@@ -73,8 +73,8 @@ public class ItemKSDAO implements ItemDAO<TableItemKS, TableEST> {
         try(Connection connection = SQLconnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {
             
-                pstmt.setString(1, enumEst.getSecondValue(SQL.Common.SITE_NUMBER));
-                pstmt.setString(2, enumEst.getSecondValue(SQL.Common.CONTRACTOR));
+                pstmt.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
+                pstmt.setString(2, enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR));
                 pstmt.execute();
             
             ResultSet rs = pstmt.getResultSet();
@@ -132,8 +132,8 @@ public class ItemKSDAO implements ItemDAO<TableItemKS, TableEST> {
         try(Connection connection = SQLconnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {
             
-                pstmt.setString(1, enumEst.getSecondValue(SQL.Common.SITE_NUMBER).toString());
-                pstmt.setString(2, enumEst.getSecondValue(SQL.Common.CONTRACTOR).toString());
+                pstmt.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER).toString());
+                pstmt.setString(2, enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR).toString());
                 pstmt.setInt   (3, ksNumber);
                 pstmt.execute();
             

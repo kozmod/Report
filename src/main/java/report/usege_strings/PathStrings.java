@@ -2,6 +2,9 @@
 package report.usege_strings;
 
 
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public  interface PathStrings {
 
         String USER_DIRRECTORY = System.getProperty("user.dir");
@@ -27,6 +30,11 @@ public  interface PathStrings {
                 String EXCEL               =  "lib\\excel_files";
                 String BACK_UP_SQL         =  "lib\\BackUp_SQL";
                 String VARIABLE_PROPERTIES =  "lib\\MyProperties\\formula.properties";
+        }
+        interface FilesPaths{
+                Path EXCEL               = Paths.get("lib\\excel_files");
+                Path BACK_UP_SQL         = Paths.get("lib\\BackUp_SQL");
+                Path VARIABLE_PROPERTIES = Paths.get( "lib\\MyProperties\\formula.properties");
         }
 
 }

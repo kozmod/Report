@@ -26,8 +26,8 @@ public class CoefficientQuery {
     public Coefficient getCoefficientClass() {
         Coefficient coefficient = new Coefficient();
         
-        String siteNumber = Est.Common.getSecondValue(SQL.Site.SITE_NUMBER);
-        String contractor = Est.Common.getSecondValue(SQL.Site.CONTRACTOR);
+        String siteNumber = Est.Common.getSiteSecondValue(SQL.Site.SITE_NUMBER);
+        String contractor = Est.Common.getSiteSecondValue(SQL.Site.CONTRACTOR);
         
         Properties variableProperties = new ItemPropertiesFAO().getProperties();
         Double pse  = DecimalFormatter.stringToDouble(variableProperties.get(FileFields.FormulaVar.PER_SALE_EXPENSES));
@@ -44,7 +44,7 @@ public class CoefficientQuery {
                     coefficient.setQuantity       (rs.getInt(SQL.Formula.QUANTITY));
                     coefficient.setSaleHouseSum   (rs.getDouble(SQL.Formula.SALE_HOUSE_SUM_ALL));
                     coefficient.setSiteExpenses   (rs.getDouble(SQL.Formula.SITE_EXPESES));
-                    coefficient.setSmetCost       (Est.Common.getSecondValue(SQL.Site.SMET_COST));
+                    coefficient.setSmetCost       (Est.Common.getSiteSecondValue(SQL.Site.SMET_COST));
                     coefficient.setSmetCostSum    (rs.getDouble(SQL.Formula.SMET_COST_SUM_ALL));
                     coefficient.setPerSaleExpenses(pse);
                     coefficient.setIncomeTax      (iTax);    

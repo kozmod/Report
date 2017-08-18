@@ -200,7 +200,7 @@ private final Table<TableItemPlan>       factTableView        = TableFactory.get
 //        contractorTableView.getItems().addListener((ListChangeListener.Change<? extends TableItemContractor> c) -> {
 //            System.out.println("init_ContractorTab => Changed on " + c);
 //                if(c.next()){ 
-//                   if(c.wasUpdated())  contractorTableView.getCRUD().addUpdate(contractorTableView.getItems().get(c.getFrom()));
+//                   if(c.wasUpdated())  contractorTableView.getCRUD().addUpdate(contractorTableView.getItems().saveEst(c.getFrom()));
 //                   if(c.wasAdded()) contractorTableView.getCRUD().addCreate(c.getAddedSubList());
 //                   if(c.wasRemoved()) contractorTableView.getCRUD().addDelete(c.getRemoved());       
 //                }

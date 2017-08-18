@@ -2,7 +2,6 @@
 package report.models.printer;
 
 import java.nio.file.Path;
-import java.util.Collection;
 import java.util.List;
 
 import javafx.collections.FXCollections;
@@ -33,7 +32,7 @@ public class PrintEstimate extends AbstractPrinterXML{
 
         doc = buildDocument("\\lib\\XML_Models\\Смета.xml");
         addJMrows();
-        saveDocument("\\lib\\XML_Models\\Смета-"+ Est.Common.getSecondValue(SQL.Common.SITE_NUMBER) +"_"+ Est.Common.getSecondValue(SQL.Common.CONTRACTOR) +".xml");
+        saveDocument("\\lib\\XML_Models\\Смета-"+ Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER) +"_"+ Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR) +".xml");
     }
 
     public PrintEstimate(List list) {
@@ -45,7 +44,7 @@ public class PrintEstimate extends AbstractPrinterXML{
 
         doc = buildDocument("\\lib\\XML_Models\\Смета.xml");
         addJMrows();
-        saveDocument("\\lib\\XML_Models\\Смета-"+ Est.Common.getSecondValue(SQL.Common.SITE_NUMBER) +"_"+ Est.Common.getSecondValue(SQL.Common.CONTRACTOR) +".xml");
+        saveDocument("\\lib\\XML_Models\\Смета-"+ Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER) +"_"+ Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR) +".xml");
     }
 
     public PrintEstimate(List list, Path path) {

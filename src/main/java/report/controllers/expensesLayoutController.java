@@ -24,6 +24,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import report.controllers.root.rootLayoutController;
 import report.view_models.data_models.DecimalFormatter;
 import report.usege_strings.SQL;
 
@@ -59,9 +60,9 @@ public class expensesLayoutController implements Initializable {
     @FXML  private DatePicker dateFromDP, dateToDP;
     @FXML  private Button applyCoefButton,siteUndoButton, siteSaveButton,addExpensesButton,addPeriodButton;
     
-    private final StringProperty SITE_NUMBER = new SimpleStringProperty(Est.Common.getSecondValue(SQL.Common.SITE_NUMBER));
-    private final StringProperty CONTRACTOR  = new SimpleStringProperty(Est.Common.getSecondValue(SQL.Common.CONTRACTOR));
-    private final StringProperty TYPE_HOME   = new SimpleStringProperty(Est.Common.getSecondValue(SQL.Common.TYPE_HOME));
+    private final StringProperty SITE_NUMBER = new SimpleStringProperty(Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER));
+    private final StringProperty CONTRACTOR  = new SimpleStringProperty(Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
+    private final StringProperty TYPE_HOME   = new SimpleStringProperty(Est.Common.getSiteSecondValue(SQL.Common.TYPE_HOME));
     
     private final  DoubleProperty COEFFICIENT = new SimpleDoubleProperty(new CoefficientQuery().getCoefficientClass().getCoefficientValue());
     /********************************************************************************************************************
@@ -202,7 +203,7 @@ public class expensesLayoutController implements Initializable {
         
         siteUndoButton .setDisable(true);
         siteSaveButton .setDisable(true);
-        if(!Est.Common.getSecondValue(SQL.Site.COEFFICIENT).equals(COEFFICIENT.get()))
+        if(!Est.Common.getSiteSecondValue(SQL.Site.COEFFICIENT).equals(COEFFICIENT.get()))
             applyCoefButton.setDisable(false);
         else applyCoefButton.setDisable(true);
         
@@ -234,7 +235,7 @@ public class expensesLayoutController implements Initializable {
             
             COEFFICIENT.setValue(new CoefficientQuery().getCoefficientClass().getCoefficientValue());
             
-            CONTRACTOR.setValue(Est.Common.getSecondValue(SQL.Common.CONTRACTOR));  
+            CONTRACTOR.setValue(Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
             siteUndoButton .setDisable(true);
             siteSaveButton.setDisable(true);
             
@@ -296,8 +297,8 @@ public class expensesLayoutController implements Initializable {
         
         if(Est.Changed.isExist()){
             new CoefficientQuery().applyCoefficient(
-                Est.Changed.getSecondValue(SQL.Common.SITE_NUMBER), 
-                Est.Changed.getSecondValue(SQL.Common.CONTRACTOR),
+                Est.Changed.getSiteSecondValue(SQL.Common.SITE_NUMBER),
+                Est.Changed.getSiteSecondValue(SQL.Common.CONTRACTOR),
                 COEFFICIENT.getValue());
             
         }

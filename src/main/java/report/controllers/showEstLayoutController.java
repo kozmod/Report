@@ -1,5 +1,6 @@
 package report.controllers;
 
+import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -28,7 +29,8 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import report.Report.ScreenSize;
+import report.controllers.root.rootLayoutController;
+import report.models.VFS.FileChooserFactory;
 import report.usege_strings.PathStrings;
 import report.usege_strings.SQL;
 
@@ -96,7 +98,7 @@ public class showEstLayoutController implements Initializable {
         public int getTaleType()   {return taleType;}
         public Map getTabMap()     {return  tabMap;}
 
-        public <T> T getSecondValue(String sqlField){
+        public <T> T getSiteSecondValue(String sqlField){
             return (T) previewTableObs.stream()
                     .filter(o -> o.getSqlColumn().equals(sqlField))
                     .findFirst()
@@ -228,7 +230,7 @@ public class showEstLayoutController implements Initializable {
 ********************************************************************************************************************/  
     
     
-    private rootLayoutController  rootController;
+    private rootLayoutController rootController;
     private ksAddLayoutController ksAddController;
    
     //preview table
@@ -341,8 +343,8 @@ public class showEstLayoutController implements Initializable {
             }
         
         addFromModelButton.setOnAction(event -> {
-            if(!enumEst.getSecondValue(SQL.Site.CONTRACTOR ).equals("-") 
-                    || !enumEst.getSecondValue(SQL.Site.TYPE_HOME).equals("-")){
+            if(!enumEst.getSiteSecondValue(SQL.Site.CONTRACTOR ).equals("-")
+                    || !enumEst.getSiteSecondValue(SQL.Site.TYPE_HOME).equals("-")){
                 new ItemEstDAO().insertEstNewTables(enumEst);
     //            init_Lists();
     //            if(enumEst == Est.Base)    init_EstBase();
@@ -405,7 +407,7 @@ public class showEstLayoutController implements Initializable {
     }
 
     private void init_Additional(){
-//        tableAdditional.setItems((ObservableList)Est.Base.getTabMap(). get("ФУНДАМЕНТ"));
+//        tableAdditional.setItems((ObservableList)Est.Base.getTabMap(). saveEst("ФУНДАМЕНТ"));
     }
     
     
@@ -514,21 +516,22 @@ public class showEstLayoutController implements Initializable {
     
     @FXML
     private void hanle_PrintKS(ActionEvent event) {
-        
-        if(!listKS.getSelectionModel().isEmpty())
-//            new PrintKS(listKS.getSelectionModel().getSelectedItem().toString());
-         new PrintKS.Builder()
-                 .setObsKS(tableKS.getItems())
-//                 .setObsPreTab(previewTableObs)
-                 .setKSnumber(listKS.getSelectionModel().getSelectedItem().toString())
-                 .setKSDate(ksDateLabel.getText())
-                 .build();
-        
-//        for(TableItem ti : tableKS.getItems()){
-//            System.out.println(ti.getJM_name());
-//        }
-//        tableKS.getItems().forEach(item -> System.out.println(item.getJM_name()));
-//        
+        File selectedFile = FileChooserFactory.Save.saveKS(listKS.getSelectionModel().getSelectedItem().toString());
+        if(!listKS.getSelectionModel().isEmpty()
+                && selectedFile != null
+                ) {
+            new PrintKS(tableKS.getItems(),selectedFile.toPath());
+
+
+
+//            new PrintKS.Builder()
+//                    .setObsKS(tableKS.getItems())
+////                 .setObsPreTab(previewTableObs)
+//                    .setKSnumber(listKS.getSelectionModel().getSelectedItem().toString())
+//                    .setKSDate(ksDateLabel.getText())
+//                    .build();
+        }
+
     }
     
     @FXML //delete new KS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!NEED TO CHAGE
@@ -536,7 +539,7 @@ public class showEstLayoutController implements Initializable {
             String selectedItemKS = listKS.getSelectionModel().getSelectedItem().toString();
             new ItemKSDAO().deleteKS(
                     selectedItemKS,
-                    Est.Changed.getSecondValue(SQL.Common.SITE_NUMBER),  Est.Changed.getSecondValue(SQL.Common.CONTRACTOR)
+                    Est.Changed.getSiteSecondValue(SQL.Common.SITE_NUMBER),  Est.Changed.getSiteSecondValue(SQL.Common.CONTRACTOR)
             );
             ksMap.remove(Integer.parseInt(selectedItemKS));
             listKS.getItems().clear();

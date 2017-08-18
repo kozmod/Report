@@ -1,6 +1,7 @@
 
 package report.view_models.nodes_factories;
 
+import javafx.scene.input.MouseButton;
 import report.entities.items.site.TableItemPreview;
 
 import java.time.LocalDate;
@@ -18,7 +19,7 @@ import javafx.util.StringConverter;
 import report.view_models.data_models.DecimalFormatter;
 import report.usege_strings.SQL;
 
-import report.controllers.rootLayoutController;
+import report.controllers.root.rootLayoutController;
 import report.controllers.showEstLayoutController.Est;
 import report.entities.items.TableClone;
 import report.entities.items.TableItem;
@@ -247,7 +248,7 @@ public class TableCellFactory{
                             setText("N/A");
                             setGraphic(null);
                         }
-//                        setText(t.getSecondValue().toString());
+//                        setText(t.getSiteSecondValue().toString());
                         setGraphic(null);
                         break;
                 }   
@@ -375,7 +376,7 @@ public class TableCellFactory{
         
             checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
                 getTableView().getItems().get(getIndex()).setCheck(newValue);
-//                ((TableItemCB)getTableView().getItems().get(getIndex())).setCheck(newValue);
+//                ((TableItemCB)getTableView().getItems().saveEst(getIndex())).setCheck(newValue);
             });
         }
     }
@@ -454,6 +455,42 @@ public class TableCellFactory{
             }
         } 
     }
+
+    public static class OnMouseClickTableCell extends TableCell<TableItem, Object> {
+        private Est enumEst;
+
+
+        @Override
+        public void updateItem(Object item, boolean empty) {
+            super.updateItem(item, empty);
+             if (empty) {
+                setText(null);
+                setGraphic(null);
+                this.setOnMouseEntered(null);
+             } else {
+                setText(item.toString());
+
+                setOnMouseClicked(mouseEvent ->{
+                    if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
+                        if(mouseEvent.getClickCount() == 2){
+                            System.out.println("Double clicked");
+                            String text = this.getText();
+
+                            TableItem itemm = this.getTableView().getItems().filtered(i -> i.getJM_name().equals(text)).get(0);
+                            System.out.println(this.getTableView().getItems().indexOf(itemm));
+//                            System.out.println(this.getTableView().ge;
+                            this.getTableView().getSelectionModel().selectLast();
+                        }
+                    }
+
+
+
+
+
+                });
+            }
+        }
+    }
     
     
     private class ObjectCell extends TableCell{
@@ -503,7 +540,7 @@ public class TableCellFactory{
 //                setOnMouseEntered(value ->{
 ////                     
 //                   
-//                     rootLayoutController.update_changeTable((ObservableList) Est.Base.findItemsList_DL(this.getTableView().getItems().get(this.getIndex())));
+//                     rootLayoutController.update_changeTable((ObservableList) Est.Base.findItemsList_DL(this.getTableView().getItems().saveEst(this.getIndex())));
 //                    
 //                 });
 //                 
@@ -530,12 +567,12 @@ public class TableCellFactory{
 //            try {
 //               Field fieldBehavior = tooltip.getClass().getDeclaredField("BEHAVIOR");
 //               fieldBehavior.setAccessible(true);
-//               Object objBehavior = fieldBehavior.get(tooltip);
+//               Object objBehavior = fieldBehavior.saveEst(tooltip);
 //               
 //               Field fieldHideTimer = objBehavior.getClass().getDeclaredField("hideTimer");
 ////               Field fieldTimer = objBehavior.getClass().getDeclaredField("activationTimer");
 //               fieldHideTimer.setAccessible(true);
-//               Timeline objTimer = (Timeline) fieldHideTimer.get(objBehavior);
+//               Timeline objTimer = (Timeline) fieldHideTimer.saveEst(objBehavior);
 //               
 //               objTimer.getKeyFrames().clear();
 //               objTimer.getKeyFrames().add(new KeyFrame(new Duration(Double.MAX_VALUE)));

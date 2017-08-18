@@ -401,7 +401,7 @@ public class InsertFileXLSQuery {
                                                               Float.parseFloat(debString),  
                                                               Float.parseFloat(credString)                       
                                                     ));
-//                     System.out.println(xlsAccObs.get(i).getDate());
+//                     System.out.println(xlsAccObs.saveEst(i).getDate());
 //                     i++;
                 }
             }

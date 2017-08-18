@@ -90,8 +90,8 @@ public class ItemEstDAO implements ItemDAO<TableItemEst, TableEST> {
                 
         try(Connection connection = SQLconnector.getInstance();
                 PreparedStatement prst = connection.prepareStatement(sql)) {
-                prst.setString(1, enumEst.getSecondValue(SQL.Common.SITE_NUMBER));
-                prst.setString(2, enumEst.getSecondValue(SQL.Common.CONTRACTOR));
+                prst.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
+                prst.setString(2, enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR));
                 prst.setInt   (3, enumEst.getTaleType());
                 
                 ResultSet rs = prst.executeQuery();
@@ -155,7 +155,7 @@ public class ItemEstDAO implements ItemDAO<TableItemEst, TableEST> {
         try(Connection connection = SQLconnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(psmtmtString); ) {
            
-            pstmt.setString(1, Est.Base.getSecondValue(SQL.Common.TYPE_HOME));
+            pstmt.setString(1, Est.Base.getSiteSecondValue(SQL.Common.TYPE_HOME));
             pstmt.setString(2, BildingPart);
            
             ResultSet rs = pstmt.executeQuery();
@@ -165,9 +165,9 @@ public class ItemEstDAO implements ItemDAO<TableItemEst, TableEST> {
                                     0,
                                     false, 
                                     new Timestamp(System.currentTimeMillis()),
-                                    Est.Base.getSecondValue(SQL.Common.SITE_NUMBER),//rs.getObject("SiteNumber").toString(),
+                                    Est.Base.getSiteSecondValue(SQL.Common.SITE_NUMBER),//rs.getObject("SiteNumber").toString(),
                                     rs.getObject (SQL.Common.TYPE_HOME).toString(),
-                                    Est.Base.getSecondValue(SQL.Common.CONTRACTOR),//rs.getObject("Contractor").toString(),
+                                    Est.Base.getSiteSecondValue(SQL.Common.CONTRACTOR),//rs.getObject("Contractor").toString(),
                                     rs.getObject (SQL.Estimate.JM_NAME).toString(),
                                     rs.getObject (SQL.Estimate.JOB_MATERIAL).toString(),
                                     rs.getObject (SQL.Estimate.BINDED_JOB).toString(),
@@ -226,8 +226,8 @@ public class ItemEstDAO implements ItemDAO<TableItemEst, TableEST> {
                 
         try(Connection connection = SQLconnector.getInstance();
                 PreparedStatement prst = connection.prepareStatement(ResultSetString)) {
-                prst.setString(1, enumEst.getSecondValue(SQL.Common.SITE_NUMBER));
-                prst.setString(2, enumEst.getSecondValue(SQL.Common.CONTRACTOR));
+                prst.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
+                prst.setString(2, enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR));
                 prst.setString(3, title);
                 prst.setInt   (4, enumEst.getTaleType());
                 
@@ -483,20 +483,20 @@ public class ItemEstDAO implements ItemDAO<TableItemEst, TableEST> {
 //            if(enumEst == Est.Changed){
 //                pstmt.setDouble  (1, Coefficient.getCoefficientValue());
 ////                pstmt.setFloat  (1, coefficient.getValue());
-//                pstmt.setString (5, enumEst.getSecondValue(SQL.Common.SITE_NUMBER));
-//                pstmt.setString (6, enumEst.getSecondValue(SQL.Common.CONTRACTOR)); 
+//                pstmt.setString (5, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
+//                pstmt.setString (6, enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR));
 //                pstmt.setInt    (7, 1); 
 //            }
 //             //2: SiteNumber / 3: Contractor / 4: TableType / 8: TypeHome
-//                pstmt.setString (2, enumEst.getSecondValue(SQL.Common.SITE_NUMBER));
-//                pstmt.setString (3, enumEst.getSecondValue(SQL.Common.CONTRACTOR));
+//                pstmt.setString (2, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
+//                pstmt.setString (3, enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR));
 //                pstmt.setInt    (4, enumEst.getTaleType());                                                       
-//                pstmt.setString (8, enumEst.getSecondValue(SQL.Common.TYPE_HOME));
+//                pstmt.setString (8, enumEst.getSiteSecondValue(SQL.Common.TYPE_HOME));
             
                 
-                pstmt.setString (1, enumEst.getSecondValue(SQL.Estimate.SITE_NUMBER));
-                pstmt.setString (2, enumEst.getSecondValue(SQL.Estimate.CONTRACTOR));
-                pstmt.setString (3, enumEst.getSecondValue(SQL.Estimate.TYPE_HOME)); 
+                pstmt.setString (1, enumEst.getSiteSecondValue(SQL.Estimate.SITE_NUMBER));
+                pstmt.setString (2, enumEst.getSiteSecondValue(SQL.Estimate.CONTRACTOR));
+                pstmt.setString (3, enumEst.getSiteSecondValue(SQL.Estimate.TYPE_HOME));
                 pstmt.setInt    (4, enumEst.getTaleType());
 
            
@@ -553,8 +553,8 @@ public class ItemEstDAO implements ItemDAO<TableItemEst, TableEST> {
 
     /**
      * Delete TableItemEst  Entities from SQL and then insert new Entities.
-     * Use Table to get  <b>memento</b> and <b>current</b> (Current List of elements).
-     * <br>Then update Table Items ( to get new Element's ID of SQL)
+     * Use Table to saveEst  <b>memento</b> and <b>current</b> (Current List of elements).
+     * <br>Then update Table Items ( to saveEst new Element's ID of SQL)
      * <br>Then update "ALL elements List"
     * @param table (Table) 
     */

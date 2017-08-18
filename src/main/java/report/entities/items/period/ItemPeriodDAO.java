@@ -45,8 +45,8 @@ public class ItemPeriodDAO implements ItemDAO<TableItemPeriod,  Table> {
           try(Connection connection = SQLconnector.getInstance();
                 PreparedStatement pstmt = connection.prepareStatement(sqlQuery);) {
             //set false SQL Autocommit
-                pstmt.setString(1, Est.Common.getSecondValue(SQL.Common.SITE_NUMBER));
-                pstmt.setString(2, Est.Common.getSecondValue(SQL.Common.CONTRACTOR));   
+                pstmt.setString(1, Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER));
+                pstmt.setString(2, Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
                 pstmt.execute();
                 
                 try(ResultSet rs = pstmt.getResultSet();){

@@ -30,8 +30,8 @@ public class ItemSiteDAO implements ItemDAO<TableItemPreview, Table> {
     }
     public ItemSiteDAO() {  
         if(Est.Common.isExist()){
-            this.siteNumber = Est.Common.getSecondValue(SQL.Common.SITE_NUMBER);
-            this.contractor = Est.Common.getSecondValue(SQL.Common.CONTRACTOR);
+            this.siteNumber = Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER);
+            this.contractor = Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR);
         }    
     }
 
@@ -118,7 +118,7 @@ public class ItemSiteDAO implements ItemDAO<TableItemPreview, Table> {
                            
                    );
 
-                   //System.out.println(SiteInfoTable.get(0).getFirstValue());  
+                   //System.out.println(SiteInfoTable.saveEst(0).getFirstValue());
                }
                        
 
@@ -192,7 +192,7 @@ public class ItemSiteDAO implements ItemDAO<TableItemPreview, Table> {
             connection.setAutoCommit(false);
                 int i  = 1;
                 for(TableItemPreview obsItem : items){
-//                        System.out.println(item.getSecondValue().toString() + " # "+ i);                    
+//                        System.out.println(item.getSiteSecondValue().toString() + " # "+ i);
                         pstmt.setObject (i, obsItem.getSecondValue());
                         i++;
                 }

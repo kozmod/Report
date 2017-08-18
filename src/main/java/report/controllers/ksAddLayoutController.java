@@ -70,8 +70,8 @@ public class ksAddLayoutController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         //set data to Labels
-        siteNumLabel.setText(Est.Common.getSecondValue(SQL.Common.SITE_NUMBER));
-        contLabel.setText(Est.Common.getSecondValue(SQL.Common.CONTRACTOR));
+        siteNumLabel.setText(Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER));
+        contLabel.setText(Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
 
         TableViewFxmlDecorator.decorAddKS(allJMTable);
         TableViewFxmlDecorator.decorAddKS(selectedJMTable);

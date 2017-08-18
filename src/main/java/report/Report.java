@@ -11,7 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import report.controllers.rootLayoutController;
+import report.controllers.root.rootLayoutController;
 import report.servises.StageCreator;
 import report.usege_strings.PathStrings;
 

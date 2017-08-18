@@ -1,5 +1,5 @@
 
-package report.controllers;
+package report.controllers.root;
 
 import java.io.File;
 import report.Report;
@@ -22,12 +22,10 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeCell;
 import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseEvent;
-import javafx.stage.FileChooser;
 import javafx.util.Callback;
 
+import report.controllers.*;
 import report.models.VFS.FileChooserFactory;
-import report.models.printer.PrintEstimate;
-import report.servises.RootControllerService;
 import report.usege_strings.PathStrings;
 import report.controllers.showEstLayoutController.Est;
 import report.servises.StageCreator;
@@ -42,11 +40,11 @@ public class rootLayoutController implements Initializable {
     
     // ref to Report App      
     private Report                      reportApp;                                                                           
-    private contAddLayoutController     contAddController;
-    private delLayoutController         delController;
-    private siteAddLayoutController     siteAddController;
-    private showEstLayoutController     showEstController;
-    private expensesLayoutController    expensesController;
+    private contAddLayoutController contAddController;
+    private delLayoutController delController;
+    private siteAddLayoutController siteAddController;
+    private showEstLayoutController showEstController;
+    private expensesLayoutController expensesController;
 
     private RootControllerService rootService = new RootControllerService(this);
 
@@ -84,7 +82,7 @@ public class rootLayoutController implements Initializable {
 ********************************************************************************************************************/
 
     
-    void update_previewTable(ObservableList<TableItemPreview> items){
+    public void update_previewTable(ObservableList<TableItemPreview> items){
         previewTable.refresh();
     }
 
@@ -149,16 +147,11 @@ public class rootLayoutController implements Initializable {
     @FXML
     private void handle_menuFileAccLoad(ActionEvent event) {
 
-//        FileChooser fileChooser = new FileChooser();
-//        fileChooser.setInitialDirectory(
-//                new File(PathStrings.Files.EXCEL));
-//        fileChooser.setTitle("Open Resource File");
         File selectedFile = FileChooserFactory.Open.getExcel();
 
         if(selectedFile != null){
-//            commonSQL_INSERT.insertRowsFromXls_Account_test(selectedFile.getPath());
-            new InsertFileXLSQuery().insertRowsFromXls_Account(selectedFile.getPath());
-
+            new InsertFileXLSQuery()
+                    .insertRowsFromXls_Account(selectedFile.getPath());
         }else{
             System.out.println("Отмена FILE CH00SER xls/xlsx --- ACCOUNT");
         }
@@ -170,13 +163,14 @@ public class rootLayoutController implements Initializable {
     
     @FXML
     private void handle_menuFileLoad(ActionEvent event) {
-//        String defPath = "\\libS\\excel_files";
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(
-//                new File(System.getProperty("user.dir")+ defPath));
-                new File( PathStrings.Files.EXCEL));
-        fileChooser.setTitle("Open Resource File");
-        File selectedFile = fileChooser.showOpenDialog(null);
+////        String defPath = "\\libS\\excel_files";
+//        FileChooser fileChooser = new FileChooser();
+//        fileChooser.setInitialDirectory(
+////                new File(System.getProperty("user.dir")+ defPath));
+//                new File( PathStrings.Files.EXCEL));
+//        fileChooser.setTitle("Open Resource File");
+//        File selectedFile = fileChooser.showOpenDialog(null);
+        File selectedFile = FileChooserFactory.Open.getExcel();
         
         if(selectedFile != null){
             new InsertFileXLSQuery().insertRowsFromXls_Site_Numeric(selectedFile.getPath());
@@ -192,11 +186,11 @@ public class rootLayoutController implements Initializable {
     
     @FXML
     private void handle_menuFileRestore(ActionEvent event) {
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(
-                new File( PathStrings.Files.BACK_UP_SQL));
-        fileChooser.setTitle("Open  File");
-        File selectedFile = fileChooser.showOpenDialog(null);
+//        FileChooser fileChooser = new FileChooser();
+//        fileChooser.setInitialDirectory(
+//                new File( PathStrings.Files.BACK_UP_SQL));
+//        fileChooser.setTitle("Open  File");
+        File selectedFile = FileChooserFactory.Open.getSqlBackUp();
         
         if(selectedFile != null){
             BackUpQuery.restore(selectedFile.getPath());
@@ -250,14 +244,20 @@ public class rootLayoutController implements Initializable {
         File selectedFile;
         if(Est.Base.isExist()
                 && showEstController.getBaseTab().isSelected()) {
-            selectedFile = FileChooserFactory.Save.get(Est.Base);
-            new PrintEstimate(Est.Base.getAllItemsList_Live(),selectedFile.toPath());
-            LogLayoutController.appendLogViewText("Базовая смета сохранена в файл");
+            selectedFile = FileChooserFactory.Save.saveEst(Est.Base);
+            if (selectedFile != null) {
+                rootService.printEstBase(selectedFile);
+//                new PrintEstimate(Est.Base.getAllItemsList_Live(), selectedFile.toPath());
+                LogLayoutController.appendLogViewText("Базовая смета сохранена в файл");
+            }
         }else if((Est.Changed.isExist()
                 && showEstController.getChangeTab().isSelected())) {
-            selectedFile = FileChooserFactory.Save.get(Est.Base);
-            new PrintEstimate(Est.Changed.getAllItemsList_Live(),selectedFile.toPath());
-            LogLayoutController.appendLogViewText("Изменненная смета сохранена в файл");
+            selectedFile = FileChooserFactory.Save.saveEst(Est.Changed);
+            if (selectedFile != null) {
+                rootService.printEstChange(selectedFile);
+//                new PrintEstimate(Est.Changed.getAllItemsList_Live(), selectedFile.toPath());
+                LogLayoutController.appendLogViewText("Изменненная смета сохранена в файл");
+            }
         }else{
             LogLayoutController.appendLogViewText("Не выбрана смета для печати");
         }

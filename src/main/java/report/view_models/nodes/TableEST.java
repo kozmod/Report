@@ -40,7 +40,7 @@ public  class TableEST<S> extends Table<TableItem>{
      * <br>
      * 2. saveTableItems() - save table items to Memento.
      * <br>
-     * 3. computeSum() - get sum of all "Price_sum" elements.
+     * 3. computeSum() - saveEst sum of all "Price_sum" elements.
      * <br>
      * @param items - Observable List of table item (inherited TableItems)
      * @see computeSum()

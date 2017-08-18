@@ -17,6 +17,7 @@ import javafx.scene.control.ToggleGroup;
 
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import report.controllers.root.rootLayoutController;
 import report.usege_strings.SQL;
 import report.controllers.showEstLayoutController.Est;
 import report.entities.items.contractor.ItemContractorDAO;
@@ -25,7 +26,7 @@ import report.view_models.InputValidator;
 
 public class contAddLayoutController implements Initializable  {
 
-    private rootLayoutController rootController; 
+    private rootLayoutController rootController;
     
     @FXML
     private Label siteNumLabel, typeHomeLabel, queueLabel, errorLabel;
@@ -60,9 +61,9 @@ public class contAddLayoutController implements Initializable  {
     }
     
     public void init_InfLabels(String selectedTreeElemParent){
-        siteNumLabel .setText(Est.Common.getSecondValue(SQL.Common.SITE_NUMBER));
-        typeHomeLabel.setText(Est.Common.getSecondValue(SQL.Common.TYPE_HOME));
-        queueLabel   .setText(Est.Common.getSecondValue(SQL.Site.QUEUE_BUILDING));
+        siteNumLabel .setText(Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER));
+        typeHomeLabel.setText(Est.Common.getSiteSecondValue(SQL.Common.TYPE_HOME));
+        queueLabel   .setText(Est.Common.getSiteSecondValue(SQL.Site.QUEUE_BUILDING));
 
     }
     

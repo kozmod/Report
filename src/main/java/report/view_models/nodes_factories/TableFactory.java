@@ -1,6 +1,7 @@
 
 package report.view_models.nodes_factories;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 import javafx.beans.value.ChangeListener;
@@ -92,10 +93,16 @@ public class TableFactory {
         TableColumn Price_oneColumn = table.addColumn("Стоимость (за единицу)",    "price_one");
         TableColumn Price_sumColumn = table.addColumn("Стоимость (общая)",         "price_sum");
         TableColumn isInKSColumn    = table.addColumn("КС",                        "inKS");
-        
+
+
+
         JM_nameColumn.setMinWidth(300);
         BJobColumnn.setMinWidth(160);
-        
+
+//        BJobColumnn.setCellFactory(param ->  new TableCellFactory.OnMouseClickTableCell());
+
+
+
         valueColumn.setEditable(true);
         Price_oneColumn.setEditable(true);
 //        
@@ -280,8 +287,8 @@ public class TableFactory {
             }
         });
         
-        ContextMenu contexMenuKS = ContextMenuFactory.getCommonSU(table);
-        table.setContextMenu(contexMenuKS);
+        ContextMenu contextMenuKS = ContextMenuFactory.getCommonSU(table);
+        table.setContextMenu(contextMenuKS);
 //               
 //        Est.KS.getTabMap().values().forEach(new Consumer<ObservableList<TableItem>>() {
 //            @Override
@@ -556,7 +563,8 @@ public class TableFactory {
                                    = table.addColumn("Цена",           "SaleCost");
         TableColumn saleSumColumn  = table.addColumn("Выручка",        "SaleCostSum");
         TableColumn profitColumn   = table.addColumn("Прибыль",        "profit");
-        
+
+
         typeIdColumn    .setMaxWidth(50);
         typeIdColumn    .setMinWidth(35);
         typeColumn      .setMaxWidth(80);

@@ -39,7 +39,7 @@ import report.view_models.nodes.Table;
 
 
 public class addSiteRowLayoutController implements Initializable {
-//   get DATA(NOW)
+//   saveEst DATA(NOW)
     private final Timestamp todayDate = new Timestamp(System.currentTimeMillis());
     
     private ObservableList<TableItemCB> editObsList,
@@ -75,9 +75,9 @@ public class addSiteRowLayoutController implements Initializable {
         this.rootTable   = t;
         this.editObsList = getCheckObs(t.getItems());
         this.bildingPart = t.getTitle();
-        this.siteNumber  = Est.Common.getSecondValue(SQL.Common.SITE_NUMBER);
-        this.contName    = Est.Common.getSecondValue(SQL.Common.CONTRACTOR);
-        this.typeHome    = Est.Common.getSecondValue(SQL.Common.TYPE_HOME);
+        this.siteNumber  = Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER);
+        this.contName    = Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR);
+        this.typeHome    = Est.Common.getSiteSecondValue(SQL.Common.TYPE_HOME);
 //        this.tableType   = enumEst.getTaleType();
         
         init_Labels();
@@ -363,7 +363,7 @@ public class addSiteRowLayoutController implements Initializable {
 //        
 //            checkBox.selectedProperty().addListener(
 //                (ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-//                ((ObsItems_Check)getTableView().getItems().get(getIndex())).setCheck(newValue);
+//                ((ObsItems_Check)getTableView().getItems().saveEst(getIndex())).setCheck(newValue);
 //            });
 //        }
 //    }
@@ -515,42 +515,42 @@ public class addSiteRowLayoutController implements Initializable {
 //        }
 //
 //        
-//        public boolean getCheck() {return check.get();}
+//        public boolean getCheck() {return check.saveEst();}
 //        public void setCheck(boolean value_inp) {check.set(value_inp);}
 //     
-//        public String getSiteNumber() {return siteNumber.get();}
+//        public String getSiteNumber() {return siteNumber.saveEst();}
 //        public void   setSiteNumber(String value_inp) {siteNumber.set(value_inp);}
 //
-//        public String getTypeHome() {return typeHome.get();}
+//        public String getTypeHome() {return typeHome.saveEst();}
 //        public void   setTypeHome(String value_inp) {typeHome.set(value_inp);}
 //
-//        public String getContractor() {return contractor.get();}
+//        public String getContractor() {return contractor.saveEst();}
 //        public void   setContractor(String value_inp) {contractor.set(value_inp);}
 //        
-//        public String getJM_name() {return JM_name.get();}
+//        public String getJM_name() {return JM_name.saveEst();}
 //        public void   setJM_name(String value_inp) {JM_name.set(value_inp);}
 //      
-//        public String getJobOrMat() {return JobOrMat.get();}
+//        public String getJobOrMat() {return JobOrMat.saveEst();}
 //        public void   setJobOrMat(String value_inp) {JobOrMat.set(value_inp);}
 //        
-//        public String getBindedJob() {return BindedJob.get();}
+//        public String getBindedJob() {return BindedJob.saveEst();}
 //        public void   setBindedJob(String value_inp) {BindedJob.set(value_inp);}
 //
-//        public float getValue() {return value.get();}
+//        public float getValue() {return value.saveEst();}
 //        public void  setValue(float value_inp) {value.set(value_inp);}
 //        public FloatProperty getValueProprty() {return value;}
 //        
-//        public String getUnit() {return unit.get();}
+//        public String getUnit() {return unit.saveEst();}
 //        public void  setUnit(String value_inp) {unit.set(value_inp);}
 //        
-//        public float getPrice_one() {return price_one.get();}
+//        public float getPrice_one() {return price_one.saveEst();}
 //        public void setPrice_one (float value_inp) {price_one.set(value_inp);}     
 //        public FloatProperty getPrice_oneProprty() {return price_one;}
 //       
-//        public float getPrice_sum() {return price_sum.get();}
+//        public float getPrice_sum() {return price_sum.saveEst();}
 //        public void setPrice_sum (float value_inp) {price_sum.set(value_inp);}
 //        
-//        public String getBildingPart() {return bildingPart.get();}
+//        public String getBildingPart() {return bildingPart.saveEst();}
 //        public void   setBildingPart(String value_inp) {bildingPart.set(value_inp);}
 //        
 //        
@@ -574,40 +574,40 @@ public class addSiteRowLayoutController implements Initializable {
 //            if (!ObsItems_Check.class.isAssignableFrom(obj.getClass())) {
 //                return false;
 //            }
-//            if (this.check.get() != other.check.get()) {
+//            if (this.check.saveEst() != other.check.saveEst()) {
 //                return false;
 //            }       
-//            if ((this.siteNumber.get() == null) ? (other.siteNumber.getValue() != null) : !this.siteNumber.get().equals(other.siteNumber.get())) {
+//            if ((this.siteNumber.saveEst() == null) ? (other.siteNumber.getValue() != null) : !this.siteNumber.saveEst().equals(other.siteNumber.saveEst())) {
 //                return false;
 //            }
-//            if ((this.typeHome.get() == null) ? (other.typeHome.getValue() != null) : !this.typeHome.get().equals(other.typeHome.get())) {
+//            if ((this.typeHome.saveEst() == null) ? (other.typeHome.getValue() != null) : !this.typeHome.saveEst().equals(other.typeHome.saveEst())) {
 //                return false;
 //            }
-//            if ((this.contractor.get() == null) ? (other.contractor.getValue() != null) : !this.contractor.get().equals(other.contractor.get())) {
+//            if ((this.contractor.saveEst() == null) ? (other.contractor.getValue() != null) : !this.contractor.saveEst().equals(other.contractor.saveEst())) {
 //                return false;
 //            }
-//            if ((this.JM_name.get() == null) ? (other.JM_name.getValue() != null) : !this.JM_name.get().equals(other.JM_name.get())) {
+//            if ((this.JM_name.saveEst() == null) ? (other.JM_name.getValue() != null) : !this.JM_name.saveEst().equals(other.JM_name.saveEst())) {
 //                return false;
 //            }
-//            if ((this.JobOrMat.get() == null) ? (other.JobOrMat.get() != null) : !this.JobOrMat.get().equals(other.JobOrMat.get())) {
+//            if ((this.JobOrMat.saveEst() == null) ? (other.JobOrMat.saveEst() != null) : !this.JobOrMat.saveEst().equals(other.JobOrMat.saveEst())) {
 //                return false;
 //            }
-//            if ((this.BindedJob.get() == null) ? (other.BindedJob.get() != null) : !this.BindedJob.get().equals(other.BindedJob.get())) {
+//            if ((this.BindedJob.saveEst() == null) ? (other.BindedJob.saveEst() != null) : !this.BindedJob.saveEst().equals(other.BindedJob.saveEst())) {
 //                return false;
 //            }
-//            if (this.value.get() != other.value.get()) {
+//            if (this.value.saveEst() != other.value.saveEst()) {
 //                return false;
 //            }
-//            if ((this.unit.get() == null) ? (other.unit.get() != null) : !this.unit.get().equals(other.unit.get())) {
+//            if ((this.unit.saveEst() == null) ? (other.unit.saveEst() != null) : !this.unit.saveEst().equals(other.unit.saveEst())) {
 //                return false;
 //            }
-//            if (this.price_one.get() != other.price_one.get()) {
+//            if (this.price_one.saveEst() != other.price_one.saveEst()) {
 //                return false;
 //            }
-//            if (this.price_sum.get() != other.price_sum.get()) {
+//            if (this.price_sum.saveEst() != other.price_sum.saveEst()) {
 //                return false;
 //            }
-//            if ((this.bildingPart.get() == null) ? (other.bildingPart.getValue() != null) : !this.bildingPart.get().equals(other.bildingPart.get())) {
+//            if ((this.bildingPart.saveEst() == null) ? (other.bildingPart.getValue() != null) : !this.bildingPart.saveEst().equals(other.bildingPart.saveEst())) {
 //                return false;
 //            }
 //        return true;
