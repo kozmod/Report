@@ -76,7 +76,7 @@ public abstract class AbstractPrinterXML {
             DOMSource source = new DOMSource(doc);
             TransformerFactory transformerFactory = TransformerFactory.newInstance();
             Transformer transformer = transformerFactory.newTransformer();
-            StreamResult result = new StreamResult(System.getProperty("user.dir")+ savePath);
+            StreamResult result = new StreamResult( savePath);
             transformer.transform(source, result);
             
         } catch (TransformerConfigurationException ex) {

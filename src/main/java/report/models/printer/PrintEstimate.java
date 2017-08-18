@@ -1,6 +1,7 @@
 
 package report.models.printer;
 
+import java.nio.file.Path;
 import java.util.Collection;
 import java.util.List;
 
@@ -45,6 +46,18 @@ public class PrintEstimate extends AbstractPrinterXML{
         doc = buildDocument("\\lib\\XML_Models\\Смета.xml");
         addJMrows();
         saveDocument("\\lib\\XML_Models\\Смета-"+ Est.Common.getSecondValue(SQL.Common.SITE_NUMBER) +"_"+ Est.Common.getSecondValue(SQL.Common.CONTRACTOR) +".xml");
+    }
+
+    public PrintEstimate(List list, Path path) {
+//        this.obsKS = FXCollections.observableArrayList(commonSQL_SELECT.getObsEst_TEST_2(enumEst));
+        this.obsKS = FXCollections.observableArrayList(list);
+//        this.obsKS = commonSQL_SELECT.getEstObs(siteNumber, contName, "%", tableType);
+//        this.obsKS = obsKS;
+//        this.obsPreTab = obsPreTab;
+
+        doc = buildDocument("\\lib\\XML_Models\\Смета.xml");
+        addJMrows();
+        saveDocument(path.toString());
     }
 
     

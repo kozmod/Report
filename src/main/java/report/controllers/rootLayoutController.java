@@ -25,6 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
 
+import report.models.VFS.FileChooserFactory;
 import report.models.printer.PrintEstimate;
 import report.servises.RootControllerService;
 import report.usege_strings.PathStrings;
@@ -147,12 +148,12 @@ public class rootLayoutController implements Initializable {
     
     @FXML
     private void handle_menuFileAccLoad(ActionEvent event) {
-//        String defPath = "/libS/excel_files";
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setInitialDirectory(
-                new File(PathStrings.Files.EXCEL));
-        fileChooser.setTitle("Open Resource File");
-        File selectedFile = fileChooser.showOpenDialog(null);
+
+//        FileChooser fileChooser = new FileChooser();
+//        fileChooser.setInitialDirectory(
+//                new File(PathStrings.Files.EXCEL));
+//        fileChooser.setTitle("Open Resource File");
+        File selectedFile = FileChooserFactory.Open.getExcel();
 
         if(selectedFile != null){
 //            commonSQL_INSERT.insertRowsFromXls_Account_test(selectedFile.getPath());
@@ -246,11 +247,16 @@ public class rootLayoutController implements Initializable {
     @FXML
     private void handle_PrintToXML(ActionEvent event) {
 
-        if(Est.Base.isExist() && showEstController.getBaseTab().isSelected()) {
-            new PrintEstimate(Est.Base.getAllItemsList_Live());
+        File selectedFile;
+        if(Est.Base.isExist()
+                && showEstController.getBaseTab().isSelected()) {
+            selectedFile = FileChooserFactory.Save.get(Est.Base);
+            new PrintEstimate(Est.Base.getAllItemsList_Live(),selectedFile.toPath());
             LogLayoutController.appendLogViewText("Базовая смета сохранена в файл");
-        }else if((Est.Changed.isExist() && showEstController.getChangeTab().isSelected())) {
-            new PrintEstimate(Est.Changed.getAllItemsList_Live());
+        }else if((Est.Changed.isExist()
+                && showEstController.getChangeTab().isSelected())) {
+            selectedFile = FileChooserFactory.Save.get(Est.Base);
+            new PrintEstimate(Est.Changed.getAllItemsList_Live(),selectedFile.toPath());
             LogLayoutController.appendLogViewText("Изменненная смета сохранена в файл");
         }else{
             LogLayoutController.appendLogViewText("Не выбрана смета для печати");
