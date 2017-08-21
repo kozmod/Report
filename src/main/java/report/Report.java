@@ -18,6 +18,9 @@ import report.usege_strings.PathStrings;
 
 public class Report extends Application {
 
+/*!******************************************************************************************************************
+*                                                                                                               ENUMS
+********************************************************************************************************************/
     public  enum ScreenSize {
          width , height; 
          
@@ -36,47 +39,67 @@ public class Report extends Application {
         
         private double value;
     }
-    
-    
+
+/*!******************************************************************************************************************
+*                                                                                                              FIELDS
+********************************************************************************************************************/
+
     private Stage primaryStage;
-    private BorderPane rootlayout;
+    private BorderPane rootLayout;
     private Scene scene;
-    private rootLayoutController RLController;
+    private rootLayoutController rootController;
     private StageCreator stageCreator;
 
-//Getter - Setter ==============================================================    
+/*!******************************************************************************************************************
+*                                                                                                      Getter/Setter
+********************************************************************************************************************/
     public Stage getPrimaryStage() {
         return primaryStage;
     }
 
-    public BorderPane getRootlayout() {
-        return rootlayout;
+    public BorderPane getRootLayout() {
+        return rootLayout;
     }
 
     public rootLayoutController getRLController() {
-        return RLController;
+        return rootController;
     }
     
-// Start =======================================================================    
-       
-    void initRootLayout(){
+/*!******************************************************************************************************************
+*                                                                                                               INIT
+********************************************************************************************************************/
+
+//Init ROOT Layout
+    private void initRootLayout(){
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Report.class.getResource(PathStrings.Layout.ROOT));
-            rootlayout = (BorderPane)loader.load();
+            rootLayout = (BorderPane)loader.load();
             
-            scene = new Scene(rootlayout,ScreenSize.width.getValue() - 100,ScreenSize.height.getValue() - 100);
+            scene = new Scene(rootLayout,ScreenSize.width.getValue() - 100,ScreenSize.height.getValue() - 100);
 //            scene = new Scene(rootlayout,1800,900);
             primaryStage.setScene(scene);
-            RLController = loader.getController(); //set controller
-            RLController.setReportApp(this);  
+            rootController = loader.getController(); //set controller
+            rootController.setReportApp(this);
+
+
+
         } catch (IOException ex) {
             Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
         }
         
-    } 
-    
-    
+    }
+
+    //init Intro Layout
+    private void initIntroLayout(){
+        StageCreator.setReportMain(this);
+        new StageCreator(PathStrings.Layout.INTRO,"").loadIntoRootCenter();
+    }
+
+
+/*!******************************************************************************************************************
+*                                                                                                              START
+********************************************************************************************************************/
     @Override
     public void start(Stage stage){
         ScreenSize.width.setValue();
@@ -84,14 +107,20 @@ public class Report extends Application {
         
         this.primaryStage = stage;
         this.primaryStage.setTitle("App");
-        
-        initRootLayout();
+
+        //init ROOT
+        this.initRootLayout();
         this.primaryStage.sizeToScene();
         primaryStage.show();
+
+        //Init Intro
+        this.initIntroLayout();
         
     }
-    
 
+/*!******************************************************************************************************************
+*                                                                              public static void main(String[] args)
+********************************************************************************************************************/
     public static void main(String[] args) {
         launch(args);
     }

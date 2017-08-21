@@ -23,41 +23,43 @@ public class ContextMenuFactory {
         if(!Est.Changed.isExist()){
             return ContextMenuOptional
                     .newBuilder()
-                        .setTable(tableView)
-                                 .addSpecialMenuItem("Дабавить").addActionEventHandler(action -> {
-                                                            StageCreator addSiteRowLayout
-                                                               = new StageCreator(PathStrings.Layout.ADD_SITE_ROW, "Добавление строк");
-                                                            addSiteRowLayoutController controllerAddRow = addSiteRowLayout.getController();
-                                                            controllerAddRow.setRootTableView(tableView);
-                                                            addSiteRowLayout.getStage().show();
-                                                        })
-                                 .addRemoveMenuItem()
-                                    .addSeparator()
-                                 .addSaveMenuItem().addActionEventHandler(event -> Est.Common.updatePreviewTable())
-                                 .addUndoMenuItem()
-                                    .addSeparator()
-                                 .addPrintSmeta()
-                        .build(); 
+                    .setTable(tableView)
+                    .addSpecialMenuItem("Дабавить").addActionEventHandler(action -> {
+                        StageCreator addSiteRowLayout
+                                = new StageCreator(PathStrings.Layout.ADD_SITE_ROW, "Добавление строк")
+                                .loadNewWindow();
+                        addSiteRowLayoutController controllerAddRow = addSiteRowLayout.getController();
+                        controllerAddRow.setRootTableView(tableView);
+                        addSiteRowLayout.getStage().show();
+                    })
+                    .addRemoveMenuItem()
+                    .addSeparator()
+                    .addSaveMenuItem().addActionEventHandler(event -> Est.Common.updatePreviewTable())
+                    .addUndoMenuItem()
+                    .addSeparator()
+                    .addPrintSmeta()
+                    .build();
         }
         return ContextMenuOptional
                 .newBuilder()
-                    .setTable(tableView)
+                .setTable(tableView)
 //                             .addEstAddMenuItem()
-                            .addSpecialMenuItem("Дабавить").addActionEventHandler(action -> {
-                                                            StageCreator addSiteRowLayout
-                                                               = new StageCreator(PathStrings.Layout.ADD_SITE_ROW, "Добавление строк");
-                                                            addSiteRowLayoutController controllerAddRow = addSiteRowLayout.getController();
-                                                            controllerAddRow.setRootTableView(tableView);
+                .addSpecialMenuItem("Дабавить").addActionEventHandler(action -> {
+                    StageCreator addSiteRowLayout
+                            = new StageCreator(PathStrings.Layout.ADD_SITE_ROW, "Добавление строк")
+                            .loadNewWindow();
+                    addSiteRowLayoutController controllerAddRow = addSiteRowLayout.getController();
+                    controllerAddRow.setRootTableView(tableView);
 //                                                            controllerAddRow.setAditionalTableView(Est.Additional.getAllItemsList_Live());
-                                                            addSiteRowLayout.getStage().show();
-                                                        })
-                                .addSeparator()
-                             .addSaveMenuItem()
-                             .addUndoMenuItem()
-                                .addSeparator()
-                             .addPrintSmeta()
-                    .build();   
-        
+                    addSiteRowLayout.getStage().show();
+                })
+                .addSeparator()
+                .addSaveMenuItem()
+                .addUndoMenuItem()
+                .addSeparator()
+                .addPrintSmeta()
+                .build();
+
     }
     
     /**
@@ -68,11 +70,11 @@ public class ContextMenuFactory {
      */
     public static ContextMenu getEstPrint(Est enumEst){
         return ContextMenuOptional.newBuilder()
-                      .setDAO(new ItemEstDAO(enumEst))
+                .setDAO(new ItemEstDAO(enumEst))
 //                    .setEnum(enumEst)
-                             .addPrintSmeta()
-                    .build();    
-        
+                .addPrintSmeta()
+                .build();
+
     }
     
     /**
@@ -85,12 +87,12 @@ public class ContextMenuFactory {
     public static ContextMenu getCommonDSU(Table tableView){
         return ContextMenuOptional.newBuilder()
 //                    .setDAO(dao)
-                    .setTable(tableView)
-                             .addRemoveMenuItem()
-                               .addSeparator()
-                             .addSaveMenuItem()
-                             .addUndoMenuItem()
-                    .build();         
+                .setTable(tableView)
+                .addRemoveMenuItem()
+                .addSeparator()
+                .addSaveMenuItem()
+                .addUndoMenuItem()
+                .build();
     }
     
     /**
@@ -102,10 +104,10 @@ public class ContextMenuFactory {
      */    
     public static ContextMenu getCommonSU(Table tableView){
         return ContextMenuOptional.newBuilder()
-                    .setTable(tableView)
-                             .addSaveMenuItem()
-                             .addUndoMenuItem()
-                    .build();         
+                .setTable(tableView)
+                .addSaveMenuItem()
+                .addUndoMenuItem()
+                .build();
     }
     
     

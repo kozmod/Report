@@ -30,6 +30,7 @@ public class ItemAccDAO {
                 + ",[Description]"
                 + ",[Deb]"
                 + ",[Cred]"
+                + ",[OutgoingRest]"
                 + "FROM dbo.[Account]"
                 + "WHERE [dell] = 0 ");
         if(DateFrom != 0 && DateTo != 0)
@@ -55,11 +56,11 @@ public class ItemAccDAO {
                                 rs.getObject("Name_Cor").toString(),
                                 rs.getInt   ("VO"),
                                 rs.getObject("Description").toString(),
-                                rs.getFloat ("Deb"),
-                                rs.getFloat ("Cred")
+                                rs.getDouble ("Deb"),
+                                rs.getDouble ("Cred"),
+                                rs.getDouble ("OutgoingRest")
                         )
                 );
-
             }
         } catch (SQLException ex) {
             Logger.getLogger(ItemAccDAO.class.getName()).log(Level.SEVERE, null, ex);

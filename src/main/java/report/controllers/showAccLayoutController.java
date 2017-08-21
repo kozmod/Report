@@ -10,17 +10,14 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
 import report.entities.items.account.ItemAccDAO;
 import report.view_models.data_models.EpochDatePickerConverter;
-import report.view_models.nodes_factories.TableCellFactory;
 import report.models.sql.sqlQuery.InsertFileXLSQuery;
-
+import report.view_models.nodes_factories.TableViewFxmlDecorator;
 
 
 public class showAccLayoutController implements Initializable {
@@ -30,89 +27,97 @@ public class showAccLayoutController implements Initializable {
     private TableView accTable;
    
     @FXML
-    private DatePicker dateAccfrom, dateAccto;
+    private DatePicker dateAccFrom, dateAccTo;
     
 //INIT==============================================================================================================      
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        //decore Acc table
+        TableViewFxmlDecorator.decorAcc(accTable);
+        accTable.setItems(new ItemAccDAO().getList(0,0));
+
         init_DatePickers();
-        init_AccTable();
+//        init_AccTable();
     }
     
     void init_DatePickers(){
-        dateAccfrom.setConverter(new EpochDatePickerConverter());
-        dateAccto.setConverter  (new EpochDatePickerConverter());
+        dateAccFrom.setConverter(new EpochDatePickerConverter());
+        dateAccTo.setConverter  (new EpochDatePickerConverter());
     }
  
     
-    void init_AccTable(){
-        TableColumn dateCol = new TableColumn("Дата");
-        dateCol.setCellValueFactory(new PropertyValueFactory("date"));
-        dateCol.setCellFactory(cell -> TableCellFactory.getEpochDateCell());
-                
-                
-        TableColumn numCol = new TableColumn(" № ");
-        numCol.setCellValueFactory(new PropertyValueFactory("num"));
-//        numCol.setMinWidth(40);
-//        numCol.setMaxWidth(40);
-        
-        //client
-        TableColumn ClientCol = new TableColumn("Клиент");
-        
-        TableColumn ITNCol = new TableColumn("ИНН");
-        ITNCol.setCellValueFactory(new PropertyValueFactory("ITN_Client"));
-        
-        TableColumn nameClientCol = new TableColumn("Наименование");
-        nameClientCol.setCellValueFactory(new PropertyValueFactory("name_Client"));
-        
-        TableColumn accClientCol = new TableColumn("Счет");
-        accClientCol.setCellValueFactory(new PropertyValueFactory("accNum_Client"));
-        
-        ClientCol.getColumns().addAll(ITNCol, nameClientCol, accClientCol);
-        
-        //correspondent
-        TableColumn CorCol = new TableColumn("Корреспондент");
-        
-        TableColumn BICCOrCol = new TableColumn("BIC");
-        BICCOrCol.setCellValueFactory(new PropertyValueFactory("BIC_Cor"));
-        
-        TableColumn accCorCol = new TableColumn("Счет");
-        accCorCol.setCellValueFactory(new PropertyValueFactory("accNum_Cor"));
-        
-        TableColumn nameCorCol = new TableColumn("Наименование");
-        nameCorCol.setCellValueFactory(new PropertyValueFactory("name_Cor"));
-        
-        CorCol.getColumns().addAll(BICCOrCol, accCorCol, nameCorCol);
-        
-        TableColumn VOCol = new TableColumn("ВО");
-        VOCol.setCellValueFactory(new PropertyValueFactory("VO"));
-//        VOCol.setMinWidth(40);
-//        VOCol.setMaxWidth(40);
-        
-        
-        TableColumn dascCol = new TableColumn("Содержание");
-        dascCol.setCellValueFactory(new PropertyValueFactory("description"));
-        
-        //turnover
-        TableColumn TurnoverCol = new TableColumn("Обороты");
-       
-        TableColumn debCol = new TableColumn("Дебет");
-        debCol.setCellValueFactory(new PropertyValueFactory("deb"));
-        debCol.setCellFactory(cell -> TableCellFactory.getDecimalCell());
-        
-        TableColumn credCol = new TableColumn("Кредит");
-        credCol.setCellValueFactory(new PropertyValueFactory("cred"));
-        credCol.setCellFactory(cell -> TableCellFactory.getDecimalCell());
-        
-        TurnoverCol.getColumns().addAll(debCol,credCol);
-        
-        
-        accTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        accTable.getColumns().setAll(dateCol, numCol,ClientCol,CorCol, VOCol,dascCol,TurnoverCol);
-        
-        accTable.setItems(new ItemAccDAO().getList(0,0));
-
-    }
+//    void init_AccTable(){
+//        TableColumn dateCol = new TableColumn("Дата");
+//        dateCol.setCellValueFactory(new PropertyValueFactory("date"));
+//        dateCol.setCellFactory(cell -> TableCellFactory.getEpochDateCell());
+//
+//
+//        TableColumn numCol = new TableColumn(" № ");
+//        numCol.setCellValueFactory(new PropertyValueFactory("num"));
+////        numCol.setMinWidth(40);
+////        numCol.setMaxWidth(40);
+//
+//        //client
+//        TableColumn ClientCol = new TableColumn("Клиент");
+//
+//        TableColumn ITNCol = new TableColumn("ИНН");
+//        ITNCol.setCellValueFactory(new PropertyValueFactory("ITN_Client"));
+//
+//        TableColumn nameClientCol = new TableColumn("Наименование");
+//        nameClientCol.setCellValueFactory(new PropertyValueFactory("name_Client"));
+//
+//        TableColumn accClientCol = new TableColumn("Счет");
+//        accClientCol.setCellValueFactory(new PropertyValueFactory("accNum_Client"));
+//
+//        ClientCol.getColumns().addAll(ITNCol, nameClientCol, accClientCol);
+//
+//        //correspondent
+//        TableColumn CorCol = new TableColumn("Корреспондент");
+//
+//        TableColumn BICCOrCol = new TableColumn("BIC");
+//        BICCOrCol.setCellValueFactory(new PropertyValueFactory("BIC_Cor"));
+//
+//        TableColumn accCorCol = new TableColumn("Счет");
+//        accCorCol.setCellValueFactory(new PropertyValueFactory("accNum_Cor"));
+//
+//        TableColumn nameCorCol = new TableColumn("Наименование");
+//        nameCorCol.setCellValueFactory(new PropertyValueFactory("name_Cor"));
+//
+//        CorCol.getColumns().addAll(BICCOrCol, accCorCol, nameCorCol);
+//
+//        TableColumn VOCol = new TableColumn("ВО");
+//        VOCol.setCellValueFactory(new PropertyValueFactory("VO"));
+////        VOCol.setMinWidth(40);
+////        VOCol.setMaxWidth(40);
+//
+//
+//        TableColumn dascCol = new TableColumn("Содержание");
+//        dascCol.setCellValueFactory(new PropertyValueFactory("description"));
+//
+//        //turnover
+//        TableColumn TurnoverCol = new TableColumn("Обороты");
+//
+//        TableColumn debCol = new TableColumn("Дебет");
+//        debCol.setCellValueFactory(new PropertyValueFactory("deb"));
+//        debCol.setCellFactory(cell -> TableCellFactory.getDecimalCell());
+//
+//        TableColumn<TableItemAcc,Double> credCol = new TableColumn<>("Кредит");
+//        credCol.setCellValueFactory(new PropertyValueFactory<>("cred"));
+//        credCol.setCellFactory(cell -> TableCellFactory.getDecimalCell());
+//
+//        TableColumn<TableItemAcc,Double> outgoingRestCol = new TableColumn<>("Остаток");
+//        outgoingRestCol.setCellValueFactory(new PropertyValueFactory<>("outgoingRest"));
+//        outgoingRestCol.setCellFactory(cell -> TableCellFactory.getDecimalCell());
+//
+//        TurnoverCol.getColumns().addAll(debCol,credCol,outgoingRestCol);
+//
+//
+//        accTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+//        accTable.getColumns().setAll(dateCol, numCol,ClientCol,CorCol, VOCol,dascCol,TurnoverCol);
+//
+//        accTable.setItems(new ItemAccDAO().getList(0,0));
+//
+//    }
 
     
 // HANDLERT=========================================================================================================== 
@@ -134,8 +139,8 @@ public class showAccLayoutController implements Initializable {
     private void handle_OKButton(ActionEvent event) {  
         if (isInputValid()){
             accTable.setItems(new ItemAccDAO().getList(
-                                    (int) dateAccfrom.getValue().toEpochDay(),
-                                    (int) dateAccto.getValue().toEpochDay())
+                                    (int) dateAccFrom.getValue().toEpochDay(),
+                                    (int) dateAccTo.getValue().toEpochDay())
                                                         );
         }
     }
@@ -146,21 +151,21 @@ public class showAccLayoutController implements Initializable {
     private boolean isInputValid() {
         String errorMessage = "";
 
-            if (dateAccfrom.getValue() == null ){
+            if (dateAccFrom.getValue() == null ){
                 errorMessage += "'Дата поиска: с' ";
-                dateAccfrom.setEditable(true);
-                dateAccfrom.setStyle("-fx-border-color: red;");
+                dateAccFrom.setEditable(true);
+                dateAccFrom.setStyle("-fx-border-color: red;");
                 
             } 
-            if (dateAccto.getValue() == null){
+            if (dateAccTo.getValue() == null){
                 errorMessage += "'Дата поиска: по' ";
                 
-                dateAccto.setStyle("-fx-border-color: red;");
+                dateAccTo.setStyle("-fx-border-color: red;");
             }
-            if(dateAccfrom.getValue() != null && dateAccto.getValue() != null 
-                    && dateAccfrom.getValue().toEpochDay() > dateAccto.getValue().toEpochDay()){
+            if(dateAccFrom.getValue() != null && dateAccTo.getValue() != null
+                    && dateAccFrom.getValue().toEpochDay() > dateAccTo.getValue().toEpochDay()){
                 errorMessage += "'Неверный период' ";
-                dateAccfrom.setStyle("-fx-border-color: red;");
+                dateAccFrom.setStyle("-fx-border-color: red;");
                 
             }
             
@@ -175,8 +180,8 @@ public class showAccLayoutController implements Initializable {
 
                         @Override
                         public void handle(ActionEvent event) {
-                            dateAccfrom.setStyle(null);
-                            dateAccto.setStyle(null);
+                            dateAccFrom.setStyle(null);
+                            dateAccTo.setStyle(null);
                         }
                     });
              visiblePause.play();

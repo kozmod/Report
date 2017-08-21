@@ -14,36 +14,48 @@ import report.Report;
 
 
 public class StageCreator extends FXMLLoader{
-    private Report reportApp;
+
     private Parent root;
     private String fxmlPath;
     private Stage  stage;
     private String stageName;
-   
-    
+
+    private static Report reportMain;
+
+/*!******************************************************************************************************************
+*                                                                                                       CONSTRUCTORS
+********************************************************************************************************************/
+
     public StageCreator(String fxmlPath, String stageName ){
-        this.fxmlPath = fxmlPath;
+        this.fxmlPath  = fxmlPath;
         this.stageName = stageName;
-        loadNew();
     }
-    
-    public StageCreator(Report reportApp, String fxmlPath){
-        this.fxmlPath = fxmlPath;
-        this.reportApp = reportApp;
-        loadIntoRootCenter();
+
+    public StageCreator(String fxmlPath){
+        this.fxmlPath  = fxmlPath;
+        this.stageName = "";
     }
-   
-//Getter/Setter====================================================================
+
+
+/*!******************************************************************************************************************
+*                                                                                                      Getter/Setter
+********************************************************************************************************************/
     public Stage getStage() {
         return stage;
     }
-    
-    public void setReportApp(Report reportApp) {                                
-        this.reportApp = reportApp;
+
+    public static Report getReportMain() {
+        return reportMain;
     }
-    
-//Met===============================================================================
-    private void loadNew(){
+
+    public static void setReportMain(Report reportMain) {
+        StageCreator.reportMain = reportMain;
+    }
+
+/*!******************************************************************************************************************
+*                                                                                                             METHODS
+********************************************************************************************************************/
+    public StageCreator loadNewWindow(){
         try {
             setLocation(Report.class.getResource(fxmlPath));
             root = load();
@@ -55,12 +67,14 @@ public class StageCreator extends FXMLLoader{
         } catch (IOException ex) {
             Logger.getLogger(StageCreator.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return this;
     }
 
     
-    public void loadIntoRootCenter(){
+    public StageCreator loadIntoRootCenter(){
+
        try {
-           BorderPane rootLayout = reportApp.getRootlayout();
+           BorderPane rootLayout = reportMain.getRootLayout();
            setLocation(Report.class.getResource(fxmlPath));
            
            Node nodeContainer = load();
@@ -69,7 +83,7 @@ public class StageCreator extends FXMLLoader{
        } catch (IOException ex) {
            Logger.getLogger(StageCreator.class.getName()).log(Level.SEVERE, null, ex);
        }
-       
+        return this;
    }
   
     

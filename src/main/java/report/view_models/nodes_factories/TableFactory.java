@@ -99,7 +99,7 @@ public class TableFactory {
         JM_nameColumn.setMinWidth(300);
         BJobColumnn.setMinWidth(160);
 
-//        BJobColumnn.setCellFactory(param ->  new TableCellFactory.OnMouseClickTableCell());
+        BJobColumnn.setCellFactory(param ->   TableCellFactory.getOnDoubleMouseClickMoveToTextCell());
 
 
 

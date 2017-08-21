@@ -6,6 +6,8 @@ import report.entities.items.site.TableItemPreview;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
+
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
@@ -96,6 +98,16 @@ public class TableCellFactory{
      */
     public static TableCell getOnMouseEnteredTableCell(Est enumEst){
         return new TableCellFactory().new OnMouseEnteredTableCell(enumEst);
+    }
+
+    /**
+     * This Cell Listen Double Mouse click.
+     * Get text of this cell and find same in JM_Mane(Est), then
+     * <br>
+     * @return OnMouseEnteredTableCell
+     */
+    public static TableCell getOnDoubleMouseClickMoveToTextCell(){
+        return new TableCellFactory().new OnDoubleMouseClickMoveToCell();
     }
     
       /**
@@ -456,9 +468,7 @@ public class TableCellFactory{
         } 
     }
 
-    public static class OnMouseClickTableCell extends TableCell<TableItem, Object> {
-        private Est enumEst;
-
+    private  class OnDoubleMouseClickMoveToCell extends TableCell<TableItem, Object> {
 
         @Override
         public void updateItem(Object item, boolean empty) {
@@ -471,22 +481,20 @@ public class TableCellFactory{
                 setText(item.toString());
 
                 setOnMouseClicked(mouseEvent ->{
-                    if(mouseEvent.getButton().equals(MouseButton.PRIMARY)){
-                        if(mouseEvent.getClickCount() == 2){
-                            System.out.println("Double clicked");
+                    if(mouseEvent.getButton().equals(MouseButton.PRIMARY) & mouseEvent.getClickCount() == 2){
                             String text = this.getText();
-
-                            TableItem itemm = this.getTableView().getItems().filtered(i -> i.getJM_name().equals(text)).get(0);
-                            System.out.println(this.getTableView().getItems().indexOf(itemm));
-//                            System.out.println(this.getTableView().ge;
-                            this.getTableView().getSelectionModel().selectLast();
-                        }
+//                            TableItem itemW = this.getTableView().getItems()
+//                                    .stream()
+//                                    .filter(i -> i.getJM_name().equals(text))
+//                                    .findFirst()
+//                                    .get();
+                            List items = this.getTableView().getItems().filtered(i -> i.getJM_name().equals(text));
+                            if(!items.isEmpty()) {
+                                int index = this.getTableView().getItems().indexOf(items.get(0));
+                                this.getTableView().getSelectionModel().select(index);
+                                this.getTableView().scrollTo(index);
+                            }
                     }
-
-
-
-
-
                 });
             }
         }

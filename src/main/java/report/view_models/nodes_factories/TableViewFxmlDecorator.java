@@ -4,7 +4,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
+import report.entities.items.account.TableItemAcc;
 import report.entities.items.fin_res.TableItemFinRes;
+import report.entities.items.site.TableItemPreview;
+
+import java.util.Objects;
 
 /**
  * Class contain PUBLIC STATIC VOID Methods which decorate FXML-TableView.
@@ -76,6 +81,49 @@ public class TableViewFxmlDecorator {
 
     }
 
+    /**
+     * Decorate KS_add TableView (ksAddLayoutController)
+     */
+    public static void decorAcc(TableView<TableItemAcc> table){
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        ColumnCreator<TableItemAcc> creator  = new ColumnCreator<>(table);
+        TableColumn dateCol = creator.createColumn("Дата","date");
+        TableColumn numCol  = creator.createColumn(" № ","num");
+
+        //***************************  Client Column  ********************************
+        TableColumn<TableItemAcc,Objects> ClientCol = new TableColumn<>("Клиент");
+        TableColumn ITNCol        = creator.createColumnIntoColumn(ClientCol, "ИНН",         "ITN_Client");
+        TableColumn nameClientCol = creator.createColumnIntoColumn(ClientCol, "Наименование","name_Client");
+        TableColumn accClientCol  = creator.createColumnIntoColumn(ClientCol, "Счет",        "accNum_Client");
+        table.getColumns().add(ClientCol);
+
+        //***************************  Correspondent Column  ***************************
+        TableColumn<TableItemAcc,Objects> CorCol = new TableColumn<>("Корреспондент");
+        TableColumn BICCOrCol   = creator.createColumnIntoColumn(CorCol,"BIC",         "BIC_Cor");
+        TableColumn accCorCol   = creator.createColumnIntoColumn(CorCol,"Счет",        "accNum_Cor");
+        TableColumn nameCorCol  = creator.createColumnIntoColumn(CorCol,"Наименование","name_Cor");
+        table.getColumns().add(CorCol);
+
+        TableColumn VOCol   = creator.createColumn("ВО",        "VO");
+        TableColumn dascCol = creator.createColumn("Содержание","description");
+
+        //***************************  Turnover Column  ********************************
+        TableColumn<TableItemAcc,Objects> TurnoverCol = new TableColumn<>("Обороты");
+        TableColumn debCol          = creator.createColumnIntoColumn(TurnoverCol,"Дебет",  "deb");
+        TableColumn credCol         = creator.createColumnIntoColumn(TurnoverCol,"Кредит", "cred");
+        TableColumn outgoingRestCol = creator.createColumnIntoColumn(TurnoverCol,"Остаток","outgoingRest");
+        table.getColumns().add(TurnoverCol);
+
+
+        dateCol.setCellFactory(cell -> TableCellFactory.getEpochDateCell());
+        debCol.setCellFactory(cell -> TableCellFactory.getDecimalCell());
+        credCol.setCellFactory(cell -> TableCellFactory.getDecimalCell());
+        outgoingRestCol.setCellFactory(cell -> TableCellFactory.getDecimalCell());
+
+
+    }
+
 
 
 /*!******************************************************************************************************************
@@ -89,16 +137,26 @@ public class TableViewFxmlDecorator {
      * @param <S>
      */
     private static class ColumnCreator<S>{
-        private TableView table;
+        private TableView<S> table;
 
         private ColumnCreator() {}
-        public  ColumnCreator(TableView table) {this.table = table;}
+        private  ColumnCreator(TableView table)    {this.table = table;}
 
-        public  <K> TableColumn<S,K> createColumn(String name, String fieldName){
-            TableColumn<S,K> column = new TableColumn(name);
-            column.setCellValueFactory(new PropertyValueFactory(fieldName));
+
+
+        private  <K> TableColumn<S,K> createColumn(String name, String fieldName){
+            TableColumn<S,K> column = new TableColumn<>(name);
+            column.setCellValueFactory(new PropertyValueFactory<>(fieldName));
 
             table.getColumns().add(column);
+            return column;
+        }
+
+        private  <K> TableColumn<S,K> createColumnIntoColumn (TableColumn<S,Objects> parentCol, String name, String fieldName){
+            TableColumn<S,K> column = new TableColumn<>(name);
+            column.setCellValueFactory(new PropertyValueFactory<>(fieldName));
+
+            parentCol.getColumns().add(column);
             return column;
         }
     }

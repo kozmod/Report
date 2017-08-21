@@ -1,4 +1,4 @@
-package report.models.VFS;
+package report.view_models.nodes_factories;
 
 import javafx.stage.FileChooser;
 

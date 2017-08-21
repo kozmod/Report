@@ -171,6 +171,7 @@ public class InsertFileXLSQuery {
                                             +")"
                                + "values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)");
                         ExcelFile = new FileInputStream(new File(FilePath));
+                        System.out.println(ExcelFile.toString());
                         XSSFWorkbook  wbXlsX = new XSSFWorkbook(ExcelFile);
                         sheet = wbXlsX.getSheetAt(0);
                   
@@ -323,7 +324,7 @@ public class InsertFileXLSQuery {
     
     public  void insertRowsFromXls_Account(String FilePath) {
         
-        ObservableList<TableItemAcc> AccObs = compareAccount(FilePath);
+        ObservableList<TableItemAcc> AccObs = this.compareAccount(FilePath);
         
         String psmtmtString = "INSERT into dbo.[Account] ("
                             + "[Date]"
@@ -338,8 +339,9 @@ public class InsertFileXLSQuery {
                             + ",[Description]"
                             + ",[Deb]"
                             + ",[Cred]"
+                            + ",[OutgoingRest]"
                             + ")"
-                            + "values (?,?,?,?,?,?,?,?,?,?,?,?)";
+                            + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try(Connection connection = SQLconnector.getInstance();
             PreparedStatement  pstmt_acc = connection.prepareStatement(psmtmtString);){  
                 for(TableItemAcc row : AccObs){
@@ -355,7 +357,8 @@ public class InsertFileXLSQuery {
                     pstmt_acc.setString (10, row.getDescription());
                     pstmt_acc.setDouble (11, row.getDeb());
                     pstmt_acc.setDouble (12,row.getCred() );
-                 
+                    pstmt_acc.setDouble (13,row.getOutgoingRest());
+
                     pstmt_acc.addBatch();
                 }
             pstmt_acc.executeBatch();
@@ -369,24 +372,41 @@ public class InsertFileXLSQuery {
     
 
     //DO NOT Insert - only compare Accounts 
-    public  ObservableList<TableItemAcc> compareAccount(String FilePath) {
+    private ObservableList<TableItemAcc> compareAccount(String FilePath) {
         Sheet sheet = null;                                              
         Row row = null;
+        double incomingRest;
+
         
         ObservableList<TableItemAcc> existAccObs = new ItemAccDAO().getList(0,0);
         ObservableList<TableItemAcc> xlsAccObs = FXCollections.observableArrayList();
 
-        try { 
-            Workbook workbook = WorkbookFactory.create(new File(FilePath));
+
+        try {
+            File file = new File(FilePath);
+
+            Workbook workbook = WorkbookFactory.create(file);
             sheet = workbook.getSheetAt(0);
+
+            //grt Incoming Rest
+            Cell cell = sheet.getRow(2).getCell(10);
+            incomingRest = Double.parseDouble(cell
+                    .getStringCellValue()
+                    .replaceAll("RUR","")
+                    .replaceAll(String.valueOf((char) 160),"")
+            );
+
+
             Iterator rows = sheet.rowIterator();
             while(rows.hasNext()){
                 row =  (Row) rows.next();
                 if(row.getCell(0).toString().length() == 10){
                     String debString = row.getCell(10).toString();
                         debString = debString.replace(String.valueOf((char) 160),"");
+                        double d = Double.parseDouble(row.getCell(10).toString().replace(String.valueOf((char) 160),""));
                     String credString = row.getCell(11).getStringCellValue();
                         credString = credString.replace(String.valueOf((char) 160),"");
+                    double c = Double.parseDouble(row.getCell(11).toString().replace(String.valueOf((char) 160),""));
                  
                     xlsAccObs.add(new TableItemAcc(dateParser(row.getCell(0).getStringCellValue()),
                                                               Integer.parseInt(row.getCell(1).toString()),  
@@ -398,8 +418,9 @@ public class InsertFileXLSQuery {
                                                               row.getCell(7).toString(),  
                                                               Integer.parseInt(row.getCell(8).toString()),
                                                               row.getCell(9).toString(),  
-                                                              Float.parseFloat(debString),  
-                                                              Float.parseFloat(credString)                       
+                                                              d,
+                                                              c,
+                                                              ( incomingRest = (incomingRest*100 + c*100 - d*100)/100 )
                                                     ));
 //                     System.out.println(xlsAccObs.saveEst(i).getDate());
 //                     i++;
@@ -415,7 +436,7 @@ public class InsertFileXLSQuery {
 //            result.removeAll(intersection);
 //        for (AccTableItem x  : result){
 //                 System.err.println(LocalDate.ofEpochDay( x.getDate()) + "  "+  x.getName_Client());
-//                 
+//
 //         }
         } catch (FileNotFoundException ex) {
             Logger.getLogger(InsertFileXLSQuery.class.getName()).log(Level.SEVERE, null, ex);
@@ -426,10 +447,14 @@ public class InsertFileXLSQuery {
         } catch (InvalidFormatException ex) {
             Logger.getLogger(InsertFileXLSQuery.class.getName()).log(Level.SEVERE, null, ex);
         }
-  
-        return (ObservableList<TableItemAcc>) new DiffList(existAccObs, xlsAccObs).exElements();
+
+//        System.out.println("dif " + new DiffList(existAccObs, xlsAccObs).newElements().size());
+//        System.out.println("existAccObs "+ existAccObs.size());
+//        System.out.println("xlsAccObs "+ xlsAccObs.size());
+
+        return FXCollections.observableArrayList(new DiffList(existAccObs, xlsAccObs).newElements());
     }
-    
+
   
 
     

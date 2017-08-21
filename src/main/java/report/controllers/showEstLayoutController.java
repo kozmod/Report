@@ -30,7 +30,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import report.controllers.root.rootLayoutController;
-import report.models.VFS.FileChooserFactory;
+import report.view_models.nodes_factories.FileChooserFactory;
 import report.usege_strings.PathStrings;
 import report.usege_strings.SQL;
 
@@ -474,7 +474,7 @@ public class showEstLayoutController implements Initializable {
     @FXML //Add new KS
     private void handle_addKS(ActionEvent event) {
         if(Est.Changed.isExist()){
-            StageCreator siteAddLayout = new StageCreator(PathStrings.Layout.ADD_KS, "Добавить KC");
+            StageCreator siteAddLayout = new StageCreator(PathStrings.Layout.ADD_KS, "Добавить KC").loadNewWindow();
             ksAddController = siteAddLayout.getController();
             ksAddController.setShowEstController(this);
             
@@ -535,16 +535,14 @@ public class showEstLayoutController implements Initializable {
     }
     
     @FXML //delete new KS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!NEED TO CHAGE
-    private void handle_deleteKS(ActionEvent event) {  
+    private void handle_deleteKS(ActionEvent event) {
+        if(!listKS.getSelectionModel().isEmpty() && listKS.getSelectionModel().getSelectedItem() != null){
             String selectedItemKS = listKS.getSelectionModel().getSelectedItem().toString();
-            new ItemKSDAO().deleteKS(
-                    selectedItemKS,
-                    Est.Changed.getSiteSecondValue(SQL.Common.SITE_NUMBER),  Est.Changed.getSiteSecondValue(SQL.Common.CONTRACTOR)
-            );
+            new ItemKSDAO().deleteKS(selectedItemKS);
             ksMap.remove(Integer.parseInt(selectedItemKS));
             listKS.getItems().clear();
             listKS.getItems().addAll(ksMap.keySet());
-            
+        }
     }
 
     

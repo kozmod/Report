@@ -25,6 +25,10 @@ import javafx.beans.property.StringProperty;
         private final StringProperty  description;
         private final DoubleProperty   deb;
         private final DoubleProperty   cred;
+
+        private final DoubleProperty   outgoingRest;
+
+
         
         public TableItemAcc(int    date,
                             int    num, 
@@ -36,8 +40,10 @@ import javafx.beans.property.StringProperty;
                             String name_Cor, 
                             int    VO,
                             String description,
-                            float  deb,
-                            float  cred) {
+                            double  deb,
+                            double  cred,
+                            double outgoingRest
+        ) {
             this.date          = new SimpleIntegerProperty(date);
             this.num           = new SimpleIntegerProperty(num);
             this.ITN_Client    = new SimpleStringProperty(ITN_Client);
@@ -50,6 +56,8 @@ import javafx.beans.property.StringProperty;
             this.description   = new SimpleStringProperty(description);
             this.deb           = new SimpleDoubleProperty(deb);
             this.cred          = new SimpleDoubleProperty(cred);
+
+            this.outgoingRest  = new SimpleDoubleProperty(outgoingRest);
         }
 
         public int  getDate() {return date.get();}
@@ -87,16 +95,21 @@ import javafx.beans.property.StringProperty;
         
         public Double getCred() {return cred.get();} 
         public void  setCred(float value_inp) {cred.set(value_inp);}
-        
-        @Override
+
+        public Double         getOutgoingRest() {return outgoingRest.get();}
+//        public DoubleProperty outgoingRestProperty() {return outgoingRest;}
+        public void           setOutgoingRest(double outgoingRest) {this.outgoingRest.set(outgoingRest);}
+
+    @Override
         public int hashCode() {
             int hash = 7;
-            hash = 77 * hash + (this.date          != null ? this.date.hashCode() : 0);
-            hash = 77 * hash + (this.num           != null ? this.num.hashCode() : 0);
-            hash = 77 * hash + (this.VO            != null ? this.VO.hashCode() : 0);
-            hash = 77 * hash + (this.deb           != null ? this.deb.hashCode() : 0);
-            hash = 77 * hash + (this.cred          != null ? this.cred.hashCode() : 0);
-            
+            hash = 7 * hash + (this.date          != null ? this.date.intValue()                    : 0);
+            hash = 7 * hash + (this.num           != null ? this.num.intValue()                     : 0);
+            hash = 7 * hash + (this.VO            != null ? this.VO.intValue()                      : 0);
+            hash =     hash + (this.deb           != null ? this.deb.getValue().hashCode()          : 0);
+            hash =     hash + (this.cred          != null ? this.cred.getValue().hashCode()         : 0);
+            hash =     hash + (this.outgoingRest  != null ? this.outgoingRest.getValue().hashCode() : 0);
+
             return hash;
         }
 
@@ -144,6 +157,9 @@ import javafx.beans.property.StringProperty;
                 return false;
             }
             if (this.cred.get() != other.cred.get()) {
+                return false;
+            }
+            if (this.outgoingRest.get() != other.outgoingRest.get()) {
                 return false;
             }
             

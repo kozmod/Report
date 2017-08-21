@@ -223,18 +223,16 @@ public class ItemKSDAO implements ItemDAO<TableItemKS, TableEST> {
     /**
     * Delete All Entities in One KS from SQL
      * @param ksNumber  (String)
-     * @param siteNumb  (String)
-     * @param contName  (String)
     */
-    public static void deleteKS(String ksNumber, String siteNumb, String contName){
+    public static void deleteKS(String ksNumber){
         
         String psmtmtString ="DELETE FROM dbo.[KS]  WHERE [KS_Number]= ? and [SiteNumber] = ? and [Contractor] = ?";
        
         try(Connection connection = SQLconnector.getInstance(); 
             PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {
             pstmt.setString(1, ksNumber);
-            pstmt.setString(2, siteNumb);
-            pstmt.setString(3, contName);
+            pstmt.setString(2, Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER));
+            pstmt.setString(3, Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
             pstmt.execute();
             
         } catch (SQLException ex) {
