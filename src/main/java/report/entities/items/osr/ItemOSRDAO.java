@@ -16,10 +16,10 @@ import javafx.collections.ObservableList;
 import report.controllers.LogLayoutController;
 //import report.models.Formula_test;
 import report.models.sql.SQLconnector;
-import report.view_models.nodes.Table;
+import report.view_models.nodes.TableWrapper;
 
 
-public class ItemOSRDAO implements ItemDAO<TableItemOSR,Table> {
+public class ItemOSRDAO implements ItemDAO<TableItemOSR,TableWrapper> {
 
     /**
     * Get String of a Mirror (SQL.Tables).
@@ -168,7 +168,7 @@ public class ItemOSRDAO implements ItemDAO<TableItemOSR,Table> {
 
     
 //    @Override
-//    public void dellAndInsert(Table table) {
+//    public void dellAndInsert(TableWrapper table) {
 //        Collection memento = table.getMemento().getSavedState(),
 //                   current = table.getItems();
 //        

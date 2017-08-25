@@ -17,10 +17,10 @@ import javafx.collections.ObservableList;
 import report.controllers.LogLayoutController;
 import report.controllers.showEstLayoutController.Est;
 import report.models.sql.SQLconnector;
-import report.view_models.nodes.Table;
+import report.view_models.nodes.TableWrapper;
 
 
-public class ItemSiteDAO implements ItemDAO<TableItemPreview, Table> {
+public class ItemSiteDAO implements ItemDAO<TableItemPreview, TableWrapper> {
     
     private String siteNumber, contractor;
     
@@ -223,10 +223,10 @@ public class ItemSiteDAO implements ItemDAO<TableItemPreview, Table> {
     }
 
     @Override
-    public void dellAndInsert(Table table) {
-        if(table.getItems() != null) {
-                    delete(table.getItems());
-                    insert(table.getItems());  }
+    public void dellAndInsert(TableWrapper tableWrapper) {
+        if(tableWrapper.getItems() != null) {
+                    delete(tableWrapper.getItems());
+                    insert(tableWrapper.getItems());  }
     }
     
     public void dellAndInsert(Collection<TableItemPreview> collection) {

@@ -61,10 +61,10 @@ import report.entities.items.TableClone;
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 23 * hash + Objects.hashCode(this.id);
-        hash = 23 * hash + Objects.hashCode(this.sqlColumn);
-        hash = 23 * hash + Objects.hashCode(this.firstValue);
-        hash = 23 * hash + Objects.hashCode(this.secondValue);
+        hash = 3 * hash + Objects.hashCode(this.id)                    >>>3;
+        hash = 3 * hash + Objects.hashCode(this.sqlColumn)             >>>3;
+        hash = 3 * hash + Objects.hashCode(this.firstValue.getValue()) >>>3;
+        hash = 3 * hash + Objects.hashCode(this.secondValue.getValue())>>>3;
         return hash;
     }
 
@@ -80,9 +80,13 @@ import report.entities.items.TableClone;
             return false;
         }
         final TableItemPreview other = (TableItemPreview) obj;
+        if (!Objects.equals(this.id, other.id)) {
+            return false;
+        }
         if (!Objects.equals(this.sqlColumn, other.sqlColumn)) {
             return false;
         }
+
         if ((this.firstValue.get() == null) ? (other.firstValue.getValue() != null) : !this.firstValue.get().equals(other.firstValue.get())) {
             return false;
         }

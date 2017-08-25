@@ -34,8 +34,8 @@ import report.view_models.data_models.EpochDatePickerConverter;
 import report.entities.items.expenses.TableItemExpenses;
 import report.entities.items.period.TableItemPeriod;
 //import report.models.Formula_test;
+import report.view_models.nodes.TableWrapper;
 import report.view_models.nodes_factories.ContextMenuFactory;
-import report.view_models.nodes.Table;
 import report.view_models.nodes_factories.TableFactory;
 import report.entities.items.site.TableItemPreview;
 import report.models.coefficient.CoefficientQuery;
@@ -52,9 +52,9 @@ public class expensesLayoutController implements Initializable {
     @FXML  private TextField  textExpTF, valueTF, textPeriodTF, contract_FinishTF, coeffTF;
     @FXML  private GridPane siteTableGridPane, expensesTableGridPane, periodTableGridPane;
 
-    private final Table<TableItemPreview>   siteTV     = TableFactory.getProperty_Site();
-    private final Table<TableItemExpenses>  expensesTV = TableFactory.getProperty_Expenses();
-    private final Table<TableItemPeriod>    periodTV   = TableFactory.getProperty_JobPeriod();
+    private final TableWrapper<TableItemPreview> siteTV     = TableFactory.getProperty_Site();
+    private final TableWrapper<TableItemExpenses> expensesTV = TableFactory.getProperty_Expenses();
+    private final TableWrapper<TableItemPeriod> periodTV   = TableFactory.getProperty_JobPeriod();
     
     @FXML  private ComboBox typeCB;
     @FXML  private DatePicker dateFromDP, dateToDP;

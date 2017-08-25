@@ -17,10 +17,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.controllers.LogLayoutController;
 import report.models.sql.SQLconnector;
-import report.view_models.nodes.Table;
+import report.view_models.nodes.TableWrapper;
 
 
-public class ItemContractorDAO implements ItemDAO<TableItemContractor,  Table<TableItemContractor>> {
+public class ItemContractorDAO implements ItemDAO<TableItemContractor, TableWrapper<TableItemContractor>> {
 
     @Override
     public String getTableString() {
@@ -148,7 +148,7 @@ public class ItemContractorDAO implements ItemDAO<TableItemContractor,  Table<Ta
     }
 
 //    @Override
-//    public void dellAndInsert(Table table) {
+//    public void dellAndInsert(TableWrapper table) {
 //        Collection memento = table.getMemento().getSavedState(),
 //                   current = table.getItems();
 //        

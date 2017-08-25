@@ -71,7 +71,7 @@ public class StageCreator extends FXMLLoader{
     }
 
     
-    public StageCreator loadIntoRootCenter(){
+    public StageCreator loadIntoRootBorderPaneCenter(){
 
        try {
            BorderPane rootLayout = reportMain.getRootLayout();
@@ -79,14 +79,17 @@ public class StageCreator extends FXMLLoader{
            
            Node nodeContainer = load();
            rootLayout.setCenter(nodeContainer);
+
+           reportMain.setCenterController(this.getController());
            
        } catch (IOException ex) {
            Logger.getLogger(StageCreator.class.getName()).log(Level.SEVERE, null, ex);
        }
         return this;
    }
-  
-    
-   
-    
+
+
+
+
+
 }

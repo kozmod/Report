@@ -22,10 +22,10 @@ import report.controllers.showEstLayoutController.Est;
 import report.models.sql.SQLconnector;
 import report.entities.items.TableItem;
 import report.entities.items.cb.TableItemCB;
-import report.view_models.nodes.TableEST;
+import report.view_models.nodes.TableWrapperEST;
 
 
-public class ItemEstDAO implements ItemDAO<TableItemEst, TableEST> {
+public class ItemEstDAO implements ItemDAO<TableItemEst, TableWrapperEST> {
 
     private Est enumEst;
     
@@ -42,7 +42,7 @@ public class ItemEstDAO implements ItemDAO<TableItemEst, TableEST> {
     public String getTableString() {return SQL.Tables.ESTIMATE;}
     
     /**
-    * Get List of Table Items (TableItemEst) from SQL
+    * Get List of TableWrapper Items (TableItemEst) from SQL
     * @return  List of TableItem
     */
     @Override
@@ -139,7 +139,7 @@ public class ItemEstDAO implements ItemDAO<TableItemEst, TableEST> {
     }
      
     /**
-    * Get <b>BASE</b>List of Table Items (TableItemEst) from SQL
+    * Get <b>BASE</b>List of TableWrapper Items (TableItemEst) from SQL
     * @return  List of TableItem
     */
     public ObservableList<TableItemCB> getBaseList(String BildingPart) {
@@ -187,7 +187,7 @@ public class ItemEstDAO implements ItemDAO<TableItemEst, TableEST> {
     }
     
     /**
-    * Get List of Table Items (TableItemEst) from SQL
+    * Get List of TableWrapper Items (TableItemEst) from SQL
     * <b>(only ONE List use table title)</b>
      * 
      * @param enumEst (enumeration)
@@ -553,13 +553,13 @@ public class ItemEstDAO implements ItemDAO<TableItemEst, TableEST> {
 
     /**
      * Delete TableItemEst  Entities from SQL and then insert new Entities.
-     * Use Table to saveEst  <b>memento</b> and <b>current</b> (Current List of elements).
-     * <br>Then update Table Items ( to saveEst new Element's ID of SQL)
+     * Use TableWrapper to saveEst  <b>memento</b> and <b>current</b> (Current List of elements).
+     * <br>Then update TableWrapper Items ( to saveEst new Element's ID of SQL)
      * <br>Then update "ALL elements List"
-    * @param table (Table) 
+    * @param table (TableWrapper)
     */
     @Override
-    public void dellAndInsert(TableEST table){
+    public void dellAndInsert(TableWrapperEST table){
 //        Collection memento = table.getMemento().getSavedState(),
 //                   current = table.getItems();     
 //        

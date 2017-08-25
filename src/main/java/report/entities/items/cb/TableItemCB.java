@@ -10,7 +10,7 @@ import report.entities.items.TableItem;
 
 /**
 * 
-* TableItem to CheckBox Table.
+* TableItem to CheckBox TableWrapper.
 *Use into AddRowLayout (addSiteRowController)
 * 
 */

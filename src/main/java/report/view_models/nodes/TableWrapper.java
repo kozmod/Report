@@ -11,7 +11,7 @@ import report.entities.items.TableClone;
 import report.view_models.data_models.Memento;
 import report.entities.ItemDAO;
 
-public class Table<S> extends TableView<S>{
+public class TableWrapper<S> extends TableView<S>{
     
    private String title;
    private Memento<S > memento;
@@ -20,8 +20,10 @@ public class Table<S> extends TableView<S>{
  
 //   private CeartakerUID<TableClone> ceartaker = new CeartakerUID<TableClone>();
 
-//MEMENTO ---------------------------------------------------------------------------------------
-        //Memento - create
+/*!******************************************************************************************************************
+*                                                                                                       MEMENTO
+********************************************************************************************************************/
+    //Memento - create
             /**
             * Save Items of TableView.
             */
@@ -42,32 +44,34 @@ public class Table<S> extends TableView<S>{
             return memento;
         }
         
-//------------------------------------------------------------------------------------------------ 
-       
-//Constructor ==========================================================================================
+/*!******************************************************************************************************************
+*                                                                                                       CONSTRUCTORS
+********************************************************************************************************************/
 
-   public Table()                        { super(); }     
-   public Table(String title)            { super(); this.title = title; }
-   public Table(String title, 
-                ObservableList<S> items) { super(items); this.title = title; }
-   public Table(String title,
-                ObservableList<S> items, 
-                ItemDAO dao)             { super(items); this.title = title;this.dao = dao; }
+    public TableWrapper()                        { super(); }
+   public TableWrapper(String title)            { super(); this.title = title; }
+   public TableWrapper(String title,
+                       ObservableList<S> items) { super(items); this.title = title; }
+   public TableWrapper(String title,
+                       ObservableList<S> items,
+                       ItemDAO dao)             { super(items); this.title = title;this.dao = dao; }
     
-//Getter ===============================================================================================
+/*!******************************************************************************************************************
+*                                                                                                      Getter/Setter
+********************************************************************************************************************/
         
    public String getTitle()   {return title;}
 //   public <S>CeartakerUID getCRUD(){return  ceartaker;}
 
     public ItemDAO getDAO() {return dao;}
-   
-   
-//Setter ===============================================================================================   
+
     public  void setTitle(String title) {this.title = title;}
 
     public void setDAO(ItemDAO dao) {this.dao = dao;}
     
-//Methots ==============================================================================================
+/*!******************************************************************************************************************
+*                                                                                                             METHODS
+********************************************************************************************************************/
     /**
      * Contain :
      * <br>

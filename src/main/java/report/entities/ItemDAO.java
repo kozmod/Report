@@ -14,13 +14,10 @@ import report.models.sql.SQLconnector;
 import report.usege_strings.ServiceStrings;
 import report.view_models.data_models.DiffList;
 
-import report.view_models.nodes.Table;
+import report.view_models.nodes.TableWrapper;
 
 
-
-
-
-public interface ItemDAO<E,T extends Table> extends TableDataBaseName{
+public interface ItemDAO<E,T extends TableWrapper> extends TableDataBaseName{
     ObservableList<E> getList();
     void delete(Collection<E> entry);
     void insert(Collection<E>  entry);

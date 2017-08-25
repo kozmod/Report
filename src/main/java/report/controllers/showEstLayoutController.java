@@ -30,6 +30,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import report.controllers.root.rootLayoutController;
+import report.view_models.nodes.TableWrapper;
 import report.view_models.nodes_factories.FileChooserFactory;
 import report.usege_strings.PathStrings;
 import report.usege_strings.SQL;
@@ -45,13 +46,11 @@ import report.entities.items.estimate.TableItemEst;
 import report.models.printer.PrintKS;
 import report.entities.ItemDAO;
 import report.view_models.nodes.TabModel;
-import report.view_models.nodes.TableEST;
+import report.view_models.nodes.TableWrapperEST;
 import report.entities.items.estimate.ItemEstDAO;
 import report.entities.items.KS.ItemKSDAO;
 import report.view_models.nodes.ContextMenuOptional;
 import report.entities.items.site.ItemSiteDAO;
-import report.view_models.nodes.Table;
-
 
 
 public class showEstLayoutController implements Initializable {
@@ -250,8 +249,8 @@ public class showEstLayoutController implements Initializable {
 
     
     private Label                 lableSumBase,lableSumChanged;    
-    private TableEST<TableItemKS> tableKS = TableFactory.getKS();
-    private Table   tableAdditional = TableFactory.getAdditional();
+    private TableWrapperEST<TableItemKS> tableKS = TableFactory.getKS();
+    private TableWrapper tableWrapperAdditional = TableFactory.getAdditional();
     
     
 /*!******************************************************************************************************************
@@ -285,8 +284,8 @@ public class showEstLayoutController implements Initializable {
         init_EstLayoutTabs();
         
         //add Aditional table
-        gridPaneAdditional.add(tableAdditional,0, 1, 2, 1); 
-        GridPane.setMargin(tableAdditional, new Insets(5,5,5,5));
+        gridPaneAdditional.add(tableWrapperAdditional,0, 1, 2, 1);
+        GridPane.setMargin(tableWrapperAdditional, new Insets(5,5,5,5));
         
         //add KS table
         ksSumLabel.textProperty().bind(Bindings.convert(tableKS.getSumProperty()));
@@ -308,7 +307,7 @@ public class showEstLayoutController implements Initializable {
        Est.KS       .createTabMap();
        Est.Additional       .createTabMap();
      //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  
-    tableAdditional.setItems(Est.Additional.getAllItemsList_Live());
+    tableWrapperAdditional.setItems(Est.Additional.getAllItemsList_Live());
 
        
        if(Est.Base    .isExist())init_Est(Est.Base);    
@@ -407,7 +406,7 @@ public class showEstLayoutController implements Initializable {
     }
 
     private void init_Additional(){
-//        tableAdditional.setItems((ObservableList)Est.Base.getTabMap(). saveEst("ФУНДАМЕНТ"));
+//        tableWrapperAdditional.setItems((ObservableList)Est.Base.getTabMap(). saveEst("ФУНДАМЕНТ"));
     }
     
     

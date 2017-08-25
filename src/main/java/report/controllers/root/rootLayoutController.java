@@ -25,6 +25,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 import report.controllers.*;
+import report.controllers.intro.IntroLayoutController;
 import report.view_models.nodes_factories.FileChooserFactory;
 import report.usege_strings.PathStrings;
 import report.controllers.showEstLayoutController.Est;
@@ -45,6 +46,7 @@ public class rootLayoutController implements Initializable {
     private siteAddLayoutController siteAddController;
     private showEstLayoutController showEstController;
     private expensesLayoutController expensesController;
+    private IntroLayoutController introControllre;
 
     private RootControllerService rootService = new RootControllerService(this);
 
@@ -106,6 +108,8 @@ public class rootLayoutController implements Initializable {
 /*!******************************************************************************************************************
 *                                                                                                               INIT
 ********************************************************************************************************************/
+
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -113,9 +117,10 @@ public class rootLayoutController implements Initializable {
         printEstToXmlMenuItem.setDisable(true);
 
 
+
     }
 
-    
+
     private void init_TreeComboBlock(){
        comboQueueNum.setItems(rootService.getComboQueueValues());
        comboSiteCondition.setItems(rootService.getComboSiteConditionValues());
@@ -143,6 +148,7 @@ public class rootLayoutController implements Initializable {
         init_TreeComboBlock();
         init_siteTreeView();
         init_previewTable();
+        reportApp.<IntroLayoutController>getCenterController().updateTables();
         
     }
     
@@ -279,13 +285,13 @@ public class rootLayoutController implements Initializable {
     @FXML
     private void handle_FinResButton(ActionEvent event) {
 //         StageCreator finResLayout  =
-                        new StageCreator(PathStrings.Layout.FIN_RES,"").loadIntoRootCenter();
+                        new StageCreator(PathStrings.Layout.FIN_RES,"").loadIntoRootBorderPaneCenter();
     }
     
     @FXML
     private void handle_accountButton(ActionEvent event) {  
 //        StageCreator accLayout  =
-                        new StageCreator(PathStrings.Layout.ACC,"").loadIntoRootCenter();
+                        new StageCreator(PathStrings.Layout.ACC,"").loadIntoRootBorderPaneCenter();
                      
         
     }
@@ -349,8 +355,12 @@ public class rootLayoutController implements Initializable {
 //                    previewTable.setEditable(true);
 //                    previewTable.setEditColor();
                     StageCreator expensesLayout
-                        = new StageCreator(PathStrings.Layout.EXPENSES,
-                                "Свойства Участка № " + selectedTreeElemParent +" / "+ selectedTreeElem).loadNewWindow();
+                            = new StageCreator(PathStrings.Layout.EXPENSES,
+                            "Свойства Участка № "
+                                    + selectedTreeElemParent
+                                    +" / "
+                                    + selectedTreeElem)
+                            .loadNewWindow();
                     
                     expensesController = expensesLayout.getController();
                     expensesController.setRootController(getRootController());
@@ -365,9 +375,10 @@ public class rootLayoutController implements Initializable {
             });
             contAddItem.setOnAction(new EventHandler<ActionEvent>() {  
                 @Override  
-                public void handle(ActionEvent event) {  
+                public void handle(ActionEvent event) {
                     StageCreator contAddLayout
-                        = new StageCreator(PathStrings.Layout.CONT_ADD, "Добавить Субподрядчика").loadNewWindow();
+                            = new StageCreator(PathStrings.Layout.CONT_ADD, "Добавить Субподрядчика")
+                            .loadNewWindow();
                     contAddController = contAddLayout.getController();
                     contAddController.setRootController(getRootController());
                     contAddController.init_InfLabels(selectedTreeElemParent);
@@ -379,7 +390,8 @@ public class rootLayoutController implements Initializable {
                 @Override  
                 public void handle(ActionEvent event) {  
                     StageCreator delLayout
-                        = new StageCreator(PathStrings.Layout.DEL_SITE, "Удалить").loadNewWindow();
+                            = new StageCreator(PathStrings.Layout.DEL_SITE, "Удалить")
+                            .loadNewWindow();
                     delController = delLayout.getController();
                     delController.setRootController(getRootController());
                     delController.init_delLabels(selectedTreeElem, selectedTreeElemParent);
@@ -412,13 +424,13 @@ public class rootLayoutController implements Initializable {
                     contDelItem  .setDisable(false);
                     printEstToXmlMenuItem.setDisable(false);
                     
-                    //Update Preview Table OBS-LIST
+                    //Update Preview TableWrapper OBS-LIST
                     Est.Common.setPreviewObs(new ItemSiteDAO(selectedTreeElemParent,selectedTreeElem).getList());
 //                    update_previewTable(Est.Common.getPreviewObservableList());
                     previewTable.setItems(Est.Common.getPreviewObservableList());
                     
                     showEstController = new StageCreator(PathStrings.Layout.SITE_EST,"")
-                            .loadIntoRootCenter()
+                            .loadIntoRootBorderPaneCenter()
                             .getController();
                     showEstController.setRootController(getRootController());
 

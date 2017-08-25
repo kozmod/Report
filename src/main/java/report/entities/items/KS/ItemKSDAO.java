@@ -18,10 +18,10 @@ import report.controllers.LogLayoutController;
 import report.controllers.showEstLayoutController.Est;
 import report.models.sql.SQLconnector;
 import report.entities.items.TableItem;
-import report.view_models.nodes.TableEST;
+import report.view_models.nodes.TableWrapperEST;
 
 
-public class ItemKSDAO implements ItemDAO<TableItemKS, TableEST> {
+public class ItemKSDAO implements ItemDAO<TableItemKS, TableWrapperEST> {
     
     private Est enumEst;
     
@@ -40,7 +40,7 @@ public class ItemKSDAO implements ItemDAO<TableItemKS, TableEST> {
     
     
     /**
-    * Get List of Table Items (TableItemKS) from SQL
+    * Get List of TableWrapper Items (TableItemKS) from SQL
     * @return  List of TableItemKS
     */
     @Override
@@ -109,7 +109,7 @@ public class ItemKSDAO implements ItemDAO<TableItemKS, TableEST> {
     }
     
     /**
-    * Get List of Table Items (TableItemKS) from SQL
+    * Get List of TableWrapper Items (TableItemKS) from SQL
     * <b>(only ONE List use KS number)</b>
      * 
      * @param enumEst  (enumeration)
@@ -392,7 +392,7 @@ public class ItemKSDAO implements ItemDAO<TableItemKS, TableEST> {
     
 //    public void dellAndInsert(Collection<TableItemKS> dellItem, Collection<TableItemKS> newItem){
     @Override
-    public void dellAndInsert(TableEST table){
+    public void dellAndInsert(TableWrapperEST table){
         ItemDAO.super.dellAndInsert(table);
         //??????????
 //        table.updateTableFromSQL(this.getOneKSList(Est.KS, ksNumber ));

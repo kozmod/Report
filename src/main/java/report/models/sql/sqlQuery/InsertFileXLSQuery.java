@@ -136,7 +136,7 @@ public class InsertFileXLSQuery {
                                            
                                     
                                             pstmt_xls.setString(10,bildingPart );
-                                            pstmt_xls.setInt(11, 0);                                //Table Type 0-Madel
+                                            pstmt_xls.setInt(11, 0);                                //TableWrapper Type 0-Madel
                                             pstmt_xls.execute();
                                             
                                             

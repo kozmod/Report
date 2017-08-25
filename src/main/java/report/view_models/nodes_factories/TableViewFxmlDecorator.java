@@ -25,7 +25,7 @@ public class TableViewFxmlDecorator {
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        table.setPlaceholder(new Label("необходимо выбрать участок и подрядчика"));
+//        table.setPlaceholder(new Label("необходимо выбрать участок и подрядчика"));
         table.setPrefHeight(450);
 
         ColumnCreator creator  = new ColumnCreator(table);
@@ -33,6 +33,29 @@ public class TableViewFxmlDecorator {
         TableColumn valueCol = creator.createColumn ("Значение", "secondValue");
 
         valueCol.setCellFactory(param -> TableCellFactory.getPreviewCell());
+
+    }
+
+    /**
+     * Decorate Intro TableView (IntroLayoutController)
+     * @param table
+     */
+    public static void decorIntroFinishedSite(TableView table){
+
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+//        table.setPlaceholder(new Label("необходимо выбрать участок и подрядчика"));
+
+
+        ColumnCreator creator  = new ColumnCreator(table);
+        TableColumn siteNumberCol = creator.createColumn ("Участок", "siteNumber");
+        TableColumn typeHomeCol   = creator.createColumn ("ТипДома", "typeHome");
+        TableColumn smetCostCol   = creator.createColumn ("Стоимоть", "smetCost");
+        TableColumn saleCostCol   = creator.createColumn ("Цена", "saleCost");
+
+        smetCostCol.setCellFactory(param -> TableCellFactory.getDecimalCell());
+        saleCostCol.setCellFactory(param -> TableCellFactory.getDecimalCell());
+
 
     }
 

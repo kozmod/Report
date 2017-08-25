@@ -140,10 +140,10 @@ public class TableItemEst extends TableItem {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 23 * hash + (super.value     != null ? super.value.hashCode()     : 0);
-        hash = 23 * hash + (super.price_one != null ? super.price_one.hashCode() : 0);
-        hash = 23 * hash + (super.price_sum != null ? super.price_sum.hashCode() : 0);
-        hash = 23 * hash + (this.tableType  != null ? this.tableType.hashCode()  : 0);
+        hash = 2 * hash + (super.value     != null ? super.value.hashCode()     >>>3  : 0);
+        hash = 2 * hash + (super.price_one != null ? super.price_one.hashCode() >>>3  : 0);
+        hash = 2 * hash + (super.price_sum != null ? super.price_sum.hashCode() >>>3  : 0);
+        hash = 2 * hash + (this.tableType  != null ? this.tableType.hashCode()  >>>3  : 0);
             
         return hash;
     }

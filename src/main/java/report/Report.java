@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+
 import report.controllers.root.rootLayoutController;
 import report.servises.StageCreator;
 import report.usege_strings.PathStrings;
@@ -48,6 +49,7 @@ public class Report extends Application {
     private BorderPane rootLayout;
     private Scene scene;
     private rootLayoutController rootController;
+    private Object centerController;
     private StageCreator stageCreator;
 
 /*!******************************************************************************************************************
@@ -64,7 +66,16 @@ public class Report extends Application {
     public rootLayoutController getRLController() {
         return rootController;
     }
-    
+
+    public <T> T getCenterController() {
+        return (T)centerController;
+    }
+
+    public <T> void  setCenterController(T controller) {
+        centerController = controller;
+    }
+
+
 /*!******************************************************************************************************************
 *                                                                                                               INIT
 ********************************************************************************************************************/
@@ -93,7 +104,8 @@ public class Report extends Application {
     //init Intro Layout
     private void initIntroLayout(){
         StageCreator.setReportMain(this);
-        new StageCreator(PathStrings.Layout.INTRO,"").loadIntoRootCenter();
+        StageCreator center = new StageCreator(PathStrings.Layout.INTRO,"").loadIntoRootBorderPaneCenter();
+        Object centerController = center.getController();
     }
 
 

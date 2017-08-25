@@ -4,7 +4,7 @@ package report.entities.items.fin_res;
 
 import javafx.beans.property.*;
 
-//Fin Result Table Item to ObsList
+//Fin Result TableWrapper Item to ObsList
     public  class TableItemFinRes {                                             
  
         private final StringProperty  siteNumber;                          

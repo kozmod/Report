@@ -1,7 +1,6 @@
 
 package report.view_models.nodes_factories;
 
-import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Stream;
 import javafx.beans.value.ChangeListener;
@@ -38,8 +37,8 @@ import report.entities.items.plan.ItemPlanDAO;
 import report.entities.items.variable.ItemPropertiesFAO;
 
 import report.view_models.data_models.DecimalFormatter;
-import report.view_models.nodes.Table;
-import report.view_models.nodes.TableEST;
+import report.view_models.nodes.TableWrapper;
+import report.view_models.nodes.TableWrapperEST;
 
 @SuppressWarnings("unchecked")
 public class TableFactory {
@@ -48,10 +47,10 @@ public class TableFactory {
 
     
     /**
-     * Create Table(Preview Table) with 2 columns /Object/.
+     * Create TableWrapper(Preview TableWrapper) with 2 columns /Object/.
      * 
      * 
-     * @return Table(Preview Table)
+     * @return TableWrapper(Preview TableWrapper)
      */
     public static TableView getSite(){
         TableView table = new TableView();
@@ -74,13 +73,13 @@ public class TableFactory {
     }
     
     /**
-     * Create Table(Table EST).Contain columns and their options.
+     * Create TableWrapper(TableWrapper EST).Contain columns and their options.
      * @see Est - enumeration of "Estimate Tables"
      * @param enumEst - enumeration. Contain: data of Estimate Tables
-     * @return Table(child of TableView)
+     * @return TableWrapper(child of TableView)
      */
-    public static TableEST getEst(Est enumEst){
-        TableEST table = new TableEST();
+    public static TableWrapperEST getEst(Est enumEst){
+        TableWrapperEST table = new TableWrapperEST();
         table.setDAO(new ItemEstDAO(enumEst));
         
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -174,32 +173,32 @@ public class TableFactory {
       return table;
     }
     
-     public static Table getAdditional(){
-        Table table =  new Table();
+     public static TableWrapper getAdditional(){
+        TableWrapper tableWrapper =  new TableWrapper();
         
-        table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableWrapper.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
+        tableWrapper.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
-        TableColumn JM_nameColumn   = table.addColumn("Наименование работ/затрат", "JM_name");
-        TableColumn BJobColumnn     = table.addColumn("Связанная работа",          "BindedJob");
-        TableColumn valueColumn     = table.addColumn("Кол-во",                    "value");
-        TableColumn unitColumn      = table.addColumn("Eд. изм.",                  "unit");
-        TableColumn Price_oneColumn = table.addColumn("Стоимость (за единицу)",    "price_one");
-        TableColumn Price_sumColumn = table.addColumn("Стоимость (общая)",         "price_sum");
-        TableColumn isInKSColumn    = table.addColumn("КС",                        "inKS");
+        TableColumn JM_nameColumn   = tableWrapper.addColumn("Наименование работ/затрат", "JM_name");
+        TableColumn BJobColumnn     = tableWrapper.addColumn("Связанная работа",          "BindedJob");
+        TableColumn valueColumn     = tableWrapper.addColumn("Кол-во",                    "value");
+        TableColumn unitColumn      = tableWrapper.addColumn("Eд. изм.",                  "unit");
+        TableColumn Price_oneColumn = tableWrapper.addColumn("Стоимость (за единицу)",    "price_one");
+        TableColumn Price_sumColumn = tableWrapper.addColumn("Стоимость (общая)",         "price_sum");
+        TableColumn isInKSColumn    = tableWrapper.addColumn("КС",                        "inKS");
         
         JM_nameColumn.setMinWidth(300);
         BJobColumnn.setMinWidth(160);
         
-        return table;
+        return tableWrapper;
      }
     
     /**
-     * Create Table to addSiteRowLayoutController.Contain columns and their options.
-     * @return Table(child of TableView)
+     * Create TableWrapper to addSiteRowLayoutController.Contain columns and their options.
+     * @return TableWrapper(child of TableView)
      */
-    public static TableEST getEst_add(){
-        TableEST table = new TableEST();
+    public static TableWrapperEST getEst_add(){
+        TableWrapperEST table = new TableWrapperEST();
         
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
        
@@ -227,11 +226,11 @@ public class TableFactory {
     
     
     /**
-     * Create Table(Table KS).Contain columns and their options.
-     * @return Table(child of TableView)
+     * Create TableWrapper(TableWrapper KS).Contain columns and their options.
+     * @return TableWrapper(child of TableView)
      */
-    public static TableEST<TableItemKS> getKS(){
-        TableEST table = new TableEST();
+    public static TableWrapperEST<TableItemKS> getKS(){
+        TableWrapperEST table = new TableWrapperEST();
         table.setDAO(new ItemKSDAO(Est.KS));
         
         table.setEditable(true);
@@ -281,7 +280,7 @@ public class TableFactory {
 //                Set new Rest of Value
                 editingItem.setRestOfValue(restOfValue);
                 
-                ((TableEST)t.getTableView()).computeSum();
+                ((TableWrapperEST)t.getTableView()).computeSum();
                 t.getTableView().refresh();
                 
             }
@@ -307,12 +306,12 @@ public class TableFactory {
     }
     
     /**
-     * Create Table(ksAddLayoutController).
+     * Create TableWrapper(ksAddLayoutController).
      * <br>
-     * @return Table(child of TableView)
+     * @return TableWrapper(child of TableView)
      */
-    public static TableEST getKS_add(){
-        TableEST table = new TableEST();
+    public static TableWrapperEST getKS_add(){
+        TableWrapperEST table = new TableWrapperEST();
         
 //        table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -325,20 +324,20 @@ public class TableFactory {
     }
     
     /**
-     * Create Table(ExpensesAddLayoutController). 
+     * Create TableWrapper(ExpensesAddLayoutController).
      * <br>
-     * @return Table(child of TableView)
+     * @return TableWrapper(child of TableView)
      */
-    public  static Table<TableItemPreview> getProperty_Site(){
-        Table table = new Table();
+    public  static TableWrapper<TableItemPreview> getProperty_Site(){
+        TableWrapper tableWrapper = new TableWrapper();
         
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableWrapper.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
-        table.widthProperty().addListener(new ChangeListener<Number>() {
+        tableWrapper.widthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
-                // Get the table header
-                Pane header = (Pane)table.lookup("TableHeaderRow");
+                // Get the tableWrapper header
+                Pane header = (Pane) tableWrapper.lookup("TableHeaderRow");
                 if(header!=null && header.isVisible()) {
                   header.setMaxHeight(0);
                   header.setMinHeight(0);
@@ -349,62 +348,62 @@ public class TableFactory {
             }
         });
         
-        TableColumn titleColumn  = table.addColumn("Параметр", "firstValue");
-        TableColumn valueColumn  = table.addColumn("Значение", "secondValue");
+        TableColumn titleColumn  = tableWrapper.addColumn("Параметр", "firstValue");
+        TableColumn valueColumn  = tableWrapper.addColumn("Значение", "secondValue");
 
 
         valueColumn.setCellFactory(param ->  TableCellFactory.getEditSiteCell());
      
         
-       return  table; 
+       return tableWrapper;
     }
     
     /**
-     * Create Table "expenses"(expensesesLayoutController).
+     * Create TableWrapper "expenses"(expensesesLayoutController).
      * <br>
-     * @return Table(child of TableView)
+     * @return TableWrapper(child of TableView)
      */
        
-    public static Table<TableItemExpenses> getProperty_Expenses(){
-        Table table = new Table();
-        table.setDAO( new ItemExpensesDAO());
+    public static TableWrapper<TableItemExpenses> getProperty_Expenses(){
+        TableWrapper tableWrapper = new TableWrapper();
+        tableWrapper.setDAO( new ItemExpensesDAO());
         
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableWrapper.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
 
-        TableColumn textColumn   = table.addColumn("Наименование", "text");
-        TableColumn typeColumn   = table.addColumn("Тип",          "type");
-        TableColumn valueColumn  = table.addColumn("Значение",     "value");
+        TableColumn textColumn   = tableWrapper.addColumn("Наименование", "text");
+        TableColumn typeColumn   = tableWrapper.addColumn("Тип",          "type");
+        TableColumn valueColumn  = tableWrapper.addColumn("Значение",     "value");
 
         typeColumn.setCellFactory(param ->  TableCellFactory.getExpenseesCell());
         
-       return  table; 
+       return tableWrapper;
     }
     
     /**
-     * Create Table "Job & Period"(expensesesLayoutController). 
+     * Create TableWrapper "Job & Period"(expensesesLayoutController).
      * <br>
-     * @return Table(child of TableView)
+     * @return TableWrapper(child of TableView)
      */
-    public static Table<TableItemPeriod>  getProperty_JobPeriod(){
-        Table table = new Table();
-        table.setDAO( new ItemPeriodDAO());
+    public static TableWrapper<TableItemPeriod> getProperty_JobPeriod(){
+        TableWrapper tableWrapper = new TableWrapper();
+        tableWrapper.setDAO( new ItemPeriodDAO());
         
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableWrapper.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
-        TableColumn dateFromColumn = table.addColumn("Датаначала",     "dateFrom");
-        TableColumn dateToColumn   = table.addColumn("Дата Окончания", "dateTo");
-        TableColumn textColumns    = table.addColumn("Коментарии",     "text");
+        TableColumn dateFromColumn = tableWrapper.addColumn("Датаначала",     "dateFrom");
+        TableColumn dateToColumn   = tableWrapper.addColumn("Дата Окончания", "dateTo");
+        TableColumn textColumns    = tableWrapper.addColumn("Коментарии",     "text");
 
         dateFromColumn.setCellFactory(param -> TableCellFactory.getEpochDateCell());
         dateToColumn.setCellFactory(param -> TableCellFactory.getEpochDateCell());
        
         
-       return  table; 
+       return tableWrapper;
     }
     
     /**
-     * Create Table "ChangeView"(expensesesLayoutController). 
+     * Create TableWrapper "ChangeView"(expensesesLayoutController).
      * <br>
      * Show SQL table Items where dell = 1
      * <br>
@@ -441,24 +440,24 @@ public class TableFactory {
     }
     
     /**
-     * Create Table "OSR"(allPropertiesLayoutController). 
+     * Create TableWrapper "OSR"(allPropertiesLayoutController).
      * <br>
      * Show SQL table Items where dell = 0
      * <br>
      * 
-     * @return Table
+     * @return TableWrapper
      */
-    public static Table getOSR(){
-        Table table = new Table();
-        table.setDAO(new ItemOSRDAO());
+    public static TableWrapper getOSR(){
+        TableWrapper tableWrapper = new TableWrapper();
+        tableWrapper.setDAO(new ItemOSRDAO());
         
-//        table.setEditable(true);
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+//        tableWrapper.setEditable(true);
+        tableWrapper.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         
-        TableColumn textColumn     = table.addColumn("Наименование","text");
+        TableColumn textColumn     = tableWrapper.addColumn("Наименование","text");
         TableColumn<TableItemOSR,Double> valueAllColumn
-                                   = table.addColumn("Значение (общее)","expenses");
-        TableColumn valueColumn    = table.addColumn("Значение (за дом)","expensesPerHouse");
+                                   = tableWrapper.addColumn("Значение (общее)","expenses");
+        TableColumn valueColumn    = tableWrapper.addColumn("Значение (за дом)","expensesPerHouse");
         
         valueAllColumn.setEditable(true);
         valueColumn.setCellFactory(p -> TableCellFactory.getDecimalCell());
@@ -466,8 +465,8 @@ public class TableFactory {
         
         textColumn.setCellFactory(param -> TableCellFactory.getTestIdOSR());
 
-//        ContextMenu cm = ContextMenuFactory.getOSR(table);
-//        table.setContextMenu(cm);
+//        ContextMenu cm = ContextMenuFactory.getOSR(tableWrapper);
+//        tableWrapper.setContextMenu(cm);
         
         valueAllColumn.setOnEditCommit((TableColumn.CellEditEvent<TableItemOSR, Double> t) -> {
             TableItemOSR editingItem = (TableItemOSR) t.getTableView().getItems().get(t.getTablePosition().getRow());
@@ -479,27 +478,27 @@ public class TableFactory {
             //Diseble Save & Cancel Context menu Item
         });
         
-        return table;
+        return tableWrapper;
     }
     
     /**
-     * Create Table "Variable"(allPropertiesLayoutController). 
+     * Create TableWrapper "Variable"(allPropertiesLayoutController).
      * <br>
      * Show SQL table Items where dell = 0
      * <br>
      * 
-     * @return Table
+     * @return TableWrapper
      */
-    public static Table getVariable(){
-        Table table = new Table();
-        table.setDAO(new ItemPropertiesFAO());
+    public static TableWrapper getVariable(){
+        TableWrapper tableWrapper = new TableWrapper();
+        tableWrapper.setDAO(new ItemPropertiesFAO());
         
-//        table.setEditable(true);
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+//        tableWrapper.setEditable(true);
+        tableWrapper.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 //        
-        TableColumn textColumn     = table.addColumn("Наименование","text");
+        TableColumn textColumn     = tableWrapper.addColumn("Наименование","text");
         TableColumn<TableItemVariable,Double> valueAllColumn
-                                    = table.addColumn("Значение",   "value");
+                                    = tableWrapper.addColumn("Значение",   "value");
 //        
         valueAllColumn.setEditable(true);
         TableFactory.setTextFieldCell_NumbertringConverter(valueAllColumn);
@@ -508,61 +507,61 @@ public class TableFactory {
         });
 
         
-        return table;
+        return tableWrapper;
     }
     
     /**
-     * Create Table "Contractor"(allPropertiesLayoutController). 
+     * Create TableWrapper "Contractor"(allPropertiesLayoutController).
      * <br>
      * Show SQL table Items where dell = 0
      * <br>
      * 
-     * @return Table
+     * @return TableWrapper
      */
-    public static Table getContractor(){
-        Table table = new Table();
-        table.setDAO(new ItemContractorDAO());
+    public static TableWrapper getContractor(){
+        TableWrapper tableWrapper = new TableWrapper();
+        tableWrapper.setDAO(new ItemContractorDAO());
 
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableWrapper.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 //        
-        TableColumn idColumn     = table.addColumn("ID", "id");
-        TableColumn contractorColumn = table.addColumn("Подрядчик","contractor");
+        TableColumn idColumn     = tableWrapper.addColumn("ID", "id");
+        TableColumn contractorColumn = tableWrapper.addColumn("Подрядчик","contractor");
         
    
         idColumn.setMaxWidth(50);
         idColumn.setMinWidth(35);
  
-        return table;
+        return tableWrapper;
     }
     
     /**
-     * Create Table "Plan"(allPropertiesLayoutController). 
+     * Create TableWrapper "Plan"(allPropertiesLayoutController).
      * <br>
      * Show SQL table Items where dell = 0
      * <br>
      * 
-     * @return Table
+     * @return TableWrapper
      */
 
-    public static Table getPlan(){
-        Table table = new Table();
-        table.setDAO(new ItemPlanDAO());
+    public static TableWrapper getPlan(){
+        TableWrapper tableWrapper = new TableWrapper();
+        tableWrapper.setDAO(new ItemPlanDAO());
 
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableWrapper.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 //
         TableColumn<TableItemPlan,Integer> typeIdColumn
-                                   = table.addColumn("ID",             "typeID");
-        TableColumn typeColumn     = table.addColumn("Тип",            "type");
+                                   = tableWrapper.addColumn("ID",             "typeID");
+        TableColumn typeColumn     = tableWrapper.addColumn("Тип",            "type");
         TableColumn<TableItemPlan,Integer> quantityColumn 
-                                   = table.addColumn("Кол-во",         "quantity");
-        TableColumn restColumn     = table.addColumn("Остаток",        "rest");
+                                   = tableWrapper.addColumn("Кол-во",         "quantity");
+        TableColumn restColumn     = tableWrapper.addColumn("Остаток",        "rest");
         TableColumn<TableItemPlan,Double> smetColumn
-                                   = table.addColumn("Стоимоть",       "SmetCost");
-        TableColumn smetSumColumn  = table.addColumn("Себестоимость",  "SmetCostSum");
+                                   = tableWrapper.addColumn("Стоимоть",       "SmetCost");
+        TableColumn smetSumColumn  = tableWrapper.addColumn("Себестоимость",  "SmetCostSum");
         TableColumn<TableItemPlan,Double> saleColumn
-                                   = table.addColumn("Цена",           "SaleCost");
-        TableColumn saleSumColumn  = table.addColumn("Выручка",        "SaleCostSum");
-        TableColumn profitColumn   = table.addColumn("Прибыль",        "profit");
+                                   = tableWrapper.addColumn("Цена",           "SaleCost");
+        TableColumn saleSumColumn  = tableWrapper.addColumn("Выручка",        "SaleCostSum");
+        TableColumn profitColumn   = tableWrapper.addColumn("Прибыль",        "profit");
 
 
         typeIdColumn    .setMaxWidth(50);
@@ -616,29 +615,29 @@ public class TableFactory {
         profitColumn.setCellFactory(param -> TableCellFactory.getDecimalCell());
 
         
-        return table;
+        return tableWrapper;
     }
     /**
-     * Create Table "Plan"(allPropertiesLayoutController). 
+     * Create TableWrapper "Plan"(allPropertiesLayoutController).
      * <br>
      * Show SQL table Items where dell = 0
      * <br>
      * 
-     * @return Table
+     * @return TableWrapper
      */
-    public static Table getFact(){
-        Table table = new Table();
+    public static TableWrapper getFact(){
+        TableWrapper tableWrapper = new TableWrapper();
 
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableWrapper.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 //        
-        TableColumn typeIdColumn   = table.addColumn("ID",             "typeID");
-        TableColumn typeColumn     = table.addColumn("Тип",            "type");
-        TableColumn quantityColumn = table.addColumn("Кол-во",         "quantity");
-        TableColumn smetColumn     = table.addColumn("Стоимоть",       "SmetCost");
-        TableColumn smetSumColumn  = table.addColumn("Себестоимость",  "SmetCostSum");
-        TableColumn saleColumn     = table.addColumn("Цена",           "SaleCost");
-        TableColumn saleSumColumn  = table.addColumn("Выручка",        "SaleCostSum");
-        TableColumn profitColumn   = table.addColumn("Прибыль",        "profit");
+        TableColumn typeIdColumn   = tableWrapper.addColumn("ID",             "typeID");
+        TableColumn typeColumn     = tableWrapper.addColumn("Тип",            "type");
+        TableColumn quantityColumn = tableWrapper.addColumn("Кол-во",         "quantity");
+        TableColumn smetColumn     = tableWrapper.addColumn("Стоимоть",       "SmetCost");
+        TableColumn smetSumColumn  = tableWrapper.addColumn("Себестоимость",  "SmetCostSum");
+        TableColumn saleColumn     = tableWrapper.addColumn("Цена",           "SaleCost");
+        TableColumn saleSumColumn  = tableWrapper.addColumn("Выручка",        "SaleCostSum");
+        TableColumn profitColumn   = tableWrapper.addColumn("Прибыль",        "profit");
         
         typeIdColumn    .setMaxWidth(50);
         typeIdColumn    .setMinWidth(35);
@@ -656,14 +655,14 @@ public class TableFactory {
             .forEach(a -> a.setCellFactory(param -> TableCellFactory.getDecimalCell()));
         
         
-        return table;
+        return tableWrapper;
     }
     /**
-     * Create Table "FinRes"(finResLayoutController).
+     * Create TableWrapper "FinRes"(finResLayoutController).
      * <br>
      * <br>
      *
-     * @return Table
+     * @return TableWrapper
      */
     public static TableView getFinRes(){
         TableView table = new TableView();

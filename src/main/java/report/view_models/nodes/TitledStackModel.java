@@ -21,7 +21,7 @@ import report.entities.items.estimate.ItemEstDAO;
 
 public class TitledStackModel extends StackPane{
        
-          private TableEST<TableItemEst> tableView;
+          private TableWrapperEST<TableItemEst> tableView;
     final private Label                  sumLabel   = new Label();
     final private TitledPane             titledPane = new TitledPane();
     final private Est                    enumEst;
@@ -41,7 +41,7 @@ public class TitledStackModel extends StackPane{
 
     public DoubleProperty getLabelDoubleProperty() { return tableView.getSumProperty(); }
 
-    public  Table getModelTable() { return tableView;}
+    public TableWrapper getModelTable() { return tableView;}
         
 /*!******************************************************************************************************************
 *                                                                                                        Constructor

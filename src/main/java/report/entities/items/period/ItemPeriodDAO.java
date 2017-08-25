@@ -20,9 +20,9 @@ import javafx.collections.ObservableList;
 import report.controllers.LogLayoutController;
 import report.controllers.showEstLayoutController.Est;
 import report.models.sql.SQLconnector;
-import report.view_models.nodes.Table;
+import report.view_models.nodes.TableWrapper;
 
-public class ItemPeriodDAO implements ItemDAO<TableItemPeriod,  Table> {
+public class ItemPeriodDAO implements ItemDAO<TableItemPeriod, TableWrapper> {
 
     /**
     * Get String of a Mirror (SQL.Tables).

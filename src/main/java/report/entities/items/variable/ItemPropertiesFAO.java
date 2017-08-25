@@ -10,10 +10,10 @@ import javafx.collections.ObservableList;
 import report.view_models.data_models.DecimalFormatter;
 import report.entities.ItemDAO;
 import report.usege_strings.PathStrings;
-import report.view_models.nodes.Table;
+import report.view_models.nodes.TableWrapper;
 
 
-public class ItemPropertiesFAO implements ItemDAO<TableItemVariable, Table> {
+public class ItemPropertiesFAO implements ItemDAO<TableItemVariable, TableWrapper> {
 
 
     /**
@@ -94,8 +94,8 @@ public class ItemPropertiesFAO implements ItemDAO<TableItemVariable, Table> {
     * Update Properties File (formula.properties)
     */
     @Override
-    public  void dellAndInsert(Table table) {
-        insert(table.getItems()); 
+    public  void dellAndInsert(TableWrapper tableWrapper) {
+        insert(tableWrapper.getItems());
     }
     
    

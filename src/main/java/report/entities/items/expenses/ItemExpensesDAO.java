@@ -16,10 +16,10 @@ import javafx.collections.ObservableList;
 import report.controllers.LogLayoutController;
 import report.controllers.showEstLayoutController.Est;
 import report.models.sql.SQLconnector;
-import report.view_models.nodes.Table;
+import report.view_models.nodes.TableWrapper;
 
 
-public class ItemExpensesDAO implements ItemDAO<TableItemExpenses, Table> {
+public class ItemExpensesDAO implements ItemDAO<TableItemExpenses, TableWrapper> {
 
     
     /**

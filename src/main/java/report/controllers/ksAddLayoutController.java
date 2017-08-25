@@ -35,7 +35,7 @@ public class ksAddLayoutController implements Initializable {
     @FXML  private DatePicker ksDatePicker;
     @FXML  private TableView<TableItem> allJMTable, selectedJMTable;
 
-//    private TableEST<TableItemKS> allJMTable      = TableFactory.getKS_add(),
+//    private TableWrapperEST<TableItemKS> allJMTable      = TableFactory.getKS_add(),
 //                                  selectedJMTable = TableFactory.getKS_add();
 
     private ObservableList<TableItem> obsAllJM, obsSelectedJM;

@@ -10,7 +10,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-//Account Table Item to ObsList
+//Account TableWrapper Item to ObsList
     public class TableItemAcc {                                             
  
         private final IntegerProperty date;                          

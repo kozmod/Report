@@ -24,6 +24,7 @@ import javafx.scene.layout.GridPane;
 import javafx.util.converter.NumberStringConverter;
 import report.models.coefficient.Quantity;
 //import report.models.Formula_test;
+import report.view_models.nodes.TableWrapper;
 import report.view_models.nodes_factories.ContextMenuFactory;
 import report.view_models.data_models.DecimalFormatter;
 import report.view_models.nodes_factories.TableFactory;
@@ -33,7 +34,6 @@ import report.entities.items.plan.TableItemPlan;
 import report.entities.items.variable.TableItemVariable;
 import report.entities.items.plan.ItemPlanDAO;
 import report.view_models.nodes.ContextMenuOptional;
-import report.view_models.nodes.Table;
 
 
 public class allPropertiesLayoutController implements Initializable {
@@ -55,45 +55,45 @@ public class allPropertiesLayoutController implements Initializable {
 @FXML private Button    osrAddItemButton, planAddItemButton;
 @FXML private Button    contractorAddItemButton, contractorSaveItemButton, contractorCencelItemButton;
 
-private final Table<TableItemOSR>        osrTableView         = TableFactory.getOSR();
-private final Table<TableItemVariable>   variableTableView    = TableFactory.getVariable();
-private final Table<TableItemContractor> contractorTableView  = TableFactory.getContractor();
-private final Table<TableItemPlan>       planTableView        = TableFactory.getPlan();
-private final Table<TableItemPlan>       factTableView        = TableFactory.getFact();
+private final TableWrapper<TableItemOSR> osrTableWrapperView = TableFactory.getOSR();
+private final TableWrapper<TableItemVariable> variableTableWrapperView = TableFactory.getVariable();
+private final TableWrapper<TableItemContractor> contractorTableWrapperView = TableFactory.getContractor();
+private final TableWrapper<TableItemPlan> planTableWrapperView = TableFactory.getPlan();
+private final TableWrapper<TableItemPlan> factTableWrapperView = TableFactory.getFact();
     
     {
-     osrTableView.setTableDataFromBASE();        
-        ContextMenuOptional.setTableItemContextMenuListener(osrTableView);
-     variableTableView.setTableDataFromBASE();   
-        ContextMenuOptional.setTableItemContextMenuListener(variableTableView);
-     contractorTableView.setTableDataFromBASE(); 
-        ContextMenuOptional.setTableItemContextMenuListener(contractorTableView);
-     planTableView.setTableDataFromBASE();       
-        ContextMenuOptional.setTableItemContextMenuListener(planTableView);
-     factTableView.setTableData(new ItemPlanDAO().getListFact());
+     osrTableWrapperView.setTableDataFromBASE();
+        ContextMenuOptional.setTableItemContextMenuListener(osrTableWrapperView);
+     variableTableWrapperView.setTableDataFromBASE();
+        ContextMenuOptional.setTableItemContextMenuListener(variableTableWrapperView);
+     contractorTableWrapperView.setTableDataFromBASE();
+        ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapperView);
+     planTableWrapperView.setTableDataFromBASE();
+        ContextMenuOptional.setTableItemContextMenuListener(planTableWrapperView);
+     factTableWrapperView.setTableData(new ItemPlanDAO().getListFact());
     }
     
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //add OSR TableView
-        osrGP.add(osrTableView, 0,0,3,1);
-        GridPane.setMargin(osrTableView, new Insets(5,5,5,5));
+        osrGP.add(osrTableWrapperView, 0,0,3,1);
+        GridPane.setMargin(osrTableWrapperView, new Insets(5,5,5,5));
         
         //add OSR TableView
-        variableGP.add(variableTableView, 0,0,3,1);
-        GridPane.setMargin(variableTableView, new Insets(5,5,5,5));
+        variableGP.add(variableTableWrapperView, 0,0,3,1);
+        GridPane.setMargin(variableTableWrapperView, new Insets(5,5,5,5));
         
         //add OSR TableView
-        contractorGP.add(contractorTableView, 0,0,1,8);
-        GridPane.setMargin(contractorTableView, new Insets(5,5,5,5));
+        contractorGP.add(contractorTableWrapperView, 0,0,1,8);
+        GridPane.setMargin(contractorTableWrapperView, new Insets(5,5,5,5));
         
         //add Paln TableView
-        planGP.add(factTableView, 0,6,6,1);
-        GridPane.setMargin(factTableView, new Insets(5,5,5,5));
+        planGP.add(factTableWrapperView, 0,6,6,1);
+        GridPane.setMargin(factTableWrapperView, new Insets(5,5,5,5));
         
         //add Paln TableView
-        planGP.add(planTableView, 0,1,6,1);
-        GridPane.setMargin(planTableView, new Insets(5,5,5,5));
+        planGP.add(planTableWrapperView, 0,1,6,1);
+        GridPane.setMargin(planTableWrapperView, new Insets(5,5,5,5));
         
         init_OSRTab();
         init_VariableTab();
@@ -108,7 +108,7 @@ private final Table<TableItemPlan>       factTableView        = TableFactory.get
     private void init_OSRTab(){
        
        computeSumExpTextFields();
-       osrTableView.getItems().addListener((ListChangeListener.Change<? extends TableItemOSR> c) -> {
+       osrTableWrapperView.getItems().addListener((ListChangeListener.Change<? extends TableItemOSR> c) -> {
                 System.out.println("Changed on " + c + " report.controllers.allPropertiesLayoutController.init_OSRTab()" );
                 if(c.next() && 
                         (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
@@ -117,12 +117,12 @@ private final Table<TableItemPlan>       factTableView        = TableFactory.get
         });
        
        //table Context menu property
-        osrTableView.contextMenuProperty().bind(
+        osrTableWrapperView.contextMenuProperty().bind(
             Bindings.when(osrEditСheckBox.selectedProperty() )
-                .then(ContextMenuFactory.getCommonDSU(osrTableView))
+                .then(ContextMenuFactory.getCommonDSU(osrTableWrapperView))
                 .otherwise( (ContextMenu) null  ));
-        //Table Editable property
-        osrTableView.editableProperty()
+        //TableWrapper Editable property
+        osrTableWrapperView.editableProperty()
                     .bind(osrEditСheckBox.selectedProperty());
         setGroupNodeDisableProperty(osrEditСheckBox.selectedProperty(),
                                     osrAddTextTF, 
@@ -140,12 +140,12 @@ private final Table<TableItemPlan>       factTableView        = TableFactory.get
     private void init_VariableTab(){
         
         //table Context menu property
-        variableTableView.contextMenuProperty().bind(
+        variableTableWrapperView.contextMenuProperty().bind(
             Bindings.when(variableEditСheckBox.selectedProperty() )
-                .then( ContextMenuFactory.getCommonSU(variableTableView))
+                .then( ContextMenuFactory.getCommonSU(variableTableWrapperView))
                 .otherwise( (ContextMenu) null));
-        //Table Editable property
-        variableTableView.editableProperty()
+        //TableWrapper Editable property
+        variableTableWrapperView.editableProperty()
                          .bind(variableEditСheckBox.selectedProperty());
     
         
@@ -157,9 +157,9 @@ private final Table<TableItemPlan>       factTableView        = TableFactory.get
     private void init_ContractorTab(){
         
         //bing ContextMenu
-        contractorTableView.contextMenuProperty().bind(
+        contractorTableWrapperView.contextMenuProperty().bind(
             Bindings.when(contractorEditСheckBox.selectedProperty() )
-                .then( ContextMenuFactory.getCommonDSU(contractorTableView))
+                .then( ContextMenuFactory.getCommonDSU(contractorTableWrapperView))
                 .otherwise( (ContextMenu) null));
      
         //bind editableProperty to contractorEditСheckBox
@@ -173,7 +173,7 @@ private final Table<TableItemPlan>       factTableView        = TableFactory.get
         contractorAddItemButton.disableProperty().bind(contractorEditСheckBox.selectedProperty().not());
         
 
-        contractorTableView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        contractorTableWrapperView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             TableItemContractor item = (newValue != null) ? newValue : oldValue;
 //            if(newValue != null)item = newValue; else item = oldValue;
                 if(newValue != null && oldValue != null){
@@ -185,7 +185,7 @@ private final Table<TableItemPlan>       factTableView        = TableFactory.get
                 
             clearGroupOfTextInputControl(contractorNameTF,contractorDirectorTF,contractorAdressTA,contractorCommentsTA);
             
-                if(contractorTableView.getItems().size() > 0 && !contractorTableView.getSelectionModel().isEmpty()){
+                if(contractorTableWrapperView.getItems().size() > 0 && !contractorTableWrapperView.getSelectionModel().isEmpty()){
                     Bindings.bindBidirectional(contractorNameTF    .textProperty(), item.getContractorProperty());
                     Bindings.bindBidirectional(contractorDirectorTF.textProperty(), item.getDirectorProperty());
                     Bindings.bindBidirectional(contractorAdressTA  .textProperty(), item.getAdressProperty());
@@ -197,29 +197,29 @@ private final Table<TableItemPlan>       factTableView        = TableFactory.get
 
         
 //        
-//        contractorTableView.getItems().addListener((ListChangeListener.Change<? extends TableItemContractor> c) -> {
+//        contractorTableWrapperView.getItems().addListener((ListChangeListener.Change<? extends TableItemContractor> c) -> {
 //            System.out.println("init_ContractorTab => Changed on " + c);
 //                if(c.next()){ 
-//                   if(c.wasUpdated())  contractorTableView.getCRUD().addUpdate(contractorTableView.getItems().saveEst(c.getFrom()));
-//                   if(c.wasAdded()) contractorTableView.getCRUD().addCreate(c.getAddedSubList());
-//                   if(c.wasRemoved()) contractorTableView.getCRUD().addDelete(c.getRemoved());       
+//                   if(c.wasUpdated())  contractorTableWrapperView.getCRUD().addUpdate(contractorTableWrapperView.getItems().saveEst(c.getFrom()));
+//                   if(c.wasAdded()) contractorTableWrapperView.getCRUD().addCreate(c.getAddedSubList());
+//                   if(c.wasRemoved()) contractorTableWrapperView.getCRUD().addDelete(c.getRemoved());
 //                }
 //        });
         
 
-//        variableTableView.editableProperty().bind(variableEditСheckBox.selectedProperty());
+//        variableTableWrapperView.editableProperty().bind(variableEditСheckBox.selectedProperty());
 //        
        
     }
     
     private void init_PlanTab(){
         //table Context menu property
-        planTableView.contextMenuProperty().bind(
+        planTableWrapperView.contextMenuProperty().bind(
             Bindings.when(planEditСheckBox.selectedProperty() )
-                .then( ContextMenuFactory.getCommonDSU(planTableView))
+                .then( ContextMenuFactory.getCommonDSU(planTableWrapperView))
                 .otherwise( (ContextMenu) null));
-        //Table Editable property
-        planTableView.editableProperty()
+        //TableWrapper Editable property
+        planTableWrapperView.editableProperty()
                      .bind(planEditСheckBox.selectedProperty());
         //Compute Sum Text fields
         this.computeSumPlanTextFields();
@@ -232,7 +232,7 @@ private final Table<TableItemPlan>       factTableView        = TableFactory.get
                                     planQuantityTF,
                                     planAddItemButton);
 
-        planTableView.getItems().addListener((ListChangeListener.Change<? extends TableItemPlan> c) -> {
+        planTableWrapperView.getItems().addListener((ListChangeListener.Change<? extends TableItemPlan> c) -> {
             System.out.println("Changed on " + c + " - allProperty /// init_PlanTab");
             if(c.next() &&
                     (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
@@ -249,7 +249,7 @@ private final Table<TableItemPlan>       factTableView        = TableFactory.get
     private void handle_osrAddItemButton(ActionEvent event) {  
         Double expenses = DecimalFormatter.stringToDouble(osrAddValueTF.getText());
         Double expensesPerHouse = expenses/Quantity.getQuantityValue();
-        osrTableView.getItems()
+        osrTableWrapperView.getItems()
                 .add(new TableItemOSR(0,osrAddTextTF.getText(),expenses,expensesPerHouse ));
         
         
@@ -260,8 +260,8 @@ private final Table<TableItemPlan>       factTableView        = TableFactory.get
       if(event.getSource() == contractorAddItemButton){
         setVisiblaDisableContractorNodes(true);
         
-            TableItemContractor item = contractorTableView.getSelectionModel().getSelectedItem();
-                if((item  != null)&& !contractorTableView.getSelectionModel().isEmpty()){
+            TableItemContractor item = contractorTableWrapperView.getSelectionModel().getSelectedItem();
+                if((item  != null)&& !contractorTableWrapperView.getSelectionModel().isEmpty()){
                     Bindings.unbindBidirectional(contractorNameTF    .textProperty(), item.getContractorProperty());
                     Bindings.unbindBidirectional(contractorDirectorTF.textProperty(), item.getDirectorProperty());
                     Bindings.unbindBidirectional(contractorAdressTA  .textProperty(), item.getAdressProperty());
@@ -271,7 +271,7 @@ private final Table<TableItemPlan>       factTableView        = TableFactory.get
       }else if(event.getSource() == contractorSaveItemButton){
         setVisiblaDisableContractorNodes(false);
         if(
-            contractorTableView.getItems()
+            contractorTableWrapperView.getItems()
                 .add(new TableItemContractor(0, 
                                              contractorNameTF.getText(),
                                              contractorDirectorTF.getText(), 
@@ -293,11 +293,11 @@ private final Table<TableItemPlan>       factTableView        = TableFactory.get
         double SmetCost = DecimalFormatter.stringToDouble(planSmetTF.getText());
         double SaleCost = DecimalFormatter.stringToDouble(planSaleTF.getText());
         if(
-            planTableView.getItems()
+            planTableWrapperView.getItems()
                 .add(new TableItemPlan(
                         0,
                         new Timestamp(System.currentTimeMillis()),
-                        (planTableView.getItems().stream().max(Comparator.comparing(f -> f.getTypeID())).get().getTypeID() + 1),
+                        (planTableWrapperView.getItems().stream().max(Comparator.comparing(f -> f.getTypeID())).get().getTypeID() + 1),
                         planTypeTF.getText(),
                         Integer.parseInt(planQuantityTF.getText()),
                         0,
@@ -318,28 +318,28 @@ private final Table<TableItemPlan>       factTableView        = TableFactory.get
     //Methods ------------------------------------------------------------------------------------------
     private void computeSumExpTextFields(){
         sumExpTF.setText(DecimalFormatter.toString(
-                                osrTableView.getItems().stream().mapToDouble(TableItemOSR::getExpenses).sum()));
+                                osrTableWrapperView.getItems().stream().mapToDouble(TableItemOSR::getExpenses).sum()));
         sumExpPerSiteTF.setText(DecimalFormatter.toString(
-                                osrTableView.getItems().stream().mapToDouble(TableItemOSR::getExpensesPerHouse).sum()));
+                                osrTableWrapperView.getItems().stream().mapToDouble(TableItemOSR::getExpensesPerHouse).sum()));
     }
     private void computeSumPlanTextFields(){
 
         planSmetSumTF.setText(DecimalFormatter.toString(
-                                    planTableView.getItems().stream().mapToDouble(TableItemPlan::getSmetCost).sum()));
+                                    planTableWrapperView.getItems().stream().mapToDouble(TableItemPlan::getSmetCost).sum()));
         planSaleSumTF.setText(DecimalFormatter.toString(
-                                    planTableView.getItems().stream().mapToDouble(TableItemPlan::getSaleCost).sum()));
+                                    planTableWrapperView.getItems().stream().mapToDouble(TableItemPlan::getSaleCost).sum()));
         planProfitSumTF.setText(DecimalFormatter.toString(
-                                    planTableView.getItems().stream().mapToDouble(TableItemPlan::getProfit).sum()));
+                                    planTableWrapperView.getItems().stream().mapToDouble(TableItemPlan::getProfit).sum()));
 
     }
 
     private void computeSumFactTextFields(){
         factSmetSumTF.setText(DecimalFormatter.toString(
-                                    factTableView.getItems().stream().mapToDouble(TableItemPlan::getSmetCost).sum()));
+                                    factTableWrapperView.getItems().stream().mapToDouble(TableItemPlan::getSmetCost).sum()));
         factSaleSumTF.setText(DecimalFormatter.toString(
-                                    factTableView.getItems().stream().mapToDouble(TableItemPlan::getSaleCost).sum()));
+                                    factTableWrapperView.getItems().stream().mapToDouble(TableItemPlan::getSaleCost).sum()));
         factProfitSumTF.setText(DecimalFormatter.toString(
-                                    factTableView.getItems().stream().mapToDouble(TableItemPlan::getProfit).sum()));
+                                    factTableWrapperView.getItems().stream().mapToDouble(TableItemPlan::getProfit).sum()));
 
     }
 
@@ -364,7 +364,7 @@ private final Table<TableItemPlan>       factTableView        = TableFactory.get
         contractorCencelItemButton.setVisible(v);
         
         contractorEditСheckBox.setDisable(v);
-        contractorTableView   .setDisable(v);
+        contractorTableWrapperView.setDisable(v);
         
     }
     

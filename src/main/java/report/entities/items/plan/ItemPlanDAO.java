@@ -21,10 +21,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.controllers.LogLayoutController;
 import report.models.sql.SQLconnector;
-import report.view_models.nodes.Table;
+import report.view_models.nodes.TableWrapper;
 
 
-public class ItemPlanDAO implements ItemDAO<TableItemPlan, Table> {
+public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
 
    /**
     * 

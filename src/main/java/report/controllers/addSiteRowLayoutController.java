@@ -31,11 +31,9 @@ import report.view_models.InputValidator;
 import report.entities.items.TableItem;
 import report.entities.items.cb.TableItemCB;
 import report.entities.items.estimate.TableItemEst;
+import report.view_models.nodes.TableWrapper;
 import report.view_models.nodes_factories.TableFactory;
 import report.entities.items.estimate.ItemEstDAO;
-import report.view_models.nodes.Table;
-
-
 
 
 public class addSiteRowLayoutController implements Initializable {
@@ -50,7 +48,7 @@ public class addSiteRowLayoutController implements Initializable {
                    siteNumber,
                    contName,
                    typeHome;
-    private Table  rootTable,  elemTableView;
+    private TableWrapper rootTableWrapper,  elemTableWrapperView;
     ObservableList additionalTable;
     @FXML private GridPane gridPane;
     @FXML private Label    siteNumLabel,
@@ -71,8 +69,8 @@ public class addSiteRowLayoutController implements Initializable {
 ********************************************************************************************************************/ 
 
     
-    public void setRootTableView(Table t) {
-        this.rootTable   = t;
+    public void setRootTableView(TableWrapper t) {
+        this.rootTableWrapper = t;
         this.editObsList = getCheckObs(t.getItems());
         this.bildingPart = t.getTitle();
         this.siteNumber  = Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER);
@@ -99,9 +97,9 @@ public class addSiteRowLayoutController implements Initializable {
 
 
     private void init_TableView(){
-       elemTableView = TableFactory.getEst_add();
-       gridPane.add(elemTableView, 0, 2, 4, 1);
-       gridPane.setMargin(elemTableView, new Insets(0,10,0,10));
+       elemTableWrapperView = TableFactory.getEst_add();
+       gridPane.add(elemTableWrapperView, 0, 2, 4, 1);
+       gridPane.setMargin(elemTableWrapperView, new Insets(0,10,0,10));
     }
     
     private void init_Labels(){
@@ -188,7 +186,7 @@ public class addSiteRowLayoutController implements Initializable {
         System.err.println("editObsList  size "+editObsList.size());
 
       
-        if(check >= 0)elemTableView.setItems(result);
+        if(check >= 0) elemTableWrapperView.setItems(result);
         if(check < 0)System.out.println("Базовая меньше -> " + check);
         
           
@@ -288,7 +286,7 @@ public class addSiteRowLayoutController implements Initializable {
             price_sum = price_one*value;
            
            
-            elemTableView.getItems().add(new TableItemCB(
+            elemTableWrapperView.getItems().add(new TableItemCB(
                     0,
                     false, 
                     todayDate,
@@ -310,10 +308,10 @@ public class addSiteRowLayoutController implements Initializable {
     @FXML
     private void handle_addMarkedRow(ActionEvent event) {  
 //        ((TableView)titledPaneModel.getModelTableView()
-//        ).getItems().addAll(getSelectedCheckObs(elemTableView.getItems()));
-        rootTable.getItems().addAll(getSelectedCheckObs(elemTableView.getItems()));
+//        ).getItems().addAll(getSelectedCheckObs(elemTableWrapperView.getItems()));
+        rootTableWrapper.getItems().addAll(getSelectedCheckObs(elemTableWrapperView.getItems()));
 //        if(Est.Changed.isExist())
-//           additionalTable.addAll(getSelectedCheckObs(elemTableView.getItems()))
+//           additionalTable.addAll(getSelectedCheckObs(elemTableWrapperView.getItems()))
 //            ;
             
         

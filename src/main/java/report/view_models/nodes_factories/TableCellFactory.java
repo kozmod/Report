@@ -65,7 +65,7 @@ public class TableCellFactory{
     }
     
     /**
-     * Cell to "Add Row Estimate" Table (addSiteRowLayoutController)
+     * Cell to "Add Row Estimate" TableWrapper (addSiteRowLayoutController)
      * @return CheckValueCell
      */
     public static TableCell getCheckValueCell(){
@@ -73,7 +73,7 @@ public class TableCellFactory{
     }
     
     /**
-     * Cell to EDIT Site Table  
+     * Cell to EDIT Site TableWrapper
      * <br>[set type of currency]
      * @return EditCell
      */
@@ -203,7 +203,7 @@ public class TableCellFactory{
     }
     
     /**
-     * Cell to EDIT Table  
+     * Cell to EDIT TableWrapper
      * <br>[set type of currency]
      */
     private class EditSiteCell extends TableCell<TableItemPreview, Object>{
@@ -357,7 +357,7 @@ public class TableCellFactory{
     }
     
   /**
-   * Cell to "Add Row Estimate" Table (addSiteRowlayoutController)
+   * Cell to "Add Row Estimate" TableWrapper (addSiteRowlayoutController)
    */
    private class CheckValueCell extends TableCell<TableItemCB, Boolean> {
         private CheckBox checkBox;
@@ -526,7 +526,7 @@ public class TableCellFactory{
                 };
     }
 //   private class TooltipTableCell extends TableCell<TableItem, Object> {
-//       Table table = new Table();
+//       TableWrapper table = new TableWrapper();
 //       Tooltip tooltip = new Tooltip();
 //         
 //        public TooltipTableCell() {
