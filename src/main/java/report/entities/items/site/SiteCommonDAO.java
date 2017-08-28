@@ -5,6 +5,8 @@
  */
 package report.entities.items.site;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import report.usege_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -25,24 +27,28 @@ public class SiteCommonDAO {
 
     /**
      * Get ArrayList to TreeView Of Sites and make TreeViewItem.
-     * @param QueueValue
-     * @param PaimentCondition
+
      * @return 
      */
-    public  TreeItem<String> getTreeObsList(String QueueValue, String PaimentCondition){    //DATA for TREEVIEW
+    public  TreeItem<String> getTreeObsList(String queueValue, String payment, String siteNumber){    //DATA for TREEVIEW
                 
         long lBegin = System.currentTimeMillis();
                
         ArrayList<TableItemPreview> siteList = new ArrayList<>();
                 
-        String ResultSetString = "SELECT [id],[SiteNumber], [Contractor]  from dbo.[Site] "
-                                   + "WHERE [StatusPayment] LIKE '" + PaimentCondition+ "' "
-                                   + "And [QueueBuilding] LIKE '" + QueueValue +"' "
+        String psmtmtString = "SELECT [id],[SiteNumber], [Contractor]  from dbo.[Site] "
+                                   + "WHERE [StatusPayment] LIKE ? "
+                                   + "And [QueueBuilding] LIKE ? "
+                                   + "And [SiteNumber] LIKE ? "
                                    + "And [dell] = 0 "                                           //dell 0 - false / 1 - true
                                    + "Order by [SiteNumber]";
             try (Connection connection = SQLconnector.getInstance();
-                 Statement st = connection.createStatement();){
-                ResultSet rs = st.executeQuery(ResultSetString);
+                 PreparedStatement pstmt = connection.prepareStatement(psmtmtString)){
+                pstmt.setString(1,payment);
+                pstmt.setString(2,queueValue);
+                pstmt.setString(3,siteNumber);
+
+                ResultSet rs = pstmt.executeQuery();
                 
                 while(rs.next()){
                     siteList.add(new TableItemPreview( 
@@ -171,7 +177,55 @@ public class SiteCommonDAO {
             Logger.getLogger(SiteCommonDAO.class.getName()).log(Level.SEVERE, null, ex);
             
         }
-            
-       
     }
+
+    public ObservableList<TableItemPreview> getListIntro(){
+
+
+
+        ObservableList<TableItemPreview> list = FXCollections.observableArrayList(TableItemPreview.extractor());
+        String ResultSetString = "BEGIN TRAN;"
+                +"DECLARE @SumCostHouse decimal(28,2) "
+                +", @SumSmetCost decimal(28,2) "
+                +", @Quantity INT "
+                +" SELECT @SumCostHouse = sum([CostHouse]) from [dbo].[Site]    where dell = 0; \n"
+                +" SELECT @SumSmetCost  = sum([SmetCost])  from [dbo].[Site]    where dell = 0; \n"
+                +" SELECT @Quantity     = sum([Quantity])  from [dbo].[FinPlan] where dell = 0; \n"
+                +" SELECT TOP 1 "
+                            + "id"
+                            +",Date"
+                            +",OutgoingRest"
+                            +",@Quantity as Quantity "
+                            +",(@SumCostHouse - @SumSmetCost) as SumProfit "
+                +" FROM Account ORDER BY ID DESC \n"
+                +" COMMIT TRAN; ";
+
+
+        try(Connection connection = SQLconnector.getInstance();
+            PreparedStatement prst = connection.prepareStatement(ResultSetString)) {
+
+            ResultSet rs = prst.executeQuery();
+            if(rs.next()){
+                list.addAll(
+                        //0
+                        new TableItemPreview(rs.getLong("id"),"Date", "Дата последней транзакции", rs.getLong("Date")),
+                        //1
+                        new TableItemPreview(rs.getLong("id"),"OutgoingRest", "Исходящий остаток", rs.getDouble("OutgoingRest")),
+                        //2
+                        new TableItemPreview(rs.getLong("id"),"Quantity", "Количество Участков", rs.getInt("Quantity")),
+                        //3
+                        new TableItemPreview(rs.getLong("id"),"SumProfit", "Суммарная прибыль", rs.getDouble("SumProfit"))
+
+                );
+
+                //System.out.println(SiteInfoTable.saveEst(0).getFirstValue());
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ItemSiteDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+        return list ;
+    }
+
 }

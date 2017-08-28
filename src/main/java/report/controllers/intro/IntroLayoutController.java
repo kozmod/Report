@@ -3,7 +3,8 @@ package report.controllers.intro;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
-import report.entities.items.intro.ItemIntroDAO;
+import report.entities.items.intro.ItemFinishedSiteDAO;
+import report.entities.items.site.SiteCommonDAO;
 import report.view_models.nodes_factories.TableViewFxmlDecorator;
 
 import java.net.URL;
@@ -14,6 +15,8 @@ public class IntroLayoutController implements Initializable {
 
     @FXML TableView infoTV, finishedSiteTV;
 
+    //Service
+    private IntroControllerService introService = new IntroControllerService(this);
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -24,7 +27,9 @@ public class IntroLayoutController implements Initializable {
 
     }
 
+
     public void updateTables(){
-        finishedSiteTV.setItems(new ItemIntroDAO().getList());
+        infoTV.setItems(introService.getListIntro());
+        finishedSiteTV.setItems(introService.getFinishedSiteList());
     }
 }

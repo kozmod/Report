@@ -35,7 +35,7 @@ import report.view_models.nodes_factories.FileChooserFactory;
 import report.usege_strings.PathStrings;
 import report.usege_strings.SQL;
 
-import report.servises.StageCreator;
+import report.view_models.StageCreator;
 import report.view_models.data_models.DecimalFormatter;
 import report.view_models.data_models.EpochDatePickerConverter;
 import report.view_models.nodes_factories.TableFactory;

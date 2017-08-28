@@ -2,6 +2,8 @@
 package report.controllers.root;
 
 import java.io.File;
+
+import javafx.scene.control.*;
 import report.Report;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -12,24 +14,16 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Label;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.SeparatorMenuItem;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TitledPane;
-import javafx.scene.control.TreeCell;
-import javafx.scene.control.TreeView;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 import report.controllers.*;
 import report.controllers.intro.IntroLayoutController;
+import report.view_models.InputValidator;
 import report.view_models.nodes_factories.FileChooserFactory;
 import report.usege_strings.PathStrings;
 import report.controllers.showEstLayoutController.Est;
-import report.servises.StageCreator;
+import report.view_models.StageCreator;
 import report.models.sql.sqlQuery.BackUpQuery;
 import report.view_models.nodes_factories.TableFactory;
 import report.entities.items.site.TableItemPreview;
@@ -60,7 +54,8 @@ public class rootLayoutController implements Initializable {
     @FXML private MenuItem printEstToXmlMenuItem;
 
     @FXML Label lll;
-    
+    @FXML TextField findSiteByNameTF;
+
     private TableView previewTable;
     private static final TableView changeTable = TableFactory.getChangeView();
 
@@ -106,10 +101,8 @@ public class rootLayoutController implements Initializable {
 
 
 /*!******************************************************************************************************************
-*                                                                                                               INIT
+*                                                                                                          INITIALIZE
 ********************************************************************************************************************/
-
-
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
@@ -119,7 +112,9 @@ public class rootLayoutController implements Initializable {
 
 
     }
-
+/*!******************************************************************************************************************
+*                                                                                                               INIT
+********************************************************************************************************************/
 
     private void init_TreeComboBlock(){
        comboQueueNum.setItems(rootService.getComboQueueValues());
@@ -148,8 +143,14 @@ public class rootLayoutController implements Initializable {
         init_TreeComboBlock();
         init_siteTreeView();
         init_previewTable();
-        reportApp.<IntroLayoutController>getCenterController().updateTables();
-        
+
+        if(!(reportApp.getCenterController() instanceof IntroLayoutController)) {
+            reportApp.initIntroLayout()
+                    .<IntroLayoutController>getController()
+                    .updateTables();
+        }else{
+            reportApp.<IntroLayoutController>getCenterController().updateTables();
+        }
     }
     
     @FXML
@@ -223,9 +224,9 @@ public class rootLayoutController implements Initializable {
     }
     @FXML
     private void handle_CommonProperties(ActionEvent event) {
-        StageCreator allParopLayout
+        StageCreator allPropLayout
                         = new StageCreator(PathStrings.Layout.ALL_PROPERTIES, "Общие параметры").loadNewWindow();
-        allParopLayout.getStage().show();
+        allPropLayout.getStage().show();
     }
 
     @FXML
@@ -279,6 +280,16 @@ public class rootLayoutController implements Initializable {
              combo_SiteConditionValue ="%";
         else combo_SiteConditionValue = comboSiteCondition.getValue().toString();
         treeViewSite.setRoot(rootService.getTreeViewList(combo_QueueNumValue, combo_SiteConditionValue));
+    }
+
+    @FXML
+    private void handle_FindSiteByName(ActionEvent event) {
+        String findSiteNumber = findSiteByNameTF.getText();
+        if(InputValidator.isSiteNumberValid(findSiteNumber) && findSiteNumber != null){
+            treeViewSite.setRoot(rootService.finTreeViewListWithOneElement(findSiteNumber));
+        }
+
+
     }
 
     

@@ -429,9 +429,9 @@ public class TableFactory {
         columnDate.setCellValueFactory(new PropertyValueFactory("dateCreate"));
         columnDate.setMinWidth(80);
         
-        columnV .setCellFactory(param ->  TableCellFactory.getEquialToAboveCell());
-        columnPO.setCellFactory(param ->  TableCellFactory.getEquialToAboveCell());
-        columnPS.setCellFactory(param ->  TableCellFactory.getEquialToAboveCell());
+        columnV .setCellFactory(param ->  TableCellFactory.getEqualsToAboveCell());
+        columnPO.setCellFactory(param ->  TableCellFactory.getEqualsToAboveCell());
+        columnPS.setCellFactory(param ->  TableCellFactory.getEqualsToAboveCell());
         
         table.getColumns().addAll(columnV, columnPO, columnPS, columnDate );
        

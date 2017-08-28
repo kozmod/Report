@@ -13,7 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import report.controllers.root.rootLayoutController;
-import report.servises.StageCreator;
+import report.view_models.StageCreator;
 import report.usege_strings.PathStrings;
 
 
@@ -102,10 +102,11 @@ public class Report extends Application {
     }
 
     //init Intro Layout
-    private void initIntroLayout(){
+    public StageCreator initIntroLayout(){
         StageCreator.setReportMain(this);
         StageCreator center = new StageCreator(PathStrings.Layout.INTRO,"").loadIntoRootBorderPaneCenter();
         Object centerController = center.getController();
+        return center;
     }
 
 

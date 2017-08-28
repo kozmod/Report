@@ -115,7 +115,7 @@ public class TableCellFactory{
      * <br>
      * @return ChageTableCell
      */
-    public static TableCell getEquialToAboveCell(){
+    public static TableCell getEqualsToAboveCell(){
         return new TableCellFactory().new EquialToAboveTableCell();
     }
       /**
@@ -510,7 +510,9 @@ public class TableCellFactory{
                         if (item instanceof String) {
                             setText( item.toString());
                         } else if (item instanceof Long) {
-                            setText(LocalDate.ofEpochDay((long) item).toString());
+                            setText(LocalDate.ofEpochDay((long) item).toString());}
+                            else if (item instanceof Integer) {
+                            setText( item.toString());
                         } else if (item instanceof Float) {
                             setText(DecimalFormatter.toString(item));
                         } else if (item instanceof Double) {

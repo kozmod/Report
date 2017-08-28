@@ -3,7 +3,6 @@ package report.entities.items.intro;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.entities.items.KS.ItemKSDAO;
-import report.entities.items.KS.TableItemKS;
 import report.models.sql.SQLconnector;
 import report.usege_strings.SQL;
 
@@ -14,11 +13,11 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ItemIntroDAO {
+public class ItemFinishedSiteDAO {
 
-    public ObservableList<TableItemIntro> getList(){
+    public ObservableList<TableItemFinishedSite> getList(){
 
-        ObservableList<TableItemIntro> list = FXCollections.observableArrayList();
+        ObservableList<TableItemFinishedSite> list = FXCollections.observableArrayList();
 
         String psmtmtString = "SELECT  "
                            + " S.[SiteNumber] "
@@ -38,7 +37,7 @@ public class ItemIntroDAO {
             ResultSet rs = pstmt.getResultSet();
 
             while(rs.next()){
-                list.add(new TableItemIntro(
+                list.add(new TableItemFinishedSite(
                         rs.getObject (SQL.Common.SITE_NUMBER).toString(),
                         rs.getObject (SQL.Common.TYPE_HOME).toString(),
                         rs.getDouble (SQL.Site.SMET_COST),

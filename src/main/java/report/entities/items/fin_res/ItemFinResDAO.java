@@ -39,9 +39,7 @@ public class ItemFinResDAO {
                                 rs.getDouble ("CostHouse"),
                                 rs.getDouble ("SaleHouse"),
                                 rs.getDouble ("Res"),
-//                                                rs.getFloat("Res") - rs.getFloat ("SmetCost")
-                                rs.getDouble ("CostHouse") - rs.getDouble ("SmetCost")
-                        )
+                                rs.getDouble ("CostHouse") - rs.getDouble ("SmetCost"))
                 );
             }
         } catch (SQLException ex) {

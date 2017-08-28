@@ -16,9 +16,16 @@ public class RootControllerService {
 
     private rootLayoutController rootLayout;
 
+/*!******************************************************************************************************************
+*                                                                                                       CONSTRUCTORS
+********************************************************************************************************************/
     public RootControllerService(rootLayoutController root) {
         this.rootLayout = root;
     }
+
+/*!******************************************************************************************************************
+*                                                                                                             METHODS
+********************************************************************************************************************/
 
     public  ObservableList<Object> getComboQueueValues(){
        return  new ItemSiteDAO().getDistinctOfColumn(SQL.Site.QUEUE_BUILDING, ServiceStrings.PERCENT);
@@ -28,12 +35,34 @@ public class RootControllerService {
        return  new ItemSiteDAO().getDistinctOfColumn(SQL.Site.STATUS_PAYMENT,ServiceStrings.PERCENT);
     }
 
+    /**
+     * Get TreeView item List contains all elements
+     * @return TreeItem<String>
+     */
     public  TreeItem<String> getTreeViewList(){
-       return  new SiteCommonDAO().getTreeObsList(ServiceStrings.PERCENT.trim(), ServiceStrings.PERCENT.trim());
+       return  new SiteCommonDAO().getTreeObsList(ServiceStrings.PERCENT.trim(),
+                                                   ServiceStrings.PERCENT.trim(),
+                                                   ServiceStrings.PERCENT.trim());
     }
 
-    public  TreeItem<String> getTreeViewList(String parameterFirst, String parameterSecond){
-       return  new SiteCommonDAO().getTreeObsList(parameterFirst.trim(), parameterSecond.trim());
+    /**
+     * Get TreeView item List contains elements use  parameters : Queue, Payment Status
+     * @return TreeItem<String>
+     */
+    public  TreeItem<String> getTreeViewList(String Queue, String paymentStatus){
+       return  new SiteCommonDAO().getTreeObsList(Queue.trim(),
+                                                    paymentStatus.trim(),
+                                                    ServiceStrings.PERCENT.trim());
+    }
+
+    /**
+     * Get TreeView item List contains elements use  Site Number and  Queue = Payment Status = %
+     * @return TreeItem<String>
+     */
+    public  TreeItem<String> finTreeViewListWithOneElement(String siteNumber){
+       return  new SiteCommonDAO().getTreeObsList(ServiceStrings.PERCENT.trim(),
+                                                    ServiceStrings.PERCENT.trim(),
+                                                    siteNumber);
     }
 
 

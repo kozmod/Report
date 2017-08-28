@@ -24,7 +24,7 @@ import report.view_models.data_models.EpochDatePickerConverter;
 
 public class finResLayoutController implements Initializable {
 
-    @FXML private DatePicker dateFinResfrom,dateFinResto;
+    @FXML private DatePicker dateFinResFrom, dateFinResTo;
     @FXML private TableView<TableItemFinRes>  finResTable;
     @FXML private TextField sumSmetCostTF, sumCostHouseTF, profitTF;
 
@@ -43,8 +43,8 @@ public class finResLayoutController implements Initializable {
         finResTable.setItems(finResObs);
 
         //Init DatePickers
-        dateFinResfrom.setConverter(new EpochDatePickerConverter());
-        dateFinResto.setConverter  (new EpochDatePickerConverter());
+        dateFinResFrom.setConverter(new EpochDatePickerConverter());
+        dateFinResTo.setConverter  (new EpochDatePickerConverter());
 
         //set TF value
         setTextFieldValue(sumSmetCostTF);
@@ -81,14 +81,14 @@ public class finResLayoutController implements Initializable {
     private void handle_FilterSite(ActionEvent event) {
         if (isInputValid()){
 //            finResTable.setItems(commonSQL_SELECT.getFinResObs(
-//                                    (int) dateFinResfrom.getValue().toEpochDay(),
-//                                    (int) dateFinResto.getValue().toEpochDay())
+//                                    (int) dateFinResFrom.getValue().toEpochDay(),
+//                                    (int) dateFinResTo.getValue().toEpochDay())
 //                                                        );
 
             finResTable.setItems(
                     finResObs.stream()
-                            .filter(item -> item.getDateContract()>=(int) dateFinResfrom.getValue().toEpochDay()
-                                         && item.getDateContract()<=(int) dateFinResto.getValue().toEpochDay())
+                            .filter(item -> item.getDateContract()>=(int) dateFinResFrom.getValue().toEpochDay()
+                                         && item.getDateContract()<=(int) dateFinResTo.getValue().toEpochDay())
                             .collect(toCollection(FXCollections::observableArrayList)));
 
 
@@ -116,21 +116,21 @@ public class finResLayoutController implements Initializable {
     private boolean isInputValid() {
         StringBuilder errorMessage = new StringBuilder();
 
-            if (dateFinResfrom.getValue() == null ){
+            if (dateFinResFrom.getValue() == null ){
                 errorMessage.append("'Дата поиска: с' ");
-                dateFinResfrom.setEditable(true);
-                dateFinResfrom.setStyle("-fx-border-color: red;");
+                dateFinResFrom.setEditable(true);
+                dateFinResFrom.setStyle("-fx-border-color: red;");
 
             }
-            if (dateFinResto.getValue() == null){
+            if (dateFinResTo.getValue() == null){
                 errorMessage.append("'Дата поиска: по' ");
 
-                dateFinResto.setStyle("-fx-border-color: red;");
+                dateFinResTo.setStyle("-fx-border-color: red;");
             }
-            if(dateFinResfrom.getValue() != null && dateFinResto.getValue() != null
-                    && dateFinResfrom.getValue().toEpochDay() > dateFinResto.getValue().toEpochDay()){
+            if(dateFinResFrom.getValue() != null && dateFinResTo.getValue() != null
+                    && dateFinResFrom.getValue().toEpochDay() > dateFinResTo.getValue().toEpochDay()){
                 errorMessage.append("'Неверный период' ");
-                dateFinResfrom.setStyle("-fx-border-color: red;");
+                dateFinResFrom.setStyle("-fx-border-color: red;");
 
             }
 
@@ -142,8 +142,8 @@ public class finResLayoutController implements Initializable {
 
         PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
         visiblePause.setOnFinished( e -> {
-                        dateFinResfrom.setStyle(null);
-                        dateFinResto.setStyle(null);
+                        dateFinResFrom.setStyle(null);
+                        dateFinResTo.setStyle(null);
                     });
         visiblePause.play();
 

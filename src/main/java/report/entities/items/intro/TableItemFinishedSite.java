@@ -5,9 +5,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-import java.sql.Timestamp;
-
-public class TableItemIntro {
+public class TableItemFinishedSite {
 
 //    private long id;
 //    private int  del;
@@ -18,7 +16,7 @@ public class TableItemIntro {
     protected final DoubleProperty smetCost;
     protected final DoubleProperty saleCost;
 
-    public TableItemIntro(
+    public TableItemFinishedSite(
 //                          long id,
 //                          int del,
 //                          Timestamp dateCreate,
@@ -65,7 +63,7 @@ public class TableItemIntro {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        TableItemIntro that = (TableItemIntro) o;
+        TableItemFinishedSite that = (TableItemFinishedSite) o;
 
 //        if (id  != that.id)  return false;
 //        if (del != that.del) return false;
