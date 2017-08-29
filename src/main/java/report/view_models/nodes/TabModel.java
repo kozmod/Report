@@ -6,6 +6,7 @@ import javafx.beans.binding.StringBinding;
 import javafx.geometry.Insets;
 import javafx.geometry.NodeOrientation;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
@@ -18,6 +19,7 @@ public class TabModel {
     private Est enumEst;
     private TitledStackModel faundationTP, wallsTP, roofTP, apertureTP, finishingWorkTP;
     private VBox baseVBox;
+    private ScrollPane scrollPane;
     private SumLabel sumLable;
     private DoubleBinding sumDouble;
 
@@ -36,8 +38,12 @@ public class TabModel {
         return baseVBox;
     }
 
-    public SumLabel getSumLabel() { return sumLable; }
+
+    public SumLabel getSumLabel() {
+        return sumLable;
+    }
     public Double getSumLabelValue() {
+
         return sumDouble.getValue();
     }
 
@@ -46,6 +52,7 @@ public class TabModel {
     private void createTitledPane(){
        
         baseVBox = new VBox();
+        scrollPane = new ScrollPane();
         faundationTP    = new TitledStackModel("ФУНДАМЕНТ",         enumEst);
         wallsTP         = new TitledStackModel("СТЕНЫ, ПЕРЕКРЫТИЯ", enumEst);
         roofTP          = new TitledStackModel("КРОВЛЯ",            enumEst);
@@ -107,7 +114,8 @@ public class TabModel {
         });
 
         baseVBox.getChildren().addAll(faundationTP,wallsTP,roofTP,apertureTP,finishingWorkTP);
-        
+
+
        
     }
        

@@ -3,7 +3,7 @@ package report.entities.items.plan;
 
 import report.entities.items.KS.ItemKSDAO;
 import report.entities.ItemDAO;
-import report.usege_strings.SQL;
+import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -78,7 +78,7 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
     public ObservableList<TableItemPlan> getListFact() {
         ObservableList<TableItemPlan> list = FXCollections.observableArrayList();
         
-        String psmtmtString = 
+        String sqlString =
                 " SELECT "
                 + " F.[TypeID]      "
                 + " ,max(F.[TypeName])	as [TypeName]   "
@@ -87,7 +87,7 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
                 + " ,round(SUM(S.[SmetCost]),2) 						as [SmetCostSum] "
                 + " ,case when COUNT(1) = 0 then 0 else  round(SUM(S.[SaleHouse])/COUNT(1),2) end as [SaleCost]    "
                 + " ,round(SUM(S.[SaleHouse]),2)   as [SaleCostSum] "
-                + " From dbo.[FinPlan] F          "     
+                + " From dbo.[FinPlan] F          "
                 + " Inner JOIN dbo.[Site] S     "
                 + " ON F.[TypeID] = S.[SiteTypeID] "
                 + " and F.dell = 0 "
@@ -113,7 +113,7 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
                 + " having sum(cast(S.dell as int)) = count(F.[TypeID] )  ";
          
         try(Connection connection = SQLconnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {
+            PreparedStatement pstmt = connection.prepareStatement(sqlString);) {
             
             pstmt.execute();
             

@@ -7,12 +7,11 @@ package report.entities.items.site;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.usege_strings.SQL;
+import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.logging.Level;
@@ -221,7 +220,7 @@ public class SiteCommonDAO {
                 //System.out.println(SiteInfoTable.saveEst(0).getFirstValue());
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ItemSiteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SiteItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 

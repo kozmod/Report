@@ -7,10 +7,10 @@ import javafx.collections.ObservableList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import report.entities.items.KS.TableItemKS;
-import report.usege_strings.SQL;
+import report.entities.items.contractor.TableItemContractor;
+import report.usage_strings.SQL;
 import report.controllers.showEstLayoutController.Est;
 import report.view_models.data_models.DecimalFormatter;
-import report.entities.items.site.TableItemPreview;
 import report.entities.items.TableItem;
 
 
@@ -22,7 +22,7 @@ public class PrintKS extends AbstractPrinterXML{
     private ObservableList<TableItem> obsKS;
 //    private ObservableList<PreviewTableItem>  obsPreTab;
     private String ksNumber, ksDate;
-    
+    private TableItemContractor contractorObject;
     
 
 //Constructor =====================================================================================================================    
@@ -45,10 +45,28 @@ public class PrintKS extends AbstractPrinterXML{
 //        saveDocument(System.getProperty("user.dir") + "\\lib\\XML_Models\\КС-2 № " + ksNumber + ".xml");
 //    }
 
+    public PrintKS(ObservableList<TableItem> obsKS,TableItemContractor contractor, Path path) {
+        this.obsKS    = obsKS;
+        this.ksNumber = Integer.toString(((TableItemKS)obsKS.get(0)).getKSNumber());
+        this.ksDate   = LocalDate.ofEpochDay(((TableItemKS)obsKS.get(0)).getKSDate()).toString();
+
+        this.contractorObject = contractor;
+
+        doc = buildDocument("\\lib\\XML_Models\\KS-2.xml");
+        setObjectName();
+        setDates();
+        setNumber();
+        addJMrows();
+        setAdress();
+        saveDocument(path.toString());
+    }
+
     public PrintKS(ObservableList<TableItem> obsKS, Path path) {
         this.obsKS    = obsKS;
         this.ksNumber = Integer.toString(((TableItemKS)obsKS.get(0)).getKSNumber());
         this.ksDate   = LocalDate.ofEpochDay(((TableItemKS)obsKS.get(0)).getKSDate()).toString();
+
+
 
         doc = buildDocument("\\lib\\XML_Models\\KS-2.xml");
         setObjectName();
@@ -78,14 +96,25 @@ public class PrintKS extends AbstractPrinterXML{
 //Methods ==========================================================================================================================
     //Add Name of OBJECT
     private void setObjectName(){
-        String text = "Объект: ДКП 'Мечта пятницы', ж/дом '',  уч. № ";
+
+        String text  = new StringBuilder("Объект: ДКП 'Мечта пятницы', ж/дом '',  уч. № ")
+                .insert(36, obsKS.get(0).getTypeHome())
+                .append( obsKS.get(0).getSiteNumber())
+                .toString();
         
-        StringBuilder objString = new StringBuilder(text);
-        objString.insert(36, obsKS.get(0).getTypeHome());
-        objString.append( obsKS.get(0).getSiteNumber());
+        getTargetElement("Home").setTextContent(text);
         
-        getTargetElement("Home").setTextContent(objString.toString());
-        
+    }
+    private void setAdress(){
+        String text = new StringBuilder("Объект: ")
+                .append( "ООО «")
+                .append(contractorObject.getContractor())
+                .append( "», ")
+                .append(contractorObject.getAdress())
+                .toString();
+
+        getTargetElement("Contractor").setTextContent(text);
+
     }
 
     //Add Dates of KS
@@ -120,7 +149,7 @@ public class PrintKS extends AbstractPrinterXML{
     //Add Job - Material rows
     private void addJMrows(){
         
-        int i = 1;
+        int rowsQuantity = 1;
         String buildingPart = null;
         
         for(TableItem item : obsKS){
@@ -137,7 +166,7 @@ public class PrintKS extends AbstractPrinterXML{
                 
                 row.appendChild(new CellBuilder(doc)
                                  .setCellStyle("s77")
-                                 .setCellValue("Number", Integer.toString(i))
+                                 .setCellValue("Number", Integer.toString(rowsQuantity))
                                  .build());
                 row.appendChild(new CellBuilder(doc)
                                  .setCellStyle("s77")
@@ -169,7 +198,7 @@ public class PrintKS extends AbstractPrinterXML{
                                  .build());
                 
                 targetRow.getParentNode().insertBefore(row, targetRow); 
-                i++;
+                rowsQuantity++;
             };
             
             //Set rows
@@ -178,7 +207,7 @@ public class PrintKS extends AbstractPrinterXML{
             
             row.appendChild(new CellBuilder(doc)
                                  .setCellStyle("s77")
-                                 .setCellValue("Number", Integer.toString(i))
+                                 .setCellValue("Number", Integer.toString(rowsQuantity))
                                  .build());
             row.appendChild(new CellBuilder(doc)
                                  .setCellStyle("s77")
@@ -202,7 +231,8 @@ public class PrintKS extends AbstractPrinterXML{
                                  .build());
             row.appendChild(new CellBuilder(doc)
                                  .setCellStyle("s174")
-                                 .setCellValue("Number",DecimalFormatter.toString(item.getPrice_one()) )
+                                 .setCellValue("Number",DecimalFormatter.toString(item.getPrice_one())
+                                         .replace(" ","") )
                                  .build());
             row.appendChild(new CellBuilder(doc)
                                  .setCellStyle("s174")
@@ -211,13 +241,15 @@ public class PrintKS extends AbstractPrinterXML{
                                  .build());
             
             targetRow.getParentNode().insertBefore(row, targetRow);
-            i++;             
+            rowsQuantity++;
         }
         
         //set FORMULA to ROW "Итого:"
-        String rowsCounter = Integer.toString(i - 1);
-        getTargetElement("SumEmountValue").setAttribute("ss:Formula", "=SUM(R[-"+ rowsCounter +"]C:R[-1]C)");
-        getTargetElement("SumEmountCost").setAttribute("ss:Formula", "=SUM(R[-"+ rowsCounter +"]C:R[-1]C)");
+        String rowsCounter = Integer.toString(rowsQuantity - 1);
+        super.getTargetElement("SumAmountValue")
+                .setAttribute("ss:Formula", "=SUM(R[-"+ rowsCounter +"]C:R[-1]C)");
+        super.getTargetElement("SumAmountCost")
+                .setAttribute("ss:Formula", "=SUM(R[-"+ rowsCounter +"]C:R[-1]C)");
         
 
       

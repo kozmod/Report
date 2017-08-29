@@ -33,8 +33,8 @@ public class TableItemCB extends TableItem {
             String unit, 
             Double price_one,
             Double price_sum, 
-            String bildingPart) {
-        super(id, dateCreate, siteNumber, typeHome, contractor, JM_name, JobOrMat, BindedJob, value, unit, price_one, price_sum, bildingPart);
+            String buildingPart) {
+        super(id, dateCreate, siteNumber, typeHome, contractor, JM_name, JobOrMat, BindedJob, value, unit, price_one, price_sum, buildingPart);
         this.check = new SimpleBooleanProperty(check);
     }
 
@@ -64,10 +64,8 @@ public class TableItemCB extends TableItem {
     
     @Override
     public int hashCode() {
-        int hash = 5;
-        hash = 23 * hash + (super.value != null     ? super.value.hashCode() : 0);
-        hash = 23 * hash + (super.price_one != null ? super.price_one.hashCode() : 0);
-        hash = 23 * hash + (super.price_sum != null ? super.price_sum.hashCode() : 0);
+        int hash = super.hashCode();
+        hash = 3 * hash + (this.check  != null   ? this.check.hashCode() : 0);
             
         return hash;
     }

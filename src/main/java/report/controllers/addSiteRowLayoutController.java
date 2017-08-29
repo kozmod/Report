@@ -17,13 +17,14 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import report.usege_strings.SQL;
 
 import report.controllers.showEstLayoutController.Est;
+import report.usage_strings.SQL;
 import report.view_models.data_models.DiffList;
 
 import report.view_models.InputValidator;
@@ -37,38 +38,39 @@ import report.entities.items.estimate.ItemEstDAO;
 
 
 public class addSiteRowLayoutController implements Initializable {
-//   saveEst DATA(NOW)
+    //   saveEst DATA(NOW)
     private final Timestamp todayDate = new Timestamp(System.currentTimeMillis());
-    
+
     private ObservableList<TableItemCB> editObsList,
-                                           baseObsList;
-    
+            baseObsList;
+
     private int    tableTpe;
     private String bildingPart,
-                   siteNumber,
-                   contName,
-                   typeHome;
+            siteNumber,
+            contName,
+            typeHome;
     private TableWrapper rootTableWrapper,  elemTableWrapperView;
-    ObservableList additionalTable;
-    @FXML private GridPane gridPane;
+    private ObservableList additionalTable;
+    @FXML private TableView elemTableView;
     @FXML private Label    siteNumLabel,
-                           contHomeLabel,
-                           buildingPartLabel;
+            contHomeLabel,
+            buildingPartLabel;
 
-    
+
     @FXML private TextField JM_maneTextField,
-                            bindedJobTextField,
-                            unitTextField,
-                            valueTextField,
-                            price_oneTextField;
-    
+            bindedJobTextField,
+            unitTextField,
+            valueTextField,
+            price_oneTextField;
+
     @FXML private ComboBox comboJobOrMat, comboUnit;
 
-/*!******************************************************************************************************************
-*                                                                                                Getter - Setter 
-********************************************************************************************************************/ 
 
-    
+/*!******************************************************************************************************************
+*                                                                                                Getter - Setter
+********************************************************************************************************************/
+
+
     public void setRootTableView(TableWrapper t) {
         this.rootTableWrapper = t;
         this.editObsList = getCheckObs(t.getItems());
@@ -77,76 +79,74 @@ public class addSiteRowLayoutController implements Initializable {
         this.contName    = Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR);
         this.typeHome    = Est.Common.getSiteSecondValue(SQL.Common.TYPE_HOME);
 //        this.tableType   = enumEst.getTaleType();
-        
+
         init_Labels();
         init_diffObsList();
-    
+
     }
-    
+
     public void setAditionalTableView(ObservableList t) {this.additionalTable = t; }
-    
-/*!******************************************************************************************************************
-*                                                                                                           INIT 
-********************************************************************************************************************/ 
+
+    /*!******************************************************************************************************************
+    *                                                                                                           INIT
+    ********************************************************************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        init_TableView();
+        //Init TableView
+        elemTableWrapperView = TableFactory.decorEst_add(elemTableView);
+
         init_TextField();
         init_ComboBox();
     }
 
 
-    private void init_TableView(){
-       elemTableWrapperView = TableFactory.getEst_add();
-       gridPane.add(elemTableWrapperView, 0, 2, 4, 1);
-       gridPane.setMargin(elemTableWrapperView, new Insets(0,10,0,10));
-    }
-    
+
+
     private void init_Labels(){
         siteNumLabel.setText(siteNumber);
-        contHomeLabel.setText(contName); 
+        contHomeLabel.setText(contName);
         buildingPartLabel.setText(bildingPart);
     }
 
     private void init_TextField() {
         bindedJobTextField.setVisible(false);
         bindedJobTextField.setDisable(true);
-        
+
         unitTextField.setVisible(false);
         unitTextField.setDisable(true);
     }
     private void init_ComboBox(){
-        ObservableList JobOrMatObs 
+        ObservableList JobOrMatObs
                 = FXCollections.observableArrayList ("Работа", "Материал");
         comboJobOrMat.setItems(JobOrMatObs);
         comboJobOrMat.valueProperty().addListener(new ChangeListener<String>() {
-            @Override 
+            @Override
             public void changed(ObservableValue ov, String oldValue, String newValue) {
 //                System.out.println(comboJobOrMat.getValue());
-                
+
                 if(newValue.equals("Работа")){
                     bindedJobTextField.setText("-");
                     bindedJobTextField.setDisable(true);
                     bindedJobTextField.setVisible(false);
-                    
+
                 } else {
                     bindedJobTextField.clear();
                     bindedJobTextField.setDisable(false);
                     bindedJobTextField.setVisible(true);
                     bindedJobTextField.setPromptText("Введите название работы");
-                    
+
                 }
-                
-            }    
-            
-            
+
+            }
+
+
         });
-        ObservableList unitObs 
+        ObservableList unitObs
                 = FXCollections.observableArrayList(new ItemEstDAO().getDistinctOfColumn(SQL.Estimate.UNIT, "-Новый тип Ед. изм.-"));
 //                = FXCollections.observableArrayList(new CommonQuery().getObsDISTINCT("Estimate", "Unit", this));
         comboUnit.setItems(unitObs);
         comboUnit.valueProperty().addListener(new ChangeListener<String>() {
-            @Override 
+            @Override
             public void changed(ObservableValue ov, String oldValue, String newValue) {
                 if(newValue.equals("-Новый тип Ед. изм.-")){
                     unitTextField.clear();
@@ -158,68 +158,68 @@ public class addSiteRowLayoutController implements Initializable {
                     unitTextField.setDisable(true);
                     unitTextField.setVisible(false);
                     unitTextField.setText(newValue);
-                    
+
                 }
-                
-            }    
-            
-            
+
+            }
+
+
         });
-        
+
     }
-    
+
     // ATTENTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     private void init_diffObsList(){
-      int check ;
+        int check ;
 //       baseObsList = getCheckObs(commonSQL_SELECT.getEstObs_base(siteNumber, contName,typeHome, bildingPart));
-       baseObsList = new ItemEstDAO().getBaseList(bildingPart);
-       DiffList diflist = new DiffList(baseObsList, editObsList);
-       
-       ObservableList<TableItem> result;
-       if(diflist.exElements().size() > 0)
+        baseObsList = new ItemEstDAO().getBaseList(bildingPart);
+        DiffList diflist = new DiffList(baseObsList, editObsList);
+
+        ObservableList<TableItem> result;
+        if(diflist.exElements().size() > 0)
             result =   FXCollections.observableArrayList(diflist.exElements());
-       else result  =   FXCollections.observableArrayList();    
-       check = baseObsList.size() - editObsList.size();
+        else result  =   FXCollections.observableArrayList();
+        check = baseObsList.size() - editObsList.size();
 
 //        System.err.println("result size "+result.size());
         System.err.println("baseObsList  size "+baseObsList.size());
         System.err.println("editObsList  size "+editObsList.size());
 
-      
+
         if(check >= 0) elemTableWrapperView.setItems(result);
         if(check < 0)System.out.println("Базовая меньше -> " + check);
-        
-          
+
+
     }
 
-/*!******************************************************************************************************************
-*                                                                                                           METH0TS 
-********************************************************************************************************************/
+    /*!******************************************************************************************************************
+    *                                                                                                           METH0TS
+    ********************************************************************************************************************/
     private ObservableList<TableItemCB>  getCheckObs(ObservableList<TableItem> items){
         ObservableList<TableItemCB>  checkedObsList = FXCollections.observableArrayList();
-        
+
         if(items != null)
-        for (TableItem obsItem : items){
-            checkedObsList.add(new TableItemCB(
-                                        0,
-                                        false, 
-                                        todayDate,
-                                        obsItem.getSiteNumber(),
-                                        obsItem.getTypeHome(),
-                                        obsItem.getContractor(),
-                                        obsItem.getJM_name(),
-                                        obsItem.getJobOrMat(),
-                                        obsItem.getBindedJob(),
-                                        obsItem.getValue(),
-                                        obsItem.getUnit(),
-                                        obsItem.getPrice_one(),
-                                        obsItem.getPrice_sum(),
-                                        obsItem.getBildingPart()
-            ));
-        }
-     
-     return checkedObsList;
-    }   
+            for (TableItem obsItem : items){
+                checkedObsList.add(new TableItemCB(
+                        0,
+                        false,
+                        todayDate,
+                        obsItem.getSiteNumber(),
+                        obsItem.getTypeHome(),
+                        obsItem.getContractor(),
+                        obsItem.getJM_name(),
+                        obsItem.getJobOrMat(),
+                        obsItem.getBindedJob(),
+                        obsItem.getValue(),
+                        obsItem.getUnit(),
+                        obsItem.getPrice_one(),
+                        obsItem.getPrice_sum(),
+                        obsItem.getBildingPart()
+                ));
+            }
+
+        return checkedObsList;
+    }
 
     public ObservableList<TableItemEst>  getSelectedCheckObs(ObservableList<TableItem> items){
         ObservableList<TableItemEst>  checkedObsList = FXCollections.observableArrayList();
@@ -227,68 +227,68 @@ public class addSiteRowLayoutController implements Initializable {
         for (TableItem obsItem : items){
             if(((TableItemCB)obsItem).getCheck() == true){
                 checkedObsList.add(new TableItemEst
-                                    .Builder()
-                                    .setSiteNumber(obsItem.getSiteNumber())
-                                    .setTypeHome(obsItem.getTypeHome())
-                                    .setContractor(obsItem.getContractor())
-                                    .setJM_name(obsItem.getJM_name())
-                                    .setJobOrMat(obsItem.getJobOrMat())
-                                    .setBindedJob(obsItem.getBindedJob())
-                                    .setValue(obsItem.getValue())
-                                    .setUnit(obsItem.getUnit())
-                                    .setPrice_one(obsItem.getPrice_one())
-                                    .setPrice_sum(obsItem.getPrice_sum())
-                                    .setBildingPart(obsItem.getBildingPart())
-                        
-                                    .setDate(todayDate)
+                                .Builder()
+                                .setSiteNumber(obsItem.getSiteNumber())
+                                .setTypeHome(obsItem.getTypeHome())
+                                .setContractor(obsItem.getContractor())
+                                .setJM_name(obsItem.getJM_name())
+                                .setJobOrMat(obsItem.getJobOrMat())
+                                .setBindedJob(obsItem.getBindedJob())
+                                .setValue(obsItem.getValue())
+                                .setUnit(obsItem.getUnit())
+                                .setPrice_one(obsItem.getPrice_one())
+                                .setPrice_sum(obsItem.getPrice_sum())
+                                .setBildingPart(obsItem.getBildingPart())
+
+                                .setDate(todayDate)
 //                                    .setTableType(tableType)
-                                    .setTableType(1)
-                                    .setInKS(false)
-                                    .build()
-                    );
+                                .setTableType(1)
+                                .setInKS(false)
+                                .build()
+                );
             }
         }
         return checkedObsList;
     }   
 /*!******************************************************************************************************************
 *                                                                                                           HANDLERS 
-********************************************************************************************************************/    
+********************************************************************************************************************/
 
     @FXML
     private void handle_addRow(ActionEvent event) {
         String JM_name,
-               JobOrMat = null,
-               bindedLob = null,
-               unit ;
+                JobOrMat = null,
+                bindedLob = null,
+                unit ;
         Double value,
-              price_one,
-              price_sum;
-         
+                price_one,
+                price_sum;
+
         if(isInputValid()){
-            
-            if (((String)comboJobOrMat.getValue()) != null ){ 
+
+            if (((String)comboJobOrMat.getValue()) != null ){
                 JobOrMat = comboJobOrMat.getValue().toString();
             }
-            if (((String)comboJobOrMat.getValue()) == "Работа"){ 
+            if (((String)comboJobOrMat.getValue()) == "Работа"){
                 bindedLob = "-";
             }else if(((String)comboJobOrMat.getValue()) == "Материал"){
                 bindedLob = bindedJobTextField.getText();
             }
-            if (((String)comboUnit.getValue()) != "-Новый тип Ед. изм.-"){ 
+            if (((String)comboUnit.getValue()) != "-Новый тип Ед. изм.-"){
                 unit = comboUnit.getValue().toString();
             }else{
                 unit = unitTextField.getText();
             }
-            
+
             JM_name   = JM_maneTextField.getText();
             value     = Double.parseDouble(valueTextField.getText());
             price_one = Double.parseDouble(price_oneTextField.getText());
             price_sum = price_one*value;
-           
-           
+
+
             elemTableWrapperView.getItems().add(new TableItemCB(
                     0,
-                    false, 
+                    false,
                     todayDate,
                     siteNumber,
                     typeHome,
@@ -301,35 +301,35 @@ public class addSiteRowLayoutController implements Initializable {
                     price_one,
                     price_sum,
                     bildingPart
-            ));  
+            ));
         }
     }
-    
+
     @FXML
-    private void handle_addMarkedRow(ActionEvent event) {  
+    private void handle_addMarkedRow(ActionEvent event) {
 //        ((TableView)titledPaneModel.getModelTableView()
 //        ).getItems().addAll(getSelectedCheckObs(elemTableWrapperView.getItems()));
         rootTableWrapper.getItems().addAll(getSelectedCheckObs(elemTableWrapperView.getItems()));
 //        if(Est.Changed.isExist())
 //           additionalTable.addAll(getSelectedCheckObs(elemTableWrapperView.getItems()))
 //            ;
-            
-        
+
+
         Stage appStage =(Stage) ((Node)(event.getSource())).getScene().getWindow();
         appStage.close();
-        
-        
-        
+
+
+
     }
-    
+
     @FXML
-    private void handle_cencelButton(ActionEvent event) {  
-        
+    private void handle_cencelButton(ActionEvent event) {
+
         Stage appStage =(Stage) ((Node)(event.getSource())).getScene().getWindow();
         appStage.close();
-        
-        
-        
+
+
+
     }
 //Inner class ========================================================================================================    
 //    public class CheckValueCell extends TableCell<ObsItems_Check, Boolean> {
@@ -367,101 +367,101 @@ public class addSiteRowLayoutController implements Initializable {
 //    }
 /*!******************************************************************************************************************
 *                                                                                                     InputValidator 
-********************************************************************************************************************/    
+********************************************************************************************************************/
 
-  private boolean isInputValid() {
+    private boolean isInputValid() {
         String errorMessage = "";
-            if (JM_maneTextField.getText().length() == 0 || JM_maneTextField.getText() == null ){
-                errorMessage += "'JM_maneTextField' ";
-                JM_maneTextField.setStyle("-fx-border-color: red;");
-                
-            }else if(InputValidator.isStringValid(JM_maneTextField.getText()) == false){
-                errorMessage += "'JM_maneTextField' ";
-                JM_maneTextField.setStyle("-fx-border-color: red;");
-                
-                }
-            
-            if (valueTextField.getText().length() == 0 || valueTextField.getText() == null ){
-                errorMessage += "'valueTextField  %' ";
-                valueTextField.setStyle("-fx-border-color: red;");
-                
-            }else if(InputValidator.isStringValid(valueTextField.getText()) == false){
-                errorMessage += "'valueTextField  %' ";
-                valueTextField.setStyle("-fx-border-color: red;");
-                
-                }
-            if (price_oneTextField.getText().length() == 0 || price_oneTextField.getText() == null ){
-                errorMessage += "'price_oneTextField  %' ";
-                price_oneTextField.setStyle("-fx-border-color: red;");
-                
-            }else if(InputValidator.isNumericValid(price_oneTextField.getText()) == false){
-                
-                errorMessage += "'price_oneTextField' ";
+        if (JM_maneTextField.getText().length() == 0 || JM_maneTextField.getText() == null ){
+            errorMessage += "'JM_maneTextField' ";
+            JM_maneTextField.setStyle("-fx-border-color: red;");
 
-                price_oneTextField.setStyle("-fx-border-color: red;");
+        }else if(InputValidator.isStringValid(JM_maneTextField.getText()) == false){
+            errorMessage += "'JM_maneTextField' ";
+            JM_maneTextField.setStyle("-fx-border-color: red;");
+
+        }
+
+        if (valueTextField.getText().length() == 0 || valueTextField.getText() == null ){
+            errorMessage += "'valueTextField  %' ";
+            valueTextField.setStyle("-fx-border-color: red;");
+
+        }else if(InputValidator.isStringValid(valueTextField.getText()) == false){
+            errorMessage += "'valueTextField  %' ";
+            valueTextField.setStyle("-fx-border-color: red;");
+
+        }
+        if (price_oneTextField.getText().length() == 0 || price_oneTextField.getText() == null ){
+            errorMessage += "'price_oneTextField  %' ";
+            price_oneTextField.setStyle("-fx-border-color: red;");
+
+        }else if(InputValidator.isNumericValid(price_oneTextField.getText()) == false){
+
+            errorMessage += "'price_oneTextField' ";
+
+            price_oneTextField.setStyle("-fx-border-color: red;");
+        }
+        if (((String)comboJobOrMat.getValue()) == "Материал"){
+            if(bindedJobTextField.getText().length() == 0 || bindedJobTextField.getText() == null ){
+                errorMessage += "'bindedJobTextField' ";
+                bindedJobTextField.setStyle("-fx-border-color: red;");
+            } else if(InputValidator.isStringValid(bindedJobTextField.getText()) == false){
+                errorMessage += "'bindedJobTextField' ";
+                bindedJobTextField.setStyle("-fx-border-color: red;");
             }
-            if (((String)comboJobOrMat.getValue()) == "Материал"){ 
-                    if(bindedJobTextField.getText().length() == 0 || bindedJobTextField.getText() == null ){
-                        errorMessage += "'bindedJobTextField' ";
-                        bindedJobTextField.setStyle("-fx-border-color: red;");
-                    } else if(InputValidator.isStringValid(bindedJobTextField.getText()) == false){
-                        errorMessage += "'bindedJobTextField' ";
-                        bindedJobTextField.setStyle("-fx-border-color: red;");
-                    }
-            } else if(((String)comboJobOrMat.getValue()) == null){
-                errorMessage += "'comboJobOrMat' ";
-                comboJobOrMat.setStyle("-fx-border-color: red;");
+        } else if(((String)comboJobOrMat.getValue()) == null){
+            errorMessage += "'comboJobOrMat' ";
+            comboJobOrMat.setStyle("-fx-border-color: red;");
+        }
+        if (((String)comboUnit.getValue()) == "-Новый тип Ед. изм.-"){
+            if(unitTextField.getText().length() == 0 || unitTextField.getText() == null ){
+                errorMessage += "'unitTextField' ";
+                unitTextField.setStyle("-fx-border-color: red;");
+
+            } else if(InputValidator.isStringValid(unitTextField.getText()) == false){
+                errorMessage += "'unitTextField' ";
+                unitTextField.setStyle("-fx-border-color: red;");
             }
-            if (((String)comboUnit.getValue()) == "-Новый тип Ед. изм.-"){ 
-                    if(unitTextField.getText().length() == 0 || unitTextField.getText() == null ){
-                        errorMessage += "'unitTextField' ";
-                        unitTextField.setStyle("-fx-border-color: red;");
-                        
-                    } else if(InputValidator.isStringValid(unitTextField.getText()) == false){
-                        errorMessage += "'unitTextField' ";
-                        unitTextField.setStyle("-fx-border-color: red;");
-                    }
-            } else if(((String)comboUnit.getValue()) == null){
-                errorMessage += "'comboUnit' ";
-                comboUnit.setStyle("-fx-border-color: red;");
-            }
-            
-            
+        } else if(((String)comboUnit.getValue()) == null){
+            errorMessage += "'comboUnit' ";
+            comboUnit.setStyle("-fx-border-color: red;");
+        }
+
+
 
         if(errorMessage.length() >0){
 //            errorLabel.setText("Ошибки в полях:\n" + errorMessage);
 //            errorLabel.setVisible(true);
         }
 
-          PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
-                    visiblePause.setOnFinished(new EventHandler<ActionEvent>() {
+        PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
+        visiblePause.setOnFinished(new EventHandler<ActionEvent>() {
 
-                        @Override
-                        public void handle(ActionEvent event) {
-                            JM_maneTextField.setStyle(null);
-                            valueTextField.setStyle(null);
-                            price_oneTextField.setStyle(null);
-                            bindedJobTextField.setStyle(null);
-                            unitTextField.setStyle(null);
-                            comboJobOrMat.setStyle(null);
-                            comboUnit.setStyle(null);
+            @Override
+            public void handle(ActionEvent event) {
+                JM_maneTextField.setStyle(null);
+                valueTextField.setStyle(null);
+                price_oneTextField.setStyle(null);
+                bindedJobTextField.setStyle(null);
+                unitTextField.setStyle(null);
+                comboJobOrMat.setStyle(null);
+                comboUnit.setStyle(null);
 //                            errorLabel.setVisible(false);
-                            
-                        }
-                    });
-             visiblePause.play();
 
-         if (errorMessage.length() == 0) {
+            }
+        });
+        visiblePause.play();
+
+        if (errorMessage.length() == 0) {
             return true;
-            } else { 
-             
-             // Показываем сообщение об ошибке.
+        } else {
+
+            // Показываем сообщение об ошибке.
             return false;
         }
-  }
+    }
 //ObsItems_Checked========================================================================================================
-    
-    
+
+
 //    public class ObsItems_Check {                                             
 //        
 //         //new value
@@ -611,6 +611,6 @@ public class addSiteRowLayoutController implements Initializable {
 //        return true;
 //        }
 //    } 
-  
-    
+
+
 }

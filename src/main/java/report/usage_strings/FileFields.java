@@ -1,5 +1,5 @@
 
-package report.usege_strings;
+package report.usage_strings;
 
 public interface FileFields extends ServiceStrings{
     

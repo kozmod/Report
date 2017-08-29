@@ -17,7 +17,7 @@ import javafx.util.Duration;
 
 import report.entities.items.fin_res.ItemFinResDAO;
 import report.view_models.data_models.DecimalFormatter;
-import report.view_models.nodes_factories.TableViewFxmlDecorator;
+import report.view_models.nodes_factories.TableFactory;
 import report.entities.items.fin_res.TableItemFinRes;
 import report.view_models.data_models.EpochDatePickerConverter;
 
@@ -39,7 +39,7 @@ public class finResLayoutController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         //Decorate and Init FinRes
-        TableViewFxmlDecorator. decorFinRes(finResTable);
+        TableFactory.decorFinRes(finResTable);
         finResTable.setItems(finResObs);
 
         //Init DatePickers

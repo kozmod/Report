@@ -16,7 +16,7 @@ import report.entities.items.correspondents.ItemCorDAO;
 
 
 
-public class corFilterLayoutController implements Initializable {
+public class CorrespondentFilterLayoutController implements Initializable {
 
     @FXML private ListView<Object> allCorList, selectedCorList;
     

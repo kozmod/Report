@@ -101,17 +101,23 @@ import javafx.beans.property.StringProperty;
         public void           setOutgoingRest(double outgoingRest) {this.outgoingRest.set(outgoingRest);}
 
     @Override
-        public int hashCode() {
-            int hash = 7;
-            hash = 7 * hash + (this.date          != null ? this.date.intValue()                    : 0);
-            hash = 7 * hash + (this.num           != null ? this.num.intValue()                     : 0);
-            hash = 7 * hash + (this.VO            != null ? this.VO.intValue()                      : 0);
-            hash =     hash + (this.deb           != null ? this.deb.getValue().hashCode()          : 0);
-            hash =     hash + (this.cred          != null ? this.cred.getValue().hashCode()         : 0);
-            hash =     hash + (this.outgoingRest  != null ? this.outgoingRest.getValue().hashCode() : 0);
+    public int hashCode() {
+        int hash = 7;
+        hash = 1 * hash + (this.date.get()         != 0 ? this.date.intValue()                       : 0);
+        hash = 2 * hash + (this.num.get()          != 0 ? this.num.intValue()                        : 0);
+        hash = 3 * hash + (this.VO.get()           != 0 ? this.VO.intValue()                         : 0);
+        hash =     hash + (this.deb.get()          != 0 ? this.deb.getValue().hashCode()             : 0);
+        hash =     hash + (this.cred.get()         != 0 ? this.cred.getValue().hashCode()            : 0);
+        hash =     hash + (this.ITN_Client.get()   != null ? this.ITN_Client.getValue().hashCode()   : 0);
+        hash =     hash + (this.name_Client.get()  != null ? this.name_Client.getValue().hashCode()  : 0);
+        hash =     hash + (this.accNum_Client.get()!= null ? this.accNum_Client.getValue().hashCode(): 0);
+        hash =     hash + (this.BIC_Cor.get()      != null ? this.BIC_Cor.getValue().hashCode()      : 0);
+        hash =     hash + (this.accNum_Cor.get()   != null ? this.accNum_Cor.getValue().hashCode()   : 0);
+        hash =     hash + (this.name_Cor.get()     != null ? this.name_Cor.getValue().hashCode()     : 0);
+        hash =     hash + (this.outgoingRest.get() != 0 ? this.outgoingRest.getValue().hashCode()    : 0);
 
-            return hash;
-        }
+        return hash;
+    }
 
         @Override
         public boolean equals(Object obj) {

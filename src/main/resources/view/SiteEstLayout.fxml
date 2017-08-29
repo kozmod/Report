@@ -8,11 +8,12 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+
 <VBox stylesheets="@/css/showSiteEstLayout.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.controllers.showEstLayoutController">
    <children>
       <TabPane minHeight="-Infinity" minWidth="-Infinity" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-            <Tab fx:id="baseTab"  text="Базовая Смета">
+            <Tab fx:id="baseTab" text="Базовая Смета">
                <content>
                   <VBox fx:id="baseVBox" alignment="TOP_RIGHT">
                      <children>
@@ -21,14 +22,15 @@
                   </VBox>
                </content>
             </Tab>
-          <Tab fx:id="changeTab"  text="Измененная Смета">
+          <Tab fx:id="changeTab" text="Измененная Смета">
                <content>
                   <VBox fx:id="changedVBox" alignment="TOP_RIGHT">
                      <children>
-                        <ScrollPane fx:id="scrollPaneChanged" fitToWidth="true" prefHeight="700.0" />
+                        <ScrollPane fx:id="scrollPaneChanged" fitToWidth="true" />
                      </children>
                   </VBox>
-               </content></Tab>
+               </content>
+            </Tab>
             <Tab fx:id="dopTab" text="Доп. Смета">
                <content>
                   <GridPane fx:id="gridPaneAdditional">

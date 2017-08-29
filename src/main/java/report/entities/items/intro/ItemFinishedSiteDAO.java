@@ -4,7 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.entities.items.KS.ItemKSDAO;
 import report.models.sql.SQLconnector;
-import report.usege_strings.SQL;
+import report.usage_strings.SQL;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -28,7 +28,8 @@ public class ItemFinishedSiteDAO {
                            + ",F.[SmetCost] "
                            + "FROM [Site] S "
                            + "Inner Join [FinPlan] F ON S.[SiteTypeID] = F.[TypeID] "
-                           + "WHERE S.[StatusPayment] ='не оплачено' ";
+                           + "WHERE S.[StatusPayment] ='не оплачено' "
+                           + "AND S.[dell] = 0 ";
 
         try(Connection connection = SQLconnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {

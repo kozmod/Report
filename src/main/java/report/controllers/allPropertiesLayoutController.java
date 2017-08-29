@@ -14,12 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TextInputControl;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.util.converter.NumberStringConverter;
 import report.models.coefficient.Quantity;
@@ -37,78 +32,84 @@ import report.view_models.nodes.ContextMenuOptional;
 
 
 public class allPropertiesLayoutController implements Initializable {
-    
-@FXML private GridPane  osrGP,
-                        variableGP,
-                        contractorGP,
-                        planGP;
-@FXML private TextField osrAddTextTF, osrAddValueTF,
-                        siteQuantityTF, sumExpTF, sumExpPerSiteTF;
-//@FXML private TextField variableAddTextTF,variableAddValueTF;
-@FXML private TextField contractorNameTF,contractorDirectorTF;
-@FXML private TextField planTypeTF,planSmetTF,planSaleTF, planQuantityTF ;
-@FXML private TextField planSmetSumTF,planSaleSumTF, planProfitSumTF;
-@FXML private TextField factSmetSumTF,factSaleSumTF, factProfitSumTF;
-//@FXML private TextField contractorNameTF,contractorDirectorTF;
-@FXML private TextArea  contractorAdressTA,contractorCommentsTA;
-@FXML private CheckBox  osrEditСheckBox, variableEditСheckBox, contractorEditСheckBox, planEditСheckBox;
-@FXML private Button    osrAddItemButton, planAddItemButton;
-@FXML private Button    contractorAddItemButton, contractorSaveItemButton, contractorCencelItemButton;
 
-private final TableWrapper<TableItemOSR> osrTableWrapperView = TableFactory.getOSR();
-private final TableWrapper<TableItemVariable> variableTableWrapperView = TableFactory.getVariable();
-private final TableWrapper<TableItemContractor> contractorTableWrapperView = TableFactory.getContractor();
-private final TableWrapper<TableItemPlan> planTableWrapperView = TableFactory.getPlan();
-private final TableWrapper<TableItemPlan> factTableWrapperView = TableFactory.getFact();
-    
-    {
-     osrTableWrapperView.setTableDataFromBASE();
-        ContextMenuOptional.setTableItemContextMenuListener(osrTableWrapperView);
-     variableTableWrapperView.setTableDataFromBASE();
-        ContextMenuOptional.setTableItemContextMenuListener(variableTableWrapperView);
-     contractorTableWrapperView.setTableDataFromBASE();
-        ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapperView);
-     planTableWrapperView.setTableDataFromBASE();
-        ContextMenuOptional.setTableItemContextMenuListener(planTableWrapperView);
-     factTableWrapperView.setTableData(new ItemPlanDAO().getListFact());
-    }
-    
+
+    @FXML private TextField osrAddTextTF,
+            osrAddValueTF,
+            siteQuantityTF,
+            sumExpTF,
+            sumExpPerSiteTF;
+
+    @FXML private TableView osrTable,
+            variableTable,
+            contractorTable,
+            planTable,
+            factTable;
+
+    @FXML private TextField contractorNameTF,contractorDirectorTF;
+    @FXML private TextField planTypeTF,planSmetTF,planSaleTF, planQuantityTF ;
+    @FXML private TextField planSmetSumTF,planSaleSumTF, planProfitSumTF;
+    @FXML private TextField factSmetSumTF,factSaleSumTF, factProfitSumTF;
+    ;
+    @FXML private TextArea  contractorAdressTA,contractorCommentsTA;
+    @FXML private CheckBox  osrEditСheckBox, variableEditСheckBox, contractorEditСheckBox, planEditСheckBox;
+    @FXML private Button    osrAddItemButton, planAddItemButton;
+    @FXML private Button    contractorAddItemButton, contractorSaveItemButton, contractorCencelItemButton;
+
+    private TableWrapper<TableItemOSR> osrTableWrapper;
+    private TableWrapper<TableItemVariable> variableTableWrapper ;
+    private TableWrapper<TableItemContractor> contractorTableWrapper;
+    private TableWrapper<TableItemPlan> planTableWrapper;
+    private TableWrapper<TableItemPlan> factTableWrapper ;
+
+    /*!******************************************************************************************************************
+    *                                                                                                         initialize
+    ********************************************************************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //add OSR TableView
-        osrGP.add(osrTableWrapperView, 0,0,3,1);
-        GridPane.setMargin(osrTableWrapperView, new Insets(5,5,5,5));
-        
-        //add OSR TableView
-        variableGP.add(variableTableWrapperView, 0,0,3,1);
-        GridPane.setMargin(variableTableWrapperView, new Insets(5,5,5,5));
-        
-        //add OSR TableView
-        contractorGP.add(contractorTableWrapperView, 0,0,1,8);
-        GridPane.setMargin(contractorTableWrapperView, new Insets(5,5,5,5));
-        
+//        //add OSR TableView
+        osrTableWrapper = TableFactory.decorOSR(osrTable);
+        osrTableWrapper.setTableDataFromBASE();
+        ContextMenuOptional.setTableItemContextMenuListener(osrTableWrapper);
+
+//        //add OSR TableView
+        variableTableWrapper = TableFactory.decorVariable(variableTable);
+        variableTableWrapper.setTableDataFromBASE();
+        ContextMenuOptional.setTableItemContextMenuListener(variableTableWrapper);
+
+        //add Contractors TableView
+//        contractorGP.add(contractorTableWrapper.getTableView(), 0,0,1,8);
+//        GridPane.setMargin(contractorTableWrapper.getTableView(), new Insets(5,5,5,5));
+        contractorTableWrapper = TableFactory.decorContractor(contractorTable);
+        contractorTableWrapper.setTableDataFromBASE();
+        ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapper);
+
         //add Paln TableView
-        planGP.add(factTableWrapperView, 0,6,6,1);
-        GridPane.setMargin(factTableWrapperView, new Insets(5,5,5,5));
-        
-        //add Paln TableView
-        planGP.add(planTableWrapperView, 0,1,6,1);
-        GridPane.setMargin(planTableWrapperView, new Insets(5,5,5,5));
-        
+        planTableWrapper = TableFactory.decorPlan(planTable);
+        planTableWrapper.setTableDataFromBASE();
+        ContextMenuOptional.setTableItemContextMenuListener(planTableWrapper);
+
+        //add Fact TableView
+        factTableWrapper = TableFactory.decorFact(factTable);
+        factTableWrapper.setTableData(new ItemPlanDAO().getListFact());
+
+
         init_OSRTab();
         init_VariableTab();
         init_ContractorTab();
         init_PlanTab();
-    }   
+    }
     
-    //INIT -----------------------------------------------------------------------------------------------
+/*!******************************************************************************************************************
+*                                                                                                               INIT
+********************************************************************************************************************/
     /**
      * Initialization of OSR Tab. 
      */
     private void init_OSRTab(){
        
        computeSumExpTextFields();
-       osrTableWrapperView.getItems().addListener((ListChangeListener.Change<? extends TableItemOSR> c) -> {
+       osrTableWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItemOSR> c) -> {
                 System.out.println("Changed on " + c + " report.controllers.allPropertiesLayoutController.init_OSRTab()" );
                 if(c.next() && 
                         (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
@@ -117,12 +118,12 @@ private final TableWrapper<TableItemPlan> factTableWrapperView = TableFactory.ge
         });
        
        //table Context menu property
-        osrTableWrapperView.contextMenuProperty().bind(
+        osrTableWrapper.contextMenuProperty().bind(
             Bindings.when(osrEditСheckBox.selectedProperty() )
-                .then(ContextMenuFactory.getCommonDSU(osrTableWrapperView))
+                .then(ContextMenuFactory.getCommonDSU(osrTableWrapper))
                 .otherwise( (ContextMenu) null  ));
         //TableWrapper Editable property
-        osrTableWrapperView.editableProperty()
+        osrTableWrapper.editableProperty()
                     .bind(osrEditСheckBox.selectedProperty());
         setGroupNodeDisableProperty(osrEditСheckBox.selectedProperty(),
                                     osrAddTextTF, 
@@ -140,12 +141,12 @@ private final TableWrapper<TableItemPlan> factTableWrapperView = TableFactory.ge
     private void init_VariableTab(){
         
         //table Context menu property
-        variableTableWrapperView.contextMenuProperty().bind(
+        variableTableWrapper.contextMenuProperty().bind(
             Bindings.when(variableEditСheckBox.selectedProperty() )
-                .then( ContextMenuFactory.getCommonSU(variableTableWrapperView))
+                .then( ContextMenuFactory.getCommonSU(variableTableWrapper))
                 .otherwise( (ContextMenu) null));
         //TableWrapper Editable property
-        variableTableWrapperView.editableProperty()
+        variableTableWrapper.editableProperty()
                          .bind(variableEditСheckBox.selectedProperty());
     
         
@@ -157,9 +158,9 @@ private final TableWrapper<TableItemPlan> factTableWrapperView = TableFactory.ge
     private void init_ContractorTab(){
         
         //bing ContextMenu
-        contractorTableWrapperView.contextMenuProperty().bind(
+        contractorTableWrapper.contextMenuProperty().bind(
             Bindings.when(contractorEditСheckBox.selectedProperty() )
-                .then( ContextMenuFactory.getCommonDSU(contractorTableWrapperView))
+                .then( ContextMenuFactory.getCommonDSU(contractorTableWrapper))
                 .otherwise( (ContextMenu) null));
      
         //bind editableProperty to contractorEditСheckBox
@@ -173,7 +174,7 @@ private final TableWrapper<TableItemPlan> factTableWrapperView = TableFactory.ge
         contractorAddItemButton.disableProperty().bind(contractorEditСheckBox.selectedProperty().not());
         
 
-        contractorTableWrapperView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        contractorTableWrapper.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             TableItemContractor item = (newValue != null) ? newValue : oldValue;
 //            if(newValue != null)item = newValue; else item = oldValue;
                 if(newValue != null && oldValue != null){
@@ -185,7 +186,7 @@ private final TableWrapper<TableItemPlan> factTableWrapperView = TableFactory.ge
                 
             clearGroupOfTextInputControl(contractorNameTF,contractorDirectorTF,contractorAdressTA,contractorCommentsTA);
             
-                if(contractorTableWrapperView.getItems().size() > 0 && !contractorTableWrapperView.getSelectionModel().isEmpty()){
+                if(contractorTableWrapper.getItems().size() > 0 && !contractorTableWrapper.getSelectionModel().isEmpty()){
                     Bindings.bindBidirectional(contractorNameTF    .textProperty(), item.getContractorProperty());
                     Bindings.bindBidirectional(contractorDirectorTF.textProperty(), item.getDirectorProperty());
                     Bindings.bindBidirectional(contractorAdressTA  .textProperty(), item.getAdressProperty());
@@ -197,29 +198,29 @@ private final TableWrapper<TableItemPlan> factTableWrapperView = TableFactory.ge
 
         
 //        
-//        contractorTableWrapperView.getItems().addListener((ListChangeListener.Change<? extends TableItemContractor> c) -> {
+//        contractorTableWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItemContractor> c) -> {
 //            System.out.println("init_ContractorTab => Changed on " + c);
 //                if(c.next()){ 
-//                   if(c.wasUpdated())  contractorTableWrapperView.getCRUD().addUpdate(contractorTableWrapperView.getItems().saveEst(c.getFrom()));
-//                   if(c.wasAdded()) contractorTableWrapperView.getCRUD().addCreate(c.getAddedSubList());
-//                   if(c.wasRemoved()) contractorTableWrapperView.getCRUD().addDelete(c.getRemoved());
+//                   if(c.wasUpdated())  contractorTableWrapper.getCRUD().addUpdate(contractorTableWrapper.getItems().saveEst(c.getFrom()));
+//                   if(c.wasAdded()) contractorTableWrapper.getCRUD().addCreate(c.getAddedSubList());
+//                   if(c.wasRemoved()) contractorTableWrapper.getCRUD().addDelete(c.getRemoved());
 //                }
 //        });
         
 
-//        variableTableWrapperView.editableProperty().bind(variableEditСheckBox.selectedProperty());
+//        variableTableWrapper.editableProperty().bind(variableEditСheckBox.selectedProperty());
 //        
        
     }
     
     private void init_PlanTab(){
         //table Context menu property
-        planTableWrapperView.contextMenuProperty().bind(
+        planTableWrapper.contextMenuProperty().bind(
             Bindings.when(planEditСheckBox.selectedProperty() )
-                .then( ContextMenuFactory.getCommonDSU(planTableWrapperView))
+                .then( ContextMenuFactory.getCommonDSU(planTableWrapper))
                 .otherwise( (ContextMenu) null));
         //TableWrapper Editable property
-        planTableWrapperView.editableProperty()
+        planTableWrapper.editableProperty()
                      .bind(planEditСheckBox.selectedProperty());
         //Compute Sum Text fields
         this.computeSumPlanTextFields();
@@ -232,7 +233,7 @@ private final TableWrapper<TableItemPlan> factTableWrapperView = TableFactory.ge
                                     planQuantityTF,
                                     planAddItemButton);
 
-        planTableWrapperView.getItems().addListener((ListChangeListener.Change<? extends TableItemPlan> c) -> {
+        planTableWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItemPlan> c) -> {
             System.out.println("Changed on " + c + " - allProperty /// init_PlanTab");
             if(c.next() &&
                     (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
@@ -243,13 +244,15 @@ private final TableWrapper<TableItemPlan> factTableWrapperView = TableFactory.ge
 
     }
     
-    //Hendlers ----------------------------------------------------------------------------------------
-    
+/*!******************************************************************************************************************
+*                                                                                                     	    HANDLERS
+********************************************************************************************************************/
+
     @FXML
     private void handle_osrAddItemButton(ActionEvent event) {  
         Double expenses = DecimalFormatter.stringToDouble(osrAddValueTF.getText());
         Double expensesPerHouse = expenses/Quantity.getQuantityValue();
-        osrTableWrapperView.getItems()
+        osrTableWrapper.getItems()
                 .add(new TableItemOSR(0,osrAddTextTF.getText(),expenses,expensesPerHouse ));
         
         
@@ -260,8 +263,8 @@ private final TableWrapper<TableItemPlan> factTableWrapperView = TableFactory.ge
       if(event.getSource() == contractorAddItemButton){
         setVisiblaDisableContractorNodes(true);
         
-            TableItemContractor item = contractorTableWrapperView.getSelectionModel().getSelectedItem();
-                if((item  != null)&& !contractorTableWrapperView.getSelectionModel().isEmpty()){
+            TableItemContractor item = contractorTableWrapper.getSelectionModel().getSelectedItem();
+                if((item  != null)&& !contractorTableWrapper.getSelectionModel().isEmpty()){
                     Bindings.unbindBidirectional(contractorNameTF    .textProperty(), item.getContractorProperty());
                     Bindings.unbindBidirectional(contractorDirectorTF.textProperty(), item.getDirectorProperty());
                     Bindings.unbindBidirectional(contractorAdressTA  .textProperty(), item.getAdressProperty());
@@ -271,7 +274,7 @@ private final TableWrapper<TableItemPlan> factTableWrapperView = TableFactory.ge
       }else if(event.getSource() == contractorSaveItemButton){
         setVisiblaDisableContractorNodes(false);
         if(
-            contractorTableWrapperView.getItems()
+            contractorTableWrapper.getItems()
                 .add(new TableItemContractor(0, 
                                              contractorNameTF.getText(),
                                              contractorDirectorTF.getText(), 
@@ -293,11 +296,11 @@ private final TableWrapper<TableItemPlan> factTableWrapperView = TableFactory.ge
         double SmetCost = DecimalFormatter.stringToDouble(planSmetTF.getText());
         double SaleCost = DecimalFormatter.stringToDouble(planSaleTF.getText());
         if(
-            planTableWrapperView.getItems()
+            planTableWrapper.getItems()
                 .add(new TableItemPlan(
                         0,
                         new Timestamp(System.currentTimeMillis()),
-                        (planTableWrapperView.getItems().stream().max(Comparator.comparing(f -> f.getTypeID())).get().getTypeID() + 1),
+                        (planTableWrapper.getItems().stream().max(Comparator.comparing(f -> f.getTypeID())).get().getTypeID() + 1),
                         planTypeTF.getText(),
                         Integer.parseInt(planQuantityTF.getText()),
                         0,
@@ -312,34 +315,39 @@ private final TableWrapper<TableItemPlan> factTableWrapperView = TableFactory.ge
         
     }
 
-    
-    
-    
-    //Methods ------------------------------------------------------------------------------------------
+
+
+
+/*!******************************************************************************************************************
+*                                                                                                             METHODS
+********************************************************************************************************************/
     private void computeSumExpTextFields(){
         sumExpTF.setText(DecimalFormatter.toString(
-                                osrTableWrapperView.getItems().stream().mapToDouble(TableItemOSR::getExpenses).sum()));
+                                osrTableWrapper.getItems().stream().mapToDouble(TableItemOSR::getExpenses).sum()));
         sumExpPerSiteTF.setText(DecimalFormatter.toString(
-                                osrTableWrapperView.getItems().stream().mapToDouble(TableItemOSR::getExpensesPerHouse).sum()));
+                                osrTableWrapper.getItems().stream().mapToDouble(TableItemOSR::getExpensesPerHouse).sum()));
     }
     private void computeSumPlanTextFields(){
 
         planSmetSumTF.setText(DecimalFormatter.toString(
-                                    planTableWrapperView.getItems().stream().mapToDouble(TableItemPlan::getSmetCost).sum()));
+                                    planTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSmetCost).sum()));
         planSaleSumTF.setText(DecimalFormatter.toString(
-                                    planTableWrapperView.getItems().stream().mapToDouble(TableItemPlan::getSaleCost).sum()));
+                                    planTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSaleCostSum).sum()));
         planProfitSumTF.setText(DecimalFormatter.toString(
-                                    planTableWrapperView.getItems().stream().mapToDouble(TableItemPlan::getProfit).sum()));
+                                    planTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getProfit).sum()));
+
+
 
     }
 
     private void computeSumFactTextFields(){
         factSmetSumTF.setText(DecimalFormatter.toString(
-                                    factTableWrapperView.getItems().stream().mapToDouble(TableItemPlan::getSmetCost).sum()));
+                                    factTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSmetCost).sum()));
         factSaleSumTF.setText(DecimalFormatter.toString(
-                                    factTableWrapperView.getItems().stream().mapToDouble(TableItemPlan::getSaleCost).sum()));
+                                    factTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSaleCostSum).sum()));
         factProfitSumTF.setText(DecimalFormatter.toString(
-                                    factTableWrapperView.getItems().stream().mapToDouble(TableItemPlan::getProfit).sum()));
+                                    factTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getProfit).sum()));
+
 
     }
 
@@ -364,7 +372,7 @@ private final TableWrapper<TableItemPlan> factTableWrapperView = TableFactory.ge
         contractorCencelItemButton.setVisible(v);
         
         contractorEditСheckBox.setDisable(v);
-        contractorTableWrapperView.setDisable(v);
+        contractorTableWrapper.setDisable(v);
         
     }
     

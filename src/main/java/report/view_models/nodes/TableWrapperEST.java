@@ -5,16 +5,14 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-
+import javafx.scene.control.TableView;
 import report.entities.items.TableItem;
 
 
-
-
 public  class TableWrapperEST<S> extends TableWrapper<TableItem> {
-    
-   private DoubleProperty sum = new SimpleDoubleProperty();
-     
+
+    private DoubleProperty sum = new SimpleDoubleProperty();
+
 /*!******************************************************************************************************************
 *                                                                                                      Getter/Setter
 ********************************************************************************************************************/
@@ -23,14 +21,17 @@ public  class TableWrapperEST<S> extends TableWrapper<TableItem> {
 
 
 
-/*!******************************************************************************************************************
-*                                                                                                       CONSTRUCTORS
-********************************************************************************************************************/
+    /*!******************************************************************************************************************
+    *                                                                                                       CONSTRUCTORS
+    ********************************************************************************************************************/
     public TableWrapperEST() {
         super();
     }
-    
+
     public TableWrapperEST(String title) { super(title);}
+    public TableWrapperEST(TableView<TableItem> tableView){
+        super.tableView = tableView;
+    }
 
     public TableWrapperEST(String title, ObservableList items) {super(title,items); }
     
@@ -51,29 +52,29 @@ public  class TableWrapperEST<S> extends TableWrapper<TableItem> {
     @Override
     public void setTableData(ObservableList items){
         super.setTableData(items);
-        computeSum(); 
-        this.getItems().addListener((ListChangeListener.Change<? extends TableItem> c) -> {
-                if(c.next() && 
-                        (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
-                        this.computeSum();  
-                        System.out.println("report.report.view_models.nodes.TableWrapperEST.setTableData() == sum -> " + sum.getValue());
-                }
-        }); 
+        computeSum();
+        super.getTableView().getItems().addListener((ListChangeListener.Change<? extends TableItem> c) -> {
+            if(c.next() &&
+                    (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
+                this.computeSum();
+                System.out.println("report.report.view_models.nodes.TableWrapperEST.setTableData() == sum -> " + sum.getValue());
+            }
+        });
 
-        
+
     }
-   
-    
-    /** 
+
+
+    /**
      * Get sum of all "Price_sum" elements.
      */
     public void computeSum(){
-        Double summ = new Double(0); 
-        for (TableItem  obsItem : this.getItems())
+        Double summ = new Double(0);
+        for (TableItem  obsItem : super.getTableView().getItems())
             summ = summ + obsItem.getPrice_sum();
         sum.setValue(summ);
-         
-    }      
-     
+
+    }
+
 
 }

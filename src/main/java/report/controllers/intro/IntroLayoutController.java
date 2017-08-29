@@ -5,7 +5,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
 import report.entities.items.intro.ItemFinishedSiteDAO;
 import report.entities.items.site.SiteCommonDAO;
-import report.view_models.nodes_factories.TableViewFxmlDecorator;
+import report.view_models.nodes_factories.TableFactory;
+
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -21,8 +22,8 @@ public class IntroLayoutController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //decorate TableViews
-        TableViewFxmlDecorator.decorPreview(infoTV);
-        TableViewFxmlDecorator.decorIntroFinishedSite(finishedSiteTV);
+        TableFactory.decorPreview(infoTV);
+        TableFactory.decorIntroFinishedSite(finishedSiteTV);
 
 
     }

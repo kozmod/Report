@@ -17,7 +17,7 @@ import javafx.util.Duration;
 import report.entities.items.account.ItemAccDAO;
 import report.view_models.data_models.EpochDatePickerConverter;
 import report.models.sql.sqlQuery.InsertFileXLSQuery;
-import report.view_models.nodes_factories.TableViewFxmlDecorator;
+import report.view_models.nodes_factories.TableFactory;
 
 
 public class showAccLayoutController implements Initializable {
@@ -33,7 +33,7 @@ public class showAccLayoutController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //decore Acc table
-        TableViewFxmlDecorator.decorAcc(accTable);
+        TableFactory.decorAcc(accTable);
         accTable.setItems(new ItemAccDAO().getList(0,0));
 
         init_DatePickers();

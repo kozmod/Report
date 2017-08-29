@@ -9,7 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.view_models.data_models.DecimalFormatter;
 import report.entities.ItemDAO;
-import report.usege_strings.PathStrings;
+import report.usage_strings.PathStrings;
 import report.view_models.nodes.TableWrapper;
 
 

@@ -48,7 +48,7 @@
                   </TextField>
                   <TextField fx:id="siteQuantityTF" GridPane.columnIndex="2" GridPane.rowIndex="2">
                      <GridPane.margin>
-                        <Insets left="5.0" right="5.0" />
+                        <Insets left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>
                   </TextField>
                   <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Количество участков" GridPane.columnIndex="1" GridPane.rowIndex="2" />
@@ -60,6 +60,11 @@
                      </GridPane.margin>
                   </Button>
                   <CheckBox fx:id="osrEditСheckBox" mnemonicParsing="false" text="Редактировать" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TableView fx:id="osrTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3">
+                     <GridPane.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </GridPane.margin>
+                  </TableView>
                </children>
             </GridPane>
          </content>
@@ -82,6 +87,11 @@
                      <GridPane.margin>
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin></CheckBox>
+                  <TableView fx:id="variableTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="3">
+                     <GridPane.margin>
+                        <Insets left="5.0" right="5.0" top="5.0" />
+                     </GridPane.margin>
+                  </TableView>
                </children>
             </GridPane>
          </content></Tab>
@@ -164,6 +174,11 @@
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
                   </HBox>
+                  <TableView fx:id="contractorTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowSpan="8">
+                     <GridPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                     </GridPane.margin>
+                  </TableView>
                </children>
             </GridPane>
          </content>
@@ -297,6 +312,16 @@
                         <Insets left="5.0" right="5.0" />
                      </GridPane.margin>
                   </Text>
+                  <TableView fx:id="planTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </GridPane.margin>
+                  </TableView>
+                  <TableView fx:id="factTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="6">
+                     <GridPane.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </GridPane.margin>
+                  </TableView>
                </children>
             </GridPane>
          </content>

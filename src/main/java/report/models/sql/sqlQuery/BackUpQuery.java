@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 
 import report.controllers.LogLayoutController;
 import report.models.sql.SQLconnector;
-import report.usege_strings.PathStrings;
+import report.usage_strings.PathStrings;
 
 /**
  *

@@ -3,8 +3,8 @@ package report.view_models.nodes_factories;
 import javafx.stage.FileChooser;
 
 import report.controllers.showEstLayoutController.Est;
-import report.usege_strings.PathStrings;
-import report.usege_strings.SQL;
+import report.usage_strings.PathStrings;
+import report.usage_strings.SQL;
 
 import java.io.File;
 

@@ -9,24 +9,21 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.*;
 
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import report.controllers.root.rootLayoutController;
-import report.usege_strings.SQL;
+import report.controllers.root.RootLayoutController;
+import report.entities.items.site.SiteCommonDAO;
+import report.usage_strings.SQL;
 import report.controllers.showEstLayoutController.Est;
 import report.entities.items.contractor.ItemContractorDAO;
 import report.view_models.InputValidator;
 
 
-public class contAddLayoutController implements Initializable  {
+public class ContractorAddLayoutController implements Initializable  {
 
-    private rootLayoutController rootController;
+    private RootLayoutController rootController;
     
     @FXML
     private Label siteNumLabel, typeHomeLabel, queueLabel, errorLabel;
@@ -39,14 +36,26 @@ public class contAddLayoutController implements Initializable  {
     
     @FXML
     private RadioButton contRadioButton_list, contRadioButton_new;
-//Getter/Setter====================================================================================================
-    
-    public void setRootController(rootLayoutController rootController) {
+
+    private TreeView<String> treeViewSite;
+
+/*!******************************************************************************************************************
+*                                                                                                      Getter/Setter
+********************************************************************************************************************/
+
+    public void setRootController(RootLayoutController rootController) {
         this.rootController = rootController;
     }
 
-    
-//INIT=============================================================================================================
+    public void setTreeViewSite(TreeView<String> treeViewSite) {
+        this.treeViewSite = treeViewSite;
+    }
+
+
+
+/*!******************************************************************************************************************
+*                                                                                                               INIT
+********************************************************************************************************************/
     @Override                                                                   
     public void initialize(URL location, ResourceBundle resources) {
        init_ContComco();
@@ -75,8 +84,19 @@ public class contAddLayoutController implements Initializable  {
         contRadioButton_new.setToggleGroup(contToggleGroup);
         
     }
-    
-// HANDLERT========================================================================================================
+
+/*!******************************************************************************************************************
+ *                                                                                                           METHODS
+********************************************************************************************************************/
+    public void addTreeItem(String contractor){
+
+        TreeItem<String> ContractorLeaf = new TreeItem<String>(contractor);
+        treeViewSite.getSelectionModel().getSelectedItem().getParent().getChildren().add(ContractorLeaf);
+    }
+
+/*!******************************************************************************************************************
+*                                                                                                     	    HANDLERS
+********************************************************************************************************************/
     @FXML
     private void handle_contRadioButtons(ActionEvent event){                    // Action listener Contactors Radio Buttons
         if(event.getSource() == contRadioButton_list 
@@ -102,6 +122,7 @@ public class contAddLayoutController implements Initializable  {
     private void handle_CreateButton(ActionEvent event){                        //Добавить insert
        String InsertSiteVel = null,
               InsertContVal = null,
+              InsertTypeVal = rootController.getPreviewTable().getItems().get(3).toString(),
               InsertTypeHomeVal = null,
               InsertQueueVal = null;
   
@@ -121,13 +142,19 @@ public class contAddLayoutController implements Initializable  {
        // проверка полей
        if(isInputValid()){                                                       
 //      System.out.println(InsertSiteVel +"  "+ InsertQueueVal + "   "+ InsertContVal +"  "+ InsertTypeHomeVal);
-//            new SiteCommonDAO().insertSite(InsertSiteVel,
-//                                             InsertQueueVal, 
-//                                             InsertTypeHomeVal, 
-//                                             InsertContVal);
+           new SiteCommonDAO().insertSite(InsertSiteVel,
+                   InsertQueueVal,
+                   InsertTypeVal,
+                   InsertTypeHomeVal,
+                   InsertContVal );
+
             Stage appStage =(Stage) ((Node)(event.getSource())).getScene().getWindow();
-            rootController.update_TreeView();
+//            rootController.update_TreeView();
             appStage.close();
+
+           this.addTreeItem(InsertContVal);
+
+
        }
        
    }
@@ -140,10 +167,12 @@ public class contAddLayoutController implements Initializable  {
        
        
    }
-    
-    
-//InputValidator========================================================================================================    
-  private boolean isInputValid() {
+
+
+/*!******************************************************************************************************************
+*                                                                                                     InputValidator
+********************************************************************************************************************/
+    private boolean isInputValid() {
         String errorMessage = "";
          
             if (contRadioButton_list.selectedProperty().get() == true){

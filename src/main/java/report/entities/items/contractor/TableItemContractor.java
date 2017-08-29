@@ -14,7 +14,7 @@ public class TableItemContractor implements TableClone {
     private Long id;
     private final StringProperty  contractor;  
     private final StringProperty  director;  
-    private final StringProperty  adress;  
+    private final StringProperty  adress;
     private final StringProperty  comments;
 
     public TableItemContractor(long id,String contractor, String director, String adress, String comments) {
@@ -64,10 +64,10 @@ public class TableItemContractor implements TableClone {
     @Override
     public int hashCode() {
         int hash = 7;
-        hash = 61 * hash + Objects.hashCode(this.contractor);
-        hash = 61 * hash + Objects.hashCode(this.director);
-        hash = 61 * hash + Objects.hashCode(this.adress);
-        hash = 61 * hash + Objects.hashCode(this.comments);
+        hash = 4 * hash + this.contractor.getValue().hashCode();
+        hash = 5 * hash + this.director.getValue().hashCode();
+        hash = 2 * hash + this.adress.getValue().hashCode();
+        hash = 2 * hash + this.comments.getValue().hashCode();
         return hash;
     }
 

@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.models.sql.SQLconnector;
-import report.usege_strings.ServiceStrings;
+import report.usage_strings.ServiceStrings;
 import report.view_models.data_models.DiffList;
 
 import report.view_models.nodes.TableWrapper;
@@ -21,27 +21,24 @@ public interface ItemDAO<E,T extends TableWrapper> extends TableDataBaseName{
     ObservableList<E> getList();
     void delete(Collection<E> entry);
     void insert(Collection<E>  entry);
-//    String getTableString();
-//    void dellAndInsert(T table);
+
    
     
     
-    default <E> void  dellAndInsert(T table) {
-        Collection memento = table.getMemento().getSavedState(),
-                   current = table.getItems();
-           
-        DiffList<E> diffList = new DiffList(memento,current);
-        if(diffList.exElements() != null 
-           || diffList.exElements().size() > 0) delete( diffList.getIntersection());
-        if(diffList.newElements()  != null 
-           || diffList.newElements().size()  > 0) insert( diffList.newElements());     
+    default void  dellAndInsert(T table) {
+        Collection<E>  memento= table.getMemento().getSavedState(),
+                current = table.getItems();
+
+        DiffList<E> diffList = new DiffList<>(memento,current);
+        if(diffList.exElements() != null
+                || diffList.exElements().size() > 0) delete( diffList.getIntersection());
+        if(diffList.newElements()  != null
+                || diffList.newElements().size()  > 0) insert( diffList.newElements());
       
     }
     
     /**
      * Get <b>Unique</b> value of column.
-     * @param column
-     * @param fistNodes
      * @return ObservableList
      */
     default ObservableList<Object> getDistinctOfColumn(String column, Object ... fistNodes){

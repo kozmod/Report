@@ -2,7 +2,7 @@
 package report.entities.items.osr;
 
 import report.entities.ItemDAO;
-import report.usege_strings.SQL;
+import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

@@ -14,8 +14,8 @@ import report.controllers.showEstLayoutController.Est;
 import report.view_models.data_models.DecimalFormatter;
 import report.entities.items.variable.ItemPropertiesFAO;
 import report.models.sql.SQLconnector;
-import report.usege_strings.FileFields;
-import report.usege_strings.SQL;
+import report.usage_strings.FileFields;
+import report.usage_strings.SQL;
 
 
 public class CoefficientQuery {

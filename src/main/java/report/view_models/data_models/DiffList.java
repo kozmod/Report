@@ -37,9 +37,9 @@ public class DiffList<T>{
         }
              
              
-        public <T> Collection getIntersection(){return this.intersection;}           
+        public  Collection<T> getIntersection(){return this.intersection;}
             
-        public <T> Collection  exElements(){
+        public  Collection<T>   exElements(){
             return intersection.stream()
                                .filter(item -> !editedList.contains(item))
                                .collect(Collectors.toList());
@@ -50,7 +50,7 @@ public class DiffList<T>{
 //                return rr;
         }
         
-        public <T> Collection  newElements(){
+        public  Collection<T>  newElements(){
             return  editedList.stream()
                               .filter(item -> !baseList.contains(item))
                               .collect(Collectors.toList());

@@ -12,6 +12,8 @@ import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
 import report.entities.items.TableClone;
 
+import java.util.Objects;
+
 
 public class TableItemExpenses implements TableClone {
     
@@ -20,7 +22,7 @@ public class TableItemExpenses implements TableClone {
     private final StringProperty  contractor;    
     private final StringProperty  text;    
     private final IntegerProperty type;                                                   
-    private final DoubleProperty   value;
+    private final DoubleProperty  value;
     
     public TableItemExpenses(
                     Long id,
@@ -115,11 +117,13 @@ public class TableItemExpenses implements TableClone {
     
         @Override
         public int hashCode() {
-            int hash = 13;
-            hash = 13 * hash + (this.type      != null ? this.type.hashCode()  : 0);
-            hash = 13 * hash + (this.value     != null ? this.value.hashCode() : 0);
-
-            
+            int hash = 3;
+            hash = Long.valueOf(this.id).hashCode();
+            hash = 3 * hash + (this.siteNumber.getValue()!= null ? this.siteNumber.getValue().hashCode()    : 0);
+            hash = 3 * hash + (this.contractor.getValue()!= null ? this.contractor.getValue().hashCode()    : 0);
+            hash = 3 * hash + (this.text.getValue()      != null ? this.text.getValue().hashCode()          : 0);
+            hash = 3 * hash + (this.type.get());
+            hash = 3 * hash + (this.value.get()          != 0 ? Double.valueOf(this.value.get()).hashCode() : 0);
             return hash;
         }
 
@@ -133,6 +137,8 @@ public class TableItemExpenses implements TableClone {
                 return false;
             }
             final TableItemExpenses other = (TableItemExpenses) obj;
+            if (!Objects.equals(this.id, other.id))
+                return false;
             if ((this.siteNumber.get() == null) ? (other.siteNumber.getValue() != null) : !this.siteNumber.get().equals(other.siteNumber.get())) {
                 return false;
             }

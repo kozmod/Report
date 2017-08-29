@@ -12,9 +12,9 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import report.controllers.root.rootLayoutController;
+import report.controllers.root.RootLayoutController;
 import report.view_models.StageCreator;
-import report.usege_strings.PathStrings;
+import report.usage_strings.PathStrings;
 
 
 public class Report extends Application {
@@ -48,7 +48,7 @@ public class Report extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private Scene scene;
-    private rootLayoutController rootController;
+    private RootLayoutController rootController;
     private Object centerController;
     private StageCreator stageCreator;
 
@@ -63,7 +63,7 @@ public class Report extends Application {
         return rootLayout;
     }
 
-    public rootLayoutController getRLController() {
+    public RootLayoutController getRLController() {
         return rootController;
     }
 

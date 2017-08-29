@@ -3,7 +3,7 @@ package report.entities.items.site;
 
 import report.entities.items.estimate.ItemEstDAO;
 import report.entities.ItemDAO;
-import report.usege_strings.SQL;
+import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,15 +20,15 @@ import report.models.sql.SQLconnector;
 import report.view_models.nodes.TableWrapper;
 
 
-public class ItemSiteDAO implements ItemDAO<TableItemPreview, TableWrapper> {
+public class SiteItemDAO implements ItemDAO<TableItemPreview, TableWrapper> {
     
     private String siteNumber, contractor;
     
-    public ItemSiteDAO(String siteNumber, String contractor) {  
+    public SiteItemDAO(String siteNumber, String contractor) {
         this.siteNumber = siteNumber;
         this.contractor = contractor;
     }
-    public ItemSiteDAO() {  
+    public SiteItemDAO() {
         if(Est.Common.isExist()){
             this.siteNumber = Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER);
             this.contractor = Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR);
@@ -127,7 +127,7 @@ public class ItemSiteDAO implements ItemDAO<TableItemPreview, TableWrapper> {
                 
                     
             } catch (SQLException ex) {
-               Logger.getLogger(ItemSiteDAO.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(SiteItemDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
       
         long lEnd = System.currentTimeMillis();

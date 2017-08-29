@@ -21,21 +21,21 @@ import report.controllers.*;
 import report.controllers.intro.IntroLayoutController;
 import report.view_models.InputValidator;
 import report.view_models.nodes_factories.FileChooserFactory;
-import report.usege_strings.PathStrings;
+import report.usage_strings.PathStrings;
 import report.controllers.showEstLayoutController.Est;
 import report.view_models.StageCreator;
 import report.models.sql.sqlQuery.BackUpQuery;
 import report.view_models.nodes_factories.TableFactory;
 import report.entities.items.site.TableItemPreview;
 import report.models.sql.sqlQuery.InsertFileXLSQuery;
-import report.entities.items.site.ItemSiteDAO;
+import report.entities.items.site.SiteItemDAO;
 
 
-public class rootLayoutController implements Initializable {
+public class RootLayoutController implements Initializable {
     
     // ref to Report App      
     private Report                      reportApp;                                                                           
-    private contAddLayoutController contAddController;
+    private ContractorAddLayoutController contAddController;
     private delLayoutController delController;
     private siteAddLayoutController siteAddController;
     private showEstLayoutController showEstController;
@@ -66,7 +66,7 @@ public class rootLayoutController implements Initializable {
         this.reportApp = reportApp;
     }
 
-    public rootLayoutController getRootController() {
+    public RootLayoutController getRootController() {
         return this;
     }
 
@@ -393,6 +393,7 @@ public class rootLayoutController implements Initializable {
                     contAddController = contAddLayout.getController();
                     contAddController.setRootController(getRootController());
                     contAddController.init_InfLabels(selectedTreeElemParent);
+                    contAddController.setTreeViewSite(treeViewSite);
           
                     contAddLayout.getStage().show(); 
                     }  
@@ -424,10 +425,10 @@ public class rootLayoutController implements Initializable {
                 if(((TreeView)cell.getTreeView()).getTreeItem(cell.getIndex()).isLeaf()){
                     selectedTreeElemParent
                             = ((TreeView)cell.getTreeView()).getTreeItem(cell.getIndex()
-                            ).getParent().getValue().toString();
+                    ).getParent().getValue().toString();
                     selectedTreeElem
                             = ((TreeView)cell.getTreeView()).getTreeItem(cell.getIndex()
-                            ).getValue().toString();
+                    ).getValue().toString();
 //                    siteAddItem  .setDisable(true);
                     siteEditItem .setDisable(false);
                     contAddItem  .setDisable(false);
@@ -436,7 +437,7 @@ public class rootLayoutController implements Initializable {
                     printEstToXmlMenuItem.setDisable(false);
                     
                     //Update Preview TableWrapper OBS-LIST
-                    Est.Common.setPreviewObs(new ItemSiteDAO(selectedTreeElemParent,selectedTreeElem).getList());
+                    Est.Common.setPreviewObs(new SiteItemDAO(selectedTreeElemParent,selectedTreeElem).getList());
 //                    update_previewTable(Est.Common.getPreviewObservableList());
                     previewTable.setItems(Est.Common.getPreviewObservableList());
                     

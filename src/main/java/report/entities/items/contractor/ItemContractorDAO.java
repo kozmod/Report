@@ -4,7 +4,7 @@ package report.entities.items.contractor;
 import report.entities.ItemDAO;
 import report.entities.items.osr.ItemOSRDAO;
 import report.entities.items.variable.ItemPropertiesFAO;
-import report.usege_strings.SQL;
+import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,7 +37,7 @@ public class ItemContractorDAO implements ItemDAO<TableItemContractor, TableWrap
         
         String sqlQuery = "SELECT "
                        + " * "
-                       + "from dbo.[Contractors] "
+                       + "FROM dbo.[Contractors] "
                        + "WHERE [dell] = 0";
         
           try(Connection connection = SQLconnector.getInstance();
@@ -60,6 +60,41 @@ public class ItemContractorDAO implements ItemDAO<TableItemContractor, TableWrap
                Logger.getLogger(ItemPropertiesFAO.class.getName()).log(Level.SEVERE, null, ex);
            }
         return  listAllContractors;
+    }
+
+    public TableItemContractor getOne(String contractorName) {
+
+        TableItemContractor contractor = null;
+
+        String sqlQuery = "SELECT "
+                       + " * "
+                       + ",[Contractor] "
+                       + "FROM dbo.[Contractors] "
+                       + "WHERE [dell] = 0 "
+                       + "AND [Contractor] = ? ";
+
+          try(Connection connection = SQLconnector.getInstance();
+              PreparedStatement pstmt = connection.prepareStatement(sqlQuery)) {
+              pstmt.setString(1,contractorName);
+
+              ResultSet rs = pstmt.executeQuery();
+
+               while(rs.next()){
+                   contractor = new TableItemContractor(
+                           rs.getLong("id"),
+                           rs.getString("Contractor"),
+                           rs.getString("Director"),
+                           rs.getString("Adress"),
+                           rs.getString("Comments")
+                   );
+
+
+
+               }
+           } catch (SQLException ex) {
+               Logger.getLogger(ItemPropertiesFAO.class.getName()).log(Level.SEVERE, null, ex);
+           }
+        return  contractor;
     }
 
 /**

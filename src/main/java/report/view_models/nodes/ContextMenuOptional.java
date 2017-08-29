@@ -170,13 +170,13 @@ public class ContextMenuOptional extends ContextMenu{
             undoMenuItem   = new MenuItem("Отменить изменения");
 
             undoMenuItem.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
-                tableWrapper.undoChageItems();
+                tableWrapper.undoChangeItems();
 
                 setDisable_SaveUndoPrint_groupe(true);
             });
 
 //            undoMenuItem.setOnAction(event -> {
-//                tableWrapper.undoChageItems();
+//                tableWrapper.undoChangeItems();
 //
 //                setDisable_SaveUndoPrint_groupe(true);
 //            });

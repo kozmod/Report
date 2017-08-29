@@ -18,20 +18,20 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import report.controllers.root.rootLayoutController;
-import report.usege_strings.SQL;
+import report.controllers.root.RootLayoutController;
+import report.usage_strings.SQL;
 import report.entities.items.plan.TableItemPlan;
 import report.entities.items.plan.ItemPlanDAO;
-import report.entities.items.site.ItemSiteDAO;
+import report.entities.items.site.SiteItemDAO;
 import report.entities.items.site.SiteCommonDAO;
-import report.usege_strings.ServiceStrings;
+import report.usage_strings.ServiceStrings;
 import report.view_models.InputValidator;
 
 
 
 public class siteAddLayoutController implements Initializable {
     
-    private rootLayoutController rootController;
+    private RootLayoutController rootController;
 
     @FXML private ComboBox<Object>    queueComboBox, classComboBox, contractorComboBox, typeHomeComboBox;
     @FXML private TextField   siteNumTF, queueTF, planTF, factTF;
@@ -48,9 +48,9 @@ public class siteAddLayoutController implements Initializable {
     {
         listPlan  = new ItemPlanDAO().getList();
         listFact  = new ItemPlanDAO().getListFact();
-        listQueue = new ItemSiteDAO().getDistinctOfColumn(SQL.Site.QUEUE_BUILDING);
-        listContractors = new ItemSiteDAO().getDistinctOfColumn(SQL.Site.CONTRACTOR,ServiceStrings.Line);
-        listTypes       = new ItemSiteDAO().getDistinctOfColumn(SQL.Site.TYPE_HOME, ServiceStrings.Line);
+        listQueue = new SiteItemDAO().getDistinctOfColumn(SQL.Site.QUEUE_BUILDING);
+        listContractors = new SiteItemDAO().getDistinctOfColumn(SQL.Site.CONTRACTOR,ServiceStrings.Line);
+        listTypes       = new SiteItemDAO().getDistinctOfColumn(SQL.Site.TYPE_HOME, ServiceStrings.Line);
 
 
     }
@@ -59,7 +59,7 @@ public class siteAddLayoutController implements Initializable {
 *                                                                                                     Getter/Setter
 ********************************************************************************************************************/
 
-    public void setRootController(rootLayoutController rootController) {
+    public void setRootController(RootLayoutController rootController) {
         this.rootController = rootController;
     }
     

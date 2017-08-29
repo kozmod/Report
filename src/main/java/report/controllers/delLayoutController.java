@@ -14,12 +14,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-import report.controllers.root.rootLayoutController;
+import report.controllers.root.RootLayoutController;
 import report.entities.items.site.SiteCommonDAO;
 
 
 public class delLayoutController implements Initializable {
-    private rootLayoutController rootController;
+    private RootLayoutController rootController;
     private String siteNumber, contractorName;
     
     @FXML private Label delLabel;
@@ -29,7 +29,7 @@ public class delLayoutController implements Initializable {
      *                                                                                                     Getter/Setter
      ********************************************************************************************************************/  
 
-    public void setRootController(rootLayoutController rootController) {
+    public void setRootController(RootLayoutController rootController) {
         this.rootController = rootController;
     }
     

@@ -21,7 +21,7 @@ import report.entities.items.estimate.ItemEstDAO;
 
 public class TitledStackModel extends StackPane{
        
-          private TableWrapperEST<TableItemEst> tableView;
+          private TableWrapperEST<TableItemEst> tableViewWrapper;
     final private Label                  sumLabel   = new Label();
     final private TitledPane             titledPane = new TitledPane();
     final private Est                    enumEst;
@@ -39,9 +39,9 @@ public class TitledStackModel extends StackPane{
 ********************************************************************************************************************/ 
     public StringProperty getLabelProperty() { return sumLabel.textProperty(); }
 
-    public DoubleProperty getLabelDoubleProperty() { return tableView.getSumProperty(); }
+    public DoubleProperty getLabelDoubleProperty() { return tableViewWrapper.getSumProperty(); }
 
-    public TableWrapper getModelTable() { return tableView;}
+    public TableWrapper getModelTable() { return tableViewWrapper;}
         
 /*!******************************************************************************************************************
 *                                                                                                        Constructor
@@ -61,15 +61,15 @@ public class TitledStackModel extends StackPane{
 ********************************************************************************************************************/ 
     //1
     private void init_tableView(){
-        tableView = TableFactory.getEst(enumEst);
-        tableView.setTitle(title);
+        tableViewWrapper = TableFactory.getEst(enumEst);
+        tableViewWrapper.setTitle(title);
         
         if(enumEst.getTabMap().get(title) != null){
-             tableView.setTableData((ObservableList) enumEst.getTabMap().get(title));
-             ContextMenuOptional.setTableItemContextMenuListener(tableView);
+             tableViewWrapper.setTableData((ObservableList) enumEst.getTabMap().get(title));
+             ContextMenuOptional.setTableItemContextMenuListener(tableViewWrapper);
         }else{
-            tableView.setTableData(FXCollections.observableArrayList(TableItemEst.extractor()));
-            ContextMenuOptional.setTableItemContextMenuListener(tableView);
+            tableViewWrapper.setTableData(FXCollections.observableArrayList(TableItemEst.extractor()));
+            ContextMenuOptional.setTableItemContextMenuListener(tableViewWrapper);
         }
 
     }
@@ -77,14 +77,14 @@ public class TitledStackModel extends StackPane{
     //2
     private void init_Lable(){
         TitledStackModel.setMargin(sumLabel, new Insets(5,10,0,0));
-        sumLabel.textProperty().setValue( tableView.getSumProperty().getValue().toString());
-        Bindings.bindBidirectional(sumLabel.textProperty(), tableView.getSumProperty(), DecimalFormatter.getDecimalFormat());
+        sumLabel.textProperty().setValue( tableViewWrapper.getSumProperty().getValue().toString());
+        Bindings.bindBidirectional(sumLabel.textProperty(), tableViewWrapper.getSumProperty(), DecimalFormatter.getDecimalFormat());
     }
     
     //3
     private void init_titledPane(){
         titledPane.setText(title);
-        titledPane.setContent(tableView);
+        titledPane.setContent(tableViewWrapper.getTableView());
         
         titledPane.setExpanded(false);
         titledPane.setAnimated(false);      
@@ -94,7 +94,7 @@ public class TitledStackModel extends StackPane{
     
 
     public  void updateTableItems(){
-        tableView.updateTableFromBASE(new ItemEstDAO().getOneBildingPartList(enumEst, title));
+        tableViewWrapper.updateTableFromBASE(new ItemEstDAO().getOneBildingPartList(enumEst, title));
     }
     
     
@@ -102,8 +102,8 @@ public class TitledStackModel extends StackPane{
 
 //    public void initContextMenu(ContextMenu cm){
 //        
-//            tableView.setContextMenu(cm);
-//            tableView.getItems().addListener((ListChangeListener.Change<? extends TableItem> c) -> {
+//            tableViewWrapper.setContextMenu(cm);
+//            tableViewWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItem> c) -> {
 //                System.out.println("Changed on " + c);
 //                if(c.next() && 
 //                        (c.wasUpdated() || c.wasAdded() || c.wasRemoved() )){

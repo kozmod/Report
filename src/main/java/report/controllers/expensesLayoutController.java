@@ -24,9 +24,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import report.controllers.root.rootLayoutController;
+import report.controllers.root.RootLayoutController;
 import report.view_models.data_models.DecimalFormatter;
-import report.usege_strings.SQL;
+import report.usage_strings.SQL;
 
 import report.controllers.showEstLayoutController.Est;
 
@@ -41,20 +41,20 @@ import report.entities.items.site.TableItemPreview;
 import report.models.coefficient.CoefficientQuery;
 import report.entities.items.expenses.ItemExpensesDAO;
 import report.entities.items.period.ItemPeriodDAO;
-import report.entities.items.site.ItemSiteDAO;
+import report.entities.items.site.SiteItemDAO;
 import report.view_models.nodes.ContextMenuOptional;
 
 public class expensesLayoutController implements Initializable {
     
-    private rootLayoutController rootController;
+    private RootLayoutController rootController;
     private Stage controllerStage;
 
     @FXML  private TextField  textExpTF, valueTF, textPeriodTF, contract_FinishTF, coeffTF;
     @FXML  private GridPane siteTableGridPane, expensesTableGridPane, periodTableGridPane;
 
-    private final TableWrapper<TableItemPreview> siteTV     = TableFactory.getProperty_Site();
-    private final TableWrapper<TableItemExpenses> expensesTV = TableFactory.getProperty_Expenses();
-    private final TableWrapper<TableItemPeriod> periodTV   = TableFactory.getProperty_JobPeriod();
+    private final TableWrapper<TableItemPreview> siteTWrapper = TableFactory.getProperty_Site();
+    private final TableWrapper<TableItemExpenses> expensesTWrapper = TableFactory.getProperty_Expenses();
+    private final TableWrapper<TableItemPeriod> periodTWrapper = TableFactory.getProperty_JobPeriod();
     
     @FXML  private ComboBox typeCB;
     @FXML  private DatePicker dateFromDP, dateToDP;
@@ -69,10 +69,10 @@ public class expensesLayoutController implements Initializable {
      *                                                                                                     PreConstructor
      ********************************************************************************************************************/ 
     {
-//        siteTV.setTableData(FXCollections.observableArrayList(new TableItemPreview(Long.MIN_VALUE, "sss", "SSS", "s")));
-        siteTV.setTableData(Est.Common.getPreviewObservableList());
-        expensesTV.setTableData(new ItemExpensesDAO().getList());
-        periodTV.setTableData(new ItemPeriodDAO().getList());
+//        siteTWrapper.setTableData(FXCollections.observableArrayList(new TableItemPreview(Long.MIN_VALUE, "sss", "SSS", "s")));
+        siteTWrapper.setTableData(Est.Common.getPreviewObservableList());
+        expensesTWrapper.setTableData(new ItemExpensesDAO().getList());
+        periodTWrapper.setTableData(new ItemPeriodDAO().getList());
 
         InvalidationListener l = (Observable observable) -> {
             if(CONTRACTOR.getValue().equals(SQL.Line) && TYPE_HOME.getValue().equals(SQL.Line) ){
@@ -90,7 +90,7 @@ public class expensesLayoutController implements Initializable {
      *                                                                                                     Getter/Setter
      ********************************************************************************************************************/   
 
-    public void setRootController(rootLayoutController rootController) {
+    public void setRootController(RootLayoutController rootController) {
         this.rootController = rootController;
         rootController.setTreeViewDisable(true);
         
@@ -114,16 +114,16 @@ public class expensesLayoutController implements Initializable {
      ********************************************************************************************************************/ 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //set siteTV to GP
-        siteTableGridPane.add(siteTV,0,0);
-        //set expensesTV to GP
-        expensesTableGridPane.add(expensesTV,0,0);
-//        expensesGridPane.add(expensesTV, 0, 0, 2, 1);
-//        GridPane.setMargin(expensesTV, new Insets(5,0,0,0));
-        //set periodTV to GP
-        periodTableGridPane.add(periodTV,0,0);
-//        periodGridPane.add(periodTV, 0, 1, 2, 1);
-//        GridPane.setMargin(periodTV, new Insets(5,0,0,0));
+        //set siteTWrapper to GP
+        siteTableGridPane.add(siteTWrapper.getTableView(),0,0);
+        //set expensesTWrapper to GP
+        expensesTableGridPane.add(expensesTWrapper.getTableView(),0,0);
+//        expensesGridPane.add(expensesTWrapper, 0, 0, 2, 1);
+//        GridPane.setMargin(expensesTWrapper, new Insets(5,0,0,0));
+        //set periodTWrapper to GP
+        periodTableGridPane.add(periodTWrapper.getTableView(),0,0);
+//        periodGridPane.add(periodTWrapper, 0, 1, 2, 1);
+//        GridPane.setMargin(periodTWrapper, new Insets(5,0,0,0));
         
       init_expensesTab();
       init_periodTab();
@@ -135,9 +135,9 @@ public class expensesLayoutController implements Initializable {
     private void init_expensesTab(){
 
         //Set Context Menu
-        expensesTV.setContextMenu(ContextMenuFactory.getCommonDSU(expensesTV));
-        ContextMenuOptional.setTableItemContextMenuListener(expensesTV);
-        expensesTV.getContextMenu().getItems().get(2)
+        expensesTWrapper.setContextMenu(ContextMenuFactory.getCommonDSU(expensesTWrapper));
+        ContextMenuOptional.setTableItemContextMenuListener(expensesTWrapper);
+        expensesTWrapper.getContextMenu().getItems().get(2)
                 .addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
                     System.out.println("SAVEITEM ->>  report.controllers.expensesLayoutController.init_expensesTab()");
                     COEFFICIENT.setValue(new CoefficientQuery().getCoefficientClass().getCoefficientValue());
@@ -153,8 +153,8 @@ public class expensesLayoutController implements Initializable {
     private void init_periodTab(){
 
     //Set Context Menu
-    periodTV.setContextMenu(ContextMenuFactory.getCommonDSU(periodTV));
-    ContextMenuOptional.setTableItemContextMenuListener(periodTV);
+    periodTWrapper.setContextMenu(ContextMenuFactory.getCommonDSU(periodTWrapper));
+    ContextMenuOptional.setTableItemContextMenuListener(periodTWrapper);
     
     //Set Date Pickers Converter
     dateFromDP.setConverter(new EpochDatePickerConverter());
@@ -162,8 +162,8 @@ public class expensesLayoutController implements Initializable {
         
     //Set DateContract / FinishBuildin TextField
     contract_FinishTF.textProperty().bind(new StringBinding(){
-            ObjectProperty dateComtract   = Est.Changed.getItem(SQL.Site.DATE_CONTRACT).getSecondProperty();
-            ObjectProperty FinishBuilding = Est.Changed.getItem(SQL.Site.FINISH_BUILDING).getSecondProperty();
+            ObjectProperty dateComtract   = Est.Changed.getSiteItem(SQL.Site.DATE_CONTRACT).getSecondProperty();
+            ObjectProperty FinishBuilding = Est.Changed.getSiteItem(SQL.Site.FINISH_BUILDING).getSecondProperty();
             {
                 super.bind(
                         dateComtract,
@@ -182,7 +182,7 @@ public class expensesLayoutController implements Initializable {
     
 
     private void siteButtonAccess(){
-        siteTV.getItems().addListener((ListChangeListener<? super TableItemPreview>) c -> {
+        siteTWrapper.getItems().addListener((ListChangeListener<? super TableItemPreview>) c -> {
             System.out.println("Changed on " + c + " expensesLayoutController" );
             siteUndoButton.setDisable(false);
             siteSaveButton.setDisable(false);
@@ -194,7 +194,7 @@ public class expensesLayoutController implements Initializable {
         //add Coefficient TF Listener
         coeffTF.textProperty().addListener(event ->{
             if(Est.Changed.isExist() ) {
-                if(!COEFFICIENT.getValue().equals(Est.Common.getItem(SQL.Site.COEFFICIENT).getSecondValue()))
+                if(!COEFFICIENT.getValue().equals(Est.Common.getSiteItem(SQL.Site.COEFFICIENT).getSecondValue()))
                     applyCoefButton.setDisable(false);
                 else
                     applyCoefButton.setDisable(true);
@@ -228,9 +228,9 @@ public class expensesLayoutController implements Initializable {
     @FXML   
     private void hendler_applySiteChanges(ActionEvent event) {
 
-            new ItemSiteDAO().dellAndInsert( siteTV);
+            new SiteItemDAO().dellAndInsert(siteTWrapper);
        
-            siteTV.saveTableItems();
+            siteTWrapper.saveTableItems();
             rootController.update_previewTable(Est.Common.getPreviewObservableList());
             
             COEFFICIENT.setValue(new CoefficientQuery().getCoefficientClass().getCoefficientValue());
@@ -244,7 +244,7 @@ public class expensesLayoutController implements Initializable {
     
     @FXML   
     private void hendler_cencelSiteChanges(ActionEvent event) {
-        siteTV.undoChageItems();
+        siteTWrapper.undoChangeItems();
         
         siteUndoButton .setDisable(true);
         siteSaveButton .setDisable(true);
@@ -260,7 +260,7 @@ public class expensesLayoutController implements Initializable {
         }else if(typeCB.getSelectionModel().getSelectedItem().equals(" Руб. ")){
             type = 1;
         }       
-             expensesTV.getItems().add(new TableItemExpenses
+             expensesTWrapper.getItems().add(new TableItemExpenses
                                         .Builder()
                                         .setId(new Long(0))
                                         .setsiteNumber(SITE_NUMBER.getValue())
@@ -270,12 +270,12 @@ public class expensesLayoutController implements Initializable {
                                         .setValue(Double.parseDouble(valueTF.getText()))
                                         .build()
              );
-        expensesTV.refresh();
+        expensesTWrapper.refresh();
     } 
  
     @FXML
     private void hendler_addJobPeriod(ActionEvent event) {                   //<===SQL connect
-        periodTV.getItems().add(new TableItemPeriod
+        periodTWrapper.getItems().add(new TableItemPeriod
                                         .Builder()
                                         .setsiteNumber(SITE_NUMBER.getValue())
                                         .setContractor(CONTRACTOR.getValue())
@@ -284,16 +284,16 @@ public class expensesLayoutController implements Initializable {
                                         .setDateTo((int) dateToDP.getValue().toEpochDay())
                                         .build()
              );
-        periodTV.refresh();
+        periodTWrapper.refresh();
     }   
     
     @FXML
     private void hendler_applyCoeffToChaged(ActionEvent event) {
-        Est.Common.getItem(SQL.Site.COEFFICIENT).setSecondValue(COEFFICIENT.get());
+        Est.Common.getSiteItem(SQL.Site.COEFFICIENT).setSecondValue(COEFFICIENT.get());
         
-        new ItemSiteDAO().dellAndInsert(siteTV);
-        siteTV.saveTableItems();
-        siteTV.refresh();
+        new SiteItemDAO().dellAndInsert(siteTWrapper);
+        siteTWrapper.saveTableItems();
+        siteTWrapper.refresh();
         
         if(Est.Changed.isExist()){
             new CoefficientQuery().applyCoefficient(

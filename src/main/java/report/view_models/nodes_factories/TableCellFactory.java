@@ -19,9 +19,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.util.StringConverter;
 import report.view_models.data_models.DecimalFormatter;
-import report.usege_strings.SQL;
+import report.usage_strings.SQL;
 
-import report.controllers.root.rootLayoutController;
+import report.controllers.root.RootLayoutController;
 import report.controllers.showEstLayoutController.Est;
 import report.entities.items.TableClone;
 import report.entities.items.TableItem;
@@ -30,8 +30,8 @@ import report.entities.items.estimate.TableItemEst;
 import report.entities.items.osr.TableItemOSR;
 import report.entities.items.estimate.ItemEstDAO;
 import report.entities.items.plan.ItemPlanDAO;
-import report.entities.items.site.ItemSiteDAO;
-import report.usege_strings.ServiceStrings;
+import report.entities.items.site.SiteItemDAO;
+import report.usage_strings.ServiceStrings;
 
 
 public class TableCellFactory{
@@ -307,7 +307,7 @@ public class TableCellFactory{
                    comboBox.setPrefWidth(150);
                         switch(item.getSqlColumn()){
                             case SQL.Site.CONTRACTOR :
-                                comboBox.setItems(new ItemSiteDAO().getDistinctOfColumn(SQL.Common.CONTRACTOR));
+                                comboBox.setItems(new SiteItemDAO().getDistinctOfColumn(SQL.Common.CONTRACTOR));
 //                                comboBox.setItems(new CommonQuery().getObsDISTINCT(SQL.Tables.C, SQL.Plan.TYPE_NAME, this));
                                 break;
                             case SQL.Site.TYPE_HOME  :
@@ -458,7 +458,7 @@ public class TableCellFactory{
              } else {
                 setText(item.toString());
                 setOnMouseEntered(value ->{
-                     rootLayoutController.update_changeTable(
+                     RootLayoutController.update_changeTable(
                             enumEst.findItemsList_DL(
                                      this.getTableView().getItems().get(this.getIndex())));
                      System.out.println("ID EST =" + this.getTableView().getItems().get(this.getIndex()).getId());
@@ -550,7 +550,7 @@ public class TableCellFactory{
 //                setOnMouseEntered(value ->{
 ////                     
 //                   
-//                     rootLayoutController.update_changeTable((ObservableList) Est.Base.findItemsList_DL(this.getTableView().getItems().saveEst(this.getIndex())));
+//                     RootLayoutController.update_changeTable((ObservableList) Est.Base.findItemsList_DL(this.getTableView().getItems().saveEst(this.getIndex())));
 //                    
 //                 });
 //                 

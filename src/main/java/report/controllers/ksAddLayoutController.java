@@ -14,8 +14,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import report.view_models.nodes_factories.TableViewFxmlDecorator;
-import report.usege_strings.SQL;
+import report.view_models.nodes_factories.TableFactory;
+import report.usage_strings.SQL;
 
 import report.controllers.showEstLayoutController.Est;
 import report.view_models.InputValidator;
@@ -73,8 +73,8 @@ public class ksAddLayoutController implements Initializable {
         siteNumLabel.setText(Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER));
         contLabel.setText(Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
 
-        TableViewFxmlDecorator.decorAddKS(allJMTable);
-        TableViewFxmlDecorator.decorAddKS(selectedJMTable);
+        TableFactory.decorAddKS(allJMTable);
+        TableFactory.decorAddKS(selectedJMTable);
         //set Items of allJMTable
         allJMTable.setItems(obsAllJM);
         selectedJMTable.setItems(obsSelectedJM);

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.image.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.geometry.*?>
 <?import java.lang.*?>
@@ -8,7 +9,8 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="772.0" prefWidth="1247.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.controllers.root.rootLayoutController">
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="772.0" prefWidth="1247.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.controllers.root.RootLayoutController">
    <top>
       <StackPane>
          <children>
@@ -55,7 +57,7 @@
       </StackPane>
    </top>
    <left>
-      <ScrollPane prefHeight="747.0" prefWidth="360.0" BorderPane.alignment="CENTER">
+      <ScrollPane prefWidth="360.0" BorderPane.alignment="CENTER">
          <content>
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="345.0">
                <children>
@@ -71,12 +73,33 @@
                           <rowConstraints>
                             <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
                             <RowConstraints minHeight="10.0" prefHeight="250.0" vgrow="SOMETIMES" />
+                              <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                           </rowConstraints>
                            <children>
                               <ComboBox fx:id="comboQueueNum" prefWidth="150.0" promptText="Очередь" />
                               <ComboBox fx:id="comboSiteCondition" prefWidth="150.0" promptText="Статус " GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
                               <TreeView fx:id="treeViewSite" GridPane.columnSpan="3" GridPane.rowIndex="1" />
-                              <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handle_OkButton" text="Ok" GridPane.columnIndex="2" />
+                              <Button alignment="CENTER" contentDisplay="RIGHT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handle_OkButton" text="Фильтр" GridPane.columnIndex="2" />
+                              <TextField fx:id="findSiteByNameTF" promptText="Номер участка" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets left="5.0" right="5.0" />
+                                 </GridPane.margin>
+                              </TextField>
+                              <Button alignment="TOP_CENTER" contentDisplay="RIGHT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handle_FindSiteByName" text="Найти" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                 <GridPane.margin>
+                                    <Insets />
+                                 </GridPane.margin>
+                                 <opaqueInsets>
+                                    <Insets />
+                                 </opaqueInsets>
+                                 <graphic>
+                                    <ImageView fitHeight="15.0" fitWidth="15.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../img/search_glass.png" />
+                                       </image>
+                                    </ImageView>
+                                 </graphic>
+                              </Button>
                            </children>
                         </GridPane>
                      </content>
@@ -93,4 +116,11 @@
          </content>
       </ScrollPane>
    </left>
+   <center>
+      <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <content>
+            <VBox />
+         </content>
+      </ScrollPane>
+   </center>
 </BorderPane>

@@ -8,7 +8,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import report.usege_strings.SQL;
+import report.entities.items.contractor.TableItemContractor;
+import report.usage_strings.SQL;
 import report.controllers.showEstLayoutController.Est;
 
 import report.entities.items.site.TableItemPreview;
@@ -21,38 +22,23 @@ public class PrintEstimate extends AbstractPrinterXML{
     private Document doc;
     private ObservableList<TableItem> obsKS; 
     private ObservableList<TableItemPreview>  obsPreTab;
+    private TableItemContractor contractorObject;
     
     //Constructor =====================================================================================================================    
     public PrintEstimate(ItemDAO dao) {
-//        this.obsKS = FXCollections.observableArrayList(commonSQL_SELECT.getObsEst_TEST_2(enumEst));
         this.obsKS = FXCollections.observableArrayList( dao.getList());
-//        this.obsKS = commonSQL_SELECT.getEstObs(siteNumber, contName, "%", tableType);
-//        this.obsKS = obsKS;
-//        this.obsPreTab = obsPreTab;
+
 
         doc = buildDocument("\\lib\\XML_Models\\Смета.xml");
         addJMrows();
         saveDocument("\\lib\\XML_Models\\Смета-"+ Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER) +"_"+ Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR) +".xml");
     }
 
-    public PrintEstimate(List list) {
-//        this.obsKS = FXCollections.observableArrayList(commonSQL_SELECT.getObsEst_TEST_2(enumEst));
-        this.obsKS = FXCollections.observableArrayList(list);
-//        this.obsKS = commonSQL_SELECT.getEstObs(siteNumber, contName, "%", tableType);
-//        this.obsKS = obsKS;
-//        this.obsPreTab = obsPreTab;
 
-        doc = buildDocument("\\lib\\XML_Models\\Смета.xml");
-        addJMrows();
-        saveDocument("\\lib\\XML_Models\\Смета-"+ Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER) +"_"+ Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR) +".xml");
-    }
 
     public PrintEstimate(List list, Path path) {
-//        this.obsKS = FXCollections.observableArrayList(commonSQL_SELECT.getObsEst_TEST_2(enumEst));
         this.obsKS = FXCollections.observableArrayList(list);
-//        this.obsKS = commonSQL_SELECT.getEstObs(siteNumber, contName, "%", tableType);
-//        this.obsKS = obsKS;
-//        this.obsPreTab = obsPreTab;
+
 
         doc = buildDocument("\\lib\\XML_Models\\Смета.xml");
         addJMrows();
@@ -92,8 +78,8 @@ public class PrintEstimate extends AbstractPrinterXML{
     
     //Add Job - Material rows
     private void addJMrows(){
-        
-        int i = 1;
+
+        int rowsQuantity = 1;
         String buildingPart = null;
         
         for(TableItem item : obsKS){
@@ -110,7 +96,7 @@ public class PrintEstimate extends AbstractPrinterXML{
                 
                 row.appendChild(new CellBuilder(doc)
                                  .setCellStyle("s139")
-                                 .setCellValue("Number", Integer.toString(i))
+                                 .setCellValue("Number", Integer.toString(rowsQuantity))
                                  .build());
                 row.appendChild(new CellBuilder(doc)
                                  .setCellStyle("s109")
@@ -145,8 +131,8 @@ public class PrintEstimate extends AbstractPrinterXML{
                                  .setCellValue("String", "" )
                                  .build());
                 
-                targetRow.getParentNode().insertBefore(row, targetRow); 
-                i++;
+                targetRow.getParentNode().insertBefore(row, targetRow);
+                rowsQuantity++;
             };
             
 
@@ -156,7 +142,7 @@ public class PrintEstimate extends AbstractPrinterXML{
             //Posittion
             row.appendChild(new CellBuilder(doc)
                                  .setCellStyle("s139")
-                                 .setCellValue("Number", Integer.toString(i))
+                                 .setCellValue("Number", Integer.toString(rowsQuantity))
                                  .build());
             //JM name
             row.appendChild(new CellBuilder(doc)
@@ -228,10 +214,14 @@ public class PrintEstimate extends AbstractPrinterXML{
                                  .build());
                
             targetRow.getParentNode().insertBefore(row, targetRow);
-            i++;
+            rowsQuantity++;
 //                
         }
-        
+
+        super.getTargetElement("SumAmountValue")
+                .setAttribute("ss:Formula", "=SUM(R[-"+ Integer.toString(rowsQuantity - 1) +"]C:R[-1]C)");
+        super.getTargetElement("HeadSumAmountValue")
+                .setAttribute("ss:Formula", "=R["+Integer.toString(rowsQuantity + 7) +"]C[2]");
 
       
     }
