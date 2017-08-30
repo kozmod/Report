@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import report.controllers.LogLayoutController;
+import report.layoutControllers.LogController;
 import report.models.sql.SQLconnector;
 import report.usage_strings.PathStrings;
 
@@ -42,7 +42,7 @@ public class BackUpQuery {
             SQLWarning warning = pstmt.getWarnings();
             while (warning != null){
                 System.out.println(warning.getMessage());
-                LogLayoutController.appendLogViewText(warning.getMessage());
+                LogController.appendLogViewText(warning.getMessage());
                 
                 warning = warning.getNextWarning();
             }
@@ -79,7 +79,7 @@ public class BackUpQuery {
             SQLWarning warning = pstmt.getWarnings();
             while (warning != null){
                 System.out.println(warning.getMessage());
-                LogLayoutController.appendLogViewText(warning.getMessage());
+                LogController.appendLogViewText(warning.getMessage());
                 
                 warning = warning.getNextWarning();
                 

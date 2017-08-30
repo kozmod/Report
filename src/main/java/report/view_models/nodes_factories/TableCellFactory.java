@@ -21,8 +21,8 @@ import javafx.util.StringConverter;
 import report.view_models.data_models.DecimalFormatter;
 import report.usage_strings.SQL;
 
-import report.controllers.root.RootLayoutController;
-import report.controllers.showEstLayoutController.Est;
+import report.layoutControllers.root.RootLayoutController;
+import report.layoutControllers.EstimateController.Est;
 import report.entities.items.TableClone;
 import report.entities.items.TableItem;
 import report.entities.items.cb.TableItemCB;
@@ -65,7 +65,7 @@ public class TableCellFactory{
     }
     
     /**
-     * Cell to "Add Row Estimate" TableWrapper (addSiteRowLayoutController)
+     * Cell to "Add Row Estimate" TableWrapper (AddSiteRowController)
      * @return CheckValueCell
      */
     public static TableCell getCheckValueCell(){

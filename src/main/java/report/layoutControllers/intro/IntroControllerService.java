@@ -1,4 +1,4 @@
-package report.controllers.intro;
+package report.layoutControllers.intro;
 
 import javafx.collections.ObservableList;
 import report.entities.items.intro.ItemFinishedSiteDAO;

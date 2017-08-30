@@ -1,5 +1,5 @@
 
-package report.controllers;
+package report.layoutControllers;
 
 import java.net.URL;
 import java.sql.Timestamp;
@@ -13,7 +13,7 @@ import javafx.geometry.Insets;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 
-public class LogLayoutController implements Initializable {
+public class LogController implements Initializable {
 
     @FXML private GridPane gridPane;
 

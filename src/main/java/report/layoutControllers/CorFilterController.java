@@ -1,5 +1,5 @@
 
-package report.controllers;
+package report.layoutControllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,7 +16,7 @@ import report.entities.items.correspondents.ItemCorDAO;
 
 
 
-public class CorrespondentFilterLayoutController implements Initializable {
+public class CorFilterController implements Initializable {
 
     @FXML private ListView<Object> allCorList, selectedCorList;
     

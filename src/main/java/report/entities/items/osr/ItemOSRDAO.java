@@ -1,6 +1,7 @@
 
 package report.entities.items.osr;
 
+import report.layoutControllers.LogController;
 import report.entities.ItemDAO;
 import report.usage_strings.SQL;
 import java.sql.Connection;
@@ -13,7 +14,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.controllers.LogLayoutController;
 //import report.models.Formula_test;
 import report.models.sql.SQLconnector;
 import report.view_models.nodes.TableWrapper;
@@ -104,15 +104,15 @@ public class ItemOSRDAO implements ItemDAO<TableItemOSR,TableWrapper> {
            pstmt.executeBatch();
            //SQL commit
            connection.commit();
-           //add info to LogTextArea / LogLayoutController
+           //add info to LogTextArea / LogController
            items.forEach(item -> {
-//                LogLayoutController.appendLogViewText("deleted item: "+ ((TableItemOSR)item).getJM_name() 
+//                LogController.appendLogViewText("deleted item: "+ ((TableItemOSR)item).getJM_name()
 //                                                         +" [JM/ "+((TableItemOSR)item).getJobOrMat()      + "]"
 //                                                         +" [BP/ "+((TableItemOSR)item).getBindedJob()     + "]"
 //                                                         +" [S#/ " + ((TableItem)item).getSiteNumber()  + "]"
 //                                                         +" [C/ " + ((TableItem)item).getContractor()   + "]");
                 });
-            LogLayoutController.appendLogViewText(items.size() + " deleted");
+            LogController.appendLogViewText(items.size() + " deleted");
             
         } catch (SQLException ex) {
             Logger.getLogger(ItemOSRDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -151,15 +151,15 @@ public class ItemOSRDAO implements ItemDAO<TableItemOSR,TableWrapper> {
            
            //SQL commit
            connection.commit();
-           //add info to LogTextArea / LogLayoutController
+           //add info to LogTextArea / LogController
 //           items.forEach(item -> {
-////                LogLayoutController.appendLogViewText("inserted item: "+ ((TableItem)item).getJM_name() 
+////                LogController.appendLogViewText("inserted item: "+ ((TableItem)item).getJM_name()
 ////                                                         +" [JM/ "+((TableItem)item).getJobOrMat()      + "]"
 ////                                                         +" [BP/ "+((TableItem)item).getBindedJob()     + "]"
 ////                                                         +" [S#/ " + ((TableItem)item).getSiteNumber()  + "]"
 ////                                                         +" [C/ " + ((TableItem)item).getContractor()   + "]");
 //                });
-            LogLayoutController.appendLogViewText(items.size() + " inserted");
+            LogController.appendLogViewText(items.size() + " inserted");
         } catch (SQLException ex) {
             Logger.getLogger(ItemOSRDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

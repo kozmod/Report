@@ -1,10 +1,8 @@
-package report.controllers.intro;
+package report.layoutControllers.intro;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
-import report.entities.items.intro.ItemFinishedSiteDAO;
-import report.entities.items.site.SiteCommonDAO;
 import report.view_models.nodes_factories.TableFactory;
 
 

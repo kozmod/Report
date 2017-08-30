@@ -1,5 +1,5 @@
 
-package report.controllers;
+package report.layoutControllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -13,15 +13,15 @@ import javafx.scene.control.*;
 
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import report.controllers.root.RootLayoutController;
+import report.layoutControllers.root.RootLayoutController;
 import report.entities.items.site.SiteCommonDAO;
 import report.usage_strings.SQL;
-import report.controllers.showEstLayoutController.Est;
+import report.layoutControllers.EstimateController.Est;
 import report.entities.items.contractor.ItemContractorDAO;
 import report.view_models.InputValidator;
 
 
-public class ContractorAddLayoutController implements Initializable  {
+public class AddContractController implements Initializable  {
 
     private RootLayoutController rootController;
     

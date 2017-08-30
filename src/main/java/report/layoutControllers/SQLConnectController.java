@@ -1,12 +1,12 @@
 
-package report.controllers;
+package report.layoutControllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.fxml.Initializable;
 
 
-public class connectSQLLayoutController implements Initializable {
+public class SQLConnectController implements Initializable {
 
    
     @Override

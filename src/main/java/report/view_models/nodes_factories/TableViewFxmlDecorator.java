@@ -91,7 +91,7 @@
 //    }
 //
 //    /**
-//     * Decorate KS_add TableView (ksAddLayoutController)
+//     * Decorate KS_add TableView (AddKSController)
 //     */
 //    public static void decorAddKS(TableView table){
 //        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -105,7 +105,7 @@
 //    }
 //
 //    /**
-//     * Decorate KS_add TableView (ksAddLayoutController)
+//     * Decorate KS_add TableView (AddKSController)
 //     */
 //    public static void decorAcc(TableView<TableItemAcc> table){
 //        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

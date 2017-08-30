@@ -19,7 +19,7 @@ import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.controllers.LogLayoutController;
+import report.layoutControllers.LogController;
 import report.models.sql.SQLconnector;
 import report.view_models.nodes.TableWrapper;
 
@@ -161,8 +161,8 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
            pstmt.executeBatch();
            //SQL commit
            connection.commit();
-           //add info to LogTextArea / LogLayoutController
-           LogLayoutController.appendLogViewText(entry.size() + " deleted");
+           //add info to LogTextArea / LogController
+           LogController.appendLogViewText(entry.size() + " deleted");
             
         } catch (SQLException ex) {
             Logger.getLogger(ItemPlanDAO.class.getName()).log(Level.SEVERE, null, ex);

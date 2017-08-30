@@ -1,5 +1,5 @@
 
-package report.controllers;
+package report.layoutControllers;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -24,11 +24,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import report.controllers.root.RootLayoutController;
+import report.layoutControllers.root.RootLayoutController;
 import report.view_models.data_models.DecimalFormatter;
 import report.usage_strings.SQL;
 
-import report.controllers.showEstLayoutController.Est;
+import report.layoutControllers.EstimateController.Est;
 
 import report.view_models.data_models.EpochDatePickerConverter;
 import report.entities.items.expenses.TableItemExpenses;
@@ -44,7 +44,7 @@ import report.entities.items.period.ItemPeriodDAO;
 import report.entities.items.site.SiteItemDAO;
 import report.view_models.nodes.ContextMenuOptional;
 
-public class expensesLayoutController implements Initializable {
+public class ExpensesController implements Initializable {
     
     private RootLayoutController rootController;
     private Stage controllerStage;
@@ -139,7 +139,7 @@ public class expensesLayoutController implements Initializable {
         ContextMenuOptional.setTableItemContextMenuListener(expensesTWrapper);
         expensesTWrapper.getContextMenu().getItems().get(2)
                 .addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
-                    System.out.println("SAVEITEM ->>  report.controllers.expensesLayoutController.init_expensesTab()");
+                    System.out.println("SAVEITEM ->>  report.layoutControllers.ExpensesController.init_expensesTab()");
                     COEFFICIENT.setValue(new CoefficientQuery().getCoefficientClass().getCoefficientValue());
                     System.out.println("COEF - >"  + COEFFICIENT.getValue());
                 });
@@ -183,7 +183,7 @@ public class expensesLayoutController implements Initializable {
 
     private void siteButtonAccess(){
         siteTWrapper.getItems().addListener((ListChangeListener<? super TableItemPreview>) c -> {
-            System.out.println("Changed on " + c + " expensesLayoutController" );
+            System.out.println("Changed on " + c + " ExpensesController" );
             siteUndoButton.setDisable(false);
             siteSaveButton.setDisable(false);
         });

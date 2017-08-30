@@ -12,7 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.StackPane;
-import report.controllers.showEstLayoutController.Est;
+import report.layoutControllers.EstimateController.Est;
 import report.view_models.data_models.DecimalFormatter;
 import report.view_models.nodes_factories.TableFactory;
 import report.entities.items.estimate.TableItemEst;

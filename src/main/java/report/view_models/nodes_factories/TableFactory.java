@@ -17,9 +17,8 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.layout.Pane;
 import javafx.util.StringConverter;
-import report.controllers.showEstLayoutController.Est;
+import report.layoutControllers.EstimateController.Est;
 import report.entities.items.account.TableItemAcc;
-import report.entities.items.fin_res.TableItemFinRes;
 import report.models.coefficient.Quantity;
 import report.entities.items.TableItem;
 import report.entities.items.estimate.TableItemEst;
@@ -196,7 +195,7 @@ public class TableFactory {
     }
 
     /**
-     * Create TableWrapper to addSiteRowLayoutController.Contain columns and their options.
+     * Create TableWrapper to AddSiteRowController.Contain columns and their options.
      * @return TableWrapper(child of TableView)
      */
     public static TableWrapperEST decorEst_add(TableView table){
@@ -308,7 +307,7 @@ public class TableFactory {
     }
 
     /**
-     * Create TableWrapper(ksAddLayoutController).
+     * Create TableWrapper(AddKSController).
      * <br>
      * @return TableWrapper(child of TableView)
      */
@@ -442,7 +441,7 @@ public class TableFactory {
     }
 
     /**
-     * Create TableWrapper "OSR"(allPropertiesLayoutController).
+     * Create TableWrapper "OSR"(AllPropertiesController).
      * <br>
      * Show SQL table Items where dell = 0
      * <br>
@@ -484,7 +483,7 @@ public class TableFactory {
     }
 
     /**
-     * Create TableWrapper "Variable"(allPropertiesLayoutController).
+     * Create TableWrapper "Variable"(AllPropertiesController).
      * <br>
      * Show SQL table Items where dell = 0
      * <br>
@@ -513,7 +512,7 @@ public class TableFactory {
     }
 
     /**
-     * Create TableWrapper "Contractor"(allPropertiesLayoutController).
+     * Create TableWrapper "Contractor"(AllPropertiesController).
      * <br>
      * Show SQL table Items where dell = 0
      * <br>
@@ -537,7 +536,7 @@ public class TableFactory {
     }
 
     /**
-     * Create TableWrapper "Plan"(allPropertiesLayoutController).
+     * Create TableWrapper "Plan"(AllPropertiesController).
      * <br>
      * Show SQL table Items where dell = 0
      * <br>
@@ -620,7 +619,7 @@ public class TableFactory {
         return tableWrapper;
     }
     /**
-     * Create TableWrapper "Plan"(allPropertiesLayoutController).
+     * Create TableWrapper "Plan"(AllPropertiesController).
      * <br>
      * Show SQL table Items where dell = 0
      * <br>
@@ -660,7 +659,7 @@ public class TableFactory {
         return tableWrapper;
     }
     /**
-     * Create TableWrapper "FinRes"(finResLayoutController).
+     * Create TableWrapper "FinRes"(FinResController).
      * <br>
      * <br>
      *
@@ -764,7 +763,7 @@ public class TableFactory {
     }
 
     /**
-     * Decorate FinRes TableView (finResLayoutController)
+     * Decorate FinRes TableView (FinResController)
      * @param table
      */
     @SuppressWarnings("unchecked")
@@ -797,7 +796,7 @@ public class TableFactory {
 
 
     /**
-     * Decorate KS_add TableView (ksAddLayoutController)
+     * Decorate KS_add TableView (AddKSController)
      */
     public static void decorAddKS(TableView table){
         TableWrapper tableWrapper = new TableWrapper(table);
@@ -814,7 +813,7 @@ public class TableFactory {
 
 
     /**
-     * Decorate KS_add TableView (ksAddLayoutController)
+     * Decorate KS_add TableView (AddKSController)
      */
     public static void decorAcc(TableView<TableItemAcc> table){
 

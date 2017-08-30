@@ -1,5 +1,5 @@
 
-package report.controllers;
+package report.layoutControllers;
 
 
 import java.net.URL;
@@ -14,11 +14,11 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
-import report.controllers.root.RootLayoutController;
+import report.layoutControllers.root.RootLayoutController;
 import report.entities.items.site.SiteCommonDAO;
 
 
-public class delLayoutController implements Initializable {
+public class DeleteController implements Initializable {
     private RootLayoutController rootController;
     private String siteNumber, contractorName;
     

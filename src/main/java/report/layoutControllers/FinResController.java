@@ -1,5 +1,5 @@
 
-package report.controllers;
+package report.layoutControllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -22,7 +22,7 @@ import report.entities.items.fin_res.TableItemFinRes;
 import report.view_models.data_models.EpochDatePickerConverter;
 
 
-public class finResLayoutController implements Initializable {
+public class FinResController implements Initializable {
 
     @FXML private DatePicker dateFinResFrom, dateFinResTo;
     @FXML private TableView<TableItemFinRes>  finResTable;

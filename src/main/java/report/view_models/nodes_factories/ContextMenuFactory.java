@@ -2,8 +2,8 @@
 package report.view_models.nodes_factories;
 
 import javafx.scene.control.ContextMenu;
-import report.controllers.addSiteRowLayoutController;
-import report.controllers.showEstLayoutController.Est;
+import report.layoutControllers.AddSiteRowController;
+import report.layoutControllers.EstimateController.Est;
 import report.view_models.StageCreator;
 import report.entities.items.estimate.ItemEstDAO;
 import report.usage_strings.PathStrings;
@@ -28,7 +28,7 @@ public class ContextMenuFactory {
                         StageCreator addSiteRowLayout
                                 = new StageCreator(PathStrings.Layout.ADD_SITE_ROW, "Добавление строк")
                                 .loadNewWindow();
-                        addSiteRowLayoutController controllerAddRow = addSiteRowLayout.getController();
+                        AddSiteRowController controllerAddRow = addSiteRowLayout.getController();
                         controllerAddRow.setRootTableView(tableWrapperView);
                         addSiteRowLayout.getStage().show();
                     })
@@ -48,7 +48,7 @@ public class ContextMenuFactory {
                     StageCreator addSiteRowLayout
                             = new StageCreator(PathStrings.Layout.ADD_SITE_ROW, "Добавление строк")
                             .loadNewWindow();
-                    addSiteRowLayoutController controllerAddRow = addSiteRowLayout.getController();
+                    AddSiteRowController controllerAddRow = addSiteRowLayout.getController();
                     controllerAddRow.setRootTableView(tableWrapperView);
 //                                                            controllerAddRow.setAditionalTableView(Est.Additional.getAllItemsList_Live());
                     addSiteRowLayout.getStage().show();

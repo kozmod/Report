@@ -1,5 +1,5 @@
 
-package report.controllers;
+package report.layoutControllers;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,7 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import report.controllers.root.RootLayoutController;
+import report.layoutControllers.root.RootLayoutController;
 import report.usage_strings.SQL;
 import report.entities.items.plan.TableItemPlan;
 import report.entities.items.plan.ItemPlanDAO;
@@ -29,7 +29,7 @@ import report.view_models.InputValidator;
 
 
 
-public class siteAddLayoutController implements Initializable {
+public class AddSiteController implements Initializable {
     
     private RootLayoutController rootController;
 

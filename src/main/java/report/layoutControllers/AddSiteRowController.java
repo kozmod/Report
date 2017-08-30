@@ -1,5 +1,5 @@
 
-package report.controllers;
+package report.layoutControllers;
 
 import java.net.URL;
 import java.sql.Timestamp;
@@ -13,17 +13,15 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import report.controllers.showEstLayoutController.Est;
+import report.layoutControllers.EstimateController.Est;
 import report.usage_strings.SQL;
 import report.view_models.data_models.DiffList;
 
@@ -37,7 +35,7 @@ import report.view_models.nodes_factories.TableFactory;
 import report.entities.items.estimate.ItemEstDAO;
 
 
-public class addSiteRowLayoutController implements Initializable {
+public class AddSiteRowController implements Initializable {
     //   saveEst DATA(NOW)
     private final Timestamp todayDate = new Timestamp(System.currentTimeMillis());
 

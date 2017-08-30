@@ -14,8 +14,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.controllers.LogLayoutController;
-import report.controllers.showEstLayoutController.Est;
+import report.layoutControllers.LogController;
+import report.layoutControllers.EstimateController.Est;
 import report.models.sql.SQLconnector;
 import report.entities.items.TableItem;
 import report.view_models.nodes.TableWrapperEST;
@@ -185,7 +185,7 @@ public class ItemKSDAO implements ItemDAO<TableItemKS, TableWrapperEST> {
            pstmt.executeBatch();
            connection.commit();
            items.forEach(item -> {
-                LogLayoutController.appendLogViewText("deleted KS item: "
+                LogController.appendLogViewText("deleted KS item: "
                                                          + item.getJM_name() 
                                                          +" [KS# "+item.getKSNumber()   + "]"
                                                          +" [JM/ "+item.getJobOrMat()   + "]"

@@ -112,8 +112,8 @@ public class ContextMenuOptional extends ContextMenu{
 //            
 //            addMenuItem.setOnAction(event -> {
 //                StageCreator addSiteRowLayout
-//                    = new StageCreator("view/addSiteRowLayout.fxml", "Добавление строк");
-//                addSiteRowLayoutController controllerAddRow = addSiteRowLayout.getController();
+//                    = new StageCreator("view/AddSiteRowLayout.fxml", "Добавление строк");
+//                AddSiteRowController controllerAddRow = addSiteRowLayout.getController();
 //                controllerAddRow.setRootTableView(tableWrapper);
 //                addSiteRowLayout.getStage().show();
 //            });

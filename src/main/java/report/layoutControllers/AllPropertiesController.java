@@ -1,5 +1,5 @@
 
-package report.controllers;
+package report.layoutControllers;
 
 import java.net.URL;
 import java.sql.Timestamp;
@@ -12,10 +12,8 @@ import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.GridPane;
 import javafx.util.converter.NumberStringConverter;
 import report.models.coefficient.Quantity;
 //import report.models.Formula_test;
@@ -31,7 +29,7 @@ import report.entities.items.plan.ItemPlanDAO;
 import report.view_models.nodes.ContextMenuOptional;
 
 
-public class allPropertiesLayoutController implements Initializable {
+public class AllPropertiesController implements Initializable {
 
 
     @FXML private TextField osrAddTextTF,
@@ -110,7 +108,7 @@ public class allPropertiesLayoutController implements Initializable {
        
        computeSumExpTextFields();
        osrTableWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItemOSR> c) -> {
-                System.out.println("Changed on " + c + " report.controllers.allPropertiesLayoutController.init_OSRTab()" );
+                System.out.println("Changed on " + c + " report.layoutControllers.AllPropertiesController.init_OSRTab()" );
                 if(c.next() && 
                         (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
                             computeSumExpTextFields();

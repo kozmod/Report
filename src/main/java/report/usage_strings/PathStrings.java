@@ -10,21 +10,21 @@ public  interface PathStrings {
         String USER_DIRRECTORY = System.getProperty("user.dir");
 
         interface Layout{
-                String ACC             = "/view/AccLayout.fxml";
-                String ADD_KS          = "/view/addKSLayout.fxml";
-                String ADD_SITE_ROW    = "/view/addSiteRowLayout.fxml";
+                String ACC             = "/view/CorAccountLayout.fxml";
+                String ADD_KS          = "/view/KSAddLayout.fxml";
+                String ADD_SITE_ROW    = "/view/AddSiteRowLayout.fxml";
                 String ALL_PROPERTIES  = "/view/AllPropertiesLayout.fxml";
-                String CONT_ADD        = "/view/ContractorAddLayout.fxml";
-                String COR_FILTER      = "/view/CorrespondentFilterLayout.fxml";
-                String DEL_SITE        = "/view/delLayout.fxml";
+                String CONT_ADD        = "/view/AddContractorLayout.fxml";
+                String COR_FILTER      = "/view/CorFilterLayout.fxml";
+                String DEL_SITE        = "/view/DeleteLayout.fxml";
                 String EXPENSES        = "/view/ExpensesLayout.fxml";
                 String FIN_RES         = "/view/FinResLayout.fxml";
                 String INTRO           = "/view/IntroLayout.fxml";
                 String LOG             = "/view/LogLayout.fxml";
                 String ROOT            = "/view/RootLayout.fxml";
-                String SITE_ADD        = "/view/siteAddLayout.fxml";
-                String SITE_EST        = "/view/SiteEstLayout.fxml";
-                String SQL_CONNECT     = "/view/sqlConnectLayout.fxml";
+                String SITE_ADD        = "/view/AddSiteLayout.fxml";
+                String SITE_EST        = "/view/EstimateLayout.fxml";
+                String SQL_CONNECT     = "/view/SQLConnectLayout.fxml";
         }
 
         interface Files{

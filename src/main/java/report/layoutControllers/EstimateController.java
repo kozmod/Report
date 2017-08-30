@@ -1,4 +1,4 @@
-package report.controllers;
+package report.layoutControllers;
 
 import java.io.File;
 import java.net.URL;
@@ -29,7 +29,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import report.controllers.root.RootLayoutController;
+import report.layoutControllers.root.RootLayoutController;
 import report.entities.items.contractor.ItemContractorDAO;
 import report.usage_strings.PathStrings;
 import report.usage_strings.SQL;
@@ -55,7 +55,7 @@ import report.view_models.nodes.ContextMenuOptional;
 import report.entities.items.site.SiteItemDAO;
 
 
-public class showEstLayoutController implements Initializable {
+public class EstimateController implements Initializable {
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //                                                                                                  ENUM
@@ -232,7 +232,7 @@ public class showEstLayoutController implements Initializable {
 
 
     private RootLayoutController rootController;
-    private ksAddLayoutController ksAddController;
+    private AddKSController ksAddController;
 
     //preview table
     private Map<Integer, List<TableItemKS>> ksMap;
@@ -334,7 +334,6 @@ public class showEstLayoutController implements Initializable {
             case Base:
                 nullExtText.setText("Для данного подрядчика отсутствует 'Базовая Cмета'");
                 addFromModelButton.setText("Добавить из SQL-Базы");
-                ((ScrollPane)baseVBox.getChildren().get(0)).setContent(vBox);
                 ((ScrollPane)baseVBox.getChildren().get(0)).setContent(vBox);
                 break;
             case Changed:

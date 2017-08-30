@@ -1,5 +1,5 @@
 
-package report.controllers;
+package report.layoutControllers;
 
 import java.io.File;
 import java.net.URL;
@@ -20,7 +20,7 @@ import report.models.sql.sqlQuery.InsertFileXLSQuery;
 import report.view_models.nodes_factories.TableFactory;
 
 
-public class showAccLayoutController implements Initializable {
+public class CorAccountController implements Initializable {
 
 
     @FXML

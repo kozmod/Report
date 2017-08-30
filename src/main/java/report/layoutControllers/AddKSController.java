@@ -1,4 +1,4 @@
-package report.controllers;
+package report.layoutControllers;
 
 import java.net.URL;
 import java.util.List;
@@ -17,16 +17,16 @@ import javafx.util.Duration;
 import report.view_models.nodes_factories.TableFactory;
 import report.usage_strings.SQL;
 
-import report.controllers.showEstLayoutController.Est;
+import report.layoutControllers.EstimateController.Est;
 import report.view_models.InputValidator;
 import report.entities.items.TableItem;
 import report.entities.items.KS.ItemKSDAO;
 
 
 
-public class ksAddLayoutController implements Initializable {
+public class AddKSController implements Initializable {
     
-    private showEstLayoutController showEstController;
+    private EstimateController showEstController;
 
     @FXML  private Label siteNumLabel, contLabel, errorLabel;
     @FXML  private ComboBox<Object> comboBuildingPart;
@@ -57,7 +57,7 @@ public class ksAddLayoutController implements Initializable {
 *                                                                                                     Getter/Setter
 ********************************************************************************************************************/
 
-    public void setShowEstController(showEstLayoutController showEstController) {
+    public void setShowEstController(EstimateController showEstController) {
         this.showEstController = showEstController;
     }
 

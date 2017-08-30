@@ -1,5 +1,5 @@
 
-package report.controllers.root;
+package report.layoutControllers.root;
 
 import java.io.File;
 
@@ -17,12 +17,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
-import report.controllers.*;
-import report.controllers.intro.IntroLayoutController;
+import report.layoutControllers.*;
+import report.layoutControllers.intro.IntroLayoutController;
 import report.view_models.InputValidator;
 import report.view_models.nodes_factories.FileChooserFactory;
 import report.usage_strings.PathStrings;
-import report.controllers.showEstLayoutController.Est;
+import report.layoutControllers.EstimateController.Est;
 import report.view_models.StageCreator;
 import report.models.sql.sqlQuery.BackUpQuery;
 import report.view_models.nodes_factories.TableFactory;
@@ -35,11 +35,11 @@ public class RootLayoutController implements Initializable {
     
     // ref to Report App      
     private Report                      reportApp;                                                                           
-    private ContractorAddLayoutController contAddController;
-    private delLayoutController delController;
-    private siteAddLayoutController siteAddController;
-    private showEstLayoutController showEstController;
-    private expensesLayoutController expensesController;
+    private AddContractController contAddController;
+    private DeleteController delController;
+    private AddSiteController siteAddController;
+    private EstimateController showEstController;
+    private ExpensesController expensesController;
     private IntroLayoutController introControllre;
 
     private RootControllerService rootService = new RootControllerService(this);
@@ -250,7 +250,7 @@ public class RootLayoutController implements Initializable {
             if (selectedFile != null) {
                 rootService.printEstBase(selectedFile);
 //                new PrintEstimate(Est.Base.getAllItemsList_Live(), selectedFile.toPath());
-                LogLayoutController.appendLogViewText("Базовая смета сохранена в файл");
+                LogController.appendLogViewText("Базовая смета сохранена в файл");
             }
         }else if((Est.Changed.isExist()
                 && showEstController.getChangeTab().isSelected())) {
@@ -258,10 +258,10 @@ public class RootLayoutController implements Initializable {
             if (selectedFile != null) {
                 rootService.printEstChange(selectedFile);
 //                new PrintEstimate(Est.Changed.getAllItemsList_Live(), selectedFile.toPath());
-                LogLayoutController.appendLogViewText("Изменненная смета сохранена в файл");
+                LogController.appendLogViewText("Изменненная смета сохранена в файл");
             }
         }else{
-            LogLayoutController.appendLogViewText("Не выбрана смета для печати");
+            LogController.appendLogViewText("Не выбрана смета для печати");
         }
 
     }
