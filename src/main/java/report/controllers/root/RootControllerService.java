@@ -6,11 +6,13 @@ import report.controllers.showEstLayoutController;
 import report.entities.items.site.SiteItemDAO;
 import report.entities.items.site.SiteCommonDAO;
 import report.models.printer.PrintEstimate;
+import report.models.utils.ConcurrentUtils;
 import report.usage_strings.SQL;
 import report.usage_strings.ServiceStrings;
 
 import java.io.File;
 import java.util.concurrent.Executor;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class RootControllerService {
@@ -66,20 +68,29 @@ public class RootControllerService {
                                                     siteNumber);
     }
 
-
+    /**
+     * Print to XML Base use new Thread
+     */
     public  void printEstBase(File selectedFile){
 
-        Executor executor = Executors.newSingleThreadExecutor();
+        ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(()->
                 new PrintEstimate(showEstLayoutController.Est.Base.getAllItemsList_Live(),
                         selectedFile.toPath()));
+
+
+        ConcurrentUtils.stop(executor);
     }
 
+    /**
+     * Print to XML Change use new Thread
+     */
     public  void printEstChange(File selectedFile){
-        Executor executor = Executors.newSingleThreadExecutor();
+        ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(()->
                 new PrintEstimate(showEstLayoutController.Est.Changed.getAllItemsList_Live(),
                         selectedFile.toPath()));
+        ConcurrentUtils.stop(executor);
     }
 //
 
