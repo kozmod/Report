@@ -1,0 +1,16 @@
+<component name="ArtifactManager">
+  <artifact build-on-make="true" name="R-1">
+    <output-path>$PROJECT_DIR$/out/artifacts/R_1</output-path>
+    <root id="root">
+      <element id="archive" name="R-1.jar">
+        <element id="module-output" name="Report" />
+        <element id="directory" name="META-INF">
+          <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+        </element>
+      </element>
+      <element id="directory" name="lib">
+        <element id="dir-copy" path="$PROJECT_DIR$/lib" />
+      </element>
+    </root>
+  </artifact>
+</component>

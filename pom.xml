@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>report</groupId>
+    <artifactId>Report</artifactId>
+    <version>1.0-R</version>
+    <name>projectReport</name>
+    <properties>
+        <jdk.version>1.8</jdk.version>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.6.1</version>
+                <configuration>
+                    <source>${jdk.version}</source>
+                    <target>${jdk.version}</target>
+                </configuration>
+            </plugin>
+        </plugins>
+
+    </build>
+
+    <!--<repositories>-->
+        <!--<repository>-->
+            <!--<id>my_repo</id>-->
+            <!--<url>file://${basedir}/lib/dependencies</url>-->
+        <!--</repository>-->
+    <!--</repositories>-->
+
+    <dependencies>
+        <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/sqljdbc4 -->
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>sqljdbc4</artifactId>
+            <version>4.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/dependencies/sqljdbc4.jar</systemPath>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.15</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/dependencies/poi-3.15.jar</systemPath>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.15</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/dependencies/poi-ooxml-3.15.jar</systemPath>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml-schemas -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml-schemas</artifactId>
+            <version>3.15</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/dependencies/poi-ooxml-schemas-3.15.jar</systemPath>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.xmlbeans/xmlbeans -->
+        <dependency>
+            <groupId>org.apache.xmlbeans</groupId>
+            <artifactId>xmlbeans</artifactId>
+            <version>2.4.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/dependencies/xmlbeans.jar</systemPath>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+            <version>2.5</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/dependencies/commons-io-2.5.jar</systemPath>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-collections4</artifactId>
+            <version>4.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/dependencies/commons-collections4-4.1.jar</systemPath>
+        </dependency>
+
+
+    </dependencies>
+
+
+
+
+</project>
