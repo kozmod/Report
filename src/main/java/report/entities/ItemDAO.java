@@ -12,9 +12,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.models.sql.SQLconnector;
 import report.usage_strings.ServiceStrings;
-import report.view_models.data_models.DiffList;
+import report.models_view.data_utils.DiffList;
 
-import report.view_models.nodes.TableWrapper;
+import report.models_view.nodes.TableWrapper;
 
 
 public interface ItemDAO<E,T extends TableWrapper> extends TableDataBaseName{

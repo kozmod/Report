@@ -1,5 +1,5 @@
 
-package report.view_models.nodes;
+package report.models_view.nodes;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ObjectProperty;
@@ -11,7 +11,7 @@ import javafx.scene.control.TableView.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import report.entities.ItemDAO;
-import report.view_models.data_models.Memento;
+import report.models_view.data_utils.Memento;
 
 import java.util.List;
 import java.util.Objects;

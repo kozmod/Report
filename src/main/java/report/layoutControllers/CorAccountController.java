@@ -15,9 +15,9 @@ import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
 import report.entities.items.account.ItemAccDAO;
-import report.view_models.data_models.EpochDatePickerConverter;
+import report.models_view.data_utils.EpochDatePickerConverter;
 import report.models.sql.sqlQuery.InsertFileXLSQuery;
-import report.view_models.nodes_factories.TableFactory;
+import report.models_view.nodes_factories.TableFactory;
 
 
 public class CorAccountController implements Initializable {

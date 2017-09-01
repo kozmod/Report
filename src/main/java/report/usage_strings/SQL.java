@@ -70,6 +70,7 @@ public interface SQL extends ServiceStrings{
         String QUEUE_BUILDING = "QueueBuilding";
         String N_CONTRACT     = "NContract";
         String COEFFICIENT    = "k";
+        String TAXES_ALL      = "Taxes_all";
         String SITE_TYPE_ID   = "SiteTypeID";
         
         

@@ -22,7 +22,7 @@ import report.layoutControllers.EstimateController.Est;
 import report.models.sql.SQLconnector;
 import report.entities.items.TableItem;
 import report.entities.items.cb.TableItemCB;
-import report.view_models.nodes.TableWrapperEST;
+import report.models_view.nodes.TableWrapperEST;
 
 
 public class ItemEstDAO implements ItemDAO<TableItemEst, TableWrapperEST> {
@@ -481,7 +481,7 @@ public class ItemEstDAO implements ItemDAO<TableItemEst, TableWrapperEST> {
 //                pstmt.setInt    (7,  0); 
 //            } else
 //            if(enumEst == Est.Changed){
-//                pstmt.setDouble  (1, Coefficient.getCoefficientValue());
+//                pstmt.setDouble  (1, CoefficientService.getValue());
 ////                pstmt.setFloat  (1, coefficient.getValue());
 //                pstmt.setString (5, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
 //                pstmt.setString (6, enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR));

@@ -18,7 +18,7 @@ import report.entities.items.site.SiteCommonDAO;
 import report.usage_strings.SQL;
 import report.layoutControllers.EstimateController.Est;
 import report.entities.items.contractor.ItemContractorDAO;
-import report.view_models.InputValidator;
+import report.models_view.InputValidator;
 
 
 public class AddContractController implements Initializable  {

@@ -16,10 +16,10 @@ import javafx.scene.control.TextField;
 import javafx.util.Duration;
 
 import report.entities.items.fin_res.ItemFinResDAO;
-import report.view_models.data_models.DecimalFormatter;
-import report.view_models.nodes_factories.TableFactory;
+import report.models_view.data_utils.DecimalFormatter;
+import report.models_view.nodes_factories.TableFactory;
 import report.entities.items.fin_res.TableItemFinRes;
-import report.view_models.data_models.EpochDatePickerConverter;
+import report.models_view.data_utils.EpochDatePickerConverter;
 
 
 public class FinResController implements Initializable {

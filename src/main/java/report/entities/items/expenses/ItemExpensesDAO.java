@@ -16,7 +16,7 @@ import javafx.collections.ObservableList;
 import report.layoutControllers.LogController;
 import report.layoutControllers.EstimateController.Est;
 import report.models.sql.SQLconnector;
-import report.view_models.nodes.TableWrapper;
+import report.models_view.nodes.TableWrapper;
 
 
 public class ItemExpensesDAO implements ItemDAO<TableItemExpenses, TableWrapper> {

@@ -1,5 +1,5 @@
 
-package report.view_models.nodes;
+package report.models_view.nodes;
 
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.binding.StringBinding;
@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import report.layoutControllers.EstimateController.Est;
-import report.view_models.data_models.DecimalFormatter;
+import report.models_view.data_utils.DecimalFormatter;
 
 
 public class TabModel {

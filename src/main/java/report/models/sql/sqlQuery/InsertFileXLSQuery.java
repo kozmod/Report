@@ -27,7 +27,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import report.entities.items.account.ItemAccDAO;
-import report.view_models.data_models.DiffList;
+import report.models_view.data_utils.DiffList;
 import report.entities.items.account.TableItemAcc;
 import report.models.sql.SQLconnector;
 
@@ -402,26 +402,26 @@ public class InsertFileXLSQuery {
                 row =  (Row) rows.next();
                 if(row.getCell(0).toString().length() == 10){
                     String debString = row.getCell(10).toString();
-                        debString = debString.replace(String.valueOf((char) 160),"");
-                        double d = Double.parseDouble(row.getCell(10).toString().replace(String.valueOf((char) 160),""));
+//                    debString = debString.replace(String.valueOf((char) 160),"");
+                    double d = Double.parseDouble(row.getCell(10).toString().replace(String.valueOf((char) 160),""));
                     String credString = row.getCell(11).getStringCellValue();
-                        credString = credString.replace(String.valueOf((char) 160),"");
+//                    credString = credString.replace(String.valueOf((char) 160),"");
                     double c = Double.parseDouble(row.getCell(11).toString().replace(String.valueOf((char) 160),""));
-                 
+
                     xlsAccObs.add(new TableItemAcc(dateParser(row.getCell(0).getStringCellValue()),
-                                                              Integer.parseInt(row.getCell(1).toString()),  
-                                                              row.getCell(2).toString(),  
-                                                              row.getCell(3).toString(),  
-                                                              row.getCell(4).toString(),  
-                                                              row.getCell(5).toString(),  
-                                                              row.getCell(6).toString(),  
-                                                              row.getCell(7).toString(),  
-                                                              Integer.parseInt(row.getCell(8).toString()),
-                                                              row.getCell(9).toString(),  
-                                                              d,
-                                                              c,
-                                                              ( incomingRest = (incomingRest*100 + c*100 - d*100)/100 )
-                                                    ));
+                            Integer.parseInt(row.getCell(1).toString()),
+                            row.getCell(2).toString(),
+                            row.getCell(3).toString(),
+                            row.getCell(4).toString(),
+                            row.getCell(5).toString(),
+                            row.getCell(6).toString(),
+                            row.getCell(7).toString(),
+                            Integer.parseInt(row.getCell(8).toString()),
+                            row.getCell(9).toString(),
+                            d,
+                            c,
+                            ( incomingRest = (incomingRest*100 + c*100 - d*100)/100 )
+                    ));
 //                     System.out.println(xlsAccObs.saveEst(i).getDate());
 //                     i++;
                 }

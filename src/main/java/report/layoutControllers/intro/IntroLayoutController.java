@@ -3,7 +3,7 @@ package report.layoutControllers.intro;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
-import report.view_models.nodes_factories.TableFactory;
+import report.models_view.nodes_factories.TableFactory;
 
 
 import java.net.URL;

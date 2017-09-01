@@ -1,5 +1,5 @@
 
-package report.view_models.data_models;
+package report.models_view.data_utils;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

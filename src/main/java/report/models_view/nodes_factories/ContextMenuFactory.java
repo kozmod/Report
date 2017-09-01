@@ -1,14 +1,14 @@
 
-package report.view_models.nodes_factories;
+package report.models_view.nodes_factories;
 
 import javafx.scene.control.ContextMenu;
 import report.layoutControllers.AddSiteRowController;
 import report.layoutControllers.EstimateController.Est;
-import report.view_models.StageCreator;
+import report.models_view.StageCreator;
 import report.entities.items.estimate.ItemEstDAO;
 import report.usage_strings.PathStrings;
-import report.view_models.nodes.ContextMenuOptional;
-import report.view_models.nodes.TableWrapper;
+import report.models_view.nodes.ContextMenuOptional;
+import report.models_view.nodes.TableWrapper;
 
 
 public class ContextMenuFactory {

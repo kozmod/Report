@@ -19,16 +19,18 @@ import javafx.util.Callback;
 
 import report.layoutControllers.*;
 import report.layoutControllers.intro.IntroLayoutController;
-import report.view_models.InputValidator;
-import report.view_models.nodes_factories.FileChooserFactory;
+import report.models.coefficient.CoefficientService;
+import report.models_view.InputValidator;
+import report.models_view.nodes_factories.FileChooserFactory;
 import report.usage_strings.PathStrings;
 import report.layoutControllers.EstimateController.Est;
-import report.view_models.StageCreator;
+import report.models_view.StageCreator;
 import report.models.sql.sqlQuery.BackUpQuery;
-import report.view_models.nodes_factories.TableFactory;
+import report.models_view.nodes_factories.TableFactory;
 import report.entities.items.site.TableItemPreview;
 import report.models.sql.sqlQuery.InsertFileXLSQuery;
 import report.entities.items.site.SiteItemDAO;
+import report.usage_strings.SQL;
 
 
 public class RootLayoutController implements Initializable {
@@ -437,10 +439,14 @@ public class RootLayoutController implements Initializable {
                     printEstToXmlMenuItem.setDisable(false);
                     
                     //Update Preview TableWrapper OBS-LIST
-                    Est.Common.setPreviewObs(new SiteItemDAO(selectedTreeElemParent,selectedTreeElem).getList());
+                    Est.Common.setSiteObs(new SiteItemDAO(selectedTreeElemParent,selectedTreeElem).getList());
 //                    update_previewTable(Est.Common.getPreviewObservableList());
                     previewTable.setItems(Est.Common.getPreviewObservableList());
-                    
+
+                    //create Coefficient
+                    CoefficientService.createCoefficient();
+                    Est.Common.getSiteItem(SQL.Site.TAXES_ALL).setSecondValue(CoefficientService.getCurrentTaxes());
+
                     showEstController = new StageCreator(PathStrings.Layout.SITE_EST,"")
                             .loadIntoRootBorderPaneCenter()
                             .getController();

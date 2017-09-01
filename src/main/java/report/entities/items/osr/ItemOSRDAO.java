@@ -16,7 +16,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 //import report.models.Formula_test;
 import report.models.sql.SQLconnector;
-import report.view_models.nodes.TableWrapper;
+import report.models_view.nodes.TableWrapper;
 
 
 public class ItemOSRDAO implements ItemDAO<TableItemOSR,TableWrapper> {
@@ -67,7 +67,7 @@ public class ItemOSRDAO implements ItemDAO<TableItemOSR,TableWrapper> {
                
                ResultSet rs = st.executeQuery(sqlQuery);
                int q =  850;
-//               int q =  Coefficient.getQuantityValue();
+//               int q =  CoefficientService.getQuantityValue();
                while(rs.next()){
                    listAllOSR.add(new TableItemOSR(
                                                 rs.getLong  (SQL.Common.ID),

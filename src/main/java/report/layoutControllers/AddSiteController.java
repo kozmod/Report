@@ -25,7 +25,7 @@ import report.entities.items.plan.ItemPlanDAO;
 import report.entities.items.site.SiteItemDAO;
 import report.entities.items.site.SiteCommonDAO;
 import report.usage_strings.ServiceStrings;
-import report.view_models.InputValidator;
+import report.models_view.InputValidator;
 
 
 

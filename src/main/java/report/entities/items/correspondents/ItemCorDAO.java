@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.models.sql.SQLconnector;
-import report.view_models.data_models.DiffList;
+import report.models_view.data_utils.DiffList;
 
 
 

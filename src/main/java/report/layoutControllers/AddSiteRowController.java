@@ -23,15 +23,15 @@ import javafx.util.Duration;
 
 import report.layoutControllers.EstimateController.Est;
 import report.usage_strings.SQL;
-import report.view_models.data_models.DiffList;
+import report.models_view.data_utils.DiffList;
 
-import report.view_models.InputValidator;
+import report.models_view.InputValidator;
 
 import report.entities.items.TableItem;
 import report.entities.items.cb.TableItemCB;
 import report.entities.items.estimate.TableItemEst;
-import report.view_models.nodes.TableWrapper;
-import report.view_models.nodes_factories.TableFactory;
+import report.models_view.nodes.TableWrapper;
+import report.models_view.nodes_factories.TableFactory;
 import report.entities.items.estimate.ItemEstDAO;
 
 

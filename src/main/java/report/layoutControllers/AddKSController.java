@@ -14,11 +14,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import report.view_models.nodes_factories.TableFactory;
+import report.models_view.nodes_factories.TableFactory;
 import report.usage_strings.SQL;
 
 import report.layoutControllers.EstimateController.Est;
-import report.view_models.InputValidator;
+import report.models_view.InputValidator;
 import report.entities.items.TableItem;
 import report.entities.items.KS.ItemKSDAO;
 

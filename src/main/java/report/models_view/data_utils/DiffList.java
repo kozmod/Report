@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package report.view_models.data_models;
+package report.models_view.data_utils;
 
 import java.util.Collection;
 import java.util.List;

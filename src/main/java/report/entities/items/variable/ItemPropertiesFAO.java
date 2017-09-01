@@ -7,10 +7,10 @@ import java.util.Properties;
 import java.util.stream.Collector;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.view_models.data_models.DecimalFormatter;
+import report.models_view.data_utils.DecimalFormatter;
 import report.entities.ItemDAO;
 import report.usage_strings.PathStrings;
-import report.view_models.nodes.TableWrapper;
+import report.models_view.nodes.TableWrapper;
 
 
 public class ItemPropertiesFAO implements ItemDAO<TableItemVariable, TableWrapper> {

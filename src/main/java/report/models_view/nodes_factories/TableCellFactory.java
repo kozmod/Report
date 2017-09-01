@@ -1,5 +1,5 @@
 
-package report.view_models.nodes_factories;
+package report.models_view.nodes_factories;
 
 import javafx.scene.input.MouseButton;
 import report.entities.items.site.TableItemPreview;
@@ -18,7 +18,7 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.util.StringConverter;
-import report.view_models.data_models.DecimalFormatter;
+import report.models_view.data_utils.DecimalFormatter;
 import report.usage_strings.SQL;
 
 import report.layoutControllers.root.RootLayoutController;

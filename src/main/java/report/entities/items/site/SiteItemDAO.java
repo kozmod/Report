@@ -17,7 +17,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layoutControllers.EstimateController.Est;
 import report.models.sql.SQLconnector;
-import report.view_models.nodes.TableWrapper;
+import report.models_view.nodes.TableWrapper;
 
 
 public class SiteItemDAO implements ItemDAO<TableItemPreview, TableWrapper> {
@@ -76,57 +76,60 @@ public class SiteItemDAO implements ItemDAO<TableItemPreview, TableWrapper> {
                 prst.setString(2, contractor);
 
                 ResultSet rs = prst.executeQuery();
-                if(rs.next()){
+            if(rs.next()){
 //                   DateTimeFormatter dtf =  DateTimeFormatter.ofPattern("dd.MM.YYYY");
-                    list.addAll(//0
-                           new TableItemPreview(rs.getLong("id"),SQL.Site.SITE_NUMBER, "Номер участка", rs.getObject(SQL.Common.SITE_NUMBER).toString()),
-                           //1
-                           new TableItemPreview(rs.getLong("id"),SQL.Site.TYPE_HOME, "Тип дома", rs.getObject(SQL.Common.TYPE_HOME).toString()),
-                           //2
-                           new TableItemPreview(rs.getLong("id"),SQL.Site.CONTRACTOR, "Субподрядчик", rs.getObject(SQL.Common.CONTRACTOR).toString()),
-                           //3
-                           new TableItemPreview(rs.getLong("id"),SQL.Site.SITE_TYPE_ID, "Класс Дома", rs.getObject(SQL.Site.SITE_TYPE_ID).toString()),                         
-                           //4
-                           new TableItemPreview(rs.getLong("id"),SQL.Site.DATE_CONTRACT, "Дата договора", rs.getLong(SQL.Site.DATE_CONTRACT)),
-                           //5
-                           new TableItemPreview(rs.getLong("id"),SQL.Site.FINISH_BUILDING, "Окончание строительства", rs.getLong(SQL.Site.FINISH_BUILDING)),
-                           //6
-                           new TableItemPreview(rs.getLong("id"),SQL.Site.STATUS_JOBS, "Статус строительства", rs.getObject(SQL.Site.STATUS_JOBS).toString()),
-                           //7
-                           new TableItemPreview(rs.getLong("id"),SQL.Site.STATUS_PAYMENT, "Статус оплаты", rs.getObject(SQL.Site.STATUS_PAYMENT).toString()),
-                           //8
-                           new TableItemPreview(rs.getLong("id"),SQL.Site.SALE_CLIENTS, "Оплачено клиентом", rs.getDouble(SQL.Site.SALE_CLIENTS)),
-                           //9
-                           new TableItemPreview(rs.getLong("id"),SQL.Site.DEBT_CLIENTS, "Долг клиента", rs.getDouble(SQL.Site.DEBT_CLIENTS)),
-                           //10
-                           new TableItemPreview(rs.getLong("id"),SQL.Site.SMET_COST, "Сметная стоимость", rs.getDouble(SQL.Site.SMET_COST)), 
-                           //11
-                           new TableItemPreview(rs.getLong("id"),SQL.Site.COST_HOUSE, "Стоимость дома", rs.getDouble(SQL.Site.COST_HOUSE)), //Продажная cебестоимость / CostHouse == SmetCost 
-                           //12
-                           new TableItemPreview(rs.getLong("id"),SQL.Site.SALE_HOUSE, "Цена продажи дома", rs.getDouble(SQL.Site.SALE_HOUSE)), // + SaleHouse "Цена продажи дома"
-                           //13
-                           new TableItemPreview(rs.getLong("id"),SQL.Site.COST_SITE, "Стоимость земли", rs.getDouble(SQL.Site.COST_SITE)),
-                           //14
-                           new TableItemPreview(rs.getLong("id"),SQL.Site.SUM_COST, "Сумма затрат", rs.getDouble(SQL.Site.SUM_COST)),
-                           //15
-                           new TableItemPreview(rs.getLong("id"),SQL.Site.QUEUE_BUILDING, "Очередь Строительства", rs.getString(SQL.Site.QUEUE_BUILDING)),
-                           //16
-                           new TableItemPreview(rs.getLong("id"),SQL.Site.N_CONTRACT, "№ Контракта", rs.getString(SQL.Site.N_CONTRACT)),
-                           //17 k  - коэффициент умножения
-                           new TableItemPreview(rs.getLong("id"),SQL.Site.COEFFICIENT, "Коэффициент", rs.getDouble(SQL.Site.COEFFICIENT))
-                          
-                           
-                   );
+                list.addAll(//0
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.SITE_NUMBER, "Номер участка", rs.getObject(SQL.Common.SITE_NUMBER).toString()),
+                        //1
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.TYPE_HOME, "Тип дома", rs.getObject(SQL.Common.TYPE_HOME).toString()),
+                        //2
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.CONTRACTOR, "Субподрядчик", rs.getObject(SQL.Common.CONTRACTOR).toString()),
+                        //3
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.SITE_TYPE_ID, "Класс Дома", rs.getObject(SQL.Site.SITE_TYPE_ID).toString()),
+                        //4
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.DATE_CONTRACT, "Дата договора", rs.getLong(SQL.Site.DATE_CONTRACT)),
+                        //5
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.FINISH_BUILDING, "Окончание строительства", rs.getLong(SQL.Site.FINISH_BUILDING)),
+                        //6
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.STATUS_JOBS, "Статус строительства", rs.getObject(SQL.Site.STATUS_JOBS).toString()),
+                        //7
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.STATUS_PAYMENT, "Статус оплаты", rs.getObject(SQL.Site.STATUS_PAYMENT).toString()),
+                        //8
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.SALE_CLIENTS, "Оплачено клиентом", rs.getDouble(SQL.Site.SALE_CLIENTS)),
+                        //9
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.DEBT_CLIENTS, "Долг клиента", rs.getDouble(SQL.Site.DEBT_CLIENTS)),
+                        //10
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.SMET_COST, "Сметная стоимость", rs.getDouble(SQL.Site.SMET_COST)),
+                        //11
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.COST_HOUSE, "Стоимость дома", rs.getDouble(SQL.Site.COST_HOUSE)), //Продажная cебестоимость / CostHouse == SmetCost
+                        //12
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.SALE_HOUSE, "Цена продажи дома", rs.getDouble(SQL.Site.SALE_HOUSE)), // + SaleHouse "Цена продажи дома"
+                        //13
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.COST_SITE, "Стоимость земли", rs.getDouble(SQL.Site.COST_SITE)),
+                        //14
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.SUM_COST, "Сумма затрат", rs.getDouble(SQL.Site.SUM_COST)),// >>>>>>>>>>> ??????? выяснить ---- скорее всего Delete
+                        //18
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.TAXES_ALL, "Выплаченные налоги", 0),
+                        //15
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.QUEUE_BUILDING, "Очередь Строительства", rs.getString(SQL.Site.QUEUE_BUILDING)),
+                        //16
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.N_CONTRACT, "№ Контракта", rs.getString(SQL.Site.N_CONTRACT)),
+                        //17 k  - коэффициент умножения
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.COEFFICIENT, "Коэффициент", rs.getDouble(SQL.Site.COEFFICIENT))
 
-                   //System.out.println(SiteInfoTable.saveEst(0).getFirstValue());
-               }
-                       
 
-               
-                
-                
-                    
-            } catch (SQLException ex) {
+
+                );
+
+                //System.out.println(SiteInfoTable.saveEst(0).getFirstValue());
+            }
+
+
+
+
+
+
+        } catch (SQLException ex) {
                Logger.getLogger(SiteItemDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
       
@@ -171,13 +174,13 @@ public class SiteItemDAO implements ItemDAO<TableItemPreview, TableWrapper> {
        StringBuffer stringValues = new StringBuffer(" VALUES(");
        String prefix = "";
             for(TableItemPreview item : items){
-                
-                stringInsert.append(prefix + "["+item.getSqlColumn()+"]");
-                    if(!item.getSqlColumn().equals(SQL.Site.SITE_TYPE_ID)) 
-                    stringValues.append(prefix + "?");
-                    else 
-                    stringValues.append(prefix + "(SELECT P.[TypeID] from [FinPlan] P WHERE P.[TypeName] = ? )");
-                prefix = ",";
+                if(!item.getSqlColumn().equals(SQL.Site.TAXES_ALL))
+                    stringInsert.append(prefix + "["+item.getSqlColumn()+"]");
+                        if(!item.getSqlColumn().equals(SQL.Site.SITE_TYPE_ID))
+                        stringValues.append(prefix + "?");
+                        else
+                        stringValues.append(prefix + "(SELECT P.[TypeID] from [FinPlan] P WHERE P.[TypeName] = ? )");
+                    prefix = ",";
             }
             stringInsert.append( ")");
             stringValues.append(")");

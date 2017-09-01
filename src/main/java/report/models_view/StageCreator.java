@@ -1,5 +1,5 @@
 
-package report.view_models;
+package report.models_view;
 
 import java.io.IOException;
 import java.util.logging.Level;

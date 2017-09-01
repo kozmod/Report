@@ -10,7 +10,7 @@ import report.entities.items.KS.TableItemKS;
 import report.entities.items.contractor.TableItemContractor;
 import report.usage_strings.SQL;
 import report.layoutControllers.EstimateController.Est;
-import report.view_models.data_models.DecimalFormatter;
+import report.models_view.data_utils.DecimalFormatter;
 import report.entities.items.TableItem;
 
 

@@ -17,7 +17,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.models.sql.SQLconnector;
-import report.view_models.nodes.TableWrapper;
+import report.models_view.nodes.TableWrapper;
 
 
 public class ItemContractorDAO implements ItemDAO<TableItemContractor, TableWrapper<TableItemContractor>> {

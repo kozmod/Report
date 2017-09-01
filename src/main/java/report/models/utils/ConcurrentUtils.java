@@ -12,8 +12,7 @@ public class ConcurrentUtils {
         }
         catch (InterruptedException e) {
             System.err.println("termination interrupted");
-        }
-        finally {
+        }finally {
             if (!executor.isTerminated()) {
                 System.err.println("killing non-finished tasks");
             }

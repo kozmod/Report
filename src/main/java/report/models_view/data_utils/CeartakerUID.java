@@ -1,5 +1,5 @@
 
-package report.view_models.data_models;
+package report.models_view.data_utils;
 
 import java.util.ArrayList;
 import java.util.Collection;

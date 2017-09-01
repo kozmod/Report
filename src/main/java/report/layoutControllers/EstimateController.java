@@ -33,25 +33,25 @@ import report.layoutControllers.root.RootLayoutController;
 import report.entities.items.contractor.ItemContractorDAO;
 import report.usage_strings.PathStrings;
 import report.usage_strings.SQL;
-import report.view_models.nodes.TableWrapper;
-import report.view_models.nodes_factories.FileChooserFactory;
+import report.models_view.nodes.TableWrapper;
+import report.models_view.nodes_factories.FileChooserFactory;
 
 
-import report.view_models.StageCreator;
-import report.view_models.data_models.DecimalFormatter;
-import report.view_models.data_models.EpochDatePickerConverter;
-import report.view_models.nodes_factories.TableFactory;
+import report.models_view.StageCreator;
+import report.models_view.data_utils.DecimalFormatter;
+import report.models_view.data_utils.EpochDatePickerConverter;
+import report.models_view.nodes_factories.TableFactory;
 import report.entities.items.KS.TableItemKS;
 import report.entities.items.site.TableItemPreview;
 import report.entities.items.TableItem;
 import report.entities.items.estimate.TableItemEst;
 import report.models.printer.PrintKS;
 import report.entities.ItemDAO;
-import report.view_models.nodes.TabModel;
-import report.view_models.nodes.TableWrapperEST;
+import report.models_view.nodes.TabModel;
+import report.models_view.nodes.TableWrapperEST;
 import report.entities.items.estimate.ItemEstDAO;
 import report.entities.items.KS.ItemKSDAO;
-import report.view_models.nodes.ContextMenuOptional;
+import report.models_view.nodes.ContextMenuOptional;
 import report.entities.items.site.SiteItemDAO;
 
 
@@ -85,11 +85,11 @@ public class EstimateController implements Initializable {
         }
 
         //Setter ---------------------------------------------------------------------------
-        public void setPreviewObs(ObservableList<TableItemPreview> obsList){
-            Common.previewTableObs  = obsList;
-            Base.previewTableObs    = obsList;
-            Changed.previewTableObs = obsList;
-            KS.previewTableObs      = obsList;
+        public void setSiteObs(ObservableList<TableItemPreview> siteObsList){
+            Common.previewTableObs  = siteObsList;
+            Base.previewTableObs    = siteObsList;
+            Changed.previewTableObs = siteObsList;
+            KS.previewTableObs      = siteObsList;
 
         }
 
@@ -303,7 +303,7 @@ public class EstimateController implements Initializable {
 
     public void init_EstLayoutTabs(/*ObservableList<PreviewTableItem> obs?/*String SiteNumber, String contName*/){
         //add site number and Contractor
-//       Est.Common   .setPreviewObs(obs);
+//       Est.Common   .setSiteObs(obs);
         Est.Base     .createTabMap();
         Est.Changed  .createTabMap();
         Est.KS       .createTabMap();

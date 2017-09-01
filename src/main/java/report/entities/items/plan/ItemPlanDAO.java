@@ -21,7 +21,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layoutControllers.LogController;
 import report.models.sql.SQLconnector;
-import report.view_models.nodes.TableWrapper;
+import report.models_view.nodes.TableWrapper;
 
 
 public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
@@ -41,10 +41,23 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
     public ObservableList<TableItemPlan> getList() {
         ObservableList<TableItemPlan> list = FXCollections.observableArrayList(TableItemPlan.extractor());
         
-        String psmtmtString = " execute dbo.[getListPlan] ";
-        
+//        String psmtmtString = " execute dbo.[getListPlan] ";
+
+        String sqlString = "SELECT"
+                +" F.[id]"
+                +",F.[TypeName]"
+                +",F.[TypeID]"
+                +",F.[Quantity]"
+                +",(F.[Quantity] - (SELECT COUNT(1) FROM  dbo.[Site] S where F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0)) AS [Rest]"
+                +",F.[SmetCost]"
+                +",F.[SmetCost]*F.[Quantity] AS [SmetCostSUM]"
+                +",F.[SaleCost]"
+                +",F.[SaleCost]*F.[Quantity]  AS [SaleCostSUM]"
+                +",F.[NumberSession]"
+                +",F.[DateCreate]"
+                +" FROM dbo.[FinPlan] F";
         try(Connection connection = SQLconnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {
+            PreparedStatement pstmt = connection.prepareStatement(sqlString)) {
             
             pstmt.execute();
             
@@ -62,7 +75,7 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
                                     rs.getDouble    (SQL.Plan.SMET_COST_SUM),
                                     rs.getDouble    (SQL.Plan.SALE_COST),
                                     rs.getDouble    (SQL.Plan.SALE_COST_SUM),
-                                    (rs.getDouble   (SQL.Plan.SALE_COST) - rs.getDouble (SQL.Plan.SMET_COST))
+                                    (rs.getDouble   (SQL.Plan.SALE_COST_SUM) - rs.getDouble (SQL.Plan.SMET_COST_SUM))
                                 );
                     list.add(item);     
                 }
@@ -78,39 +91,49 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
     public ObservableList<TableItemPlan> getListFact() {
         ObservableList<TableItemPlan> list = FXCollections.observableArrayList();
         
-        String sqlString =
-                " SELECT "
-                + " F.[TypeID]      "
-                + " ,max(F.[TypeName])	as [TypeName]   "
-                + " ,count(1) 		as [Quantity] "
-                + " ,case when COUNT(1) = 0 then 0 else round(SUM(S.[SmetCost])/COUNT(1),2) end	as [SmetCost]	 "
-                + " ,round(SUM(S.[SmetCost]),2) 						as [SmetCostSum] "
-                + " ,case when COUNT(1) = 0 then 0 else  round(SUM(S.[SaleHouse])/COUNT(1),2) end as [SaleCost]    "
-                + " ,round(SUM(S.[SaleHouse]),2)   as [SaleCostSum] "
-                + " From dbo.[FinPlan] F          "
-                + " Inner JOIN dbo.[Site] S     "
-                + " ON F.[TypeID] = S.[SiteTypeID] "
-                + " and F.dell = 0 "
-                + " Where  "
-                + " S.dell = 0 "
-                + " Group by  "
-                + " F.[TypeID]  "
-                + " union all "
-                + " Select  "
-                + " F.[TypeID]      "
-                + " ,max(F.[TypeName])	 "
-                + " ,0 "
-                + " ,0 "
-                + " ,0 "
-                + " ,0 "
-                + " ,0 "
-                + " From dbo.[FinPlan] F                "
-                + " Inner JOIN dbo.[Site] S   "
-                + " ON F.[TypeID] = S.[SiteTypeID]  "
-                + " and F.dell = 0    "
-                + " group by   "
-                + " F.[TypeID]   "
-                + " having sum(cast(S.dell as int)) = count(F.[TypeID] )  ";
+//        String sqlString =
+//                " SELECT "
+//                + " F.[TypeID]      "
+//                + " ,max(F.[TypeName])	as [TypeName]   "
+//                + " ,count(1) 		as [Quantity] "
+//                + " ,case when COUNT(1) = 0 then 0 else round(SUM(S.[SmetCost])/COUNT(1),2) end	as [SmetCost]	 "
+//                + " ,round(SUM(S.[SmetCost]),2) 						as [SmetCostSum] "
+//                + " ,case when COUNT(1) = 0 then 0 else  round(SUM(S.[SaleHouse])/COUNT(1),2) end as [SaleCost]    "
+//                + " ,round(SUM(S.[SaleHouse]),2)   as [SaleCostSum] "
+//                + " From dbo.[FinPlan] F          "
+//                + " Inner JOIN dbo.[Site] S     "
+//                + " ON F.[TypeID] = S.[SiteTypeID] "
+//                + " and F.dell = 0 "
+//                + " Where  "
+//                + " S.dell = 0 "
+//                + " Group by  "
+//                + " F.[TypeID]  "
+//                + " union all "
+//                + " Select  "
+//                + " F.[TypeID]      "
+//                + " ,max(F.[TypeName])	 "
+//                + " ,0 "
+//                + " ,0 "
+//                + " ,0 "
+//                + " ,0 "
+//                + " ,0 "
+//                + " From dbo.[FinPlan] F                "
+//                + " Inner JOIN dbo.[Site] S   "
+//                + " ON F.[TypeID] = S.[SiteTypeID]  "
+//                + " and F.dell = 0    "
+//                + " group by   "
+//                + " F.[TypeID]   "
+//                + " having sum(cast(S.dell as int)) = count(F.[TypeID] )  ";
+
+        String sqlString = " SELECT "
+                + "F.[TypeID]"
+                +",F.[TypeName]"
+                +",ISNULL((SELECT COUNT(1)                            FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [Quantity]"
+                +",ISNULL((SELECT round(SUM(S.[SmetCost])/COUNT(1),2) FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [SmetCost]"
+                +",ISNULL((SELECT round(SUM(S.[SmetCost]),2)          FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [SmetCostSum]"
+                +",ISNULL((SELECT round(SUM(S.[SaleHouse])/COUNT(1),2)FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [SaleCost]"
+                +",ISNULL((SELECT round(SUM(S.[SaleHouse]),2)         FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [SaleCostSum]"
+                +" FROM  dbo.[FinPlan] F ";
          
         try(Connection connection = SQLconnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sqlString);) {
@@ -131,7 +154,7 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
                                     rs.getDouble     (SQL.Plan.SMET_COST_SUM),
                                     rs.getDouble     (SQL.Plan.SALE_COST),
                                     rs.getDouble     (SQL.Plan.SALE_COST_SUM),
-                                    (rs.getDouble    (SQL.Plan.SALE_COST) - rs.getDouble   (SQL.Plan.SMET_COST))
+                                    (rs.getDouble    (SQL.Plan.SALE_COST_SUM) - rs.getDouble   (SQL.Plan.SMET_COST_SUM))
                                 );
                     list.add(item);     
                 }

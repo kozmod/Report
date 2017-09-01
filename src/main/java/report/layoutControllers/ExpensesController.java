@@ -25,24 +25,25 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import report.layoutControllers.root.RootLayoutController;
-import report.view_models.data_models.DecimalFormatter;
+import report.models.coefficient.CoefficientService;
+import report.models_view.data_utils.DecimalFormatter;
 import report.usage_strings.SQL;
 
 import report.layoutControllers.EstimateController.Est;
 
-import report.view_models.data_models.EpochDatePickerConverter;
+import report.models_view.data_utils.EpochDatePickerConverter;
 import report.entities.items.expenses.TableItemExpenses;
 import report.entities.items.period.TableItemPeriod;
 //import report.models.Formula_test;
-import report.view_models.nodes.TableWrapper;
-import report.view_models.nodes_factories.ContextMenuFactory;
-import report.view_models.nodes_factories.TableFactory;
+import report.models_view.nodes.TableWrapper;
+import report.models_view.nodes_factories.ContextMenuFactory;
+import report.models_view.nodes_factories.TableFactory;
 import report.entities.items.site.TableItemPreview;
 import report.models.coefficient.CoefficientQuery;
 import report.entities.items.expenses.ItemExpensesDAO;
 import report.entities.items.period.ItemPeriodDAO;
 import report.entities.items.site.SiteItemDAO;
-import report.view_models.nodes.ContextMenuOptional;
+import report.models_view.nodes.ContextMenuOptional;
 
 public class ExpensesController implements Initializable {
     
@@ -64,7 +65,8 @@ public class ExpensesController implements Initializable {
     private final StringProperty CONTRACTOR  = new SimpleStringProperty(Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
     private final StringProperty TYPE_HOME   = new SimpleStringProperty(Est.Common.getSiteSecondValue(SQL.Common.TYPE_HOME));
     
-    private final  DoubleProperty COEFFICIENT = new SimpleDoubleProperty(new CoefficientQuery().getCoefficientClass().getCoefficientValue());
+//    private final  DoubleProperty COEFFICIENT = new SimpleDoubleProperty(new CoefficientQuery().getCoefficientClass().getValue());
+    private final  DoubleProperty COEFFICIENT = new SimpleDoubleProperty(CoefficientService.getCurrentValue());
     /********************************************************************************************************************
      *                                                                                                     PreConstructor
      ********************************************************************************************************************/ 
@@ -140,7 +142,8 @@ public class ExpensesController implements Initializable {
         expensesTWrapper.getContextMenu().getItems().get(2)
                 .addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
                     System.out.println("SAVEITEM ->>  report.layoutControllers.ExpensesController.init_expensesTab()");
-                    COEFFICIENT.setValue(new CoefficientQuery().getCoefficientClass().getCoefficientValue());
+//                    COEFFICIENT.setValue(new CoefficientQuery().getCoefficientClass().getValue());
+                    COEFFICIENT.setValue(CoefficientService.createCoefficient().getValue());
                     System.out.println("COEF - >"  + COEFFICIENT.getValue());
                 });
 
@@ -188,10 +191,10 @@ public class ExpensesController implements Initializable {
             siteSaveButton.setDisable(false);
         });
 
-        //Bind Coefficient to Textfield
+        //Bind CoefficientService to Textfield
         coeffTF.textProperty().bindBidirectional(COEFFICIENT,  DecimalFormatter.getDecimalFormat());
 
-        //add Coefficient TF Listener
+        //add CoefficientService TF Listener
         coeffTF.textProperty().addListener(event ->{
             if(Est.Changed.isExist() ) {
                 if(!COEFFICIENT.getValue().equals(Est.Common.getSiteItem(SQL.Site.COEFFICIENT).getSecondValue()))
@@ -233,8 +236,9 @@ public class ExpensesController implements Initializable {
             siteTWrapper.saveTableItems();
             rootController.update_previewTable(Est.Common.getPreviewObservableList());
             
-            COEFFICIENT.setValue(new CoefficientQuery().getCoefficientClass().getCoefficientValue());
-            
+//            COEFFICIENT.setValue(new CoefficientQuery().getCoefficientClass().getValue());
+            COEFFICIENT.setValue(CoefficientService.createCoefficient().getValue());
+
             CONTRACTOR.setValue(Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
             siteUndoButton .setDisable(true);
             siteSaveButton.setDisable(true);

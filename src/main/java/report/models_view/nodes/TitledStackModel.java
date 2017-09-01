@@ -1,5 +1,5 @@
 
-package report.view_models.nodes;
+package report.models_view.nodes;
 
 
 import javafx.beans.property.DoubleProperty;
@@ -13,8 +13,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.StackPane;
 import report.layoutControllers.EstimateController.Est;
-import report.view_models.data_models.DecimalFormatter;
-import report.view_models.nodes_factories.TableFactory;
+import report.models_view.data_utils.DecimalFormatter;
+import report.models_view.nodes_factories.TableFactory;
 import report.entities.items.estimate.TableItemEst;
 import report.entities.items.estimate.ItemEstDAO;
 

@@ -1,5 +1,5 @@
 
-package report.view_models.nodes_factories;
+package report.models_view.nodes_factories;
 
 import java.util.List;
 import java.util.Objects;
@@ -38,9 +38,9 @@ import report.entities.items.period.ItemPeriodDAO;
 import report.entities.items.plan.ItemPlanDAO;
 import report.entities.items.variable.ItemPropertiesFAO;
 
-import report.view_models.data_models.DecimalFormatter;
-import report.view_models.nodes.TableWrapper;
-import report.view_models.nodes.TableWrapperEST;
+import report.models_view.data_utils.DecimalFormatter;
+import report.models_view.nodes.TableWrapper;
+import report.models_view.nodes.TableWrapperEST;
 
 @SuppressWarnings("unchecked")
 public class TableFactory {

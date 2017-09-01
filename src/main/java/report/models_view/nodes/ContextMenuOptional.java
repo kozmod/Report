@@ -1,5 +1,5 @@
 
-package report.view_models.nodes;
+package report.models_view.nodes;
 
 
 import javafx.beans.binding.Bindings;

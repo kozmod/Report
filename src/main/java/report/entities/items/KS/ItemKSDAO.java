@@ -18,7 +18,7 @@ import report.layoutControllers.LogController;
 import report.layoutControllers.EstimateController.Est;
 import report.models.sql.SQLconnector;
 import report.entities.items.TableItem;
-import report.view_models.nodes.TableWrapperEST;
+import report.models_view.nodes.TableWrapperEST;
 
 
 public class ItemKSDAO implements ItemDAO<TableItemKS, TableWrapperEST> {

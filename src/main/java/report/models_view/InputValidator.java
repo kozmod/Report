@@ -1,5 +1,5 @@
 
-package report.view_models;
+package report.models_view;
 
 import java.util.regex.Pattern;
 
@@ -21,7 +21,7 @@ public class InputValidator {
     }
 
     public static boolean  isSiteNumberValid(String  inputString){
-         return checkValidation(inputString, "^\\w+|(\\d+\\.*\\d+)$");
+         return checkValidation(inputString, "^\\d+[a-zA-Zа-яА-Я0-9\\-]?|(\\d+\\.*\\d+)$");
 
     }
 
