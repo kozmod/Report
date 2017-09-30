@@ -36,9 +36,7 @@ public class ContextMenuOptional extends ContextMenu{
     public static <S> void setTableItemContextMenuListener(TableWrapper<S> tableWrapper){
         tableWrapper.getItems().addListener((ListChangeListener.Change<? extends S> c) -> {
                 System.out.println("Changed on " + c + " - ContextMenuOptional");
-                if(c.next() && 
-                        (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
-//                                ((ContextMenuBuilder)contexMenuEst).setDisable_SaveUndoPrint_groupe(false);
+                if(c.next() && (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
                                 ((ContextMenuOptional) tableWrapper.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
                                 
                                 tableWrapper.refresh();

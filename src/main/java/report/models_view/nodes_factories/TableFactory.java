@@ -665,60 +665,60 @@ public class TableFactory {
      *
      * @return TableWrapper
      */
-    public static TableView getFinRes(){
-        TableView table = new TableView();
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
-        TableColumn siteNumberColumn = new TableColumn("№ учстка");
-        siteNumberColumn.setCellValueFactory(new PropertyValueFactory("siteNumber"));
-
-        TableColumn contractorColumn = new TableColumn("Субподрядчик");
-        contractorColumn.setCellValueFactory(new PropertyValueFactory("contractor"));
-
-        TableColumn NContractColumn  = new TableColumn("№ договора");
-        NContractColumn.setCellValueFactory(new PropertyValueFactory("NContract"));
-
-        TableColumn dateContColumn   = new TableColumn("Дата договора");
-        dateContColumn.setCellValueFactory(new PropertyValueFactory("dateContract"));
-        dateContColumn.setCellFactory(cell -> TableCellFactory.getEpochDateCell());
-
-        TableColumn finishBuildColumn= new TableColumn("Окончание строительства");
-        finishBuildColumn.setCellValueFactory(new PropertyValueFactory("finishBuilding"));
-
-        TableColumn smetCostColumn   = new TableColumn("Сметная стоимость");
-        smetCostColumn.setCellValueFactory(new PropertyValueFactory("smetCost"));
-
-        TableColumn costHouseColumn  = new TableColumn("Стоимость дома");
-        costHouseColumn.setCellValueFactory(new PropertyValueFactory("costHouse"));
-
-        TableColumn saleHouseColumn  = new TableColumn("Цена продажи");
-        saleHouseColumn.setCellValueFactory(new PropertyValueFactory("SaleHouse"));
-
-        TableColumn trueCostColumn   = new TableColumn("TRUECOST");
-        trueCostColumn.setCellValueFactory(new PropertyValueFactory("trueCost"));
-
-        TableColumn profitColumn     = new TableColumn("Прибыль");
-        profitColumn.setCellValueFactory(new PropertyValueFactory("profit"));
-
-
-        finishBuildColumn.setCellFactory(cell -> TableCellFactory.getEpochDateCell());
-        trueCostColumn.setCellFactory(cell -> TableCellFactory.getDecimalCell());
-
-        table.getColumns().setAll(
-                siteNumberColumn,
-                contractorColumn,
-                NContractColumn,
-                dateContColumn ,
-                finishBuildColumn,
-                saleHouseColumn,
-                smetCostColumn,
-                costHouseColumn,
-                trueCostColumn,
-                profitColumn
-        );
-
-        return table;
-    }
+//    public static TableView getFinRes(){
+//        TableView table = new TableView();
+//        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+//
+//        TableColumn siteNumberColumn = new TableColumn("№ учстка");
+//        siteNumberColumn.setCellValueFactory(new PropertyValueFactory("siteNumber"));
+//
+//        TableColumn contractorColumn = new TableColumn("Субподрядчик");
+//        contractorColumn.setCellValueFactory(new PropertyValueFactory("contractor"));
+//
+//        TableColumn NContractColumn  = new TableColumn("№ договора");
+//        NContractColumn.setCellValueFactory(new PropertyValueFactory("NContract"));
+//
+//        TableColumn dateContColumn   = new TableColumn("Дата договора");
+//        dateContColumn.setCellValueFactory(new PropertyValueFactory("dateContract"));
+//        dateContColumn.setCellFactory(cell -> TableCellFactory.getEpochDateCell());
+//
+//        TableColumn finishBuildColumn= new TableColumn("Окончание строительства");
+//        finishBuildColumn.setCellValueFactory(new PropertyValueFactory("finishBuilding"));
+//
+//        TableColumn smetCostColumn   = new TableColumn("Сметная стоимость");
+//        smetCostColumn.setCellValueFactory(new PropertyValueFactory("smetCost"));
+//
+//        TableColumn costHouseColumn  = new TableColumn("Стоимость дома");
+//        costHouseColumn.setCellValueFactory(new PropertyValueFactory("costHouse"));
+//
+//        TableColumn saleHouseColumn  = new TableColumn("Цена продажи");
+//        saleHouseColumn.setCellValueFactory(new PropertyValueFactory("SaleHouse"));
+//
+////        TableColumn trueCostColumn   = new TableColumn("TRUECOST");
+////        trueCostColumn.setCellValueFactory(new PropertyValueFactory("trueCost"));
+//
+//        TableColumn profitColumn     = new TableColumn("Прибыль");
+//        profitColumn.setCellValueFactory(new PropertyValueFactory("profit"));
+//
+//
+//        finishBuildColumn.setCellFactory(cell -> TableCellFactory.getEpochDateCell());
+////        trueCostColumn.setCellFactory(cell -> TableCellFactory.getDecimalCell());
+//
+//        table.getColumns().setAll(
+//                siteNumberColumn,
+//                contractorColumn,
+//                NContractColumn,
+//                dateContColumn ,
+//                finishBuildColumn,
+//                saleHouseColumn,
+//                smetCostColumn,
+//                costHouseColumn,
+////                trueCostColumn,
+//                profitColumn
+//        );
+//
+//        return table;
+//    }
 
     /**
      * Decorate PreviewT TableView (RootLayoutController)
@@ -781,7 +781,7 @@ public class TableFactory {
         TableColumn smetCostColumn    = tableWrapper.addColumn("Сметная стоимость", "smetCost");
         TableColumn costHouseColumn   = tableWrapper.addColumn("Стоимость дома", "costHouse");
         TableColumn saleHouseColumn   = tableWrapper.addColumn("Цена продажи","SaleHouse");
-        TableColumn trueCostColumn    = tableWrapper.addColumn("TRUECOST", "trueCost");
+//        TableColumn trueCostColumn    = tableWrapper.addColumn("TRUECOST", "trueCost");
         TableColumn profitColumn      = tableWrapper.addColumn("Прибыль", "profit");
 
 
@@ -790,7 +790,7 @@ public class TableFactory {
         smetCostColumn.setCellFactory   (cell -> TableCellFactory.getDecimalCell());
         costHouseColumn.setCellFactory  (cell -> TableCellFactory.getDecimalCell());
         saleHouseColumn.setCellFactory  (cell -> TableCellFactory.getDecimalCell());
-        trueCostColumn.setCellFactory   (cell -> TableCellFactory.getDecimalCell());
+//        trueCostColumn.setCellFactory   (cell -> TableCellFactory.getDecimalCell());
         profitColumn.setCellFactory     (cell -> TableCellFactory.getDecimalCell());
     }
 

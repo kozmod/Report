@@ -25,7 +25,6 @@ import report.entities.items.contractor.TableItemContractor;
 import report.entities.items.osr.TableItemOSR;
 import report.entities.items.plan.TableItemPlan;
 import report.entities.items.variable.TableItemVariable;
-import report.entities.items.plan.ItemPlanDAO;
 import report.models_view.nodes.ContextMenuOptional;
 
 
@@ -48,7 +47,7 @@ public class AllPropertiesController implements Initializable {
     @FXML private TextField planTypeTF,planSmetTF,planSaleTF, planQuantityTF ;
     @FXML private TextField planSmetSumTF,planSaleSumTF, planProfitSumTF;
     @FXML private TextField factSmetSumTF,factSaleSumTF, factProfitSumTF;
-    ;
+
     @FXML private TextArea  contractorAdressTA,contractorCommentsTA;
     @FXML private CheckBox  osrEditСheckBox, variableEditСheckBox, contractorEditСheckBox, planEditСheckBox;
     @FXML private Button    osrAddItemButton, planAddItemButton;
@@ -76,26 +75,24 @@ public class AllPropertiesController implements Initializable {
         ContextMenuOptional.setTableItemContextMenuListener(variableTableWrapper);
 
         //add Contractors TableView
-//        contractorGP.add(contractorTableWrapper.getTableView(), 0,0,1,8);
-//        GridPane.setMargin(contractorTableWrapper.getTableView(), new Insets(5,5,5,5));
         contractorTableWrapper = TableFactory.decorContractor(contractorTable);
         contractorTableWrapper.setTableDataFromBASE();
         ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapper);
 
-        //add Paln TableView
-        planTableWrapper = TableFactory.decorPlan(planTable);
-        planTableWrapper.setTableDataFromBASE();
-        ContextMenuOptional.setTableItemContextMenuListener(planTableWrapper);
-
-        //add Fact TableView
-        factTableWrapper = TableFactory.decorFact(factTable);
-        factTableWrapper.setTableData(new ItemPlanDAO().getListFact());
+//        //add Plan TableView
+//        planTableWrapper = TableFactory.decorPlan(planTable);
+//        planTableWrapper.setTableDataFromBASE();
+//        ContextMenuOptional.setTableItemContextMenuListener(planTableWrapper);
+//
+//        //add Fact TableView
+//        factTableWrapper = TableFactory.decorFact(factTable);
+//        factTableWrapper.setTableData(new ItemPlanDAO().getListFact());
 
 
         init_OSRTab();
         init_VariableTab();
         init_ContractorTab();
-        init_PlanTab();
+//        init_PlanTab();
     }
     
 /*!******************************************************************************************************************
@@ -154,7 +151,6 @@ public class AllPropertiesController implements Initializable {
      * Initialization of Contractor Tab. 
      */
     private void init_ContractorTab(){
-        
         //bing ContextMenu
         contractorTableWrapper.contextMenuProperty().bind(
             Bindings.when(contractorEditСheckBox.selectedProperty() )
@@ -167,10 +163,8 @@ public class AllPropertiesController implements Initializable {
         contractorAdressTA  .editableProperty().bind(contractorEditСheckBox.selectedProperty());
         contractorCommentsTA.editableProperty().bind(contractorEditСheckBox.selectedProperty());
 
-     
         //bind disableProperty to contractorEditСheckBox
         contractorAddItemButton.disableProperty().bind(contractorEditСheckBox.selectedProperty().not());
-        
 
         contractorTableWrapper.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             TableItemContractor item = (newValue != null) ? newValue : oldValue;
@@ -191,10 +185,7 @@ public class AllPropertiesController implements Initializable {
                     Bindings.bindBidirectional(contractorCommentsTA.textProperty(), item.getCommentsProperty());
                 }
         });
-        
-        
 
-        
 //        
 //        contractorTableWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItemContractor> c) -> {
 //            System.out.println("init_ContractorTab => Changed on " + c);
@@ -211,36 +202,34 @@ public class AllPropertiesController implements Initializable {
        
     }
     
-    private void init_PlanTab(){
-        //table Context menu property
-        planTableWrapper.contextMenuProperty().bind(
-            Bindings.when(planEditСheckBox.selectedProperty() )
-                .then( ContextMenuFactory.getCommonDSU(planTableWrapper))
-                .otherwise( (ContextMenu) null));
-        //TableWrapper Editable property
-        planTableWrapper.editableProperty()
-                     .bind(planEditСheckBox.selectedProperty());
-        //Compute Sum Text fields
-        this.computeSumPlanTextFields();
-        this.computeSumFactTextFields();
-        
-        setGroupNodeDisableProperty(planEditСheckBox.selectedProperty(),
-                                    planTypeTF,
-                                    planSmetTF,
-                                    planSaleTF,
-                                    planQuantityTF,
-                                    planAddItemButton);
-
-        planTableWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItemPlan> c) -> {
-            System.out.println("Changed on " + c + " - allProperty /// init_PlanTab");
-            if(c.next() &&
-                    (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
-                    this.computeSumPlanTextFields();
-            }
-        });
-
-
-    }
+//    private void init_PlanTab(){
+//        //table Context menu property
+//        planTableWrapper.contextMenuProperty().bind(
+//            Bindings.when(planEditСheckBox.selectedProperty() )
+//                .then( ContextMenuFactory.getCommonDSU(planTableWrapper))
+//                .otherwise( (ContextMenu) null));
+//        //TableWrapper Editable property
+//        planTableWrapper.editableProperty()
+//                     .bind(planEditСheckBox.selectedProperty());
+//        //Compute Sum Text fields
+//        this.computeSumPlanTextFields();
+//        this.computeSumFactTextFields();
+//
+//        setGroupNodeDisableProperty(planEditСheckBox.selectedProperty(),
+//                                    planTypeTF,
+//                                    planSmetTF,
+//                                    planSaleTF,
+//                                    planQuantityTF,
+//                                    planAddItemButton);
+//
+//        planTableWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItemPlan> c) -> {
+//            System.out.println("Changed on " + c + " - allProperty /// init_PlanTab");
+//            if(c.next() &&
+//                    (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
+//                    this.computeSumPlanTextFields();
+//            }
+//        });
+//    }
     
 /*!******************************************************************************************************************
 *                                                                                                     	    HANDLERS
@@ -259,7 +248,7 @@ public class AllPropertiesController implements Initializable {
     @FXML
     private void handle_contractorItemButton(ActionEvent event) {  
       if(event.getSource() == contractorAddItemButton){
-        setVisiblaDisableContractorNodes(true);
+        setVisibleDisableContractorNodes(true);
         
             TableItemContractor item = contractorTableWrapper.getSelectionModel().getSelectedItem();
                 if((item  != null)&& !contractorTableWrapper.getSelectionModel().isEmpty()){
@@ -270,7 +259,7 @@ public class AllPropertiesController implements Initializable {
                 }
         clearGroupOfTextInputControl(contractorNameTF,contractorDirectorTF,contractorAdressTA,contractorCommentsTA);
       }else if(event.getSource() == contractorSaveItemButton){
-        setVisiblaDisableContractorNodes(false);
+        setVisibleDisableContractorNodes(false);
         if(
             contractorTableWrapper.getItems()
                 .add(new TableItemContractor(0, 
@@ -282,36 +271,36 @@ public class AllPropertiesController implements Initializable {
       }
       
       if(event.getSource() == contractorCencelItemButton){
-        setVisiblaDisableContractorNodes(false);
+        setVisibleDisableContractorNodes(false);
         clearGroupOfTextInputControl(contractorNameTF,contractorDirectorTF,contractorAdressTA,contractorCommentsTA);
           
       }
       
         
     }
-    @FXML
-    private void handle_planAddItemButton(ActionEvent event) {
-        double SmetCost = DecimalFormatter.stringToDouble(planSmetTF.getText());
-        double SaleCost = DecimalFormatter.stringToDouble(planSaleTF.getText());
-        if(
-            planTableWrapper.getItems()
-                .add(new TableItemPlan(
-                        0,
-                        new Timestamp(System.currentTimeMillis()),
-                        (planTableWrapper.getItems().stream().max(Comparator.comparing(f -> f.getTypeID())).get().getTypeID() + 1),
-                        planTypeTF.getText(),
-                        Integer.parseInt(planQuantityTF.getText()),
-                        0,
-                        SmetCost,
-                        (double)0,
-                        SaleCost,
-                        (double)0,
-                        (double)0
-                ))
-        )clearGroupOfTextInputControl(planTypeTF,planQuantityTF,planSmetTF,planSaleTF);
-        
-        
-    }
+//    @FXML
+//    private void handle_planAddItemButton(ActionEvent event) {
+//        double SmetCost = DecimalFormatter.stringToDouble(planSmetTF.getText());
+//        double SaleCost = DecimalFormatter.stringToDouble(planSaleTF.getText());
+//        if(
+//            planTableWrapper.getItems()
+//                .add(new TableItemPlan(
+//                        0,
+//                        new Timestamp(System.currentTimeMillis()),
+//                        (planTableWrapper.getItems().stream().max(Comparator.comparing(f -> f.getTypeID())).get().getTypeID() + 1),
+//                        planTypeTF.getText(),
+//                        Integer.parseInt(planQuantityTF.getText()),
+//                        0,
+//                        SmetCost,
+//                        (double)0,
+//                        SaleCost,
+//                        (double)0,
+//                        (double)0
+//                ))
+//        )clearGroupOfTextInputControl(planTypeTF,planQuantityTF,planSmetTF,planSaleTF);
+//
+//
+//    }
 
 
 
@@ -325,29 +314,29 @@ public class AllPropertiesController implements Initializable {
         sumExpPerSiteTF.setText(DecimalFormatter.toString(
                                 osrTableWrapper.getItems().stream().mapToDouble(TableItemOSR::getExpensesPerHouse).sum()));
     }
-    private void computeSumPlanTextFields(){
-
-        planSmetSumTF.setText(DecimalFormatter.toString(
-                                    planTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSmetCostSum).sum()));
-        planSaleSumTF.setText(DecimalFormatter.toString(
-                                    planTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSaleCostSum).sum()));
-        planProfitSumTF.setText(DecimalFormatter.toString(
-                                    planTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getProfit).sum()));
-
-
-
-    }
-
-    private void computeSumFactTextFields(){
-        factSmetSumTF.setText(DecimalFormatter.toString(
-                                    factTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSmetCostSum).sum()));
-        factSaleSumTF.setText(DecimalFormatter.toString(
-                                    factTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSaleCostSum).sum()));
-        factProfitSumTF.setText(DecimalFormatter.toString(
-                                    factTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getProfit).sum()));
-
-
-    }
+//    private void computeSumPlanTextFields(){
+//
+//        planSmetSumTF.setText(DecimalFormatter.toString(
+//                                    planTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSmetCostSum).sum()));
+//        planSaleSumTF.setText(DecimalFormatter.toString(
+//                                    planTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSaleCostSum).sum()));
+//        planProfitSumTF.setText(DecimalFormatter.toString(
+//                                    planTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getProfit).sum()));
+//
+//
+//
+//    }
+//
+//    private void computeSumFactTextFields(){
+//        factSmetSumTF.setText(DecimalFormatter.toString(
+//                                    factTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSmetCostSum).sum()));
+//        factSaleSumTF.setText(DecimalFormatter.toString(
+//                                    factTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSaleCostSum).sum()));
+//        factProfitSumTF.setText(DecimalFormatter.toString(
+//                                    factTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getProfit).sum()));
+//
+//
+//    }
 
      /**
      * Bind disable property to group of 
@@ -364,23 +353,15 @@ public class AllPropertiesController implements Initializable {
     }
     
 
-    private void setVisiblaDisableContractorNodes(boolean v){
-        contractorAddItemButton.setVisible(!v);
-        contractorSaveItemButton.setVisible(v);
-        contractorCencelItemButton.setVisible(v);
-        
-        contractorEditСheckBox.setDisable(v);
-        contractorTableWrapper.setDisable(v);
+    private void setVisibleDisableContractorNodes(boolean value){
+        contractorAddItemButton     .setVisible(!value);
+        contractorSaveItemButton    .setVisible(value);
+        contractorCencelItemButton  .setVisible(value);
+        contractorEditСheckBox      .setDisable(value);
+        contractorTableWrapper      .setDisable(value);
         
     }
-    
-//    public void clearContractorTextfields (){
-//        contractorNameTF    .clear();
-//        contractorDirectorTF.clear();
-//        contractorAdressTA  .clear();
-//        contractorCommentsTA.clear();
-//    }
-//    
+
     
 
 }

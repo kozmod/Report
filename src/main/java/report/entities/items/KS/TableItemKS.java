@@ -145,7 +145,7 @@ public class TableItemKS extends TableItem {
     
     
     public static Callback<TableItem, Observable[]> extractor() {
-        return (TableItem p) -> new Observable[]{p.getValueProprty()};
+        return (TableItem p) -> new Observable[]{p.getValueProperty()};
     }
 
 }

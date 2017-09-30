@@ -57,9 +57,9 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
                 +",F.[DateCreate]"
                 +" FROM dbo.[FinPlan] F";
         try(Connection connection = SQLconnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(sqlString)) {
-            
-            pstmt.execute();
+                PreparedStatement pstmt = connection.prepareStatement(sqlString)) {
+
+                pstmt.execute();
             
             ResultSet rs = pstmt.getResultSet();
             
@@ -226,6 +226,7 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
                 }; 
            //SQL commit
            connection.commit();
+
         } catch (SQLException ex) {
             Logger.getLogger(ItemKSDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

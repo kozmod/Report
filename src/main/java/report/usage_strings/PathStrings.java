@@ -19,6 +19,7 @@ public  interface PathStrings {
                 String DEL_SITE        = "/view/DeleteLayout.fxml";
                 String EXPENSES        = "/view/ExpensesLayout.fxml";
                 String FIN_RES         = "/view/FinResLayout.fxml";
+                String PLANNING        = "/view/PlanningLayout.fxml";
                 String INTRO           = "/view/IntroLayout.fxml";
                 String LOG             = "/view/LogLayout.fxml";
                 String ROOT            = "/view/RootLayout.fxml";

@@ -150,14 +150,14 @@ import javafx.beans.property.StringProperty;
 
         public Double getValue()                {return value.get();}
         public void  setValue(Double value_inp) {value.set(value_inp);}      
-        public DoubleProperty getValueProprty() {return value;}
+        public DoubleProperty getValueProperty() {return value;}
         
         public String getUnit() {return unit.get();}
         public void   setUnit(String value_inp) {unit.set(value_inp);}
         
         public Double getPrice_one() {return price_one.get();}
         public void  setPrice_one (Double value_inp) {price_one.set(value_inp);}
-        public DoubleProperty getPrice_oneProprty() {return price_one;}
+        public DoubleProperty getPrice_oneProperty() {return price_one;}
         
         public Double getPrice_sum() {return price_sum.get();}
         public void  setPrice_sum (Double value_inp) {price_sum.set(value_inp);}
@@ -268,7 +268,7 @@ import javafx.beans.property.StringProperty;
         
           //Extractor
 //   public static Callback<TableItem, Observable[]> extractor() {
-//        return (TableItem p) -> new Observable[]{p.getValueProprty(), p.getPrice_oneProprty()};
+//        return (TableItem p) -> new Observable[]{p.getValueProperty(), p.getPrice_oneProperty()};
 //    }
 
 

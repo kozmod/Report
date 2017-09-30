@@ -51,7 +51,7 @@ public class ExpensesController implements Initializable {
     private Stage controllerStage;
 
     @FXML  private TextField  textExpTF, valueTF, textPeriodTF, contract_FinishTF, coeffTF;
-    @FXML  private GridPane siteTableGridPane, expensesTableGridPane, periodTableGridPane;
+    @FXML  private GridPane   siteTableGridPane, expensesTableGridPane, periodTableGridPane;
 
     private final TableWrapper<TableItemPreview> siteTWrapper = TableFactory.getProperty_Site();
     private final TableWrapper<TableItemExpenses> expensesTWrapper = TableFactory.getProperty_Expenses();
@@ -67,7 +67,7 @@ public class ExpensesController implements Initializable {
     
 //    private final  DoubleProperty COEFFICIENT = new SimpleDoubleProperty(new CoefficientQuery().getCoefficientClass().getValue());
     private final  DoubleProperty COEFFICIENT = new SimpleDoubleProperty(CoefficientService.getCurrentValue());
-    /********************************************************************************************************************
+    /*!*******************************************************************************************************************
      *                                                                                                     PreConstructor
      ********************************************************************************************************************/ 
     {
@@ -105,13 +105,13 @@ public class ExpensesController implements Initializable {
         controllerStage.setOnCloseRequest((WindowEvent we) -> {
             System.out.println("Stage is closing");
             rootController.setTreeViewDisable(false);
-            rootController.update_TreeView();
+//            rootController.update_TreeView();
 
         });
     }
     
     
-    /********************************************************************************************************************
+    /*!*******************************************************************************************************************
      *                                                                                                              INIT
      ********************************************************************************************************************/ 
     @Override
@@ -120,12 +120,8 @@ public class ExpensesController implements Initializable {
         siteTableGridPane.add(siteTWrapper.getTableView(),0,0);
         //set expensesTWrapper to GP
         expensesTableGridPane.add(expensesTWrapper.getTableView(),0,0);
-//        expensesGridPane.add(expensesTWrapper, 0, 0, 2, 1);
-//        GridPane.setMargin(expensesTWrapper, new Insets(5,0,0,0));
         //set periodTWrapper to GP
         periodTableGridPane.add(periodTWrapper.getTableView(),0,0);
-//        periodGridPane.add(periodTWrapper, 0, 1, 2, 1);
-//        GridPane.setMargin(periodTWrapper, new Insets(5,0,0,0));
         
       init_expensesTab();
       init_periodTab();
@@ -212,7 +208,7 @@ public class ExpensesController implements Initializable {
         
     }
     
-    /********************************************************************************************************************
+    /*!*******************************************************************************************************************
     *                                                                                              INIT  Button handlers
     ********************************************************************************************************************/
 
@@ -225,9 +221,9 @@ public class ExpensesController implements Initializable {
 //        });
 //    }
     
-    /********************************************************************************************************************
+    /*!*******************************************************************************************************************
      *                                                                                                            HANDLERS
-     ********************************************************************************************************************/ 
+     ********************************************************************************************************************/
     @FXML   
     private void hendler_applySiteChanges(ActionEvent event) {
 
@@ -242,6 +238,9 @@ public class ExpensesController implements Initializable {
             CONTRACTOR.setValue(Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
             siteUndoButton .setDisable(true);
             siteSaveButton.setDisable(true);
+            rootController.update_SelctedTreeViewItem(
+                    Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR)
+            );
             
             
     }
@@ -307,14 +306,17 @@ public class ExpensesController implements Initializable {
             
         }
 //
-        applyCoefButton.setDisable(true);
-//       
+
         if(Est.Changed.isExist()){
             Est.Changed. updateTabData();
             Est.Changed.printALLSum();
 
         }
         System.out.println(COEFFICIENT.getValue());
+
+        applyCoefButton.setDisable(true);
+        siteUndoButton.setDisable(true);
+        siteSaveButton.setDisable(true);
         
     }
     

@@ -534,14 +534,14 @@ public class AddSiteRowController implements Initializable {
 //
 //        public float getValue() {return value.saveEst();}
 //        public void  setValue(float value_inp) {value.set(value_inp);}
-//        public FloatProperty getValueProprty() {return value;}
+//        public FloatProperty getValueProperty() {return value;}
 //        
 //        public String getUnit() {return unit.saveEst();}
 //        public void  setUnit(String value_inp) {unit.set(value_inp);}
 //        
 //        public float getPrice_one() {return price_one.saveEst();}
 //        public void setPrice_one (float value_inp) {price_one.set(value_inp);}     
-//        public FloatProperty getPrice_oneProprty() {return price_one;}
+//        public FloatProperty getPrice_oneProperty() {return price_one;}
 //       
 //        public float getPrice_sum() {return price_sum.saveEst();}
 //        public void setPrice_sum (float value_inp) {price_sum.set(value_inp);}

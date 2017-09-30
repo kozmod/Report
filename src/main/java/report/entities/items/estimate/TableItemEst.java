@@ -200,7 +200,7 @@ public class TableItemEst extends TableItem {
      * @return extractor
     */
     public static Callback<TableItem, Observable[]> extractor() {
-        return (TableItem p) -> new Observable[]{p.getValueProprty(), p.getPrice_oneProprty()};
+        return (TableItem p) -> new Observable[]{p.getValueProperty(), p.getPrice_oneProperty()};
     }
     
 

@@ -1,6 +1,8 @@
 
 package report.entities.items;
 
+
+
 public interface TableClone {
 
     /**
@@ -8,6 +10,7 @@ public interface TableClone {
      * @return TableClone
      */  
     TableClone getClone();
+
 
     Long getId();
     void setId(Long id);

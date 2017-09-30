@@ -170,17 +170,20 @@ public class SiteItemDAO implements ItemDAO<TableItemPreview, TableWrapper> {
 
     @Override
     public void insert(Collection<TableItemPreview> items) {
+
+        //Build INSERT SQL String
        StringBuffer stringInsert = new StringBuffer("insert into [dbo].[Site]( ");
        StringBuffer stringValues = new StringBuffer(" VALUES(");
        String prefix = "";
-            for(TableItemPreview item : items){
-                if(!item.getSqlColumn().equals(SQL.Site.TAXES_ALL))
-                    stringInsert.append(prefix + "["+item.getSqlColumn()+"]");
-                        if(!item.getSqlColumn().equals(SQL.Site.SITE_TYPE_ID))
+            for(TableItemPreview item : items) {
+                if (!item.getSqlColumn().equals(SQL.Site.TAXES_ALL)) {
+                    stringInsert.append(prefix + "[" + item.getSqlColumn() + "]");
+                    if (!item.getSqlColumn().equals(SQL.Site.SITE_TYPE_ID))
                         stringValues.append(prefix + "?");
-                        else
+                    else
                         stringValues.append(prefix + "(SELECT P.[TypeID] from [FinPlan] P WHERE P.[TypeName] = ? )");
                     prefix = ",";
+                }
             }
             stringInsert.append( ")");
             stringValues.append(")");
@@ -193,11 +196,15 @@ public class SiteItemDAO implements ItemDAO<TableItemPreview, TableWrapper> {
                                                                    Statement.RETURN_GENERATED_KEYS);) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
+
+            //Add data to Prepare Statement
                 int i  = 1;
                 for(TableItemPreview obsItem : items){
+                    if (!obsItem.getSqlColumn().equals(SQL.Site.TAXES_ALL)) {
 //                        System.out.println(item.getSiteSecondValue().toString() + " # "+ i);
-                        pstmt.setObject (i, obsItem.getSecondValue());
+                        pstmt.setObject(i, obsItem.getSecondValue());
                         i++;
+                    }
                 }
                     int affectedRows = pstmt.executeUpdate();
                     
