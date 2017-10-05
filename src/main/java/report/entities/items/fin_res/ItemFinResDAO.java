@@ -34,7 +34,7 @@ public class ItemFinResDAO {
             while(rs.next()){
 
 //                            System.out.println("True cost   "+trueCost+ "   sh --> " + rs.getFloat ("SmetCost"));
-//                            System.out.println(rs.getObject("ITN_Client").toString());
+//                            System.out.println(rs.getObject("ITN_Client").formatNumber());
                 FinResTable.add(new TableItemFinRes(
                                 rs.getString("SiteNumber"),
                                 rs.getString("Contractor"),

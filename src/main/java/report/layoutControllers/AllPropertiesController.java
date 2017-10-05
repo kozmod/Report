@@ -2,8 +2,6 @@
 package report.layoutControllers;
 
 import java.net.URL;
-import java.sql.Timestamp;
-import java.util.Comparator;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
@@ -17,9 +15,9 @@ import javafx.scene.control.*;
 import javafx.util.converter.NumberStringConverter;
 import report.models.coefficient.Quantity;
 //import report.models.Formula_test;
+import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
 import report.models_view.nodes.TableWrapper;
 import report.models_view.nodes_factories.ContextMenuFactory;
-import report.models_view.data_utils.DecimalFormatter;
 import report.models_view.nodes_factories.TableFactory;
 import report.entities.items.contractor.TableItemContractor;
 import report.entities.items.osr.TableItemOSR;
@@ -124,7 +122,7 @@ public class AllPropertiesController implements Initializable {
                                     osrAddTextTF, 
                                     osrAddValueTF,
                                     osrAddItemButton);
-//       siteQuantityTF.setText(Formula_test.siteQuantity.getValue().toString());
+//       siteQuantityTF.setText(Formula_test.siteQuantity.getValue().formatNumber());
        siteQuantityTF.textProperty().bindBidirectional(Quantity.getQuantityProperty(), new NumberStringConverter());
 //       siteQuantityTF.textProperty().bindBidirectional(CoefficientService.getQuantityProperty(), new NumberStringConverter());
 
@@ -237,7 +235,7 @@ public class AllPropertiesController implements Initializable {
 
     @FXML
     private void handle_osrAddItemButton(ActionEvent event) {  
-        Double expenses = DecimalFormatter.stringToDouble(osrAddValueTF.getText());
+        Double expenses = new DoubleDFormatter().fromString(osrAddValueTF.getText());
         Double expensesPerHouse = expenses/Quantity.getQuantityValue();
         osrTableWrapper.getItems()
                 .add(new TableItemOSR(0,osrAddTextTF.getText(),expenses,expensesPerHouse ));
@@ -280,8 +278,8 @@ public class AllPropertiesController implements Initializable {
     }
 //    @FXML
 //    private void handle_planAddItemButton(ActionEvent event) {
-//        double SmetCost = DecimalFormatter.stringToDouble(planSmetTF.getText());
-//        double SaleCost = DecimalFormatter.stringToDouble(planSaleTF.getText());
+//        double SmetCost = DecimalFormatter.formatString(planSmetTF.getText());
+//        double SaleCost = DecimalFormatter.formatString(planSaleTF.getText());
 //        if(
 //            planTableWrapper.getItems()
 //                .add(new TableItemPlan(
@@ -309,18 +307,18 @@ public class AllPropertiesController implements Initializable {
 *                                                                                                             METHODS
 ********************************************************************************************************************/
     private void computeSumExpTextFields(){
-        sumExpTF.setText(DecimalFormatter.toString(
+        sumExpTF.setText(new DoubleDFormatter().toString(
                                 osrTableWrapper.getItems().stream().mapToDouble(TableItemOSR::getExpenses).sum()));
-        sumExpPerSiteTF.setText(DecimalFormatter.toString(
+        sumExpPerSiteTF.setText(new DoubleDFormatter().toString(
                                 osrTableWrapper.getItems().stream().mapToDouble(TableItemOSR::getExpensesPerHouse).sum()));
     }
 //    private void computeSumPlanTextFields(){
 //
-//        planSmetSumTF.setText(DecimalFormatter.toString(
+//        planSmetSumTF.setText(DecimalFormatter.formatNumber(
 //                                    planTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSmetCostSum).sum()));
-//        planSaleSumTF.setText(DecimalFormatter.toString(
+//        planSaleSumTF.setText(DecimalFormatter.formatNumber(
 //                                    planTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSaleCostSum).sum()));
-//        planProfitSumTF.setText(DecimalFormatter.toString(
+//        planProfitSumTF.setText(DecimalFormatter.formatNumber(
 //                                    planTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getProfit).sum()));
 //
 //
@@ -328,11 +326,11 @@ public class AllPropertiesController implements Initializable {
 //    }
 //
 //    private void computeSumFactTextFields(){
-//        factSmetSumTF.setText(DecimalFormatter.toString(
+//        factSmetSumTF.setText(DecimalFormatter.formatNumber(
 //                                    factTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSmetCostSum).sum()));
-//        factSaleSumTF.setText(DecimalFormatter.toString(
+//        factSaleSumTF.setText(DecimalFormatter.formatNumber(
 //                                    factTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSaleCostSum).sum()));
-//        factProfitSumTF.setText(DecimalFormatter.toString(
+//        factProfitSumTF.setText(DecimalFormatter.formatNumber(
 //                                    factTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getProfit).sum()));
 //
 //

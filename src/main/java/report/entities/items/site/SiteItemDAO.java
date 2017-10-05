@@ -107,7 +107,7 @@ public class SiteItemDAO implements ItemDAO<TableItemPreview, TableWrapper> {
                         //13
                         new TableItemPreview(rs.getLong("id"),SQL.Site.COST_SITE, "Стоимость земли", rs.getDouble(SQL.Site.COST_SITE)),
                         //14
-                        new TableItemPreview(rs.getLong("id"),SQL.Site.SUM_COST, "Сумма затрат", rs.getDouble(SQL.Site.SUM_COST)),// >>>>>>>>>>> ??????? выяснить ---- скорее всего Delete
+                        new TableItemPreview(rs.getLong("id"),SQL.Site.SUM_COST, "Сумма затрат", rs.getDouble(SQL.Site.SUM_COST)),// >>>>>>>>>>> Delete
                         //18
                         new TableItemPreview(rs.getLong("id"),SQL.Site.TAXES_ALL, "Выплаченные налоги", 0),
                         //15
@@ -176,6 +176,7 @@ public class SiteItemDAO implements ItemDAO<TableItemPreview, TableWrapper> {
        StringBuffer stringValues = new StringBuffer(" VALUES(");
        String prefix = "";
             for(TableItemPreview item : items) {
+//                if(item.getSqlColumn().equals(SQL.Site.COST_HOUSE))System.err.println("COST_HOUSE -----------> "+ item.getSecondValue().formatNumber());
                 if (!item.getSqlColumn().equals(SQL.Site.TAXES_ALL)) {
                     stringInsert.append(prefix + "[" + item.getSqlColumn() + "]");
                     if (!item.getSqlColumn().equals(SQL.Site.SITE_TYPE_ID))
@@ -185,6 +186,7 @@ public class SiteItemDAO implements ItemDAO<TableItemPreview, TableWrapper> {
                     prefix = ",";
                 }
             }
+
             stringInsert.append( ")");
             stringValues.append(")");
             stringInsert.append(stringValues);
@@ -201,7 +203,7 @@ public class SiteItemDAO implements ItemDAO<TableItemPreview, TableWrapper> {
                 int i  = 1;
                 for(TableItemPreview obsItem : items){
                     if (!obsItem.getSqlColumn().equals(SQL.Site.TAXES_ALL)) {
-//                        System.out.println(item.getSiteSecondValue().toString() + " # "+ i);
+//                        System.out.println(item.getSiteSecondValue().formatNumber() + " # "+ i);
                         pstmt.setObject(i, obsItem.getSecondValue());
                         i++;
                     }

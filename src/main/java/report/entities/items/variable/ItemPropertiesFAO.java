@@ -7,8 +7,8 @@ import java.util.Properties;
 import java.util.stream.Collector;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.models_view.data_utils.DecimalFormatter;
 import report.entities.ItemDAO;
+import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
 import report.usage_strings.PathStrings;
 import report.models_view.nodes.TableWrapper;
 
@@ -47,7 +47,10 @@ public class ItemPropertiesFAO implements ItemDAO<TableItemVariable, TableWrappe
                         TableItemVariable tiv = new TableItemVariable(
                             0,
                             temp.getKey().toString()
-                            ,DecimalFormatter.stringToDouble(temp.getValue()));
+//                            ,DecimalFormatter.formatString(temp.getValue()));
+//                            ,DecimalFormatter.stringToDouble_threeZeroes(temp.getValue()));
+                              ,new DoubleDFormatter("###,##0.000")
+                                .fromString(temp.getValue().toString()));
                         return tiv;})
                      .collect(Collector.of(
                                 () -> FXCollections.observableArrayList(TableItemVariable.extractor()),
@@ -81,7 +84,10 @@ public class ItemPropertiesFAO implements ItemDAO<TableItemVariable, TableWrappe
                     Properties::new,
                     (prop, item) -> prop.put(
                         item.getText(),
-                        DecimalFormatter.toString(item.getValue())
+//                        DecimalFormatter.toString_threeZeroes(item.getValue())
+                            new DoubleDFormatter("###,##0.000")
+                                    .fromString(item.getValue().toString())
+//                        DecimalFormatter.formatNumber(item.getValue())
                     ),
                     (p1, p2) -> { p1.putAll(p2); return p1; })
                 );

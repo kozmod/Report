@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import report.layoutControllers.EstimateController.Est;
-import report.models_view.data_utils.DecimalFormatter;
+import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
 
 
 public class TabModel {
@@ -79,7 +79,7 @@ public class TabModel {
 //                double f5 = DecimalFormatter.stringToDouble(finishingWorkTP.getLabelProperty().getValueSafe());
 //
 ////                return faundationTP.getLabelProperty().getValue();
-//                return DecimalFormatter.toString(f1 + f2 + f3+ f4 + f5);
+//                return DecimalFormatter.formatNumber(f1 + f2 + f3+ f4 + f5);
 //            }
 //        });
         sumDouble =  new DoubleBinding(){
@@ -109,7 +109,7 @@ public class TabModel {
 
             @Override
             protected String computeValue() {
-                return DecimalFormatter.toString(sumDouble.get());
+                return new DoubleDFormatter().toString(sumDouble.get());
             }
         });
 

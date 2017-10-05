@@ -2,6 +2,10 @@
 package report.models.coefficient;
 
 
+import report.layoutControllers.LogController;
+
+import java.math.BigDecimal;
+
 public class CoefficientService {
 
     private static CoefficientService coefficient = null;
@@ -44,22 +48,43 @@ public class CoefficientService {
 *                                                                                                            Methods
 /********************************************************************************************************************/
     private Double computeCoefficient(){
-        profit = (perSaleExpenses*saleHouseSum) - OSR - smetCostSum;
+//        profit = (perSaleExpenses*saleHouseSum) - OSR - smetCostSum;
+        profit = this.getProfit();
         double nonRoundCoefficient = (siteExpenses
                 - OSR/quantity.doubleValue()
-                - (profit/quantity.doubleValue())*incomeTax) ///  НалогиБ<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+                - (profit/quantity.doubleValue())*incomeTax) ///  Налоги<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
                 /smetCost;
 
-        //Roun COEFFICIENT to #.00
+        //Round COEFFICIENT to #.00
         Double COEFFICIENT = Math.floor(nonRoundCoefficient * 100) / 100;
+//        Double COEFFICIENT = nonRoundCoefficient;
         if(COEFFICIENT ==  0
                 | COEFFICIENT ==  Double.NEGATIVE_INFINITY
                 | COEFFICIENT ==  Double.POSITIVE_INFINITY
                 | COEFFICIENT ==  Double.NaN
                 )
             return 1d;
-        else
+        else {
+//            LogController.appendLogViewText(
+//                    "siteExpenses = " + siteExpenses + " || " +
+//                            "OSR = " + new BigDecimal(OSR).toPlainString() + " || " +
+//                            "quantity = " +  new BigDecimal(quantity).toPlainString()  + " || " +
+//                            "incomeTax = " +  new BigDecimal(incomeTax).toPlainString()  + " || " +
+//                            "smetCost = " +  new BigDecimal(smetCost).toPlainString()  + " || " +
+//                            "profit =" +  new BigDecimal(profit).toPlainString() + " || " +
+//                            "perSaleExpenses =" +  new BigDecimal(perSaleExpenses).toPlainString() + " || " +
+//                            "" );
+//            LogController.appendLogViewText(
+//                    "siteExpenses = " + siteExpenses + " || " +
+//                            "OSR = " + new BigDecimal(OSR).toPlainString() + " || " +
+//                            "OSR/quantity.doubleValue() = " +  OSR/quantity.doubleValue()  + " || " +
+//                            "(profit/quantity.doubleValue())*incomeTax) = " +  (profit/quantity.doubleValue())*incomeTax  + " || " +
+//                            "profit =" +  new BigDecimal(profit).toPlainString() + " || " +
+//                            "COEFFICIENT =" + nonRoundCoefficient+ " || " +
+//
+//                            "" );
             return COEFFICIENT;
+        }
     }
 
 
@@ -67,7 +92,7 @@ public class CoefficientService {
 *                                                                                                             Builder
 /********************************************************************************************************************/
 
-    public static Builder newCoefBuilder(){
+    public static Builder newCoeffBuilder(){
         return new CoefficientService().new Builder();
     }
 
@@ -108,7 +133,7 @@ public class CoefficientService {
             return  this;
         }
 
-        public CoefficientService boild() {
+        public CoefficientService build() {
             CoefficientService.this.coefficientValue = CoefficientService.this.computeCoefficient();
             return  CoefficientService.this;
         }
@@ -135,13 +160,16 @@ public class CoefficientService {
     }
 
     private Double getProfit(){
-        return (profit =(perSaleExpenses*saleHouseSum) - OSR - smetCostSum);
+//        return (profit =((perSaleExpenses*saleHouseSum) - OSR - smetCostSum));
+        return (profit =((perSaleExpenses*saleHouseSum) - OSR ));
     }
 
     private Double getAllTaxes(){
-        getProfit();
+        this.getProfit();
         return (profit/quantity.doubleValue())*incomeTax;
     }
+
+
 /*!******************************************************************************************************************
 *                                                                                                      Static Methods
 /********************************************************************************************************************/

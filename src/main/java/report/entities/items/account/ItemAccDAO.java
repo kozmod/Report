@@ -44,7 +44,7 @@ public class ItemAccDAO {
             ResultSet rs = st.executeQuery(ResultSetString.toString());
             while(rs.next()){
 
-//                            System.out.println(rs.getObject("ITN_Client").toString());
+//                            System.out.println(rs.getObject("ITN_Client").formatNumber());
                 AccTable.add(new TableItemAcc(
                                 rs.getInt   ("Date"),
                                 rs.getInt   ("Num"),

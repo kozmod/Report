@@ -13,7 +13,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.StackPane;
 import report.layoutControllers.EstimateController.Est;
-import report.models_view.data_utils.DecimalFormatter;
+import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
 import report.models_view.nodes_factories.TableFactory;
 import report.entities.items.estimate.TableItemEst;
 import report.entities.items.estimate.ItemEstDAO;
@@ -78,7 +78,7 @@ public class TitledStackModel extends StackPane{
     private void init_Lable(){
         TitledStackModel.setMargin(sumLabel, new Insets(5,10,0,0));
         sumLabel.textProperty().setValue( tableViewWrapper.getSumProperty().getValue().toString());
-        Bindings.bindBidirectional(sumLabel.textProperty(), tableViewWrapper.getSumProperty(), DecimalFormatter.getDecimalFormat());
+        Bindings.bindBidirectional(sumLabel.textProperty(), tableViewWrapper.getSumProperty(), new DoubleDFormatter().format());
     }
     
     //3

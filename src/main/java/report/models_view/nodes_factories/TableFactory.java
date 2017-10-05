@@ -38,7 +38,9 @@ import report.entities.items.period.ItemPeriodDAO;
 import report.entities.items.plan.ItemPlanDAO;
 import report.entities.items.variable.ItemPropertiesFAO;
 
-import report.models_view.data_utils.DecimalFormatter;
+import report.models_view.data_utils.decimalFormatters.DFormatter;
+import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
+import report.models_view.data_utils.decimalFormatters.stringConvertersFX.StringNumberConverter;
 import report.models_view.nodes.TableWrapper;
 import report.models_view.nodes.TableWrapperEST;
 
@@ -111,7 +113,8 @@ public class TableFactory {
 
         switch(enumEst){
             case Base :
-                TableFactory.setTextFieldCell_NumbertringConverter(valueColumn);
+                TableFactory.setTextFieldCell_NumberStringConverter(valueColumn);
+
 //
                 valueColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<? extends TableItem, Double>>() {
                     @Override
@@ -148,7 +151,7 @@ public class TableFactory {
                 });
                 break;
         }
-        TableFactory.setTextFieldCell_NumbertringConverter(Price_oneColumn);
+        TableFactory.setTextFieldCell_NumberStringConverter(Price_oneColumn);
         Price_oneColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<TableItem, Double>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<TableItem, Double> t) {
@@ -165,6 +168,9 @@ public class TableFactory {
 //                ((ContextMenuModelEst)table.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
             }
         });
+
+        TableFactory.setTextFieldCell_NumberStringConverter(Price_sumColumn);
+
 
         switch(enumEst){
             case Base    : table.setContextMenu(ContextMenuFactory.getEst(table));         break;
@@ -249,7 +255,7 @@ public class TableFactory {
         JM_nameColumn.setCellFactory(param -> TableCellFactory.getOnMouseEnteredTableCell(Est.KS));
         valueColumn.setEditable(true);
 
-        TableFactory.setTextFieldCell_NumbertringConverter(valueColumn);
+        TableFactory.setTextFieldCell_NumberStringConverter(valueColumn);
         valueColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<? extends TableItem, Double>>() {
             @Override
             public void handle(TableColumn.CellEditEvent<? extends TableItem, Double> t) {
@@ -462,7 +468,7 @@ public class TableFactory {
 
         valueAllColumn.setEditable(true);
         valueColumn.setCellFactory(p -> TableCellFactory.getDecimalCell());
-        TableFactory.setTextFieldCell_NumbertringConverter(valueAllColumn);
+        TableFactory.setTextFieldCell_NumberStringConverter(valueAllColumn);
 
         textColumn.setCellFactory(param -> TableCellFactory.getTestIdOSR());
 
@@ -502,7 +508,7 @@ public class TableFactory {
                 = tableWrapper.addColumn("Значение",   "value");
 //
         valueAllColumn.setEditable(true);
-        TableFactory.setTextFieldCell_NumbertringConverter(valueAllColumn);
+        TableFactory.setTextFieldCell_NumbertringConverter_threeZeroes(valueAllColumn);
         valueAllColumn.setOnEditCommit((TableColumn.CellEditEvent<TableItemVariable, Double> t) -> {
             t.getRowValue().setValue(t.getNewValue());
         });
@@ -576,7 +582,7 @@ public class TableFactory {
 
 
         TableFactory.setTextFieldCell_IntegerStringConverter(typeIdColumn,quantityColumn);
-        TableFactory.setTextFieldCell_NumbertringConverter(smetColumn,saleColumn );
+        TableFactory.setTextFieldCell_NumberStringConverter(smetColumn,saleColumn );
 
         typeIdColumn.setOnEditCommit((TableColumn.CellEditEvent<TableItemPlan, Integer> t) -> {
             t.getRowValue().setTypeID(t.getNewValue());
@@ -863,7 +869,7 @@ public class TableFactory {
 //
 //                // chage Float to string in Value Column
 //                @Override
-//                public String toString(Float object) {
+//                public String formatNumber(Float object) {
 //                    return new DecimalFormat("0.00").format(object);
 //                }
 //
@@ -887,7 +893,7 @@ public class TableFactory {
 //
 //                // chage Float to string in Value Column
 //                @Override
-//                public String toString(Double object) {
+//                public String formatNumber(Double object) {
 //                    return new DecimalFormat("0.00").format(object);
 //                }
 //
@@ -904,26 +910,69 @@ public class TableFactory {
 //
 //            }));
 //    }
-    private static  void  setTextFieldCell_NumbertringConverter(TableColumn ... columns){
-        for(TableColumn column  : columns)
-            column.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Number>(){
 
-                // chage Float to string in Value Column
+
+    private static  void setTextFieldCell_NumberStringConverter(TableColumn ... columns){
+
+
+        DoubleDFormatter dFormatter = new DoubleDFormatter();
+            for(TableColumn column  : columns)
+                column.setCellFactory(
+                        TextFieldTableCell.forTableColumn(
+                                new StringConverter<Double>(){
+                // change Float to string in Value Column
                 @Override
-                public String toString(Number object) {
-                    return DecimalFormatter.toString(object);
+                public String toString(Double object) {
+                    return dFormatter.toString(object);
 //                    return new DecimalFormat("0.00").format(object);
                 }
 
                 @Override
-                public Number fromString(String string) {
+                public Double fromString(String string) {
 //                    Number num = new Double(0);
 //                    try {
 //                      num =  new DecimalFormat("0.00").parse(string).doubleValue();
 //                    } catch (ParseException ex) {
 //                        Logger.getLogger(TableFactory.class.getName()).log(Level.SEVERE, null, ex);
 //                    }
-                    return DecimalFormatter.stringToDouble(string);
+
+                        return dFormatter.fromString(string);
+
+                }
+
+            }));
+    }
+
+    /**
+     *Apply StringConverter to all input cells.
+     *@param formatter DFormatter(DecimalFormatSymbols & DecimalFormat)
+     *@param columns TableColumn[]
+     */
+    private static  void setCellFactoryAll(DFormatter formatter, TableColumn ... columns){
+            for(TableColumn column  : columns)
+                column.setCellFactory(
+                        TextFieldTableCell.forTableColumn(
+                                new StringNumberConverter(formatter)
+                        )
+                );
+    }
+
+
+
+    private static  void  setTextFieldCell_NumbertringConverter_threeZeroes(TableColumn ... columns){
+        DoubleDFormatter dFormatter = new DoubleDFormatter("###,##0.000");
+        for(TableColumn column  : columns)
+            column.setCellFactory(TextFieldTableCell.forTableColumn(new StringConverter<Number>(){
+                @Override
+                public String toString(Number object) {
+//                    return DecimalFormatter.toString_threeZeroes(object);
+                    return dFormatter.toString(object);
+
+                    }
+
+                @Override
+                public Number fromString(String string) {
+                    return dFormatter.fromString(string);
                 }
 
             }));

@@ -26,7 +26,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import report.layoutControllers.root.RootLayoutController;
 import report.models.coefficient.CoefficientService;
-import report.models_view.data_utils.DecimalFormatter;
+import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
 import report.usage_strings.SQL;
 
 import report.layoutControllers.EstimateController.Est;
@@ -188,7 +188,7 @@ public class ExpensesController implements Initializable {
         });
 
         //Bind CoefficientService to Textfield
-        coeffTF.textProperty().bindBidirectional(COEFFICIENT,  DecimalFormatter.getDecimalFormat());
+        coeffTF.textProperty().bindBidirectional(COEFFICIENT,  new DoubleDFormatter().format());
 
         //add CoefficientService TF Listener
         coeffTF.textProperty().addListener(event ->{
@@ -291,28 +291,29 @@ public class ExpensesController implements Initializable {
     }   
     
     @FXML
-    private void hendler_applyCoeffToChaged(ActionEvent event) {
+    private void handler_applyCoeffToChanged(ActionEvent event) {
         Est.Common.getSiteItem(SQL.Site.COEFFICIENT).setSecondValue(COEFFICIENT.get());
-        
-        new SiteItemDAO().dellAndInsert(siteTWrapper);
-        siteTWrapper.saveTableItems();
-        siteTWrapper.refresh();
+
+
+
         
         if(Est.Changed.isExist()){
             new CoefficientQuery().applyCoefficient(
                 Est.Changed.getSiteSecondValue(SQL.Common.SITE_NUMBER),
                 Est.Changed.getSiteSecondValue(SQL.Common.CONTRACTOR),
                 COEFFICIENT.getValue());
-            
         }
-//
-
         if(Est.Changed.isExist()){
-            Est.Changed. updateTabData();
+            Est.Changed.updateTabData();
             Est.Changed.printALLSum();
 
         }
-        System.out.println(COEFFICIENT.getValue());
+
+        new SiteItemDAO().dellAndInsert(siteTWrapper);
+        siteTWrapper.saveTableItems();
+        siteTWrapper.refresh();
+
+//        System.out.println(COEFFICIENT.getValue());
 
         applyCoefButton.setDisable(true);
         siteUndoButton.setDisable(true);
@@ -324,9 +325,9 @@ public class ExpensesController implements Initializable {
 //    class StringConverterTF extends StringConverter{
 //
 //        @Override
-//        public String toString(Object value) {
+//        public String formatNumber(Object value) {
 //            if(value != null){
-//                return value.toString();
+//                return value.formatNumber();
 //            }else {
 //                return "";
 //            }

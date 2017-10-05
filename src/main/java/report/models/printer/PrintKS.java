@@ -8,9 +8,9 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import report.entities.items.KS.TableItemKS;
 import report.entities.items.contractor.TableItemContractor;
+import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
 import report.usage_strings.SQL;
 import report.layoutControllers.EstimateController.Est;
-import report.models_view.data_utils.DecimalFormatter;
 import report.entities.items.TableItem;
 
 
@@ -81,7 +81,7 @@ public class PrintKS extends AbstractPrinterXML{
 //        this.obsKS = (ObservableList<TableItem>) Est.KS.getTabMap().saveEst(ksNamber);
 //
 //        this.ksNumber = ksNamber;
-//        this.ksDate = obsKS.saveEst(2).toString();
+//        this.ksDate = obsKS.saveEst(2).formatNumber();
 //        
 //        doc = buildDocument("\\libS\\XML_Models\\KS-2.xml");
 //        setObjectName();
@@ -231,7 +231,7 @@ public class PrintKS extends AbstractPrinterXML{
                                  .build());
             row.appendChild(new CellBuilder(doc)
                                  .setCellStyle("s174")
-                                 .setCellValue("Number",DecimalFormatter.toString(item.getPrice_one())
+                                 .setCellValue("Number",new DoubleDFormatter().toString(item.getPrice_one())
                                          .replace(" ","") )
                                  .build());
             row.appendChild(new CellBuilder(doc)

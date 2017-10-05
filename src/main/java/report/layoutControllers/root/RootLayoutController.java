@@ -455,6 +455,7 @@ public class RootLayoutController implements Initializable {
 
                     //create Coefficient
                     CoefficientService.createCoefficient();
+                    //Set TAXES_ALL
                     Est.Common.getSiteItem(SQL.Site.TAXES_ALL).setSecondValue(CoefficientService.getCurrentTaxes());
 
                     showEstController = new StageCreator(PathStrings.Layout.SITE_EST,"")

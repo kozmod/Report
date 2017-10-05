@@ -274,15 +274,15 @@ public class InsertFileXLSQuery {
 //                
 //            
 //
-////            System.out.println(row.getCell(0).toString());
-////            System.out.println(dateParser(row.getCell(0).toString()));
+////            System.out.println(row.getCell(0).formatNumber());
+////            System.out.println(dateParser(row.getCell(0).formatNumber()));
 ////            System.out.println(Long.parseLong(row.getCell(2).getStringCellValue()));
 //////            
 //             while(rows.hasNext()){
 //                 row =  (Row) rows.next();
 //                 if(row.getCell(0).getStringCellValue().length() == 10){
-////                 System.out.println(dateParser(row.getCell(0).toString()));
-//                 pstmt_acc.setInt    (1, dateParser(row.getCell(0).toString()));
+////                 System.out.println(dateParser(row.getCell(0).formatNumber()));
+//                 pstmt_acc.setInt    (1, dateParser(row.getCell(0).formatNumber()));
 //                 pstmt_acc.setInt    (2, Integer.parseInt(row.getCell(1).getStringCellValue()));
 //                 pstmt_acc.setString (3, row.getCell(2).getStringCellValue());
 //                 pstmt_acc.setString (4, row.getCell(3).getStringCellValue());
@@ -293,7 +293,7 @@ public class InsertFileXLSQuery {
 //                 pstmt_acc.setInt    (9, Integer.parseInt(row.getCell(8).getStringCellValue()));
 //                 pstmt_acc.setString (10, row.getCell(9).getStringCellValue());
 //                 
-//                    String debString = row.getCell(10).toString();
+//                    String debString = row.getCell(10).formatNumber();
 //                    debString = debString.replace(String.valueOf((char) 160),"");
 //                 pstmt_acc.setDouble  (11, (Math.round(Double.parseDouble(debString)*100.00)/100.00));
 //                 
@@ -511,8 +511,8 @@ public class InsertFileXLSQuery {
 //                                    if(firstCell !=null){
 //                                        while (cells.hasNext()){
 //                                            XSSFCell cell = (XSSFCell) cells.next();
-//                                            //sqlLoader.getPstmt().setString(cellNumb, cell.toString());
-//                                            pstmt.setString(cellNumb, cell.toString());
+//                                            //sqlLoader.getPstmt().setString(cellNumb, cell.formatNumber());
+//                                            pstmt.setString(cellNumb, cell.formatNumber());
 //                                            cellNumb++;  
 //                                        }
 //                                        pstmt.execute();

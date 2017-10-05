@@ -31,6 +31,7 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import report.layoutControllers.root.RootLayoutController;
 import report.entities.items.contractor.ItemContractorDAO;
+import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
 import report.usage_strings.PathStrings;
 import report.usage_strings.SQL;
 import report.models_view.nodes.TableWrapper;
@@ -38,7 +39,7 @@ import report.models_view.nodes_factories.FileChooserFactory;
 
 
 import report.models_view.StageCreator;
-import report.models_view.data_utils.DecimalFormatter;
+
 import report.models_view.data_utils.EpochDatePickerConverter;
 import report.models_view.nodes_factories.TableFactory;
 import report.entities.items.KS.TableItemKS;
@@ -357,13 +358,13 @@ public class EstimateController implements Initializable {
                     case Base:
                         enumEst.getSiteItem(SQL.Site.SMET_COST)
                                 .setSecondValue(
-                                        DecimalFormatter.stringToDouble(lableSumBase.getText()));
+                                       new DoubleDFormatter().fromString(lableSumBase.getText()));
                         //                    enumEst.getPrewiewItem(9).setSecondValue(lableSumBase.getText());
                         break;
                     case Changed:
                         enumEst.getSiteItem(SQL.Site.COST_HOUSE)
                                 .setSecondValue(
-                                        DecimalFormatter.stringToDouble(lableSumChanged.getText()));
+                                        new DoubleDFormatter().fromString(lableSumChanged.getText()));
                         break;
                 }
                 enumEst.updatePreviewTable();
@@ -469,7 +470,7 @@ public class EstimateController implements Initializable {
 //                        );
                 });
 
-                //Set date Lable of selected KS 
+                //Set date Lable of selected KS
                 ksDateLabel.setText(LocalDate.ofEpochDay(
                         ((TableItemKS)ksMap.get(newValue).get(0)).getKSDate()).toString());
                 ksSumLabel.setVisible(true);
@@ -484,7 +485,7 @@ public class EstimateController implements Initializable {
     public void update_TapKS(){
         Est.KS.createTabMap();
         init_ksList();
-    }    
+    }
 
 /*!******************************************************************************************************************
 *                                                                                                     HANDLERS
@@ -549,7 +550,7 @@ public class EstimateController implements Initializable {
 //            new PrintKS.Builder()
 //                    .setObsKS(tableKS.getItems())
 ////                 .setObsPreTab(previewTableObs)
-//                    .setKSnumber(listKS.getSelectionModel().getSelectedItem().toString())
+//                    .setKSnumber(listKS.getSelectionModel().getSelectedItem().formatNumber())
 //                    .setKSDate(ksDateLabel.getText())
 //                    .build();
         }
@@ -567,7 +568,7 @@ public class EstimateController implements Initializable {
         }
     }
 
-    
+
 /*!******************************************************************************************************************
 *                                                                                                     InputValidator
 ********************************************************************************************************************/

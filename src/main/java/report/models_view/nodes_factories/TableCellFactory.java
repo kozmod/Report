@@ -1,6 +1,7 @@
 
 package report.models_view.nodes_factories;
 
+import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import report.entities.items.site.TableItemPreview;
 
@@ -11,14 +12,9 @@ import java.util.List;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
 import javafx.util.StringConverter;
-import report.models_view.data_utils.DecimalFormatter;
+import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
 import report.usage_strings.SQL;
 
 import report.layoutControllers.root.RootLayoutController;
@@ -116,7 +112,7 @@ public class TableCellFactory{
      * @return ChageTableCell
      */
     public static TableCell getEqualsToAboveCell(){
-        return new TableCellFactory().new EquialToAboveTableCell();
+        return new TableCellFactory().new EqualToAboveTableCell();
     }
       /**
      * Cell which change Object data to String.
@@ -144,15 +140,15 @@ public class TableCellFactory{
     /**
      * Cell to Estimate, Account Tables
      */
-    private  class DecimalTableCell extends TableCell{
+    private  class DecimalTableCell extends TableCell<TableView, Number>{
         @Override
-        protected void updateItem(Object item, boolean empty) {
+        protected void updateItem(Number item, boolean empty) {
          super.updateItem(item, empty);
              if (empty) {
                  setText(null);
                  setGraphic(null);
              } else {
-                 setText(DecimalFormatter.toString(item));
+                 setText(new DoubleDFormatter().toString(item));
              }
          } 
     }
@@ -253,14 +249,14 @@ public class TableCellFactory{
                         } else if (item instanceof Long) {
                             setText(LocalDate.ofEpochDay((long) item).toString());
                         } else if (item instanceof Float) {
-                            setText(DecimalFormatter.toString(item));
+                            setText(new DoubleDFormatter().toString((Float)item));
                         } else if (item instanceof Double) {
-                            setText(DecimalFormatter.toString(item));
+                            setText(new DoubleDFormatter().toString((Double)item));
                         } else {
                             setText("N/A");
                             setGraphic(null);
                         }
-//                        setText(t.getSiteSecondValue().toString());
+//                        setText(t.getSiteSecondValue().formatNumber());
                         setGraphic(null);
                         break;
                 }   
@@ -345,7 +341,7 @@ public class TableCellFactory{
                     case SQL.Site.SALE_CLIENTS :
                     case SQL.Site.DEBT_CLIENTS :
                     case SQL.Site.SALE_HOUSE:
-                        item.setSecondValue(DecimalFormatter.stringToDouble(textField.getText()));
+                        item.setSecondValue(new DoubleDFormatter().fromString(textField.getText()));
                         break;
                 }
                         
@@ -408,10 +404,10 @@ public class TableCellFactory{
    
    }
    
-    class EquialToAboveTableCell extends TableCell<TableClone, Comparable>{
+    class EqualToAboveTableCell<T extends Number & Comparable> extends TableCell<TableClone, T >{
         
         @Override
-        public void updateItem(Comparable item, boolean empty) {
+        public void updateItem(T item, boolean empty) {
           
             super.updateItem(item, empty);
             if (empty) {
@@ -419,9 +415,10 @@ public class TableCellFactory{
                 setGraphic(null);
 
             }else{
-                setText(DecimalFormatter.toString(item));
-                
-                Comparable aboveCellValue 
+
+                setText(new DoubleDFormatter().toString(item));
+
+                Comparable aboveCellValue
                         = super.getTableColumn().getCellData(this.getIndex() - 1);
                 if(aboveCellValue != null)
                     switch(item.compareTo(aboveCellValue)){
@@ -514,9 +511,9 @@ public class TableCellFactory{
                             else if (item instanceof Integer) {
                             setText( item.toString());
                         } else if (item instanceof Float) {
-                            setText(DecimalFormatter.toString(item));
+                            setText(new DoubleDFormatter().toString((Float)item));
                         } else if (item instanceof Double) {
-                            setText(DecimalFormatter.toString(item));
+                            setText(new DoubleDFormatter().toString((Double)item));
                         } else {
                             setText("N/A");
                             setGraphic(null);
@@ -546,7 +543,7 @@ public class TableCellFactory{
 //                setGraphic(null);
 //                this.setOnMouseEntered(null);
 //             } else {
-//                setText(item.toString());
+//                setText(item.formatNumber());
 //                setOnMouseEntered(value ->{
 ////                     
 //                   

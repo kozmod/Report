@@ -10,7 +10,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import report.entities.items.plan.ItemPlanDAO;
 import report.entities.items.plan.TableItemPlan;
-import report.models_view.data_utils.DecimalFormatter;
+import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
 import report.models_view.nodes.ContextMenuOptional;
 import report.models_view.nodes.TableWrapper;
 import report.models_view.nodes_factories.ContextMenuFactory;
@@ -91,8 +91,8 @@ public class PlanningController implements Initializable{
 
     @FXML
     private void handle_planAddItemButton(ActionEvent event) {
-        double SmetCost = DecimalFormatter.stringToDouble(planSmetTF.getText());
-        double SaleCost = DecimalFormatter.stringToDouble(planSaleTF.getText());
+        double SmetCost = new DoubleDFormatter().fromString(planSmetTF.getText());
+        double SaleCost = new DoubleDFormatter().fromString(planSaleTF.getText());
         if(planTableWrapper.getItems()
                 .add(new TableItemPlan(
                                 0,
@@ -120,21 +120,21 @@ public class PlanningController implements Initializable{
 
     private void computeSumPlanTextFields(){
         planSmetSumTF.setText(
-                DecimalFormatter.toString(
+                new DoubleDFormatter().toString(
                     planTableWrapper.getItems().stream()
                             .mapToDouble(TableItemPlan::getSmetCostSum)
                             .sum()
                 )
         );
         planSaleSumTF.setText(
-                DecimalFormatter.toString(
+                new DoubleDFormatter().toString(
                     planTableWrapper.getItems().stream()
                             .mapToDouble(TableItemPlan::getSaleCostSum)
                             .sum()
                 )
         );
         planProfitSumTF.setText(
-                DecimalFormatter.toString(
+                new DoubleDFormatter().toString(
                     planTableWrapper.getItems().stream()
                             .mapToDouble(TableItemPlan::getProfit)
                             .sum()
@@ -144,21 +144,21 @@ public class PlanningController implements Initializable{
 
     private void computeSumFactTextFields(){
         factSmetSumTF.setText(
-                DecimalFormatter.toString(
+                new DoubleDFormatter().toString(
                     factTableWrapper.getItems().stream()
                         .mapToDouble(TableItemPlan::getSmetCostSum)
                         .sum()
                 )
         );
         factSaleSumTF.setText(
-                DecimalFormatter.toString(
+                new DoubleDFormatter().toString(
                     factTableWrapper.getItems().stream()
                         .mapToDouble(TableItemPlan::getSaleCostSum)
                         .sum()
             )
         );
         factProfitSumTF.setText(
-                DecimalFormatter.toString(
+                new DoubleDFormatter().toString(
                     factTableWrapper.getItems().stream()
                         .mapToDouble(TableItemPlan::getProfit)
                         .sum()
