@@ -60,6 +60,8 @@
          <content>
             <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="345.0">
                <children>
+                  <Button alignment="TOP_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handle_CommonInfButton" text="Общаая Информация (Start Page)" />
+                  <Button alignment="TOP_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handle_PlanningButton" text="Планирование" />
                   <Button alignment="TOP_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handle_FinResButton" text="Финансовый результат" />
                   <TitledPane animated="false" text="Участки">
                      <content>
@@ -104,7 +106,7 @@
                      </content>
                   </TitledPane>
                   <TitledPane fx:id="infoTitledPane" animated="false" text="Информация по участку" />
-                  <TitledPane fx:id="changesTitledPane" animated="false" expanded="false" text="Test" />
+                  <TitledPane fx:id="changesTitledPane" animated="false" expanded="false" text="Журнал изменений" />
                   <Button alignment="TOP_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handle_accountButton" text="Расчетный счет">
                      <opaqueInsets>
                         <Insets />

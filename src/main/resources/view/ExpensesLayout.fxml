@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:id="perentGridPane" prefHeight="732.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.layoutControllers.ExpensesController">
+<GridPane fx:id="perentGridPane" prefHeight="650.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.layoutControllers.expensese.ExpensesController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
    </columnConstraints>
@@ -43,6 +43,9 @@
                            <GridPane.margin>
                               <Insets top="5.0" />
                            </GridPane.margin>
+                           <children>
+                              <TableView fx:id="siteTV" prefHeight="200.0" prefWidth="200.0" />
+                           </children>
                         </GridPane>
                      </children>
                      <padding>
@@ -81,6 +84,9 @@
                            <GridPane.margin>
                               <Insets top="5.0" />
                            </GridPane.margin>
+                           <children>
+                              <TableView fx:id="expensesTV" prefHeight="200.0" prefWidth="200.0" />
+                           </children>
                         </GridPane>
                      </children>
                      <padding>
@@ -122,6 +128,9 @@
                            <GridPane.margin>
                               <Insets top="5.0" />
                            </GridPane.margin>
+                           <children>
+                              <TableView fx:id="periodTV" prefHeight="200.0" prefWidth="200.0" />
+                           </children>
                         </GridPane>
                      </children>
                      <opaqueInsets>
@@ -135,15 +144,16 @@
             </Tab>
         </tabs>
       </TabPane>
-      <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.halignment="RIGHT" GridPane.rowIndex="1">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Текущий К :" />
+      <ToolBar prefHeight="40.0" prefWidth="200.0" GridPane.rowIndex="1">
+         <items>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="   Текущий Коэффициент :  ">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Text>
             <TextField fx:id="coeffTF" editable="false" prefWidth="50.0" />
-            <Button fx:id="applyCoefButton" mnemonicParsing="false" onAction="#hendler_applyCoeffToChaged" text="Применить K (ИС)" />
-         </children>
-         <GridPane.margin>
-            <Insets left="5.0" right="5.0" />
-         </GridPane.margin>
-      </HBox>
+            <Button fx:id="applyCoefButton" mnemonicParsing="false" onAction="#handler_applyCoeffToChanged" text="Применить K (ИС)" />
+         </items>
+      </ToolBar>
    </children>
 </GridPane>
