@@ -1,5 +1,5 @@
 
-package report.layoutControllers;
+package report.layoutControllers.expensese;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -17,19 +17,17 @@ import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import report.layoutControllers.estimate.EstimateControllerTF;
 import report.layoutControllers.root.RootLayoutController;
 import report.models.coefficient.CoefficientService;
 import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
 import report.usage_strings.SQL;
 
-import report.layoutControllers.EstimateController.Est;
+import report.layoutControllers.estimate.EstimateController.Est;
 
 import report.models_view.data_utils.EpochDatePickerConverter;
 import report.entities.items.expenses.TableItemExpenses;
@@ -37,7 +35,6 @@ import report.entities.items.period.TableItemPeriod;
 //import report.models.Formula_test;
 import report.models_view.nodes.TableWrapper;
 import report.models_view.nodes_factories.ContextMenuFactory;
-import report.models_view.nodes_factories.TableFactory;
 import report.entities.items.site.TableItemPreview;
 import report.models.coefficient.CoefficientQuery;
 import report.entities.items.expenses.ItemExpensesDAO;
@@ -52,11 +49,15 @@ public class ExpensesController implements Initializable {
 
     @FXML  private TextField  textExpTF, valueTF, textPeriodTF, contract_FinishTF, coeffTF;
     @FXML  private GridPane   siteTableGridPane, expensesTableGridPane, periodTableGridPane;
+    @FXML  private TableView  siteTV,expensesTV, periodTV;
 
-    private final TableWrapper<TableItemPreview> siteTWrapper = TableFactory.getProperty_Site();
-    private final TableWrapper<TableItemExpenses> expensesTWrapper = TableFactory.getProperty_Expenses();
-    private final TableWrapper<TableItemPeriod> periodTWrapper = TableFactory.getProperty_JobPeriod();
-    
+
+
+
+    private  TableWrapper<TableItemPreview> siteTWrapper ;
+    private  TableWrapper<TableItemExpenses> expensesTWrapper ;
+    private  TableWrapper<TableItemPeriod> periodTWrapper ;
+
     @FXML  private ComboBox typeCB;
     @FXML  private DatePicker dateFromDP, dateToDP;
     @FXML  private Button applyCoefButton,siteUndoButton, siteSaveButton,addExpensesButton,addPeriodButton;
@@ -72,9 +73,7 @@ public class ExpensesController implements Initializable {
      ********************************************************************************************************************/ 
     {
 //        siteTWrapper.setTableData(FXCollections.observableArrayList(new TableItemPreview(Long.MIN_VALUE, "sss", "SSS", "s")));
-        siteTWrapper.setTableData(Est.Common.getPreviewObservableList());
-        expensesTWrapper.setTableData(new ItemExpensesDAO().getList());
-        periodTWrapper.setTableData(new ItemPeriodDAO().getList());
+
 
         InvalidationListener l = (Observable observable) -> {
             if(CONTRACTOR.getValue().equals(SQL.Line) && TYPE_HOME.getValue().equals(SQL.Line) ){
@@ -116,13 +115,14 @@ public class ExpensesController implements Initializable {
      ********************************************************************************************************************/ 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //set siteTWrapper to GP
-        siteTableGridPane.add(siteTWrapper.getTableView(),0,0);
-        //set expensesTWrapper to GP
-        expensesTableGridPane.add(expensesTWrapper.getTableView(),0,0);
-        //set periodTWrapper to GP
-        periodTableGridPane.add(periodTWrapper.getTableView(),0,0);
-        
+        siteTWrapper = ExpensesControllerTF.decorProperty_Site(siteTV);
+        expensesTWrapper = ExpensesControllerTF.decorProperty_Expenses(expensesTV);
+        periodTWrapper = ExpensesControllerTF.decorProperty_JobPeriod(periodTV);
+
+        siteTWrapper.setTableData(Est.Common.getPreviewObservableList());
+        expensesTWrapper.setTableData(new ItemExpensesDAO().getList());
+        periodTWrapper.setTableData(new ItemPeriodDAO().getList());
+
       init_expensesTab();
       init_periodTab();
       siteButtonAccess();
@@ -137,7 +137,7 @@ public class ExpensesController implements Initializable {
         ContextMenuOptional.setTableItemContextMenuListener(expensesTWrapper);
         expensesTWrapper.getContextMenu().getItems().get(2)
                 .addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
-                    System.out.println("SAVEITEM ->>  report.layoutControllers.ExpensesController.init_expensesTab()");
+                    System.out.println("SAVEITEM ->>  report.layoutControllers.expensese.ExpensesController.init_expensesTab()");
 //                    COEFFICIENT.setValue(new CoefficientQuery().getCoefficientClass().getValue());
                     COEFFICIENT.setValue(CoefficientService.createCoefficient().getValue());
                     System.out.println("COEF - >"  + COEFFICIENT.getValue());

@@ -1,5 +1,5 @@
 
-package report.layoutControllers;
+package report.layoutControllers.finRes;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,7 +17,6 @@ import javafx.util.Duration;
 
 import report.entities.items.fin_res.ItemFinResDAO;
 import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
-import report.models_view.nodes_factories.TableFactory;
 import report.entities.items.fin_res.TableItemFinRes;
 import report.models_view.data_utils.EpochDatePickerConverter;
 
@@ -39,7 +38,7 @@ public class FinResController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         //Decorate and Init FinRes
-        TableFactory.decorFinRes(finResTable);
+        FinResControllerTF.decorFinRes(finResTable);
         finResTable.setItems(finResObs);
 
         //Init DatePickers

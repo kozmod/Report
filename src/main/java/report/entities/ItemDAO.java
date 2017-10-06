@@ -22,16 +22,13 @@ public interface ItemDAO<E,T extends TableWrapper> extends TableDataBaseName{
     void delete(Collection<E> entry);
     void insert(Collection<E>  entry);
 
-   
-    
-    
     default void  dellAndInsert(T table) {
         Collection<E>  memento= table.getMemento().getSavedState(),
                 current = table.getItems();
 
         DiffList<E> diffList = new DiffList<>(memento,current);
         if(diffList.exElements() != null
-                || diffList.exElements().size() > 0) delete( diffList.getIntersection());
+                || diffList.exElements().size() > 0) delete( diffList.intersection());
         if(diffList.newElements()  != null
                 || diffList.newElements().size()  > 0) insert( diffList.newElements());
       
@@ -52,7 +49,7 @@ public interface ItemDAO<E,T extends TableWrapper> extends TableDataBaseName{
             
                 pstmt.execute();
             
-            try ( ResultSet resSet = pstmt.getResultSet();){
+            try ( ResultSet resSet = pstmt.getResultSet()){
                 while(resSet.next()){
                     if(!(resSet.getObject(column) == null)
                             && !(resSet.getObject(column).equals(ServiceStrings.Line)))

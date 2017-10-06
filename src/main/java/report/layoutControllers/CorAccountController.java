@@ -15,6 +15,7 @@ import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
 import report.entities.items.account.ItemAccDAO;
+import report.layoutControllers.addKS.AddKSControllerTF;
 import report.models_view.data_utils.EpochDatePickerConverter;
 import report.models.sql.sqlQuery.InsertFileXLSQuery;
 import report.models_view.nodes_factories.TableFactory;
@@ -33,7 +34,7 @@ public class CorAccountController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //decore Acc table
-        TableFactory.decorAcc(accTable);
+        AddKSControllerTF.decorAcc(accTable);
         accTable.setItems(new ItemAccDAO().getList(0,0));
 
         init_DatePickers();

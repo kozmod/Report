@@ -18,12 +18,15 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 import report.layoutControllers.*;
+import report.layoutControllers.estimate.EstimateController;
+import report.layoutControllers.expensese.ExpensesController;
+import report.layoutControllers.expensese.ExpensesControllerTF;
 import report.layoutControllers.intro.IntroLayoutController;
 import report.models.coefficient.CoefficientService;
 import report.models_view.InputValidator;
 import report.models_view.nodes_factories.FileChooserFactory;
 import report.usage_strings.PathStrings;
-import report.layoutControllers.EstimateController.Est;
+import report.layoutControllers.estimate.EstimateController.Est;
 import report.models_view.StageCreator;
 import report.models.sql.sqlQuery.BackUpQuery;
 import report.models_view.nodes_factories.TableFactory;
@@ -59,7 +62,7 @@ public class RootLayoutController implements Initializable {
     @FXML TextField findSiteByNameTF;
 
     private TableView previewTable;
-    private static final TableView changeTable = TableFactory.getChangeView();
+    private static final TableView changeTable = ExpensesControllerTF.getChangeView();
 
 /*!******************************************************************************************************************
 *                                                                                                      Getter/Setter
@@ -136,7 +139,7 @@ public class RootLayoutController implements Initializable {
     }
 
     private void init_previewTable(){
-        previewTable = TableFactory.getSite();
+        previewTable = RootControllerTF.getSite();
         infoTitledPane.setContent(previewTable);
     }
 

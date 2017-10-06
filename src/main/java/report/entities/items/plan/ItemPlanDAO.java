@@ -56,13 +56,19 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
                 +",F.[NumberSession]"
                 +",F.[DateCreate]"
                 +" FROM dbo.[FinPlan] F";
+//                +" where dell = 2";
         try(Connection connection = SQLconnector.getInstance();
                 PreparedStatement pstmt = connection.prepareStatement(sqlString)) {
 
-                pstmt.execute();
-            
+            pstmt.execute();
+
+
+//            System.out.println(b);
             ResultSet rs = pstmt.getResultSet();
-            
+
+
+
+
                 while(rs.next()){
                     TableItemPlan item = new TableItemPlan(
                                     rs.getLong      (SQL.Common.ID),
@@ -79,14 +85,16 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
                                 );
                     list.add(item);     
                 }
-   
-        } catch (SQLException ex) {
+
+        }  catch (SQLException ex) {
             Logger.getLogger(ItemPlanDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+
         return list;
     }
-    
-    
+
+
     
     public ObservableList<TableItemPlan> getListFact() {
         ObservableList<TableItemPlan> list = FXCollections.observableArrayList();

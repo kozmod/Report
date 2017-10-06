@@ -18,7 +18,7 @@ import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
 import report.usage_strings.SQL;
 
 import report.layoutControllers.root.RootLayoutController;
-import report.layoutControllers.EstimateController.Est;
+import report.layoutControllers.estimate.EstimateController.Est;
 import report.entities.items.TableClone;
 import report.entities.items.TableItem;
 import report.entities.items.cb.TableItemCB;
@@ -61,7 +61,7 @@ public class TableCellFactory{
     }
     
     /**
-     * Cell to "Add Row Estimate" TableWrapper (AddSiteRowController)
+     * Cell to "Add Row Estimate" TableWrapper (AddEstimateRowController)
      * @return CheckValueCell
      */
     public static TableCell getCheckValueCell(){

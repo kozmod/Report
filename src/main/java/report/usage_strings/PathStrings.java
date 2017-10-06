@@ -12,7 +12,7 @@ public  interface PathStrings {
         interface Layout{
                 String ACC             = "/view/CorAccountLayout.fxml";
                 String ADD_KS          = "/view/KSAddLayout.fxml";
-                String ADD_SITE_ROW    = "/view/AddSiteRowLayout.fxml";
+                String ADD_SITE_ROW    = "/view/AddEstimateRowLayout.fxml";
                 String ALL_PROPERTIES  = "/view/AllPropertiesLayout.fxml";
                 String CONT_ADD        = "/view/AddContractorLayout.fxml";
                 String COR_FILTER      = "/view/CorFilterLayout.fxml";

@@ -1,4 +1,4 @@
-package report.layoutControllers;
+package report.layoutControllers.addKS;
 
 import java.net.URL;
 import java.util.List;
@@ -14,10 +14,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import report.layoutControllers.estimate.EstimateController;
 import report.models_view.nodes_factories.TableFactory;
 import report.usage_strings.SQL;
 
-import report.layoutControllers.EstimateController.Est;
+import report.layoutControllers.estimate.EstimateController.Est;
 import report.models_view.InputValidator;
 import report.entities.items.TableItem;
 import report.entities.items.KS.ItemKSDAO;
@@ -73,8 +74,8 @@ public class AddKSController implements Initializable {
         siteNumLabel.setText(Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER));
         contLabel.setText(Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
 
-        TableFactory.decorAddKS(allJMTable);
-        TableFactory.decorAddKS(selectedJMTable);
+        AddKSControllerTF.decorAddKS(allJMTable);
+        AddKSControllerTF.decorAddKS(selectedJMTable);
         //set Items of allJMTable
         allJMTable.setItems(obsAllJM);
         selectedJMTable.setItems(obsSelectedJM);

@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import report.layoutControllers.EstimateController.Est;
+import report.layoutControllers.estimate.EstimateController.Est;
 import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
 
 

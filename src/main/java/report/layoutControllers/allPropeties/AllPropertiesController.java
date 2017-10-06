@@ -1,5 +1,5 @@
 
-package report.layoutControllers;
+package report.layoutControllers.allPropeties;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -18,7 +18,6 @@ import report.models.coefficient.Quantity;
 import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
 import report.models_view.nodes.TableWrapper;
 import report.models_view.nodes_factories.ContextMenuFactory;
-import report.models_view.nodes_factories.TableFactory;
 import report.entities.items.contractor.TableItemContractor;
 import report.entities.items.osr.TableItemOSR;
 import report.entities.items.plan.TableItemPlan;
@@ -63,17 +62,17 @@ public class AllPropertiesController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 //        //add OSR TableView
-        osrTableWrapper = TableFactory.decorOSR(osrTable);
+        osrTableWrapper = AllPropertiesControllerTF.decorOSR(osrTable);
         osrTableWrapper.setTableDataFromBASE();
         ContextMenuOptional.setTableItemContextMenuListener(osrTableWrapper);
 
 //        //add OSR TableView
-        variableTableWrapper = TableFactory.decorVariable(variableTable);
+        variableTableWrapper = AllPropertiesControllerTF.decorVariable(variableTable);
         variableTableWrapper.setTableDataFromBASE();
         ContextMenuOptional.setTableItemContextMenuListener(variableTableWrapper);
 
         //add Contractors TableView
-        contractorTableWrapper = TableFactory.decorContractor(contractorTable);
+        contractorTableWrapper = AllPropertiesControllerTF.decorContractor(contractorTable);
         contractorTableWrapper.setTableDataFromBASE();
         ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapper);
 
@@ -103,7 +102,7 @@ public class AllPropertiesController implements Initializable {
        
        computeSumExpTextFields();
        osrTableWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItemOSR> c) -> {
-                System.out.println("Changed on " + c + " report.layoutControllers.AllPropertiesController.init_OSRTab()" );
+                System.out.println("Changed on " + c + " report.layoutControllers.allPropeties.AllPropertiesController.init_OSRTab()" );
                 if(c.next() && 
                         (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
                             computeSumExpTextFields();

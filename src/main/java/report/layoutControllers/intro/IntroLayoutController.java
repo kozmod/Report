@@ -3,7 +3,6 @@ package report.layoutControllers.intro;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableView;
-import report.models_view.nodes_factories.TableFactory;
 
 
 import java.net.URL;
@@ -20,8 +19,8 @@ public class IntroLayoutController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //decorate TableViews
-        TableFactory.decorPreview(infoTV);
-        TableFactory.decorIntroFinishedSite(finishedSiteTV);
+        IntroControllerTF.decorPreview(infoTV);
+        IntroControllerTF.decorIntroFinishedSite(finishedSiteTV);
 
 
     }

@@ -179,7 +179,7 @@ public class ItemOSRDAO implements ItemDAO<TableItemOSR,TableWrapper> {
 ////           || diffList.newElements().size()  > 0) insert(diffList.newElements());     
 //        DataUtils.DiffList diffList = new DataUtils.DiffList(memento,current);
 //        if(diffList.exElements() != null 
-//           || diffList.exElements().size() > 0) delete(diffList.getIntersection());
+//           || diffList.exElements().size() > 0) delete(diffList.intersection());
 //        if(diffList.newElements()  != null 
 //           || diffList.newElements().size()  > 0) insert(diffList.newElements());     
 //        

@@ -40,10 +40,9 @@ public class ItemAccDAO {
                     .append(DateTo);
 
         try(Connection connection = SQLconnector.getInstance();
-            Statement st = connection.createStatement();) {
+            Statement st = connection.createStatement()) {
             ResultSet rs = st.executeQuery(ResultSetString.toString());
             while(rs.next()){
-
 //                            System.out.println(rs.getObject("ITN_Client").formatNumber());
                 AccTable.add(new TableItemAcc(
                                 rs.getInt   ("Date"),

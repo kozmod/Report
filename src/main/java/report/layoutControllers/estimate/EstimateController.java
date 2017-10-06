@@ -1,4 +1,4 @@
-package report.layoutControllers;
+package report.layoutControllers.estimate;
 
 import java.io.File;
 import java.net.URL;
@@ -21,7 +21,6 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 
@@ -29,6 +28,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import report.layoutControllers.addKS.AddKSController;
 import report.layoutControllers.root.RootLayoutController;
 import report.entities.items.contractor.ItemContractorDAO;
 import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
@@ -243,17 +243,15 @@ public class EstimateController implements Initializable {
     @FXML private VBox             baseVBox, changedVBox;
     @FXML private ListView<Object> listKS;
     @FXML private DatePicker       dateKSfrom, dateKSto;
-    @FXML private GridPane         gridPaneKS, gridPaneAdditional;
+    @FXML private GridPane         gridPaneAdditional;
     @FXML private ScrollPane       scrollPaneBase,scrollPaneChanged;
     @FXML private ComboBox         comboAdditional;
     @FXML private Tab              baseTab, changeTab, dopTab;
+    @FXML private TableView        tableKS, tableAdditional;
 
-
-
-
-    private Label                 lableSumBase,lableSumChanged;
-    private TableWrapperEST<TableItemKS> tableKS = TableFactory.getKS();
-    private TableWrapper tableWrapperAdditional = TableFactory.getAdditional();
+    private Label labelSumBase, labelSumChanged;
+    private TableWrapperEST<TableItemKS> tableKSWrapper ;
+    private TableWrapper tableAdditionalWrapper;
 
 
 /*!******************************************************************************************************************
@@ -270,12 +268,6 @@ public class EstimateController implements Initializable {
     ********************************************************************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
-//        Properties p = PropertiesFactory.getFormula();
-//        System.out.println(p.getProperty("saleExpenses"));
-//          Properties p = new ItemVariableDAO().getList();
-//        System.out.println(p.getProperty("saleExpenses"))
-
 //        scrollPaneBase.setPrefHeight(ScreenSize.height.getValue() - 200);
 //        scrollPaneChanged.setPrefHeight(ScreenSize.height.getValue() - 200);
 
@@ -284,15 +276,13 @@ public class EstimateController implements Initializable {
         dateKSto.setEditable(true);
         dateKSto.setConverter(new EpochDatePickerConverter());
 
+        //add Additional table
+        tableAdditionalWrapper = EstimateControllerTF.decorAdditional(tableAdditional);
         init_EstLayoutTabs();
-
-        //add Aditional table
-        gridPaneAdditional.add(tableWrapperAdditional.getTableView(),0, 1, 2, 1);
-        GridPane.setMargin(tableWrapperAdditional.getTableView(), new Insets(5,5,5,5));
-
         //add KS table
-        ksSumLabel.textProperty().bind(Bindings.convert(tableKS.getSumProperty()));
-        gridPaneKS.add(tableKS.getTableView(),1,2);
+        tableKSWrapper = EstimateControllerTF.decorKS(tableKS);
+        ksSumLabel.textProperty().bind(Bindings.convert(tableKSWrapper.getSumProperty()));
+
 
 
 
@@ -310,7 +300,7 @@ public class EstimateController implements Initializable {
         Est.KS       .createTabMap();
         Est.Additional       .createTabMap();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        tableWrapperAdditional.setItems(Est.Additional.getAllItemsList_Live());
+        tableAdditionalWrapper.setItems(Est.Additional.getAllItemsList_Live());
 
 
         if(Est.Base    .isExist())init_Est(Est.Base);
@@ -358,13 +348,13 @@ public class EstimateController implements Initializable {
                     case Base:
                         enumEst.getSiteItem(SQL.Site.SMET_COST)
                                 .setSecondValue(
-                                       new DoubleDFormatter().fromString(lableSumBase.getText()));
-                        //                    enumEst.getPrewiewItem(9).setSecondValue(lableSumBase.getText());
+                                       new DoubleDFormatter().fromString(labelSumBase.getText()));
+                        //                    enumEst.getPrewiewItem(9).setSecondValue(labelSumBase.getText());
                         break;
                     case Changed:
                         enumEst.getSiteItem(SQL.Site.COST_HOUSE)
                                 .setSecondValue(
-                                        new DoubleDFormatter().fromString(lableSumChanged.getText()));
+                                        new DoubleDFormatter().fromString(labelSumChanged.getText()));
                         break;
                 }
                 enumEst.updatePreviewTable();
@@ -383,29 +373,29 @@ public class EstimateController implements Initializable {
 //        tm1 = new TabModel(enumEst.getTabMap());
         switch(enumEst){
             case Base:
-                lableSumBase = tm.getSumLabel();
-                lableSumBase.textProperty().addListener(change -> {
+                labelSumBase = tm.getSumLabel();
+                labelSumBase.textProperty().addListener(change -> {
 
-                    enumEst.getSiteItem(SQL.Site.SMET_COST).setSecondValue(lableSumBase.getText());
+                    enumEst.getSiteItem(SQL.Site.SMET_COST).setSecondValue(labelSumBase.getText());
                     enumEst.getSiteItem(SQL.Site.SMET_COST).setSecondValue(tm.getSumLabelValue());
                     rootController.getPreviewTable().refresh();
                 });
 
                 ((ScrollPane)baseVBox.getChildren().get(0)).setContent(tm.getBaseVBox());
-                baseVBox.getChildren().add(lableSumBase);
+                baseVBox.getChildren().add(labelSumBase);
 
                 break;
             case Changed:
-                lableSumChanged = tm.getSumLabel();
-                lableSumChanged.textProperty().addListener(change -> {
+                labelSumChanged = tm.getSumLabel();
+                labelSumChanged.textProperty().addListener(change -> {
 
-                    enumEst.getSiteItem(SQL.Site.COST_HOUSE).setSecondValue(lableSumChanged.getText());
+                    enumEst.getSiteItem(SQL.Site.COST_HOUSE).setSecondValue(labelSumChanged.getText());
                     enumEst.getSiteItem(SQL.Site.COST_HOUSE).setSecondValue(tm.getSumLabelValue());
                     rootController.getPreviewTable().refresh();
                 });
 
                 ((ScrollPane) changedVBox.getChildren().get(0)).setContent(tm.getBaseVBox());
-                changedVBox.getChildren().add(lableSumChanged);
+                changedVBox.getChildren().add(labelSumChanged);
         }
         enumEst.setTabsEditable();
 
@@ -434,20 +424,20 @@ public class EstimateController implements Initializable {
 
             if(!"-КС отсутствуют-".equals(newValue) && newValue != null){
                 //Undo Changes if changed items weren't SAVE
-                if(tableKS.getMemento()!= null
-                        && !tableKS.getMemento().getSavedState().equals(tableKS.getItems())){
-                    tableKS.undoChangeItems();
+                if(tableKSWrapper.getMemento()!= null
+                        && !tableKSWrapper.getMemento().getSavedState().equals(tableKSWrapper.getItems())){
+                    tableKSWrapper.undoChangeItems();
                 }
 
                 //Set tableItem and SAVE MEMENTO
-                tableKS.setTableData((ObservableList) ksMap.get(newValue));
-                ContextMenuOptional.setTableItemContextMenuListener(tableKS);
+                tableKSWrapper.setTableData((ObservableList) ksMap.get(newValue));
+                ContextMenuOptional.setTableItemContextMenuListener(tableKSWrapper);
 
                 //Set disable Context Menu after added Items
-                ((ContextMenuOptional) tableKS.getContextMenu()).setDisable_SaveUndoPrint_groupe(true);
+                ((ContextMenuOptional) tableKSWrapper.getContextMenu()).setDisable_SaveUndoPrint_groupe(true);
 
                 //count values
-                tableKS.getItems().stream().forEach(item ->{
+                tableKSWrapper.getItems().stream().forEach(item ->{
 
                     TableItem equalsItem = Est.Changed.findEqualsElevent(item);
                     double sum =0;
@@ -540,7 +530,7 @@ public class EstimateController implements Initializable {
         if(!listKS.getSelectionModel().isEmpty()
                 && selectedFile != null
                 ) {
-            new PrintKS(tableKS.getItems(),
+            new PrintKS(tableKSWrapper.getItems(),
                     new ItemContractorDAO().getOne(Est.KS.getSiteSecondValue(SQL.KS.CONTRACTOR)),
                     selectedFile.toPath()
             );
@@ -548,7 +538,7 @@ public class EstimateController implements Initializable {
 
 
 //            new PrintKS.Builder()
-//                    .setObsKS(tableKS.getItems())
+//                    .setObsKS(tableKSWrapper.getItems())
 ////                 .setObsPreTab(previewTableObs)
 //                    .setKSnumber(listKS.getSelectionModel().getSelectedItem().formatNumber())
 //                    .setKSDate(ksDateLabel.getText())

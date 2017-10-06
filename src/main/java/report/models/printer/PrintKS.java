@@ -10,7 +10,7 @@ import report.entities.items.KS.TableItemKS;
 import report.entities.items.contractor.TableItemContractor;
 import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
 import report.usage_strings.SQL;
-import report.layoutControllers.EstimateController.Est;
+import report.layoutControllers.estimate.EstimateController.Est;
 import report.entities.items.TableItem;
 
 

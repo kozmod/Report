@@ -12,7 +12,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.StackPane;
-import report.layoutControllers.EstimateController.Est;
+import report.layoutControllers.estimate.EstimateController.Est;
+import report.layoutControllers.estimate.EstimateControllerTF;
+import report.layoutControllers.root.RootControllerTF;
 import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
 import report.models_view.nodes_factories.TableFactory;
 import report.entities.items.estimate.TableItemEst;
@@ -61,7 +63,7 @@ public class TitledStackModel extends StackPane{
 ********************************************************************************************************************/ 
     //1
     private void init_tableView(){
-        tableViewWrapper = TableFactory.getEst(enumEst);
+        tableViewWrapper = EstimateControllerTF.getEst(enumEst);
         tableViewWrapper.setTitle(title);
         
         if(enumEst.getTabMap().get(title) != null){

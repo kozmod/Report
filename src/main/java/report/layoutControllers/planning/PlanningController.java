@@ -14,7 +14,6 @@ import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
 import report.models_view.nodes.ContextMenuOptional;
 import report.models_view.nodes.TableWrapper;
 import report.models_view.nodes_factories.ContextMenuFactory;
-import report.models_view.nodes_factories.TableFactory;
 
 import java.net.URL;
 import java.sql.Timestamp;
@@ -42,12 +41,12 @@ public class PlanningController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //add Plan TableView
-        planTableWrapper = TableFactory.decorPlan(planTable);
+        planTableWrapper = PlaningControllerTF.decorPlan(planTable);
         planTableWrapper.setTableDataFromBASE();
         ContextMenuOptional.setTableItemContextMenuListener(planTableWrapper);
 
         //add Fact TableView
-        factTableWrapper = TableFactory.decorFact(factTable);
+        factTableWrapper = PlaningControllerTF.decorFact(factTable);
         factTableWrapper.setTableData(new ItemPlanDAO().getListFact());
 
         init_PlanTab();

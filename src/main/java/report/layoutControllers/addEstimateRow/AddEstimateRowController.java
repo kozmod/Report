@@ -1,5 +1,5 @@
 
-package report.layoutControllers;
+package report.layoutControllers.addEstimateRow;
 
 import java.net.URL;
 import java.sql.Timestamp;
@@ -21,7 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import report.layoutControllers.EstimateController.Est;
+import report.layoutControllers.estimate.EstimateController.Est;
 import report.usage_strings.SQL;
 import report.models_view.data_utils.DiffList;
 
@@ -35,7 +35,7 @@ import report.models_view.nodes_factories.TableFactory;
 import report.entities.items.estimate.ItemEstDAO;
 
 
-public class AddSiteRowController implements Initializable {
+public class AddEstimateRowController implements Initializable {
     //   saveEst DATA(NOW)
     private final Timestamp todayDate = new Timestamp(System.currentTimeMillis());
 
@@ -91,7 +91,7 @@ public class AddSiteRowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Init TableView
-        elemTableWrapperView = TableFactory.decorEst_add(elemTableView);
+        elemTableWrapperView = AddEstimateRowTF.decorEst_add(elemTableView);
 
         init_TextField();
         init_ComboBox();

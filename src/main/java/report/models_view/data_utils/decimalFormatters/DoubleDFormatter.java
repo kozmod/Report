@@ -41,7 +41,7 @@ public class DoubleDFormatter implements DFormatter {
      *<p>RoundingMode      : DOWN (1)<p/>
      */
     public DoubleDFormatter(final String pattern) {
-        decimalFormatter = new DefaultDFormatter();
+        decimalFormatter = new DefaultDFormatter(pattern);
     }
 
     /*!******************************************************************************************************************

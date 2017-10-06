@@ -41,10 +41,8 @@ public class ItemContractorDAO implements ItemDAO<TableItemContractor, TableWrap
                        + "WHERE [dell] = 0";
         
           try(Connection connection = SQLconnector.getInstance();
-                Statement st = connection.createStatement();) {
-               
-               ResultSet rs = st.executeQuery(sqlQuery);
-
+              Statement st = connection.createStatement();
+              ResultSet rs = st.executeQuery(sqlQuery);) {
                while(rs.next()){
                    listAllContractors.add(new TableItemContractor(
                                                 rs.getLong  (SQL.Common.ID),
@@ -77,20 +75,19 @@ public class ItemContractorDAO implements ItemDAO<TableItemContractor, TableWrap
               PreparedStatement pstmt = connection.prepareStatement(sqlQuery)) {
               pstmt.setString(1,contractorName);
 
-              ResultSet rs = pstmt.executeQuery();
-
-               while(rs.next()){
-                   contractor = new TableItemContractor(
-                           rs.getLong("id"),
-                           rs.getString("Contractor"),
-                           rs.getString("Director"),
-                           rs.getString("Adress"),
-                           rs.getString("Comments")
-                   );
-
+              try(ResultSet rs = pstmt.executeQuery();) {
+                  while (rs.next()) {
+                      contractor = new TableItemContractor(
+                              rs.getLong("id"),
+                              rs.getString("Contractor"),
+                              rs.getString("Director"),
+                              rs.getString("Adress"),
+                              rs.getString("Comments")
+                      );
 
 
-               }
+                  }
+              }
            } catch (SQLException ex) {
                Logger.getLogger(ItemPropertiesFAO.class.getName()).log(Level.SEVERE, null, ex);
            }
