@@ -12,8 +12,8 @@ import java.util.logging.Logger;
 import report.layoutControllers.estimate.EstimateController.Est;
 
 import report.entities.items.variable.ItemPropertiesFAO;
+import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models.sql.SQLconnector;
-import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
 import report.usage_strings.FileFields;
 import report.usage_strings.SQL;
 
@@ -31,12 +31,12 @@ public class CoefficientQuery {
         String contractor = Est.Common.getSiteSecondValue(SQL.Site.CONTRACTOR);
 
         Properties variableProperties = new ItemPropertiesFAO().getProperties();
-        Double pse  = new DoubleDFormatter()
+        Double pse  = new DoubleStringConverter()
                 .fromString(
                 variableProperties.get(
                         FileFields.FormulaVar.PER_SALE_EXPENSES).toString()
         );
-        Double iTax = new DoubleDFormatter().fromString(
+        Double iTax = new DoubleStringConverter().fromString(
                 variableProperties.get(
                         FileFields.FormulaVar.INCOM_TAX).toString()
         );
