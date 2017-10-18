@@ -1,11 +1,18 @@
-package report.models_view.data_utils.decimalFormatters;
+package report.models.numberStringConverters.numberStringConverters;
+
+
+
+
+import javafx.util.StringConverter;
+import report.models.numberStringConverters.NFormat;
 
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.text.DecimalFormatSymbols;
+import java.text.Format;
 import java.text.ParseException;
 
-public  class DefaultDFormatter implements DFormatter{
+public  abstract class DefaultNumberStringConverter<T extends Number> extends StringConverter<T> implements NFormat<Format> {
 
     private final DecimalFormatSymbols decimalFormatSymbols;
     private final DecimalFormat decimalFormat;
@@ -21,7 +28,7 @@ public  class DefaultDFormatter implements DFormatter{
      *<br>DecimalSeparator  : '.'<br/>
      *<br>RoundingMode      : DOWN (1)<br/>
      */
-    public DefaultDFormatter() {
+    public DefaultNumberStringConverter() {
         this("0.00",
                 ' ',
                 '.',
@@ -36,7 +43,7 @@ public  class DefaultDFormatter implements DFormatter{
      *<br>DecimalSeparator  : '.'<br/>
      *<br>RoundingMode      : <b>?</b><br/>
      */
-    public DefaultDFormatter(final RoundingMode roundingMode) {
+    public DefaultNumberStringConverter(final RoundingMode roundingMode) {
         this(
                 "0.00",
                 ' ',
@@ -52,7 +59,7 @@ public  class DefaultDFormatter implements DFormatter{
      *<br>DecimalSeparator  : '.'<br/>
      *<br>RoundingMode      : DOWN (1)<br/>
      */
-    public DefaultDFormatter(final String pattern) {
+    public DefaultNumberStringConverter(final String pattern) {
         this(
                 pattern,
                 ' ',
@@ -69,7 +76,7 @@ public  class DefaultDFormatter implements DFormatter{
      *@param decimalSeparator DecimalSeparator
      *@param roundingMode RoundingMode
      */
-    public DefaultDFormatter(String pattern, char groupingSeparator, char decimalSeparator, RoundingMode roundingMode) {
+    public DefaultNumberStringConverter(final String pattern, char groupingSeparator, char decimalSeparator, final RoundingMode roundingMode) {
 
         this.decimalFormatSymbols = new DecimalFormatSymbols(){
             {
@@ -96,15 +103,18 @@ public  class DefaultDFormatter implements DFormatter{
      * @param numberString String
      * @return Number
      */
+    @SuppressWarnings( "unchecked" )
     @Override
-    public  Number fromString(String numberString) throws ParseException {
-        Number number ;
+    public  T fromString(String numberString) {
+        Number number = 0;
+        try {
+            number =  decimalFormat.parse(numberString);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        number =  decimalFormat.parse(numberString);
-
-        return  number;
+        return  (T)number;
     }
-
 
     /**
      * Parse Number to String.
@@ -130,15 +140,6 @@ public  class DefaultDFormatter implements DFormatter{
         return decimalFormat;
     }
 
-    /**
-     * Return DecimalFormatSymbols with current settings.
-     * <br>
-     * @return DecimalFormatSymbols
-     */
-    @Override
-    public DecimalFormatSymbols formatSymbols() {
-        return null;
-    }
 
 
 }

@@ -8,13 +8,34 @@ import java.util.stream.Collector;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.entities.ItemDAO;
-import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
+import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.usage_strings.PathStrings;
 import report.models_view.nodes.TableWrapper;
 
 
-public class ItemPropertiesFAO implements ItemDAO<TableItemVariable, TableWrapper> {
+public class VariablePropertiesDAO implements ItemDAO<TableItemVariable, TableWrapper> {
 
+
+
+    private final DoubleStringConverter doubleStringConverter;
+
+
+    /*!******************************************************************************************************************
+    *                                                                                                         CONSTRUCTOR
+    /********************************************************************************************************************/
+
+    public VariablePropertiesDAO(DoubleStringConverter doubleStringConverter) {
+        this.doubleStringConverter = doubleStringConverter;
+    }
+
+    public VariablePropertiesDAO() {
+        this.doubleStringConverter = new DoubleStringConverter("###,##0.000");
+    }
+
+
+    /*!******************************************************************************************************************
+    *                                                                                                            Methods
+    /********************************************************************************************************************/
 
     /**
     * Get String - path to file (formula.properties). 
@@ -25,6 +46,7 @@ public class ItemPropertiesFAO implements ItemDAO<TableItemVariable, TableWrappe
     public String getTableString() {return PathStrings.Files.VARIABLE_PROPERTIES;}
     
     
+
     /**
     * Get variable Properties.
     * @return value (converted string to Double value)
@@ -32,7 +54,7 @@ public class ItemPropertiesFAO implements ItemDAO<TableItemVariable, TableWrappe
     public Properties getProperties(){return  PropertiesFile.get(getTableString());}
 //    public Properties getProperties(){return  PropertiesFactory.getUsePath(getTableString());}
 
-    
+
     /**
      * Get List of Variable Items from SQL (SiteOSR)
     * @return  ObservableList of TableItemVariable
@@ -40,23 +62,26 @@ public class ItemPropertiesFAO implements ItemDAO<TableItemVariable, TableWrappe
     @Override
     public ObservableList<TableItemVariable> getList() {
         ObservableList<TableItemVariable> listAllOSR 
-                = PropertiesFile.get( PathStrings.Files.VARIABLE_PROPERTIES)
-                    .entrySet()
-                    .stream()
-                    .map(temp -> {
-                        TableItemVariable tiv = new TableItemVariable(
-                            0,
-                            temp.getKey().toString()
+                = PropertiesFile.get(PathStrings.Files.VARIABLE_PROPERTIES)
+                .entrySet()
+                .stream()
+                .map(temp ->
+                        {
+                            TableItemVariable tiv = new TableItemVariable(
+                                    0,
+                                    temp.getKey().toString()
 //                            ,DecimalFormatter.formatString(temp.getValue()));
 //                            ,DecimalFormatter.stringToDouble_threeZeroes(temp.getValue()));
-                              ,new DoubleDFormatter("###,##0.000")
-                                .fromString(temp.getValue().toString()));
-                        return tiv;})
-                     .collect(Collector.of(
-                                () -> FXCollections.observableArrayList(TableItemVariable.extractor()),
-                                ObservableList::add,
-                                (l1, l2) -> { l1.addAll(l2); return l1; })
-                                               );
+                                    ,doubleStringConverter.fromString(temp.getValue().toString())
+                            );
+                            return tiv;
+                        }
+                ).collect(Collector.of(
+                        () -> FXCollections.observableArrayList(TableItemVariable.extractor()),
+                        ObservableList::add,
+                        (l1, l2) -> { l1.addAll(l2); return l1; }
+                        )
+                );
            
         return  listAllOSR;
     }
@@ -85,8 +110,7 @@ public class ItemPropertiesFAO implements ItemDAO<TableItemVariable, TableWrappe
                     (prop, item) -> prop.put(
                         item.getText(),
 //                        DecimalFormatter.toString_threeZeroes(item.getValue())
-                            new DoubleDFormatter("###,##0.000")
-                                    .fromString(item.getValue().toString())
+                            doubleStringConverter.fromString(item.getValue().toString())
 //                        DecimalFormatter.formatNumber(item.getValue())
                     ),
                     (p1, p2) -> { p1.putAll(p2); return p1; })

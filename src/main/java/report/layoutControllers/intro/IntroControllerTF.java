@@ -2,6 +2,7 @@ package report.layoutControllers.intro;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models_view.nodes.TableWrapper;
 import report.models_view.nodes_factories.TableCellFactory;
 import report.models_view.nodes_factories.TableFactory;
@@ -48,8 +49,14 @@ public class IntroControllerTF implements TableFactory {
         TableColumn smetCostCol   = tableWrapper.addColumn ("Стоимоть", "smetCost");
         TableColumn saleCostCol   = tableWrapper.addColumn ("Цена",     "saleCost");
 
-        smetCostCol.setCellFactory(param -> TableCellFactory.getDecimalCell());
-        saleCostCol.setCellFactory(param -> TableCellFactory.getDecimalCell());
+//        smetCostCol.setCellFactory(param -> TableCellFactory.getDecimalCell());
+//        saleCostCol.setCellFactory(param -> TableCellFactory.getDecimalCell());
+
+        TableFactory.setCellFactory(
+                new DoubleStringConverter(),
+                smetCostCol,
+                saleCostCol
+        );
 
 
     }

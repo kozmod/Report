@@ -7,12 +7,13 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import report.entities.items.expenses.ItemExpensesDAO;
-import report.entities.items.expenses.TableItemExpenses;
 import report.entities.items.period.ItemPeriodDAO;
 import report.entities.items.period.TableItemPeriod;
 import report.entities.items.site.TableItemPreview;
+import report.models.numberStringConverters.dateStringConverters.EpochDayStringConverter;
 import report.models_view.nodes.TableWrapper;
 import report.models_view.nodes_factories.TableCellFactory;
+import report.models_view.nodes_factories.TableFactory;
 
 public class ExpensesControllerTF {
 
@@ -96,8 +97,8 @@ public class ExpensesControllerTF {
      * <br>
      * @return TableWrapper(child of TableView)
      */
-    public static TableWrapper<TableItemExpenses> decorProperty_Expenses(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table);
+    public static TableWrapper decorProperty_Expenses(TableView table){
+        TableWrapper tableWrapper = new TableWrapper<>(table);
         tableWrapper.setDAO( new ItemExpensesDAO());
 
         tableWrapper.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -126,9 +127,14 @@ public class ExpensesControllerTF {
         TableColumn dateFromColumn = tableWrapper.addColumn("Датаначала",     "dateFrom");
         TableColumn dateToColumn   = tableWrapper.addColumn("Дата Окончания", "dateTo");
         TableColumn textColumns    = tableWrapper.addColumn("Коментарии",     "text");
-
-        dateFromColumn.setCellFactory(param -> TableCellFactory.getEpochDateCell());
-        dateToColumn.setCellFactory(param -> TableCellFactory.getEpochDateCell());
+//
+//        dateFromColumn.setCellFactory(param -> TableCellFactory.getEpochDateCell());
+//        dateToColumn.setCellFactory(param -> TableCellFactory.getEpochDateCell());
+        TableFactory.setCellFactory(
+                new EpochDayStringConverter(),
+                dateFromColumn,
+                dateToColumn
+        );
 
 
         return tableWrapper;

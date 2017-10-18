@@ -12,7 +12,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import report.layoutControllers.estimate.EstimateController.Est;
-import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
+import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 
 
 public class TabModel {
@@ -109,7 +109,7 @@ public class TabModel {
 
             @Override
             protected String computeValue() {
-                return new DoubleDFormatter().toString(sumDouble.get());
+                return new DoubleStringConverter().toString(sumDouble.get());
             }
         });
 

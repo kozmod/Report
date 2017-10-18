@@ -45,8 +45,8 @@ public class TableItemKS extends TableItem {
  
 // Clone CONSTRUCTOR implementation
         @Override
-        public TableClone getClone() {
-            TableClone clone = new TableItemKS(
+        public TableItemKS getClone() {
+            TableItemKS clone = new TableItemKS(
                                     super.getId(),
                                     super.getDateCreate(),
                                     this.getKSNumber(),

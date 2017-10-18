@@ -8,7 +8,7 @@ public interface TableClone {
     /**
      * Get clone Constructor
      * @return TableClone
-     */  
+     */
     TableClone getClone();
 
 

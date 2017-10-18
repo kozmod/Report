@@ -1,12 +1,10 @@
-package report.models_view.data_utils.decimalFormatters;
+package report.models.numberStringConverters.numberStringConverters;
 
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.ParseException;
 
-public class IntegerDFormatter implements DFormatter {
+public class IntegerStringConverter extends DefaultNumberStringConverter<Integer> {
 
-    private final DFormatter decimalFormatter;
+//    private final NFormat<Number> decimalFormatter;
 
     /*!******************************************************************************************************************
     *                                                                                                        Constructor
@@ -14,9 +12,9 @@ public class IntegerDFormatter implements DFormatter {
     /**
      * Ctor.
      */
-    public IntegerDFormatter(DFormatter df) {
-        decimalFormatter = df;
-    }
+//    public IntegerStringConverter(NFormat<Number> df) {
+//        decimalFormatter = df;
+//    }
 
     /**
      * Ctor.
@@ -25,8 +23,8 @@ public class IntegerDFormatter implements DFormatter {
      *<br>DecimalSeparator  : '.'<br/>
      *<br>RoundingMode      : DOWN (1)<br/>
      */
-    public IntegerDFormatter() {
-        decimalFormatter = new DefaultDFormatter("###,##0");
+    public IntegerStringConverter() {
+        super("###,##0");
     }
 
     /**
@@ -36,8 +34,9 @@ public class IntegerDFormatter implements DFormatter {
      *<br>DecimalSeparator  : '.'<br/>
      *<br>RoundingMode      : DOWN (1)<br/>
      */
-    public IntegerDFormatter(final String pattern) {
-        decimalFormatter = new DefaultDFormatter(pattern);
+    public IntegerStringConverter(final String pattern) {
+        super(pattern);
+//        decimalFormatter = new DefaultNumberStringConverter(pattern);
     }
 
 
@@ -54,7 +53,8 @@ public class IntegerDFormatter implements DFormatter {
      */
     @Override
     public String toString(Number number) {
-        return decimalFormatter.toString(number);
+        return super.toString(number);
+//        return decimalFormatter.toString(number);
     }
 
 
@@ -70,12 +70,9 @@ public class IntegerDFormatter implements DFormatter {
     @Override
     public Integer fromString(String numberString)  {
         Integer integer = 0;
-        try {
-            Number nn = decimalFormatter.fromString(numberString).intValue();
+            Number nn = super.fromString(numberString);
             integer = nn.intValue();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
         return integer;
     }
 
@@ -86,7 +83,8 @@ public class IntegerDFormatter implements DFormatter {
      */
     @Override
     public DecimalFormat format() {
-        return null;
+        return super.format();
+//        return decimalFormatter.format();
     }
 
     /**
@@ -94,8 +92,4 @@ public class IntegerDFormatter implements DFormatter {
      * <br>
      * @return DecimalFormatSymbols
      */
-    @Override
-    public DecimalFormatSymbols formatSymbols() {
-        return decimalFormatter.formatSymbols();
-    }
 }

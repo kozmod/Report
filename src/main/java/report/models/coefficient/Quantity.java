@@ -24,15 +24,15 @@ public class Quantity {
     }
 
     public synchronized static IntegerProperty updateFromBase() {
-        quantity.setValue(new CoefficientQuery().getSiteQuantity());
+        quantity.setValue(new FormulaQuery().getSiteQuantity());
        return quantity;
     }
 
 
-    
-    
-    
-     
-     
-    
+
+
+
+
+
+
 }

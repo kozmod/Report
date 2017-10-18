@@ -167,6 +167,7 @@ public interface SQL extends ServiceStrings{
         String QUANTITY           = "Quantity";
         String SALE_HOUSE_SUM_ALL = "SaleHouseSumALL";
         String SMET_COST_SUM_ALL  = "SmetCostSumALL";
+        String SALE_COSTSUM_FROM_FINPLAN = "SaleCostSumFromFinPlan";
 
     }
     

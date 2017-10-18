@@ -16,9 +16,9 @@ import javafx.scene.control.TextField;
 import javafx.util.Duration;
 
 import report.entities.items.fin_res.ItemFinResDAO;
-import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
+import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.entities.items.fin_res.TableItemFinRes;
-import report.models_view.data_utils.EpochDatePickerConverter;
+import report.models.numberStringConverters.dateStringConverters.LocalDayStringConverter;
 
 
 public class FinResController implements Initializable {
@@ -41,9 +41,15 @@ public class FinResController implements Initializable {
         FinResControllerTF.decorFinRes(finResTable);
         finResTable.setItems(finResObs);
 
-        //Init DatePickers
-        dateFinResFrom.setConverter(new EpochDatePickerConverter());
-        dateFinResTo.setConverter  (new EpochDatePickerConverter());
+//        //Init DatePickers
+//        dateFinResFrom.setConverter(new EpochDatePickerConverter());
+//        dateFinResTo.setConverter  (new EpochDatePickerConverter());
+        dateFinResFrom.setConverter(
+                        new LocalDayStringConverter()
+        );
+        dateFinResTo.setConverter(
+                        new LocalDayStringConverter()
+        );
 
         //set TF value
         setTextFieldValue(sumSmetCostTF);
@@ -67,7 +73,7 @@ public class FinResController implements Initializable {
                     sumFloat += item.getProfit();
             }
         }
-        textfield.setText(new DoubleDFormatter().toString(sumFloat));
+        textfield.setText(new DoubleStringConverter().toString(sumFloat));
 
     }
     

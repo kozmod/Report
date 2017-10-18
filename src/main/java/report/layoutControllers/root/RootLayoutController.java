@@ -22,14 +22,14 @@ import report.layoutControllers.estimate.EstimateController;
 import report.layoutControllers.expensese.ExpensesController;
 import report.layoutControllers.expensese.ExpensesControllerTF;
 import report.layoutControllers.intro.IntroLayoutController;
-import report.models.coefficient.CoefficientService;
+import report.models.coefficient.FormulaQuery;
+import report.models.coefficient.Formula;
 import report.models_view.InputValidator;
 import report.models_view.nodes_factories.FileChooserFactory;
 import report.usage_strings.PathStrings;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models_view.StageCreator;
 import report.models.sql.sqlQuery.BackUpQuery;
-import report.models_view.nodes_factories.TableFactory;
 import report.entities.items.site.TableItemPreview;
 import report.models.sql.sqlQuery.InsertFileXLSQuery;
 import report.entities.items.site.SiteItemDAO;
@@ -457,9 +457,9 @@ public class RootLayoutController implements Initializable {
                     previewTable.setItems(Est.Common.getPreviewObservableList());
 
                     //create Coefficient
-                    CoefficientService.createCoefficient();
+                    Formula formula = new FormulaQuery().getFormula();
                     //Set TAXES_ALL
-                    Est.Common.getSiteItem(SQL.Site.TAXES_ALL).setSecondValue(CoefficientService.getCurrentTaxes());
+                    Est.Common.getSiteItem(SQL.Site.TAXES_ALL).setSecondValue(formula.allTaxes());
 
                     showEstController = new StageCreator(PathStrings.Layout.SITE_EST,"")
                             .loadIntoRootBorderPaneCenter()

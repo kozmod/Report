@@ -14,7 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.geometry.Pos;
 import javafx.scene.paint.Color;
 import javafx.util.StringConverter;
-import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
+import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.usage_strings.SQL;
 
 import report.layoutControllers.root.RootLayoutController;
@@ -38,19 +38,19 @@ public class TableCellFactory{
      * Cell to Estimate, Account Tables
      * @return DecimalTableCell
      */
-    public static TableCell getDecimalCell(){
-        return new TableCellFactory().new DecimalTableCell();
-    }
+//    public static TableCell getDecimalCell(){
+//        return new TableCellFactory().new DecimalTableCell();
+//    }
     
     /**
      * Cell to Estimate, Account Tables
      * <br>[cell set date from Epoch]
      * @return EpochDateCell
      */
-    public static TableCell getEpochDateCell(){
-        return new TableCellFactory().new EpochDateCell();
-    }
-    
+//    public static TableCell getEpochDateCell(){
+//        return new TableCellFactory().new EpochDateCell();
+//    }
+//
     /**
      * Cell to expenses
      * <br>[set type of currency]
@@ -148,9 +148,10 @@ public class TableCellFactory{
                  setText(null);
                  setGraphic(null);
              } else {
-                 setText(new DoubleDFormatter().toString(item));
+                 setText(new DoubleStringConverter().toString(item));
              }
-         } 
+         }
+
     }
         
     /**
@@ -249,9 +250,9 @@ public class TableCellFactory{
                         } else if (item instanceof Long) {
                             setText(LocalDate.ofEpochDay((long) item).toString());
                         } else if (item instanceof Float) {
-                            setText(new DoubleDFormatter().toString((Float)item));
+                            setText(new DoubleStringConverter().toString((Float)item));
                         } else if (item instanceof Double) {
-                            setText(new DoubleDFormatter().toString((Double)item));
+                            setText(new DoubleStringConverter().toString((Double)item));
                         } else {
                             setText("N/A");
                             setGraphic(null);
@@ -341,7 +342,7 @@ public class TableCellFactory{
                     case SQL.Site.SALE_CLIENTS :
                     case SQL.Site.DEBT_CLIENTS :
                     case SQL.Site.SALE_HOUSE:
-                        item.setSecondValue(new DoubleDFormatter().fromString(textField.getText()));
+                        item.setSecondValue(new DoubleStringConverter().fromString(textField.getText()));
                         break;
                 }
                         
@@ -416,7 +417,7 @@ public class TableCellFactory{
 
             }else{
 
-                setText(new DoubleDFormatter().toString(item));
+                setText(new DoubleStringConverter().toString(item));
 
                 Comparable aboveCellValue
                         = super.getTableColumn().getCellData(this.getIndex() - 1);
@@ -511,9 +512,9 @@ public class TableCellFactory{
                             else if (item instanceof Integer) {
                             setText( item.toString());
                         } else if (item instanceof Float) {
-                            setText(new DoubleDFormatter().toString((Float)item));
+                            setText(new DoubleStringConverter().toString((Float)item));
                         } else if (item instanceof Double) {
-                            setText(new DoubleDFormatter().toString((Double)item));
+                            setText(new DoubleStringConverter().toString((Double)item));
                         } else {
                             setText("N/A");
                             setGraphic(null);

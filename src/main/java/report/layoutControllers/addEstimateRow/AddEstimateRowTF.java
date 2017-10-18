@@ -2,6 +2,7 @@ package report.layoutControllers.addEstimateRow;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import report.entities.items.TableClone;
 import report.models_view.nodes.TableWrapperEST;
 import report.models_view.nodes_factories.TableCellFactory;
 

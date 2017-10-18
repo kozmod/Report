@@ -10,7 +10,7 @@ import report.entities.items.KS.TableItemKS;
 import report.entities.items.TableItem;
 import report.entities.items.estimate.ItemEstDAO;
 import report.entities.items.estimate.TableItemEst;
-import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
+import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models_view.nodes.TableWrapper;
 import report.models_view.nodes.TableWrapperEST;
 import report.models_view.nodes_factories.ContextMenuFactory;
@@ -120,10 +120,13 @@ public class EstimateControllerTF implements TableFactory {
 
 //        TableFactory.setTextFieldCell_NumberStringConverter(Price_sumColumn);
 
-        TableFactory.setCellFactoryAll(
-                new DoubleDFormatter(),
+        TableFactory.setTextFieldTableCell(
+                new DoubleStringConverter(),
                 valueColumn,
-                Price_oneColumn,
+                Price_oneColumn
+        );
+        TableFactory.setTextFieldTableCell(
+                new DoubleStringConverter(),
                 Price_sumColumn
         );
 
@@ -165,7 +168,7 @@ public class EstimateControllerTF implements TableFactory {
      * @return TableWrapper(child of TableView)
      */
     public static TableWrapperEST<TableItemKS> decorKS(TableView tableView){
-        TableWrapperEST table = new TableWrapperEST(tableView);
+        TableWrapperEST table = new TableWrapperEST<>(tableView);
         table.setDAO(new ItemKSDAO(EstimateController.Est.KS));
 
         table.setEditable(true);
@@ -185,8 +188,8 @@ public class EstimateControllerTF implements TableFactory {
 
 //        TableFactory.setTextFieldCell_NumberStringConverter(valueColumn);
 
-        TableFactory.setCellFactoryAll(
-                new DoubleDFormatter(),
+        TableFactory.setTextFieldTableCell(
+                new DoubleStringConverter(),
                 valueColumn
         );
 

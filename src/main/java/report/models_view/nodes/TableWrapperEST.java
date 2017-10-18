@@ -9,7 +9,7 @@ import javafx.scene.control.TableView;
 import report.entities.items.TableItem;
 
 
-public  class TableWrapperEST<S> extends TableWrapper<TableItem> {
+public  class TableWrapperEST<S extends TableItem> extends TableWrapper<S> {
 
     private DoubleProperty sum = new SimpleDoubleProperty();
 
@@ -29,7 +29,7 @@ public  class TableWrapperEST<S> extends TableWrapper<TableItem> {
     }
 
     public TableWrapperEST(String title) { super(title);}
-    public TableWrapperEST(TableView<TableItem> tableView){
+    public TableWrapperEST(TableView<S> tableView){
         super.tableView = tableView;
     }
 

@@ -15,7 +15,7 @@ import javafx.scene.control.*;
 import javafx.util.converter.NumberStringConverter;
 import report.models.coefficient.Quantity;
 //import report.models.Formula_test;
-import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
+import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models_view.nodes.TableWrapper;
 import report.models_view.nodes_factories.ContextMenuFactory;
 import report.entities.items.contractor.TableItemContractor;
@@ -123,7 +123,7 @@ public class AllPropertiesController implements Initializable {
                                     osrAddItemButton);
 //       siteQuantityTF.setText(Formula_test.siteQuantity.getValue().formatNumber());
        siteQuantityTF.textProperty().bindBidirectional(Quantity.getQuantityProperty(), new NumberStringConverter());
-//       siteQuantityTF.textProperty().bindBidirectional(CoefficientService.getQuantityProperty(), new NumberStringConverter());
+//       siteQuantityTF.textProperty().bindBidirectional(Formula.getQuantityProperty(), new NumberStringConverter());
 
     }
     
@@ -234,7 +234,7 @@ public class AllPropertiesController implements Initializable {
 
     @FXML
     private void handle_osrAddItemButton(ActionEvent event) {  
-        Double expenses = new DoubleDFormatter().fromString(osrAddValueTF.getText());
+        Double expenses = new DoubleStringConverter().fromString(osrAddValueTF.getText());
         Double expensesPerHouse = expenses/Quantity.getQuantityValue();
         osrTableWrapper.getItems()
                 .add(new TableItemOSR(0,osrAddTextTF.getText(),expenses,expensesPerHouse ));
@@ -306,9 +306,9 @@ public class AllPropertiesController implements Initializable {
 *                                                                                                             METHODS
 ********************************************************************************************************************/
     private void computeSumExpTextFields(){
-        sumExpTF.setText(new DoubleDFormatter().toString(
+        sumExpTF.setText(new DoubleStringConverter().toString(
                                 osrTableWrapper.getItems().stream().mapToDouble(TableItemOSR::getExpenses).sum()));
-        sumExpPerSiteTF.setText(new DoubleDFormatter().toString(
+        sumExpPerSiteTF.setText(new DoubleStringConverter().toString(
                                 osrTableWrapper.getItems().stream().mapToDouble(TableItemOSR::getExpensesPerHouse).sum()));
     }
 //    private void computeSumPlanTextFields(){

@@ -39,8 +39,8 @@ public class TableItemCB extends TableItem {
     }
 
     @Override
-    public TableClone getClone() {
-        TableClone clone = new TableItemCB(
+    public TableItemCB getClone() {
+        TableItemCB clone = new TableItemCB(
                                     super.getId(),
                                     this.getCheck(),
                                     super.getDateCreate(),

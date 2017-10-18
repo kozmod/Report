@@ -67,7 +67,7 @@ public class ItemOSRDAO implements ItemDAO<TableItemOSR,TableWrapper> {
                
                ResultSet rs = st.executeQuery(sqlQuery);
                int q =  850;
-//               int q =  CoefficientService.getQuantityValue();
+//               int q =  Formula.getQuantityValue();
                while(rs.next()){
                    listAllOSR.add(new TableItemOSR(
                                                 rs.getLong  (SQL.Common.ID),

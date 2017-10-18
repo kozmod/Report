@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 import javafx.animation.PauseTransition;
-import javafx.beans.binding.Bindings;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableMap;
@@ -28,10 +27,12 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import report.entities.items.TableItem;
 import report.layoutControllers.addKS.AddKSController;
 import report.layoutControllers.root.RootLayoutController;
 import report.entities.items.contractor.ItemContractorDAO;
-import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
+import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
+import report.models.numberStringConverters.dateStringConverters.LocalDayStringConverter;
 import report.usage_strings.PathStrings;
 import report.usage_strings.SQL;
 import report.models_view.nodes.TableWrapper;
@@ -40,11 +41,8 @@ import report.models_view.nodes_factories.FileChooserFactory;
 
 import report.models_view.StageCreator;
 
-import report.models_view.data_utils.EpochDatePickerConverter;
-import report.models_view.nodes_factories.TableFactory;
 import report.entities.items.KS.TableItemKS;
 import report.entities.items.site.TableItemPreview;
-import report.entities.items.TableItem;
 import report.entities.items.estimate.TableItemEst;
 import report.models.printer.PrintKS;
 import report.entities.ItemDAO;
@@ -77,11 +75,10 @@ public class EstimateController implements Initializable {
         Base(1), Changed(2),Additional(3),KS, Common;
 
         //Constructors ---------------------------------------------------------------------
-        Est(){ }
+        Est(){     }
         Est(int val){ taleType = val; }
 
         public void printALLSum(){
-
             this.tab.getSumLabelValue();
         }
 
@@ -272,19 +269,22 @@ public class EstimateController implements Initializable {
 //        scrollPaneChanged.setPrefHeight(ScreenSize.height.getValue() - 200);
 
         dateKSfrom.setEditable(true);
-        dateKSfrom.setConverter(new EpochDatePickerConverter());
+//        dateKSfrom.setConverter(new EpochDatePickerConverter());
+        dateKSfrom.setConverter(new LocalDayStringConverter());
         dateKSto.setEditable(true);
-        dateKSto.setConverter(new EpochDatePickerConverter());
+//        dateKSto.setConverter(new EpochDatePickerConverter());
+        dateKSto.setConverter(new LocalDayStringConverter());
 
         //add Additional table
         tableAdditionalWrapper = EstimateControllerTF.decorAdditional(tableAdditional);
         init_EstLayoutTabs();
         //add KS table
         tableKSWrapper = EstimateControllerTF.decorKS(tableKS);
-        ksSumLabel.textProperty().bind(Bindings.convert(tableKSWrapper.getSumProperty()));
-
-
-
+//        ksSumLabel.textProperty().bind(Bindings.convert(tableKSWrapper.getSumProperty()));
+        ksSumLabel.textProperty().bindBidirectional(
+                tableKSWrapper.getSumProperty(),
+                new DoubleStringConverter().format()
+        );
 
 
     }
@@ -294,7 +294,6 @@ public class EstimateController implements Initializable {
 
     public void init_EstLayoutTabs(/*ObservableList<PreviewTableItem> obs?/*String SiteNumber, String contName*/){
         //add site number and Contractor
-//       Est.Common   .setSiteObs(obs);
         Est.Base     .createTabMap();
         Est.Changed  .createTabMap();
         Est.KS       .createTabMap();
@@ -348,13 +347,13 @@ public class EstimateController implements Initializable {
                     case Base:
                         enumEst.getSiteItem(SQL.Site.SMET_COST)
                                 .setSecondValue(
-                                       new DoubleDFormatter().fromString(labelSumBase.getText()));
+                                       new DoubleStringConverter().fromString(labelSumBase.getText()));
                         //                    enumEst.getPrewiewItem(9).setSecondValue(labelSumBase.getText());
                         break;
                     case Changed:
                         enumEst.getSiteItem(SQL.Site.COST_HOUSE)
                                 .setSecondValue(
-                                        new DoubleDFormatter().fromString(labelSumChanged.getText()));
+                                        new DoubleStringConverter().fromString(labelSumChanged.getText()));
                         break;
                 }
                 enumEst.updatePreviewTable();
@@ -376,7 +375,7 @@ public class EstimateController implements Initializable {
                 labelSumBase = tm.getSumLabel();
                 labelSumBase.textProperty().addListener(change -> {
 
-                    enumEst.getSiteItem(SQL.Site.SMET_COST).setSecondValue(labelSumBase.getText());
+//                    enumEst.getSiteItem(SQL.Site.SMET_COST).setSecondValue(labelSumBase.getText());
                     enumEst.getSiteItem(SQL.Site.SMET_COST).setSecondValue(tm.getSumLabelValue());
                     rootController.getPreviewTable().refresh();
                 });
@@ -389,7 +388,7 @@ public class EstimateController implements Initializable {
                 labelSumChanged = tm.getSumLabel();
                 labelSumChanged.textProperty().addListener(change -> {
 
-                    enumEst.getSiteItem(SQL.Site.COST_HOUSE).setSecondValue(labelSumChanged.getText());
+//                    enumEst.getSiteItem(SQL.Site.COST_HOUSE).setSecondValue(labelSumChanged.getText());
                     enumEst.getSiteItem(SQL.Site.COST_HOUSE).setSecondValue(tm.getSumLabelValue());
                     rootController.getPreviewTable().refresh();
                 });
@@ -527,6 +526,7 @@ public class EstimateController implements Initializable {
     @FXML
     private void hanle_PrintKS(ActionEvent event) {
         File selectedFile = FileChooserFactory.Save.saveKS(listKS.getSelectionModel().getSelectedItem().toString());
+        ObservableList<TableItemKS> i = tableKSWrapper.getItems();
         if(!listKS.getSelectionModel().isEmpty()
                 && selectedFile != null
                 ) {

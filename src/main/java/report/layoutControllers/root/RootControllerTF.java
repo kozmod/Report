@@ -7,7 +7,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import report.models_view.nodes_factories.TableCellFactory;
 import report.models_view.nodes_factories.TableFactory;
 
-public class RootControllerTF implements TableFactory {
+class RootControllerTF implements TableFactory {
 
     private RootControllerTF() {
     }
@@ -17,7 +17,7 @@ public class RootControllerTF implements TableFactory {
      *
      * @return TableWrapper(Preview TableWrapper)
      */
-    public static TableView getSite(){
+    static TableView getSite(){
         TableView table = new TableView();
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

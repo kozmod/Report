@@ -3,8 +3,10 @@ package report.layoutControllers.addKS;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import report.entities.items.account.TableItemAcc;
+import report.models.numberStringConverters.dateStringConverters.EpochDayStringConverter;
+import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models_view.nodes.TableWrapper;
-import report.models_view.nodes_factories.TableCellFactory;
+import report.models_view.nodes_factories.TableFactory;
 
 import java.util.Objects;
 
@@ -49,10 +51,23 @@ public class AddKSControllerTF {
         table.getColumns().add(TurnoverCol);
 
 
-        dateCol.setCellFactory(cell -> TableCellFactory.getEpochDateCell());
-        debCol.setCellFactory(cell -> TableCellFactory.getDecimalCell());
-        credCol.setCellFactory(cell -> TableCellFactory.getDecimalCell());
-        outgoingRestCol.setCellFactory(cell -> TableCellFactory.getDecimalCell());
+//        dateCol.setCellFactory(cell -> TableCellFactory.getEpochDateCell());
+//        debCol.setCellFactory(cell -> TableCellFactory.getDecimalCell());
+//        credCol.setCellFactory(cell -> TableCellFactory.getDecimalCell());
+//        outgoingRestCol.setCellFactory(cell -> TableCellFactory.getDecimalCell());
+
+
+        TableFactory.setCellFactory(
+                new EpochDayStringConverter(),
+                dateCol
+        );
+
+        TableFactory.setCellFactory(
+                new DoubleStringConverter(),
+                debCol,
+                credCol,
+                outgoingRestCol
+        );
 
 
     }

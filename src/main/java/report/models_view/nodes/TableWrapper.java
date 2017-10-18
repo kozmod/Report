@@ -11,6 +11,7 @@ import javafx.scene.control.TableView.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import report.entities.ItemDAO;
+import report.entities.items.TableClone;
 import report.models_view.data_utils.Memento;
 
 import java.util.List;
@@ -21,7 +22,7 @@ public class TableWrapper<S>  {
 
     protected TableView<S> tableView;
     private String title;
-    private Memento<S> memento;
+    private Memento<? extends TableClone> memento;
     private ItemDAO<S,TableWrapper> dao;
 
 
@@ -42,7 +43,7 @@ public class TableWrapper<S>  {
      * Undo changes of TableView Items.
      */
     public void undoChangeItems(){
-        tableView.getItems().setAll(memento.getSavedState());
+        tableView.getItems().setAll((S) memento.getSavedState());
 
     }
 

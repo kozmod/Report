@@ -21,22 +21,21 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import report.layoutControllers.estimate.EstimateControllerTF;
 import report.layoutControllers.root.RootLayoutController;
-import report.models.coefficient.CoefficientService;
-import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
+import report.models.coefficient.Formula;
+import report.models.coefficient.FormulaQuery;
+import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
+import report.models.numberStringConverters.dateStringConverters.LocalDayStringConverter;
 import report.usage_strings.SQL;
 
 import report.layoutControllers.estimate.EstimateController.Est;
 
-import report.models_view.data_utils.EpochDatePickerConverter;
 import report.entities.items.expenses.TableItemExpenses;
 import report.entities.items.period.TableItemPeriod;
 //import report.models.Formula_test;
 import report.models_view.nodes.TableWrapper;
 import report.models_view.nodes_factories.ContextMenuFactory;
 import report.entities.items.site.TableItemPreview;
-import report.models.coefficient.CoefficientQuery;
 import report.entities.items.expenses.ItemExpensesDAO;
 import report.entities.items.period.ItemPeriodDAO;
 import report.entities.items.site.SiteItemDAO;
@@ -66,8 +65,8 @@ public class ExpensesController implements Initializable {
     private final StringProperty CONTRACTOR  = new SimpleStringProperty(Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
     private final StringProperty TYPE_HOME   = new SimpleStringProperty(Est.Common.getSiteSecondValue(SQL.Common.TYPE_HOME));
     
-//    private final  DoubleProperty COEFFICIENT = new SimpleDoubleProperty(new CoefficientQuery().getCoefficientClass().getValue());
-    private final  DoubleProperty COEFFICIENT = new SimpleDoubleProperty(CoefficientService.getCurrentValue());
+//    private final  DoubleProperty COEFFICIENT = new SimpleDoubleProperty(new FormulaQuery().getFormula().getValue());
+    private final  DoubleProperty COEFFICIENT = new SimpleDoubleProperty(Formula.formulaFromBase().computeCoefficient());
     /*!*******************************************************************************************************************
      *                                                                                                     PreConstructor
      ********************************************************************************************************************/ 
@@ -138,8 +137,8 @@ public class ExpensesController implements Initializable {
         expensesTWrapper.getContextMenu().getItems().get(2)
                 .addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
                     System.out.println("SAVEITEM ->>  report.layoutControllers.expensese.ExpensesController.init_expensesTab()");
-//                    COEFFICIENT.setValue(new CoefficientQuery().getCoefficientClass().getValue());
-                    COEFFICIENT.setValue(CoefficientService.createCoefficient().getValue());
+//                    COEFFICIENT.setValue(new FormulaQuery().getFormula().getValue());
+                    COEFFICIENT.setValue(Formula.formulaFromBase().computeCoefficient());
                     System.out.println("COEF - >"  + COEFFICIENT.getValue());
                 });
 
@@ -155,10 +154,16 @@ public class ExpensesController implements Initializable {
     periodTWrapper.setContextMenu(ContextMenuFactory.getCommonDSU(periodTWrapper));
     ContextMenuOptional.setTableItemContextMenuListener(periodTWrapper);
     
-    //Set Date Pickers Converter
-    dateFromDP.setConverter(new EpochDatePickerConverter());
-    dateToDP.setConverter(new EpochDatePickerConverter());
-        
+//    //Set Date Pickers Converter
+//    dateFromDP.setConverter(new EpochDatePickerConverter());
+//    dateToDP.setConverter(new EpochDatePickerConverter());
+    dateFromDP.setConverter(
+                        new LocalDayStringConverter()
+        );
+    dateToDP.setConverter(
+                        new LocalDayStringConverter()
+        );
+
     //Set DateContract / FinishBuildin TextField
     contract_FinishTF.textProperty().bind(new StringBinding(){
             ObjectProperty dateComtract   = Est.Changed.getSiteItem(SQL.Site.DATE_CONTRACT).getSecondProperty();
@@ -187,10 +192,10 @@ public class ExpensesController implements Initializable {
             siteSaveButton.setDisable(false);
         });
 
-        //Bind CoefficientService to Textfield
-        coeffTF.textProperty().bindBidirectional(COEFFICIENT,  new DoubleDFormatter().format());
+        //Bind Formula to Textfield
+        coeffTF.textProperty().bindBidirectional(COEFFICIENT,  new DoubleStringConverter().format());
 
-        //add CoefficientService TF Listener
+        //add Formula TF Listener
         coeffTF.textProperty().addListener(event ->{
             if(Est.Changed.isExist() ) {
                 if(!COEFFICIENT.getValue().equals(Est.Common.getSiteItem(SQL.Site.COEFFICIENT).getSecondValue()))
@@ -232,8 +237,8 @@ public class ExpensesController implements Initializable {
             siteTWrapper.saveTableItems();
             rootController.update_previewTable(Est.Common.getPreviewObservableList());
             
-//            COEFFICIENT.setValue(new CoefficientQuery().getCoefficientClass().getValue());
-            COEFFICIENT.setValue(CoefficientService.createCoefficient().getValue());
+//            COEFFICIENT.setValue(new FormulaQuery().getFormula().getValue());
+            COEFFICIENT.setValue(Formula.formulaFromBase().computeCoefficient());
 
             CONTRACTOR.setValue(Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
             siteUndoButton .setDisable(true);
@@ -298,7 +303,7 @@ public class ExpensesController implements Initializable {
 
         
         if(Est.Changed.isExist()){
-            new CoefficientQuery().applyCoefficient(
+            new FormulaQuery().applyCoefficient(
                 Est.Changed.getSiteSecondValue(SQL.Common.SITE_NUMBER),
                 Est.Changed.getSiteSecondValue(SQL.Common.CONTRACTOR),
                 COEFFICIENT.getValue());

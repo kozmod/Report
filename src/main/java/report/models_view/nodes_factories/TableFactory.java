@@ -1,23 +1,53 @@
 package report.models_view.nodes_factories;
 
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
-import report.models_view.data_utils.decimalFormatters.DFormatter;
-import report.models_view.data_utils.decimalFormatters.stringConvertersFX.StringNumberConverter;
+import javafx.util.StringConverter;
+
 
 public interface TableFactory {
     /**
-     *Apply StringConverter to all input cells.
-     *@param formatter DFormatter(DecimalFormatSymbols & DecimalFormat)
+     *Set Text Field cell with string converter to column array.
+     *@param converter StringConverter(DecimalFormatSymbols & DecimalFormat)
      *@param columns TableColumn[]
      */
-     static void setCellFactoryAll(DFormatter formatter, TableColumn... columns){
+    static void setTextFieldTableCell(StringConverter converter, TableColumn... columns){
+
         for(TableColumn column  : columns)
             column.setCellFactory(
                     TextFieldTableCell.forTableColumn(
-                            new StringNumberConverter(formatter)
+                            converter
                     )
             );
     }
+
+    /**
+     *Set Cell with string formatter to column array.
+     *@param converter StringConverter(DecimalFormatSymbols & DecimalFormat)
+     *@param columns TableColumn[]
+     */
+    static <T> void setCellFactory(StringConverter<T> converter, TableColumn... columns) {
+        for (TableColumn column : columns) {
+            column.setCellFactory(cell ->
+                    new TableCell<TableView, T>() {
+                        @Override
+                        protected void updateItem(T item, boolean empty) {
+                            super.updateItem(item, empty);
+                            if (empty) {
+                                setText(null);
+                                setGraphic(null);
+                            } else {
+                                setText(converter.toString(item));
+                            }
+                        }
+                    });
+        }
+    }
+
+
+
+
 
 }

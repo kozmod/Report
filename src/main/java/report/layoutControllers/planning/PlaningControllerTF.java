@@ -4,13 +4,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import report.entities.items.plan.ItemPlanDAO;
 import report.entities.items.plan.TableItemPlan;
-import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
-import report.models_view.data_utils.decimalFormatters.IntegerDFormatter;
+import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
+import report.models.numberStringConverters.numberStringConverters.IntegerStringConverter;
 import report.models_view.nodes.TableWrapper;
-import report.models_view.nodes_factories.TableCellFactory;
 import report.models_view.nodes_factories.TableFactory;
-
-import java.util.stream.Stream;
 
 public class PlaningControllerTF implements TableFactory {
 
@@ -28,7 +25,7 @@ public class PlaningControllerTF implements TableFactory {
      */
 
     public static TableWrapper decorPlan(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table);
+        TableWrapper<TableItemPlan> tableWrapper = new TableWrapper<>(table);
         tableWrapper.setDAO(new ItemPlanDAO());
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -57,18 +54,6 @@ public class PlaningControllerTF implements TableFactory {
         restColumn      .setMaxWidth(80);
         restColumn      .setMinWidth(50);
 
-
-//        TableFactory.setTextFieldCell_IntegerStringConverter(typeIdColumn,quantityColumn);
-        TableFactory.setCellFactoryAll(
-                new IntegerDFormatter(),
-                typeIdColumn,
-                quantityColumn);
-//        TableFactory.setTextFieldCell_NumberStringConverter(smetColumn,smetColumn );
-        TableFactory.setCellFactoryAll(
-                new DoubleDFormatter(),
-                smetColumn,
-                smetColumn
-        );
         typeIdColumn.setOnEditCommit((TableColumn.CellEditEvent<TableItemPlan, Integer> t) -> {
             t.getRowValue().setTypeID(t.getNewValue());
         });
@@ -102,10 +87,23 @@ public class PlaningControllerTF implements TableFactory {
             }
         });
 
-        smetSumColumn.setCellFactory(param -> TableCellFactory.getDecimalCell());
-        saleSumColumn.setCellFactory(param -> TableCellFactory.getDecimalCell());
-        profitColumn.setCellFactory(param -> TableCellFactory.getDecimalCell());
+//        smetSumColumn.setCellFactory(param -> TableCellFactory.getDecimalCell());
+//        saleSumColumn.setCellFactory(param -> TableCellFactory.getDecimalCell());
+//        profitColumn.setCellFactory(param -> TableCellFactory.getDecimalCell());
 
+        TableFactory.setCellFactory(
+                new DoubleStringConverter(),
+                smetColumn,
+                smetSumColumn,
+                saleColumn,
+                saleSumColumn,
+                profitColumn
+        );
+        TableFactory.setCellFactory(
+                new IntegerStringConverter(),
+                typeIdColumn,
+                quantityColumn
+        );
 
         return tableWrapper;
     }
@@ -140,14 +138,14 @@ public class PlaningControllerTF implements TableFactory {
         quantityColumn  .setMaxWidth(70);
         quantityColumn  .setMinWidth(50);
 
-        Stream.of(
+        TableFactory.setCellFactory(
+                new DoubleStringConverter(),
                 smetColumn,
                 smetSumColumn,
                 saleColumn,
                 saleSumColumn,
-                profitColumn)
-                .forEach(a -> a.setCellFactory(param -> TableCellFactory.getDecimalCell()));
-
+                profitColumn
+        );
 
         return tableWrapper;
     }

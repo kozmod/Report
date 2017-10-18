@@ -1,12 +1,11 @@
-package report.models_view.data_utils.decimalFormatters;
+package report.models.numberStringConverters.numberStringConverters;
 
+import java.math.RoundingMode;
 import java.text.DecimalFormat;
-import java.text.DecimalFormatSymbols;
-import java.text.ParseException;
 
-public class DoubleDFormatter implements DFormatter {
+public class DoubleStringConverter extends DefaultNumberStringConverter<Double> {
 
-    private final DFormatter decimalFormatter;
+//    private final NFormat<Number> decimalFormatter;
 
     /*!******************************************************************************************************************
     *                                                                                                        Constructor
@@ -18,9 +17,9 @@ public class DoubleDFormatter implements DFormatter {
      *<br>DecimalSeparator  : ?<br/>
      *<br>RoundingMode      : ?<br/>
      */
-    public DoubleDFormatter(DFormatter df) {
-        decimalFormatter = df;
-    }
+//    public DoubleStringConverter(NFormat<Number> df) {
+//        decimalFormatter = df;
+//    }
 
     /**
      * Ctor.
@@ -29,8 +28,8 @@ public class DoubleDFormatter implements DFormatter {
      *<br>DecimalSeparator  : '.'<br/>
      *<br>RoundingMode      : DOWN (1)<br/>
      */
-    public DoubleDFormatter() {
-        decimalFormatter = new DefaultDFormatter("###,##0.00");
+    public DoubleStringConverter() {
+        super("###,##0.00");
     }
 
     /**
@@ -40,9 +39,13 @@ public class DoubleDFormatter implements DFormatter {
      *<p>DecimalSeparator  : '.'<p/>
      *<p>RoundingMode      : DOWN (1)<p/>
      */
-    public DoubleDFormatter(final String pattern) {
-        decimalFormatter = new DefaultDFormatter(pattern);
+    public DoubleStringConverter(final String pattern) {
+        super(pattern);
+
+//        decimalFormatter = new DefaultNumberStringConverter(pattern);
     }
+
+
 
     /*!******************************************************************************************************************
     *                                                                                                        Methods
@@ -58,8 +61,10 @@ public class DoubleDFormatter implements DFormatter {
      */
     @Override
     public String toString(Number number) {
-        return decimalFormatter.toString(number);
+//        return decimalFormatter.toString(number);
+        return super.toString(number);
     }
+
 
     /**
      * Parse to Double.
@@ -73,12 +78,9 @@ public class DoubleDFormatter implements DFormatter {
     @Override
     public Double fromString(String numberString) {
         Double parserDouble = 0.0;
-        try {
-            Number nn  = decimalFormatter.fromString(numberString);
+            Number nn  = super.fromString(numberString);
             parserDouble = nn.doubleValue();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+
         return parserDouble;
     }
 
@@ -89,17 +91,8 @@ public class DoubleDFormatter implements DFormatter {
      */
     @Override
     public DecimalFormat format() {
-        return decimalFormatter.format();
-    }
-
-    /**
-     * Return DecimalFormatSymbols with current settings.
-     * <br>
-     * @return DecimalFormatSymbols
-     */
-    @Override
-    public DecimalFormatSymbols formatSymbols() {
-        return decimalFormatter.formatSymbols();
+        return super.format();
+//        return decimalFormatter.format();
     }
 
 

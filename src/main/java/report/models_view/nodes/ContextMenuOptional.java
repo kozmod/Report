@@ -10,6 +10,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 
+import report.entities.items.TableClone;
 import report.models.printer.PrintEstimate;
 import report.entities.ItemDAO;
 
@@ -33,7 +34,7 @@ public class ContextMenuOptional extends ContextMenu{
         if(printSmeta != null)  printSmeta.setDisable(!value);   
     }
     
-    public static <S> void setTableItemContextMenuListener(TableWrapper<S> tableWrapper){
+    public static <S extends TableClone> void setTableItemContextMenuListener(TableWrapper<S> tableWrapper){
         tableWrapper.getItems().addListener((ListChangeListener.Change<? extends S> c) -> {
                 System.out.println("Changed on " + c + " - ContextMenuOptional");
                 if(c.next() && (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){

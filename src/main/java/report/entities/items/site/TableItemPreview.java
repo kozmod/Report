@@ -32,8 +32,8 @@ import report.entities.items.TableClone;
         
         //Clone CONSTRUCTOR implementation
         @Override
-        public TableClone getClone() {
-            TableClone clone = new TableItemPreview(
+        public TableItemPreview getClone() {
+            TableItemPreview clone = new TableItemPreview(
                                 this.id,
                                 this.sqlColumn,
                                 this.getFirstValue(),

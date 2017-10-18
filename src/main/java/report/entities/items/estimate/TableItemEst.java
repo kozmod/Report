@@ -46,8 +46,8 @@ public class TableItemEst extends TableItem {
     
 // Clone CONSTRUCTOR implementation
         @Override
-        public TableClone getClone() {
-            TableClone clone = new TableItemEst(
+        public TableItemEst getClone() {
+            TableItemEst clone = new TableItemEst(
                                     super.getId(),
                                     super.getDateCreate(),
                                     super.getSiteNumber(),

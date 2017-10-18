@@ -4,7 +4,7 @@ package report.entities.items.contractor;
 import report.layoutControllers.LogController;
 import report.entities.ItemDAO;
 import report.entities.items.osr.ItemOSRDAO;
-import report.entities.items.variable.ItemPropertiesFAO;
+import report.entities.items.variable.VariablePropertiesDAO;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +20,7 @@ import report.models.sql.SQLconnector;
 import report.models_view.nodes.TableWrapper;
 
 
-public class ItemContractorDAO implements ItemDAO<TableItemContractor, TableWrapper<TableItemContractor>> {
+public class ItemContractorDAO implements ItemDAO<TableItemContractor, TableWrapper> {
 
     @Override
     public String getTableString() {
@@ -55,7 +55,7 @@ public class ItemContractorDAO implements ItemDAO<TableItemContractor, TableWrap
                    );
                }
            } catch (SQLException ex) {
-               Logger.getLogger(ItemPropertiesFAO.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(VariablePropertiesDAO.class.getName()).log(Level.SEVERE, null, ex);
            }
         return  listAllContractors;
     }
@@ -89,7 +89,7 @@ public class ItemContractorDAO implements ItemDAO<TableItemContractor, TableWrap
                   }
               }
            } catch (SQLException ex) {
-               Logger.getLogger(ItemPropertiesFAO.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(VariablePropertiesDAO.class.getName()).log(Level.SEVERE, null, ex);
            }
         return  contractor;
     }
@@ -123,7 +123,7 @@ public class ItemContractorDAO implements ItemDAO<TableItemContractor, TableWrap
             LogController.appendLogViewText(items.size() + " deleted");
             
         } catch (SQLException ex) {
-            Logger.getLogger(ItemPropertiesFAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VariablePropertiesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

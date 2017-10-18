@@ -2,8 +2,10 @@ package report.layoutControllers.finRes;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import report.models.numberStringConverters.dateStringConverters.EpochDayStringConverter;
+import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models_view.nodes.TableWrapper;
-import report.models_view.nodes_factories.TableCellFactory;
+import report.models_view.nodes_factories.TableFactory;
 
 public class FinResControllerTF {
 
@@ -33,13 +35,26 @@ public class FinResControllerTF {
         TableColumn profitColumn      = tableWrapper.addColumn("Прибыль", "profit");
 
 
-        dateContColumn.setCellFactory   (cell -> TableCellFactory.getEpochDateCell());
-        finishBuildColumn.setCellFactory(cell -> TableCellFactory.getEpochDateCell());
-        smetCostColumn.setCellFactory   (cell -> TableCellFactory.getDecimalCell());
-        costHouseColumn.setCellFactory  (cell -> TableCellFactory.getDecimalCell());
-        saleHouseColumn.setCellFactory  (cell -> TableCellFactory.getDecimalCell());
-//        trueCostColumn.setCellFactory   (cell -> TableCellFactory.getDecimalCell());
-        profitColumn.setCellFactory     (cell -> TableCellFactory.getDecimalCell());
+//        dateContColumn.setCellFactory   (cell -> TableCellFactory.getEpochDateCell());
+//        finishBuildColumn.setCellFactory(cell -> TableCellFactory.getEpochDateCell());
+//        smetCostColumn.setCellFactory   (cell -> TableCellFactory.getDecimalCell());
+//        costHouseColumn.setCellFactory  (cell -> TableCellFactory.getDecimalCell());
+//        saleHouseColumn.setCellFactory  (cell -> TableCellFactory.getDecimalCell());
+////        trueCostColumn.setCellFactory   (cell -> TableCellFactory.getDecimalCell());
+//        profitColumn.setCellFactory     (cell -> TableCellFactory.getDecimalCell());
+        TableFactory.setCellFactory(
+              new EpochDayStringConverter(),
+                dateContColumn,
+                finishBuildColumn
+        );
+
+        TableFactory.setCellFactory(
+                new DoubleStringConverter(),
+                smetCostColumn,
+                costHouseColumn,
+                saleHouseColumn,
+                profitColumn
+        );
     }
 
 }

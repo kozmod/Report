@@ -6,21 +6,24 @@ import javafx.collections.ObservableList;
 import report.entities.items.TableClone;
 
 
-public  class Memento<S > {
+public  class Memento<S extends TableClone> {
         
     private  ObservableList<S> tableMemento;
 
-    public Memento(ObservableList<? extends TableClone>  tableItems) {
+    public Memento(ObservableList<S>  tableItems) {
         this.tableMemento  = getNewObs( tableItems);   
               
     }
         
-    public ObservableList<S> getSavedState() {return  this.getNewObs((ObservableList<? extends TableClone>) tableMemento); }
+    public ObservableList<S> getSavedState() {return  this.getNewObs( tableMemento); }
             
-    private ObservableList<S> getNewObs(ObservableList<? extends TableClone> items){
+    private ObservableList<S> getNewObs(ObservableList<S> items){
         ObservableList<S> newObsList = FXCollections.observableArrayList();
-        items.forEach((TableClone obsItem) -> newObsList.add((S) obsItem.getClone()));
-        
+        items.forEach((S obsItem) -> {
+            newObsList.add(
+                    (S)obsItem.getClone()
+            );
+        });
     return newObsList;
     }
 }  

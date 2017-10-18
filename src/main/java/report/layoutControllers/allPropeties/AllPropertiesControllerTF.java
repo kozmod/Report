@@ -5,10 +5,10 @@ import javafx.scene.control.TableView;
 import report.entities.items.contractor.ItemContractorDAO;
 import report.entities.items.osr.ItemOSRDAO;
 import report.entities.items.osr.TableItemOSR;
-import report.entities.items.variable.ItemPropertiesFAO;
+import report.entities.items.variable.VariablePropertiesDAO;
 import report.entities.items.variable.TableItemVariable;
 import report.models.coefficient.Quantity;
-import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
+import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models_view.nodes.TableWrapper;
 import report.models_view.nodes_factories.TableCellFactory;
 import report.models_view.nodes_factories.TableFactory;
@@ -39,10 +39,10 @@ public class AllPropertiesControllerTF implements TableFactory {
         TableColumn valueColumn    = tableWrapper.addColumn("Значение (за дом)","expensesPerHouse");
 
         valueAllColumn.setEditable(true);
-        valueColumn.setCellFactory(p -> TableCellFactory.getDecimalCell());
+//        valueColumn.setCellFactory(p -> TableCellFactory.getDecimalCell());
 //        TableFactory.setTextFieldCell_NumberStringConverter(valueAllColumn);
-        TableFactory.setCellFactoryAll(
-                new DoubleDFormatter(),
+        TableFactory.setTextFieldTableCell(
+                new DoubleStringConverter(),
                 valueAllColumn
         );
 
@@ -75,7 +75,7 @@ public class AllPropertiesControllerTF implements TableFactory {
      */
     public static TableWrapper decorVariable(TableView table){
         TableWrapper tableWrapper = new TableWrapper(table);
-        tableWrapper.setDAO(new ItemPropertiesFAO());
+        tableWrapper.setDAO(new VariablePropertiesDAO());
 
 //        tableWrapper.setEditable(true);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -86,8 +86,8 @@ public class AllPropertiesControllerTF implements TableFactory {
 //
         valueAllColumn.setEditable(true);
 //        TableFactory.setTextFieldCell_NumbertringConverter_threeZeroes(valueAllColumn);
-        TableFactory.setCellFactoryAll(
-                new DoubleDFormatter("###,##0.000"),
+        TableFactory.setTextFieldTableCell(
+                new DoubleStringConverter("###,##0.000"),
                 valueAllColumn
 
         );

@@ -16,9 +16,8 @@ import javafx.util.Duration;
 
 import report.entities.items.account.ItemAccDAO;
 import report.layoutControllers.addKS.AddKSControllerTF;
-import report.models_view.data_utils.EpochDatePickerConverter;
 import report.models.sql.sqlQuery.InsertFileXLSQuery;
-import report.models_view.nodes_factories.TableFactory;
+import report.models.numberStringConverters.dateStringConverters.LocalDayStringConverter;
 
 
 public class CorAccountController implements Initializable {
@@ -42,8 +41,14 @@ public class CorAccountController implements Initializable {
     }
     
     void init_DatePickers(){
-        dateAccFrom.setConverter(new EpochDatePickerConverter());
-        dateAccTo.setConverter  (new EpochDatePickerConverter());
+//        dateAccFrom.setConverter(new EpochDatePickerConverter());
+//        dateAccTo.setConverter  (new EpochDatePickerConverter());
+        dateAccFrom.setConverter(
+                        new LocalDayStringConverter()
+        );
+        dateAccTo.setConverter(
+                        new LocalDayStringConverter()
+        );
     }
  
     

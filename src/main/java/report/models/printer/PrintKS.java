@@ -8,7 +8,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import report.entities.items.KS.TableItemKS;
 import report.entities.items.contractor.TableItemContractor;
-import report.models_view.data_utils.decimalFormatters.DoubleDFormatter;
+import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.usage_strings.SQL;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.entities.items.TableItem;
@@ -19,7 +19,7 @@ public class PrintKS extends AbstractPrinterXML{
     
     
     private Document doc;
-    private ObservableList<TableItem> obsKS;
+    private ObservableList<TableItemKS> obsKS;
 //    private ObservableList<PreviewTableItem>  obsPreTab;
     private String ksNumber, ksDate;
     private TableItemContractor contractorObject;
@@ -45,7 +45,7 @@ public class PrintKS extends AbstractPrinterXML{
 //        saveDocument(System.getProperty("user.dir") + "\\lib\\XML_Models\\КС-2 № " + ksNumber + ".xml");
 //    }
 
-    public PrintKS(ObservableList<TableItem> obsKS,TableItemContractor contractor, Path path) {
+    public PrintKS(ObservableList<TableItemKS> obsKS,TableItemContractor contractor, Path path) {
         this.obsKS    = obsKS;
         this.ksNumber = Integer.toString(((TableItemKS)obsKS.get(0)).getKSNumber());
         this.ksDate   = LocalDate.ofEpochDay(((TableItemKS)obsKS.get(0)).getKSDate()).toString();
@@ -61,7 +61,7 @@ public class PrintKS extends AbstractPrinterXML{
         saveDocument(path.toString());
     }
 
-    public PrintKS(ObservableList<TableItem> obsKS, Path path) {
+    public PrintKS(ObservableList<TableItemKS> obsKS, Path path) {
         this.obsKS    = obsKS;
         this.ksNumber = Integer.toString(((TableItemKS)obsKS.get(0)).getKSNumber());
         this.ksDate   = LocalDate.ofEpochDay(((TableItemKS)obsKS.get(0)).getKSDate()).toString();
@@ -231,7 +231,7 @@ public class PrintKS extends AbstractPrinterXML{
                                  .build());
             row.appendChild(new CellBuilder(doc)
                                  .setCellStyle("s174")
-                                 .setCellValue("Number",new DoubleDFormatter().toString(item.getPrice_one())
+                                 .setCellValue("Number",new DoubleStringConverter().toString(item.getPrice_one())
                                          .replace(" ","") )
                                  .build());
             row.appendChild(new CellBuilder(doc)
