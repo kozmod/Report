@@ -27,8 +27,7 @@ public class AllPropertiesControllerTF implements TableFactory {
      * @return TableWrapper
      */
     public static TableWrapper decorOSR(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table);
-        tableWrapper.setDAO(new ItemOSRDAO());
+        TableWrapper tableWrapper = new TableWrapper(table,new ItemOSRDAO());
 
 //        tableWrapper.setEditable(true);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -74,8 +73,7 @@ public class AllPropertiesControllerTF implements TableFactory {
      * @return TableWrapper
      */
     public static TableWrapper decorVariable(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table);
-        tableWrapper.setDAO(new VariablePropertiesDAO());
+        TableWrapper tableWrapper = new TableWrapper(table,new VariablePropertiesDAO());
 
 //        tableWrapper.setEditable(true);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -109,8 +107,7 @@ public class AllPropertiesControllerTF implements TableFactory {
      * @return TableWrapper
      */
     public static TableWrapper decorContractor(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table);
-        tableWrapper.setDAO(new ItemContractorDAO());
+        TableWrapper tableWrapper = new TableWrapper(table,new ItemContractorDAO());
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 //

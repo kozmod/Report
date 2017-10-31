@@ -1,6 +1,7 @@
 
 package report.entities.items.estimate;
 
+import javafx.collections.ObservableArray;
 import report.layoutControllers.LogController;
 import report.entities.ItemDAO;
 import report.usage_strings.SQL;
@@ -194,9 +195,9 @@ public class ItemEstDAO implements ItemDAO<TableItemEst, TableWrapperEST> {
      * @param title   (String)
      * @return List of TableItem
     */
-    public List<TableItemEst> getOneBildingPartList(Est enumEst, String  title) {
+    public ObservableList<TableItemEst> getOneBildingPartList(Est enumEst, String  title) {
         
-        List<TableItemEst> listEstAll =  FXCollections.observableArrayList();
+        ObservableList<TableItemEst> listEstAll =  FXCollections.observableArrayList();
         
         
         String ResultSetString = "SELECT "

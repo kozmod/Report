@@ -18,7 +18,7 @@ public class IntroControllerTF implements TableFactory {
      */
     public static void decorPreview(TableView table){
 
-        TableWrapper tableWrapper = new TableWrapper(table);
+        TableWrapper tableWrapper = new TableWrapper(table, null);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         table.setPrefHeight(450);
@@ -37,7 +37,7 @@ public class IntroControllerTF implements TableFactory {
      */
     public static void decorIntroFinishedSite(TableView table){
 
-        TableWrapper tableWrapper = new TableWrapper(table);
+        TableWrapper tableWrapper = new TableWrapper(table, null);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 //        table.setPlaceholder(new Label("необходимо выбрать участок и подрядчика"));

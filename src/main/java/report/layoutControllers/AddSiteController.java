@@ -18,6 +18,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import report.entities.items.plan.TableItemFact;
 import report.layoutControllers.root.RootLayoutController;
 import report.usage_strings.SQL;
 import report.entities.items.plan.TableItemPlan;
@@ -40,7 +41,7 @@ public class AddSiteController implements Initializable {
     final private ToggleGroup radioButtonsTG = new ToggleGroup();
 
     private ObservableList<TableItemPlan> listPlan;
-    private ObservableList<TableItemPlan> listFact;
+    private ObservableList<TableItemFact> listFact;
     private ObservableList<Object>        listQueue;
     private ObservableList<Object>        listContractors;
     private ObservableList<Object>        listTypes;
@@ -94,8 +95,9 @@ public class AddSiteController implements Initializable {
     private void init_ComboBoxesValue(){
         queueComboBox.setItems(listQueue);
 //        queueComboBox.setItems( new CommonQuery().getObsDISTINCT(SQL.Tables.SITE, SQL.Site.QUEUE_BUILDING, this));
-        classComboBox.setItems(listFact.stream()
-                .map(TableItemPlan::getType)
+        classComboBox.setItems(
+                listFact.stream()
+                .map(TableItemFact::getType)
                 .collect(toCollection(FXCollections::observableArrayList)));
         
         classComboBox.getSelectionModel()
@@ -105,7 +107,7 @@ public class AddSiteController implements Initializable {
                    .filter(o -> o.getType().equals(newValue))
                    .findFirst()
                    .orElse(null);
-           TableItemPlan fact = listFact.stream()
+           TableItemFact fact = listFact.stream()
                    .filter(o -> o.getType().equals(newValue))
                    .findFirst()
                    .orElse(null);

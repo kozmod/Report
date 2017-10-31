@@ -20,7 +20,7 @@ public class AddKSControllerTF {
      */
     public static void decorAcc(TableView<TableItemAcc> table){
 
-        TableWrapper tableWrapper = new TableWrapper(table);
+        TableWrapper tableWrapper = new TableWrapper(table,null);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn dateCol = tableWrapper.addColumn("Дата","date");
@@ -77,7 +77,7 @@ public class AddKSControllerTF {
      * Decorate KS_add TableView (AddKSController)
      */
     public static void decorAddKS(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table);
+        TableWrapper tableWrapper = new TableWrapper(table, null);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 

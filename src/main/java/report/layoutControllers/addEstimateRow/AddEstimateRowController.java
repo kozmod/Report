@@ -184,7 +184,7 @@ public class AddEstimateRowController implements Initializable {
         System.err.println("editObsList  size "+editObsList.size());
 
 
-        if(check >= 0) elemTableWrapperView.setItems(result);
+        if(check >= 0) elemTableWrapperView.tableView().setItems(result);
         if(check < 0)System.out.println("Базовая меньше -> " + check);
 
 
@@ -359,7 +359,7 @@ public class AddEstimateRowController implements Initializable {
 //        
 //            checkBox.selectedProperty().addListener(
 //                (ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-//                ((ObsItems_Check)getTableView().getItems().saveEst(getIndex())).setCheck(newValue);
+//                ((ObsItems_Check)tableView().getItems().saveEst(getIndex())).setCheck(newValue);
 //            });
 //        }
 //    }

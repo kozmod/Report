@@ -24,9 +24,8 @@ public class PlaningControllerTF implements TableFactory {
      * @return TableWrapper
      */
 
-    public static TableWrapper decorPlan(TableView table){
-        TableWrapper<TableItemPlan> tableWrapper = new TableWrapper<>(table);
-        tableWrapper.setDAO(new ItemPlanDAO());
+    public static TableWrapper<TableItemPlan> decorPlan(TableView<TableItemPlan> table){
+        TableWrapper<TableItemPlan> tableWrapper = new TableWrapper<>(table,new ItemPlanDAO());
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 //
@@ -87,10 +86,6 @@ public class PlaningControllerTF implements TableFactory {
             }
         });
 
-//        smetSumColumn.setCellFactory(param -> TableCellFactory.getDecimalCell());
-//        saleSumColumn.setCellFactory(param -> TableCellFactory.getDecimalCell());
-//        profitColumn.setCellFactory(param -> TableCellFactory.getDecimalCell());
-
         TableFactory.setCellFactory(
                 new DoubleStringConverter(),
                 smetColumn,
@@ -101,10 +96,13 @@ public class PlaningControllerTF implements TableFactory {
         );
         TableFactory.setCellFactory(
                 new IntegerStringConverter(),
-                typeIdColumn,
-                quantityColumn
+                typeIdColumn
         );
 
+        TableFactory.setTextFieldTableCell(
+                new IntegerStringConverter(),
+                quantityColumn
+        );
         return tableWrapper;
     }
 
@@ -118,7 +116,7 @@ public class PlaningControllerTF implements TableFactory {
      * @return TableWrapper
      */
     public static TableWrapper decorFact(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table);
+        TableWrapper tableWrapper = new TableWrapper(table,null);
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 //
@@ -127,6 +125,7 @@ public class PlaningControllerTF implements TableFactory {
         TableColumn quantityColumn = tableWrapper.addColumn("Кол-во",         "quantity");
         TableColumn smetColumn     = tableWrapper.addColumn("Стоимоть",       "SmetCost");
         TableColumn smetSumColumn  = tableWrapper.addColumn("Себестоимость",  "SmetCostSum");
+        TableColumn costHouseSumColumn  = tableWrapper.addColumn("Стоимость дома",  "costHouseSum");
         TableColumn saleColumn     = tableWrapper.addColumn("Цена",           "SaleCost");
         TableColumn saleSumColumn  = tableWrapper.addColumn("Выручка",        "SaleCostSum");
         TableColumn profitColumn   = tableWrapper.addColumn("Прибыль",        "profit");
@@ -142,6 +141,7 @@ public class PlaningControllerTF implements TableFactory {
                 new DoubleStringConverter(),
                 smetColumn,
                 smetSumColumn,
+                costHouseSumColumn,
                 saleColumn,
                 saleSumColumn,
                 profitColumn

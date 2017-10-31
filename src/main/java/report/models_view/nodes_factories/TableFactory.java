@@ -13,8 +13,7 @@ public interface TableFactory {
      *@param converter StringConverter(DecimalFormatSymbols & DecimalFormat)
      *@param columns TableColumn[]
      */
-    static void setTextFieldTableCell(StringConverter converter, TableColumn... columns){
-
+    static void setTextFieldTableCell(StringConverter converter, TableColumn ... columns){
         for(TableColumn column  : columns)
             column.setCellFactory(
                     TextFieldTableCell.forTableColumn(
@@ -42,12 +41,9 @@ public interface TableFactory {
                                 setText(converter.toString(item));
                             }
                         }
-                    });
+                    }
+            );
         }
     }
-
-
-
-
 
 }

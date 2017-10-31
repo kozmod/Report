@@ -17,13 +17,14 @@ import report.models_view.data_utils.Memento;
 import java.util.List;
 import java.util.Objects;
 
-public class TableWrapper<S>  {
+public class TableWrapper<E extends TableClone>  {
 
 
-    protected TableView<S> tableView;
+
     private String title;
-    private Memento<? extends TableClone> memento;
-    private ItemDAO<S,TableWrapper> dao;
+    private Memento<E> memento;
+    protected final TableView<E> tableView;
+    private final  ItemDAO<E,TableWrapper> dao;
 
 
 
@@ -35,7 +36,7 @@ public class TableWrapper<S>  {
      * Save Items of TableView.
      */
     public void saveTableItems() {
-        memento = new Memento(tableView.getItems());
+        memento = new Memento<>(tableView.getItems());
     }
 
     //Memento - undo
@@ -43,7 +44,7 @@ public class TableWrapper<S>  {
      * Undo changes of TableView Items.
      */
     public void undoChangeItems(){
-        tableView.getItems().setAll((S) memento.getSavedState());
+        tableView.getItems().setAll( memento.getSavedState());
 
     }
 
@@ -55,22 +56,14 @@ public class TableWrapper<S>  {
 *                                                                                                       CONSTRUCTORS
 ********************************************************************************************************************/
 
-    public TableWrapper() {
-        tableView = new TableView<>();
+    public TableWrapper (TableView<E> table,ItemDAO<E,TableWrapper> dao) {
+
+        this("TEST TITLE",table, dao);
     }
-    public TableWrapper(TableView<S> tableView){
-        this.tableView = tableView;
-    }
-    public TableWrapper(String title){
-        this();
+
+    public TableWrapper(String title, TableView<E> table, ItemDAO<E,TableWrapper> dao) {
+        tableView = table;
         this.title = title;
-    }
-    public TableWrapper(String title, ObservableList<S> items) {
-        tableView = new TableView<>(items);
-        this.title = title;
-    }
-    public TableWrapper(String title, ObservableList<S> items, ItemDAO<S,TableWrapper> dao) {
-        this(title,items);
         this.dao = dao;
     }
 
@@ -79,27 +72,34 @@ public class TableWrapper<S>  {
 ********************************************************************************************************************/
 
     public String getTitle()   {return title;}
-    public  void setTitle(String title) {this.title = title;}
+//    public  void setTitle(String title) {this.title = title;}
 
-//   public <S>CeartakerUID getCRUD(){return  ceartaker;}
+//   public <E>CeartakerUID getCRUD(){return  ceartaker;}
 
-    public ItemDAO getDAO() {return dao;}
-    public void setDAO(ItemDAO<S,TableWrapper> dao) {this.dao = dao;}
+    public ItemDAO getDAO() {
+        if(this.dao == null)
+            throw  new NullPointerException(TableWrapper.class.getCanonicalName());
+        return dao;
+    }
 
-    public  TableView<S> getTableView(){ return tableView; }
+    public  TableView<E> tableView(){ return tableView; }
 
     ///
-    public ObservableList<S> getItems(){ return tableView.getItems();}
-    public void setItems(ObservableList<S> value){tableView.setItems(value);}
+    public ObservableList<E> getItems(){ return tableView.getItems();}
+
 
     public ContextMenu getContextMenu(){ return tableView.getContextMenu();}
     public void setContextMenu(ContextMenu contextMenu){ tableView.setContextMenu(contextMenu);}
 
-    public void setColumnResizePolicy(Callback<ResizeFeatures, Boolean> callback ){ tableView.setColumnResizePolicy(callback);}
+//    public void setColumnResizePolicy(Callback<ResizeFeatures, Boolean> callback ){ tableView.setColumnResizePolicy(callback);}
 
-    public ObjectProperty<ContextMenu> contextMenuProperty(){return tableView.contextMenuProperty();}
+//    public ObjectProperty<ContextMenu> contextMenuProperty(){return tableView.contextMenuProperty();}
 
-    public BooleanProperty editableProperty(){return tableView.editableProperty();}
+//    public BooleanProperty editableProperty(){return tableView.editableProperty();}
+
+//    public void setItems(ObservableList<E> value){tableView.setItems(value);}
+
+    //    public void setDAO(ItemDAO<E,TableWrapper> dao) {this.dao = dao;}
 
 
 /*!******************************************************************************************************************
@@ -114,10 +114,15 @@ public class TableWrapper<S>  {
      * <br>
      * @param items - Observable List of table item (inherited TableItems)
      */
-    public void setTableData(ObservableList<S> items){
+    public void setTableData(ObservableList<E> items){
         tableView.setItems(items);
         saveTableItems();
     }
+    /**
+     * Update TableView Items, use <b>method</b>:
+     * <br><b>this.</b>getItems().setAll(newItems);
+     */
+    public void updateTableFromBASE(List newItems){tableView.getItems().setAll(newItems);}
     /**
      * Contain :
      * <br>
@@ -141,7 +146,7 @@ public class TableWrapper<S>  {
      * @return TableColumn
      */
     public  <K> TableColumn addColumn(String name, String fieldName){
-        TableColumn<S,K> column = new TableColumn<>(name);
+        TableColumn<E,K> column = new TableColumn<>(name);
         column.setCellValueFactory(new PropertyValueFactory<>(fieldName));
 
 
@@ -159,7 +164,7 @@ public class TableWrapper<S>  {
      * @return TableColumn
      */
     public <K> TableColumn addColumn(int position, String name, String fieldName){
-        TableColumn<S,K> column = new TableColumn<>(name);
+        TableColumn<E,K> column = new TableColumn<>(name);
         column.setCellValueFactory(new PropertyValueFactory<>(fieldName));
         tableView.getColumns().add(position,column);
         return column;
@@ -172,18 +177,14 @@ public class TableWrapper<S>  {
      * @param parentCol parent-column name.
      * @return TableColumn
      */
-    public  <K> TableColumn<S,K> addColumn (TableColumn<S,Objects> parentCol, String name, String fieldName){
-        TableColumn<S,K> column = new TableColumn<>(name);
+    public  <K> TableColumn<E,K> addColumn (TableColumn<E,Objects> parentCol, String name, String fieldName){
+        TableColumn<E,K> column = new TableColumn<>(name);
         column.setCellValueFactory(new PropertyValueFactory<>(fieldName));
 
         parentCol.getColumns().add(column);
         return column;
     }
-    /**
-     * Update TableView Items, use <b>method</b>:
-     * <br><b>this.</b>getItems().setAll(newItems);
-     */
-    public void updateTableFromBASE(List newItems){tableView.getItems().setAll(newItems);}
+
 
 
     /*!******************************************************************************************************************
@@ -191,7 +192,7 @@ public class TableWrapper<S>  {
     ********************************************************************************************************************/
     public void refresh(){tableView.refresh();}
 
-    public TableViewSelectionModel<S> getSelectionModel(){
+    public TableViewSelectionModel<E> getSelectionModel(){
         return tableView.getSelectionModel();
     }
     public void setEditable(boolean value){

@@ -110,12 +110,12 @@ public class AllPropertiesController implements Initializable {
         });
        
        //table Context menu property
-        osrTableWrapper.contextMenuProperty().bind(
+        osrTableWrapper.tableView().contextMenuProperty().bind(
             Bindings.when(osrEditСheckBox.selectedProperty() )
                 .then(ContextMenuFactory.getCommonDSU(osrTableWrapper))
                 .otherwise( (ContextMenu) null  ));
         //TableWrapper Editable property
-        osrTableWrapper.editableProperty()
+        osrTableWrapper.tableView().editableProperty()
                     .bind(osrEditСheckBox.selectedProperty());
         setGroupNodeDisableProperty(osrEditСheckBox.selectedProperty(),
                                     osrAddTextTF, 
@@ -133,12 +133,12 @@ public class AllPropertiesController implements Initializable {
     private void init_VariableTab(){
         
         //table Context menu property
-        variableTableWrapper.contextMenuProperty().bind(
+        variableTableWrapper.tableView().contextMenuProperty().bind(
             Bindings.when(variableEditСheckBox.selectedProperty() )
                 .then( ContextMenuFactory.getCommonSU(variableTableWrapper))
                 .otherwise( (ContextMenu) null));
         //TableWrapper Editable property
-        variableTableWrapper.editableProperty()
+        variableTableWrapper.tableView().editableProperty()
                          .bind(variableEditСheckBox.selectedProperty());
     
         
@@ -149,7 +149,7 @@ public class AllPropertiesController implements Initializable {
      */
     private void init_ContractorTab(){
         //bing ContextMenu
-        contractorTableWrapper.contextMenuProperty().bind(
+        contractorTableWrapper.tableView().contextMenuProperty().bind(
             Bindings.when(contractorEditСheckBox.selectedProperty() )
                 .then( ContextMenuFactory.getCommonDSU(contractorTableWrapper))
                 .otherwise( (ContextMenu) null));

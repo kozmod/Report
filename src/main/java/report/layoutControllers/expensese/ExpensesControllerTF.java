@@ -63,15 +63,15 @@ public class ExpensesControllerTF {
      * @return TableWrapper(child of TableView)
      */
     public  static TableWrapper<TableItemPreview> decorProperty_Site(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table);
+        TableWrapper tableWrapper = new TableWrapper(table,null);
 
-        tableWrapper.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        tableWrapper.getTableView().widthProperty().addListener(new ChangeListener<Number>() {
+        tableWrapper.tableView().widthProperty().addListener(new ChangeListener<Number>() {
             @Override
             public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
                 // Get the tableWrapper header
-                Pane header = (Pane) tableWrapper.getTableView().lookup("TableHeaderRow");
+                Pane header = (Pane) tableWrapper.tableView().lookup("TableHeaderRow");
                 if(header!=null && header.isVisible()) {
                     header.setMaxHeight(0);
                     header.setMinHeight(0);
@@ -98,10 +98,9 @@ public class ExpensesControllerTF {
      * @return TableWrapper(child of TableView)
      */
     public static TableWrapper decorProperty_Expenses(TableView table){
-        TableWrapper tableWrapper = new TableWrapper<>(table);
-        tableWrapper.setDAO( new ItemExpensesDAO());
+        TableWrapper tableWrapper = new TableWrapper<>(table, new ItemExpensesDAO());
 
-        tableWrapper.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 
         TableColumn textColumn   = tableWrapper.addColumn("Наименование", "text");
@@ -119,10 +118,8 @@ public class ExpensesControllerTF {
      * @return TableWrapper(child of TableView)
      */
     public static TableWrapper<TableItemPeriod> decorProperty_JobPeriod(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table);
-        tableWrapper.setDAO( new ItemPeriodDAO());
-
-        tableWrapper.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        TableWrapper tableWrapper = new TableWrapper(table, new ItemPeriodDAO());
+        tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn dateFromColumn = tableWrapper.addColumn("Датаначала",     "dateFrom");
         TableColumn dateToColumn   = tableWrapper.addColumn("Дата Окончания", "dateTo");

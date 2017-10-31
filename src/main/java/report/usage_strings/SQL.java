@@ -145,6 +145,7 @@ public interface SQL extends ServiceStrings{
         String SMET_COST_SUM = "SmetCostSUM";
         String SALE_COST     = "SaleCost";
         String SALE_COST_SUM = "SaleCostSUM";
+        String COST_HOUSE_SUM= "CostHouseSUM";
 
 
     }

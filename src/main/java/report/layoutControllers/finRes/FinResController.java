@@ -42,8 +42,6 @@ public class FinResController implements Initializable {
         finResTable.setItems(finResObs);
 
 //        //Init DatePickers
-//        dateFinResFrom.setConverter(new EpochDatePickerConverter());
-//        dateFinResTo.setConverter  (new EpochDatePickerConverter());
         dateFinResFrom.setConverter(
                         new LocalDayStringConverter()
         );
@@ -85,19 +83,11 @@ public class FinResController implements Initializable {
     @FXML
     private void handle_FilterSite(ActionEvent event) {
         if (isInputValid()){
-//            finResTable.setItems(commonSQL_SELECT.getFinResObs(
-//                                    (int) dateFinResFrom.getValue().toEpochDay(),
-//                                    (int) dateFinResTo.getValue().toEpochDay())
-//                                                        );
-
             finResTable.setItems(
                     finResObs.stream()
                             .filter(item -> item.getDateContract()>=(int) dateFinResFrom.getValue().toEpochDay()
-                                         && item.getDateContract()<=(int) dateFinResTo.getValue().toEpochDay())
+                                    && item.getDateContract()<=(int) dateFinResTo.getValue().toEpochDay())
                             .collect(toCollection(FXCollections::observableArrayList)));
-
-
-
 //            System.err.println(finResTable.getItems());
             setTextFieldValue(sumSmetCostTF);
             setTextFieldValue(sumCostHouseTF);

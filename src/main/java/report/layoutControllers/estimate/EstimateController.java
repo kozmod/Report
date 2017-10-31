@@ -299,7 +299,7 @@ public class EstimateController implements Initializable {
         Est.KS       .createTabMap();
         Est.Additional       .createTabMap();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        tableAdditionalWrapper.setItems(Est.Additional.getAllItemsList_Live());
+        tableAdditionalWrapper.tableView().setItems(Est.Additional.getAllItemsList_Live());
 
 
         if(Est.Base    .isExist())init_Est(Est.Base);

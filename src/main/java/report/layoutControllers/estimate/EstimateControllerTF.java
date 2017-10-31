@@ -32,12 +32,12 @@ public class EstimateControllerTF implements TableFactory {
      * @param enumEst - enumeration. Contain: data of Estimate Tables
      * @return TableWrapper(child of TableView)
      */
-    public static TableWrapperEST getEst(EstimateController.Est enumEst){
-        TableWrapperEST table = new TableWrapperEST();
-        table.setDAO(new ItemEstDAO(enumEst));
+    public static TableWrapperEST getEst(EstimateController.Est enumEst,String title){
+        TableWrapperEST table = new TableWrapperEST(title,new TableView(),new ItemEstDAO(enumEst));
+
 
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        table.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn JM_nameColumn   = table.addColumn("Наименование работ/затрат", "JM_name");
         TableColumn BJobColumnn     = table.addColumn("Связанная работа",          "BindedJob");
@@ -144,10 +144,10 @@ public class EstimateControllerTF implements TableFactory {
      * @return TableWrapper(child of TableView)
      */
     public static TableWrapper decorAdditional(TableView table){
-        TableWrapper tableWrapper =  new TableWrapper(table);
+        TableWrapper tableWrapper =  new TableWrapper(table, null);
 
         tableWrapper.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
-        tableWrapper.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn JM_nameColumn   = tableWrapper.addColumn("Наименование работ/затрат", "JM_name");
         TableColumn BJobColumnn     = tableWrapper.addColumn("Связанная работа",          "BindedJob");
@@ -168,11 +168,12 @@ public class EstimateControllerTF implements TableFactory {
      * @return TableWrapper(child of TableView)
      */
     public static TableWrapperEST<TableItemKS> decorKS(TableView tableView){
-        TableWrapperEST table = new TableWrapperEST<>(tableView);
-        table.setDAO(new ItemKSDAO(EstimateController.Est.KS));
+        TableWrapperEST table = new TableWrapperEST(tableView,
+                new ItemKSDAO(EstimateController.Est.KS));
+
 
         table.setEditable(true);
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        table.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn JM_nameColumn       = table.addColumn("Наименование работ/затрат", "JM_name");
         TableColumn BJobColumnn         = table.addColumn("Связанная работа",          "BindedJob");

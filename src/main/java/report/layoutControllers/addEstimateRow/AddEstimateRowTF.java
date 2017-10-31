@@ -15,7 +15,7 @@ public class AddEstimateRowTF {
      * @return TableWrapper(child of TableView)
      */
     public static TableWrapperEST decorEst_add(TableView table){
-        TableWrapperEST tableWrapper = new TableWrapperEST(table);
+        TableWrapperEST tableWrapper = new TableWrapperEST(table, null);
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 

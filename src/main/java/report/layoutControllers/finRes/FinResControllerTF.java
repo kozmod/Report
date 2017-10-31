@@ -19,8 +19,8 @@ public class FinResControllerTF {
     @SuppressWarnings("unchecked")
     public static void decorFinRes(TableView table){
 
-        TableWrapper tableWrapper = new TableWrapper(table);
-        tableWrapper.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        TableWrapper tableWrapper = new TableWrapper(table, null);
+        tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 
         TableColumn siteNumberColumn  = tableWrapper.addColumn("№ учстка", "siteNumber");

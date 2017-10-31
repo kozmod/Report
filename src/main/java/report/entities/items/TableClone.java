@@ -9,7 +9,7 @@ public interface TableClone {
      * Get clone Constructor
      * @return TableClone
      */
-    TableClone getClone();
+    <E> E getClone();
 
 
     Long getId();

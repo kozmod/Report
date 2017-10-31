@@ -96,8 +96,8 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
 
 
     
-    public ObservableList<TableItemPlan> getListFact() {
-        ObservableList<TableItemPlan> list = FXCollections.observableArrayList();
+    public ObservableList<TableItemFact> getListFact() {
+        ObservableList<TableItemFact> list = FXCollections.observableArrayList();
         
 //        String sqlString =
 //                " SELECT "
@@ -141,28 +141,28 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
                 +",ISNULL((SELECT round(SUM(S.[SmetCost]),2)          FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [SmetCostSum]"
                 +",ISNULL((SELECT round(SUM(S.[SaleHouse])/COUNT(1),2)FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [SaleCost]"
                 +",ISNULL((SELECT round(SUM(S.[SaleHouse]),2)         FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [SaleCostSum]"
+                +",ISNULL((SELECT round(SUM(S.[CostHouse]),2)         FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [CostHouseSum]"
                 +" FROM  dbo.[FinPlan] F ";
          
         try(Connection connection = SQLconnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sqlString);) {
-            
             pstmt.execute();
-            
             ResultSet rs = pstmt.getResultSet();
             
                 while(rs.next()){
-                    TableItemPlan item = new TableItemPlan(
+                    TableItemFact item = new TableItemFact(
                                     0, //id
                                     new Timestamp(0),
                                     rs.getInt       (SQL.Plan.TYPE_ID),
                                     rs.getString    (SQL.Plan.TYPE_NAME),
-                                    rs.getInt       (SQL.Plan.QUANTITY),   
-                                    0,   //rest
+                                    rs.getInt       (SQL.Plan.QUANTITY),
                                     rs.getDouble     (SQL.Plan.SMET_COST),
                                     rs.getDouble     (SQL.Plan.SMET_COST_SUM),
+                                    rs.getDouble     (SQL.Plan.COST_HOUSE_SUM),
                                     rs.getDouble     (SQL.Plan.SALE_COST),
                                     rs.getDouble     (SQL.Plan.SALE_COST_SUM),
-                                    (rs.getDouble    (SQL.Plan.SALE_COST_SUM) - rs.getDouble   (SQL.Plan.SMET_COST_SUM))
+                                    (rs.getDouble    (SQL.Plan.COST_HOUSE_SUM) - rs.getDouble   (SQL.Plan.SMET_COST_SUM))
+//                                    (rs.getDouble    (SQL.Plan.SALE_COST_SUM) - rs.getDouble   (SQL.Plan.SMET_COST_SUM))
                                 );
                     list.add(item);     
                 }

@@ -9,6 +9,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import report.entities.items.plan.ItemPlanDAO;
+import report.entities.items.plan.TableItemFact;
 import report.entities.items.plan.TableItemPlan;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models_view.nodes.ContextMenuOptional;
@@ -33,7 +34,7 @@ public class PlanningController implements Initializable{
     @FXML private TableView planTable,factTable;
 
     private TableWrapper<TableItemPlan> planTableWrapper;
-    private TableWrapper<TableItemPlan> factTableWrapper;
+    private TableWrapper<TableItemFact> factTableWrapper;
 
     /*!******************************************************************************************************************
     *                                                                                                               INIT
@@ -55,12 +56,12 @@ public class PlanningController implements Initializable{
 
     private void init_PlanTab(){
         //table Context menu property
-        planTableWrapper.contextMenuProperty().bind(
+        planTableWrapper.tableView().contextMenuProperty().bind(
                 Bindings.when(planEditСheckBox.selectedProperty() )
                         .then( ContextMenuFactory.getCommonDSU(planTableWrapper))
                         .otherwise( (ContextMenu) null));
         //TableWrapper Editable property
-        planTableWrapper.editableProperty()
+        planTableWrapper.tableView().editableProperty()
                 .bind(planEditСheckBox.selectedProperty());
         //Compute Sum Text fields
         this.computeSumPlanTextFields();
@@ -109,10 +110,16 @@ public class PlanningController implements Initializable{
                                 (double)0
                         )
                 )
-                )clearGroupOfTextInputControl(planTypeTF,planQuantityTF,planSmetTF,planSaleTF);
-
-
+                )
+            clearGroupOfTextInputControl(planTypeTF,planQuantityTF,planSmetTF,planSaleTF);
     }
+
+//    @FXML
+//    private void test(ActionEvent event) {
+//        System.out.println(planTableWrapper.editableProperty().get());
+//        System.out.println(planEditСheckBox.selectedProperty().get());
+//
+//    }
     /*!******************************************************************************************************************
     *                                                                                                             METHODS
     ********************************************************************************************************************/
@@ -145,21 +152,21 @@ public class PlanningController implements Initializable{
         factSmetSumTF.setText(
                 new DoubleStringConverter().toString(
                     factTableWrapper.getItems().stream()
-                        .mapToDouble(TableItemPlan::getSmetCostSum)
+                        .mapToDouble(TableItemFact::getSmetCostSum)
                         .sum()
                 )
         );
         factSaleSumTF.setText(
                 new DoubleStringConverter().toString(
                     factTableWrapper.getItems().stream()
-                        .mapToDouble(TableItemPlan::getSaleCostSum)
+                        .mapToDouble(TableItemFact::getSaleCostSum)
                         .sum()
             )
         );
         factProfitSumTF.setText(
                 new DoubleStringConverter().toString(
                     factTableWrapper.getItems().stream()
-                        .mapToDouble(TableItemPlan::getProfit)
+                        .mapToDouble(TableItemFact::getProfit)
                         .sum()
                 )
         );

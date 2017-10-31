@@ -1,49 +1,39 @@
-
 package report.entities.items.plan;
 
-import java.sql.Timestamp;
 import javafx.beans.Observable;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 import javafx.util.Callback;
 import report.entities.items.TableClone;
 
-/**
- * FACT
- * @author xxx
- */
-public class TableItemPlan implements TableClone {
+import java.sql.Timestamp;
 
+public  class TableItemFact implements TableClone  {
     private long id;
     private Timestamp dateCreate;
-    
-    protected final IntegerProperty  typeID;
-    protected final StringProperty   type;
+
+    protected final IntegerProperty typeID;
+    protected final StringProperty type;
     protected final IntegerProperty  quantity;
-    protected final DoubleProperty   SmetCostSum;                            
+    private final DoubleProperty   SmetCost;
+    protected final DoubleProperty SmetCostSum;
+    private  final DoubleProperty costHouseSum;
+    private final DoubleProperty   SaleCost;
     protected final DoubleProperty   SaleCostSum;
     protected final DoubleProperty   profit;
 
-    private final IntegerProperty  rest;
-    private final DoubleProperty   SmetCost;                            
-    private final DoubleProperty   SaleCost; 
 
-    public TableItemPlan(
-            long      id, 
+    public TableItemFact(
+            long   id,
             Timestamp dateCreate,
-            Integer   typeID,
-            String    type, 
-            Integer   quantity,
-            Integer   rest, 
-            Double     SmetCost,
-            Double     SmetCostSum,
-            Double     SaleCost,
-            Double     SaleCostSum,
-            Double     profit
+            int    typeID,
+            String type,
+            int    quantity,
+            double SmetCost,
+            double SmetCostSum,
+            double costHouseSum,
+            double SaleCost,
+            double SaleCostSum,
+            double profit
     ) {
         this.id = id;
         this.dateCreate   = dateCreate;
@@ -52,46 +42,46 @@ public class TableItemPlan implements TableClone {
         this.quantity     = new SimpleIntegerProperty(quantity);
         this.SmetCostSum  = new SimpleDoubleProperty(SmetCostSum);
         this.SaleCostSum  = new SimpleDoubleProperty(SaleCostSum);
-        
-        this.rest      = new SimpleIntegerProperty(rest);
+
         this.SmetCost  = new SimpleDoubleProperty(SmetCost);
         this.SaleCost  = new SimpleDoubleProperty(SaleCost);
+        this.costHouseSum = new SimpleDoubleProperty(costHouseSum);
         this.profit    = new SimpleDoubleProperty(profit);
     }
-    
+
     //Clone CONSTRUCTOR
     @Override
     public TableClone getClone() {
-         TableClone clone = new TableItemPlan(
-                                        this.getId(),
-                                        this.getDateCreate(),
-                                        this.getTypeID(),
-                                        this.getType(),
-                                        this.getQuantity(),
-                                            this.getRest(),
-                                            this.getSmetCost(),
-                                        this.getSmetCostSum(),
-                                            this.getSaleCost(),
-                                        this.getSaleCostSum(),
-                                        this.getProfit()
-                                    );
-         return clone;
+        TableClone clone = new TableItemFact(
+                this.getId(),
+                this.getDateCreate(),
+                this.getTypeID(),
+                this.getType(),
+                this.getQuantity(),
+                this.getSmetCost(),
+                this.getSmetCostSum(),
+                this.getCostHouseSum(),
+                this.getSaleCost(),
+                this.getSaleCostSum(),
+                this.getProfit()
+        );
+        return clone;
     }
 
 
-    
+
     //Getter / Setter ==================================================================================
-    
+
     @Override public Long  getId()                    {return this.id;}
     @Override public void  setId(Long id)             {this.id = id;  }
 
     public Timestamp       getDateCreate()            {return dateCreate;  }
     public void            setDateCreate(Timestamp v) {this.dateCreate = v;}
-    
+
     public IntegerProperty getTypeIDProperty()       {return typeID;}
     public Integer         getTypeID()               {return typeID.getValue();}
     public void            setTypeID(Integer v)      {this.typeID.setValue(v); }
-    
+
     public StringProperty  getTypeProperty()          {return type;}
     public String          getType()                  {return type.getValue();}
     public void            setType(String v)          {this.type.setValue(v); }
@@ -107,11 +97,8 @@ public class TableItemPlan implements TableClone {
     public DoubleProperty   getSaleCostSumProperty() {return SaleCostSum; }
     public Double           getSaleCostSum()         {return SaleCostSum.getValue();}
     public void             setSaleCostSum(Double v)  {this.SaleCostSum.setValue(v); }
-    
-    public IntegerProperty getRestProperty() {return rest;           }
-    public Integer         getRest()         {return rest.getValue();}
-    public void            setRest(Integer v){this.rest.setValue(v); }
-    
+
+
     public DoubleProperty getSmetCostProperty() {return SmetCost;           }
     public Double         getSmetCost()         {return SmetCost.getValue();}
     public void           setSmetCost(Double v)  {this.SmetCost.setValue(v); }
@@ -124,39 +111,47 @@ public class TableItemPlan implements TableClone {
     public DoubleProperty getProfitProperty() {return profit;}
     public void           setProfit(double profit) {this.profit.set(profit);}
 
+    public double getCostHouseSum() {
+        return costHouseSum.get();
+    }
+    public DoubleProperty costHouseSumProperty() {
+        return costHouseSum;
+    }
+    public void setCostHouseSum(double costHouseSum) {
+        this.costHouseSum.set(costHouseSum);
+    }
+
     @Override
     public int hashCode() {
         int hash = 33;
         hash = 3 * hash + (this.typeID      != null ? this.typeID.intValue()       : 0);
         hash = 3 * hash + (this.type        != null ? this.type.hashCode()         : 0);
         hash = 3 * hash + (this.quantity    != null ? this.quantity.intValue()     : 0);
-        hash = 3 * hash + (this.rest        != null ? this.rest.intValue()         : 0);
         hash = 3 * hash + (this.SmetCost    != null ? this.SmetCost.intValue()     : 0);
         hash = 3 * hash + (this.SmetCostSum != null ? this.SmetCostSum.intValue()  : 0);
         hash = 3 * hash + (this.SaleCost    != null ? this.SaleCost.intValue()     : 0);
         hash = 3 * hash + (this.SaleCostSum != null ? this.SaleCostSum.intValue()  : 0);
         hash = 3 * hash + (this.profit      != null ? this.profit.intValue()       : 0);
+        hash = 3 * hash + (this.costHouseSum != null ? this.costHouseSum.intValue()    : 0);
+
         return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
-            
+
         if (obj == null) {
             return false;
         }
-        if (!TableItemPlan.class.isAssignableFrom(obj.getClass())) {
+        if (!TableItemFact.class.isAssignableFrom(obj.getClass())) {
             return false;
         }
-        final TableItemPlan other = (TableItemPlan) obj;
-       
+        final TableItemFact other = (TableItemFact) obj;
+
         if ((this.type.get() == null) ? (other.type.getValue() != null) : !this.type.get().equals(other.type.get())) {
             return false;
         }
         if (this.quantity.get() != other.quantity.get()) {
-            return false;
-        }
-        if (this.rest.get() != other.rest.get()) {
             return false;
         }
         if (this.typeID.get() != other.typeID.get()) {
@@ -177,27 +172,26 @@ public class TableItemPlan implements TableClone {
         if (this.profit.get() != other.profit.get()) {
             return false;
         }
-    return true;
+        if (this.costHouseSum.get() != other.costHouseSum.get()) {
+            return false;
+        }
+        return true;
     }
-        
+
     /**
-    *Extractor 
+     *Extractor
      * @return extractor
-    */
-    public static Callback<TableItemPlan, Observable[]> extractor() {
-        return (TableItemPlan p) -> new Observable[]{
-            p.getTypeIDProperty(),
-            p.getTypeProperty(),
-            p.getQuantityProperty(),
-            p.getSaleCostProperty(),
-            p.getSmetCostProperty(),
-            p.getSaleCostSumProperty(),
-            p.getSmetCostSumProperty(),
-            p.getProfitProperty()
+     */
+    public static Callback<TableItemFact, Observable[]> extractor() {
+        return (TableItemFact p) -> new Observable[]{
+                p.getTypeIDProperty(),
+                p.getTypeProperty(),
+                p.getQuantityProperty(),
+                p.getSaleCostProperty(),
+                p.getSmetCostProperty(),
+                p.getSaleCostSumProperty(),
+                p.getSmetCostSumProperty(),
+                p.getProfitProperty()
         };
     }
-    
-
-
-    
 }

@@ -61,8 +61,7 @@ public class TitledStackModel extends StackPane{
 ********************************************************************************************************************/ 
     //1
     private void init_tableView(){
-        tableViewWrapper = EstimateControllerTF.getEst(enumEst);
-        tableViewWrapper.setTitle(title);
+        tableViewWrapper = EstimateControllerTF.getEst(enumEst,title);
         
         if(enumEst.getTabMap().get(title) != null){
              tableViewWrapper.setTableData((ObservableList) enumEst.getTabMap().get(title));
@@ -84,7 +83,7 @@ public class TitledStackModel extends StackPane{
     //3
     private void init_titledPane(){
         titledPane.setText(title);
-        titledPane.setContent(tableViewWrapper.getTableView());
+        titledPane.setContent(tableViewWrapper.tableView());
         
         titledPane.setExpanded(false);
         titledPane.setAnimated(false);      
@@ -96,9 +95,9 @@ public class TitledStackModel extends StackPane{
     public  void updateTableItems(){
         tableViewWrapper.updateTableFromBASE(new ItemEstDAO().getOneBildingPartList(enumEst, title));
     }
-    
-    
-//Public Methots     ============================================================================   
+
+
+//Public Methots     ============================================================================
 
 //    public void initContextMenu(ContextMenu cm){
 //        
