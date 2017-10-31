@@ -10,36 +10,11 @@
 
 <GridPane fx:id="planGP" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.layoutControllers.planning.PlanningController">
    <children>
-      <TextField fx:id="planTypeTF" promptText="Тип" GridPane.rowIndex="4">
-         <GridPane.margin>
-            <Insets left="5.0" right="5.0" />
-         </GridPane.margin>
-      </TextField>
-      <TextField fx:id="planSmetTF" promptText="Сметная С." GridPane.columnIndex="2" GridPane.rowIndex="4">
-         <GridPane.margin>
-            <Insets left="5.0" right="5.0" />
-         </GridPane.margin>
-      </TextField>
-      <TextField fx:id="planSaleTF" promptText="Продажная C." GridPane.columnIndex="3" GridPane.rowIndex="4">
-         <GridPane.margin>
-            <Insets left="5.0" right="5.0" />
-         </GridPane.margin>
-      </TextField>
-      <Button fx:id="planAddItemButton" mnemonicParsing="false" onAction="#handle_planAddItemButton" text="Добавить" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
-         <GridPane.margin>
-            <Insets left="5.0" right="5.0" />
-         </GridPane.margin>
-      </Button>
-      <CheckBox fx:id="planEditСheckBox" mnemonicParsing="false" text="Редактировать" GridPane.columnIndex="4" GridPane.columnSpan="2" GridPane.rowIndex="4">
+      <CheckBox fx:id="planEditСheckBox" mnemonicParsing="false" onAction="#planEditСheckBox_handler" text="Редактировать" GridPane.columnSpan="2" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets left="5.0" right="5.0" />
          </GridPane.margin>
       </CheckBox>
-      <TextField fx:id="planQuantityTF" promptText="Кол-во" GridPane.columnIndex="1" GridPane.rowIndex="4">
-         <GridPane.margin>
-            <Insets left="5.0" right="5.0" />
-         </GridPane.margin>
-      </TextField>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="План">
          <font>
             <Font size="14.0" />
@@ -48,7 +23,7 @@
             <Insets left="10.0" />
          </GridPane.margin>
       </Text>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Факт" GridPane.rowIndex="5">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Факт" GridPane.rowIndex="6">
          <font>
             <Font size="14.0" />
          </font>
@@ -56,62 +31,62 @@
             <Insets left="10.0" />
          </GridPane.margin>
       </Text>
-      <TextField fx:id="planSmetSumTF" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="3">
+      <TextField fx:id="planSmetSumTF" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets left="5.0" right="5.0" />
          </GridPane.margin>
       </TextField>
-      <TextField fx:id="planSaleSumTF" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="3">
+      <TextField fx:id="planSaleSumTF" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets left="5.0" right="5.0" />
          </GridPane.margin>
       </TextField>
-      <TextField fx:id="planProfitSumTF" editable="false" GridPane.columnIndex="5" GridPane.rowIndex="3">
+      <TextField fx:id="planProfitSumTF" editable="false" GridPane.columnIndex="5" GridPane.rowIndex="4">
          <GridPane.margin>
             <Insets left="5.0" right="5.0" />
          </GridPane.margin>
       </TextField>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Себестоимость (Сумм.)" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Себестоимость (Сумм.)" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets left="5.0" right="5.0" />
          </GridPane.margin>
       </Text>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Выручка (Сумм.)" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Выручка (Сумм.)" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets left="5.0" right="5.0" />
          </GridPane.margin>
       </Text>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Прибыль ( Сумм.)" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="2">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Прибыль ( Сумм.)" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets left="5.0" right="5.0" />
          </GridPane.margin>
       </Text>
-      <TextField fx:id="factSmetSumTF" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="8">
+      <TextField fx:id="factSmetSumTF" editable="false" GridPane.columnIndex="3" GridPane.rowIndex="9">
          <GridPane.margin>
             <Insets left="5.0" right="5.0" />
          </GridPane.margin>
       </TextField>
-      <TextField fx:id="factSaleSumTF" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="8">
+      <TextField fx:id="factSaleSumTF" editable="false" GridPane.columnIndex="4" GridPane.rowIndex="9">
          <GridPane.margin>
             <Insets left="5.0" right="5.0" />
          </GridPane.margin>
       </TextField>
-      <TextField fx:id="factProfitSumTF" editable="false" GridPane.columnIndex="5" GridPane.rowIndex="8">
+      <TextField fx:id="factProfitSumTF" editable="false" GridPane.columnIndex="5" GridPane.rowIndex="9">
          <GridPane.margin>
             <Insets left="5.0" right="5.0" />
          </GridPane.margin>
       </TextField>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Себестоимость (Сумм.)" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Себестоимость (Сумм.)" GridPane.columnIndex="3" GridPane.halignment="RIGHT" GridPane.rowIndex="8">
          <GridPane.margin>
             <Insets left="5.0" right="5.0" />
          </GridPane.margin>
       </Text>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Выручка (Сумм.)" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Выручка (Сумм.)" GridPane.columnIndex="4" GridPane.halignment="RIGHT" GridPane.rowIndex="8">
          <GridPane.margin>
             <Insets left="5.0" right="5.0" />
          </GridPane.margin>
       </Text>
-      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Прибыль ( Сумм.)" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="7">
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Прибыль ( Сумм.)" GridPane.columnIndex="5" GridPane.halignment="RIGHT" GridPane.rowIndex="8">
          <GridPane.margin>
             <Insets left="5.0" right="5.0" />
          </GridPane.margin>
@@ -121,11 +96,23 @@
             <Insets left="5.0" right="5.0" />
          </GridPane.margin>
       </TableView>
-      <TableView fx:id="factTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="6">
+      <TableView fx:id="factTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="6" GridPane.rowIndex="7">
          <GridPane.margin>
             <Insets left="5.0" right="5.0" />
          </GridPane.margin>
       </TableView>
+      <HBox fx:id="planAddRowHB" prefHeight="0.0" prefWidth="200.0" spacing="5.0" GridPane.columnSpan="6" GridPane.rowIndex="2">
+         <children>
+            <Button fx:id="planAddItemButton" mnemonicParsing="false" onAction="#handle_planAddItemButton" prefWidth="40.0" text="+" />
+            <TextField fx:id="planTypeTF" promptText="Тип" />
+            <TextField fx:id="planQuantityTF" promptText="Кол-во" />
+            <TextField fx:id="planSmetTF" promptText="Сметная С." />
+            <TextField fx:id="planSaleTF" promptText="Продажная C." />
+         </children>
+         <GridPane.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </GridPane.margin>
+      </HBox>
    </children>
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -138,6 +125,7 @@
    <rowConstraints>
       <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="0.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="15.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />

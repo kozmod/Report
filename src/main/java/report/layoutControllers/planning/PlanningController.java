@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import report.entities.items.plan.ItemPlanDAO;
 import report.entities.items.plan.TableItemFact;
 import report.entities.items.plan.TableItemPlan;
@@ -29,6 +31,8 @@ public class PlanningController implements Initializable{
     @FXML private TextField factSmetSumTF,factSaleSumTF, factProfitSumTF;
 
     @FXML private CheckBox  planEditСheckBox;
+    @FXML private HBox      planAddRowHB;
+    @FXML private GridPane planGP;
     @FXML private Button planAddItemButton;
 
     @FXML private TableView planTable,factTable;
@@ -67,12 +71,20 @@ public class PlanningController implements Initializable{
         this.computeSumPlanTextFields();
         this.computeSumFactTextFields();
 
-        this.setGroupNodeDisableProperty(planEditСheckBox.selectedProperty(),
-                planTypeTF,
-                planSmetTF,
-                planSaleTF,
-                planQuantityTF,
-                planAddItemButton);
+        planAddRowHB.disableProperty().bind(Bindings
+                .when(planEditСheckBox.selectedProperty())
+                .then(false)
+                .otherwise(true));
+        planAddRowHB.visibleProperty().bind(Bindings
+                .when(planEditСheckBox.selectedProperty())
+                .then(true)
+                .otherwise(false));
+//        this.setGroupNodeDisableProperty(planEditСheckBox.selectedProperty(),
+//                planTypeTF,
+//                planSmetTF,
+//                planSaleTF,
+//                planQuantityTF,
+//                planAddItemButton);
 
         planTableWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItemPlan> c) -> {
             System.out.println("Changed on " + c + " - allProperty /// init_PlanTab");
@@ -114,12 +126,15 @@ public class PlanningController implements Initializable{
             clearGroupOfTextInputControl(planTypeTF,planQuantityTF,planSmetTF,planSaleTF);
     }
 
-//    @FXML
-//    private void test(ActionEvent event) {
-//        System.out.println(planTableWrapper.editableProperty().get());
-//        System.out.println(planEditСheckBox.selectedProperty().get());
-//
-//    }
+    @FXML
+    private void planEditСheckBox_handler(ActionEvent event) {
+        if(planEditСheckBox.isSelected()){
+            planGP.getRowConstraints().get(2).setPrefHeight(30);
+        }else {
+            planGP.getRowConstraints().get(2).setPrefHeight(0);
+        }
+
+    }
     /*!******************************************************************************************************************
     *                                                                                                             METHODS
     ********************************************************************************************************************/
@@ -172,20 +187,20 @@ public class PlanningController implements Initializable{
         );
     }
 
-    /**
-     * Bind disable property to group of
-     */
-    private void setGroupNodeDisableProperty(BooleanProperty booleanProperty, Node... nodes){
-//        for(Node node : nodes)node.disableProperty().bind(Bindings.when(booleanProperty).then(false).otherwise(true));
-        Stream.of(nodes).forEach(
-                node -> node.disableProperty()
-                        .bind(Bindings
-                                .when(booleanProperty)
-                                .then(false)
-                                .otherwise(true)
-                        )
-        );
-    }
+//    /**
+//     * Bind disable property to group of
+//     */
+//    private void setGroupNodeDisableProperty(BooleanProperty booleanProperty, Node... nodes){
+////        for(Node node : nodes)node.disableProperty().bind(Bindings.when(booleanProperty).then(false).otherwise(true));
+//        Stream.of(nodes).forEach(
+//                node -> node.disableProperty()
+//                        .bind(Bindings
+//                                .when(booleanProperty)
+//                                .then(false)
+//                                .otherwise(true)
+//                        )
+//        );
+//    }
 
     /**
      * Clear for of TextInputControl like TextField, TextArea, etc.
