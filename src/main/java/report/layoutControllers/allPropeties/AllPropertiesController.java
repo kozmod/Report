@@ -6,13 +6,11 @@ import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
-import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.util.converter.NumberStringConverter;
 import report.models.coefficient.Quantity;
 //import report.models.Formula_test;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
@@ -86,7 +84,7 @@ public class AllPropertiesController implements Initializable {
 //        factTableWrapper.setTableData(new ItemPlanDAO().getListFact());
 
 
-        init_OSRTab();
+//        init_OSRTab();
         init_VariableTab();
         init_ContractorTab();
 //        init_PlanTab();
@@ -95,37 +93,36 @@ public class AllPropertiesController implements Initializable {
 /*!******************************************************************************************************************
 *                                                                                                               INIT
 ********************************************************************************************************************/
-    /**
-     * Initialization of OSR Tab. 
-     */
-    private void init_OSRTab(){
-       
-       computeSumExpTextFields();
-       osrTableWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItemOSR> c) -> {
-                System.out.println("Changed on " + c + " report.layoutControllers.allPropeties.AllPropertiesController.init_OSRTab()" );
-                if(c.next() && 
-                        (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
-                            computeSumExpTextFields();
-                }
-        });
-       
-       //table Context menu property
-        osrTableWrapper.tableView().contextMenuProperty().bind(
-            Bindings.when(osrEditСheckBox.selectedProperty() )
-                .then(ContextMenuFactory.getCommonDSU(osrTableWrapper))
-                .otherwise( (ContextMenu) null  ));
-        //TableWrapper Editable property
-        osrTableWrapper.tableView().editableProperty()
-                    .bind(osrEditСheckBox.selectedProperty());
-        setGroupNodeDisableProperty(osrEditСheckBox.selectedProperty(),
-                                    osrAddTextTF, 
-                                    osrAddValueTF,
-                                    osrAddItemButton);
-//       siteQuantityTF.setText(Formula_test.siteQuantity.getValue().formatNumber());
-       siteQuantityTF.textProperty().bindBidirectional(Quantity.getQuantityProperty(), new NumberStringConverter());
-//       siteQuantityTF.textProperty().bindBidirectional(Formula.getQuantityProperty(), new NumberStringConverter());
-
-    }
+//    /**
+//     * Initialization of OSR Tab.
+//     */
+//    private void init_OSRTab(){
+//
+//       computeSumExpTextFields();
+//       osrTableWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItemOSR> c) -> {
+//                System.out.println("Changed on " + c + " report.layoutControllers.allPropeties.AllPropertiesController.init_OSRTab()" );
+//                if(c.next() &&
+//                        (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
+//                            computeSumExpTextFields();
+//                }
+//        });
+//
+//       //table Context menu property
+//        osrTableWrapper.tableView().contextMenuProperty().bind(
+//            Bindings.when(osrEditСheckBox.selectedProperty() )
+//                .then(ContextMenuFactory.getCommonDSU(osrTableWrapper))
+//                .otherwise( (ContextMenu) null  ));
+//        //TableWrapper Editable property
+//        osrTableWrapper.tableView().editableProperty()
+//                    .bind(osrEditСheckBox.selectedProperty());
+//        setGroupNodeDisableProperty(osrEditСheckBox.selectedProperty(),
+//                                    osrAddTextTF,
+//                                    osrAddValueTF,
+//                                    osrAddItemButton);
+//
+//       siteQuantityTF.textProperty().bindBidirectional(Quantity.getQuantityProperty(), new NumberStringConverter());
+//
+//    }
     
      /**
      * Initialization of Variable Tab. 
@@ -235,7 +232,7 @@ public class AllPropertiesController implements Initializable {
     @FXML
     private void handle_osrAddItemButton(ActionEvent event) {  
         Double expenses = new DoubleStringConverter().fromString(osrAddValueTF.getText());
-        Double expensesPerHouse = expenses/Quantity.getQuantityValue();
+        Double expensesPerHouse = expenses/Quantity.value();
         osrTableWrapper.getItems()
                 .add(new TableItemOSR(0,osrAddTextTF.getText(),expenses,expensesPerHouse ));
         

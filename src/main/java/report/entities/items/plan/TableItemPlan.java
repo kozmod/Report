@@ -20,17 +20,17 @@ public class TableItemPlan implements TableClone {
 
     private long id;
     private Timestamp dateCreate;
-    
+
     protected final IntegerProperty  typeID;
     protected final StringProperty   type;
     protected final IntegerProperty  quantity;
-    protected final DoubleProperty   SmetCostSum;                            
+    protected final DoubleProperty   SmetCostSum;
     protected final DoubleProperty   SaleCostSum;
     protected final DoubleProperty   profit;
 
     private final IntegerProperty  rest;
-    private final DoubleProperty   SmetCost;                            
-    private final DoubleProperty   SaleCost; 
+    private final DoubleProperty   SmetCost;
+    private final DoubleProperty   SaleCost;
 
     public TableItemPlan(
             long      id, 
@@ -141,7 +141,6 @@ public class TableItemPlan implements TableClone {
 
     @Override
     public boolean equals(Object obj) {
-            
         if (obj == null) {
             return false;
         }

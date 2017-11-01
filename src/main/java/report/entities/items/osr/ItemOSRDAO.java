@@ -3,6 +3,7 @@ package report.entities.items.osr;
 
 import report.layoutControllers.LogController;
 import report.entities.ItemDAO;
+import report.models.coefficient.Quantity;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -66,8 +67,8 @@ public class ItemOSRDAO implements ItemDAO<TableItemOSR,TableWrapper> {
                 Statement st = connection.createStatement();) {
                
                ResultSet rs = st.executeQuery(sqlQuery);
-               int q =  850;
-//               int q =  Formula.getQuantityValue();
+//               int q =  850;
+               int q = Quantity.value();
                while(rs.next()){
                    listAllOSR.add(new TableItemOSR(
                                                 rs.getLong  (SQL.Common.ID),

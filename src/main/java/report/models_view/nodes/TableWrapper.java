@@ -134,6 +134,7 @@ public class TableWrapper<E extends TableClone>  {
     public void setTableDataFromBASE(){
         tableView.setItems(dao.getList());
         saveTableItems();
+//        tableView.refresh();
     }
 
 

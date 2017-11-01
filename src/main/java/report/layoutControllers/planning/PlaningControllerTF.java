@@ -2,11 +2,15 @@ package report.layoutControllers.planning;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import report.entities.items.osr.ItemOSRDAO;
+import report.entities.items.osr.TableItemOSR;
 import report.entities.items.plan.ItemPlanDAO;
 import report.entities.items.plan.TableItemPlan;
+import report.models.coefficient.Quantity;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models.numberStringConverters.numberStringConverters.IntegerStringConverter;
 import report.models_view.nodes.TableWrapper;
+import report.models_view.nodes_factories.TableCellFactory;
 import report.models_view.nodes_factories.TableFactory;
 
 public class PlaningControllerTF implements TableFactory {
@@ -149,4 +153,47 @@ public class PlaningControllerTF implements TableFactory {
 
         return tableWrapper;
     }
+
+    /**
+     * Create TableWrapper "OSR"(AllPropertiesController).
+     * <br>
+     * Show SQL table Items where dell = 0
+     * <br>
+     *
+     * @return TableWrapper
+     */
+    @SuppressWarnings("Duplicates")
+    static TableWrapper decorOSR(TableView table){
+        TableWrapper tableWrapper = new TableWrapper(table,new ItemOSRDAO());
+
+//        tableWrapper.setEditable(true);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        TableColumn textColumn     = tableWrapper.addColumn("Наименование","text");
+        TableColumn<TableItemOSR,Double> valueAllColumn
+                = tableWrapper.addColumn("Значение (общее)","expenses");
+        TableColumn valueColumn    = tableWrapper.addColumn("Значение (за дом)","expensesPerHouse");
+
+        valueAllColumn.setEditable(true);
+//        valueColumn.setCellFactory(p -> TableCellFactory.getDecimalCell());
+//        TableFactory.setTextFieldCell_NumberStringConverter(valueAllColumn);
+        TableFactory.setTextFieldTableCell(
+                new DoubleStringConverter(),
+                valueAllColumn,
+                valueColumn
+        );
+
+        textColumn.setCellFactory(param -> TableCellFactory.getTestIdOSR());
+
+        valueAllColumn.setOnEditCommit((TableColumn.CellEditEvent<TableItemOSR, Double> t) -> {
+            TableItemOSR editingItem = (TableItemOSR) t.getTableView().getItems().get(t.getTablePosition().getRow());
+            editingItem.setExpenses(t.getNewValue());
+            editingItem.setExpensesPerHouse(t.getNewValue() / Quantity.value());
+
+            t.getTableView().refresh();
+        });
+
+        return tableWrapper;
+    }
+
 }

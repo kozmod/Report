@@ -13,7 +13,7 @@ import report.models_view.nodes.TableWrapper;
 import report.models_view.nodes_factories.TableCellFactory;
 import report.models_view.nodes_factories.TableFactory;
 
-public class AllPropertiesControllerTF implements TableFactory {
+class AllPropertiesControllerTF implements TableFactory {
 
     private AllPropertiesControllerTF() {
     }
@@ -26,7 +26,7 @@ public class AllPropertiesControllerTF implements TableFactory {
      *
      * @return TableWrapper
      */
-    public static TableWrapper decorOSR(TableView table){
+    static TableWrapper decorOSR(TableView table){
         TableWrapper tableWrapper = new TableWrapper(table,new ItemOSRDAO());
 
 //        tableWrapper.setEditable(true);
@@ -54,7 +54,7 @@ public class AllPropertiesControllerTF implements TableFactory {
             TableItemOSR editingItem = (TableItemOSR) t.getTableView().getItems().get(t.getTablePosition().getRow());
 
             editingItem.setExpenses(t.getNewValue());
-            editingItem.setExpensesPerHouse(t.getNewValue() / Quantity.getQuantityValue());
+            editingItem.setExpensesPerHouse(t.getNewValue() / Quantity.value());
 
             t.getTableView().refresh();
             //Diseble Save & Cancel Context menu Item
@@ -72,7 +72,7 @@ public class AllPropertiesControllerTF implements TableFactory {
      *
      * @return TableWrapper
      */
-    public static TableWrapper decorVariable(TableView table){
+    static TableWrapper decorVariable(TableView table){
         TableWrapper tableWrapper = new TableWrapper(table,new VariablePropertiesDAO());
 
 //        tableWrapper.setEditable(true);
@@ -106,7 +106,7 @@ public class AllPropertiesControllerTF implements TableFactory {
      *
      * @return TableWrapper
      */
-    public static TableWrapper decorContractor(TableView table){
+    static TableWrapper decorContractor(TableView table){
         TableWrapper tableWrapper = new TableWrapper(table,new ItemContractorDAO());
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

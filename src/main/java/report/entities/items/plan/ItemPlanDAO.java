@@ -3,6 +3,9 @@ package report.entities.items.plan;
 
 import report.entities.items.KS.ItemKSDAO;
 import report.entities.ItemDAO;
+import report.entities.items.TableClone;
+import report.models.coefficient.Quantity;
+import report.models_view.nodes.ContextMenuOptional;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -55,20 +58,13 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
                 +",F.[SaleCost]*F.[Quantity]  AS [SaleCostSUM]"
                 +",F.[NumberSession]"
                 +",F.[DateCreate]"
-                +" FROM dbo.[FinPlan] F";
-//                +" where dell = 2";
+                +" FROM dbo.[FinPlan] F"
+                +" WHERE dell = 0";
         try(Connection connection = SQLconnector.getInstance();
                 PreparedStatement pstmt = connection.prepareStatement(sqlString)) {
-
             pstmt.execute();
-
-
 //            System.out.println(b);
             ResultSet rs = pstmt.getResultSet();
-
-
-
-
                 while(rs.next()){
                     TableItemPlan item = new TableItemPlan(
                                     rs.getLong      (SQL.Common.ID),
@@ -142,8 +138,9 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
                 +",ISNULL((SELECT round(SUM(S.[SaleHouse])/COUNT(1),2)FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [SaleCost]"
                 +",ISNULL((SELECT round(SUM(S.[SaleHouse]),2)         FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [SaleCostSum]"
                 +",ISNULL((SELECT round(SUM(S.[CostHouse]),2)         FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [CostHouseSum]"
-                +" FROM  dbo.[FinPlan] F ";
-         
+                +" FROM  dbo.[FinPlan] F "
+                +" WHERE  dell = 0 ";
+
         try(Connection connection = SQLconnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sqlString);) {
             pstmt.execute();
@@ -173,14 +170,15 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
         return list;
     }
     
-    public Map<String,List<TableItemPlan>> getMap(String s){
-        int i =  getListFact().stream().filter(o -> o.getQuantity().equals(s)).findFirst().get().getQuantity();
-       
-        return new HashMap();
-    }
+//    public Map<String,List<TableItemPlan>> getMap(String s){
+//        int i =  getListFact().stream().filter(o -> o.getQuantity().equals(s)).findFirst().get().getQuantity();
+//
+//        return new HashMap();
+//    }
 
     @Override
-    public void delete(Collection<TableItemPlan> entry) {                
+    public void delete(Collection<TableItemPlan> entry) {
+        System.out.println("PLAN DELET SIZE " + entry.size());
         try(Connection connection   = SQLconnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement("update [dbo].[FinPlan] SET dell = 1 WHERE [id] = ? AND [dell] = 0;");) {
             //set false SQL Autocommit
@@ -204,6 +202,7 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
     
     @Override
     public void insert(Collection<TableItemPlan> entry) {
+        System.out.println("PLAN INS SIZE " + entry.size());
          String sql = "INSERT into [dbo].[FinPlan] "
                                     + "( " 
                                     + " [TypeID]" 
@@ -240,6 +239,12 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
         }
     }
 
-
-    
+    @Override
+    public void dellAndInsert(TableWrapper table) {
+        ItemDAO.super.dellAndInsert(table);
+        //????????????????????????????????????????????
+        Quantity.updateFromBase();
+//        table. setTableDataFromBASE();
+//        ContextMenuOptional.setTableItemContextMenuListener(table);
+    }
 }

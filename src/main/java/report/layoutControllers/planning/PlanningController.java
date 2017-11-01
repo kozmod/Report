@@ -1,18 +1,19 @@
 package report.layoutControllers.planning;
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.property.BooleanProperty;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.util.converter.NumberStringConverter;
+import report.entities.items.osr.TableItemOSR;
 import report.entities.items.plan.ItemPlanDAO;
 import report.entities.items.plan.TableItemFact;
 import report.entities.items.plan.TableItemPlan;
+import report.models.coefficient.Quantity;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models_view.nodes.ContextMenuOptional;
 import report.models_view.nodes.TableWrapper;
@@ -29,22 +30,46 @@ public class PlanningController implements Initializable{
     @FXML private TextField planTypeTF,planSmetTF,planSaleTF, planQuantityTF ;
     @FXML private TextField planSmetSumTF,planSaleSumTF, planProfitSumTF;
     @FXML private TextField factSmetSumTF,factSaleSumTF, factProfitSumTF;
+    @FXML private TextField osrAddTextTF, osrAddValueTF, siteQuantityTF, sumExpTF,  sumExpPerSiteTF;
 
     @FXML private CheckBox  planEditСheckBox;
+    @FXML private CheckBox  osrEditСheckBox;
     @FXML private HBox      planAddRowHB;
-    @FXML private GridPane planGP;
-    @FXML private Button planAddItemButton;
+    @FXML private HBox      osrAddRowHB;
+    @FXML private GridPane planGP,osrGP;
+    @FXML private Button   planAddItemButton;
+    @FXML private Button   osrAddItemButton;
 
-    @FXML private TableView planTable,factTable;
+    @FXML private TableView planTable,factTable,osrTable;
 
     private TableWrapper<TableItemPlan> planTableWrapper;
     private TableWrapper<TableItemFact> factTableWrapper;
+    private TableWrapper<TableItemOSR> osrTableWrapper;
 
     /*!******************************************************************************************************************
     *                                                                                                               INIT
     ********************************************************************************************************************/
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        init_PlanTab();
+        init_OSRTab();
+
+        Quantity.getQuantityProperty().addListener(e ->{
+            Quantity.updateFromBase();
+            //plan table
+            planTableWrapper. setTableDataFromBASE();
+            ContextMenuOptional.setTableItemContextMenuListener(planTableWrapper);
+            //osr table
+            osrTableWrapper.setTableDataFromBASE();
+            ContextMenuOptional.setTableItemContextMenuListener(osrTableWrapper);
+            //TF
+            computeSumExpTextFields();
+
+        });
+
+    }
+
+    private void init_PlanTab(){
         //add Plan TableView
         planTableWrapper = PlaningControllerTF.decorPlan(planTable);
         planTableWrapper.setTableDataFromBASE();
@@ -54,11 +79,6 @@ public class PlanningController implements Initializable{
         factTableWrapper = PlaningControllerTF.decorFact(factTable);
         factTableWrapper.setTableData(new ItemPlanDAO().getListFact());
 
-        init_PlanTab();
-
-    }
-
-    private void init_PlanTab(){
         //table Context menu property
         planTableWrapper.tableView().contextMenuProperty().bind(
                 Bindings.when(planEditСheckBox.selectedProperty() )
@@ -79,12 +99,6 @@ public class PlanningController implements Initializable{
                 .when(planEditСheckBox.selectedProperty())
                 .then(true)
                 .otherwise(false));
-//        this.setGroupNodeDisableProperty(planEditСheckBox.selectedProperty(),
-//                planTypeTF,
-//                planSmetTF,
-//                planSaleTF,
-//                planQuantityTF,
-//                planAddItemButton);
 
         planTableWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItemPlan> c) -> {
             System.out.println("Changed on " + c + " - allProperty /// init_PlanTab");
@@ -93,9 +107,58 @@ public class PlanningController implements Initializable{
                 this.computeSumPlanTextFields();
             }
         });
-
-
     }
+
+    /**
+     * Initialization of OSR Tab.
+     */
+    private void init_OSRTab(){
+        //add OSR TableView
+        osrTableWrapper = PlaningControllerTF.decorOSR(osrTable);
+        osrTableWrapper.setTableDataFromBASE();
+        ContextMenuOptional.setTableItemContextMenuListener(osrTableWrapper);
+
+        computeSumExpTextFields();
+        osrTableWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItemOSR> c) -> {
+            System.out.println("Changed on " + c + " report.layoutControllers.allPropeties.AllPropertiesController.init_OSRTab()" );
+            if(c.next() &&
+                    (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
+                computeSumExpTextFields();
+            }
+        });
+
+        //table Context menu property
+        osrTableWrapper.tableView().contextMenuProperty().bind(
+                Bindings.when(osrEditСheckBox.selectedProperty() )
+                        .then(ContextMenuFactory.getCommonDSU(osrTableWrapper))
+                        .otherwise( (ContextMenu) null  ));
+        //TableWrapper Editable property
+        osrTableWrapper.tableView().editableProperty()
+                .bind(osrEditСheckBox.selectedProperty());
+        osrAddRowHB.disableProperty().bind(Bindings
+                .when(osrEditСheckBox.selectedProperty())
+                .then(false)
+                .otherwise(true));
+        osrAddRowHB.visibleProperty().bind(Bindings
+                .when(osrEditСheckBox.selectedProperty())
+                .then(true)
+                .otherwise(false));
+//        setGroupNodeDisableProperty(osrEditСheckBox.selectedProperty(),
+//                osrAddTextTF,
+//                osrAddValueTF,
+//                osrAddItemButton);
+        siteQuantityTF.textProperty().bindBidirectional(Quantity.getQuantityProperty(), new NumberStringConverter());
+        osrAddRowHB.disableProperty().bind(Bindings
+                .when(osrEditСheckBox.selectedProperty())
+                .then(false)
+                .otherwise(true));
+        osrAddRowHB.visibleProperty().bind(Bindings
+                .when(osrEditСheckBox.selectedProperty())
+                .then(true)
+                .otherwise(false));
+    }
+
+
 
     /*!******************************************************************************************************************
     *                                                                                                     	    HANDLERS
@@ -135,6 +198,26 @@ public class PlanningController implements Initializable{
         }
 
     }
+    @FXML
+    private void osrEditСheckBox_handler(ActionEvent event) {
+        if(osrEditСheckBox.isSelected()){
+            osrGP.getRowConstraints().get(1).setPrefHeight(30);
+        }else {
+            osrGP.getRowConstraints().get(1).setPrefHeight(0);
+        }
+
+    }
+
+    @FXML
+    private void handle_osrAddItemButton(ActionEvent event) {
+        Double expenses = new DoubleStringConverter().fromString(osrAddValueTF.getText());
+        Double expensesPerHouse = expenses/ Quantity.value();
+        osrTableWrapper.getItems()
+                .add(new TableItemOSR(0,osrAddTextTF.getText(),expenses,expensesPerHouse ));
+
+
+    }
+
     /*!******************************************************************************************************************
     *                                                                                                             METHODS
     ********************************************************************************************************************/
@@ -208,6 +291,23 @@ public class PlanningController implements Initializable{
     private void clearGroupOfTextInputControl(TextInputControl ... nodes){
 //        for(TextInputControl node : nodes)node.clear();
         Stream.of(nodes).forEach(TextInputControl::clear);
+    }
+
+//    /**
+//     * Bind disable property to group of
+//     */
+//    private void setGroupNodeDisableProperty( BooleanProperty booleanProperty, Node ... nodes){
+//        for(Node node : nodes)node.disableProperty().bind(Bindings.when(booleanProperty).then(false).otherwise(true));
+//    }
+
+    /*!******************************************************************************************************************
+    *                                                                                                             METHODS
+    ********************************************************************************************************************/
+    private void computeSumExpTextFields(){
+        sumExpTF.setText(new DoubleStringConverter().toString(
+                osrTableWrapper.getItems().stream().mapToDouble(TableItemOSR::getExpenses).sum()));
+        sumExpPerSiteTF.setText(new DoubleStringConverter().toString(
+                osrTableWrapper.getItems().stream().mapToDouble(TableItemOSR::getExpensesPerHouse).sum()));
     }
 
 }
