@@ -12,7 +12,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import report.models.coefficient.Quantity;
-//import report.models.Formula_test;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models_view.nodes.TableWrapper;
 import report.models_view.nodes_factories.ContextMenuFactory;
@@ -26,14 +25,14 @@ import report.models_view.nodes.ContextMenuOptional;
 public class AllPropertiesController implements Initializable {
 
 
-    @FXML private TextField osrAddTextTF,
-            osrAddValueTF,
-            siteQuantityTF,
-            sumExpTF,
-            sumExpPerSiteTF;
+//    @FXML private TextField osrAddTextTF,
+//            osrAddValueTF,
+//            siteQuantityTF,
+//            sumExpTF,
+//            sumExpPerSiteTF;
 
-    @FXML private TableView osrTable,
-            variableTable,
+//    @FXML private TableView  osrTable;
+    @FXML private TableView variableTable,
             contractorTable,
             planTable,
             factTable;
@@ -44,11 +43,12 @@ public class AllPropertiesController implements Initializable {
     @FXML private TextField factSmetSumTF,factSaleSumTF, factProfitSumTF;
 
     @FXML private TextArea  contractorAdressTA,contractorCommentsTA;
-    @FXML private CheckBox  osrEditСheckBox, variableEditСheckBox, contractorEditСheckBox, planEditСheckBox;
+//    @FXML private CheckBox  osrEditСheckBox;
+    @FXML private CheckBox  variableEditСheckBox, contractorEditСheckBox, planEditСheckBox;
     @FXML private Button    osrAddItemButton, planAddItemButton;
     @FXML private Button    contractorAddItemButton, contractorSaveItemButton, contractorCencelItemButton;
 
-    private TableWrapper<TableItemOSR> osrTableWrapper;
+//    private TableWrapper<TableItemOSR> osrTableWrapper;
     private TableWrapper<TableItemVariable> variableTableWrapper ;
     private TableWrapper<TableItemContractor> contractorTableWrapper;
     private TableWrapper<TableItemPlan> planTableWrapper;
@@ -59,10 +59,10 @@ public class AllPropertiesController implements Initializable {
     ********************************************************************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        //add OSR TableView
-        osrTableWrapper = AllPropertiesControllerTF.decorOSR(osrTable);
-        osrTableWrapper.setTableDataFromBASE();
-        ContextMenuOptional.setTableItemContextMenuListener(osrTableWrapper);
+////        //add OSR TableView
+//        osrTableWrapper = AllPropertiesControllerTF.decorOSR(osrTable);
+//        osrTableWrapper.setTableDataFromBASE();
+//        ContextMenuOptional.setTableItemContextMenuListener(osrTableWrapper);
 
 //        //add OSR TableView
         variableTableWrapper = AllPropertiesControllerTF.decorVariable(variableTable);
@@ -229,15 +229,15 @@ public class AllPropertiesController implements Initializable {
 *                                                                                                     	    HANDLERS
 ********************************************************************************************************************/
 
-    @FXML
-    private void handle_osrAddItemButton(ActionEvent event) {  
-        Double expenses = new DoubleStringConverter().fromString(osrAddValueTF.getText());
-        Double expensesPerHouse = expenses/Quantity.value();
-        osrTableWrapper.getItems()
-                .add(new TableItemOSR(0,osrAddTextTF.getText(),expenses,expensesPerHouse ));
-        
-        
-    }
+//    @FXML
+//    private void handle_osrAddItemButton(ActionEvent event) {
+//        Double expenses = new DoubleStringConverter().fromString(osrAddValueTF.getText());
+//        Double expensesPerHouse = expenses/Quantity.value();
+//        osrTableWrapper.getItems()
+//                .add(new TableItemOSR(0,osrAddTextTF.getText(),expenses,expensesPerHouse ));
+//
+//
+//    }
 
     @FXML
     private void handle_contractorItemButton(ActionEvent event) {  
@@ -302,12 +302,12 @@ public class AllPropertiesController implements Initializable {
 /*!******************************************************************************************************************
 *                                                                                                             METHODS
 ********************************************************************************************************************/
-    private void computeSumExpTextFields(){
-        sumExpTF.setText(new DoubleStringConverter().toString(
-                                osrTableWrapper.getItems().stream().mapToDouble(TableItemOSR::getExpenses).sum()));
-        sumExpPerSiteTF.setText(new DoubleStringConverter().toString(
-                                osrTableWrapper.getItems().stream().mapToDouble(TableItemOSR::getExpensesPerHouse).sum()));
-    }
+//    private void computeSumExpTextFields(){
+//        sumExpTF.setText(new DoubleStringConverter().toString(
+//                                osrTableWrapper.getItems().stream().mapToDouble(TableItemOSR::getExpenses).sum()));
+//        sumExpPerSiteTF.setText(new DoubleStringConverter().toString(
+//                                osrTableWrapper.getItems().stream().mapToDouble(TableItemOSR::getExpensesPerHouse).sum()));
+//    }
 //    private void computeSumPlanTextFields(){
 //
 //        planSmetSumTF.setText(DecimalFormatter.formatNumber(

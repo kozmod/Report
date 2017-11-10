@@ -35,12 +35,12 @@ public class SiteCommonDAO {
                
         ArrayList<TableItemPreview> siteList = new ArrayList<>();
                 
-        String psmtmtString = "SELECT [id],[SiteNumber], [Contractor]  from dbo.[Site] "
+        String psmtmtString = "SELECT [id],[SiteNumber], [Contractor]  FROM dbo.[Site] "
                                    + "WHERE [StatusPayment] LIKE ? "
-                                   + "And [QueueBuilding] LIKE ? "
-                                   + "And [SiteNumber] LIKE ? "
-                                   + "And [dell] = 0 "                                           //dell 0 - false / 1 - true
-                                   + "Order by [SiteNumber]";
+                                   + "AND [QueueBuilding] LIKE ? "
+                                   + "AND [SiteNumber] LIKE ? "
+                                   + "AND [dell] = 0 "                                           //dell 0 - false / 1 - true
+                                   + "ORDER BY [SiteNumber]";
             try (Connection connection = SQLconnector.getInstance();
                  PreparedStatement pstmt = connection.prepareStatement(psmtmtString)){
                 pstmt.setString(1,payment);
