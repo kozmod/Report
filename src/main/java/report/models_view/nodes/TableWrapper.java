@@ -17,7 +17,7 @@ import report.models_view.data_utils.Memento;
 import java.util.List;
 import java.util.Objects;
 
-public class TableWrapper<E extends TableClone>  {
+public class TableWrapper<E extends TableClone>   {
 
 
 
