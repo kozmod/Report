@@ -9,7 +9,7 @@ import javafx.util.Callback;
 import report.entities.items.TableClone;
 
 
-public class TableItemContractor implements TableClone {
+public class TableItemContractor implements TableClone<TableItemContractor> {
     
     private Long id;
     private final StringProperty  contractor;  
@@ -29,8 +29,8 @@ public class TableItemContractor implements TableClone {
     * Clone CONSTRUCTOR implementation
     */
     @Override
-    public TableClone getClone() {
-        TableClone clone = new TableItemContractor(
+    public TableItemContractor getClone() {
+        TableItemContractor clone = new TableItemContractor(
                                             this.getId(),
                                             this.getContractor(),
                                             this.getDirector(),

@@ -121,7 +121,7 @@ public class CorAccountController implements Initializable {
 //        accTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 //        accTable.getColumns().setAll(dateCol, numCol,ClientCol,CorCol, VOCol,dascCol,TurnoverCol);
 //
-//        accTable.setItems(new ItemAccDAO().getList(0,0));
+//        accTable.setItems(new ItemAccDAO().getObject(0,0));
 //
 //    }
 

@@ -1,45 +1,37 @@
 
-package report.models_view.nodes;
+package report.models_view.nodes.node_wrappers;
 
-import javafx.beans.property.BooleanProperty;
-import javafx.beans.property.ObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.util.Callback;
-import report.entities.ItemDAO;
+import report.entities.CommonDAO;
 import report.entities.items.TableClone;
-import report.models_view.data_utils.Memento;
+import report.models.mementos.Memento;
+import report.models.mementos.TableMemento;
 
 import java.util.List;
 import java.util.Objects;
 
-public class TableWrapper<E extends TableClone>   {
+public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<ObservableList<E>> {
 
-
-
-    private String title;
-    private Memento<E> memento;
     protected final TableView<E> tableView;
-    private final  ItemDAO<E,TableWrapper> dao;
-
 
 
 /*!******************************************************************************************************************
 *                                                                                                       MEMENTO
 ********************************************************************************************************************/
-    //Memento - create
+    //TableMemento - create
     /**
      * Save Items of TableView.
      */
     public void saveTableItems() {
-        memento = new Memento<>(tableView.getItems());
+        super.memento = new TableMemento<>(tableView.getItems());
     }
 
-    //Memento - undo
+    //TableMemento - undo
     /**
      * Undo changes of TableView Items.
      */
@@ -48,7 +40,7 @@ public class TableWrapper<E extends TableClone>   {
 
     }
 
-    public Memento getMemento(){
+    public Memento<ObservableList<E>> getMemento(){
         return memento;
     }
 
@@ -56,50 +48,39 @@ public class TableWrapper<E extends TableClone>   {
 *                                                                                                       CONSTRUCTORS
 ********************************************************************************************************************/
 
-    public TableWrapper (TableView<E> table,ItemDAO<E,TableWrapper> dao) {
-
-        this("TEST TITLE",table, dao);
+    public TableWrapper (TableView<E> table,CommonDAO<E,TableWrapper<E>> commonDao) {
+        this("TEST TITLE",table, commonDao);
     }
 
-    public TableWrapper(String title, TableView<E> table, ItemDAO<E,TableWrapper> dao) {
+    public TableWrapper(String title, TableView<E> table, CommonDAO commonDao) {
+        super(title, commonDao);
         tableView = table;
-        this.title = title;
-        this.dao = dao;
+
     }
 
 /*!******************************************************************************************************************
 *                                                                                                      Getter/Setter
 ********************************************************************************************************************/
-
+    @Override
     public String getTitle()   {return title;}
 //    public  void setTitle(String title) {this.title = title;}
 
 //   public <E>CeartakerUID getCRUD(){return  ceartaker;}
 
-    public ItemDAO getDAO() {
-        if(this.dao == null)
+    @Override
+    public CommonDAO getDAO() {
+        if(this.commonDao == null)
             throw  new NullPointerException(TableWrapper.class.getCanonicalName());
-        return dao;
+        return commonDao;
     }
-
-    public  TableView<E> tableView(){ return tableView; }
-
-    ///
+    @Override
+    public ContextMenu getContextMenu(){ return tableView.getContextMenu();}
+    @Override
+    public void setContextMenu(ContextMenu contextMenu){ tableView.setContextMenu(contextMenu);}
+    @Override
     public ObservableList<E> getItems(){ return tableView.getItems();}
 
-
-    public ContextMenu getContextMenu(){ return tableView.getContextMenu();}
-    public void setContextMenu(ContextMenu contextMenu){ tableView.setContextMenu(contextMenu);}
-
-//    public void setColumnResizePolicy(Callback<ResizeFeatures, Boolean> callback ){ tableView.setColumnResizePolicy(callback);}
-
-//    public ObjectProperty<ContextMenu> contextMenuProperty(){return tableView.contextMenuProperty();}
-
-//    public BooleanProperty editableProperty(){return tableView.editableProperty();}
-
-//    public void setItems(ObservableList<E> value){tableView.setItems(value);}
-
-    //    public void setDAO(ItemDAO<E,TableWrapper> dao) {this.dao = dao;}
+    public  TableView<E> tableView(){ return tableView; }
 
 
 /*!******************************************************************************************************************
@@ -110,10 +91,11 @@ public class TableWrapper<E extends TableClone>   {
      * <br>
      * 1. setItems()
      * <br>
-     * 2. saveTableItems() - save table items to Memento.
+     * 2. saveTableItems() - save table items to TableMemento.
      * <br>
      * @param items - Observable List of table item (inherited TableItems)
      */
+    @Override
     public void setTableData(ObservableList<E> items){
         tableView.setItems(items);
         saveTableItems();
@@ -126,15 +108,15 @@ public class TableWrapper<E extends TableClone>   {
     /**
      * Contain :
      * <br>
-     * 1. setItems() from <b>SQL</b> if <u>DAO</u> != <b>NULL</b>
+     * 1. setItems() from <b>SQL</b> if <u>CommonDAO</u> != <b>NULL</b>
      * <br>
-     * 2. saveTableItems() - save table items to Memento.
+     * 2. saveTableItems() - save table items to TableMemento.
      * <br>
      */
     public void setTableDataFromBASE(){
-        tableView.setItems(dao.getList());
+        tableView.setItems(commonDao.getList());
         saveTableItems();
-//        tableView.refresh();
+//        treeTableView.refresh();
     }
 
 

@@ -1,8 +1,8 @@
 
 package report.entities.items.osr;
 
+import report.entities.TableViewItemDAO;
 import report.layoutControllers.LogController;
-import report.entities.ItemDAO;
 import report.models.coefficient.Quantity;
 import report.usage_strings.SQL;
 import java.sql.Connection;
@@ -17,10 +17,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 //import report.models.Formula_test;
 import report.models.sql.SQLconnector;
-import report.models_view.nodes.TableWrapper;
+import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
-public class ItemOSRDAO implements ItemDAO<TableItemOSR,TableWrapper> {
+public class TableViewItemOSRDAO implements TableViewItemDAO<TableItemOSR,TableWrapper> {
 
     /**
     * Get String of a Mirror (SQL.Tables).
@@ -44,7 +44,7 @@ public class ItemOSRDAO implements ItemDAO<TableItemOSR,TableWrapper> {
                while(rs.next()){siteQuantity = rs.getInt(1);}
                
            } catch (SQLException ex) {
-               Logger.getLogger(ItemOSRDAO.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(TableViewItemOSRDAO.class.getName()).log(Level.SEVERE, null, ex);
            }
         return siteQuantity;
     }
@@ -81,7 +81,7 @@ public class ItemOSRDAO implements ItemDAO<TableItemOSR,TableWrapper> {
                    
                }
            } catch (SQLException ex) {
-               Logger.getLogger(ItemOSRDAO.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(TableViewItemOSRDAO.class.getName()).log(Level.SEVERE, null, ex);
            }
         return  listAllOSR;
     }
@@ -116,7 +116,7 @@ public class ItemOSRDAO implements ItemDAO<TableItemOSR,TableWrapper> {
             LogController.appendLogViewText(items.size() + " deleted");
             
         } catch (SQLException ex) {
-            Logger.getLogger(ItemOSRDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemOSRDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -162,7 +162,7 @@ public class ItemOSRDAO implements ItemDAO<TableItemOSR,TableWrapper> {
 //                });
             LogController.appendLogViewText(items.size() + " inserted");
         } catch (SQLException ex) {
-            Logger.getLogger(ItemOSRDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemOSRDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -170,15 +170,15 @@ public class ItemOSRDAO implements ItemDAO<TableItemOSR,TableWrapper> {
     
 //    @Override
 //    public void dellAndInsert(TableWrapper table) {
-//        Collection memento = table.getMemento().getSavedState(),
+//        Collection tableMemento = table.getMemento().getSavedState(),
 //                   current = table.getItems();
 //        
-////        DataUtils.DiffList diffList = new DataUtils.DiffList(memento,current);
+////        DataUtils.DiffList diffList = new DataUtils.DiffList(tableMemento,current);
 ////        if(diffList.exElements() != null 
 ////           || diffList.exElements().size() > 0) delete(diffList.exElements());
 ////        if(diffList.newElements()  != null 
 ////           || diffList.newElements().size()  > 0) insert(diffList.newElements());     
-//        DataUtils.DiffList diffList = new DataUtils.DiffList(memento,current);
+//        DataUtils.DiffList diffList = new DataUtils.DiffList(tableMemento,current);
 //        if(diffList.exElements() != null 
 //           || diffList.exElements().size() > 0) delete(diffList.intersection());
 //        if(diffList.newElements()  != null 

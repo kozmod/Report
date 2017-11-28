@@ -9,9 +9,9 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import report.entities.items.variable.VariablePropertiesCommonDAOTableView;
 import report.layoutControllers.estimate.EstimateController.Est;
 
-import report.entities.items.variable.VariablePropertiesDAO;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models.sql.SQLconnector;
 import report.usage_strings.FileFields;
@@ -29,7 +29,7 @@ public class FormulaQuery {
         String siteNumber = Est.Common.getSiteSecondValue(SQL.Site.SITE_NUMBER);
         String contractor = Est.Common.getSiteSecondValue(SQL.Site.CONTRACTOR);
 
-        Properties variableProperties = new VariablePropertiesDAO().getProperties();
+        Properties variableProperties = new VariablePropertiesCommonDAOTableView().getProperties();
         Double pse  = new DoubleStringConverter()
                 .fromString(
                 variableProperties.get(

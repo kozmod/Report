@@ -7,7 +7,6 @@ import java.time.LocalDate;
 
 public class EpochDayStringConverter extends StringConverter<Number> {
 
-
     private final StringConverter<LocalDate> converter;
 
     /*!******************************************************************************************************************

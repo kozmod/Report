@@ -1,7 +1,7 @@
 
 package report.entities.items.KS;
 
-import report.entities.ItemDAO;
+import report.entities.TableViewItemDAO;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,17 +18,17 @@ import report.layoutControllers.LogController;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.sql.SQLconnector;
 import report.entities.items.TableItem;
-import report.models_view.nodes.TableWrapperEST;
+import report.models_view.nodes.node_wrappers.TableWrapperEST;
 
 
-public class ItemKSDAO implements ItemDAO<TableItemKS, TableWrapperEST> {
+public class TableViewItemKSDAO implements TableViewItemDAO<TableItemKS, TableWrapperEST> {
     
     private Est enumEst;
     
     public Est getEnumEst(){return enumEst;}
 
-    public ItemKSDAO() {}
-    public ItemKSDAO(Est enumEst){this.enumEst = enumEst;}
+    public TableViewItemKSDAO() {}
+    public TableViewItemKSDAO(Est enumEst){this.enumEst = enumEst;}
     
     /**
     * Get String of a Mirror (SQL.Tables).
@@ -103,7 +103,7 @@ public class ItemKSDAO implements ItemDAO<TableItemKS, TableWrapperEST> {
                 }
    
         } catch (SQLException ex) {
-            Logger.getLogger(ItemKSDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemKSDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -163,7 +163,7 @@ public class ItemKSDAO implements ItemDAO<TableItemKS, TableWrapperEST> {
                 }
    
         } catch (SQLException ex) {
-            Logger.getLogger(ItemKSDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemKSDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -194,7 +194,7 @@ public class ItemKSDAO implements ItemDAO<TableItemKS, TableWrapperEST> {
                                                          +" [C/ " +item.getContractor() + "]");
                 });
         } catch (SQLException ex) {
-            Logger.getLogger(ItemKSDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemKSDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 //    @Override
@@ -236,7 +236,7 @@ public class ItemKSDAO implements ItemDAO<TableItemKS, TableWrapperEST> {
             pstmt.execute();
             
         } catch (SQLException ex) {
-            Logger.getLogger(ItemKSDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemKSDAO.class.getName()).log(Level.SEVERE, null, ex);
             
         } 
     }
@@ -288,7 +288,7 @@ public class ItemKSDAO implements ItemDAO<TableItemKS, TableWrapperEST> {
            //SQL commit
            connection.commit();
         } catch (SQLException ex) {
-            Logger.getLogger(ItemKSDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemKSDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 //    public void insert(Collection<TableItemKS> items) {
 //        try(Connection connection   = SQLconnector.getInstance();
@@ -385,7 +385,7 @@ public class ItemKSDAO implements ItemDAO<TableItemKS, TableWrapperEST> {
            pstmt.executeBatch();
            
         } catch (SQLException ex) {
-            Logger.getLogger(ItemKSDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemKSDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -393,7 +393,7 @@ public class ItemKSDAO implements ItemDAO<TableItemKS, TableWrapperEST> {
 //    public void dellAndInsert(Collection<TableItemKS> dellItem, Collection<TableItemKS> newItem){
     @Override
     public void dellAndInsert(TableWrapperEST table){
-        ItemDAO.super.dellAndInsert(table);
+        TableViewItemDAO.super.dellAndInsert(table);
         //??????????
 //        table.updateTableFromSQL(this.getOneKSList(Est.KS, ksNumber ));
         Est.KS.updateList_DL(this);

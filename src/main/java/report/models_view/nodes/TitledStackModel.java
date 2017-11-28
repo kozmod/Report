@@ -12,11 +12,13 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.StackPane;
+import report.entities.items.estimate.TableViewItemEstDAO;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.layoutControllers.estimate.EstimateControllerTF;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.entities.items.estimate.TableItemEst;
-import report.entities.items.estimate.ItemEstDAO;
+import report.models_view.nodes.node_wrappers.TableWrapper;
+import report.models_view.nodes.node_wrappers.TableWrapperEST;
 
 
 public class TitledStackModel extends StackPane{
@@ -93,7 +95,7 @@ public class TitledStackModel extends StackPane{
     
 
     public  void updateTableItems(){
-        tableViewWrapper.updateTableFromBASE(new ItemEstDAO().getOneBildingPartList(enumEst, title));
+        tableViewWrapper.updateTableFromBASE(new TableViewItemEstDAO().getOneBildingPartList(enumEst, title));
     }
 
 

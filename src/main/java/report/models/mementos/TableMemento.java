@@ -1,19 +1,20 @@
 
-package report.models_view.data_utils;
+package report.models.mementos;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.entities.items.TableClone;
 
-public  class Memento<E extends TableClone> {
+public  class TableMemento<E extends TableClone<E>> implements Memento<ObservableList<E>> {
 
     private  ObservableList<E> tableMemento;
 
-    public Memento(ObservableList<E>  tableItems) {
+    public TableMemento(ObservableList<E>  tableItems) {
         this.tableMemento  = getNewObs( tableItems);
 
     }
 
+    @Override
     public ObservableList<E> getSavedState() {return  this.getNewObs( tableMemento); }
 
     private ObservableList<E> getNewObs(ObservableList<E> items){
@@ -24,11 +25,11 @@ public  class Memento<E extends TableClone> {
     }
 }
 
-//public  class Memento<S extends TableClone> {
+//public  class TableMemento<S extends TableClone> {
 //
 //    private  ObservableList<S> tableMemento;
 //
-//    public Memento(ObservableList<S>  tableItems) {
+//    public TableMemento(ObservableList<S>  tableItems) {
 //        this.tableMemento  = getNewObs( tableItems);
 //
 //    }

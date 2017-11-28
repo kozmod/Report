@@ -1,9 +1,8 @@
 
 package report.entities.items.estimate;
 
-import javafx.collections.ObservableArray;
+import report.entities.TableViewItemDAO;
 import report.layoutControllers.LogController;
-import report.entities.ItemDAO;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,7 +12,6 @@ import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Collection;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
@@ -23,17 +21,17 @@ import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.sql.SQLconnector;
 import report.entities.items.TableItem;
 import report.entities.items.cb.TableItemCB;
-import report.models_view.nodes.TableWrapperEST;
+import report.models_view.nodes.node_wrappers.TableWrapperEST;
 
 
-public class ItemEstDAO implements ItemDAO<TableItemEst, TableWrapperEST> {
+public class TableViewItemEstDAO implements TableViewItemDAO<TableItemEst, TableWrapperEST> {
 
     private Est enumEst;
     
     public Est setEnumEst(){return enumEst;}
     
-    public ItemEstDAO() { }
-    public ItemEstDAO(Est enumEst) {this.enumEst = enumEst; }
+    public TableViewItemEstDAO() { }
+    public TableViewItemEstDAO(Est enumEst) {this.enumEst = enumEst; }
     
     /**
     * Get String of a Mirror (SQL.Tables).
@@ -133,7 +131,7 @@ public class ItemEstDAO implements ItemDAO<TableItemEst, TableWrapperEST> {
                 
                     
             } catch (SQLException ex) {
-               Logger.getLogger(ItemEstDAO.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(TableViewItemEstDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
       
        return listEstAll ;
@@ -182,7 +180,7 @@ public class ItemEstDAO implements ItemDAO<TableItemEst, TableWrapperEST> {
                         }
                    
         } catch (SQLException ex) {
-            Logger.getLogger(ItemEstDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemEstDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -271,7 +269,7 @@ public class ItemEstDAO implements ItemDAO<TableItemEst, TableWrapperEST> {
                 
                     
             } catch (SQLException ex) {
-               Logger.getLogger(ItemEstDAO.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(TableViewItemEstDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
       
        return listEstAll ;
@@ -306,7 +304,7 @@ public class ItemEstDAO implements ItemDAO<TableItemEst, TableWrapperEST> {
             LogController.appendLogViewText(items.size() + " deleted");
             
         } catch (SQLException ex) {
-            Logger.getLogger(ItemEstDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemEstDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 //    @Override
@@ -405,7 +403,7 @@ public class ItemEstDAO implements ItemDAO<TableItemEst, TableWrapperEST> {
                 });
             LogController.appendLogViewText(items.size() + " inserted");
         } catch (SQLException ex) {
-            Logger.getLogger(ItemEstDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemEstDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
@@ -510,7 +508,7 @@ public class ItemEstDAO implements ItemDAO<TableItemEst, TableWrapperEST> {
             pstmt.execute();
 //            System.out.println("OEF INSERRT " + coefficient.getValue());
         } catch (SQLException ex) {
-            Logger.getLogger(ItemEstDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemEstDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -554,22 +552,22 @@ public class ItemEstDAO implements ItemDAO<TableItemEst, TableWrapperEST> {
 
     /**
      * Delete TableItemEst  Entities from SQL and then insert new Entities.
-     * Use TableWrapper to saveEst  <b>memento</b> and <b>current</b> (Current List of elements).
+     * Use TableWrapper to saveEst  <b>tableMemento</b> and <b>current</b> (Current List of elements).
      * <br>Then update TableWrapper Items ( to saveEst new Element's ID of SQL)
      * <br>Then update "ALL elements List"
     * @param table (TableWrapper)
     */
     @Override
     public void dellAndInsert(TableWrapperEST table){
-//        Collection memento = table.getMemento().getSavedState(),
+//        Collection tableMemento = table.getMemento().getSavedState(),
 //                   current = table.getItems();     
 //        
-//        DataUtils.DiffList diffList = new DataUtils.DiffList(memento,current);
+//        DataUtils.DiffList diffList = new DataUtils.DiffList(tableMemento,current);
 //        if(diffList.exElements() != null 
 //           || diffList.exElements().size() > 0) delete(diffList.exElements());
 //        if(diffList.newElements()  != null 
 //           || diffList.newElements().size()  > 0) insert(diffList.newElements());     
-        ItemDAO.super.dellAndInsert(table);
+        TableViewItemDAO.super.dellAndInsert(table);
        //?????????????
 //        table.updateTableFromSQL(this.getOneBildingPartList(Est.Base, table.getTitle()));
         Est.Base.updateList_DL(this);

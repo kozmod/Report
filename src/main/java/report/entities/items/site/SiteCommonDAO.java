@@ -220,7 +220,7 @@ public class SiteCommonDAO {
                 //System.out.println(SiteInfoTable.saveEst(0).getFirstValue());
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SiteItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SiteTableViewItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 

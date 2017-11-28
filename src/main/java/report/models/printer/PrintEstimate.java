@@ -8,13 +8,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import report.entities.TableViewItemDAO;
 import report.entities.items.contractor.TableItemContractor;
 import report.usage_strings.SQL;
 import report.layoutControllers.estimate.EstimateController.Est;
 
 import report.entities.items.site.TableItemPreview;
 import report.entities.items.TableItem;
-import report.entities.ItemDAO;
 
 
 public class PrintEstimate extends AbstractPrinterXML{
@@ -25,7 +25,7 @@ public class PrintEstimate extends AbstractPrinterXML{
     private TableItemContractor contractorObject;
     
     //Constructor =====================================================================================================================    
-    public PrintEstimate(ItemDAO dao) {
+    public PrintEstimate(TableViewItemDAO dao) {
         this.obsKS = FXCollections.observableArrayList( dao.getList());
 
 

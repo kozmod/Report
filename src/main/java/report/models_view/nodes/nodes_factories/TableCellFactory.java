@@ -1,8 +1,11 @@
 
-package report.models_view.nodes_factories;
+package report.models_view.nodes.nodes_factories;
 
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
+import report.entities.items.estimate.TableViewItemEstDAO;
+import report.entities.items.plan.TableViewItemPlanDAO;
+import report.entities.items.site.SiteTableViewItemDAO;
 import report.entities.items.site.TableItemPreview;
 
 import java.time.LocalDate;
@@ -24,9 +27,6 @@ import report.entities.items.TableItem;
 import report.entities.items.cb.TableItemCB;
 import report.entities.items.estimate.TableItemEst;
 import report.entities.items.osr.TableItemOSR;
-import report.entities.items.estimate.ItemEstDAO;
-import report.entities.items.plan.ItemPlanDAO;
-import report.entities.items.site.SiteItemDAO;
 import report.usage_strings.ServiceStrings;
 
 
@@ -304,15 +304,15 @@ public class TableCellFactory{
                    comboBox.setPrefWidth(150);
                         switch(item.getSqlColumn()){
                             case SQL.Site.CONTRACTOR :
-                                comboBox.setItems(new SiteItemDAO().getDistinctOfColumn(SQL.Common.CONTRACTOR));
+                                comboBox.setItems(new SiteTableViewItemDAO().getDistinctOfColumn(SQL.Common.CONTRACTOR));
 //                                comboBox.setItems(new CommonQuery().getObsDISTINCT(SQL.Tables.C, SQL.Plan.TYPE_NAME, this));
                                 break;
                             case SQL.Site.TYPE_HOME  :
-                                comboBox.setItems(new ItemEstDAO().getDistinctOfColumn(SQL.Common.TYPE_HOME));
+                                comboBox.setItems(new TableViewItemEstDAO().getDistinctOfColumn(SQL.Common.TYPE_HOME));
                                 
                                 break;
                             case SQL.Site.SITE_TYPE_ID : 
-                                comboBox.setItems(new ItemPlanDAO().getDistinctOfColumn(SQL.Plan.TYPE_NAME));
+                                comboBox.setItems(new TableViewItemPlanDAO().getDistinctOfColumn(SQL.Plan.TYPE_NAME));
                                 break;
                             case SQL.Site.STATUS_JOBS : 
                                 comboBox.setItems(FXCollections.observableArrayList("закончен","не начат","в работе"));
@@ -385,7 +385,7 @@ public class TableCellFactory{
         
             checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
                 getTableView().getItems().get(getIndex()).setCheck(newValue);
-//                ((TableItemCB)tableView().getItems().saveEst(getIndex())).setCheck(newValue);
+//                ((TableItemCB)treeTableView().getItems().saveEst(getIndex())).setCheck(newValue);
             });
         }
     }
@@ -481,7 +481,7 @@ public class TableCellFactory{
                 setOnMouseClicked(mouseEvent ->{
                     if(mouseEvent.getButton().equals(MouseButton.PRIMARY) & mouseEvent.getClickCount() == 2){
                             String text = this.getText();
-//                            TableItem itemW = this.tableView().getItems()
+//                            TableItem itemW = this.treeTableView().getItems()
 //                                    .stream()
 //                                    .filter(i -> i.getJM_name().equals(text))
 //                                    .findFirst()
@@ -548,7 +548,7 @@ public class TableCellFactory{
 //                setOnMouseEntered(value ->{
 ////                     
 //                   
-//                     RootLayoutController.update_changeTable((ObservableList) Est.Base.findItemsList_DL(this.tableView().getItems().saveEst(this.getIndex())));
+//                     RootLayoutController.update_changeTable((ObservableList) Est.Base.findItemsList_DL(this.treeTableView().getItems().saveEst(this.getIndex())));
 //                    
 //                 });
 //                 

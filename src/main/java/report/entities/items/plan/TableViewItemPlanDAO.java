@@ -1,11 +1,9 @@
 
 package report.entities.items.plan;
 
-import report.entities.items.KS.ItemKSDAO;
-import report.entities.ItemDAO;
-import report.entities.items.TableClone;
+import report.entities.TableViewItemDAO;
+import report.entities.items.KS.TableViewItemKSDAO;
 import report.models.coefficient.Quantity;
-import report.models_view.nodes.ContextMenuOptional;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -14,9 +12,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,10 +19,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layoutControllers.LogController;
 import report.models.sql.SQLconnector;
-import report.models_view.nodes.TableWrapper;
+import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
-public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
+public class TableViewItemPlanDAO implements TableViewItemDAO<TableItemPlan, TableWrapper> {
 
    /**
     * 
@@ -83,7 +78,7 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
                 }
 
         }  catch (SQLException ex) {
-            Logger.getLogger(ItemPlanDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemPlanDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 
@@ -165,7 +160,7 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
                 }
    
         } catch (SQLException ex) {
-            Logger.getLogger(ItemPlanDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemPlanDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -194,7 +189,7 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
            LogController.appendLogViewText(entry.size() + " deleted");
             
         } catch (SQLException ex) {
-            Logger.getLogger(ItemPlanDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemPlanDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -235,13 +230,13 @@ public class ItemPlanDAO implements ItemDAO<TableItemPlan, TableWrapper> {
            connection.commit();
 
         } catch (SQLException ex) {
-            Logger.getLogger(ItemKSDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemKSDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
     public void dellAndInsert(TableWrapper table) {
-        ItemDAO.super.dellAndInsert(table);
+        TableViewItemDAO.super.dellAndInsert(table);
         //????????????????????????????????????????????
         Quantity.updateFromBase();
 //        table. setTableDataFromBASE();

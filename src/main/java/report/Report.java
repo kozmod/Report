@@ -20,7 +20,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import report.layoutControllers.root.RootLayoutController;
-import report.models_view.StageCreator;
+import report.models_view.nodes.node_helpers.StageCreator;
 import report.usage_strings.PathStrings;
 
 

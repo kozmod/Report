@@ -11,12 +11,9 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import report.models.coefficient.Quantity;
-import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
-import report.models_view.nodes.TableWrapper;
-import report.models_view.nodes_factories.ContextMenuFactory;
+import report.models_view.nodes.node_wrappers.TableWrapper;
+import report.models_view.nodes.nodes_factories.ContextMenuFactory;
 import report.entities.items.contractor.TableItemContractor;
-import report.entities.items.osr.TableItemOSR;
 import report.entities.items.plan.TableItemPlan;
 import report.entities.items.variable.TableItemVariable;
 import report.models_view.nodes.ContextMenuOptional;
@@ -81,7 +78,7 @@ public class AllPropertiesController implements Initializable {
 //
 //        //add Fact TableView
 //        factTableWrapper = TableFactory.decorFact(factTable);
-//        factTableWrapper.setTableData(new ItemPlanDAO().getListFact());
+//        factTableWrapper.setTableData(new TableViewItemPlanDAO().getListFact());
 
 
 //        init_OSRTab();
@@ -108,12 +105,12 @@ public class AllPropertiesController implements Initializable {
 //        });
 //
 //       //table Context menu property
-//        osrTableWrapper.tableView().contextMenuProperty().bind(
+//        osrTableWrapper.treeTableView().contextMenuProperty().bind(
 //            Bindings.when(osrEditСheckBox.selectedProperty() )
 //                .then(ContextMenuFactory.getCommonDSU(osrTableWrapper))
 //                .otherwise( (ContextMenu) null  ));
 //        //TableWrapper Editable property
-//        osrTableWrapper.tableView().editableProperty()
+//        osrTableWrapper.treeTableView().editableProperty()
 //                    .bind(osrEditСheckBox.selectedProperty());
 //        setGroupNodeDisableProperty(osrEditСheckBox.selectedProperty(),
 //                                    osrAddTextTF,

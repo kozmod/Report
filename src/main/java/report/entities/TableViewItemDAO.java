@@ -12,18 +12,22 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.models.sql.SQLconnector;
 import report.usage_strings.ServiceStrings;
-import report.models_view.data_utils.DiffList;
+import report.models.DiffList;
 
-import report.models_view.nodes.TableWrapper;
+import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
-public interface ItemDAO<E,T extends TableWrapper> extends TableDataBaseName{
+public interface TableViewItemDAO<E,T extends TableWrapper> extends CommonDAO<Collection<E>,T > {
+    @Override
     ObservableList<E> getList();
+    @Override
     void delete(Collection<E> entry);
+    @Override
     void insert(Collection<E>  entry);
 
+    @Override
     default void  dellAndInsert(T table) {
-        Collection<E>  memento= table.getMemento().getSavedState(),
+        Collection<E>  memento =  (Collection<E>)table.getMemento().getSavedState(),
                 current = table.getItems();
 
         DiffList<E> diffList = new DiffList<>(memento,current);
@@ -57,12 +61,9 @@ public interface ItemDAO<E,T extends TableWrapper> extends TableDataBaseName{
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(ItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return obsList;
     }
-    
-
-
 
 }

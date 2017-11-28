@@ -6,14 +6,14 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import report.entities.items.expenses.ItemExpensesDAO;
-import report.entities.items.period.ItemPeriodDAO;
+import report.entities.items.expenses.TableViewItemExpensesDAO;
+import report.entities.items.period.TableViewItemPeriodDAO;
 import report.entities.items.period.TableItemPeriod;
 import report.entities.items.site.TableItemPreview;
 import report.models.numberStringConverters.dateStringConverters.EpochDayStringConverter;
-import report.models_view.nodes.TableWrapper;
-import report.models_view.nodes_factories.TableCellFactory;
-import report.models_view.nodes_factories.TableFactory;
+import report.models_view.nodes.node_wrappers.TableWrapper;
+import report.models_view.nodes.nodes_factories.TableCellFactory;
+import report.models_view.nodes.nodes_factories.TableFactory;
 
 public class ExpensesControllerTF {
 
@@ -98,7 +98,7 @@ public class ExpensesControllerTF {
      * @return TableWrapper(child of TableView)
      */
     public static TableWrapper decorProperty_Expenses(TableView table){
-        TableWrapper tableWrapper = new TableWrapper<>(table, new ItemExpensesDAO());
+        TableWrapper tableWrapper = new TableWrapper(table, new TableViewItemExpensesDAO());
 
         tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
@@ -118,7 +118,7 @@ public class ExpensesControllerTF {
      * @return TableWrapper(child of TableView)
      */
     public static TableWrapper<TableItemPeriod> decorProperty_JobPeriod(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table, new ItemPeriodDAO());
+        TableWrapper tableWrapper = new TableWrapper(table, new TableViewItemPeriodDAO());
         tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn dateFromColumn = tableWrapper.addColumn("Датаначала",     "dateFrom");

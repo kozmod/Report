@@ -27,31 +27,31 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
+import report.entities.TableViewItemDAO;
 import report.entities.items.TableItem;
+import report.entities.items.estimate.TableViewItemEstDAO;
+import report.entities.items.site.SiteTableViewItemDAO;
 import report.layoutControllers.addKS.AddKSController;
 import report.layoutControllers.root.RootLayoutController;
-import report.entities.items.contractor.ItemContractorDAO;
+import report.entities.items.contractor.TableViewItemContractorDAO;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models.numberStringConverters.dateStringConverters.LocalDayStringConverter;
 import report.usage_strings.PathStrings;
 import report.usage_strings.SQL;
-import report.models_view.nodes.TableWrapper;
-import report.models_view.nodes_factories.FileChooserFactory;
+import report.models_view.nodes.node_wrappers.TableWrapper;
+import report.models_view.nodes.nodes_factories.FileChooserFactory;
 
 
-import report.models_view.StageCreator;
+import report.models_view.nodes.node_helpers.StageCreator;
 
 import report.entities.items.KS.TableItemKS;
 import report.entities.items.site.TableItemPreview;
 import report.entities.items.estimate.TableItemEst;
 import report.models.printer.PrintKS;
-import report.entities.ItemDAO;
 import report.models_view.nodes.TabModel;
-import report.models_view.nodes.TableWrapperEST;
-import report.entities.items.estimate.ItemEstDAO;
-import report.entities.items.KS.ItemKSDAO;
+import report.models_view.nodes.node_wrappers.TableWrapperEST;
+import report.entities.items.KS.TableViewItemKSDAO;
 import report.models_view.nodes.ContextMenuOptional;
-import report.entities.items.site.SiteItemDAO;
 
 
 public class EstimateController implements Initializable {
@@ -134,13 +134,13 @@ public class EstimateController implements Initializable {
                 return FXCollections.observableArrayList();
         }
 
-        public void updateList_DL(ItemDAO dao){ allItems = dao.getList();}
+        public void updateList_DL(TableViewItemDAO dao){ allItems = dao.getList();}
 //        public void updateList_DL(){ createTab();}
 
 
 
         //Update ---------------------------------------------------------------------------
-        public void updatePreviewTable(){new SiteItemDAO().dellAndInsert(previewTableObs);}
+        public void updatePreviewTable(){new SiteTableViewItemDAO().dellAndInsert(previewTableObs);}
 
         public void updateTabData(){this.createTabMap(); this.tab.updateTablesItems(); }
 
@@ -158,7 +158,7 @@ public class EstimateController implements Initializable {
             switch(this){
                 case Base:
                 case Changed:
-                    allItems = new ItemEstDAO(this).getList();
+                    allItems = new TableViewItemEstDAO(this).getList();
                     tabMap   = allItems.stream()
                             .filter(item  -> item.getDel() != 1 )
                             .sorted(Comparator.comparing(TableItem::getJM_name))
@@ -172,7 +172,7 @@ public class EstimateController implements Initializable {
                             ));
                     break;
                 case KS:
-                    allItems = new ItemKSDAO(this).getList();
+                    allItems = new TableViewItemKSDAO(this).getList();
                     tabMap   = allItems.stream()
                             .filter(item  -> item.getDel() != 1 )
                             .sorted(Comparator.comparing(TableItem::getJM_name))
@@ -336,7 +336,7 @@ public class EstimateController implements Initializable {
         addFromModelButton.setOnAction(event -> {
             if(!enumEst.getSiteSecondValue(SQL.Site.CONTRACTOR ).equals("-")
                     || !enumEst.getSiteSecondValue(SQL.Site.TYPE_HOME).equals("-")){
-                new ItemEstDAO().insertEstNewTables(enumEst);
+                new TableViewItemEstDAO().insertEstNewTables(enumEst);
                 //            init_Lists();
                 //            if(enumEst == Est.Base)    init_EstBase();
                 //            if(enumEst == Est.Changed) init_EstChaged();
@@ -531,7 +531,7 @@ public class EstimateController implements Initializable {
                 && selectedFile != null
                 ) {
             new PrintKS(tableKSWrapper.getItems(),
-                    new ItemContractorDAO().getOne(Est.KS.getSiteSecondValue(SQL.KS.CONTRACTOR)),
+                    new TableViewItemContractorDAO().getOne(Est.KS.getSiteSecondValue(SQL.KS.CONTRACTOR)),
                     selectedFile.toPath()
             );
 
@@ -551,7 +551,7 @@ public class EstimateController implements Initializable {
     private void handle_deleteKS(ActionEvent event) {
         if(!listKS.getSelectionModel().isEmpty() && listKS.getSelectionModel().getSelectedItem() != null){
             String selectedItemKS = listKS.getSelectionModel().getSelectedItem().toString();
-            new ItemKSDAO().deleteKS(selectedItemKS);
+            new TableViewItemKSDAO().deleteKS(selectedItemKS);
             ksMap.remove(Integer.parseInt(selectedItemKS));
             listKS.getItems().clear();
             listKS.getItems().addAll(ksMap.keySet());

@@ -5,17 +5,17 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import report.entities.items.KS.ItemKSDAO;
+import report.entities.items.KS.TableViewItemKSDAO;
 import report.entities.items.KS.TableItemKS;
 import report.entities.items.TableItem;
-import report.entities.items.estimate.ItemEstDAO;
+import report.entities.items.estimate.TableViewItemEstDAO;
 import report.entities.items.estimate.TableItemEst;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
-import report.models_view.nodes.TableWrapper;
-import report.models_view.nodes.TableWrapperEST;
-import report.models_view.nodes_factories.ContextMenuFactory;
-import report.models_view.nodes_factories.TableCellFactory;
-import report.models_view.nodes_factories.TableFactory;
+import report.models_view.nodes.node_wrappers.TableWrapper;
+import report.models_view.nodes.node_wrappers.TableWrapperEST;
+import report.models_view.nodes.nodes_factories.ContextMenuFactory;
+import report.models_view.nodes.nodes_factories.TableCellFactory;
+import report.models_view.nodes.nodes_factories.TableFactory;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public class EstimateControllerTF implements TableFactory {
      * @return TableWrapper(child of TableView)
      */
     public static TableWrapperEST getEst(EstimateController.Est enumEst,String title){
-        TableWrapperEST table = new TableWrapperEST(title,new TableView(),new ItemEstDAO(enumEst));
+        TableWrapperEST table = new TableWrapperEST(title,new TableView(),new TableViewItemEstDAO(enumEst));
 
 
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -169,7 +169,7 @@ public class EstimateControllerTF implements TableFactory {
      */
     public static TableWrapperEST<TableItemKS> decorKS(TableView tableView){
         TableWrapperEST table = new TableWrapperEST(tableView,
-                new ItemKSDAO(EstimateController.Est.KS));
+                new TableViewItemKSDAO(EstimateController.Est.KS));
 
 
         table.setEditable(true);

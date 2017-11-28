@@ -3,16 +3,19 @@ package report.entities.items;
 
 
 
-public interface TableClone {
-
+public interface TableClone<E> extends ID{
     /**
      * Get clone Constructor
      * @return TableClone
      */
-    <E> E getClone();
+     E getClone();
 
 
-    Long getId();
-    void setId(Long id);
+
 
 }
+interface  ID{
+    Long getId();
+    void setId(Long id);
+}
+

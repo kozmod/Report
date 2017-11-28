@@ -19,14 +19,14 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import report.entities.items.plan.TableItemFact;
+import report.entities.items.plan.TableViewItemPlanDAO;
+import report.entities.items.site.SiteTableViewItemDAO;
 import report.layoutControllers.root.RootLayoutController;
 import report.usage_strings.SQL;
 import report.entities.items.plan.TableItemPlan;
-import report.entities.items.plan.ItemPlanDAO;
-import report.entities.items.site.SiteItemDAO;
 import report.entities.items.site.SiteCommonDAO;
 import report.usage_strings.ServiceStrings;
-import report.models_view.InputValidator;
+import report.models_view.nodes.node_helpers.InputValidator;
 
 
 
@@ -47,11 +47,11 @@ public class AddSiteController implements Initializable {
     private ObservableList<Object>        listTypes;
 
     {
-        listPlan  = new ItemPlanDAO().getList();
-        listFact  = new ItemPlanDAO().getListFact();
-        listQueue = new SiteItemDAO().getDistinctOfColumn(SQL.Site.QUEUE_BUILDING);
-        listContractors = new SiteItemDAO().getDistinctOfColumn(SQL.Site.CONTRACTOR,ServiceStrings.Line);
-        listTypes       = new SiteItemDAO().getDistinctOfColumn(SQL.Site.TYPE_HOME, ServiceStrings.Line);
+        listPlan  = new TableViewItemPlanDAO().getList();
+        listFact  = new TableViewItemPlanDAO().getListFact();
+        listQueue = new SiteTableViewItemDAO().getDistinctOfColumn(SQL.Site.QUEUE_BUILDING);
+        listContractors = new SiteTableViewItemDAO().getDistinctOfColumn(SQL.Site.CONTRACTOR,ServiceStrings.Line);
+        listTypes       = new SiteTableViewItemDAO().getDistinctOfColumn(SQL.Site.TYPE_HOME, ServiceStrings.Line);
 
 
     }

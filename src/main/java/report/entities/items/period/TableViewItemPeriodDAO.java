@@ -1,7 +1,11 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package report.entities.items.period;
 
-package report.entities.items.expenses;
-
-import report.entities.ItemDAO;
+import report.entities.TableViewItemDAO;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,29 +20,24 @@ import javafx.collections.ObservableList;
 import report.layoutControllers.LogController;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.sql.SQLconnector;
-import report.models_view.nodes.TableWrapper;
+import report.models_view.nodes.node_wrappers.TableWrapper;
 
+public class TableViewItemPeriodDAO implements TableViewItemDAO<TableItemPeriod, TableWrapper> {
 
-public class ItemExpensesDAO implements ItemDAO<TableItemExpenses, TableWrapper> {
-
-    
     /**
     * Get String of a Mirror (SQL.Tables).
     * @return  List of TableItem
     */
     @Override
-    public String getTableString() {return SQL.Tables.SITE_EXPENSES;}
-    /**
-     * Get List of expenses Items from SQL (SiteExpenses)
-    * @return  ObservableList of TableItemExpenses
-    */
+    public String getTableString() {return SQL.Tables.SITE_JOB_PERIOD;}
+    
     @Override
-    public ObservableList<TableItemExpenses> getList() {
-        ObservableList<TableItemExpenses> list =  FXCollections.observableArrayList(TableItemExpenses.extractor());
+    public ObservableList<TableItemPeriod> getList() {
+        ObservableList<TableItemPeriod> list =  FXCollections.observableArrayList(TableItemPeriod.extractor());
         
-        String sqlQuery = "SELECT "       //[id] [SiteNumber] [Contractor][Text][Type][Value]
+        String sqlQuery = "SELECT "       //[id] [SiteNumber] [Contractor][Text][DateFrom][DateTo]
                        + " * "
-                       + "from dbo.[SiteExpenses] "
+                       + "from dbo.[SiteJobPeriod] "
                        + "WHERE [SiteNumber] = ? "
                        + "AND   [Contractor] = ? "
                        + "AND   [dell] = 0";
@@ -52,13 +51,13 @@ public class ItemExpensesDAO implements ItemDAO<TableItemExpenses, TableWrapper>
                 
                 try(ResultSet rs = pstmt.getResultSet();){
                    while(rs.next())
-                    list.add(new TableItemExpenses(
+                    list.add(new TableItemPeriod(
                                                 rs.getLong  (SQL.Common.ID),
                                                 rs.getString(SQL.Common.SITE_NUMBER),
                                                 rs.getString(SQL.Common.CONTRACTOR),
                                                 rs.getString(SQL.Common.TEXT),
-                                                rs.getByte  (SQL.Common.TYPE),
-                                                rs.getDouble(SQL.Common.VALUE)
+                                                rs.getInt   (SQL.Period.DATE_FROM),
+                                                rs.getInt   (SQL.Period.DATE_TO)
                                                 )       
                             );
                     
@@ -66,24 +65,19 @@ public class ItemExpensesDAO implements ItemDAO<TableItemExpenses, TableWrapper>
                
                }
            } catch (SQLException ex) {
-               Logger.getLogger(ItemExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(TableViewItemPeriodDAO.class.getName()).log(Level.SEVERE, null, ex);
            }
         return  list;
     }
 
-    
-   /**
-     * Delete TableItemExpenses Entities from SQL (SiteExpenses)
-    * @param items (Collection of TableExpenses) 
-    */
     @Override
-    public void delete(Collection<TableItemExpenses> items) {
-        String sql = "update [dbo].[SiteExpenses] SET dell = 1 WHERE [id] = ? AND [dell] = 0;";
+    public void delete(Collection<TableItemPeriod> items) {
+       String sql = "update [dbo].[SiteJobPeriod] SET dell = 1 WHERE [id] = ? AND [dell] = 0;";
         try(Connection connection   = SQLconnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sql);) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
-                for (TableItemExpenses obsItem : items) {
+                for (TableItemPeriod obsItem : items) {
                     pstmt.setLong   (1, obsItem.getId());
                     pstmt.addBatch();  
                 }
@@ -101,48 +95,42 @@ public class ItemExpensesDAO implements ItemDAO<TableItemExpenses, TableWrapper>
             LogController.appendLogViewText(items.size() + " deleted");
             
         } catch (SQLException ex) {
-            Logger.getLogger(ItemExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemPeriodDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    /**
-    * Insert TableItemExpenses Entities to SQL (SiteExpenses)
-    * @param items (Collection of TableItemExpenses) 
-    */
     @Override
-    public void insert(Collection<TableItemExpenses> items) {
-            String sql = "INSERT into [dbo].[SiteExpenses] "
+    public void insert(Collection<TableItemPeriod> items) {
+         String sql = "INSERT into [dbo].[SiteJobPeriod] "
                     + "( " 
                     + " [SiteNumber]"
                     + ",[Contractor]"
                     + ",[Text]"
-                    + ",[Type]"
-                    + ",[Value]"
+                    + ",[DateFrom]"
+                    + ",[DateTo]"
                     + " ) " 
                     + "VALUES(?,?,?,?,?)";
-//                    + "VALUES('10а','УЮТСТРОЙ','ssss',0,11111)";
         try(Connection connection = SQLconnector.getInstance();
             PreparedStatement pstmt  = connection.prepareStatement(sql,
                                                                    Statement.RETURN_GENERATED_KEYS);) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
             
-                for (TableItemExpenses obsItem : items) {
+                for (TableItemPeriod obsItem : items) {
                     pstmt.setString   (1, obsItem.getSiteNumber());
                     pstmt.setString   (2, obsItem.getContractor());
                     pstmt.setString   (3, obsItem.getText());
-                    pstmt.setInt      (4, obsItem.getType());
-                    pstmt.setDouble   (5, obsItem.getValue());                                                       
+                    pstmt.setInt      (4, obsItem.getDateFrom());
+                    pstmt.setInt      (5, obsItem.getDateTo());                                                       
 
                     int affectedRows = pstmt.executeUpdate();
                     
-                    System.out.println(affectedRows);
                     try( ResultSet generategKeys = pstmt.getGeneratedKeys();){
                         if(generategKeys.next())
                             obsItem.setId(generategKeys.getLong(1));
                     }    
                 }
-     
+           
            //SQL commit
            connection.commit();
            //add info to LogTextArea / LogController
@@ -155,12 +143,9 @@ public class ItemExpensesDAO implements ItemDAO<TableItemExpenses, TableWrapper>
 //                });
             LogController.appendLogViewText(items.size() + " inserted");
         } catch (SQLException ex) {
-            Logger.getLogger(ItemExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (Exception ex) {
-            Logger.getLogger(ItemExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemPeriodDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
 
 
     

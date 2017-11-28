@@ -1,10 +1,10 @@
 
 package report.entities.items.contractor;
 
+import report.entities.TableViewItemDAO;
+import report.entities.items.variable.VariablePropertiesCommonDAOTableView;
 import report.layoutControllers.LogController;
-import report.entities.ItemDAO;
-import report.entities.items.osr.ItemOSRDAO;
-import report.entities.items.variable.VariablePropertiesDAO;
+import report.entities.items.osr.TableViewItemOSRDAO;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,10 +17,10 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.models.sql.SQLconnector;
-import report.models_view.nodes.TableWrapper;
+import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
-public class ItemContractorDAO implements ItemDAO<TableItemContractor, TableWrapper> {
+public class TableViewItemContractorDAO implements TableViewItemDAO<TableItemContractor, TableWrapper> {
 
     @Override
     public String getTableString() {
@@ -55,7 +55,7 @@ public class ItemContractorDAO implements ItemDAO<TableItemContractor, TableWrap
                    );
                }
            } catch (SQLException ex) {
-               Logger.getLogger(VariablePropertiesDAO.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(VariablePropertiesCommonDAOTableView.class.getName()).log(Level.SEVERE, null, ex);
            }
         return  listAllContractors;
     }
@@ -89,7 +89,7 @@ public class ItemContractorDAO implements ItemDAO<TableItemContractor, TableWrap
                   }
               }
            } catch (SQLException ex) {
-               Logger.getLogger(VariablePropertiesDAO.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(VariablePropertiesCommonDAOTableView.class.getName()).log(Level.SEVERE, null, ex);
            }
         return  contractor;
     }
@@ -123,7 +123,7 @@ public class ItemContractorDAO implements ItemDAO<TableItemContractor, TableWrap
             LogController.appendLogViewText(items.size() + " deleted");
             
         } catch (SQLException ex) {
-            Logger.getLogger(VariablePropertiesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VariablePropertiesCommonDAOTableView.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -175,13 +175,13 @@ public class ItemContractorDAO implements ItemDAO<TableItemContractor, TableWrap
 //                });
             LogController.appendLogViewText(items.size() + " inserted");
         } catch (SQLException ex) {
-            Logger.getLogger(ItemOSRDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemOSRDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
 //    @Override
 //    public void dellAndInsert(TableWrapper table) {
-//        Collection memento = table.getMemento().getSavedState(),
+//        Collection tableMemento = table.getMemento().getSavedState(),
 //                   current = table.getItems();
 //        
 //        
@@ -191,7 +191,7 @@ public class ItemContractorDAO implements ItemDAO<TableItemContractor, TableWrap
 ////           table.getCRUD().getUpdate().forEach(i -> System.out.println("UPDATE - " + ((TableClone)i).getId()));
 ////           table.getCRUD().clearAll();
 ////            System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,,>");
-//        DataUtils.DiffList<TableItemContractor> diffList = new DataUtils.DiffList(memento,current);
+//        DataUtils.DiffList<TableItemContractor> diffList = new DataUtils.DiffList(tableMemento,current);
 //        if(diffList.exElements() != null 
 //           || diffList.exElements().size() > 0) delete(diffList.exElements());
 //        if(diffList.newElements()  != null 

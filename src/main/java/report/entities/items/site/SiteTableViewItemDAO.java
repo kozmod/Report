@@ -1,9 +1,9 @@
 
 package report.entities.items.site;
 
+import report.entities.TableViewItemDAO;
+import report.entities.items.estimate.TableViewItemEstDAO;
 import report.layoutControllers.LogController;
-import report.entities.items.estimate.ItemEstDAO;
-import report.entities.ItemDAO;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -17,18 +17,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.sql.SQLconnector;
-import report.models_view.nodes.TableWrapper;
+import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
-public class SiteItemDAO implements ItemDAO<TableItemPreview, TableWrapper> {
+public class SiteTableViewItemDAO implements TableViewItemDAO<TableItemPreview, TableWrapper> {
     
     private String siteNumber, contractor;
     
-    public SiteItemDAO(String siteNumber, String contractor) {
+    public SiteTableViewItemDAO(String siteNumber, String contractor) {
         this.siteNumber = siteNumber;
         this.contractor = contractor;
     }
-    public SiteItemDAO() {
+    public SiteTableViewItemDAO() {
         if(Est.Common.isExist()){
             this.siteNumber = Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER);
             this.contractor = Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR);
@@ -130,7 +130,7 @@ public class SiteItemDAO implements ItemDAO<TableItemPreview, TableWrapper> {
 
 
         } catch (SQLException ex) {
-               Logger.getLogger(SiteItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(SiteTableViewItemDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
       
         long lEnd = System.currentTimeMillis();
@@ -163,7 +163,7 @@ public class SiteItemDAO implements ItemDAO<TableItemPreview, TableWrapper> {
             LogController.appendLogViewText(items.size() + " deleted");
             
         } catch (SQLException ex) {
-            Logger.getLogger(ItemEstDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemEstDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
        
     }
@@ -228,7 +228,7 @@ public class SiteItemDAO implements ItemDAO<TableItemPreview, TableWrapper> {
                 });
             LogController.appendLogViewText(items.size() + " inserted");
         } catch (SQLException ex) {
-            Logger.getLogger(ItemEstDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemEstDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
        
        

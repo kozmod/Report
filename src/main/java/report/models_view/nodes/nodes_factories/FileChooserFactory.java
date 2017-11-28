@@ -1,4 +1,4 @@
-package report.models_view.nodes_factories;
+package report.models_view.nodes.nodes_factories;
 
 import javafx.stage.FileChooser;
 

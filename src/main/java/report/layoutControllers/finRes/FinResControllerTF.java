@@ -4,8 +4,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import report.models.numberStringConverters.dateStringConverters.EpochDayStringConverter;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
-import report.models_view.nodes.TableWrapper;
-import report.models_view.nodes_factories.TableFactory;
+import report.models_view.nodes.node_wrappers.TableWrapper;
+import report.models_view.nodes.nodes_factories.TableFactory;
 
 public class FinResControllerTF {
 

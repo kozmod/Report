@@ -24,15 +24,15 @@ import report.layoutControllers.expensese.ExpensesControllerTF;
 import report.layoutControllers.intro.IntroLayoutController;
 import report.models.coefficient.FormulaQuery;
 import report.models.coefficient.Formula;
-import report.models_view.InputValidator;
-import report.models_view.nodes_factories.FileChooserFactory;
+import report.models_view.nodes.node_helpers.InputValidator;
+import report.models_view.nodes.nodes_factories.FileChooserFactory;
 import report.usage_strings.PathStrings;
 import report.layoutControllers.estimate.EstimateController.Est;
-import report.models_view.StageCreator;
+import report.models_view.nodes.node_helpers.StageCreator;
 import report.models.sql.sqlQuery.BackUpQuery;
 import report.entities.items.site.TableItemPreview;
 import report.models.sql.sqlQuery.InsertFileXLSQuery;
-import report.entities.items.site.SiteItemDAO;
+import report.entities.items.site.SiteTableViewItemDAO;
 import report.usage_strings.SQL;
 
 
@@ -305,18 +305,18 @@ public class RootLayoutController implements Initializable {
     @FXML
     private void handle_FinResButton(ActionEvent event) {
 //         StageCreator finResLayout  =
-        new StageCreator(PathStrings.Layout.FIN_RES,"").loadIntoRootBorderPaneCenter();
+        new StageCreator(PathStrings.Layout.FIN_RES).loadIntoRootBorderPaneCenter();
     }
 
     @FXML
     private void handle_PlanningButton(ActionEvent event) {
-        new StageCreator(PathStrings.Layout.PLANNING,"").loadIntoRootBorderPaneCenter();
+        new StageCreator(PathStrings.Layout.PLANNING).loadIntoRootBorderPaneCenter();
     }
 
 
     @FXML
     private void handle_CommonInfButton(ActionEvent event) {
-        new StageCreator(PathStrings.Layout.INTRO,"")
+        new StageCreator(PathStrings.Layout.INTRO)
                 .loadIntoRootBorderPaneCenter()
                 .<IntroLayoutController>getController()
                 .updateTables();
@@ -324,7 +324,7 @@ public class RootLayoutController implements Initializable {
 
     @FXML
     private void handle_accountButton(ActionEvent event) {
-          new StageCreator(PathStrings.Layout.ACC,"").loadIntoRootBorderPaneCenter();
+          new StageCreator(PathStrings.Layout.ACC).loadIntoRootBorderPaneCenter();
 
 
     }
@@ -452,7 +452,7 @@ public class RootLayoutController implements Initializable {
                     printEstToXmlMenuItem.setDisable(false);
 
                     //Update Preview TableWrapper OBS-LIST
-                    Est.Common.setSiteObs(new SiteItemDAO(selectedTreeElemParent,selectedTreeElem).getList());
+                    Est.Common.setSiteObs(new SiteTableViewItemDAO(selectedTreeElemParent,selectedTreeElem).getList());
 //                    update_previewTable(Est.Common.getPreviewObservableList());
                     previewTable.setItems(Est.Common.getPreviewObservableList());
 
@@ -461,7 +461,7 @@ public class RootLayoutController implements Initializable {
                     //Set TAXES_ALL
                     Est.Common.getSiteItem(SQL.Site.TAXES_ALL).setSecondValue(formula.allTaxes());
 
-                    showEstController = new StageCreator(PathStrings.Layout.SITE_EST,"")
+                    showEstController = new StageCreator(PathStrings.Layout.SITE_EST)
                             .loadIntoRootBorderPaneCenter()
                             .getController();
                     showEstController.setRootController(getRootController());

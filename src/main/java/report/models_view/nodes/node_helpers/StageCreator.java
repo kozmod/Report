@@ -1,5 +1,5 @@
 
-package report.models_view;
+package report.models_view.nodes.node_helpers;
 
 import java.io.IOException;
 import java.util.logging.Level;
@@ -26,14 +26,13 @@ public class StageCreator extends FXMLLoader{
 *                                                                                                       CONSTRUCTORS
 ********************************************************************************************************************/
 
+    public StageCreator(String fxmlPath){
+        this(fxmlPath,"");
+    }
+
     public StageCreator(String fxmlPath, String stageName ){
         this.fxmlPath  = fxmlPath;
         this.stageName = stageName;
-    }
-
-    public StageCreator(String fxmlPath){
-        this.fxmlPath  = fxmlPath;
-        this.stageName = "";
     }
 
 
@@ -58,8 +57,7 @@ public class StageCreator extends FXMLLoader{
     public StageCreator loadNewWindow(){
         try {
             setLocation(Report.class.getResource(fxmlPath));
-            root = load();
-            
+            root = this.load();
             stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle(stageName);
@@ -75,11 +73,9 @@ public class StageCreator extends FXMLLoader{
 
        try {
            BorderPane rootLayout = reportMain.getRootLayout();
-           setLocation(Report.class.getResource(fxmlPath));
-           
-           Node nodeContainer = load();
+           this.setLocation(Report.class.getResource(fxmlPath));
+           Node nodeContainer = this.load();
            rootLayout.setCenter(nodeContainer);
-
            reportMain.setCenterController(this.getController());
            
        } catch (IOException ex) {

@@ -21,6 +21,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import report.entities.items.expenses.TableViewItemExpensesDAO;
+import report.entities.items.period.TableViewItemPeriodDAO;
+import report.entities.items.site.SiteTableViewItemDAO;
 import report.layoutControllers.root.RootLayoutController;
 import report.models.coefficient.Formula;
 import report.models.coefficient.FormulaQuery;
@@ -33,12 +36,9 @@ import report.layoutControllers.estimate.EstimateController.Est;
 import report.entities.items.expenses.TableItemExpenses;
 import report.entities.items.period.TableItemPeriod;
 //import report.models.Formula_test;
-import report.models_view.nodes.TableWrapper;
-import report.models_view.nodes_factories.ContextMenuFactory;
+import report.models_view.nodes.node_wrappers.TableWrapper;
+import report.models_view.nodes.nodes_factories.ContextMenuFactory;
 import report.entities.items.site.TableItemPreview;
-import report.entities.items.expenses.ItemExpensesDAO;
-import report.entities.items.period.ItemPeriodDAO;
-import report.entities.items.site.SiteItemDAO;
 import report.models_view.nodes.ContextMenuOptional;
 
 public class ExpensesController implements Initializable {
@@ -119,8 +119,8 @@ public class ExpensesController implements Initializable {
         periodTWrapper = ExpensesControllerTF.decorProperty_JobPeriod(periodTV);
 
         siteTWrapper.setTableData(Est.Common.getPreviewObservableList());
-        expensesTWrapper.setTableData(new ItemExpensesDAO().getList());
-        periodTWrapper.setTableData(new ItemPeriodDAO().getList());
+        expensesTWrapper.setTableData(new TableViewItemExpensesDAO().getList());
+        periodTWrapper.setTableData(new TableViewItemPeriodDAO().getList());
 
       init_expensesTab();
       init_periodTab();
@@ -232,7 +232,7 @@ public class ExpensesController implements Initializable {
     @FXML   
     private void hendler_applySiteChanges(ActionEvent event) {
 
-            new SiteItemDAO().dellAndInsert(siteTWrapper);
+            new SiteTableViewItemDAO().dellAndInsert(siteTWrapper);
        
             siteTWrapper.saveTableItems();
             rootController.update_previewTable(Est.Common.getPreviewObservableList());
@@ -314,7 +314,7 @@ public class ExpensesController implements Initializable {
 
         }
 
-        new SiteItemDAO().dellAndInsert(siteTWrapper);
+        new SiteTableViewItemDAO().dellAndInsert(siteTWrapper);
         siteTWrapper.saveTableItems();
         siteTWrapper.refresh();
 

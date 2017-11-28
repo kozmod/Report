@@ -2,16 +2,16 @@ package report.layoutControllers.allPropeties;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import report.entities.items.contractor.ItemContractorDAO;
-import report.entities.items.osr.ItemOSRDAO;
+import report.entities.items.contractor.TableViewItemContractorDAO;
+import report.entities.items.osr.TableViewItemOSRDAO;
 import report.entities.items.osr.TableItemOSR;
-import report.entities.items.variable.VariablePropertiesDAO;
+import report.entities.items.variable.VariablePropertiesCommonDAOTableView;
 import report.entities.items.variable.TableItemVariable;
 import report.models.coefficient.Quantity;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
-import report.models_view.nodes.TableWrapper;
-import report.models_view.nodes_factories.TableCellFactory;
-import report.models_view.nodes_factories.TableFactory;
+import report.models_view.nodes.node_wrappers.TableWrapper;
+import report.models_view.nodes.nodes_factories.TableCellFactory;
+import report.models_view.nodes.nodes_factories.TableFactory;
 
 class AllPropertiesControllerTF implements TableFactory {
 
@@ -27,7 +27,7 @@ class AllPropertiesControllerTF implements TableFactory {
      * @return TableWrapper
      */
     static TableWrapper decorOSR(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table,new ItemOSRDAO());
+        TableWrapper tableWrapper = new TableWrapper(table,new TableViewItemOSRDAO());
 
 //        tableWrapper.setEditable(true);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -73,7 +73,7 @@ class AllPropertiesControllerTF implements TableFactory {
      * @return TableWrapper
      */
     static TableWrapper decorVariable(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table,new VariablePropertiesDAO());
+        TableWrapper tableWrapper = new TableWrapper(table,new VariablePropertiesCommonDAOTableView());
 
 //        tableWrapper.setEditable(true);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -107,7 +107,7 @@ class AllPropertiesControllerTF implements TableFactory {
      * @return TableWrapper
      */
     static TableWrapper decorContractor(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table,new ItemContractorDAO());
+        TableWrapper tableWrapper = new TableWrapper(table,new TableViewItemContractorDAO());
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 //

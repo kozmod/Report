@@ -10,14 +10,15 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.util.converter.NumberStringConverter;
 import report.entities.items.osr.TableItemOSR;
-import report.entities.items.plan.ItemPlanDAO;
+import report.entities.items.plan.TableViewItemPlanDAO;
 import report.entities.items.plan.TableItemFact;
 import report.entities.items.plan.TableItemPlan;
 import report.models.coefficient.Quantity;
+import report.entities.items.discount_coef.DiscountQuery;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models_view.nodes.ContextMenuOptional;
-import report.models_view.nodes.TableWrapper;
-import report.models_view.nodes_factories.ContextMenuFactory;
+import report.models_view.nodes.node_wrappers.TableWrapper;
+import report.models_view.nodes.nodes_factories.ContextMenuFactory;
 
 import java.net.URL;
 import java.sql.Timestamp;
@@ -34,6 +35,7 @@ public class PlanningController implements Initializable{
 
     @FXML private CheckBox  planEditСheckBox;
     @FXML private CheckBox  osrEditСheckBox;
+    @FXML private CheckBox  kdEditСheckBox;
     @FXML private HBox      planAddRowHB;
     @FXML private HBox      osrAddRowHB;
     @FXML private GridPane planGP,osrGP;
@@ -41,6 +43,7 @@ public class PlanningController implements Initializable{
     @FXML private Button   osrAddItemButton;
 
     @FXML private TableView planTable,factTable,osrTable;
+    @FXML private TreeTableView kdTreeTable;
 
     private TableWrapper<TableItemPlan> planTableWrapper;
     private TableWrapper<TableItemFact> factTableWrapper;
@@ -53,6 +56,7 @@ public class PlanningController implements Initializable{
     public void initialize(URL location, ResourceBundle resources) {
         init_PlanTab();
         init_OSRTab();
+        init_KDTab();
 
         Quantity.getQuantityProperty().addListener(e ->{
             Quantity.updateFromBase();
@@ -77,7 +81,7 @@ public class PlanningController implements Initializable{
 
         //add Fact TableView
         factTableWrapper = PlaningControllerTF.decorFact(factTable);
-        factTableWrapper.setTableData(new ItemPlanDAO().getListFact());
+        factTableWrapper.setTableData(new TableViewItemPlanDAO().getListFact());
 
         //table Context menu property
         planTableWrapper.tableView().contextMenuProperty().bind(
@@ -157,8 +161,18 @@ public class PlanningController implements Initializable{
                 .then(true)
                 .otherwise(false));
     }
-
-
+    /**
+     * Initialization of KD Tab.
+     */
+    private void init_KDTab(){
+        PlaningControllerTF.decorKD(kdTreeTable);
+        PlaningControllerTF.decorKD(kdTreeTable);
+        kdTreeTable.setRoot(new DiscountQuery().getList().tree());
+        kdTreeTable.editableProperty().bind(Bindings
+                .when(kdEditСheckBox.selectedProperty())
+                .then(true)
+                .otherwise(false));
+    }
 
     /*!******************************************************************************************************************
     *                                                                                                     	    HANDLERS

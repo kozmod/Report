@@ -15,13 +15,12 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import report.layoutControllers.estimate.EstimateController;
-import report.models_view.nodes_factories.TableFactory;
 import report.usage_strings.SQL;
 
 import report.layoutControllers.estimate.EstimateController.Est;
-import report.models_view.InputValidator;
+import report.models_view.nodes.node_helpers.InputValidator;
 import report.entities.items.TableItem;
-import report.entities.items.KS.ItemKSDAO;
+import report.entities.items.KS.TableViewItemKSDAO;
 
 
 
@@ -130,7 +129,7 @@ public class AddKSController implements Initializable {
             int ksNumber = Integer.parseInt( ksNumTextField.getText());
             int ksDate =(int) ksDatePicker.getValue().toEpochDay();
         
-            new ItemKSDAO().insertNewKS(ksNumber,ksDate,obsSelectedJM);
+            new TableViewItemKSDAO().insertNewKS(ksNumber,ksDate,obsSelectedJM);
          //System.out.println(obsSelectedJM);
             showEstController.update_TapKS();
         

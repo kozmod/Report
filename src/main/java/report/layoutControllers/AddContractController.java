@@ -13,12 +13,12 @@ import javafx.scene.control.*;
 
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import report.entities.items.contractor.TableViewItemContractorDAO;
 import report.layoutControllers.root.RootLayoutController;
 import report.entities.items.site.SiteCommonDAO;
 import report.usage_strings.SQL;
 import report.layoutControllers.estimate.EstimateController.Est;
-import report.entities.items.contractor.ItemContractorDAO;
-import report.models_view.InputValidator;
+import report.models_view.nodes.node_helpers.InputValidator;
 
 
 public class AddContractController implements Initializable  {
@@ -64,7 +64,7 @@ public class AddContractController implements Initializable  {
     }
     
     void init_ContComco(){
-        contComboBox.setItems( new ItemContractorDAO().getDistinctOfColumn(SQL.Contractors.CONTRACTOR));
+        contComboBox.setItems( new TableViewItemContractorDAO().getDistinctOfColumn(SQL.Contractors.CONTRACTOR));
 //        contComboBox.setItems( new CommonQuery().getObsDISTINCT("Site", "Contractor", this));
 
     }

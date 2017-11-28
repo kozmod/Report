@@ -1,14 +1,14 @@
 
-package report.models_view.nodes_factories;
+package report.models_view.nodes.nodes_factories;
 
 import javafx.scene.control.ContextMenu;
+import report.entities.items.estimate.TableViewItemEstDAO;
 import report.layoutControllers.addEstimateRow.AddEstimateRowController;
 import report.layoutControllers.estimate.EstimateController.Est;
-import report.models_view.StageCreator;
-import report.entities.items.estimate.ItemEstDAO;
+import report.models_view.nodes.node_helpers.StageCreator;
 import report.usage_strings.PathStrings;
 import report.models_view.nodes.ContextMenuOptional;
-import report.models_view.nodes.TableWrapper;
+import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
 public class ContextMenuFactory {
@@ -70,7 +70,7 @@ public class ContextMenuFactory {
      */
     public static ContextMenu getEstPrint(Est enumEst){
         return ContextMenuOptional.newBuilder()
-                .setDAO(new ItemEstDAO(enumEst))
+                .setDAO(new TableViewItemEstDAO(enumEst))
 //                    .setEnum(enumEst)
                 .addPrintSmeta()
                 .build();
@@ -86,7 +86,7 @@ public class ContextMenuFactory {
      */
     public static ContextMenu getCommonDSU(TableWrapper tableWrapperView){
         return ContextMenuOptional.newBuilder()
-//                    .setDAO(dao)
+//                    .setDAO(commonDao)
                 .setTable(tableWrapperView)
                 .addRemoveMenuItem()
                 .addSeparator()
@@ -118,13 +118,13 @@ public class ContextMenuFactory {
      * Create ContextMenu to "KS" TableViews (TableKS). 
    
      * @param enumEst   (enumeration)
-     * @param tableView (TableWrapper extends TableView)
+     * @param treeTableView (TableWrapper extends TableView)
      * @return ContextMenu
      */
-//    public static ContextMenu geKS (Est enumEst, TableWrapper tableView){
+//    public static ContextMenu geKS (Est enumEst, TableWrapper treeTableView){
 //        return ContextMenuOptional.newBuilder()
-//                    .setDAO(new ItemKSDAO(enumEst))
-//                    .setTable(tableView)
+//                    .setDAO(new TableViewItemKSDAO(enumEst))
+//                    .setTable(treeTableView)
 //                             .addSaveMenuItem()
 //                             .addUndoMenuItem()
 //                    .build();         
@@ -137,13 +137,13 @@ public class ContextMenuFactory {
 //    /**
 //     * Create ContextMenu to "OSR" TableViews. 
 //   
-//     * @param tableView (TableWrapper extends TableView)
+//     * @param treeTableView (TableWrapper extends TableView)
 //     * @return ContextMenu
 //     */
-//    public static ContextMenu getOSR (TableWrapper tableView){
+//    public static ContextMenu getOSR (TableWrapper treeTableView){
 //        return ContextMenuOptional.newBuilder()
-//                    .setDAO(new ItemOSRDAO())
-//                    .setTable(tableView)
+//                    .setDAO(new TableViewItemOSRDAO())
+//                    .setTable(treeTableView)
 //                               .addRemoveMenuItem()
 //                               .addSeparator()
 //                             .addSaveMenuItem()
@@ -154,13 +154,13 @@ public class ContextMenuFactory {
 //    /**
 //     * Create ContextMenu to "OSR" TableViews. 
 //     
-//     * @param tableView (TableWrapper extends TableView)
+//     * @param treeTableView (TableWrapper extends TableView)
 //     * @return ContextMenu
 //     */
-//    public static ContextMenu getVariable (TableWrapper tableView){
+//    public static ContextMenu getVariable (TableWrapper treeTableView){
 //        return ContextMenuOptional.newBuilder()
 //                    .setDAO(new ItemVariableDAO())
-//                    .setTable(tableView)
+//                    .setTable(treeTableView)
 //                               .addRemoveMenuItem()
 //                               .addSeparator()
 //                             .addSaveMenuItem()
@@ -170,13 +170,13 @@ public class ContextMenuFactory {
 //    /**
 //     * Create ContextMenu to "OSR" TableContractor. 
 //     *<br><b>Contain ONLY Print MenuItem</b>
-//     * @param tableView (TableWrapper extends TableView)
+//     * @param treeTableView (TableWrapper extends TableView)
 //     * @return ContextMenu
 //     */
-//    public static ContextMenu getContractor(TableWrapper tableView){
+//    public static ContextMenu getContractor(TableWrapper treeTableView){
 //        return ContextMenuOptional.newBuilder()
-//                    .setDAO(new ItemContractorDAO())
-//                    .setTable(tableView)
+//                    .setDAO(new TableViewItemContractorDAO())
+//                    .setTable(treeTableView)
 //                               .addRemoveMenuItem()
 //                               .addSeparator()
 //                             .addSaveMenuItem()
@@ -193,14 +193,14 @@ public class ContextMenuFactory {
      * Create Common ContextMenu with 
      * <b >DELETE, SAVE, UNDO </b> - options.
      *
-     * @param tableView (TableWrapper extends TableView)
-     * @param dao       (ItemDAO)
+     * @param treeTableView (TableWrapper extends TableView)
+     * @param commonDao       (TableViewItemDAO)
      * @return ContextMenu
      */
-//    public static ContextMenu getSite(TableWrapper tableView, ItemDAO dao){
+//    public static ContextMenu getSite(TableWrapper treeTableView, TableViewItemDAO commonDao){
 //        return ContextMenuOptional.newBuilder()
-//                    .setDAO(dao)
-//                    .setTable(tableView)
+//                    .setDAO(commonDao)
+//                    .setTable(treeTableView)
 //                             .addSaveMenuItem()
 //                             .addUndoMenuItem()
 //                    .build();         

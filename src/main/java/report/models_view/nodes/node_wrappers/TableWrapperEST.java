@@ -1,12 +1,12 @@
 
-package report.models_view.nodes;
+package report.models_view.nodes.node_wrappers;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
-import report.entities.ItemDAO;
+import report.entities.TableViewItemDAO;
 import report.entities.items.TableItem;
 
 
@@ -26,10 +26,10 @@ public  class TableWrapperEST<E extends TableItem> extends TableWrapper<E> {
     *                                                                                                       CONSTRUCTORS
     ********************************************************************************************************************/
 
-    public TableWrapperEST(TableView<E> table,ItemDAO<E,TableWrapper> dao) {
+    public TableWrapperEST(TableView<E> table,TableViewItemDAO<E,TableWrapper> dao) {
         super("TEST EST TITLE",table,dao);
     }
-    public TableWrapperEST(String title, TableView<E> table, ItemDAO<E,TableWrapper> dao) {
+    public TableWrapperEST(String title, TableView<E> table, TableViewItemDAO<E,TableWrapper<E>> dao) {
         super(title,table,dao);
     }
 
@@ -41,7 +41,7 @@ public  class TableWrapperEST<E extends TableItem> extends TableWrapper<E> {
      * <br>
      * 1. setItems()
      * <br>
-     * 2. saveTableItems() - save table items to Memento.
+     * 2. saveTableItems() - save table items to TableMemento.
      * <br>
      * 3. computeSum() - saveEst sum of all "Price_sum" elements.
      * <br>
@@ -55,7 +55,7 @@ public  class TableWrapperEST<E extends TableItem> extends TableWrapper<E> {
             if(c.next() &&
                     (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
                 this.computeSum();
-                System.out.println("report.report.models_view.nodes.TableWrapperEST.setTableData() == sum -> " + sum.getValue());
+                System.out.println("report.report.models_view.nodes.node_wrappers.TableWrapperEST.setTableData() == sum -> " + sum.getValue());
             }
         });
 

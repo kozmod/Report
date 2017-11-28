@@ -1,23 +1,25 @@
 package report.layoutControllers.planning;
 
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import report.entities.items.osr.ItemOSRDAO;
+import javafx.scene.control.*;
+import report.entities.items.discount_coef.DiscountQuery;
+import report.entities.items.discount_coef.TableDItem;
+import report.entities.items.osr.TableViewItemOSRDAO;
 import report.entities.items.osr.TableItemOSR;
-import report.entities.items.plan.ItemPlanDAO;
+import report.entities.items.plan.TableViewItemPlanDAO;
 import report.entities.items.plan.TableItemPlan;
+import report.layoutControllers.planning.temp.*;
 import report.models.coefficient.Quantity;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models.numberStringConverters.numberStringConverters.IntegerStringConverter;
-import report.models_view.nodes.TableWrapper;
-import report.models_view.nodes_factories.TableCellFactory;
-import report.models_view.nodes_factories.TableFactory;
+import report.models_view.nodes.node_wrappers.DiscountTreeTableWrapper;
+import report.models_view.nodes.node_wrappers.TableWrapper;
+import report.models_view.nodes.nodes_factories.TableCellFactory;
+import report.models_view.nodes.nodes_factories.TableFactory;
 
 public class PlaningControllerTF implements TableFactory {
 
 
-    private PlaningControllerTF() {
-    }
+    private PlaningControllerTF() { }
 
     /**
      * Create TableWrapper "Plan"(AllPropertiesController).
@@ -29,7 +31,7 @@ public class PlaningControllerTF implements TableFactory {
      */
 
     public static TableWrapper<TableItemPlan> decorPlan(TableView<TableItemPlan> table){
-        TableWrapper<TableItemPlan> tableWrapper = new TableWrapper<>(table,new ItemPlanDAO());
+        TableWrapper<TableItemPlan> tableWrapper = new TableWrapper(table,new TableViewItemPlanDAO());
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 //
@@ -164,7 +166,7 @@ public class PlaningControllerTF implements TableFactory {
      */
     @SuppressWarnings("Duplicates")
     static TableWrapper decorOSR(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table,new ItemOSRDAO());
+        TableWrapper tableWrapper = new TableWrapper(table,new TableViewItemOSRDAO());
 
 //        tableWrapper.setEditable(true);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -195,5 +197,107 @@ public class PlaningControllerTF implements TableFactory {
 
         return tableWrapper;
     }
+
+
+    /**
+     * TreeTable
+     * @param treeTable
+     * @return
+     */
+    public static TreeTableView decorKD(TreeTableView<TableDItem> treeTable){
+        DiscountTreeTableWrapper treeTableWrapper = new DiscountTreeTableWrapper("Коэффициент Дисконтирования",treeTable, new DiscountQuery());
+
+        TreeTableColumn<TableDItem, String> nameColumn =  new TreeTableColumn<>("Наименование");
+        nameColumn.setSortable(false);
+        nameColumn.setCellValueFactory((param) ->
+                param.getValue().getValue().firstValueProperty()
+        );
+
+        TreeTableColumn<TableDItem, Double> valueColumn = new TreeTableColumn<>("Значение");
+        valueColumn.setSortable(false);
+        valueColumn.setCellValueFactory((param) ->
+                param.getValue().getValue().secondValueProperty().asObject()
+        );
+        valueColumn.setCellFactory(p -> new EditingTreeTableCell(new DoubleStringConverter()));
+
+        valueColumn.setOnEditCommit(event ->{
+            final TreeItem<TableDItem> parent =  event.getTreeTablePosition().getTreeItem().getParent();
+            final TreeItem<TableDItem> current =  event.getTreeTablePosition().getTreeItem();
+            current.getValue().setSecondValue(event.getNewValue());
+            event.getTreeTableView().getRoot().getValue().setSecondValue(Math.random());
+            event.getTreeTableView().refresh();
+        });
+
+
+
+        valueColumn.setMaxWidth(120);
+        valueColumn.setMinWidth(100);
+        treeTable.getColumns().setAll(nameColumn, valueColumn);
+//        treeTable.setRoot(dc.tree());
+        treeTable.setEditable(true);
+        treeTable.setShowRoot(false);
+
+        return treeTable;
+
+    }
+//      public static TreeTableView decorKD(TreeTableView<TableDItem> treeTable){
+////        DiscountCoef dc = new DiscountCoef(1,9.2,
+////                new SpecificRisk(1,1d,1d,1d,1d,1d),
+////                new MarketRisk(1,1d,1d,1d,1d,1d,1d,1d,1d)
+////        );
+//        TreeTableColumn<TableDItem, String> nameColumn =  new TreeTableColumn<>("Наименование");
+//        nameColumn.setSortable(false);
+//        nameColumn.setCellValueFactory((param) ->
+//                param.getValue().getValue().firstValueProperty()
+//        );
+//
+//        TreeTableColumn<TableDItem, Double> valueColumn = new TreeTableColumn<>("Значение");
+//        valueColumn.setSortable(false);
+//        valueColumn.setCellValueFactory((param) ->
+//                param.getValue().getValue().secondValueProperty().asObject()
+//        );
+////        Callback<TreeTableColumn<TableDItem,Double>, TreeTableCell<TableDItem,Double>> defaultCellFactory2
+////                =  ComboBoxTreeTableCell.forTreeTableColumn(2d,3d,4d);
+//
+////        Callback<TreeTableColumn<TableDItem,Double>, TreeTableCell<TableDItem,Double>> defaultCellFactory = TextFieldTreeTableCell.forTreeTableColumn(new DoubleStringConverter());
+//        valueColumn.setCellFactory(p -> new EditingTreeTableCell(new DoubleStringConverter()));
+//
+//        valueColumn.setOnEditCommit(event ->{
+//            final TreeItem<TableDItem> parent =  event.getTreeTablePosition().getTreeItem().getParent();
+//            final TreeItem<TableDItem> current =  event.getTreeTablePosition().getTreeItem();
+//            current.getValue().setSecondValue(event.getNewValue());
+////           final double parentNewValue = parent.getChildren().stream().mapToDouble(i -> i.getValue().getSecondValue()).sum();
+////           parent.getValue().setSecondValue(parentNewValue);
+//            event.getTreeTableView().getRoot().getValue().setSecondValue(Math.random());
+//            event.getTreeTableView().refresh();
+//        });
+//
+//
+////        Callback<TreeTableColumn<TableDItem,Double>, TreeTableCell<TableDItem,Double>> defaultCellFactory = TextFieldTreeTableCell.forTreeTableColumn(new DoubleStringConverter());
+////        valueColumn.setCellFactory((TreeTableColumn<TableDItem,Double> tv) -> {
+////            TreeTableCell<TableDItem,Double> cell = defaultCellFactory.call(tv);
+////            cell.itemProperty().addListener((obs, oldTreeItem, newTreeItem) -> {
+////                TreeItem<TableDItem> item = cell.getTreeTableView().getTreeItem(cell.getIndex());
+////                if (newTreeItem == null) {
+////                    cell.setEditable(false);
+////                } else if ( item !=null && item.isLeaf()  ) {
+////                    cell.setEditable(true);
+////                } else {
+////                    cell.setEditable(false);
+////                }
+////            });
+////            return cell ;
+////        });
+//        valueColumn.setMaxWidth(120);
+//        valueColumn.setMinWidth(100);
+//        treeTable.getColumns().setAll(nameColumn, valueColumn);
+////        treeTable.setRoot(dc.tree());
+//        treeTable.setEditable(true);
+//        treeTable.setShowRoot(false);
+//
+//        return treeTable;
+//
+//    }
+//
 
 }

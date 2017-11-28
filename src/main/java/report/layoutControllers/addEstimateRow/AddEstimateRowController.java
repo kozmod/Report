@@ -21,18 +21,17 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
+import report.entities.items.estimate.TableViewItemEstDAO;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.usage_strings.SQL;
-import report.models_view.data_utils.DiffList;
+import report.models.DiffList;
 
-import report.models_view.InputValidator;
+import report.models_view.nodes.node_helpers.InputValidator;
 
 import report.entities.items.TableItem;
 import report.entities.items.cb.TableItemCB;
 import report.entities.items.estimate.TableItemEst;
-import report.models_view.nodes.TableWrapper;
-import report.models_view.nodes_factories.TableFactory;
-import report.entities.items.estimate.ItemEstDAO;
+import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
 public class AddEstimateRowController implements Initializable {
@@ -140,7 +139,7 @@ public class AddEstimateRowController implements Initializable {
 
         });
         ObservableList unitObs
-                = FXCollections.observableArrayList(new ItemEstDAO().getDistinctOfColumn(SQL.Estimate.UNIT, "-Новый тип Ед. изм.-"));
+                = FXCollections.observableArrayList(new TableViewItemEstDAO().getDistinctOfColumn(SQL.Estimate.UNIT, "-Новый тип Ед. изм.-"));
 //                = FXCollections.observableArrayList(new CommonQuery().getObsDISTINCT("Estimate", "Unit", this));
         comboUnit.setItems(unitObs);
         comboUnit.valueProperty().addListener(new ChangeListener<String>() {
@@ -170,7 +169,7 @@ public class AddEstimateRowController implements Initializable {
     private void init_diffObsList(){
         int check ;
 //       baseObsList = getCheckObs(commonSQL_SELECT.getEstObs_base(siteNumber, contName,typeHome, bildingPart));
-        baseObsList = new ItemEstDAO().getBaseList(bildingPart);
+        baseObsList = new TableViewItemEstDAO().getBaseList(bildingPart);
         DiffList diflist = new DiffList(baseObsList, editObsList);
 
         ObservableList<TableItem> result;
@@ -359,7 +358,7 @@ public class AddEstimateRowController implements Initializable {
 //        
 //            checkBox.selectedProperty().addListener(
 //                (ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
-//                ((ObsItems_Check)tableView().getItems().saveEst(getIndex())).setCheck(newValue);
+//                ((ObsItems_Check)treeTableView().getItems().saveEst(getIndex())).setCheck(newValue);
 //            });
 //        }
 //    }

@@ -10,9 +10,11 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 
+import report.entities.CommonDAO;
+import report.entities.TableViewItemDAO;
 import report.entities.items.TableClone;
 import report.models.printer.PrintEstimate;
-import report.entities.ItemDAO;
+import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
 public class ContextMenuOptional extends ContextMenu{
@@ -20,7 +22,7 @@ public class ContextMenuOptional extends ContextMenu{
 
 //    private Est enumEst;
     private TableWrapper<?> tableWrapper;
-    private ItemDAO dao;
+    private CommonDAO commonDao;
     
     private MenuItem addMenuItem;      
     private MenuItem removeMenuItem;
@@ -44,6 +46,8 @@ public class ContextMenuOptional extends ContextMenu{
                 }
         }); 
     }
+
+
     
 //Constructor =========================================================================
     
@@ -94,13 +98,13 @@ public class ContextMenuOptional extends ContextMenu{
         
         public Builder setTable(TableWrapper tableWrapper) {
             ContextMenuOptional.this.tableWrapper = tableWrapper;
-            ContextMenuOptional.this.dao = tableWrapper.getDAO();
+            ContextMenuOptional.this.commonDao = tableWrapper.getDAO();
             
         return this;
         }
         
-        public Builder setDAO (ItemDAO dao) {
-            ContextMenuOptional.this.dao = dao;
+        public Builder setDAO (TableViewItemDAO dao) {
+            ContextMenuOptional.this.commonDao = dao;
         return this;
         }
         
@@ -128,7 +132,7 @@ public class ContextMenuOptional extends ContextMenu{
 //                tableWrapper.getSelectionModel().getSelectedItems().forEach(toDelete -> {tableWrapper.getItems().remove(toDelete);});
 //            });
             removeMenuItem.addEventHandler(ActionEvent.ACTION, (ActionEvent event) ->
-                tableWrapper.getSelectionModel()
+                tableWrapper.tableView().getSelectionModel()
                         .getSelectedItems()
                         .forEach(toDelete -> tableWrapper.getItems().remove(toDelete))
             );
@@ -145,7 +149,7 @@ public class ContextMenuOptional extends ContextMenu{
             this.CURRENT_MENU_ITEM = saveMenuItem;
 //            saveMenuItem.setOnAction(event -> {
 //
-//                dao.dellAndInsert(tableWrapper);
+//                commonDao.dellAndInsert(tableWrapper);
 //
 //                tableWrapper.saveTableItems();
 //                setDisable_SaveUndoPrint_groupe(true);
@@ -153,7 +157,7 @@ public class ContextMenuOptional extends ContextMenu{
 //            });
             saveMenuItem.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
                 System.out.println("saveMenuItem");
-                dao.dellAndInsert(tableWrapper);
+                commonDao.dellAndInsert(tableWrapper);
 
                 tableWrapper.saveTableItems();
                 setDisable_SaveUndoPrint_groupe(true);
@@ -186,7 +190,7 @@ public class ContextMenuOptional extends ContextMenu{
         public Builder addPrintSmeta() {
             printSmeta     = new MenuItem("Выгрузить смету");
             printSmeta.setOnAction(event -> {
-               new PrintEstimate(dao);
+               new PrintEstimate((TableViewItemDAO) commonDao);
                System.out.println("printSmeta");
             });
             getItems().add(printSmeta);
@@ -211,7 +215,7 @@ public class ContextMenuOptional extends ContextMenu{
 
     public MenuItem getSaveMenuItem() {return saveMenuItem;}
 
-    public void setDao(ItemDAO dao)   { this.dao = dao; }
+    public void setCommonDao(TableViewItemDAO commonDao)   { this.commonDao = commonDao; }
 
 
 

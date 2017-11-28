@@ -7,13 +7,13 @@ import java.util.Properties;
 import java.util.stream.Collector;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.entities.ItemDAO;
+import report.entities.TableViewItemDAO;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.usage_strings.PathStrings;
-import report.models_view.nodes.TableWrapper;
+import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
-public class VariablePropertiesDAO implements ItemDAO<TableItemVariable, TableWrapper> {
+public class VariablePropertiesCommonDAOTableView implements TableViewItemDAO<TableItemVariable, TableWrapper> {
 
 
 
@@ -24,11 +24,11 @@ public class VariablePropertiesDAO implements ItemDAO<TableItemVariable, TableWr
     *                                                                                                         CONSTRUCTOR
     /********************************************************************************************************************/
 
-    public VariablePropertiesDAO(DoubleStringConverter doubleStringConverter) {
+    public VariablePropertiesCommonDAOTableView(DoubleStringConverter doubleStringConverter) {
         this.doubleStringConverter = doubleStringConverter;
     }
 
-    public VariablePropertiesDAO() {
+    public VariablePropertiesCommonDAOTableView() {
         this.doubleStringConverter = new DoubleStringConverter("###,##0.000");
     }
 

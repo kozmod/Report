@@ -27,7 +27,7 @@ import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import report.entities.items.account.ItemAccDAO;
-import report.models_view.data_utils.DiffList;
+import report.models.DiffList;
 import report.entities.items.account.TableItemAcc;
 import report.models.sql.SQLconnector;
 
