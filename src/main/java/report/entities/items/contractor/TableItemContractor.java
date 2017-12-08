@@ -1,7 +1,6 @@
 
 package report.entities.items.contractor;
 
-import java.util.Objects;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
@@ -31,7 +30,7 @@ public class TableItemContractor implements TableClone<TableItemContractor> {
     @Override
     public TableItemContractor getClone() {
         TableItemContractor clone = new TableItemContractor(
-                                            this.getId(),
+                                            this.getID(),
                                             this.getContractor(),
                                             this.getDirector(),
                                             this.getComments(),
@@ -41,8 +40,10 @@ public class TableItemContractor implements TableClone<TableItemContractor> {
     }
     
     
-    @Override  public Long getId()        {return id;}
-    @Override  public void setId(Long id) {this.id = id;}
+//    @Override
+    public Long getID()        {return id;}
+//    @Override
+    public void setID(Long id) {this.id = id;}
 
     public String          getContractor()                 {return contractor.get();}
     public StringProperty  getContractorProperty()         {return contractor;}

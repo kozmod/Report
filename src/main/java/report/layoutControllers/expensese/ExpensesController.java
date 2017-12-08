@@ -119,8 +119,8 @@ public class ExpensesController implements Initializable {
         periodTWrapper = ExpensesControllerTF.decorProperty_JobPeriod(periodTV);
 
         siteTWrapper.setTableData(Est.Common.getPreviewObservableList());
-        expensesTWrapper.setTableData(new TableViewItemExpensesDAO().getList());
-        periodTWrapper.setTableData(new TableViewItemPeriodDAO().getList());
+        expensesTWrapper.setTableData(new TableViewItemExpensesDAO().getData());
+        periodTWrapper.setTableData(new TableViewItemPeriodDAO().getData());
 
       init_expensesTab();
       init_periodTab();

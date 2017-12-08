@@ -8,8 +8,9 @@ Author  : AORA-K
 
 package report;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
+
+
+import java.awt.*;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;

@@ -16,9 +16,7 @@ public interface TableFactory {
     static void setTextFieldTableCell(StringConverter converter, TableColumn ... columns){
         for(TableColumn column  : columns)
             column.setCellFactory(
-                    TextFieldTableCell.forTableColumn(
-                            converter
-                    )
+                    TextFieldTableCell.forTableColumn(converter)
             );
     }
 

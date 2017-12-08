@@ -24,6 +24,7 @@ public class ItemFinResDAO {
 
         ObservableList<TableItemFinRes> FinResTable =  FXCollections.observableArrayList();
 
+        //Procedure
         StringBuilder ResultSetString = new StringBuilder("execute dbo.[FinResFormula]");
 
         try(Connection connection = SQLconnector.getInstance();

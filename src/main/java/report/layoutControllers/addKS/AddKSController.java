@@ -225,7 +225,7 @@ public class AddKSController implements Initializable {
 //        BindedJobColumn.setCellValueFactory(new PropertyValueFactory("secondValue"));
 //        
 //        TableColumn BuildingPartColumn = new TableColumn("Часть"); 
-//        BuildingPartColumn.setCellValueFactory(new PropertyValueFactory("bildingPart"));
+//        BuildingPartColumn.setCellValueFactory(new PropertyValueFactory("buildingPart"));
 //        
 //        
 //        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

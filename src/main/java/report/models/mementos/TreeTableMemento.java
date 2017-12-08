@@ -5,7 +5,7 @@ public class TreeTableMemento<E extends TableClone> implements Memento<E>  {
     private E treeRootParentClone;
 
     public TreeTableMemento(E treeParent) {
-        this.treeRootParentClone = treeParent;
+        this.treeRootParentClone = this.getClone(treeParent);
     }
 
     @Override

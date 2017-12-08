@@ -1,11 +1,13 @@
 
 package report.models_view.nodes.nodes_factories;
 
+import javafx.beans.binding.Bindings;
 import javafx.scene.control.ContextMenu;
 import report.entities.items.estimate.TableViewItemEstDAO;
 import report.layoutControllers.addEstimateRow.AddEstimateRowController;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models_view.nodes.node_helpers.StageCreator;
+import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.usage_strings.PathStrings;
 import report.models_view.nodes.ContextMenuOptional;
 import report.models_view.nodes.node_wrappers.TableWrapper;
@@ -102,7 +104,7 @@ public class ContextMenuFactory {
      * @param tableWrapperView (TableWrapper extends TableView)
      * @return ContextMenu
      */    
-    public static ContextMenu getCommonSU(TableWrapper tableWrapperView){
+    public static ContextMenu getCommonSU(AbstractTableWrapper tableWrapperView){
         return ContextMenuOptional.newBuilder()
                 .setTable(tableWrapperView)
                 .addSaveMenuItem()
@@ -114,96 +116,5 @@ public class ContextMenuFactory {
     
     
     
-    /**
-     * Create ContextMenu to "KS" TableViews (TableKS). 
-   
-     * @param enumEst   (enumeration)
-     * @param treeTableView (TableWrapper extends TableView)
-     * @return ContextMenu
-     */
-//    public static ContextMenu geKS (Est enumEst, TableWrapper treeTableView){
-//        return ContextMenuOptional.newBuilder()
-//                    .setDAO(new TableViewItemKSDAO(enumEst))
-//                    .setTable(treeTableView)
-//                             .addSaveMenuItem()
-//                             .addUndoMenuItem()
-//                    .build();         
-//    }
-    
-    
 
-    
-    
-//    /**
-//     * Create ContextMenu to "OSR" TableViews. 
-//   
-//     * @param treeTableView (TableWrapper extends TableView)
-//     * @return ContextMenu
-//     */
-//    public static ContextMenu getOSR (TableWrapper treeTableView){
-//        return ContextMenuOptional.newBuilder()
-//                    .setDAO(new TableViewItemOSRDAO())
-//                    .setTable(treeTableView)
-//                               .addRemoveMenuItem()
-//                               .addSeparator()
-//                             .addSaveMenuItem()
-//                             .addUndoMenuItem()
-//                    .build();         
-//    }
-    
-//    /**
-//     * Create ContextMenu to "OSR" TableViews. 
-//     
-//     * @param treeTableView (TableWrapper extends TableView)
-//     * @return ContextMenu
-//     */
-//    public static ContextMenu getVariable (TableWrapper treeTableView){
-//        return ContextMenuOptional.newBuilder()
-//                    .setDAO(new ItemVariableDAO())
-//                    .setTable(treeTableView)
-//                               .addRemoveMenuItem()
-//                               .addSeparator()
-//                             .addSaveMenuItem()
-//                             .addUndoMenuItem()
-//                    .build();         
-//    }
-//    /**
-//     * Create ContextMenu to "OSR" TableContractor. 
-//     *<br><b>Contain ONLY Print MenuItem</b>
-//     * @param treeTableView (TableWrapper extends TableView)
-//     * @return ContextMenu
-//     */
-//    public static ContextMenu getContractor(TableWrapper treeTableView){
-//        return ContextMenuOptional.newBuilder()
-//                    .setDAO(new TableViewItemContractorDAO())
-//                    .setTable(treeTableView)
-//                               .addRemoveMenuItem()
-//                               .addSeparator()
-//                             .addSaveMenuItem()
-//                             .addUndoMenuItem()
-//                    .build();         
-//    }
-    
-    
-
-    
-    
-    
-        /**
-     * Create Common ContextMenu with 
-     * <b >DELETE, SAVE, UNDO </b> - options.
-     *
-     * @param treeTableView (TableWrapper extends TableView)
-     * @param commonDao       (TableViewItemDAO)
-     * @return ContextMenu
-     */
-//    public static ContextMenu getSite(TableWrapper treeTableView, TableViewItemDAO commonDao){
-//        return ContextMenuOptional.newBuilder()
-//                    .setDAO(commonDao)
-//                    .setTable(treeTableView)
-//                             .addSaveMenuItem()
-//                             .addUndoMenuItem()
-//                    .build();         
-//    }
-    
 }

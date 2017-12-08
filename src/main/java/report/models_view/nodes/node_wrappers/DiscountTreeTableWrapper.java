@@ -1,17 +1,15 @@
 package report.models_view.nodes.node_wrappers;
 
-import javafx.beans.value.ChangeListener;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableView;
 import report.entities.CommonDAO;
-import report.entities.items.TableClone;
 import report.entities.items.discount_coef.DiscountCoef;
 import report.entities.items.discount_coef.TableDItem;
 import report.models.mementos.Memento;
 import report.models.mementos.TreeTableMemento;
+import report.models_view.nodes.ContextMenuOptional;
 
-public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef,TreeTableView<TableDItem>> {
+public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef> {
 
     private final TreeTableView<TableDItem> treeTableView;
     private DiscountCoef discountCoef;
@@ -22,7 +20,7 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef,
      *                                                                         *
      **************************************************************************/
     public DiscountTreeTableWrapper(String title, TreeTableView treeView, CommonDAO<DiscountCoef, AbstractTableWrapper> commonDao) {
-        this(title,treeView,commonDao.getList(),commonDao);
+        this(title,treeView,commonDao.getData(),commonDao);
     }
     public DiscountTreeTableWrapper(String title, TreeTableView treeView,DiscountCoef discountCoef,  CommonDAO<DiscountCoef, AbstractTableWrapper> commonDao) {
         super(title, commonDao);
@@ -38,20 +36,20 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef,
      **************************************************************************/
     @Override
     public void saveTableItems() {super.memento = new TreeTableMemento<>(discountCoef);
-
+        ContextMenuOptional.setTableItemContextMenuListener(this);
     }
 
     @Override
     public void undoChangeItems() {
         this.discountCoef = this.memento.getSavedState();
         treeTableView.setRoot(discountCoef.tree());
+        ContextMenuOptional.setTableItemContextMenuListener(this);
     }
 
     @Override
     public Memento<DiscountCoef> getMemento() {
         return super.memento;
     }
-
 
     public  TreeTableView<TableDItem> tableView() {
         return  treeTableView;
@@ -60,6 +58,9 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef,
     public void selectionModel(){
         treeTableView.getSelectionModel();
     }
+
+
+
     /***************************************************************************
      *                                                                         *
      * Getter/Setter                                                           *
@@ -73,13 +74,13 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef,
     @Override
     public void setContextMenu(ContextMenu contextMenu) {
         treeTableView.setContextMenu(contextMenu);
-        treeTableView.getRoot()
-                .getValue()
-                .secondValueProperty()
-                .addListener((ChangeListener) (observable, oldValue, newValue) ->{
-                    contextMenu.setImpl_showRelativeToWindow(false);
-                    treeTableView.refresh();
-        });
+//        treeTableView.getRoo ContextMenuOptional.setTableItemContextMenuListener(this);t()
+//                .getValue()
+//                .secondValueProperty()
+//                .addListener((ChangeListener) (observable, oldValue, newValue) ->{
+//                    contextMenu.setImpl_showRelativeToWindow(false);
+//                    treeTableView.refresh();
+//        });
     }
 
     @Override
@@ -90,8 +91,8 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef,
     }
 
     @Override
-    public void setTableDataFromBASE() {
-        this.discountCoef = commonDao.getList();
+    public void setDataFromBASE() {
+        this.discountCoef = commonDao.getData();
         treeTableView.setRoot(discountCoef.tree());
         this.saveTableItems();
     }

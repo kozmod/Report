@@ -58,22 +58,22 @@ public class AllPropertiesController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 ////        //add OSR TableView
 //        osrTableWrapper = AllPropertiesControllerTF.decorOSR(osrTable);
-//        osrTableWrapper.setTableDataFromBASE();
+//        osrTableWrapper.setDataFromBASE();
 //        ContextMenuOptional.setTableItemContextMenuListener(osrTableWrapper);
 
 //        //add OSR TableView
         variableTableWrapper = AllPropertiesControllerTF.decorVariable(variableTable);
-        variableTableWrapper.setTableDataFromBASE();
+        variableTableWrapper.setDataFromBASE();
         ContextMenuOptional.setTableItemContextMenuListener(variableTableWrapper);
 
         //add Contractors TableView
         contractorTableWrapper = AllPropertiesControllerTF.decorContractor(contractorTable);
-        contractorTableWrapper.setTableDataFromBASE();
+        contractorTableWrapper.setDataFromBASE();
         ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapper);
 
 //        //add Plan TableView
 //        planTableWrapper = TableFactory.decorPlan(planTable);
-//        planTableWrapper.setTableDataFromBASE();
+//        planTableWrapper.setDataFromBASE();
 //        ContextMenuOptional.setTableItemContextMenuListener(planTableWrapper);
 //
 //        //add Fact TableView

@@ -23,7 +23,7 @@ public class MarketRisk {
         String MARKET_BARRIERS = "MarketBarriers";
     }
 
-    private final long id;
+    private  long id;
     /**
      * Общеэкономические факторы
      */
@@ -111,6 +111,9 @@ public class MarketRisk {
      *                                                                         *
      **************************************************************************/
     public long getId() {return id;}
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public double getSocial() {return social.get(); }
     public DoubleProperty socialProperty() { return social;}

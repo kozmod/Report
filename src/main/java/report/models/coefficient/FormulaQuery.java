@@ -59,9 +59,6 @@ public class FormulaQuery {
                            pse,
                            iTax
                    );
-
-
-
                }
            } catch (SQLException ex) {
                Logger.getLogger(FormulaQuery.class.getName()).log(Level.SEVERE, null, ex);

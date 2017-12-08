@@ -69,12 +69,12 @@ public class DiscountCoef implements TableClone<DiscountCoef>{
      * GETTER                                                                  *
      *                                                                         *
      **************************************************************************/
-    @Override
-    public Long getId() {
+//    @Override
+    public Long getID() {
         return id;
     }
-    @Override
-    public void setId(Long id) {
+//    @Override
+    public void setID(Long id) {
         this.id = id;
     }
     public DoubleProperty kdProperty() {
@@ -91,6 +91,14 @@ public class DiscountCoef implements TableClone<DiscountCoef>{
 
     public MarketRisk marketRisk() {
         return marketRisk;
+    }
+
+    public double getRateOfReturn() {
+        return rateOfReturn.get();
+    }
+
+    public DoubleProperty rateOfReturnProperty() {
+        return rateOfReturn;
     }
 
     @Override
@@ -229,17 +237,14 @@ public class DiscountCoef implements TableClone<DiscountCoef>{
         final TreeItem<TableDItem> root = new TreeItem<>( new TableDItem(id,"",ROOT_ELEMENT,0D));
         root.getChildren().addAll(RORLeaf,specificRoot,marketRoot,KD,KDperMonth);
 
-        this.computeKD();
-        this.specificRisk.compute();
-        this.marketRisk.compute();
-
-
         root.getValue().secondValueProperty().addListener((ChangeListener) (observable, oldValue, newValue) ->{
             this.specificRisk.compute();
             this.marketRisk.compute();
             this.computeKD();
         });
-
+        this.specificRisk.compute();
+        this.marketRisk.compute();
+        this.computeKD();
         return root;
     }
 

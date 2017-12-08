@@ -9,14 +9,15 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.util.converter.NumberStringConverter;
+import report.entities.items.discount_coef.TableDItem;
 import report.entities.items.osr.TableItemOSR;
 import report.entities.items.plan.TableViewItemPlanDAO;
 import report.entities.items.plan.TableItemFact;
 import report.entities.items.plan.TableItemPlan;
 import report.models.coefficient.Quantity;
-import report.entities.items.discount_coef.DiscountQuery;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models_view.nodes.ContextMenuOptional;
+import report.models_view.nodes.node_wrappers.DiscountTreeTableWrapper;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 import report.models_view.nodes.nodes_factories.ContextMenuFactory;
 
@@ -43,11 +44,12 @@ public class PlanningController implements Initializable{
     @FXML private Button   osrAddItemButton;
 
     @FXML private TableView planTable,factTable,osrTable;
-    @FXML private TreeTableView kdTreeTable;
+    @FXML private TreeTableView<TableDItem> kdTreeTable;
 
     private TableWrapper<TableItemPlan> planTableWrapper;
     private TableWrapper<TableItemFact> factTableWrapper;
     private TableWrapper<TableItemOSR> osrTableWrapper;
+    private DiscountTreeTableWrapper kdTreeTableWrapper;
 
     /*!******************************************************************************************************************
     *                                                                                                               INIT
@@ -61,10 +63,10 @@ public class PlanningController implements Initializable{
         Quantity.getQuantityProperty().addListener(e ->{
             Quantity.updateFromBase();
             //plan table
-            planTableWrapper. setTableDataFromBASE();
+            planTableWrapper.setDataFromBASE();
             ContextMenuOptional.setTableItemContextMenuListener(planTableWrapper);
             //osr table
-            osrTableWrapper.setTableDataFromBASE();
+            osrTableWrapper.setDataFromBASE();
             ContextMenuOptional.setTableItemContextMenuListener(osrTableWrapper);
             //TF
             computeSumExpTextFields();
@@ -76,7 +78,7 @@ public class PlanningController implements Initializable{
     private void init_PlanTab(){
         //add Plan TableView
         planTableWrapper = PlaningControllerTF.decorPlan(planTable);
-        planTableWrapper.setTableDataFromBASE();
+        planTableWrapper.setDataFromBASE();
         ContextMenuOptional.setTableItemContextMenuListener(planTableWrapper);
 
         //add Fact TableView
@@ -119,7 +121,7 @@ public class PlanningController implements Initializable{
     private void init_OSRTab(){
         //add OSR TableView
         osrTableWrapper = PlaningControllerTF.decorOSR(osrTable);
-        osrTableWrapper.setTableDataFromBASE();
+        osrTableWrapper.setDataFromBASE();
         ContextMenuOptional.setTableItemContextMenuListener(osrTableWrapper);
 
         computeSumExpTextFields();
@@ -130,7 +132,6 @@ public class PlanningController implements Initializable{
                 computeSumExpTextFields();
             }
         });
-
         //table Context menu property
         osrTableWrapper.tableView().contextMenuProperty().bind(
                 Bindings.when(osrEditСheckBox.selectedProperty() )
@@ -165,18 +166,24 @@ public class PlanningController implements Initializable{
      * Initialization of KD Tab.
      */
     private void init_KDTab(){
-        PlaningControllerTF.decorKD(kdTreeTable);
-        PlaningControllerTF.decorKD(kdTreeTable);
-        kdTreeTable.setRoot(new DiscountQuery().getList().tree());
-        kdTreeTable.editableProperty().bind(Bindings
+        kdTreeTableWrapper = PlaningControllerTF.decorKD(kdTreeTable);
+//        PlaningControllerTF.decorKD(kdTreeTable);
+//        kdTreeTableWrapper.tableView().setRoot(new DiscountQuery().getData().tree());
+        kdTreeTableWrapper.setDataFromBASE();
+        kdTreeTableWrapper.tableView().editableProperty().bind(Bindings
                 .when(kdEditСheckBox.selectedProperty())
                 .then(true)
                 .otherwise(false));
+        kdTreeTableWrapper.tableView().contextMenuProperty().bind(
+                Bindings.when(kdEditСheckBox.selectedProperty() )
+                        .then( ContextMenuFactory.getCommonSU(kdTreeTableWrapper))
+                        .otherwise( (ContextMenu) null));
     }
 
     /*!******************************************************************************************************************
     *                                                                                                     	    HANDLERS
     ********************************************************************************************************************/
+
 
     @FXML
     private void handle_planAddItemButton(ActionEvent event) {

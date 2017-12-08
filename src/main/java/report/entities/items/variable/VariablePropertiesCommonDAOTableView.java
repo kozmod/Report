@@ -43,7 +43,7 @@ public class VariablePropertiesCommonDAOTableView implements TableViewItemDAO<Ta
     * @return  String 
     */
     @Override
-    public String getTableString() {return PathStrings.Files.VARIABLE_PROPERTIES;}
+    public String sqlTableName() {return PathStrings.Files.VARIABLE_PROPERTIES;}
     
     
 
@@ -51,8 +51,8 @@ public class VariablePropertiesCommonDAOTableView implements TableViewItemDAO<Ta
     * Get variable Properties.
     * @return value (converted string to Double value)
     */
-    public Properties getProperties(){return  PropertiesFile.get(getTableString());}
-//    public Properties getProperties(){return  PropertiesFactory.getUsePath(getTableString());}
+    public Properties getProperties(){return  PropertiesFile.get(sqlTableName());}
+//    public Properties getProperties(){return  PropertiesFactory.getUsePath(sqlTableName());}
 
 
     /**
@@ -60,7 +60,7 @@ public class VariablePropertiesCommonDAOTableView implements TableViewItemDAO<Ta
     * @return  ObservableList of TableItemVariable
     */
     @Override
-    public ObservableList<TableItemVariable> getList() {
+    public ObservableList<TableItemVariable> getData() {
         ObservableList<TableItemVariable> listAllOSR 
                 = PropertiesFile.get(PathStrings.Files.VARIABLE_PROPERTIES)
                 .entrySet()
@@ -115,7 +115,7 @@ public class VariablePropertiesCommonDAOTableView implements TableViewItemDAO<Ta
                     ),
                     (p1, p2) -> { p1.putAll(p2); return p1; })
                 );
-        PropertiesFile.update(property, this.getTableString());
+        PropertiesFile.update(property, this.sqlTableName());
        
     }
 

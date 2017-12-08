@@ -36,10 +36,10 @@ public class SiteTableViewItemDAO implements TableViewItemDAO<TableItemPreview, 
     }
 
     @Override
-    public String getTableString() {return SQL.Tables.SITE;}
+    public String sqlTableName() {return SQL.Tables.SITE;}
     
     @Override
-    public ObservableList<TableItemPreview> getList(){
+    public ObservableList<TableItemPreview> getData(){
         
         long lBegin = System.currentTimeMillis();
         
@@ -147,7 +147,7 @@ public class SiteTableViewItemDAO implements TableViewItemDAO<TableItemPreview, 
             PreparedStatement pstmt = connection.prepareStatement("update [dbo].[Site] SET dell = 1 WHERE [id] = ? AND [dell] = 0;");) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
-                pstmt.setLong   (1, items.stream().findAny().get().getId());
+                pstmt.setLong   (1, items.stream().findAny().get().getID());
                 pstmt.execute();  
                 
            //SQL commit
@@ -213,7 +213,7 @@ public class SiteTableViewItemDAO implements TableViewItemDAO<TableItemPreview, 
                     try( ResultSet generategKeys = pstmt.getGeneratedKeys();){
                         if(generategKeys.next())
                             for(TableItemPreview obsItem : items)
-                                obsItem.setId(generategKeys.getLong(1));
+                                obsItem.setID(generategKeys.getLong(1));
                     } 
                 
            //SQL commit

@@ -126,7 +126,7 @@ public class EstimateController implements Initializable {
         public ObservableList<?  extends TableItem> findItemsList_DL(TableItem selectedItem){
             if(selectedItem != null)
                 return allItems.stream()
-                        .filter((TableItem i) -> i.equalsSuperCalss(selectedItem))
+                        .filter((TableItem i) -> i.equalsSuperClass(selectedItem))
                         .sorted(Comparator.comparingLong(item -> item.getDateCreate().getTime()))
 //                    .sorted((item1, item2) -> Long.compare(item1.getDateCreate().getTime(), item2.getDateCreate().getTime()))
                         .collect(collectingAndThen(toList(), FXCollections::observableArrayList));
@@ -134,7 +134,7 @@ public class EstimateController implements Initializable {
                 return FXCollections.observableArrayList();
         }
 
-        public void updateList_DL(TableViewItemDAO dao){ allItems = dao.getList();}
+        public void updateList_DL(TableViewItemDAO dao){ allItems = dao.getData();}
 //        public void updateList_DL(){ createTab();}
 
 
@@ -158,12 +158,12 @@ public class EstimateController implements Initializable {
             switch(this){
                 case Base:
                 case Changed:
-                    allItems = new TableViewItemEstDAO(this).getList();
+                    allItems = new TableViewItemEstDAO(this).getData();
                     tabMap   = allItems.stream()
                             .filter(item  -> item.getDel() != 1 )
                             .sorted(Comparator.comparing(TableItem::getJM_name))
-//                                .collect(Collectors.groupingBy(TableItem::getBildingPart));
-                            .collect(Collectors.groupingBy(TableItem::getBildingPart,
+//                                .collect(Collectors.groupingBy(TableItem::getBuildingPart));
+                            .collect(Collectors.groupingBy(TableItem::getBuildingPart,
 //                                        TableItem::getBuildingPart,
                                     Collector.of(
                                             () -> FXCollections.observableArrayList(TableItemEst.extractor()),
@@ -172,7 +172,7 @@ public class EstimateController implements Initializable {
                             ));
                     break;
                 case KS:
-                    allItems = new TableViewItemKSDAO(this).getList();
+                    allItems = new TableViewItemKSDAO(this).getData();
                     tabMap   = allItems.stream()
                             .filter(item  -> item.getDel() != 1 )
                             .sorted(Comparator.comparing(TableItem::getJM_name))
@@ -195,8 +195,8 @@ public class EstimateController implements Initializable {
                             );
                     tabMap   = allItems.stream()
                             .filter(item  -> item.getDel() != 1 )
-                            .collect(Collectors.groupingBy(item -> ((TableItemEst)item).getBildingPart(),
-//                                        TableItem::getBildingPart,
+                            .collect(Collectors.groupingBy(item -> ((TableItemEst)item).getBuildingPart(),
+//                                        TableItem::getBuildingPart,
                                     Collector.of(
                                             () -> FXCollections.observableArrayList(),
                                             ObservableList::add,
@@ -211,7 +211,7 @@ public class EstimateController implements Initializable {
         public TableItem  findEqualsElevent(TableItem inpItem){
             return (TableItem) tabMap.values().stream()
                     .flatMap(mapItem -> ((List) mapItem).stream())
-                    .filter(item -> ((TableItem)item).equalsSuperCalss(inpItem))
+                    .filter(item -> ((TableItem)item).equalsSuperClass(inpItem))
                     .findFirst().orElse(null);
 //                   .get();
         }
@@ -444,7 +444,7 @@ public class EstimateController implements Initializable {
                         sum =  equalsItem.getValue() -
                                 ksMap.values().stream()
                                         .flatMap(mapItem ->mapItem.stream())
-                                        .filter(item::equalsSuperCalss)
+                                        .filter(item::equalsSuperClass)
                                         .mapToDouble(filtered -> filtered.getValue())
                                         .sum();
 
@@ -453,7 +453,7 @@ public class EstimateController implements Initializable {
 //                                Est.Changed.findEqualsElevent(item).getValue() -
 //                                        ksMap.values().stream()
 //                                                .flatMap(mapItem ->mapItem.stream())
-//                                                .filter(item::equalsSuperCalss)
+//                                                .filter(item::equalsSuperClass)
 //                                                .mapToDouble(filtered -> filtered.getValue())
 //                                                .sum()
 //                        );

@@ -52,8 +52,10 @@ public class TableDItem implements TableClone {
 
 
     //Getter / Setter
-    @Override  public Long getId() {return id;}
-    @Override  public void setId(Long id) {this.id = id;}
+//    @Override
+    public Long getID() {return id;}
+//    @Override
+    public void setID(Long id) {this.id = id;}
 
 
     public String getSqlColumn() {return sqlColumn;}
@@ -123,7 +125,7 @@ public class TableDItem implements TableClone {
 
     @Override
     public String toString() {
-        return "ID ->"+getId()+" FV ->"+getFirstValue() + " SV ->"+ getSecondValue();
+        return "ID ->"+ getID()+" FV ->"+getFirstValue() + " SV ->"+ getSecondValue();
     }
 
     /**

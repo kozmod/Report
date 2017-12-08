@@ -32,7 +32,7 @@ public class SpecificRisk {
     static final String OTHER_RISKS  = "Прочие риски, связанные с деятельностью компании, в %";
 
 
-    private final long id;
+    private long id;
     private final DoubleProperty keyChar;
     private final DoubleProperty entSize;
     private final DoubleProperty finStruct;
@@ -87,6 +87,9 @@ public class SpecificRisk {
      **************************************************************************/
     public long getId() {
         return id;
+    }
+    public void setId(long id) {
+        this.id = id;
     }
 
     public double getKeyChar() { return keyChar.get(); }

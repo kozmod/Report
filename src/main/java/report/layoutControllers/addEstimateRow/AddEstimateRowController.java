@@ -41,7 +41,6 @@ public class AddEstimateRowController implements Initializable {
     private ObservableList<TableItemCB> editObsList,
             baseObsList;
 
-    private int    tableTpe;
     private String bildingPart,
             siteNumber,
             contName,
@@ -168,7 +167,7 @@ public class AddEstimateRowController implements Initializable {
     // ATTENTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     private void init_diffObsList(){
         int check ;
-//       baseObsList = getCheckObs(commonSQL_SELECT.getEstObs_base(siteNumber, contName,typeHome, bildingPart));
+//       baseObsList = getCheckObs(commonSQL_SELECT.getEstObs_base(siteNumber, contName,typeHome, buildingPart));
         baseObsList = new TableViewItemEstDAO().getBaseList(bildingPart);
         DiffList diflist = new DiffList(baseObsList, editObsList);
 
@@ -206,12 +205,12 @@ public class AddEstimateRowController implements Initializable {
                         obsItem.getContractor(),
                         obsItem.getJM_name(),
                         obsItem.getJobOrMat(),
-                        obsItem.getBindedJob(),
+                        obsItem.getBindJob(),
                         obsItem.getValue(),
                         obsItem.getUnit(),
                         obsItem.getPrice_one(),
                         obsItem.getPrice_sum(),
-                        obsItem.getBildingPart()
+                        obsItem.getBuildingPart()
                 ));
             }
 
@@ -230,12 +229,12 @@ public class AddEstimateRowController implements Initializable {
                                 .setContractor(obsItem.getContractor())
                                 .setJM_name(obsItem.getJM_name())
                                 .setJobOrMat(obsItem.getJobOrMat())
-                                .setBindedJob(obsItem.getBindedJob())
+                                .setBindedJob(obsItem.getBindJob())
                                 .setValue(obsItem.getValue())
                                 .setUnit(obsItem.getUnit())
                                 .setPrice_one(obsItem.getPrice_one())
                                 .setPrice_sum(obsItem.getPrice_sum())
-                                .setBildingPart(obsItem.getBildingPart())
+                                .setBildingPart(obsItem.getBuildingPart())
 
                                 .setDate(todayDate)
 //                                    .setTableType(tableType)
@@ -250,6 +249,41 @@ public class AddEstimateRowController implements Initializable {
 /*!******************************************************************************************************************
 *                                                                                                           HANDLERS 
 ********************************************************************************************************************/
+    @FXML
+    private void testADD(ActionEvent event) {
+        elemTableWrapperView.getItems().add(new TableItemCB(
+                -1L,
+                false,
+                todayDate,
+                siteNumber,
+                typeHome,
+                contName,
+                "",
+                "",
+                "",
+                0d,
+                "",
+                0d,
+                0d,
+                bildingPart
+        ));
+
+    }
+
+    @FXML
+    private void testCOMIT(ActionEvent event) {
+        elemTableWrapperView.commitData();
+//        elemTableWrapperView.refresh();
+
+    }
+
+    @FXML
+    private void testCHECK_LIST(ActionEvent event) {
+        elemTableWrapperView.getItems().forEach(i -> System.out.println(i.toString()));
+
+    }
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     @FXML
     private void handle_addRow(ActionEvent event) {
@@ -465,14 +499,14 @@ public class AddEstimateRowController implements Initializable {
 //        private final StringProperty siteNumber; 
 //        private final StringProperty typeHome;
 //        private final StringProperty contractor; 
-//        private final StringProperty bildingPart;
+//        private final StringProperty buildingPart;
 //       
 //        
 //        //old value
 //        private final BooleanProperty check;
 //        private final StringProperty JM_name;                          
 //        private final StringProperty JobOrMat;                          
-//        private final StringProperty BindedJob;                          
+//        private final StringProperty bindJob;
 //        private final FloatProperty value;                            
 //        private final StringProperty unit;                            
 //        private final FloatProperty price_one;                            
@@ -485,24 +519,24 @@ public class AddEstimateRowController implements Initializable {
 //                              String contractor, //new
 //                              String JM_name, 
 //                              String JobOrMat,
-//                              String BindedJob, 
+//                              String bindJob,
 //                              float value, 
 //                              String unit, 
 //                              float price_one, 
 //                              float price_sum,
-//                              String bildingPart //new
+//                              String buildingPart //new
 //                            ) {
 //            //new value
 //            this.siteNumber    = new SimpleStringProperty(siteNumber);
 //            this.typeHome      = new SimpleStringProperty(typeHome);
 //            this.contractor    = new SimpleStringProperty(contractor);
-//            this.bildingPart   = new SimpleStringProperty(bildingPart);
+//            this.buildingPart   = new SimpleStringProperty(buildingPart);
 //            
 //            //old value
 //            this.check      = new SimpleBooleanProperty(check);
 //            this.JM_name    = new SimpleStringProperty(JM_name);
 //            this.JobOrMat   = new SimpleStringProperty(JobOrMat);
-//            this.BindedJob  = new SimpleStringProperty(BindedJob);
+//            this.bindJob  = new SimpleStringProperty(bindJob);
 //            this.value      = new SimpleFloatProperty(value);
 //            this.unit       = new SimpleStringProperty(unit);
 //            this.price_one  = new SimpleFloatProperty(price_one);
@@ -528,25 +562,25 @@ public class AddEstimateRowController implements Initializable {
 //        public String getJobOrMat() {return JobOrMat.saveEst();}
 //        public void   setJobOrMat(String value_inp) {JobOrMat.set(value_inp);}
 //        
-//        public String getBindedJob() {return BindedJob.saveEst();}
-//        public void   setBindedJob(String value_inp) {BindedJob.set(value_inp);}
+//        public String getBindJob() {return bindJob.saveEst();}
+//        public void   setBindJob(String value_inp) {bindJob.set(value_inp);}
 //
 //        public float getValue() {return value.saveEst();}
 //        public void  setValue(float value_inp) {value.set(value_inp);}
-//        public FloatProperty getValueProperty() {return value;}
+//        public FloatProperty valueProperty() {return value;}
 //        
 //        public String getUnit() {return unit.saveEst();}
 //        public void  setUnit(String value_inp) {unit.set(value_inp);}
 //        
 //        public float getPrice_one() {return price_one.saveEst();}
 //        public void setPrice_one (float value_inp) {price_one.set(value_inp);}     
-//        public FloatProperty getPrice_oneProperty() {return price_one;}
+//        public FloatProperty price_oneProperty() {return price_one;}
 //       
 //        public float getPrice_sum() {return price_sum.saveEst();}
 //        public void setPrice_sum (float value_inp) {price_sum.set(value_inp);}
 //        
-//        public String getBildingPart() {return bildingPart.saveEst();}
-//        public void   setBildingPart(String value_inp) {bildingPart.set(value_inp);}
+//        public String getBuildingPart() {return buildingPart.saveEst();}
+//        public void   setBuildingPart(String value_inp) {buildingPart.set(value_inp);}
 //        
 //        
 //        @Override
@@ -587,7 +621,7 @@ public class AddEstimateRowController implements Initializable {
 //            if ((this.JobOrMat.saveEst() == null) ? (other.JobOrMat.saveEst() != null) : !this.JobOrMat.saveEst().equals(other.JobOrMat.saveEst())) {
 //                return false;
 //            }
-//            if ((this.BindedJob.saveEst() == null) ? (other.BindedJob.saveEst() != null) : !this.BindedJob.saveEst().equals(other.BindedJob.saveEst())) {
+//            if ((this.bindJob.saveEst() == null) ? (other.bindJob.saveEst() != null) : !this.bindJob.saveEst().equals(other.bindJob.saveEst())) {
 //                return false;
 //            }
 //            if (this.value.saveEst() != other.value.saveEst()) {
@@ -602,7 +636,7 @@ public class AddEstimateRowController implements Initializable {
 //            if (this.price_sum.saveEst() != other.price_sum.saveEst()) {
 //                return false;
 //            }
-//            if ((this.bildingPart.saveEst() == null) ? (other.bildingPart.getValue() != null) : !this.bildingPart.saveEst().equals(other.bildingPart.saveEst())) {
+//            if ((this.buildingPart.saveEst() == null) ? (other.buildingPart.getValue() != null) : !this.buildingPart.saveEst().equals(other.buildingPart.saveEst())) {
 //                return false;
 //            }
 //        return true;

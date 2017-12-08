@@ -6,10 +6,14 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Set;
+import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.ObservableSet;
 import report.models.sql.SQLconnector;
 import report.usage_strings.ServiceStrings;
 import report.models.DiffList;
@@ -19,7 +23,7 @@ import report.models_view.nodes.node_wrappers.TableWrapper;
 
 public interface TableViewItemDAO<E,T extends TableWrapper> extends CommonDAO<Collection<E>,T > {
     @Override
-    ObservableList<E> getList();
+    ObservableList<E> getData();
     @Override
     void delete(Collection<E> entry);
     @Override
@@ -38,32 +42,6 @@ public interface TableViewItemDAO<E,T extends TableWrapper> extends CommonDAO<Co
       
     }
     
-    /**
-     * Get <b>Unique</b> value of column.
-     * @return ObservableList
-     */
-    default ObservableList<Object> getDistinctOfColumn(String column, Object ... fistNodes){
-         
-        ObservableList<Object> obsList = FXCollections.observableArrayList(fistNodes);
-        
-        try ( Connection connection = SQLconnector.getInstance();
-              PreparedStatement pstmt = connection.prepareStatement("execute getListDIST ?,?")){
-                pstmt.setString(1, column);
-                pstmt.setString(2, this.getTableString());
-            
-                pstmt.execute();
-            
-            try ( ResultSet resSet = pstmt.getResultSet()){
-                while(resSet.next()){
-                    if(!(resSet.getObject(column) == null)
-                            && !(resSet.getObject(column).equals(ServiceStrings.Line)))
-                        obsList.add(resSet.getObject(column));
-                }
-            }
-        } catch (SQLException ex) {
-            Logger.getLogger(TableViewItemDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return obsList;
-    }
+
 
 }

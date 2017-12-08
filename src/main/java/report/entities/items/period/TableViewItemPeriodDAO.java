@@ -29,10 +29,10 @@ public class TableViewItemPeriodDAO implements TableViewItemDAO<TableItemPeriod,
     * @return  List of TableItem
     */
     @Override
-    public String getTableString() {return SQL.Tables.SITE_JOB_PERIOD;}
+    public String sqlTableName() {return SQL.Tables.SITE_JOB_PERIOD;}
     
     @Override
-    public ObservableList<TableItemPeriod> getList() {
+    public ObservableList<TableItemPeriod> getData() {
         ObservableList<TableItemPeriod> list =  FXCollections.observableArrayList(TableItemPeriod.extractor());
         
         String sqlQuery = "SELECT "       //[id] [SiteNumber] [Contractor][Text][DateFrom][DateTo]
@@ -78,7 +78,7 @@ public class TableViewItemPeriodDAO implements TableViewItemDAO<TableItemPeriod,
             //set false SQL Autocommit
             connection.setAutoCommit(false);
                 for (TableItemPeriod obsItem : items) {
-                    pstmt.setLong   (1, obsItem.getId());
+                    pstmt.setLong   (1, obsItem.getID());
                     pstmt.addBatch();  
                 }
            pstmt.executeBatch();
@@ -127,7 +127,7 @@ public class TableViewItemPeriodDAO implements TableViewItemDAO<TableItemPeriod,
                     
                     try( ResultSet generategKeys = pstmt.getGeneratedKeys();){
                         if(generategKeys.next())
-                            obsItem.setId(generategKeys.getLong(1));
+                            obsItem.setID(generategKeys.getLong(1));
                     }    
                 }
            

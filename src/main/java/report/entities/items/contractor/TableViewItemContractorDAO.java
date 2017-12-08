@@ -23,7 +23,7 @@ import report.models_view.nodes.node_wrappers.TableWrapper;
 public class TableViewItemContractorDAO implements TableViewItemDAO<TableItemContractor, TableWrapper> {
 
     @Override
-    public String getTableString() {
+    public String sqlTableName() {
         return SQL.Tables.CONTRACTORS;
     }
     /**
@@ -31,7 +31,7 @@ public class TableViewItemContractorDAO implements TableViewItemDAO<TableItemCon
     * @return  ObservableList of TableItemContractor
     */
     @Override
-    public ObservableList<TableItemContractor> getList() {
+    public ObservableList<TableItemContractor> getData() {
         ObservableList<TableItemContractor> listAllContractors 
                 =  FXCollections.observableArrayList(TableItemContractor.extractor());
         
@@ -106,7 +106,7 @@ public class TableViewItemContractorDAO implements TableViewItemDAO<TableItemCon
             //set false SQL Autocommit
             connection.setAutoCommit(false);
                 for (TableItemContractor obsItem : items) {
-                    pstmt.setLong   (1, obsItem.getId());
+                    pstmt.setLong   (1, obsItem.getID());
                     pstmt.addBatch();  
                 }
            pstmt.executeBatch();
@@ -159,7 +159,7 @@ public class TableViewItemContractorDAO implements TableViewItemDAO<TableItemCon
                     
                     try( ResultSet generategKeys = pstmt.getGeneratedKeys();){
                         if(generategKeys.next())
-                            obsItem.setId(generategKeys.getLong(1));
+                            obsItem.setID(generategKeys.getLong(1));
                     }    
                 }
            
@@ -186,9 +186,9 @@ public class TableViewItemContractorDAO implements TableViewItemDAO<TableItemCon
 //        
 //        
 ////        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-////           table.getCRUD().getDelete().forEach(i -> System.out.println("Delete - " + ((TableClone)i).getId()));
-////           table.getCRUD().getCreate().forEach(i -> System.out.println("INS    - " + ((TableClone)i).getId()));
-////           table.getCRUD().getUpdate().forEach(i -> System.out.println("UPDATE - " + ((TableClone)i).getId()));
+////           table.getCRUD().getDelete().forEach(i -> System.out.println("Delete - " + ((TableClone)i).getID()));
+////           table.getCRUD().getCreate().forEach(i -> System.out.println("INS    - " + ((TableClone)i).getID()));
+////           table.getCRUD().getUpdate().forEach(i -> System.out.println("UPDATE - " + ((TableClone)i).getID()));
 ////           table.getCRUD().clearAll();
 ////            System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,,>");
 //        DataUtils.DiffList<TableItemContractor> diffList = new DataUtils.DiffList(tableMemento,current);

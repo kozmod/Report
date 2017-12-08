@@ -53,7 +53,7 @@ public  class TableItemFact implements TableClone  {
     @Override
     public TableClone getClone() {
         TableClone clone = new TableItemFact(
-                this.getId(),
+                this.getID(),
                 this.getDateCreate(),
                 this.getTypeID(),
                 this.getType(),
@@ -72,8 +72,10 @@ public  class TableItemFact implements TableClone  {
 
     //Getter / Setter ==================================================================================
 
-    @Override public Long  getId()                    {return this.id;}
-    @Override public void  setId(Long id)             {this.id = id;  }
+//    @Override
+    public Long getID()                    {return this.id;}
+//    @Override
+    public void setID(Long id)             {this.id = id;  }
 
     public Timestamp       getDateCreate()            {return dateCreate;  }
     public void            setDateCreate(Timestamp v) {this.dateCreate = v;}

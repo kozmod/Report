@@ -39,7 +39,7 @@ public class TableItemPeriod implements TableClone {
         @Override
         public  TableClone getClone() {
             TableClone clone = new TableItemPeriod(
-                                this.getId(),
+                                this.getID(),
                                 this.getSiteNumber(),
                                 this.getContractor(),
                                 this.getText(),
@@ -81,8 +81,10 @@ public class TableItemPeriod implements TableClone {
     
     
     //Getter / Setter
-    @Override  public Long getId() {return id;}
-    @Override  public void setId(Long id) {this.id = id;}
+//    @Override
+    public Long getID() {return id;}
+//    @Override
+    public void setID(Long id) {this.id = id;}
     
     public String getSiteNumber() {return siteNumber.get();} 
     public void   setSiteNumber(String value_inp) {siteNumber.set(value_inp);}

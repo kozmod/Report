@@ -27,7 +27,7 @@ public class TableViewItemOSRDAO implements TableViewItemDAO<TableItemOSR,TableW
     * @return  List of TableItem
     */
     @Override
-    public String getTableString() {return SQL.Tables.SITE_OSR;}
+    public String sqlTableName() {return SQL.Tables.SITE_OSR;}
     
     
     /**
@@ -54,7 +54,7 @@ public class TableViewItemOSRDAO implements TableViewItemDAO<TableItemOSR,TableW
     * @return  ObservableList of TableItemOSR
     */
     @Override
-    public ObservableList getList() {
+    public ObservableList getData() {
         ObservableList<TableItemOSR> listAllOSR =  FXCollections.observableArrayList(TableItemOSR.extractor());
         
         String sqlQuery = "SELECT "
@@ -99,7 +99,7 @@ public class TableViewItemOSRDAO implements TableViewItemDAO<TableItemOSR,TableW
             //set false SQL Autocommit
             connection.setAutoCommit(false);
                 for (TableItemOSR obsItem : items) {
-                    pstmt.setLong   (1, obsItem.getId());
+                    pstmt.setLong   (1, obsItem.getID());
                     pstmt.addBatch();  
                 }
            pstmt.executeBatch();
@@ -146,7 +146,7 @@ public class TableViewItemOSRDAO implements TableViewItemDAO<TableItemOSR,TableW
                     
                     try( ResultSet generategKeys = pstmt.getGeneratedKeys();){
                         if(generategKeys.next())
-                            obsItem.setId(generategKeys.getLong(1));
+                            obsItem.setID(generategKeys.getLong(1));
                     }    
                 }
            
@@ -185,7 +185,7 @@ public class TableViewItemOSRDAO implements TableViewItemDAO<TableItemOSR,TableW
 //           || diffList.newElements().size()  > 0) insert(diffList.newElements());     
 //        
 //       //?????????????
-////        table.updateTableFromSQL(getList());
+////        table.updateTableFromSQL(getData());
 //        
 //    }
     

@@ -41,7 +41,7 @@ public class TableItemCB extends TableItem {
     @Override
     public TableItemCB getClone() {
         TableItemCB clone = new TableItemCB(
-                                    super.getId(),
+                                    super.getID(),
                                     this.getCheck(),
                                     super.getDateCreate(),
                                     super.getSiteNumber(),
@@ -49,12 +49,12 @@ public class TableItemCB extends TableItem {
                                     super.getContractor(),
                                     super.getJM_name(),
                                     super.getJobOrMat(),
-                                    super.getBindedJob(),
+                                    super.getBindJob(),
                                     super.getValue(),
                                     super.getUnit(),
                                     super.getPrice_one(),
                                     super.getPrice_sum(),
-                                    super.getBildingPart()
+                                    super.getBuildingPart()
                                     );
             return clone;
     }
@@ -68,5 +68,23 @@ public class TableItemCB extends TableItem {
         hash = 3 * hash + (this.check  != null   ? this.check.hashCode() : 0);
             
         return hash;
+    }
+
+    @Override
+    public String toString() {
+        return "TableItemCB{" +
+                "check=" + check.getValue() +
+                ", siteNumber=" + siteNumber.getValue()  +
+                ", typeHome=" + typeHome.getValue() +
+                ", contractor=" + contractor.getValue()  +
+                ", buildingPart=" + buildingPart.getValue()  +
+                ", JM_name=" + JM_name.getValue()  +
+                ", JobOrMat=" + JobOrMat.getValue()  +
+                ", bindJob=" + bindJob.getValue()  +
+                ", value=" + value.getValue()  +
+                ", unit=" + unit.getValue()  +
+                ", price_one=" + price_one.getValue()  +
+                ", price_sum=" + price_sum.getValue()  +
+                '}';
     }
 }

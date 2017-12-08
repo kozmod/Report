@@ -19,25 +19,24 @@ import report.models.DiffList;
 
 public class ItemCorDAO {
 
-    
     public ObservableList getListCor() {
         List<Object> listAll =  FXCollections.observableArrayList();
         try(Connection connection = SQLconnector.getInstance();
             PreparedStatement prst = connection.prepareStatement("Select DISTINCT [Name_Cor] from dbo.[Cor] Order by [Name_Cor]" );) {
             prst.execute();
-            
+
             ResultSet resSet = prst.getResultSet();
             while(resSet.next()){
-                if(!(resSet.getObject(SQL.Cor.NAME_COR) == null)) 
+                if(!(resSet.getObject(SQL.Cor.NAME_COR) == null))
                     listAll.add(resSet.getObject(SQL.Cor.NAME_COR));
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ItemCorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return (ObservableList) listAll;
     }
-    
+
     public ObservableList getListAccount() {
         List<Object> listAll =  FXCollections.observableArrayList();
         try(Connection connection = SQLconnector.getInstance();
@@ -45,13 +44,13 @@ public class ItemCorDAO {
                                                 + "WHERE [Name_Cor] NOT IN (SELECT [Name_Cor] from dbo.[Cor] ) "
                                                 + "Order by [Name_Cor]" );) {
             prst.execute();
-            
+
             ResultSet resSet = prst.getResultSet();
             while(resSet.next()){
-                if(!(resSet.getObject(SQL.Cor.NAME_COR) == null)) 
+                if(!(resSet.getObject(SQL.Cor.NAME_COR) == null))
                     listAll.add(resSet.getObject(SQL.Cor.NAME_COR));
             }
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(ItemCorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

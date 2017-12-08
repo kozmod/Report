@@ -1,6 +1,8 @@
 package report.models_view.nodes.node_wrappers;
 
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.Control;
+import javafx.scene.control.TableSelectionModel;
 import report.entities.CommonDAO;
 import report.models.mementos.Memento;
 
@@ -37,7 +39,6 @@ public abstract class AbstractTableWrapper<E> {
 
 
 
-
     /*!******************************************************************************************************************
     *                                                                                                   Abstract MEMENTO
     ********************************************************************************************************************/
@@ -49,7 +50,7 @@ public abstract class AbstractTableWrapper<E> {
 
     //Table DATA
     public abstract void setTableData(E items);
-    public abstract void setTableDataFromBASE();
+    public abstract void setDataFromBASE();
 
     //Memento
     public abstract void saveTableItems() ;

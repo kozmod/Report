@@ -101,7 +101,7 @@ public interface SQL extends ServiceStrings{
         String CONTRACTOR       = Common.CONTRACTOR;
         String JM_NAME          = "JM_name";
         String JOB_MATERIAL     = "JobsOrMaterials";
-        String BINDED_JOB       = "BindedJob";
+        String BINDED_JOB       = "bindedJob";
         String UNIT             = "Unit";
         String VALUE            = Common.VALUE;
         String PRICE_ONE        = "Price_one";

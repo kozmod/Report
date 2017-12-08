@@ -9,7 +9,6 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.util.Callback;
-import report.entities.items.TableClone;
 import report.entities.items.TableItem;
 
 
@@ -47,7 +46,7 @@ public class TableItemKS extends TableItem {
         @Override
         public TableItemKS getClone() {
             TableItemKS clone = new TableItemKS(
-                                    super.getId(),
+                                    super.getID(),
                                     super.getDateCreate(),
                                     this.getKSNumber(),
                                     this.getKSDate(),
@@ -56,12 +55,12 @@ public class TableItemKS extends TableItem {
                                     super.getContractor(),
                                     super.getJM_name(),
                                     super.getJobOrMat(),
-                                    super.getBindedJob(),
+                                    super.getBindJob(),
                                     super.getValue(),
                                     super.getUnit(),
                                     super.getPrice_one(),
                                     super.getPrice_sum(),
-                                    super.getBildingPart()
+                                    super.getBuildingPart()
                                     );
             return clone;
         }
@@ -122,7 +121,7 @@ public class TableItemKS extends TableItem {
         if ((super.JobOrMat.get() == null) ? (other.JobOrMat.get() != null) : !super.JobOrMat.get().equals(other.JobOrMat.get())) {
             return false;
         }
-        if ((super.BindedJob.get() == null) ? (other.BindedJob.get() != null) : !super.BindedJob.get().equals(other.BindedJob.get())) {
+        if ((super.bindJob.get() == null) ? (other.bindJob.get() != null) : !super.bindJob.get().equals(other.bindJob.get())) {
             return false;
         }
         if (super.value.get() != other.value.get()) {
@@ -137,7 +136,7 @@ public class TableItemKS extends TableItem {
         if (super.price_sum.get() != other.price_sum.get()) {
             return false;
         }
-        if ((super.bildingPart.get() == null) ? (other.bildingPart.getValue() != null) : !super.bildingPart.get().equals(other.bildingPart.get())) {
+        if ((super.buildingPart.get() == null) ? (other.buildingPart.getValue() != null) : !super.buildingPart.get().equals(other.buildingPart.get())) {
             return false;
         }
     return true;
@@ -145,7 +144,7 @@ public class TableItemKS extends TableItem {
     
     
     public static Callback<TableItem, Observable[]> extractor() {
-        return (TableItem p) -> new Observable[]{p.getValueProperty()};
+        return (TableItem p) -> new Observable[]{p.valueProperty()};
     }
 
 }

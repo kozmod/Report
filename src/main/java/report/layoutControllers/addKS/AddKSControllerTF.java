@@ -82,8 +82,8 @@ public class AddKSControllerTF {
 
 
         TableColumn JM_nameColumn = tableWrapper.addColumn("Наименование работ/затрат", "JM_name");
-        TableColumn BPartColumn   = tableWrapper.addColumn("Часть",                     "bildingPart");
-        TableColumn BJobColumnn   = tableWrapper.addColumn("Связанная работа",          "BindedJob");
+        TableColumn BPartColumn   = tableWrapper.addColumn("Часть",                     "buildingPart");
+        TableColumn BJobColumnn   = tableWrapper.addColumn("Связанная работа",          "bindJob");
 
 
     }

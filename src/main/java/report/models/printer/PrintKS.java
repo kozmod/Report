@@ -158,8 +158,8 @@ public class PrintKS extends AbstractPrinterXML{
             Element targetRow = getTargetElement("SumRow");
 
             //CHECK -> Binded Job
-            if(!item.getBildingPart().equals(buildingPart)){
-                buildingPart = item.getBildingPart();
+            if(!item.getBuildingPart().equals(buildingPart)){
+                buildingPart = item.getBuildingPart();
                  
                 Element row = doc.createElement("Row");
                 row.setAttribute("ss:StyleID", "s143");

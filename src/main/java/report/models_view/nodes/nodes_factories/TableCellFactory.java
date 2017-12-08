@@ -382,7 +382,6 @@ public class TableCellFactory{
          
         void createCheckBoxCell(){
             checkBox = new CheckBox();
-        
             checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
                 getTableView().getItems().get(getIndex()).setCheck(newValue);
 //                ((TableItemCB)treeTableView().getItems().saveEst(getIndex())).setCheck(newValue);
@@ -458,8 +457,10 @@ public class TableCellFactory{
                 setOnMouseEntered(value ->{
                      RootLayoutController.update_changeTable(
                             enumEst.findItemsList_DL(
-                                     this.getTableView().getItems().get(this.getIndex())));
-                     System.out.println("ID EST =" + this.getTableView().getItems().get(this.getIndex()).getId());
+                                     this.getTableView().getItems().get(this.getIndex())
+                            )
+                     );
+                     System.out.println("ID EST =" + this.getTableView().getItems().get(this.getIndex()).getID());
             
                  });
             }
@@ -593,8 +594,6 @@ public class TableCellFactory{
 //    }
     
     private class TestID extends TableCell<TableItemOSR, Object> {
-        
-
         @Override
         public void updateItem(Object item, boolean empty) {
             super.updateItem(item, empty);
@@ -605,8 +604,7 @@ public class TableCellFactory{
              } else {
                 setText(item.toString());
                 setOnMouseEntered(value ->{
-           
-                     System.err.println("ID = " +this.getTableView().getItems().get(this.getIndex()).getId());
+                     System.err.println("ID = " +this.getTableView().getItems().get(this.getIndex()).getID());
             
                  });
             }

@@ -40,7 +40,7 @@ public class EstimateControllerTF implements TableFactory {
         table.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn JM_nameColumn   = table.addColumn("Наименование работ/затрат", "JM_name");
-        TableColumn BJobColumnn     = table.addColumn("Связанная работа",          "BindedJob");
+        TableColumn BJobColumnn     = table.addColumn("Связанная работа",          "bindJob");
         TableColumn valueColumn     = table.addColumn("Кол-во",                    "value");
         TableColumn unitColumn      = table.addColumn("Eд. изм.",                  "unit");
         TableColumn Price_oneColumn = table.addColumn("Стоимость (за единицу)",    "price_one");
@@ -150,7 +150,7 @@ public class EstimateControllerTF implements TableFactory {
         tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn JM_nameColumn   = tableWrapper.addColumn("Наименование работ/затрат", "JM_name");
-        TableColumn BJobColumnn     = tableWrapper.addColumn("Связанная работа",          "BindedJob");
+        TableColumn BJobColumnn     = tableWrapper.addColumn("Связанная работа",          "bindJob");
         TableColumn valueColumn     = tableWrapper.addColumn("Кол-во",                    "value");
         TableColumn unitColumn      = tableWrapper.addColumn("Eд. изм.",                  "unit");
         TableColumn Price_oneColumn = tableWrapper.addColumn("Стоимость (за единицу)",    "price_one");
@@ -176,8 +176,8 @@ public class EstimateControllerTF implements TableFactory {
         table.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn JM_nameColumn       = table.addColumn("Наименование работ/затрат", "JM_name");
-        TableColumn BJobColumnn         = table.addColumn("Связанная работа",          "BindedJob");
-        TableColumn BPartColumns        = table.addColumn("Часть",                     "bildingPart");
+        TableColumn BJobColumnn         = table.addColumn("Связанная работа",          "bindJob");
+        TableColumn BPartColumns        = table.addColumn("Часть",                     "buildingPart");
         TableColumn valueColumn         = table.addColumn("Кол-во",                    "value");
         TableColumn unitColumn          = table.addColumn("Eд. изм.",                  "unit");
         TableColumn Price_oneColumn     = table.addColumn("Стоимость (за единицу)",    "price_one");
@@ -210,7 +210,7 @@ public class EstimateControllerTF implements TableFactory {
                         (EstimateController.Est.KS.getTabMap().values()
                                 .stream()
                                 .flatMap(mapItem ->((List)mapItem).stream())
-                                .filter(editingItem::equalsSuperCalss)
+                                .filter(editingItem::equalsSuperClass)
                                 .mapToDouble(filtered -> ((TableItem)filtered).getValue())
                                 .sum()
                                 - t.getOldValue()

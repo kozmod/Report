@@ -452,7 +452,7 @@ public class RootLayoutController implements Initializable {
                     printEstToXmlMenuItem.setDisable(false);
 
                     //Update Preview TableWrapper OBS-LIST
-                    Est.Common.setSiteObs(new SiteTableViewItemDAO(selectedTreeElemParent,selectedTreeElem).getList());
+                    Est.Common.setSiteObs(new SiteTableViewItemDAO(selectedTreeElemParent,selectedTreeElem).getData());
 //                    update_previewTable(Est.Common.getPreviewObservableList());
                     previewTable.setItems(Est.Common.getPreviewObservableList());
 

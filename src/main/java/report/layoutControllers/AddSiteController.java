@@ -47,7 +47,7 @@ public class AddSiteController implements Initializable {
     private ObservableList<Object>        listTypes;
 
     {
-        listPlan  = new TableViewItemPlanDAO().getList();
+        listPlan  = new TableViewItemPlanDAO().getData();
         listFact  = new TableViewItemPlanDAO().getListFact();
         listQueue = new SiteTableViewItemDAO().getDistinctOfColumn(SQL.Site.QUEUE_BUILDING);
         listContractors = new SiteTableViewItemDAO().getDistinctOfColumn(SQL.Site.CONTRACTOR,ServiceStrings.Line);

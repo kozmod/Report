@@ -38,17 +38,15 @@ public class TableViewItemEstDAO implements TableViewItemDAO<TableItemEst, Table
     * @return  List of TableItem
     */
     @Override
-    public String getTableString() {return SQL.Tables.ESTIMATE;}
+    public String sqlTableName() {return SQL.Tables.ESTIMATE;}
     
     /**
     * Get List of TableWrapper Items (TableItemEst) from SQL
     * @return  List of TableItem
     */
     @Override
-    public ObservableList<TableItemEst> getList() {
-        
+    public ObservableList<TableItemEst> getData() {
         ObservableList<TableItemEst> listEstAll =  FXCollections.observableArrayList();
-        
         String sql = "SELECT "
                                 + "E.[id]"
                                 + ",E.[SiteNumber]"
@@ -86,7 +84,7 @@ public class TableViewItemEstDAO implements TableViewItemDAO<TableItemEst, Table
                                             + "AND E.[Contractor] = ? "
                                             + "AND E.[TableType] = ? ";
 //                                            + "AND E.[dell] = 0 ";
-                
+
         try(Connection connection = SQLconnector.getInstance();
                 PreparedStatement prst = connection.prepareStatement(sql)) {
                 prst.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
@@ -287,7 +285,7 @@ public class TableViewItemEstDAO implements TableViewItemDAO<TableItemEst, Table
             //set false SQL Autocommit
             connection.setAutoCommit(false);
                 for (TableItem obsItem : items) {
-                    pstmt.setLong   (1, obsItem.getId());
+                    pstmt.setLong   (1, obsItem.getID());
                     pstmt.addBatch();  
                 }
            pstmt.executeBatch();
@@ -297,7 +295,7 @@ public class TableViewItemEstDAO implements TableViewItemDAO<TableItemEst, Table
            items.forEach(item -> {
                 LogController.appendLogViewText("deleted EST item: "+ ((TableItem)item).getJM_name()
                                                          +" [JM/ "+((TableItem)item).getJobOrMat()      + "]"
-                                                         +" [BP/ "+((TableItem)item).getBindedJob()     + "]"
+                                                         +" [BP/ "+((TableItem)item).getBindJob()     + "]"
                                                          +" [S#/ " + ((TableItem)item).getSiteNumber()  + "]"
                                                          +" [C/ " + ((TableItem)item).getContractor()   + "]");
                 });
@@ -317,9 +315,9 @@ public class TableViewItemEstDAO implements TableViewItemDAO<TableItemEst, Table
 //                for (TableItem obsItem : items) {
 //                    pstmt.setString   (1, obsItem.getSiteNumber());
 //                    pstmt.setString   (2, obsItem.getContractor());
-//                    pstmt.setString   (3, obsItem.getBildingPart());
+//                    pstmt.setString   (3, obsItem.getBuildingPart());
 //                    pstmt.setString   (4, obsItem.getJM_name());
-//                    pstmt.setString   (5, obsItem.getBindedJob());
+//                    pstmt.setString   (5, obsItem.getBindJob());
 //                    pstmt.setInt      (6, ((TableItemEst)obsItem).getTableType());
 //                    
 //                    pstmt.addBatch();  
@@ -331,7 +329,7 @@ public class TableViewItemEstDAO implements TableViewItemDAO<TableItemEst, Table
 //           items.forEach(item -> {
 //                LogController.appendLogViewText("deleted item: "+ ((TableItem)item).getJM_name()
 //                                                         +" [JM/ "+((TableItem)item).getJobOrMat()      + "]"
-//                                                         +" [BP/ "+((TableItem)item).getBindedJob()     + "]"
+//                                                         +" [BP/ "+((TableItem)item).getBindJob()     + "]"
 //                                                         +" [S#/ " + ((TableItem)item).getSiteNumber()  + "]"
 //                                                         +" [C/ " + ((TableItem)item).getContractor()   + "]");
 //                });
@@ -376,11 +374,11 @@ public class TableViewItemEstDAO implements TableViewItemDAO<TableItemEst, Table
                     pstmt.setString   (3,  obsItem.getContractor());
                     pstmt.setString   (4,  obsItem.getJM_name());
                     pstmt.setString   (5,  obsItem.getJobOrMat());
-                    pstmt.setString   (6,  obsItem.getBindedJob());
+                    pstmt.setString   (6,  obsItem.getBindJob());
                     pstmt.setString   (7,  obsItem.getUnit());
                     pstmt.setDouble    (8,  obsItem.getValue());
                     pstmt.setDouble    (9,  obsItem.getPrice_one());
-                    pstmt.setString   (10,  obsItem.getBildingPart());
+                    pstmt.setString   (10,  obsItem.getBuildingPart());
                     pstmt.setInt      (11,  ((TableItemEst)obsItem).getTableType());
 
                     
@@ -388,7 +386,7 @@ public class TableViewItemEstDAO implements TableViewItemDAO<TableItemEst, Table
                     
                     try( ResultSet generategKeys = pstmt.getGeneratedKeys();){
                         if(generategKeys.next())
-                            obsItem.setId(generategKeys.getLong(1));
+                            obsItem.setID(generategKeys.getLong(1));
                     }   
                 }
            //SQL commit
@@ -397,7 +395,7 @@ public class TableViewItemEstDAO implements TableViewItemDAO<TableItemEst, Table
            items.forEach(item -> {
                 LogController.appendLogViewText("inserted item: "+ ((TableItem)item).getJM_name()
                                                          +" [JM/ "+((TableItem)item).getJobOrMat()      + "]"
-                                                         +" [BP/ "+((TableItem)item).getBindedJob()     + "]"
+                                                         +" [BP/ "+((TableItem)item).getBindJob()     + "]"
                                                          +" [S#/ " + ((TableItem)item).getSiteNumber()  + "]"
                                                          +" [C/ " + ((TableItem)item).getContractor()   + "]");
                 });
@@ -521,9 +519,9 @@ public class TableViewItemEstDAO implements TableViewItemDAO<TableItemEst, Table
 //                for (TableItem obsItem : items) {
 //                    pstmt.setString   (1,  obsItem.getSiteNumber());
 //                    pstmt.setString   (2,  obsItem.getContractor());
-//                    pstmt.setString   (3,  obsItem.getBildingPart());
+//                    pstmt.setString   (3,  obsItem.getBuildingPart());
 //                    pstmt.setString   (4,  obsItem.getJM_name());
-//                    pstmt.setString   (5,  obsItem.getBindedJob());
+//                    pstmt.setString   (5,  obsItem.getBindJob());
 //                    pstmt.setInt      (6,  ((TableItemEst)obsItem).getTableType());
 //                    pstmt.setString   (7,  obsItem.getJobOrMat());
 //                    pstmt.setFloat    (8,  obsItem.getValue());
@@ -540,7 +538,7 @@ public class TableViewItemEstDAO implements TableViewItemDAO<TableItemEst, Table
 //           items.forEach(item -> {
 //                LogController.appendLogViewText("inserted item: "+ ((TableItem)item).getJM_name()
 //                                                         +" [JM/ "+((TableItem)item).getJobOrMat()      + "]"
-//                                                         +" [BP/ "+((TableItem)item).getBindedJob()     + "]"
+//                                                         +" [BP/ "+((TableItem)item).getBindJob()     + "]"
 //                                                         +" [S#/ " + ((TableItem)item).getSiteNumber()  + "]"
 //                                                         +" [C/ " + ((TableItem)item).getContractor()   + "]");
 //                });

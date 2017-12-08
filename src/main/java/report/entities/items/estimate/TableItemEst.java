@@ -15,7 +15,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
 import report.entities.items.TableItem;
-import report.entities.items.TableClone;
 
 
 public class TableItemEst extends TableItem {
@@ -48,19 +47,19 @@ public class TableItemEst extends TableItem {
         @Override
         public TableItemEst getClone() {
             TableItemEst clone = new TableItemEst(
-                                    super.getId(),
+                                    super.getID(),
                                     super.getDateCreate(),
                                     super.getSiteNumber(),
                                     super.getTypeHome(),
                                     super.getContractor(),
                                     super.getJM_name(),
                                     super.getJobOrMat(),
-                                    super.getBindedJob(),
+                                    super.getBindJob(),
                                     super.getValue(),
                                     super.getUnit(),
                                     super.getPrice_one(),
                                     super.getPrice_sum(),
-                                    super.getBildingPart(),
+                                    super.getBuildingPart(),
                                     this.getTableType(),
                                     this.getInKS()
                                     );
@@ -148,59 +147,58 @@ public class TableItemEst extends TableItem {
         return hash;
     }
 
-    @Override
-    public boolean equals(Object obj) {
-            
-        if (obj == null) {
-            return false;
-        }
-        if (!TableItem.class.isAssignableFrom(obj.getClass())) {
-            return false;
-        }
-        final TableItemEst other = (TableItemEst) obj;
-        if ((super.siteNumber.get() == null) ? (other.siteNumber.getValue() != null) : !super.siteNumber.get().equals(other.siteNumber.get())) {
-            return false;
-        }
-        if ((super.typeHome.get() == null) ? (other.typeHome.getValue() != null) : !super.typeHome.get().equals(other.typeHome.get())) {
-            return false;
-        }
-        if ((super.contractor.get() == null) ? (other.contractor.getValue() != null) : !super.contractor.get().equals(other.contractor.get())) {
-            return false;
-        }
-        if ((super.JM_name.get() == null) ? (other.JM_name.getValue() != null) : !super.JM_name.get().equals(other.JM_name.get())) {
-            return false;
-        }
-        if ((super.JobOrMat.get() == null) ? (other.JobOrMat.get() != null) : !super.JobOrMat.get().equals(other.JobOrMat.get())) {
-            return false;
-        }
-        if ((super.BindedJob.get() == null) ? (other.BindedJob.get() != null) : !super.BindedJob.get().equals(other.BindedJob.get())) {
-            return false;
-        }
-        if (super.value.get() != other.value.get()) {
-            return false;
-        }
-        if ((super.unit.get() == null) ? (other.unit.get() != null) : !super.unit.get().equals(other.unit.get())) {
-            return false;
-        }
-        if (super.price_one.get() != other.price_one.get()) {
-            return false;
-        }
-        if (super.price_sum.get() != other.price_sum.get()) {
-            return false;
-        }
-        if ((super.bildingPart.get() == null) ? (other.bildingPart.getValue() != null) : !super.bildingPart.get().equals(other.bildingPart.get())) {
-            return false;
-        }
-     
-    return true;
-    }
+//    @Override
+//    public boolean equals(Object obj) {
+//
+//        if (obj == null) {
+//            return false;
+//        }
+//        if (!TableItem.class.isAssignableFrom(obj.getClass())) {
+//            return false;
+//        }
+//        final TableItemEst other = (TableItemEst) obj;
+//        if ((super.siteNumber.get() == null) ? (other.siteNumber.getValue() != null) : !super.siteNumber.get().equals(other.siteNumber.get())) {
+//            return false;
+//        }
+//        if ((super.typeHome.get() == null) ? (other.typeHome.getValue() != null) : !super.typeHome.get().equals(other.typeHome.get())) {
+//            return false;
+//        }
+//        if ((super.contractor.get() == null) ? (other.contractor.getValue() != null) : !super.contractor.get().equals(other.contractor.get())) {
+//            return false;
+//        }
+//        if ((super.JM_name.get() == null) ? (other.JM_name.getValue() != null) : !super.JM_name.get().equals(other.JM_name.get())) {
+//            return false;
+//        }
+//        if ((super.JobOrMat.get() == null) ? (other.JobOrMat.get() != null) : !super.JobOrMat.get().equals(other.JobOrMat.get())) {
+//            return false;
+//        }
+//        if ((super.bindJob.get() == null) ? (other.bindJob.get() != null) : !super.bindJob.get().equals(other.bindJob.get())) {
+//            return false;
+//        }
+//        if (super.value.get() != other.value.get()) {
+//            return false;
+//        }
+//        if ((super.unit.get() == null) ? (other.unit.get() != null) : !super.unit.get().equals(other.unit.get())) {
+//            return false;
+//        }
+//        if (super.price_one.get() != other.price_one.get()) {
+//            return false;
+//        }
+//        if (super.price_sum.get() != other.price_sum.get()) {
+//            return false;
+//        }
+//        if ((super.buildingPart.get() == null) ? (other.buildingPart.getValue() != null) : !super.buildingPart.get().equals(other.buildingPart.get())) {
+//            return false;
+//        }
+//    return true;
+//    }
     
     /**
     *Extractor to observe changes in "Property" fields.
      * @return extractor
     */
     public static Callback<TableItem, Observable[]> extractor() {
-        return (TableItem p) -> new Observable[]{p.getValueProperty(), p.getPrice_oneProperty()};
+        return (TableItem p) -> new Observable[]{p.valueProperty(), p.price_oneProperty()};
     }
     
 

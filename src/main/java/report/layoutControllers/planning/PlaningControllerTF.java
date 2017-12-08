@@ -11,6 +11,7 @@ import report.layoutControllers.planning.temp.*;
 import report.models.coefficient.Quantity;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models.numberStringConverters.numberStringConverters.IntegerStringConverter;
+import report.models_view.nodes.cells.AddTextFieldTableCell;
 import report.models_view.nodes.node_wrappers.DiscountTreeTableWrapper;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 import report.models_view.nodes.nodes_factories.TableCellFactory;
@@ -40,7 +41,7 @@ public class PlaningControllerTF implements TableFactory {
         TableColumn typeColumn     = tableWrapper.addColumn("Тип","type");
         TableColumn<TableItemPlan,Integer> quantityColumn
                 = tableWrapper.addColumn("Кол-во","quantity");
-        TableColumn restColumn     = tableWrapper.addColumn("Остаток","rest");
+        TableColumn<TableItemPlan,Integer>  restColumn    = tableWrapper.addColumn("Остаток","rest");
         TableColumn<TableItemPlan,Double> smetColumn
                 = tableWrapper.addColumn("Стоимоть","SmetCost");
         TableColumn smetSumColumn  = tableWrapper.addColumn("Себестоимость", "SmetCostSum");
@@ -92,6 +93,7 @@ public class PlaningControllerTF implements TableFactory {
             }
         });
 
+        quantityColumn.setCellFactory(cell -> new AddTextFieldTableCell(new IntegerStringConverter(),tableWrapper.getSetAddingCells()));
         TableFactory.setCellFactory(
                 new DoubleStringConverter(),
                 smetColumn,
@@ -105,10 +107,10 @@ public class PlaningControllerTF implements TableFactory {
                 typeIdColumn
         );
 
-        TableFactory.setTextFieldTableCell(
-                new IntegerStringConverter(),
-                quantityColumn
-        );
+//        TableFactory.setTextFieldTableCell(
+//                new IntegerStringConverter(),
+//                quantityColumn
+//        );
         return tableWrapper;
     }
 
@@ -204,7 +206,7 @@ public class PlaningControllerTF implements TableFactory {
      * @param treeTable
      * @return
      */
-    public static TreeTableView decorKD(TreeTableView<TableDItem> treeTable){
+    public static DiscountTreeTableWrapper decorKD(TreeTableView<TableDItem> treeTable){
         DiscountTreeTableWrapper treeTableWrapper = new DiscountTreeTableWrapper("Коэффициент Дисконтирования",treeTable, new DiscountQuery());
 
         TreeTableColumn<TableDItem, String> nameColumn =  new TreeTableColumn<>("Наименование");
@@ -237,7 +239,7 @@ public class PlaningControllerTF implements TableFactory {
         treeTable.setEditable(true);
         treeTable.setShowRoot(false);
 
-        return treeTable;
+        return treeTableWrapper;
 
     }
 //      public static TreeTableView decorKD(TreeTableView<TableDItem> treeTable){

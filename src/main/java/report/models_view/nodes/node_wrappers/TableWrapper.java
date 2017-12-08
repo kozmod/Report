@@ -1,22 +1,29 @@
 
 package report.models_view.nodes.node_wrappers;
 
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.Callback;
 import report.entities.CommonDAO;
 import report.entities.items.TableClone;
 import report.models.mementos.Memento;
 import report.models.mementos.TableMemento;
+import report.models_view.nodes.cells.CommittableRow;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
 public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<ObservableList<E>> {
 
+    //Set of Cell witch have to be commit.
+    private  Set<CommittableRow> setAddingCells;
     protected final TableView<E> tableView;
 
 
@@ -81,11 +88,28 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
     public ObservableList<E> getItems(){ return tableView.getItems();}
 
     public  TableView<E> tableView(){ return tableView; }
+    /*!******************************************************************************************************************
+    *                                                                                                             TEST
+    ********************************************************************************************************************/
+    /**
+     * Lazy init Set of Cell witch have to be commit and return one.
+     */
+    public Set<CommittableRow> getSetAddingCells() {
+        if(setAddingCells == null )setAddingCells = new HashSet<>();
+        return setAddingCells;
+    }
+    /**
+     * Commit all cells in "SetAddingCells" Collection.
+     */
+    public void  commitData() {
+        if(setAddingCells == null )
+            throw new NullPointerException("setAddingCells does not exist");
+        setAddingCells.forEach(item -> item.commitData());
+    }
 
-
-/*!******************************************************************************************************************
-*                                                                                                             METHODS
-********************************************************************************************************************/
+    /*!******************************************************************************************************************
+    *                                                                                                             METHODS
+    ********************************************************************************************************************/
     /**
      * Contain :
      * <br>
@@ -98,7 +122,7 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
     @Override
     public void setTableData(ObservableList<E> items){
         tableView.setItems(items);
-        saveTableItems();
+        this.saveTableItems();
     }
     /**
      * Update TableView Items, use <b>method</b>:
@@ -113,9 +137,10 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
      * 2. saveTableItems() - save table items to TableMemento.
      * <br>
      */
-    public void setTableDataFromBASE(){
-        tableView.setItems(commonDao.getList());
-        saveTableItems();
+    @Override
+    public void setDataFromBASE(){
+        tableView.setItems(commonDao.getData());
+        this.saveTableItems();
 //        treeTableView.refresh();
     }
 
@@ -128,11 +153,23 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
      * @param name column name.
      * @return TableColumn
      */
-    public  <K> TableColumn addColumn(String name, String fieldName){
+    public  <K> TableColumn<E,K> addColumn(String name, String fieldName){
         TableColumn<E,K> column = new TableColumn<>(name);
         column.setCellValueFactory(new PropertyValueFactory<>(fieldName));
-
-
+        tableView.getColumns().add(column);
+        return column;
+    }
+    /**
+     * Add new column use CALLBACK into current table and return one.
+     * @param <K>
+     * @param callback callback -> lambda.
+     * @param name column name.
+     * @return TableColumn
+     */
+    public  <K> TableColumn<E,K> addColumn(String name, Callback<TableColumn.CellDataFeatures<E,K>, ObservableValue<K>> callback){
+        TableColumn<E,K> column = new TableColumn<>(name);
+//        column.setCellValueFactory(new PropertyValueFactory<>(fieldName));
+        column.setCellValueFactory(callback);
         tableView.getColumns().add(column);
         return column;
     }

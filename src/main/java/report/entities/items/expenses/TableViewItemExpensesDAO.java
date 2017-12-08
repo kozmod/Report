@@ -27,13 +27,13 @@ public class TableViewItemExpensesDAO implements TableViewItemDAO<TableItemExpen
     * @return  List of TableItem
     */
     @Override
-    public String getTableString() {return SQL.Tables.SITE_EXPENSES;}
+    public String sqlTableName() {return SQL.Tables.SITE_EXPENSES;}
     /**
      * Get List of expenses Items from SQL (SiteExpenses)
     * @return  ObservableList of TableItemExpenses
     */
     @Override
-    public ObservableList<TableItemExpenses> getList() {
+    public ObservableList<TableItemExpenses> getData() {
         ObservableList<TableItemExpenses> list =  FXCollections.observableArrayList(TableItemExpenses.extractor());
         
         String sqlQuery = "SELECT "       //[id] [SiteNumber] [Contractor][Text][Type][Value]
@@ -84,7 +84,7 @@ public class TableViewItemExpensesDAO implements TableViewItemDAO<TableItemExpen
             //set false SQL Autocommit
             connection.setAutoCommit(false);
                 for (TableItemExpenses obsItem : items) {
-                    pstmt.setLong   (1, obsItem.getId());
+                    pstmt.setLong   (1, obsItem.getID());
                     pstmt.addBatch();  
                 }
            pstmt.executeBatch();
@@ -139,7 +139,7 @@ public class TableViewItemExpensesDAO implements TableViewItemDAO<TableItemExpen
                     System.out.println(affectedRows);
                     try( ResultSet generategKeys = pstmt.getGeneratedKeys();){
                         if(generategKeys.next())
-                            obsItem.setId(generategKeys.getLong(1));
+                            obsItem.setID(generategKeys.getLong(1));
                     }    
                 }
      

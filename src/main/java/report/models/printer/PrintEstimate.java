@@ -26,7 +26,7 @@ public class PrintEstimate extends AbstractPrinterXML{
     
     //Constructor =====================================================================================================================    
     public PrintEstimate(TableViewItemDAO dao) {
-        this.obsKS = FXCollections.observableArrayList( dao.getList());
+        this.obsKS = FXCollections.observableArrayList( dao.getData());
 
 
         doc = buildDocument("\\lib\\XML_Models\\Смета.xml");
@@ -88,8 +88,8 @@ public class PrintEstimate extends AbstractPrinterXML{
             Element targetRow = getTargetElement("SumRow");
 
             //CHECK -> Binded Job
-            if(!item.getBildingPart().equals(buildingPart)){
-                buildingPart = item.getBildingPart();
+            if(!item.getBuildingPart().equals(buildingPart)){
+                buildingPart = item.getBuildingPart();
                  
                 Element row = doc.createElement("Row");
 //                row.setAttribute("ss:StyleID", "s46");
@@ -159,7 +159,7 @@ public class PrintEstimate extends AbstractPrinterXML{
                                  .setCellStyle("s148")
                                  .setCellValue("Number", Double.toString(item.getValue()) )
                                  .build());
-            if(item.getBindedJob().endsWith("-")){
+            if(item.getBindJob().endsWith("-")){
                 //Price one - JOB
                 row.appendChild(new CellBuilder(doc)
                                  .setCellStyle("s148")

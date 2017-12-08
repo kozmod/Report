@@ -35,7 +35,7 @@ public class TableViewItemKSDAO implements TableViewItemDAO<TableItemKS, TableWr
     * @return  List of TableItem
     */
     @Override
-    public String getTableString() {return SQL.Tables.KS;}
+    public String sqlTableName() {return SQL.Tables.KS;}
     
     
     
@@ -44,7 +44,7 @@ public class TableViewItemKSDAO implements TableViewItemDAO<TableItemKS, TableWr
     * @return  List of TableItemKS
     */
     @Override
-    public ObservableList<TableItemKS> getList(){
+    public ObservableList<TableItemKS> getData(){
         
         ObservableList<TableItemKS> list = FXCollections.observableArrayList();
         
@@ -179,7 +179,7 @@ public class TableViewItemKSDAO implements TableViewItemDAO<TableItemKS, TableWr
             PreparedStatement pstmt = connection.prepareStatement(sql);) {
             connection.setAutoCommit(false);
                 for (TableItemKS obsItem : items) {
-                    pstmt.setLong   (1, obsItem.getId());
+                    pstmt.setLong   (1, obsItem.getID());
                     pstmt.addBatch();  
                 }
            pstmt.executeBatch();
@@ -189,7 +189,7 @@ public class TableViewItemKSDAO implements TableViewItemDAO<TableItemKS, TableWr
                                                          + item.getJM_name() 
                                                          +" [KS# "+item.getKSNumber()   + "]"
                                                          +" [JM/ "+item.getJobOrMat()   + "]"
-                                                         +" [BP/ "+item.getBindedJob()  + "]"
+                                                         +" [BP/ "+item.getBindJob()  + "]"
                                                          +" [S#/ "+item.getSiteNumber() + "]"
                                                          +" [C/ " +item.getContractor() + "]");
                 });
@@ -207,9 +207,9 @@ public class TableViewItemKSDAO implements TableViewItemDAO<TableItemKS, TableWr
 //                    pstmt.setInt      (1, obsItem.getKSNumber());
 //                    pstmt.setString   (2, obsItem.getSiteNumber());
 //                    pstmt.setString   (3, obsItem.getContractor());
-//                    pstmt.setString   (4, obsItem.getBildingPart());
+//                    pstmt.setString   (4, obsItem.getBuildingPart());
 //                    pstmt.setString   (5, obsItem.getJM_name());
-//                    pstmt.setString   (6, obsItem.getBindedJob());
+//                    pstmt.setString   (6, obsItem.getBindJob());
 //                    
 //                    pstmt.addBatch();
 //                }
@@ -272,17 +272,17 @@ public class TableViewItemKSDAO implements TableViewItemDAO<TableItemKS, TableWr
                     pstmt.setString   (5,  obsItem.getContractor());
                     pstmt.setString   (6,  obsItem.getJM_name());
                     pstmt.setString   (7,  obsItem.getJobOrMat());
-                    pstmt.setString   (8,  obsItem.getBindedJob());
+                    pstmt.setString   (8,  obsItem.getBindJob());
                     pstmt.setString   (9,  obsItem.getUnit());
                     pstmt.setDouble    (10, obsItem.getValue());
                     pstmt.setDouble    (11, obsItem.getPrice_one());
-                    pstmt.setString   (12, obsItem.getBildingPart());
+                    pstmt.setString   (12, obsItem.getBuildingPart());
                     
                     int affectedRows = pstmt.executeUpdate();
                     
                     try( ResultSet generategKeys = pstmt.getGeneratedKeys();){
                         if(generategKeys.next())
-                            obsItem.setId(generategKeys.getLong(1));
+                            obsItem.setID(generategKeys.getLong(1));
                     }   
                 }; 
            //SQL commit
@@ -300,9 +300,9 @@ public class TableViewItemKSDAO implements TableViewItemDAO<TableItemKS, TableWr
 //                    pstmt.setInt      (2,  obsItem.getKSDate());
 //                    pstmt.setString   (3,  obsItem.getSiteNumber());
 //                    pstmt.setString   (4,  obsItem.getContractor());
-//                    pstmt.setString   (5,  obsItem.getBildingPart());
+//                    pstmt.setString   (5,  obsItem.getBuildingPart());
 //                    pstmt.setString   (6,  obsItem.getJM_name());
-//                    pstmt.setString   (7,  obsItem.getBindedJob());
+//                    pstmt.setString   (7,  obsItem.getBindJob());
 //                    pstmt.setString   (8,  obsItem.getJobOrMat());
 //                    pstmt.setFloat    (9,  obsItem.getValue());
 //                    pstmt.setString   (10,  obsItem.getUnit());
@@ -378,7 +378,7 @@ public class TableViewItemKSDAO implements TableViewItemDAO<TableItemKS, TableWr
                     pstmt.setString(3, item.getSiteNumber());
                     pstmt.setString(4, item.getContractor());
                     pstmt.setString(5, item.getJM_name());    //JM_Name
-                    pstmt.setString(6, item.getBindedJob()); //bindedJob
+                    pstmt.setString(6, item.getBindJob()); //bindJob
                 
                     pstmt.addBatch();
                 }

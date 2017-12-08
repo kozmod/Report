@@ -29,14 +29,14 @@ public class TableViewItemPlanDAO implements TableViewItemDAO<TableItemPlan, Tab
     * @return  List of TableItem
     */
     @Override
-    public String getTableString() {return SQL.Tables.FIN_PLAN;}
+    public String sqlTableName() {return SQL.Tables.FIN_PLAN;}
     
     /**
     * Get String of a Mirror (SQL.Tables).
     * @return  List of TableItem
     */
     @Override
-    public ObservableList<TableItemPlan> getList() {
+    public ObservableList<TableItemPlan> getData() {
         ObservableList<TableItemPlan> list = FXCollections.observableArrayList(TableItemPlan.extractor());
         
 //        String psmtmtString = " execute dbo.[getListPlan] ";
@@ -179,7 +179,7 @@ public class TableViewItemPlanDAO implements TableViewItemDAO<TableItemPlan, Tab
             //set false SQL Autocommit
             connection.setAutoCommit(false);
                 for (TableItemPlan obsItem : entry) {
-                    pstmt.setLong   (1, obsItem.getId());
+                    pstmt.setLong   (1, obsItem.getID());
                     pstmt.addBatch();  
                 }
            pstmt.executeBatch();
@@ -221,11 +221,11 @@ public class TableViewItemPlanDAO implements TableViewItemDAO<TableItemPlan, Tab
                     
                     int affectedRows = pstmt.executeUpdate();
                     
-                    try( ResultSet generategKeys = pstmt.getGeneratedKeys();){
+                    try( ResultSet generategKeys = pstmt.getGeneratedKeys()){
                         if(generategKeys.next())
-                            obsItem.setId(generategKeys.getLong(1));
+                            obsItem.setID(generategKeys.getLong(1));
                     }   
-                }; 
+                }
            //SQL commit
            connection.commit();
 
@@ -239,7 +239,7 @@ public class TableViewItemPlanDAO implements TableViewItemDAO<TableItemPlan, Tab
         TableViewItemDAO.super.dellAndInsert(table);
         //????????????????????????????????????????????
         Quantity.updateFromBase();
-//        table. setTableDataFromBASE();
+//        table. setDataFromBASE();
 //        ContextMenuOptional.setTableItemContextMenuListener(table);
     }
 }
