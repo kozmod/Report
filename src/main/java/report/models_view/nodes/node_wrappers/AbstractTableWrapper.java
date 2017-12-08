@@ -1,17 +1,23 @@
 package report.models_view.nodes.node_wrappers;
 
+import javafx.collections.ListChangeListener;
+import javafx.collections.ObservableList;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Control;
 import javafx.scene.control.TableSelectionModel;
 import report.entities.CommonDAO;
 import report.models.mementos.Memento;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public abstract class AbstractTableWrapper<E> {
 
-    protected final String title;
-    protected Memento<E> memento;
-    protected final CommonDAO<E,AbstractTableWrapper> commonDao;
-
+    Memento<E> memento;
+    final String title;
+    final CommonDAO<E,AbstractTableWrapper> commonDao;
 
     /*!******************************************************************************************************************
     *                                                                                                       CONSTRUCTORS
@@ -56,6 +62,7 @@ public abstract class AbstractTableWrapper<E> {
     public abstract void saveTableItems() ;
     public abstract void undoChangeItems();
     public abstract Memento<E> getMemento();
+
 
 
 }

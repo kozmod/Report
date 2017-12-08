@@ -2,6 +2,7 @@
 package report.models_view.nodes.node_wrappers;
 
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableColumn;
@@ -10,22 +11,23 @@ import javafx.scene.control.TableView.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import report.entities.CommonDAO;
+import report.entities.items.ID;
 import report.entities.items.TableClone;
 import report.models.mementos.Memento;
 import report.models.mementos.TableMemento;
 import report.models_view.nodes.cells.CommittableRow;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<ObservableList<E>> {
+
+    public static int INSERT_LIST = 1;
+    public static int DELETE_LIST = 2;
+    public static int UPDATE_LIST = 3;
 
     //Set of Cell witch have to be commit.
     private  Set<CommittableRow> setAddingCells;
     protected final TableView<E> tableView;
-
 
 /*!******************************************************************************************************************
 *                                                                                                       MEMENTO
@@ -221,6 +223,7 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
     public void setDisable(boolean value){
         tableView.setDisable(value);
     }
+
 
 
 }
