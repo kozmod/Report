@@ -20,7 +20,7 @@ import report.models.sql.SQLconnector;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
-public class TableViewItemContractorDAO implements TableViewItemDAO<TableItemContractor, TableWrapper> {
+public class TableViewItemContractorDAO implements TableViewItemDAO<TableItemContractor> {
 
     @Override
     public String sqlTableName() {

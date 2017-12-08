@@ -17,17 +17,17 @@ public abstract class AbstractTableWrapper<E> {
 
     Memento<E> memento;
     final String title;
-    final CommonDAO<E,AbstractTableWrapper> commonDao;
+    final CommonDAO<E> commonDao;
 
     /*!******************************************************************************************************************
     *                                                                                                       CONSTRUCTORS
     ********************************************************************************************************************/
 
-    public AbstractTableWrapper (CommonDAO<E,AbstractTableWrapper> commonDao) {
+    public AbstractTableWrapper (CommonDAO<E> commonDao) {
         this("TEST TITLE", commonDao);
     }
 
-    public AbstractTableWrapper(String title, CommonDAO<E,AbstractTableWrapper> commonDao) {
+    public AbstractTableWrapper(String title, CommonDAO<E> commonDao) {
         this.title = title;
         this.commonDao = commonDao;
     }

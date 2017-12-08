@@ -19,10 +19,10 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef>
      * Constructor                                                             *
      *                                                                         *
      **************************************************************************/
-    public DiscountTreeTableWrapper(String title, TreeTableView treeView, CommonDAO<DiscountCoef, AbstractTableWrapper> commonDao) {
+    public DiscountTreeTableWrapper(String title, TreeTableView treeView, CommonDAO<DiscountCoef> commonDao) {
         this(title,treeView,commonDao.getData(),commonDao);
     }
-    public DiscountTreeTableWrapper(String title, TreeTableView treeView,DiscountCoef discountCoef,  CommonDAO<DiscountCoef, AbstractTableWrapper> commonDao) {
+    public DiscountTreeTableWrapper(String title, TreeTableView treeView,DiscountCoef discountCoef,  CommonDAO<DiscountCoef> commonDao) {
         super(title, commonDao);
         this.discountCoef = discountCoef;
         treeTableView = treeView;

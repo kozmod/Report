@@ -16,14 +16,14 @@ import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public interface CommonDAO<C,T extends AbstractTableWrapper> extends TableDataBaseName{
+public interface CommonDAO<C> extends TableDataBaseName{
     C getData();
     void delete(C entry);
     void insert(C  entry);
 
-    default void  dellAndInsert(T object) {
-        this.delete((C)object.getMemento().getSavedState());
-        this.insert((C)object.getItems());
+    default void  dellAndInsert(AbstractTableWrapper<C> object) {
+        this.delete(object.getMemento().getSavedState());
+        this.insert(object.getItems());
     }
 
     /**

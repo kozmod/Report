@@ -20,7 +20,7 @@ import report.models.sql.SQLconnector;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
-public class TableViewItemOSRDAO implements TableViewItemDAO<TableItemOSR,TableWrapper> {
+public class TableViewItemOSRDAO implements TableViewItemDAO<TableItemOSR> {
 
     /**
     * Get String of a Mirror (SQL.Tables).

@@ -11,7 +11,7 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class DiscountQuery implements CommonDAO<DiscountCoef, AbstractTableWrapper> {
+public class DiscountQuery implements CommonDAO<DiscountCoef> {
 
     @Override
     public DiscountCoef getData() {

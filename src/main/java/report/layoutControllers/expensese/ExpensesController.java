@@ -3,6 +3,7 @@ package report.layoutControllers.expensese;
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Collection;
 import java.util.ResourceBundle;
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
@@ -232,7 +233,7 @@ public class ExpensesController implements Initializable {
     @FXML   
     private void hendler_applySiteChanges(ActionEvent event) {
 
-            new SiteTableViewItemDAO().dellAndInsert(siteTWrapper);
+            new SiteTableViewItemDAO().dellAndInsert((Collection<TableItemPreview>) siteTWrapper);
        
             siteTWrapper.saveTableItems();
             rootController.update_previewTable(Est.Common.getPreviewObservableList());
@@ -314,7 +315,7 @@ public class ExpensesController implements Initializable {
 
         }
 
-        new SiteTableViewItemDAO().dellAndInsert(siteTWrapper);
+        new SiteTableViewItemDAO().dellAndInsert((Collection<TableItemPreview>) siteTWrapper);
         siteTWrapper.saveTableItems();
         siteTWrapper.refresh();
 

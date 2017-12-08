@@ -3,6 +3,7 @@ package report.entities.items.estimate;
 
 import report.entities.TableViewItemDAO;
 import report.layoutControllers.LogController;
+import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,7 +25,7 @@ import report.entities.items.cb.TableItemCB;
 import report.models_view.nodes.node_wrappers.TableWrapperEST;
 
 
-public class TableViewItemEstDAO implements TableViewItemDAO<TableItemEst, TableWrapperEST> {
+public class TableViewItemEstDAO implements TableViewItemDAO<TableItemEst> {
 
     private Est enumEst;
     
@@ -556,7 +557,7 @@ public class TableViewItemEstDAO implements TableViewItemDAO<TableItemEst, Table
     * @param table (TableWrapper)
     */
     @Override
-    public void dellAndInsert(TableWrapperEST table){
+    public void dellAndInsert(AbstractTableWrapper<Collection<TableItemEst>> table){
 //        Collection tableMemento = table.getMemento().getSavedState(),
 //                   current = table.getItems();     
 //        

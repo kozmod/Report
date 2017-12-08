@@ -22,7 +22,7 @@ import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.sql.SQLconnector;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 
-public class TableViewItemPeriodDAO implements TableViewItemDAO<TableItemPeriod, TableWrapper> {
+public class TableViewItemPeriodDAO implements TableViewItemDAO<TableItemPeriod> {
 
     /**
     * Get String of a Mirror (SQL.Tables).

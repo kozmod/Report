@@ -2,6 +2,7 @@
 package report.entities.items.KS;
 
 import report.entities.TableViewItemDAO;
+import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +22,7 @@ import report.entities.items.TableItem;
 import report.models_view.nodes.node_wrappers.TableWrapperEST;
 
 
-public class TableViewItemKSDAO implements TableViewItemDAO<TableItemKS, TableWrapperEST> {
+public class TableViewItemKSDAO implements TableViewItemDAO<TableItemKS> {
     
     private Est enumEst;
     
@@ -392,7 +393,7 @@ public class TableViewItemKSDAO implements TableViewItemDAO<TableItemKS, TableWr
     
 //    public void dellAndInsert(Collection<TableItemKS> dellItem, Collection<TableItemKS> newItem){
     @Override
-    public void dellAndInsert(TableWrapperEST table){
+    public void dellAndInsert(AbstractTableWrapper<Collection<TableItemKS>> table){
         TableViewItemDAO.super.dellAndInsert(table);
         //??????????
 //        table.updateTableFromSQL(this.getOneKSList(Est.KS, ksNumber ));

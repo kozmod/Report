@@ -4,6 +4,7 @@ package report.entities.items.plan;
 import report.entities.TableViewItemDAO;
 import report.entities.items.KS.TableViewItemKSDAO;
 import report.models.coefficient.Quantity;
+import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +23,7 @@ import report.models.sql.SQLconnector;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
-public class TableViewItemPlanDAO implements TableViewItemDAO<TableItemPlan, TableWrapper> {
+public class TableViewItemPlanDAO implements TableViewItemDAO<TableItemPlan> {
 
    /**
     * 
@@ -235,7 +236,7 @@ public class TableViewItemPlanDAO implements TableViewItemDAO<TableItemPlan, Tab
     }
 
     @Override
-    public void dellAndInsert(TableWrapper table) {
+    public void dellAndInsert(AbstractTableWrapper<Collection<TableItemPlan>> table) {
         TableViewItemDAO.super.dellAndInsert(table);
         //????????????????????????????????????????????
         Quantity.updateFromBase();

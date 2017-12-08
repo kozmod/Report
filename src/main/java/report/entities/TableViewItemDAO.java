@@ -15,13 +15,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.ObservableSet;
 import report.models.sql.SQLconnector;
+import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.usage_strings.ServiceStrings;
 import report.models.DiffList;
 
 import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
-public interface TableViewItemDAO<E,T extends TableWrapper> extends CommonDAO<Collection<E>,T > {
+public interface TableViewItemDAO<E> extends CommonDAO<Collection<E>> {
     @Override
     ObservableList<E> getData();
     @Override
@@ -30,8 +31,8 @@ public interface TableViewItemDAO<E,T extends TableWrapper> extends CommonDAO<Co
     void insert(Collection<E>  entry);
 
     @Override
-    default void  dellAndInsert(T table) {
-        Collection<E>  memento =  (Collection<E>)table.getMemento().getSavedState(),
+    default void  dellAndInsert(AbstractTableWrapper<Collection<E>> table) {
+        Collection<E>  memento =  table.getMemento().getSavedState(),
                 current = table.getItems();
 
         DiffList<E> diffList = new DiffList<>(memento,current);

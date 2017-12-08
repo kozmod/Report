@@ -26,10 +26,10 @@ public  class TableWrapperEST<E extends TableItem> extends TableWrapper<E> {
     *                                                                                                       CONSTRUCTORS
     ********************************************************************************************************************/
 
-    public TableWrapperEST(TableView<E> table,TableViewItemDAO<E,TableWrapper> dao) {
+    public TableWrapperEST(TableView<E> table,TableViewItemDAO<E> dao) {
         super("TEST EST TITLE",table,dao);
     }
-    public TableWrapperEST(String title, TableView<E> table, TableViewItemDAO<E,TableWrapper<E>> dao) {
+    public TableWrapperEST(String title, TableView<E> table, TableViewItemDAO<E> dao) {
         super(title,table,dao);
     }
 

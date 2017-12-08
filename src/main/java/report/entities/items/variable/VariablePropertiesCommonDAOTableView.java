@@ -9,11 +9,12 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.entities.TableViewItemDAO;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
+import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.usage_strings.PathStrings;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
-public class VariablePropertiesCommonDAOTableView implements TableViewItemDAO<TableItemVariable, TableWrapper> {
+public class VariablePropertiesCommonDAOTableView implements TableViewItemDAO<TableItemVariable> {
 
 
 
@@ -124,7 +125,7 @@ public class VariablePropertiesCommonDAOTableView implements TableViewItemDAO<Ta
     * Update Properties File (formula.properties)
     */
     @Override
-    public  void dellAndInsert(TableWrapper tableWrapper) {
+    public  void dellAndInsert(AbstractTableWrapper<Collection<TableItemVariable>> tableWrapper) {
         insert(tableWrapper.getItems());
     }
     

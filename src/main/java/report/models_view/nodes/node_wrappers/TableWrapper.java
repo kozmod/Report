@@ -57,7 +57,7 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
 *                                                                                                       CONSTRUCTORS
 ********************************************************************************************************************/
 
-    public TableWrapper (TableView<E> table,CommonDAO<E,TableWrapper<E>> commonDao) {
+    public TableWrapper (TableView<E> table,CommonDAO<E> commonDao) {
         this("TEST TITLE",table, commonDao);
     }
 

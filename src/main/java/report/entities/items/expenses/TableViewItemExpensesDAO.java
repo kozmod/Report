@@ -19,7 +19,7 @@ import report.models.sql.SQLconnector;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
-public class TableViewItemExpensesDAO implements TableViewItemDAO<TableItemExpenses, TableWrapper> {
+public class TableViewItemExpensesDAO implements TableViewItemDAO<TableItemExpenses> {
 
     
     /**

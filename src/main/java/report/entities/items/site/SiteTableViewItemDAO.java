@@ -4,6 +4,7 @@ package report.entities.items.site;
 import report.entities.TableViewItemDAO;
 import report.entities.items.estimate.TableViewItemEstDAO;
 import report.layoutControllers.LogController;
+import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +21,7 @@ import report.models.sql.SQLconnector;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
-public class SiteTableViewItemDAO implements TableViewItemDAO<TableItemPreview, TableWrapper> {
+public class SiteTableViewItemDAO implements TableViewItemDAO<TableItemPreview> {
     
     private String siteNumber, contractor;
     
@@ -235,7 +236,7 @@ public class SiteTableViewItemDAO implements TableViewItemDAO<TableItemPreview, 
     }
 
     @Override
-    public void dellAndInsert(TableWrapper tableWrapper) {
+    public void dellAndInsert(AbstractTableWrapper<Collection<TableItemPreview>> tableWrapper) {
         if(tableWrapper.getItems() != null) {
                     delete(tableWrapper.getItems());
                     insert(tableWrapper.getItems());  }
