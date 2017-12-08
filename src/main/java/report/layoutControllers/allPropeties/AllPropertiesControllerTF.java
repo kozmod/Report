@@ -72,6 +72,7 @@ class AllPropertiesControllerTF implements TableFactory {
      *
      * @return TableWrapper
      */
+
     static TableWrapper decorVariable(TableView table){
         TableWrapper tableWrapper = new TableWrapper(table,new VariablePropertiesCommonDAOTableView());
 
