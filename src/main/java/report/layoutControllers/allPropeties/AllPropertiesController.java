@@ -46,6 +46,7 @@ public class AllPropertiesController implements Initializable {
     @FXML private Button    contractorAddItemButton, contractorSaveItemButton, contractorCencelItemButton;
 
 //    private TableWrapper<TableItemOSR> osrTableWrapper;
+//    private TableWrapper<TableItemVariable> variableTableWrapper ;
     private TableWrapper<TableItemVariable> variableTableWrapper ;
     private TableWrapper<TableItemContractor> contractorTableWrapper;
     private TableWrapper<TableItemPlan> planTableWrapper;
