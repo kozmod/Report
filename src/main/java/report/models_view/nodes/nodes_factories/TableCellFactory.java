@@ -460,7 +460,7 @@ public class TableCellFactory{
                                      this.getTableView().getItems().get(this.getIndex())
                             )
                      );
-                     System.out.println("ID EST =" + this.getTableView().getItems().get(this.getIndex()).getID());
+                     System.out.println("ID EST =" + this.getTableView().getItems().get(this.getIndex()).getId());
             
                  });
             }
@@ -604,7 +604,7 @@ public class TableCellFactory{
              } else {
                 setText(item.toString());
                 setOnMouseEntered(value ->{
-                     System.err.println("ID = " +this.getTableView().getItems().get(this.getIndex()).getID());
+                     System.err.println("ID = " +this.getTableView().getItems().get(this.getIndex()).getId());
             
                  });
             }

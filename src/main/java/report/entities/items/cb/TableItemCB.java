@@ -5,7 +5,6 @@ import java.sql.Timestamp;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import report.entities.items.TableClone;
 import report.entities.items.TableItem;
 
 /**
@@ -41,7 +40,7 @@ public class TableItemCB extends TableItem {
     @Override
     public TableItemCB getClone() {
         TableItemCB clone = new TableItemCB(
-                                    super.getID(),
+                                    super.getId(),
                                     this.getCheck(),
                                     super.getDateCreate(),
                                     super.getSiteNumber(),

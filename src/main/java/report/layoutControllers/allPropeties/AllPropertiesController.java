@@ -6,12 +6,16 @@ import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import report.entities.items.TableDItem;
 import report.entities.items.variable.TableItemVariable_new;
+import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
+import report.models_view.nodes.node_wrappers.ReverseTableWrapper;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 import report.models_view.nodes.nodes_factories.ContextMenuFactory;
 import report.entities.items.contractor.TableItemContractor;
@@ -48,7 +52,7 @@ public class AllPropertiesController implements Initializable {
 
 //    private TableWrapper<TableItemOSR> osrTableWrapper;
 //    private TableWrapper<TableItemVariable> variableTableWrapper ;
-    private TableWrapper<TableItemVariable> variableTableWrapper ;
+    private ReverseTableWrapper<TableItemVariable_new> variableTableWrapper ;
     private TableWrapper<TableItemContractor> contractorTableWrapper;
     private TableWrapper<TableItemPlan> planTableWrapper;
     private TableWrapper<TableItemPlan> factTableWrapper ;
@@ -66,7 +70,8 @@ public class AllPropertiesController implements Initializable {
 //        //add OSR TableView
         variableTableWrapper = AllPropertiesControllerTF.decorVariable(variableTable);
         variableTableWrapper.setDataFromBASE();
-        ContextMenuOptional.setTableItemContextMenuListener(variableTableWrapper);
+//        ContextMenuOptional.setTableItemContextMenuListener(variableTableWrapper);
+
 
         //add Contractors TableView
         contractorTableWrapper = AllPropertiesControllerTF.decorContractor(contractorTable);

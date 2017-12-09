@@ -13,11 +13,14 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 
 import report.entities.CommonDAO;
+import report.entities.Reverse;
 import report.entities.TableViewItemDAO;
 import report.entities.items.TableClone;
+import report.entities.items.TableDItem;
 import report.models.printer.PrintEstimate;
 import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.models_view.nodes.node_wrappers.DiscountTreeTableWrapper;
+import report.models_view.nodes.node_wrappers.ReverseTableWrapper;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 
 import java.util.Iterator;
@@ -51,9 +54,13 @@ public class ContextMenuOptional extends ContextMenu{
             }
         });
     }
-
     public static <S extends TableClone> void setTableItemContextMenuListener(DiscountTreeTableWrapper tableWrapper){
         tableWrapper.tableView().getRoot().getValue().secondValueProperty().addListener((observable, oldValue, newValue) -> {
+            ((ContextMenuOptional) tableWrapper.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
+        });
+    }
+    public static <S extends TableClone & Reverse> void setTableItemContextMenuListener(ReverseTableWrapper<S> tableWrapper,ObservableList<TableDItem> list){
+        list.addListener((ListChangeListener.Change<? extends TableDItem> c) -> {
             ((ContextMenuOptional) tableWrapper.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
         });
     }

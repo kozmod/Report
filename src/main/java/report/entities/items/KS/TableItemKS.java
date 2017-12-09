@@ -46,7 +46,7 @@ public class TableItemKS extends TableItem {
         @Override
         public TableItemKS getClone() {
             TableItemKS clone = new TableItemKS(
-                                    super.getID(),
+                                    super.getId(),
                                     super.getDateCreate(),
                                     this.getKSNumber(),
                                     this.getKSDate(),

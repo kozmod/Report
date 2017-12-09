@@ -20,7 +20,6 @@ import javafx.collections.ObservableList;
 import report.layoutControllers.LogController;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.sql.SQLconnector;
-import report.models_view.nodes.node_wrappers.TableWrapper;
 
 public class TableViewItemPeriodDAO implements TableViewItemDAO<TableItemPeriod> {
 
@@ -78,7 +77,7 @@ public class TableViewItemPeriodDAO implements TableViewItemDAO<TableItemPeriod>
             //set false SQL Autocommit
             connection.setAutoCommit(false);
                 for (TableItemPeriod obsItem : items) {
-                    pstmt.setLong   (1, obsItem.getID());
+                    pstmt.setLong   (1, obsItem.getId());
                     pstmt.addBatch();  
                 }
            pstmt.executeBatch();
@@ -127,7 +126,7 @@ public class TableViewItemPeriodDAO implements TableViewItemDAO<TableItemPeriod>
                     
                     try( ResultSet generategKeys = pstmt.getGeneratedKeys();){
                         if(generategKeys.next())
-                            obsItem.setID(generategKeys.getLong(1));
+                            obsItem.setId(generategKeys.getLong(1));
                     }    
                 }
            

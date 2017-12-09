@@ -25,8 +25,6 @@ public class InputValidator {
 
     }
 
-
-
     //input String validator
     private static boolean checkValidation(String inputString, String regEx){
         return Pattern

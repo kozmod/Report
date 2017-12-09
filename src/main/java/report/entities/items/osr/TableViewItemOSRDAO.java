@@ -17,7 +17,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 //import report.models.Formula_test;
 import report.models.sql.SQLconnector;
-import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
 public class TableViewItemOSRDAO implements TableViewItemDAO<TableItemOSR> {
@@ -99,7 +98,7 @@ public class TableViewItemOSRDAO implements TableViewItemDAO<TableItemOSR> {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
                 for (TableItemOSR obsItem : items) {
-                    pstmt.setLong   (1, obsItem.getID());
+                    pstmt.setLong   (1, obsItem.getId());
                     pstmt.addBatch();  
                 }
            pstmt.executeBatch();
@@ -146,7 +145,7 @@ public class TableViewItemOSRDAO implements TableViewItemDAO<TableItemOSR> {
                     
                     try( ResultSet generategKeys = pstmt.getGeneratedKeys();){
                         if(generategKeys.next())
-                            obsItem.setID(generategKeys.getLong(1));
+                            obsItem.setId(generategKeys.getLong(1));
                     }    
                 }
            

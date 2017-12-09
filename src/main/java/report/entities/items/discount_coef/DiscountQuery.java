@@ -5,7 +5,6 @@ import report.entities.items.estimate.TableViewItemEstDAO;
 import report.entities.items.expenses.TableViewItemExpensesDAO;
 import report.entities.items.period.TableViewItemPeriodDAO;
 import report.models.sql.SQLconnector;
-import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.usage_strings.SQL;
 import java.sql.*;
 import java.util.logging.Level;
@@ -113,7 +112,7 @@ public class DiscountQuery implements CommonDAO<DiscountCoef> {
             psMarketRisk.executeUpdate();
             psSpecificRisk.setLong(1,disCoef.specificRisk().getId());
             psSpecificRisk.executeUpdate();
-            psDiscount.setLong(1,disCoef.getID());
+            psDiscount.setLong(1,disCoef.getId());
             psDiscount.executeUpdate();
             //SQL commit
             connection.commit();
@@ -174,7 +173,7 @@ public class DiscountQuery implements CommonDAO<DiscountCoef> {
             psMarketRisk.executeUpdate();
 //            try( ResultSet mrKeys = psMarketRisk.getGeneratedKeys()){
 //                if(mrKeys.next()){
-//                    discountCoef.marketRisk().setID(mrKeys.getLong(1));
+//                    discountCoef.marketRisk().setId(mrKeys.getLong(1));
 //                }
 //            }
             psSpecificRisk.setDouble(1,discountCoef.specificRisk().getKeyChar());
@@ -185,7 +184,7 @@ public class DiscountQuery implements CommonDAO<DiscountCoef> {
             psSpecificRisk.executeUpdate();
 //            try(ResultSet srKeys = psSpecificRisk.getGeneratedKeys()){
 //                if( srKeys.next() ){
-//                    discountCoef.specificRisk().setID(srKeys.getLong(1));
+//                    discountCoef.specificRisk().setId(srKeys.getLong(1));
 //                }
 //            }
             psDiscount.setDouble(1,discountCoef.rateOfReturnProperty().get());
@@ -196,7 +195,7 @@ public class DiscountQuery implements CommonDAO<DiscountCoef> {
             //SQL commit
 //            try( ResultSet dcKeys = psDiscount.getGeneratedKeys()){
 //                if( dcKeys.next()){
-//                    discountCoef.setID(dcKeys.getLong(1));
+//                    discountCoef.setId(dcKeys.getLong(1));
 //                }
 //            }
             connection.commit();
@@ -206,7 +205,7 @@ public class DiscountQuery implements CommonDAO<DiscountCoef> {
                 if(mrKeys.next() & srKeys.next() & dcKeys.next()){
                     discountCoef.marketRisk().setId(mrKeys.getLong(1));
                     discountCoef.specificRisk().setId(srKeys.getLong(1));
-                    discountCoef.setID(dcKeys.getLong(1));
+                    discountCoef.setId(dcKeys.getLong(1));
                 }
 
             }

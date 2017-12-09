@@ -2,7 +2,7 @@
 package report.entities.items.contractor;
 
 import report.entities.TableViewItemDAO;
-import report.entities.items.variable.VariablePropertiesCommonDAOTableView;
+
 import report.layoutControllers.LogController;
 import report.entities.items.osr.TableViewItemOSRDAO;
 import report.usage_strings.SQL;
@@ -17,7 +17,6 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.models.sql.SQLconnector;
-import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
 public class TableViewItemContractorDAO implements TableViewItemDAO<TableItemContractor> {
@@ -55,7 +54,7 @@ public class TableViewItemContractorDAO implements TableViewItemDAO<TableItemCon
                    );
                }
            } catch (SQLException ex) {
-               Logger.getLogger(VariablePropertiesCommonDAOTableView.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(TableViewItemContractorDAO.class.getName()).log(Level.SEVERE, null, ex);
            }
         return  listAllContractors;
     }
@@ -89,7 +88,7 @@ public class TableViewItemContractorDAO implements TableViewItemDAO<TableItemCon
                   }
               }
            } catch (SQLException ex) {
-               Logger.getLogger(VariablePropertiesCommonDAOTableView.class.getName()).log(Level.SEVERE, null, ex);
+               Logger.getLogger(TableViewItemContractorDAO.class.getName()).log(Level.SEVERE, null, ex);
            }
         return  contractor;
     }
@@ -106,7 +105,7 @@ public class TableViewItemContractorDAO implements TableViewItemDAO<TableItemCon
             //set false SQL Autocommit
             connection.setAutoCommit(false);
                 for (TableItemContractor obsItem : items) {
-                    pstmt.setLong   (1, obsItem.getID());
+                    pstmt.setLong   (1, obsItem.getId());
                     pstmt.addBatch();  
                 }
            pstmt.executeBatch();
@@ -123,7 +122,7 @@ public class TableViewItemContractorDAO implements TableViewItemDAO<TableItemCon
             LogController.appendLogViewText(items.size() + " deleted");
             
         } catch (SQLException ex) {
-            Logger.getLogger(VariablePropertiesCommonDAOTableView.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(TableViewItemContractorDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -159,7 +158,7 @@ public class TableViewItemContractorDAO implements TableViewItemDAO<TableItemCon
                     
                     try( ResultSet generategKeys = pstmt.getGeneratedKeys();){
                         if(generategKeys.next())
-                            obsItem.setID(generategKeys.getLong(1));
+                            obsItem.setId(generategKeys.getLong(1));
                     }    
                 }
            
@@ -186,9 +185,9 @@ public class TableViewItemContractorDAO implements TableViewItemDAO<TableItemCon
 //        
 //        
 ////        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");
-////           table.getCRUD().getDelete().forEach(i -> System.out.println("Delete - " + ((TableClone)i).getID()));
-////           table.getCRUD().getCreate().forEach(i -> System.out.println("INS    - " + ((TableClone)i).getID()));
-////           table.getCRUD().getUpdate().forEach(i -> System.out.println("UPDATE - " + ((TableClone)i).getID()));
+////           table.getCRUD().getDelete().forEach(i -> System.out.println("Delete - " + ((TableClone)i).getId()));
+////           table.getCRUD().getCreate().forEach(i -> System.out.println("INS    - " + ((TableClone)i).getId()));
+////           table.getCRUD().getUpdate().forEach(i -> System.out.println("UPDATE - " + ((TableClone)i).getId()));
 ////           table.getCRUD().clearAll();
 ////            System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<,,>");
 //        DataUtils.DiffList<TableItemContractor> diffList = new DataUtils.DiffList(tableMemento,current);

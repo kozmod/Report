@@ -33,8 +33,8 @@ public class TableItemFinishedSite {
         this.saleCost   = new SimpleDoubleProperty(saleCost);
     }
 
-//    public long getID()        {return id;}
-//    public void setID(long id) { this.id = id;}
+//    public long getId()        {return id;}
+//    public void setId(long id) { this.id = id;}
 //
 //    public int  getDel()        {return del;}
 //    public void setDel(int del) {this.del = del;}

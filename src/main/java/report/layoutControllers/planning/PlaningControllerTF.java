@@ -2,7 +2,7 @@ package report.layoutControllers.planning;
 
 import javafx.scene.control.*;
 import report.entities.items.discount_coef.DiscountQuery;
-import report.entities.items.discount_coef.TableDItem;
+import report.entities.items.TableDItem;
 import report.entities.items.osr.TableViewItemOSRDAO;
 import report.entities.items.osr.TableItemOSR;
 import report.entities.items.plan.TableViewItemPlanDAO;

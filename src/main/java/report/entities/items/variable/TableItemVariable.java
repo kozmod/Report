@@ -31,7 +31,7 @@ public class TableItemVariable implements TableClone {
     @Override
     public TableClone getClone() {
         TableClone clone = new TableItemVariable(
-                                            this.getID(),
+                                            this.getId(),
                                             this.getText(),
                                             this.getValue()
                                             );
@@ -40,9 +40,9 @@ public class TableItemVariable implements TableClone {
     
     //Getters AND Setters --------------------------------------------------------------------------    
 //    @Override
-    public Long getID() {return id;}
+    public long getId() {return id;}
 //    @Override
-    public void setID(Long id) {this.id = id;}
+    public void setId(long id) {this.id = id;}
     
     public String getText() {return text.getValue();}
     public void   setText(String value_inp) {text.set(value_inp);}

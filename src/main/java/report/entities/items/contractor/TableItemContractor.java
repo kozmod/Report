@@ -30,7 +30,7 @@ public class TableItemContractor implements TableClone<TableItemContractor> {
     @Override
     public TableItemContractor getClone() {
         TableItemContractor clone = new TableItemContractor(
-                                            this.getID(),
+                                            this.getId(),
                                             this.getContractor(),
                                             this.getDirector(),
                                             this.getComments(),
@@ -41,9 +41,9 @@ public class TableItemContractor implements TableClone<TableItemContractor> {
     
     
 //    @Override
-    public Long getID()        {return id;}
+    public long getId()        {return id;}
 //    @Override
-    public void setID(Long id) {this.id = id;}
+    public void setId(long id) {this.id = id;}
 
     public String          getContractor()                 {return contractor.get();}
     public StringProperty  getContractorProperty()         {return contractor;}

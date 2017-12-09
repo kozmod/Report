@@ -90,7 +90,7 @@ public class AddTextFieldTableCell<S extends ID,T > extends TextFieldTableCell<S
             final long personID = this.getTableView()
                     .getItems()
                     .get(this.getIndex())
-                    .getID();
+                    .getId();
             if(textField == null){
                 textField = createTextField(this,converter);
             }
@@ -168,7 +168,7 @@ public class AddTextFieldTableCell<S extends ID,T > extends TextFieldTableCell<S
         final TextField textField = new TextField(getItemText(cell, converter));
         // Use onAction here rather than onKeyReleased (with check for Enter),
         // as otherwise we encounter RT-34685
-//        if( cell.getTableView().getItems().get(cell.getIndex()).getID() != 0)
+//        if( cell.getTableView().getItems().get(cell.getIndex()).getId() != 0)
 //        if( cell.changesCounter != 0)
         textField.setOnAction(event -> {
             if (converter == null) {

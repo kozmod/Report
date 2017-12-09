@@ -19,7 +19,6 @@ import report.layoutControllers.LogController;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.sql.SQLconnector;
 import report.entities.items.TableItem;
-import report.models_view.nodes.node_wrappers.TableWrapperEST;
 
 
 public class TableViewItemKSDAO implements TableViewItemDAO<TableItemKS> {
@@ -180,7 +179,7 @@ public class TableViewItemKSDAO implements TableViewItemDAO<TableItemKS> {
             PreparedStatement pstmt = connection.prepareStatement(sql);) {
             connection.setAutoCommit(false);
                 for (TableItemKS obsItem : items) {
-                    pstmt.setLong   (1, obsItem.getID());
+                    pstmt.setLong   (1, obsItem.getId());
                     pstmt.addBatch();  
                 }
            pstmt.executeBatch();
@@ -283,7 +282,7 @@ public class TableViewItemKSDAO implements TableViewItemDAO<TableItemKS> {
                     
                     try( ResultSet generategKeys = pstmt.getGeneratedKeys();){
                         if(generategKeys.next())
-                            obsItem.setID(generategKeys.getLong(1));
+                            obsItem.setId(generategKeys.getLong(1));
                     }   
                 }; 
            //SQL commit

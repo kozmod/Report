@@ -124,10 +124,10 @@ public abstract class TableItem implements TableClone {
 //        }
 
     //Getter / Setter
-//  public Long getID() {return id;}
-//  public void setID(Long id) {this.id = id;}
-    @Override  public Long getID() {return id;}
-    @Override  public void setID(Long id) {this.id = id;}
+//  public Long getId() {return id;}
+//  public void setId(Long id) {this.id = id;}
+    @Override  public long getId() {return id;}
+    @Override  public void setId(long id) {this.id = id;}
 
     public Timestamp getDateCreate() {return dateCreate;}
     public void      setDateCreate(Timestamp value_inp) {this.dateCreate = value_inp;}

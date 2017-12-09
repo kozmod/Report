@@ -1,12 +1,11 @@
 package report.entities.items.discount_coef;
 
 import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.LongProperty;
 import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.TreeItem;
 import report.entities.items.TableClone;
+import report.entities.items.TableDItem;
 
 public class DiscountCoef implements TableClone<DiscountCoef>{
 
@@ -70,11 +69,11 @@ public class DiscountCoef implements TableClone<DiscountCoef>{
      *                                                                         *
      **************************************************************************/
 //    @Override
-    public Long getID() {
+    public long getId() {
         return id;
     }
 //    @Override
-    public void setID(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
     public DoubleProperty kdProperty() {
@@ -231,10 +230,11 @@ public class DiscountCoef implements TableClone<DiscountCoef>{
                         )
                 )
         );
+
         final TreeItem<TableDItem> RORLeaf = new TreeItem<>( new TableDItem(id,"",RATE_OF_RETURN,this.rateOfReturn));
         final TreeItem<TableDItem> KD = new TreeItem<>( new TableDItem(id,"", this.KD,this.kd));
         final TreeItem<TableDItem> KDperMonth = new TreeItem<>( new TableDItem(id,"", this.KD,this.kdPerMonth));
-        final TreeItem<TableDItem> root = new TreeItem<>( new TableDItem(id,"",ROOT_ELEMENT,0D));
+        final TreeItem<TableDItem> root = new TreeItem<>( new TableDItem(id,"",ROOT_ELEMENT,0d));
         root.getChildren().addAll(RORLeaf,specificRoot,marketRoot,KD,KDperMonth);
 
         root.getValue().secondValueProperty().addListener((ChangeListener) (observable, oldValue, newValue) ->{

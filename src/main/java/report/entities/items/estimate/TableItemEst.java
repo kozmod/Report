@@ -47,7 +47,7 @@ public class TableItemEst extends TableItem {
         @Override
         public TableItemEst getClone() {
             TableItemEst clone = new TableItemEst(
-                                    super.getID(),
+                                    super.getId(),
                                     super.getDateCreate(),
                                     super.getSiteNumber(),
                                     super.getTypeHome(),

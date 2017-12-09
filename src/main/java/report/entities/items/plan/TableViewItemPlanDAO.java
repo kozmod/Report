@@ -20,7 +20,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layoutControllers.LogController;
 import report.models.sql.SQLconnector;
-import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
 public class TableViewItemPlanDAO implements TableViewItemDAO<TableItemPlan> {
@@ -180,7 +179,7 @@ public class TableViewItemPlanDAO implements TableViewItemDAO<TableItemPlan> {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
                 for (TableItemPlan obsItem : entry) {
-                    pstmt.setLong   (1, obsItem.getID());
+                    pstmt.setLong   (1, obsItem.getId());
                     pstmt.addBatch();  
                 }
            pstmt.executeBatch();
@@ -224,7 +223,7 @@ public class TableViewItemPlanDAO implements TableViewItemDAO<TableItemPlan> {
                     
                     try( ResultSet generategKeys = pstmt.getGeneratedKeys()){
                         if(generategKeys.next())
-                            obsItem.setID(generategKeys.getLong(1));
+                            obsItem.setId(generategKeys.getLong(1));
                     }   
                 }
            //SQL commit

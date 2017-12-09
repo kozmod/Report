@@ -100,7 +100,7 @@ public class AddComboBoxTableCell<S extends ID,T > extends TableCell<S,T> implem
          final long personID = this.getTableView()
                  .getItems()
                  .get(this.getIndex())
-                 .getID();
+                 .getId();
          if(this.comboBox == null) {
             this.comboBox = createComboBox(this,this.items,this.converter);
          }

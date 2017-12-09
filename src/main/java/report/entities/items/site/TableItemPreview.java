@@ -46,9 +46,9 @@ import report.entities.items.TableClone;
 
         //Getter / Setter
 //        @Override
-        public Long getID() {return id;}
+        public long getId() {return id;}
 //        @Override
-        public void setID(Long id) {this.id = id;}
+        public void setId(long id) {this.id = id;}
 
         public String getSqlColumn() {return sqlColumn;}
         public void   setSqlColumn(String sqlColumn) {this.sqlColumn = sqlColumn;}
@@ -106,7 +106,7 @@ import report.entities.items.TableClone;
         
     @Override
     public String toString() {
-        return "ID ->"+ getID()+" FV ->"+getFirstValue() + " SV ->"+ getSecondValue();
+        return "ID ->"+ getId()+" FV ->"+getFirstValue() + " SV ->"+ getSecondValue();
     }
 
 

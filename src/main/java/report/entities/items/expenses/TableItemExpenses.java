@@ -45,7 +45,7 @@ public class TableItemExpenses implements TableClone {
         public  TableClone getClone() {
             TableClone clone = new TableItemExpenses
                            .Builder()
-                           .setId(this.getID())
+                           .setId(this.getId())
                            .setsiteNumber(this.getSiteNumber())
                            .setContractor(this.getContractor())
                            .setText(this.getText())
@@ -94,10 +94,10 @@ public class TableItemExpenses implements TableClone {
     
     
     //Getter / Setter
-//    @Override  public Long getID() {return id;}
-//    @Override  public void setID(Long id) {this.id = id;}
-    public Long getID() {return id;}
-    public void setID(Long id) {this.id = id;}
+//    @Override  public Long getId() {return id;}
+//    @Override  public void setId(Long id) {this.id = id;}
+    public long getId() {return id;}
+    public void setId(long id) {this.id = id;}
     
     public String getSiteNumber() {return siteNumber.get();} 
     public void   setSiteNumber(String value_inp) {siteNumber.set(value_inp);}

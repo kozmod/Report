@@ -44,7 +44,7 @@ public class TableItemOSR implements TableClone {
     @Override
     public TableClone getClone() {
         TableClone clone = new TableItemOSR(
-                                    this.getID(),
+                                    this.getId(),
                                     this.getText(),
                                     this.getExpenses(),
                                     this.getExpensesPerHouse()
@@ -54,9 +54,9 @@ public class TableItemOSR implements TableClone {
     
     //Getters AND Setters --------------------------------------------------------------------------
 //    @Override
-    public Long getID() {return id;}
+    public long getId() {return id;}
 //    @Override
-    public void setID(Long id) {this.id = id;}
+    public void setId(long id) {this.id = id;}
 
 
     public String getText() {return text.getValue();}

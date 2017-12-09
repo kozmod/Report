@@ -1,5 +1,5 @@
 
-package report.entities.items.discount_coef;
+package report.entities.items;
 
 import javafx.beans.Observable;
 import javafx.beans.property.DoubleProperty;
@@ -7,7 +7,6 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
-import report.entities.items.TableClone;
 
 import java.util.Objects;
 
@@ -23,7 +22,7 @@ public class TableDItem implements TableClone {
 
 
 
-    protected TableDItem(long id, String sqlColumnName, String fValue, double sValue) {
+    public TableDItem(long id, String sqlColumnName, String fValue, double sValue) {
             this.id        = id;
             this.sqlColumn = sqlColumnName;
             this.firstValue  = new SimpleStringProperty(fValue);
@@ -53,9 +52,9 @@ public class TableDItem implements TableClone {
 
     //Getter / Setter
 //    @Override
-    public Long getID() {return id;}
+    public long getId() {return id;}
 //    @Override
-    public void setID(Long id) {this.id = id;}
+    public void setId(long id) {this.id = id;}
 
 
     public String getSqlColumn() {return sqlColumn;}
@@ -125,7 +124,7 @@ public class TableDItem implements TableClone {
 
     @Override
     public String toString() {
-        return "ID ->"+ getID()+" FV ->"+getFirstValue() + " SV ->"+ getSecondValue();
+        return "ID ->"+ getId()+" FV ->"+getFirstValue() + " SV ->"+ getSecondValue();
     }
 
     /**

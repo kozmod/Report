@@ -18,7 +18,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.sql.SQLconnector;
-import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
 public class SiteTableViewItemDAO implements TableViewItemDAO<TableItemPreview> {
@@ -148,7 +147,7 @@ public class SiteTableViewItemDAO implements TableViewItemDAO<TableItemPreview> 
             PreparedStatement pstmt = connection.prepareStatement("update [dbo].[Site] SET dell = 1 WHERE [id] = ? AND [dell] = 0;");) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
-                pstmt.setLong   (1, items.stream().findAny().get().getID());
+                pstmt.setLong   (1, items.stream().findAny().get().getId());
                 pstmt.execute();  
                 
            //SQL commit
@@ -214,7 +213,7 @@ public class SiteTableViewItemDAO implements TableViewItemDAO<TableItemPreview> 
                     try( ResultSet generategKeys = pstmt.getGeneratedKeys();){
                         if(generategKeys.next())
                             for(TableItemPreview obsItem : items)
-                                obsItem.setID(generategKeys.getLong(1));
+                                obsItem.setId(generategKeys.getLong(1));
                     } 
                 
            //SQL commit

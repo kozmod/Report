@@ -9,7 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.util.converter.NumberStringConverter;
-import report.entities.items.discount_coef.TableDItem;
+import report.entities.items.TableDItem;
 import report.entities.items.osr.TableItemOSR;
 import report.entities.items.plan.TableViewItemPlanDAO;
 import report.entities.items.plan.TableItemFact;

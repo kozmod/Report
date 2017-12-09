@@ -5,16 +5,11 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
-import report.entities.items.variable.VariablePropertiesCommonDAOTableView;
+import report.entities.items.variable.TableItemVariable_new;
 import report.layoutControllers.estimate.EstimateController.Est;
-
-import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models.sql.SQLconnector;
-import report.usage_strings.FileFields;
 import report.usage_strings.SQL;
 
 
@@ -29,18 +24,18 @@ public class FormulaQuery {
         String siteNumber = Est.Common.getSiteSecondValue(SQL.Site.SITE_NUMBER);
         String contractor = Est.Common.getSiteSecondValue(SQL.Site.CONTRACTOR);
 
-        Properties variableProperties = new VariablePropertiesCommonDAOTableView().getProperties();
-        Double pse  = new DoubleStringConverter()
-                .fromString(
-                variableProperties.get(
-                        FileFields.FormulaVar.PER_SALE_EXPENSES
-                ).toString()
-        );
-        Double iTax = new DoubleStringConverter().fromString(
-                variableProperties.get(
-                        FileFields.FormulaVar.INCOM_TAX
-                ).toString()
-        );
+//        Properties variableProperties = new VariablePropertiesCommonDAOTableView().getProperties();
+//        Double pse  = new DoubleStringConverter()
+//                .fromString(
+//                variableProperties.get(
+//                        FileFields.FormulaVar.PER_SALE_EXPENSES
+//                ).toString()
+//        );
+//        Double iTax = new DoubleStringConverter().fromString(
+//                variableProperties.get(
+//                        FileFields.FormulaVar.INCOM_TAX
+//                ).toString()
+//        );
 
           try(Connection connection = SQLconnector.getInstance();
               PreparedStatement pstmt = connection.prepareStatement( "execute Coeff_TEST_2 ?,? ");) {
@@ -56,8 +51,10 @@ public class FormulaQuery {
                            Est.Common.getSiteSecondValue(SQL.Site.SMET_COST),
                            rs.getDouble(SQL.Formula.SMET_COST_SUM_ALL),
                            rs.getDouble(SQL.Formula.SALE_COSTSUM_FROM_FINPLAN),
-                           pse,
-                           iTax
+//                           pse,
+//                           iTax
+                           rs.getDouble(TableItemVariable_new.SQL.SALE_EXP),
+                           rs.getDouble(TableItemVariable_new.SQL.INCOME_TAX)
                    );
                }
            } catch (SQLException ex) {

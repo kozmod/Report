@@ -14,7 +14,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.util.StringConverter;
 import report.entities.items.discount_coef.DiscountCoef;
-import report.entities.items.discount_coef.TableDItem;
+import report.entities.items.TableDItem;
 
 
 public class EditingTreeTableCell extends TreeTableCell<TableDItem,Double> {
