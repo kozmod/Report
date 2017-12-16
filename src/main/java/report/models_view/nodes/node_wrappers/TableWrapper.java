@@ -21,10 +21,6 @@ import java.util.*;
 
 public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<ObservableList<E>> {
 
-    public static int INSERT_LIST = 1;
-    public static int DELETE_LIST = 2;
-    public static int UPDATE_LIST = 3;
-
     //Set of Cell witch have to be commit.
     private  Set<CommittableRow> setAddingCells;
     protected final TableView<E> tableView;

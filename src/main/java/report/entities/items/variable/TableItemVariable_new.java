@@ -108,6 +108,11 @@ public class TableItemVariable_new implements TableClone<TableItemVariable_new>,
         this.saleExp.set(saleExp);
     }
 
+    /***************************************************************************
+     *                                                                         *
+     * CLONE                                                                   *
+     *                                                                         *
+     **************************************************************************/
     @Override
     public TableItemVariable_new getClone() {
         return new TableItemVariable_new(this);

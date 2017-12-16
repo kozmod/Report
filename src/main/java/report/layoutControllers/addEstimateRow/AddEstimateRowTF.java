@@ -33,6 +33,7 @@ public class AddEstimateRowTF {
         TableColumn Price_one      = tableWrapper.addColumn("Стоимость (за единицу)",    "price_one");
         TableColumn Price_sum      = tableWrapper.addColumn("Стоимость (общая)",         "price_sum");
 //
+
         CheckBoxColumn.setMaxWidth(60);
         CheckBoxColumn.setMinWidth(30);
 

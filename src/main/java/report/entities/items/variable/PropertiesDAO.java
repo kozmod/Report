@@ -26,10 +26,8 @@ public class PropertiesDAO implements CommonDAO<TableItemVariable_new> {
                 + " * "
                 + "from dbo.[TBL_COMMAND_PROPERTY] "
                 + "WHERE  [dell] = 0 ";
-
         try(Connection connection = SQLconnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sqlQuery)) {
-
             pstmt.execute();
 
             try(ResultSet rs = pstmt.getResultSet()){

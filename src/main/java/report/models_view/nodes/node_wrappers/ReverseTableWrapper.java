@@ -1,15 +1,11 @@
 package report.models_view.nodes.node_wrappers;
 
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TreeTableView;
 import report.entities.CommonDAO;
 import report.entities.Reverse;
 import report.entities.items.TableClone;
 import report.entities.items.TableDItem;
-import report.entities.items.discount_coef.DiscountCoef;
 import report.models.mementos.Memento;
 import report.models.mementos.ReverseTableMemento;
 import report.models_view.nodes.ContextMenuOptional;

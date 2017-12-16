@@ -13,7 +13,7 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 
-public class AddTextFieldTableCell<S extends ID,T > extends TextFieldTableCell<S,T> implements CommittableRow {
+public class AddTextFieldTableCell<S extends ID,T > extends TableCell<S,T> implements CommittableRow {
     private int CHANGED = 0;
 
     private Set<? super CommittableRow> setOfNewCells;
@@ -66,7 +66,6 @@ public class AddTextFieldTableCell<S extends ID,T > extends TextFieldTableCell<S
                 || !getTableColumn().isEditable()) {
             return;
         }
-
         super.startEdit();
         if (isEditing()) {
             if (textField == null) {
@@ -91,10 +90,10 @@ public class AddTextFieldTableCell<S extends ID,T > extends TextFieldTableCell<S
                     .getItems()
                     .get(this.getIndex())
                     .getId();
-            if(textField == null){
-                textField = createTextField(this,converter);
-            }
             if(setOfNewCells != null & personID  == -1 &  CHANGED == 0) {
+                if(textField == null){
+                    textField = createTextField(this,converter);
+                }
                 setGraphic(textField);
                 textField.setText(item.toString());
                 this.setText(null);
@@ -142,7 +141,7 @@ public class AddTextFieldTableCell<S extends ID,T > extends TextFieldTableCell<S
     @Override
     public void commitData(){
         System.out.println("text - "+  this.textField.getText());
-        if( CHANGED== 0)
+        if( CHANGED == 0)
             CHANGED++;
         this.setText(this.textField.getText());
         this.commitEdit(converter.fromString(this.textField.getText()));

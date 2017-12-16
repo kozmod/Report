@@ -174,12 +174,12 @@ public class AddKSController implements Initializable {
         }
 
         PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
-                    visiblePause.setOnFinished(e -> {
-                        ksNumTextField.setStyle(null);
-                        ksDatePicker.setStyle(null);
-                        errorLabel.setVisible(false);
+        visiblePause.setOnFinished(e -> {
+            ksNumTextField.setStyle(null);
+            ksDatePicker.setStyle(null);
+            errorLabel.setVisible(false);
 
-                    });
+        });
         visiblePause.play();
 
 
