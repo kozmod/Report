@@ -35,19 +35,19 @@ public class AllPropertiesController implements Initializable {
 
 //    @FXML private TableView  osrTable;
     @FXML private TableView variableTable,
-            contractorTable,
-            planTable,
-            factTable;
+            contractorTable;
+//            planTable,
+//            factTable;
 
     @FXML private TextField contractorNameTF,contractorDirectorTF;
-    @FXML private TextField planTypeTF,planSmetTF,planSaleTF, planQuantityTF ;
-    @FXML private TextField planSmetSumTF,planSaleSumTF, planProfitSumTF;
-    @FXML private TextField factSmetSumTF,factSaleSumTF, factProfitSumTF;
+//    @FXML private TextField planTypeTF,planSmetTF,planSaleTF, planQuantityTF ;
+//    @FXML private TextField planSmetSumTF,planSaleSumTF, planProfitSumTF;
+//    @FXML private TextField factSmetSumTF,factSaleSumTF, factProfitSumTF;
 
     @FXML private TextArea  contractorAdressTA,contractorCommentsTA;
 //    @FXML private CheckBox  osrEditСheckBox;
     @FXML private CheckBox  variableEditСheckBox, contractorEditСheckBox, planEditСheckBox;
-    @FXML private Button    osrAddItemButton, planAddItemButton;
+//    @FXML private Button    osrAddItemButton, planAddItemButton;
     @FXML private Button    contractorAddItemButton, contractorSaveItemButton, contractorCencelItemButton;
 
 //    private TableWrapper<TableItemOSR> osrTableWrapper;
