@@ -8,10 +8,11 @@
     <artifactId>Report</artifactId>
     <version>1.0-R</version>
     <name>projectReport</name>
+    <!-- PROPERTIES -->
     <properties>
         <jdk.version>1.8</jdk.version>
     </properties>
-
+    <!-- BUILD -->
     <build>
         <plugins>
             <plugin>
@@ -23,8 +24,39 @@
                     <target>${jdk.version}</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.0.2</version>
+                <configuration>
+                    <archive>
+                        <!--<index>true</index>-->
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <mainClass>report.Report</mainClass>
+                        </manifest>
+                        <manifestEntries>
+                            <mode>development</mode>
+                            <url>${project.url}</url>
+                            <key>value</key>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.0.0</version>
+                <executions>
+                    <execution>
+                        <id>auto-clean</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>clean</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
         </plugins>
-
     </build>
 
     <!--<repositories>-->
@@ -36,12 +68,20 @@
 
     <dependencies>
         <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/sqljdbc4 -->
+        <!--<dependency>-->
+            <!--<groupId>com.microsoft.sqlserver</groupId>-->
+            <!--<artifactId>sqljdbc4</artifactId>-->
+            <!--<version>4.0</version>-->
+            <!--<scope>system</scope>-->
+            <!--<systemPath>${project.basedir}/lib/dependencies/sqljdbc4.jar</systemPath>-->
+        <!--</dependency>-->
+        <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
-            <artifactId>sqljdbc4</artifactId>
-            <version>4.0</version>
+            <artifactId>mssql-jdbc</artifactId>
+            <version>6.2.2.jre8</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/dependencies/sqljdbc4.jar</systemPath>
+            <systemPath>${project.basedir}/lib/dependencies/mssql-jdbc-6.2.2.jre8.jar</systemPath>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
         <dependency>
@@ -91,11 +131,30 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/dependencies/commons-collections4-4.1.jar</systemPath>
         </dependency>
-
-
+        <!-- +++++ JUnit +++++ -->
+        <!-- https://mvnrepository.com/artifact/org.junit.vintage/junit-vintage-engine -->
+        <dependency>
+            <groupId>org.junit.vintage</groupId>
+            <artifactId>junit-vintage-engine</artifactId>
+            <version>4.12.1</version>
+            <scope>test</scope>
+        </dependency>
+        <!--HIBERNATE ////////////////////////////////////////////////////////////////////////////////////////////////-->
+        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-core</artifactId>-->
+            <!--<version>5.2.12.Final</version>-->
+            <!--&lt;!&ndash;<scope>system</scope>&ndash;&gt;-->
+            <!--&lt;!&ndash;<systemPath>${project.basedir}/lib/dependencies/hibernate-core-5.2.12.Final.jar</systemPath>&ndash;&gt;-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.hibernate/hibernate-annotations &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-annotations</artifactId>-->
+            <!--<version>3.5.6-Final</version>-->
+            <!--&lt;!&ndash;<scope>system</scope>&ndash;&gt;-->
+            <!--&lt;!&ndash;<systemPath>${project.basedir}/lib/dependencies/hibernate-annotations-3.5.6-Final.jar</systemPath>&ndash;&gt;-->
+        <!--</dependency>-->
     </dependencies>
-
-
-
-
 </project>

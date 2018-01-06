@@ -14,10 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
@@ -154,18 +151,15 @@ public class AddEstimateRowController implements Initializable {
                     unitTextField.setDisable(true);
                     unitTextField.setVisible(false);
                     unitTextField.setText(newValue);
-
                 }
-
             }
-
-
         });
 
     }
 
     // ATTENTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     private void init_diffObsList(){
+
         int check ;
 //       baseObsList = getCheckObs(commonSQL_SELECT.getEstObs_base(siteNumber, contName,typeHome, buildingPart));
         baseObsList = new TableViewItemEstDAO().getBaseList(bildingPart);

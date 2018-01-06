@@ -2,6 +2,7 @@ package report.layoutControllers.addEstimateRow;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import report.entities.TableViewItemDAO;
 import report.entities.items.cb.TableItemCB;
 import report.entities.items.estimate.TableViewItemEstDAO;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
@@ -21,7 +22,8 @@ public class AddEstimateRowTF {
      */
     @SuppressWarnings("unchecked")
     public static TableWrapperEST decorEst_add(TableView table){
-        TableWrapperEST<TableItemCB> tableWrapper = new TableWrapperEST(table, new TableViewItemEstDAO());
+        TableViewItemDAO dao = new TableViewItemEstDAO();
+        TableWrapperEST<TableItemCB> tableWrapper = new TableWrapperEST<>(table, dao);
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
@@ -38,16 +40,19 @@ public class AddEstimateRowTF {
         CheckBoxColumn.setMinWidth(30);
 
         CheckBoxColumn.setCellFactory(param -> TableCellFactory.getCheckValueCell());
-        JM_nameColumn.setCellFactory(param -> new AddTextFieldTableCell(tableWrapper.getSetAddingCells()));
+        JM_nameColumn.setCellFactory(param -> new AddTextFieldTableCell(
+                        tableWrapper.getSetAddingCells()
+                )
+        );
         BJobColumn.setCellFactory(param -> new AddComboBoxTableCell(
                         tableWrapper.getSetAddingCells()
-                        ,tableWrapper.getDAO().getDistinctOfColumn(SQL.Estimate.BINDED_JOB,"-").toArray()
+                        ,dao.getDistinctOfColumn(SQL.Estimate.BINDED_JOB,"-").toArray()
                 )
         );
         valueColumn.setCellFactory(param -> new AddTextFieldTableCell(new DoubleStringConverter(),tableWrapper.getSetAddingCells()));
         unitColumn.setCellFactory(param -> new AddComboBoxTableCell(
                         tableWrapper.getSetAddingCells()
-                        ,tableWrapper.getDAO().getDistinctOfColumn(SQL.Estimate.UNIT).toArray()
+                        ,dao.getDistinctOfColumn(SQL.Estimate.UNIT).toArray()
                 )
         );
         Price_one.setCellFactory(param -> new AddTextFieldTableCell(new DoubleStringConverter(),tableWrapper.getSetAddingCells()));

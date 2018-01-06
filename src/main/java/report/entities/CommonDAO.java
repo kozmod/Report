@@ -20,12 +20,14 @@ public interface CommonDAO<C> extends TableDataBaseName{
     C getData();
     void delete(C entry);
     void insert(C  entry);
-
+    /**
+     * Delete & Insert data to SQL in direct sequence
+     * @return ObservableList
+     */
     default void  dellAndInsert(AbstractTableWrapper<C> object) {
         this.delete(object.getMemento().getSavedState());
         this.insert(object.getItems());
     }
-
     /**
      * Get <b>Unique</b> value of column.
      * @return ObservableList
@@ -57,5 +59,7 @@ public interface CommonDAO<C> extends TableDataBaseName{
         }
         return  FXCollections.observableArrayList(disSet);
     }
+
+
 
 }

@@ -74,7 +74,6 @@ public class ExpensesController implements Initializable {
     {
 //        siteTWrapper.setTableData(FXCollections.observableArrayList(new TableItemPreview(Long.MIN_VALUE, "sss", "SSS", "s")));
 
-
         InvalidationListener l = (Observable observable) -> {
             if(CONTRACTOR.getValue().equals(SQL.Line) && TYPE_HOME.getValue().equals(SQL.Line) ){
                 addExpensesButton.setDisable(true);

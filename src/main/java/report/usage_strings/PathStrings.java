@@ -29,14 +29,14 @@ public  interface PathStrings {
         }
 
         interface Files{
-                String EXCEL               =  "lib\\excel_files";
-                String BACK_UP_SQL         =  "lib\\BackUp_SQL";
-                String VARIABLE_PROPERTIES =  "lib\\MyProperties\\formula.properties";
+                String EXCEL               =  "lib/excel_files";
+                String BACK_UP_SQL         =  "lib/BackUp_SQL";
+                String VARIABLE_PROPERTIES =  "lib/MyProperties/formula.properties";
         }
         interface FilesPaths{
-                Path EXCEL               = Paths.get("lib\\excel_files");
-                Path BACK_UP_SQL         = Paths.get("lib\\BackUp_SQL");
-                Path VARIABLE_PROPERTIES = Paths.get( "lib\\MyProperties\\formula.properties");
+                Path EXCEL               = Paths.get("lib/excel_files");
+                Path BACK_UP_SQL         = Paths.get("lib/BackUp_SQL");
+                Path VARIABLE_PROPERTIES = Paths.get( "lib/MyProperties/formula.properties");
         }
 
 }

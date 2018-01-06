@@ -25,33 +25,52 @@ import report.models_view.nodes.ContextMenuOptional;
 
 
 public class AllPropertiesController implements Initializable {
+    /*!******************************************************************************************************************
+    *                                                                                                         Tab 3 FXML
+    ********************************************************************************************************************/
+    @FXML
+    private TextField commonOgrnTF,  commonInnTF, commonAdresTF;
+    @FXML
+    private CheckBox commonChB;
+    @FXML
+    private DatePicker commonDateOgrnDP;
+    @FXML
+    private TextField bankNameTF, bankBicTF, bankAccNumTF, bankCorAccTF;
+    @FXML
+    private CheckBox bankChB;
+    @FXML
+    private TextField exBodyTF, exBodyNameTF, exBodySurnameTF, exFNameBodyTF,exBaseTF,
+            exBcNameTF,exBcSurnameTF,exBcFNameTF,
+            exBodyIdSeriesTF,exBodyIdNumberTF, exBodyIdCodeTF;
+    @FXML
+    private TextArea exBodyIdTextTA;
+    @FXML
+    private CheckBox exBodyChB;
+    @FXML
+    private DatePicker exBodyDP;
 
 
-//    @FXML private TextField osrAddTextTF,
-//            osrAddValueTF,
-//            siteQuantityTF,
-//            sumExpTF,
-//            sumExpPerSiteTF;
+    /*!******************************************************************************************************************
+    *                                                                                                 Tab Variable FXML
+    ********************************************************************************************************************/
+    @FXML private TableView variableTable;
+    @FXML private CheckBox  variableEditСheckBox;
 
-//    @FXML private TableView  osrTable;
-    @FXML private TableView variableTable,
-            contractorTable;
-//            planTable,
-//            factTable;
-
+    /*!******************************************************************************************************************
+     *                                                                                                 Tab Contractor FXML
+     ********************************************************************************************************************/
+    @FXML private TableView contractorTable;
     @FXML private TextField contractorNameTF,contractorDirectorTF;
 //    @FXML private TextField planTypeTF,planSmetTF,planSaleTF, planQuantityTF ;
 //    @FXML private TextField planSmetSumTF,planSaleSumTF, planProfitSumTF;
 //    @FXML private TextField factSmetSumTF,factSaleSumTF, factProfitSumTF;
-
     @FXML private TextArea  contractorAdressTA,contractorCommentsTA;
 //    @FXML private CheckBox  osrEditСheckBox;
-    @FXML private CheckBox  variableEditСheckBox, contractorEditСheckBox, planEditСheckBox;
+    @FXML private CheckBox  contractorEditСheckBox, planEditСheckBox;
 //    @FXML private Button    osrAddItemButton, planAddItemButton;
     @FXML private Button    contractorAddItemButton, contractorSaveItemButton, contractorCencelItemButton;
 
-//    private TableWrapper<TableItemOSR> osrTableWrapper;
-//    private TableWrapper<TableItemVariable> variableTableWrapper ;
+
     private ReverseTableWrapper<TableItemVariable_new> variableTableWrapper ;
     private TableWrapper<TableItemContractor> contractorTableWrapper;
     private TableWrapper<TableItemPlan> planTableWrapper;
@@ -151,10 +170,10 @@ public class AllPropertiesController implements Initializable {
     private void init_ContractorTab(){
         //bing ContextMenu
         contractorTableWrapper.tableView().contextMenuProperty().bind(
-            Bindings.when(contractorEditСheckBox.selectedProperty() )
-                .then( ContextMenuFactory.getCommonDSU(contractorTableWrapper))
-                .otherwise( (ContextMenu) null));
-     
+                Bindings.when(contractorEditСheckBox.selectedProperty() )
+                        .then( ContextMenuFactory.getCommonDSU(contractorTableWrapper))
+                        .otherwise( (ContextMenu) null));
+
         //bind editableProperty to contractorEditСheckBox
         contractorNameTF    .editableProperty().bind(contractorEditСheckBox.selectedProperty());
         contractorDirectorTF.editableProperty().bind(contractorEditСheckBox.selectedProperty());
@@ -167,24 +186,22 @@ public class AllPropertiesController implements Initializable {
         contractorTableWrapper.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             TableItemContractor item = (newValue != null) ? newValue : oldValue;
 //            if(newValue != null)item = newValue; else item = oldValue;
-                if(newValue != null && oldValue != null){
-                    Bindings.unbindBidirectional(contractorNameTF    .textProperty(), oldValue.getContractorProperty());
-                    Bindings.unbindBidirectional(contractorDirectorTF.textProperty(), oldValue.getDirectorProperty());
-                    Bindings.unbindBidirectional(contractorAdressTA  .textProperty(), oldValue.getAdressProperty());
-                    Bindings.unbindBidirectional(contractorCommentsTA.textProperty(), oldValue.getCommentsProperty());
-                }
-                
-            clearGroupOfTextInputControl(contractorNameTF,contractorDirectorTF,contractorAdressTA,contractorCommentsTA);
-            
-                if(contractorTableWrapper.getItems().size() > 0 && !contractorTableWrapper.getSelectionModel().isEmpty()){
-                    Bindings.bindBidirectional(contractorNameTF    .textProperty(), item.getContractorProperty());
-                    Bindings.bindBidirectional(contractorDirectorTF.textProperty(), item.getDirectorProperty());
-                    Bindings.bindBidirectional(contractorAdressTA  .textProperty(), item.getAdressProperty());
-                    Bindings.bindBidirectional(contractorCommentsTA.textProperty(), item.getCommentsProperty());
-                }
-        });
+            if(newValue != null && oldValue != null){
+                Bindings.unbindBidirectional(contractorNameTF    .textProperty(), oldValue.getContractorProperty());
+                Bindings.unbindBidirectional(contractorDirectorTF.textProperty(), oldValue.getDirectorProperty());
+                Bindings.unbindBidirectional(contractorAdressTA  .textProperty(), oldValue.getAdressProperty());
+                Bindings.unbindBidirectional(contractorCommentsTA.textProperty(), oldValue.getCommentsProperty());
+            }
 
-//        
+            clearGroupOfTextInputControl(contractorNameTF,contractorDirectorTF,contractorAdressTA,contractorCommentsTA);
+
+            if(contractorTableWrapper.getItems().size() > 0 && !contractorTableWrapper.getSelectionModel().isEmpty()){
+                Bindings.bindBidirectional(contractorNameTF    .textProperty(), item.getContractorProperty());
+                Bindings.bindBidirectional(contractorDirectorTF.textProperty(), item.getDirectorProperty());
+                Bindings.bindBidirectional(contractorAdressTA  .textProperty(), item.getAdressProperty());
+                Bindings.bindBidirectional(contractorCommentsTA.textProperty(), item.getCommentsProperty());
+            }
+        });
 //        contractorTableWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItemContractor> c) -> {
 //            System.out.println("init_ContractorTab => Changed on " + c);
 //                if(c.next()){ 
@@ -193,11 +210,10 @@ public class AllPropertiesController implements Initializable {
 //                   if(c.wasRemoved()) contractorTableWrapper.getCRUD().addDelete(c.getRemoved());
 //                }
 //        });
-        
+
 
 //        variableTableWrapper.editableProperty().bind(variableEditСheckBox.selectedProperty());
-//        
-       
+//
     }
     
 //    private void init_PlanTab(){
@@ -242,7 +258,6 @@ public class AllPropertiesController implements Initializable {
 //
 //
 //    }
-
     @FXML
     private void handle_contractorItemButton(ActionEvent event) {  
       if(event.getSource() == contractorAddItemButton){
@@ -257,24 +272,27 @@ public class AllPropertiesController implements Initializable {
                 }
         clearGroupOfTextInputControl(contractorNameTF,contractorDirectorTF,contractorAdressTA,contractorCommentsTA);
       }else if(event.getSource() == contractorSaveItemButton){
-        setVisibleDisableContractorNodes(false);
-        if(
-            contractorTableWrapper.getItems()
-                .add(new TableItemContractor(0, 
-                                             contractorNameTF.getText(),
-                                             contractorDirectorTF.getText(), 
-                                             contractorAdressTA.getText(), 
-                                             contractorCommentsTA.getText()))
-        )clearGroupOfTextInputControl(contractorNameTF,contractorDirectorTF,contractorAdressTA,contractorCommentsTA);
+          setVisibleDisableContractorNodes(false);
+          if(
+                  contractorTableWrapper.getItems().add(new TableItemContractor(
+                                  0,
+                                  contractorNameTF.getText(),
+                                  contractorDirectorTF.getText(),
+                                  contractorAdressTA.getText(),
+                                  contractorCommentsTA.getText()
+                          )
+                  )
+                  )clearGroupOfTextInputControl(contractorNameTF,contractorDirectorTF,contractorAdressTA,contractorCommentsTA);
       }
-      
       if(event.getSource() == contractorCencelItemButton){
         setVisibleDisableContractorNodes(false);
-        clearGroupOfTextInputControl(contractorNameTF,contractorDirectorTF,contractorAdressTA,contractorCommentsTA);
-          
+        clearGroupOfTextInputControl(
+                contractorNameTF,
+                contractorDirectorTF,
+                contractorAdressTA,
+                contractorCommentsTA
+        );
       }
-      
-        
     }
 //    @FXML
 //    private void handle_planAddItemButton(ActionEvent event) {

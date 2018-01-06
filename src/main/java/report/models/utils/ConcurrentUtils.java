@@ -3,7 +3,7 @@ package report.models.utils;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class ConcurrentUtils {
+public final class ConcurrentUtils {
 
     public static void stop(ExecutorService executor) {
         try {

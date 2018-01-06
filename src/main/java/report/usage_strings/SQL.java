@@ -24,7 +24,9 @@ public interface SQL extends ServiceStrings{
         String KS              = "KS";
         String SITE_OSR        = "SiteOSR";
         String SITE_JOB_PERIOD = "SiteJobPeriod";
-        
+        String COUNTERPARTIES = "Counterparties";
+        String COUNT_REQ_BANK = "Count_Req_Bank";
+
     }
     
     /**

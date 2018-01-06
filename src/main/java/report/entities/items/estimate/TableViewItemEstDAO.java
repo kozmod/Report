@@ -27,8 +27,7 @@ import report.entities.items.cb.TableItemCB;
 public class TableViewItemEstDAO implements TableViewItemDAO<TableItemEst> {
 
     private Est enumEst;
-    
-    public Est setEnumEst(){return enumEst;}
+    private String tableName = SQL.Tables.ESTIMATE;
     
     public TableViewItemEstDAO() { }
     public TableViewItemEstDAO(Est enumEst) {this.enumEst = enumEst; }
@@ -38,7 +37,7 @@ public class TableViewItemEstDAO implements TableViewItemDAO<TableItemEst> {
     * @return  List of TableItem
     */
     @Override
-    public String sqlTableName() {return SQL.Tables.ESTIMATE;}
+    public String sqlTableName() {return this.tableName;}
     
     /**
     * Get List of TableWrapper Items (TableItemEst) from SQL

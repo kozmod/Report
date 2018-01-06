@@ -209,7 +209,7 @@
                            <children>
                               <StackPane>
                                  <children>
-                                    <TitledPane animated="false" expanded="false" text="Общие реквизиты">
+                                    <TitledPane animated="false" text="Общие реквизиты">
                                        <content>
                                       <GridPane style="-fx-background-color: #8fbc8f;">
                                           <columnConstraints>
@@ -223,8 +223,8 @@
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                           </rowConstraints>
                                           <children>
-                                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                              <TextField GridPane.columnIndex="1" />
+                                                <TextField fx:id="commonAdresTF" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                              <TextField fx:id="commonOgrnTF" GridPane.columnIndex="1" />
                                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ОГРН">
                                                    <GridPane.margin>
                                                       <Insets left="5.0" />
@@ -240,18 +240,18 @@
                                                       <Insets left="5.0" />
                                                    </GridPane.margin>
                                                 </Text>
-                                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                              <TextField fx:id="commonInnTF" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Адрес" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets left="5.0" />
                                                    </GridPane.margin>
                                                 </Text>
-                                                <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <DatePicker fx:id="commonDateOgrnTF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                                           </children>
                                       </GridPane>
                                        </content>
                                     </TitledPane>
-                                    <CheckBox mnemonicParsing="false" text="Редактировать" StackPane.alignment="TOP_RIGHT">
+                                    <CheckBox fx:id="commonChB" mnemonicParsing="false" text="Редактировать" StackPane.alignment="TOP_RIGHT">
                                        <StackPane.margin>
                                           <Insets right="5.0" top="5.0" />
                                        </StackPane.margin>
@@ -264,7 +264,7 @@
                                        <content>
                                       <GridPane style="-fx-background-color: #8fbc7f;">
                                           <children>
-                                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                              <TextField fx:id="bankAccNumTF" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Номер Счета" GridPane.rowIndex="2">
                                                    <GridPane.margin>
                                                       <Insets left="5.0" />
@@ -280,14 +280,14 @@
                                                       <Insets left="5.0" />
                                                    </GridPane.margin>
                                                 </Text>
-                                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                              <TextField GridPane.columnIndex="1" />
+                                              <TextField fx:id="bankBicTF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                              <TextField fx:id="bankNameTF" GridPane.columnIndex="1" />
                                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Креспондентский Счет" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets left="5.0" />
                                                    </GridPane.margin>
                                                 </Text>
-                                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <TextField fx:id="bankCorAccTF" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                           </children>
                                           <columnConstraints>
                                               <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -302,7 +302,7 @@
                                       </GridPane>
                                        </content>
                                     </TitledPane>
-                                    <CheckBox mnemonicParsing="false" text="Редактировать" StackPane.alignment="TOP_RIGHT">
+                                    <CheckBox fx:id="bankChB" mnemonicParsing="false" text="Редактировать" StackPane.alignment="TOP_RIGHT">
                                        <StackPane.margin>
                                           <Insets right="5.0" top="5.0" />
                                        </StackPane.margin>
@@ -311,15 +311,15 @@
                               </StackPane>
                               <StackPane>
                                  <children>
-                                    <TitledPane animated="false" text="Исполнительный орган">
+                                    <TitledPane animated="false" expanded="false" text="Исполнительный орган">
                                        <content>
                                       <GridPane style="-fx-background-color: #8fbc3f;">
                                           <children>
-                                              <TextField GridPane.columnIndex="1" />
+                                              <TextField fx:id="exBodyTF" GridPane.columnIndex="1" />
                                               <Text strokeType="OUTSIDE" strokeWidth="0.0" />
                                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ИО - Отчество " GridPane.rowIndex="3" />
                                               <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                                              <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                              <TextField fx:id="exFNameBodyTF" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Наименование ИО">
                                                    <GridPane.margin>
                                                       <Insets />
@@ -328,27 +328,27 @@
                                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ИО - Фамилия" GridPane.rowIndex="1" />
                                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ИО - Имя " GridPane.rowIndex="2" />
                                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Паспорт РФ - Дата Выдачи" GridPane.rowIndex="9" />
-                                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="6" />
-                                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="7" />
+                                                <TextField fx:id="exBodySurnameTF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <TextField fx:id="exBodyNameTF" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                                                <TextField fx:id="exBcSurnameTF" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+                                                <TextField fx:id="exBcNameTF" GridPane.columnIndex="1" GridPane.rowIndex="6" />
+                                                <TextField fx:id="exBcFNameTF" GridPane.columnIndex="1" GridPane.rowIndex="7" />
                                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Главный Бухгалтер - Фамилия" GridPane.rowIndex="5" />
                                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Главный Бухгалтер - Имя" GridPane.rowIndex="6" />
                                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Главный Бухгалтер - Отчество" GridPane.rowIndex="7" />
                                                 <HBox prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="8">
                                                    <children>
-                                                      <TextField />
-                                                      <TextField />
+                                                      <TextField fx:id="exBodyIdSeriesTF" />
+                                                      <TextField fx:id="exBodyIdNumberTF" />
                                                    </children>
                                                 </HBox>
                                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Паспорт - Серия, Номер" GridPane.rowIndex="8" />
                                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Паспорт РФ - Кем Выдан" GridPane.rowIndex="10" />
                                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Паспорт РФ - Код подразделения" GridPane.rowIndex="11" />
-                                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="11" />
-                                                <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
-                                                <DatePicker GridPane.columnIndex="1" GridPane.rowIndex="9" />
-                                                <TextField GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <TextField fx:id="exBodyIdCodeTF" GridPane.columnIndex="1" GridPane.rowIndex="11" />
+                                                <TextArea fx:id="exBodyIdTextTA" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="10" />
+                                                <DatePicker fx:id="exBodyDP" GridPane.columnIndex="1" GridPane.rowIndex="9" />
+                                                <TextField fx:id="exBaseTF" GridPane.columnIndex="1" GridPane.rowIndex="4" />
                                                 <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ИО - Основания" GridPane.rowIndex="4" />
                                           </children>
                                           <columnConstraints>
@@ -373,7 +373,7 @@
                                       </GridPane>
                                        </content>
                                     </TitledPane>
-                                    <CheckBox mnemonicParsing="false" text="Редактировать" StackPane.alignment="TOP_RIGHT">
+                                    <CheckBox fx:id="exBodyChB" mnemonicParsing="false" text="Редактировать" StackPane.alignment="TOP_RIGHT">
                                        <StackPane.margin>
                                           <Insets right="5.0" top="5.0" />
                                        </StackPane.margin>
