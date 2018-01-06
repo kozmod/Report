@@ -4,6 +4,8 @@ package report.entities.items.plan;
 import report.entities.TableViewItemDAO;
 import report.entities.items.KS.TableViewItemKSDAO;
 import report.models.coefficient.Quantity;
+import report.models.mementos.Memento;
+import report.models.mementos.TableMemento;
 import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.usage_strings.SQL;
 import java.sql.Connection;
@@ -235,8 +237,8 @@ public class TableViewItemPlanDAO implements TableViewItemDAO<TableItemPlan> {
     }
 
     @Override
-    public void dellAndInsert(AbstractTableWrapper<Collection<TableItemPlan>> table) {
-        TableViewItemDAO.super.dellAndInsert(table);
+    public void dellAndInsert(Memento<Collection<TableItemPlan>> memento) {
+        TableViewItemDAO.super.dellAndInsert(memento);
         //????????????????????????????????????????????
         Quantity.updateFromBase();
 //        table. setDataFromBASE();

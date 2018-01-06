@@ -11,6 +11,7 @@ import javafx.scene.control.TableView.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import report.entities.CommonDAO;
+import report.entities.TableViewItemDAO;
 import report.entities.items.ID;
 import report.entities.items.TableClone;
 import report.models.mementos.Memento;
@@ -22,8 +23,10 @@ import java.util.*;
 public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<ObservableList<E>> {
 
     //Set of Cell witch have to be commit.
+
     private  Set<CommittableRow> setAddingCells;
     protected final TableView<E> tableView;
+    protected final TableViewItemDAO<E> DAO;
 
 /*!******************************************************************************************************************
 *                                                                                                       MEMENTO
@@ -33,7 +36,7 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
      * Save Items of TableView.
      */
     public void saveTableItems() {
-        super.memento = new TableMemento<>(tableView.getItems());
+        super.memento = new TableMemento(tableView.getItems());
     }
 
     //TableMemento - undo
@@ -41,24 +44,44 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
      * Undo changes of TableView Items.
      */
     public void undoChangeItems(){
+//        ((TableMemento)memento).toDelete();
+//        ((TableMemento)memento).toInsert();
         tableView.getItems().setAll( memento.getSavedState());
+        memento.clearChanges();
+//        ((TableMemento)memento).toDelete();
+//        ((TableMemento)memento).toInsert();
 
     }
 
     public Memento<ObservableList<E>> getMemento(){
         return memento;
     }
+/*!******************************************************************************************************************
+*                                                                                                       SQL
+********************************************************************************************************************/
+   @Override
+    public void saveSQL(){
+       Collection<E> deleteCollection = this.memento.toDelete();
+       Collection<E> insertCollection = this.memento.toInsert();
+
+       if(!deleteCollection.isEmpty())
+        this.DAO.delete(this.memento.toDelete());
+       if(!insertCollection.isEmpty())
+        this.DAO.insert(this.memento.toInsert());
+
+    }
 
 /*!******************************************************************************************************************
 *                                                                                                       CONSTRUCTORS
 ********************************************************************************************************************/
 
-    public TableWrapper (TableView<E> table,CommonDAO<E> commonDao) {
+    public TableWrapper (TableView<E> table,TableViewItemDAO<E> commonDao) {
         this("TEST TITLE",table, commonDao);
     }
 
-    public TableWrapper(String title, TableView<E> table, CommonDAO commonDao) {
-        super(title, commonDao);
+    public TableWrapper(String title, TableView<E> table, TableViewItemDAO<E> commonDao) {
+        super(title);
+        this.DAO = commonDao;
         tableView = table;
 
     }
@@ -73,10 +96,10 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
 //   public <E>CeartakerUID getCRUD(){return  ceartaker;}
 
     @Override
-    public CommonDAO getDAO() {
-        if(this.commonDao == null)
+    public TableViewItemDAO getDAO() {
+        if(this.DAO == null)
             throw  new NullPointerException(TableWrapper.class.getCanonicalName());
-        return commonDao;
+        return DAO;
     }
     @Override
     public ContextMenu getContextMenu(){ return tableView.getContextMenu();}
@@ -137,7 +160,7 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
      */
     @Override
     public void setDataFromBASE(){
-        tableView.setItems(commonDao.getData());
+        tableView.setItems(DAO.getData());
         this.saveTableItems();
 //        treeTableView.refresh();
     }

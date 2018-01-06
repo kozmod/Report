@@ -14,6 +14,7 @@ public class ReverseTableWrapper<E extends Reverse & TableClone> extends Abstrac
 
         private final TableView<TableDItem> tableView;
         private E reverseObj;
+        private CommonDAO<E> commonDAO;
 
         /***************************************************************************
          *                                                                         *
@@ -24,7 +25,8 @@ public class ReverseTableWrapper<E extends Reverse & TableClone> extends Abstrac
             this(title,table,null,commonDao);
         }
         public ReverseTableWrapper(String title, TableView<TableDItem> table , E reverseObj, CommonDAO<E> commonDao) {
-            super(title, commonDao);
+            super(title);
+            this.commonDAO = commonDao;
             this.reverseObj = reverseObj;
             this.tableView = table;
 
@@ -79,11 +81,21 @@ public class ReverseTableWrapper<E extends Reverse & TableClone> extends Abstrac
 
         @Override
         public void setDataFromBASE() {
-            this.setTableData( commonDao.getData());
+            this.setTableData( commonDAO.getData());
 
         }
 
-        @Override
+    @Override
+    public CommonDAO getDAO() {
+        return this.commonDAO;
+    }
+
+    @Override
+    public void saveSQL() {
+        this.commonDAO.dellAndInsert(this.memento);
+    }
+
+    @Override
         public E getItems() {
             return reverseObj;
         }

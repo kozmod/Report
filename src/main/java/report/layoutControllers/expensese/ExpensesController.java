@@ -232,7 +232,7 @@ public class ExpensesController implements Initializable {
     @FXML   
     private void hendler_applySiteChanges(ActionEvent event) {
 
-            new SiteTableViewItemDAO().dellAndInsert((Collection<TableItemPreview>) siteTWrapper);
+            new SiteTableViewItemDAO().dellAndInsert(siteTWrapper.getItems());
        
             siteTWrapper.saveTableItems();
             rootController.update_previewTable(Est.Common.getPreviewObservableList());

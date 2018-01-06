@@ -234,12 +234,12 @@ public class SiteTableViewItemDAO implements TableViewItemDAO<TableItemPreview> 
        
     }
 
-    @Override
-    public void dellAndInsert(AbstractTableWrapper<Collection<TableItemPreview>> tableWrapper) {
-        if(tableWrapper.getItems() != null) {
-                    delete(tableWrapper.getItems());
-                    insert(tableWrapper.getItems());  }
-    }
+//    @Override
+//    public void dellAndInsert(AbstractTableWrapper<Collection<TableItemPreview>> tableWrapper) {
+//        if(tableWrapper.getItems() != null) {
+//                    delete(tableWrapper.getItems());
+//                    insert(tableWrapper.getItems());  }
+//    }
     
     public void dellAndInsert(Collection<TableItemPreview> collection) {
         if(collection != null && !collection.isEmpty()) {

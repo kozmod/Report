@@ -17,6 +17,7 @@ import report.entities.Reverse;
 import report.entities.TableViewItemDAO;
 import report.entities.items.TableClone;
 import report.entities.items.TableDItem;
+import report.models.mementos.TableMemento;
 import report.models.printer.PrintEstimate;
 import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.models_view.nodes.node_wrappers.DiscountTreeTableWrapper;
@@ -30,21 +31,27 @@ import java.util.Map;
 
 public class ContextMenuOptional extends ContextMenu{
 
-
-    //    private Est enumEst;
     private AbstractTableWrapper<?> tableWrapper;
-    private CommonDAO commonDao;
+//    private CommonDAO commonDao;
     MenuItem saveMenuItem;
     MenuItem undoMenuItem;
     MenuItem printSmeta;
-
+    /***************************************************************************
+     *                                                                         *
+     * Methods                                                                 *
+     *                                                                         *
+     **************************************************************************/
     public void setDisable_SaveUndoPrint_groupe(final boolean value){
         if(saveMenuItem != null)saveMenuItem.setDisable(value);
         if(undoMenuItem != null)undoMenuItem.setDisable(value);
         if(printSmeta != null)  printSmeta.setDisable(!value);
 
     }
-
+    /***************************************************************************
+     *                                                                         *
+     * Static Methods                                                            *
+     *                                                                         *
+     **************************************************************************/
     public static <S extends TableClone> void setTableItemContextMenuListener(TableWrapper<S> tableWrapper){
         tableWrapper.getItems().addListener((ListChangeListener.Change<? extends S> c) -> {
             System.out.println("Changed on " + c + " - ContextMenuOptional");
@@ -54,7 +61,7 @@ public class ContextMenuOptional extends ContextMenu{
             }
         });
     }
-    public static <S extends TableClone> void setTableItemContextMenuListener(DiscountTreeTableWrapper tableWrapper){
+    public static  void setTableItemContextMenuListener(DiscountTreeTableWrapper tableWrapper){
         tableWrapper.tableView().getRoot().getValue().secondValueProperty().addListener((observable, oldValue, newValue) -> {
             ((ContextMenuOptional) tableWrapper.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
         });
@@ -65,16 +72,27 @@ public class ContextMenuOptional extends ContextMenu{
         });
     }
 
-
-//Constructor =========================================================================
-
-    private ContextMenuOptional(){}
-
-    //Builder =============================================================================
+    /**
+     * Builder Factory Method.
+     * @return
+     */
     public static Builder newBuilder(){
         return new ContextMenuOptional().new Builder();
     }
 
+    /***************************************************************************
+     *                                                                         *
+     * Constructors                                                            *
+     *                                                                         *
+     **************************************************************************/
+
+    private ContextMenuOptional(){}
+
+    /***************************************************************************
+     *                                                                         *
+     * Builder                                                                 *
+     *                                                                         *
+     **************************************************************************/
     public class Builder{
         private MenuItem CURRENT_MENU_ITEM;
 
@@ -115,17 +133,18 @@ public class ContextMenuOptional extends ContextMenu{
 
         public Builder setTable(AbstractTableWrapper tableWrapper) {
             ContextMenuOptional.this.tableWrapper = tableWrapper;
-            ContextMenuOptional.this.commonDao = tableWrapper.getDAO();
+//            ContextMenuOptional.this.commonDao = tableWrapper.getDAO();
 
             return this;
         }
 
-        public Builder setDAO (TableViewItemDAO dao) {
-            ContextMenuOptional.this.commonDao = dao;
-            return this;
-        }
+//        public Builder setDAO (TableViewItemDAO dao) {
+//            ContextMenuOptional.this.commonDao = dao;
+//            return this;
+//        }
 
 
+        @SuppressWarnings("unchecked")
         public Builder addRemoveMenuItem() {
             MenuItem removeMenuItem = new MenuItem("Удалить");
             this.CURRENT_MENU_ITEM = removeMenuItem;
@@ -136,8 +155,8 @@ public class ContextMenuOptional extends ContextMenu{
                             .forEach(toDelete -> wrapper.getItems().remove(toDelete))
             );
             removeMenuItem.disableProperty()
-                    .bind(Bindings
-                            .isEmpty(wrapper.getSelectionModel().getSelectedItems()));
+                    .bind(Bindings.isEmpty(wrapper.getSelectionModel().getSelectedItems())
+                    );
             getItems().add(removeMenuItem);
             return this;
         }
@@ -145,18 +164,10 @@ public class ContextMenuOptional extends ContextMenu{
         public Builder addSaveMenuItem() {
              saveMenuItem   = new MenuItem("Сохранить изменения");
             this.CURRENT_MENU_ITEM = saveMenuItem;
-//            saveMenuItem.setOnAction(event -> {
-//
-//                commonDao.dellAndInsert(tableWrapper);
-//
-//                tableWrapper.saveTableItems();
-//                setDisable_SaveUndoPrint_groupe(true);
-//                tableWrapper.refresh();
-//            });
             saveMenuItem.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
                 System.out.println("saveMenuItem");
-                commonDao.dellAndInsert(tableWrapper);
-
+//                commonDao.dellAndInsert(tableWrapper.getMemento());
+                tableWrapper.saveSQL();
                 tableWrapper.saveTableItems();
                 setDisable_SaveUndoPrint_groupe(true);
                 tableWrapper.refresh();
@@ -173,20 +184,14 @@ public class ContextMenuOptional extends ContextMenu{
 
                 setDisable_SaveUndoPrint_groupe(true);
             });
-
-//            undoMenuItem.setOnAction(event -> {
-//                tableWrapper.undoChangeItems();
-//
-//                setDisable_SaveUndoPrint_groupe(true);
-//            });
             getItems().add(undoMenuItem);
             return this;
         }
 
-        public Builder addPrintSmeta() {
+        public Builder addPrintSmeta(TableViewItemDAO dao) {
              printSmeta     = new MenuItem("Выгрузить смету");
             printSmeta.setOnAction(event -> {
-                new PrintEstimate((TableViewItemDAO) commonDao);
+                new PrintEstimate(dao);
                 System.out.println("printSmeta");
             });
             getItems().add(printSmeta);

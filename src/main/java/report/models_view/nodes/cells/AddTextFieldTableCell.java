@@ -68,8 +68,8 @@ public class AddTextFieldTableCell<S extends ID,T > extends TableCell<S,T> imple
         }
         super.startEdit();
         if (isEditing()) {
-            if (textField == null) {
-                this.createTextField(this, converter);
+            if (this.textField == null) {
+                textField = this.createTextField(this, converter);
             }
             this.setText(null);
             this.setGraphic(textField);

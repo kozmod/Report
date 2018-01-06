@@ -39,7 +39,7 @@ public class ContextMenuFactory {
                     .addSaveMenuItem().addActionEventHandler(event -> Est.Common.updatePreviewTable())
                     .addUndoMenuItem()
                     .addSeparator()
-                    .addPrintSmeta()
+                    .addPrintSmeta(tableWrapperView.getDAO())
                     .build();
         }
         return ContextMenuOptional
@@ -59,7 +59,7 @@ public class ContextMenuFactory {
                 .addSaveMenuItem()
                 .addUndoMenuItem()
                 .addSeparator()
-                .addPrintSmeta()
+                .addPrintSmeta(tableWrapperView.getDAO())
                 .build();
 
     }
@@ -72,9 +72,9 @@ public class ContextMenuFactory {
      */
     public static ContextMenu getEstPrint(Est enumEst){
         return ContextMenuOptional.newBuilder()
-                .setDAO(new TableViewItemEstDAO(enumEst))
+//                .setDAO(new TableViewItemEstDAO(enumEst))
 //                    .setEnum(enumEst)
-                .addPrintSmeta()
+                .addPrintSmeta(new TableViewItemEstDAO(enumEst))
                 .build();
 
     }

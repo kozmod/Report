@@ -17,19 +17,22 @@ public abstract class AbstractTableWrapper<E> {
 
     Memento<E> memento;
     final String title;
-    final CommonDAO<E> commonDao;
+//    final CommonDAO<E> commonDao;
 
     /*!******************************************************************************************************************
     *                                                                                                       CONSTRUCTORS
     ********************************************************************************************************************/
 
-    public AbstractTableWrapper (CommonDAO<E> commonDao) {
-        this("TEST TITLE", commonDao);
-    }
+//    public AbstractTableWrapper (CommonDAO<E> commonDao) {
+//        this("TEST TITLE", commonDao);
+//    }
 
-    public AbstractTableWrapper(String title, CommonDAO<E> commonDao) {
+//    public AbstractTableWrapper(String title, CommonDAO<E> commonDao) {
+//        this.title = title;
+//        this.commonDao = commonDao;
+//    }
+    public AbstractTableWrapper(String title) {
         this.title = title;
-        this.commonDao = commonDao;
     }
 
     /*!******************************************************************************************************************
@@ -37,11 +40,17 @@ public abstract class AbstractTableWrapper<E> {
     ********************************************************************************************************************/
     public String getTitle()   {return title;}
 
-    public CommonDAO getDAO() {
-        if(this.commonDao == null)
-            throw  new NullPointerException(TableWrapper.class.getCanonicalName());
-        return commonDao;
-    }
+    public abstract CommonDAO getDAO() ;
+//        if(this.commonDao == null)
+//            throw  new NullPointerException(TableWrapper.class.getCanonicalName());
+//        return commonDao;
+//    }
+
+
+    /*!******************************************************************************************************************
+     *                                                                                                       SQL
+     ********************************************************************************************************************/
+    public abstract void saveSQL();
 
 
 

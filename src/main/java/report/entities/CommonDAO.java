@@ -3,6 +3,7 @@ package report.entities;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import report.models.mementos.Memento;
 import report.models.sql.SQLconnector;
 import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.usage_strings.ServiceStrings;
@@ -24,9 +25,11 @@ public interface CommonDAO<C> extends TableDataBaseName{
      * Delete & Insert data to SQL in direct sequence
      * @return ObservableList
      */
-    default void  dellAndInsert(AbstractTableWrapper<C> object) {
-        this.delete(object.getMemento().getSavedState());
-        this.insert(object.getItems());
+    default void  dellAndInsert(Memento<C> object) {
+//        this.delete(object.getMemento().getSavedState());
+//        this.insert(object.getItems());
+        this.delete(object.toDelete());
+        this.insert(object.toDelete());
     }
     /**
      * Get <b>Unique</b> value of column.

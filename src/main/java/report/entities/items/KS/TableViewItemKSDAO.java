@@ -2,6 +2,7 @@
 package report.entities.items.KS;
 
 import report.entities.TableViewItemDAO;
+import report.models.mementos.Memento;
 import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.usage_strings.SQL;
 import java.sql.Connection;
@@ -392,8 +393,8 @@ public class TableViewItemKSDAO implements TableViewItemDAO<TableItemKS> {
     
 //    public void dellAndInsert(Collection<TableItemKS> dellItem, Collection<TableItemKS> newItem){
     @Override
-    public void dellAndInsert(AbstractTableWrapper<Collection<TableItemKS>> table){
-        TableViewItemDAO.super.dellAndInsert(table);
+    public void dellAndInsert(Memento<Collection<TableItemKS>> memento){
+        TableViewItemDAO.super.dellAndInsert(memento);
         //??????????
 //        table.updateTableFromSQL(this.getOneKSList(Est.KS, ksNumber ));
         Est.KS.updateList_DL(this);

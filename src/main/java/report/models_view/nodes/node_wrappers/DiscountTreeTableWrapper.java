@@ -8,11 +8,13 @@ import report.entities.items.TableDItem;
 import report.models.mementos.Memento;
 import report.models.mementos.ReverseTableMemento;
 import report.models_view.nodes.ContextMenuOptional;
+import report.usage_strings.SQL;
 
 public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef> {
 
     private final TreeTableView<TableDItem> treeTableView;
     private DiscountCoef discountCoef;
+    private CommonDAO<DiscountCoef> commonDAO;
 
     /***************************************************************************
      *                                                                         *
@@ -23,7 +25,8 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef>
         this(title,treeView,commonDao.getData(),commonDao);
     }
     public DiscountTreeTableWrapper(String title, TreeTableView treeView,DiscountCoef discountCoef,  CommonDAO<DiscountCoef> commonDao) {
-        super(title, commonDao);
+        super(title);
+        this.commonDAO = commonDao;
         this.discountCoef = discountCoef;
         treeTableView = treeView;
         treeTableView.setRoot(discountCoef.tree());
@@ -93,9 +96,19 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef>
 
     @Override
     public void setDataFromBASE() {
-        this.discountCoef = commonDao.getData();
+        this.discountCoef = commonDAO.getData();
         treeTableView.setRoot(discountCoef.tree());
         this.saveTableItems();
+    }
+
+    @Override
+    public CommonDAO getDAO() {
+        return this.commonDAO;
+    }
+
+    @Override
+    public void saveSQL() {
+        this.commonDAO.dellAndInsert(this.memento);
     }
 
     @Override

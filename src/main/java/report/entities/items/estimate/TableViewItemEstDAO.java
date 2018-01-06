@@ -3,6 +3,7 @@ package report.entities.items.estimate;
 
 import report.entities.TableViewItemDAO;
 import report.layoutControllers.LogController;
+import report.models.mementos.Memento;
 import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.usage_strings.SQL;
 import java.sql.Connection;
@@ -552,10 +553,10 @@ public class TableViewItemEstDAO implements TableViewItemDAO<TableItemEst> {
      * Use TableWrapper to saveEst  <b>tableMemento</b> and <b>current</b> (Current List of elements).
      * <br>Then update TableWrapper Items ( to saveEst new Element's ID of SQL)
      * <br>Then update "ALL elements List"
-    * @param table (TableWrapper)
+    * @param memento (TableWrapper)
     */
     @Override
-    public void dellAndInsert(AbstractTableWrapper<Collection<TableItemEst>> table){
+    public void dellAndInsert(Memento<Collection<TableItemEst>> memento){
 //        Collection tableMemento = table.getMemento().getSavedState(),
 //                   current = table.getItems();     
 //        
@@ -564,11 +565,26 @@ public class TableViewItemEstDAO implements TableViewItemDAO<TableItemEst> {
 //           || diffList.exElements().size() > 0) delete(diffList.exElements());
 //        if(diffList.newElements()  != null 
 //           || diffList.newElements().size()  > 0) insert(diffList.newElements());     
-        TableViewItemDAO.super.dellAndInsert(table);
+        TableViewItemDAO.super.dellAndInsert(memento);
        //?????????????
 //        table.updateTableFromSQL(this.getOneBildingPartList(Est.Base, table.getTitle()));
         Est.Base.updateList_DL(this);
        }
+//       @Override
+//    public void dellAndInsert(AbstractTableWrapper<Collection<TableItemEst>> table){
+////        Collection tableMemento = table.getMemento().getSavedState(),
+////                   current = table.getItems();
+////
+////        DataUtils.DiffList diffList = new DataUtils.DiffList(tableMemento,current);
+////        if(diffList.exElements() != null
+////           || diffList.exElements().size() > 0) delete(diffList.exElements());
+////        if(diffList.newElements()  != null
+////           || diffList.newElements().size()  > 0) insert(diffList.newElements());
+//        TableViewItemDAO.super.dellAndInsert(table);
+//       //?????????????
+////        table.updateTableFromSQL(this.getOneBildingPartList(Est.Base, table.getTitle()));
+//        Est.Base.updateList_DL(this);
+//       }
     
        
     
