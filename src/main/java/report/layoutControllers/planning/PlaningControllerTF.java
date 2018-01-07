@@ -221,16 +221,13 @@ public class PlaningControllerTF implements TableFactory {
                 param.getValue().getValue().secondValueProperty().asObject()
         );
         valueColumn.setCellFactory(p -> new EditingTreeTableCell(new DoubleStringConverter()));
-
         valueColumn.setOnEditCommit(event ->{
-            final TreeItem<TableDItem> parent =  event.getTreeTablePosition().getTreeItem().getParent();
             final TreeItem<TableDItem> current =  event.getTreeTablePosition().getTreeItem();
             current.getValue().setSecondValue(event.getNewValue());
             event.getTreeTableView().getRoot().getValue().setSecondValue(Math.random());
             event.getTreeTableView().refresh();
+
         });
-
-
 
         valueColumn.setMaxWidth(120);
         valueColumn.setMinWidth(100);

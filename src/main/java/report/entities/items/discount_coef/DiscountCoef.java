@@ -247,5 +247,20 @@ public class DiscountCoef implements TableClone<DiscountCoef>{
         this.computeKD();
         return root;
     }
-
+    /***************************************************************************
+     *                                                                         *
+     * Override                                                                *
+     *                                                                         *
+     **************************************************************************/
+    @Override
+    public String toString() {
+        return "DiscountCoef{" +
+                "id=" + id +
+                ", rateOfReturn=" + rateOfReturn +
+                ", kd=" + kd +
+                ", kdPerMonth=" + kdPerMonth +
+                ", specificRisk=" + specificRisk +
+                ", marketRisk=" + marketRisk +
+                '}';
+    }
 }

@@ -12,6 +12,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.logging.Level;
@@ -25,11 +26,9 @@ public interface CommonDAO<C> extends TableDataBaseName{
      * Delete & Insert data to SQL in direct sequence
      * @return ObservableList
      */
-    default void  dellAndInsert(Memento<C> object) {
-//        this.delete(object.getMemento().getSavedState());
-//        this.insert(object.getItems());
-        this.delete(object.toDelete());
-        this.insert(object.toDelete());
+    default void  dellAndInsert(Memento<C> memento) {
+        this.delete(memento.toDelete());
+        this.insert(memento.toInsert());
     }
     /**
      * Get <b>Unique</b> value of column.
@@ -38,18 +37,15 @@ public interface CommonDAO<C> extends TableDataBaseName{
     //Procedure
     default <X> ObservableList<X> getDistinctOfColumn(String column, X ... fistNodes){
 
-        Set<X> disSet = new TreeSet<>();
-        for (int i = 0; i< fistNodes.length; i++){
-            disSet.add(fistNodes[i]);
-        }
-
+        Set<X> disSet = new TreeSet<>(Arrays.asList(fistNodes));
+//        for (int i = 0; i< fistNodes.length; i++){
+//            disSet.add(fistNodes[i]);
+//        }
         try (Connection connection = SQLconnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement("execute getListDIST ?,?")){
             pstmt.setString(1, column);
             pstmt.setString(2, this.sqlTableName());
-
             pstmt.execute();
-
             try ( ResultSet resSet = pstmt.getResultSet()){
                 while(resSet.next()){
                     if(!(resSet.getObject(column) == null)

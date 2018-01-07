@@ -22,59 +22,14 @@ import java.util.*;
 
 public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<ObservableList<E>> {
 
-    //Set of Cell witch have to be commit.
-
     private  Set<CommittableRow> setAddingCells;
     protected final TableView<E> tableView;
     protected final TableViewItemDAO<E> DAO;
-
-/*!******************************************************************************************************************
-*                                                                                                       MEMENTO
-********************************************************************************************************************/
-    //TableMemento - create
-    /**
-     * Save Items of TableView.
-     */
-    public void saveTableItems() {
-        super.memento = new TableMemento(tableView.getItems());
-    }
-
-    //TableMemento - undo
-    /**
-     * Undo changes of TableView Items.
-     */
-    public void undoChangeItems(){
-//        ((TableMemento)memento).toDelete();
-//        ((TableMemento)memento).toInsert();
-        tableView.getItems().setAll( memento.getSavedState());
-        memento.clearChanges();
-//        ((TableMemento)memento).toDelete();
-//        ((TableMemento)memento).toInsert();
-
-    }
-
-    public Memento<ObservableList<E>> getMemento(){
-        return memento;
-    }
-/*!******************************************************************************************************************
-*                                                                                                       SQL
-********************************************************************************************************************/
-   @Override
-    public void saveSQL(){
-       Collection<E> deleteCollection = this.memento.toDelete();
-       Collection<E> insertCollection = this.memento.toInsert();
-
-       if(!deleteCollection.isEmpty())
-        this.DAO.delete(this.memento.toDelete());
-       if(!insertCollection.isEmpty())
-        this.DAO.insert(this.memento.toInsert());
-
-    }
-
-/*!******************************************************************************************************************
-*                                                                                                       CONSTRUCTORS
-********************************************************************************************************************/
-
+    /***************************************************************************
+     *                                                                         *
+     * CONSTRUCTORS                                                            *
+     *                                                                         *
+     **************************************************************************/
     public TableWrapper (TableView<E> table,TableViewItemDAO<E> commonDao) {
         this("TEST TITLE",table, commonDao);
     }
@@ -85,16 +40,52 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
         tableView = table;
 
     }
-
-/*!******************************************************************************************************************
-*                                                                                                      Getter/Setter
-********************************************************************************************************************/
+    /***************************************************************************
+     *                                                                         *
+     * MEMENTO                                                                 *
+     *                                                                         *
+     **************************************************************************/
+    /**
+     * Save Items of TableView.
+     */
     @Override
-    public String getTitle()   {return title;}
-//    public  void setTitle(String title) {this.title = title;}
+    public void saveTableItems() {
+        super.memento = new TableMemento(tableView.getItems());
+    }
+    /**
+     * Undo changes of TableView Items.
+     */
+    @Override
+    public void undoChangeItems(){
+//        ((TableMemento)memento).toDelete();
+//        ((TableMemento)memento).toInsert();
+        tableView.getItems().setAll( memento.getSavedState());
+        memento.clearChanges();
+//        ((TableMemento)memento).toDelete();
+//        ((TableMemento)memento).toInsert();
 
-//   public <E>CeartakerUID getCRUD(){return  ceartaker;}
+    }
+    /***************************************************************************
+     *                                                                         *
+     * SQL                                                                     *
+     *                                                                         *
+     **************************************************************************/
+    @Override
+    public void saveSQL(){
+        Collection<E> deleteCollection = this.memento.toDelete();
+        Collection<E> insertCollection = this.memento.toInsert();
+        if(!deleteCollection.isEmpty())
+            this.DAO.delete(this.memento.toDelete());
+        if(!insertCollection.isEmpty())
+            this.DAO.insert(this.memento.toInsert());
+//       this.DAO.dellAndInsert(this.memento);
 
+    }
+    /***************************************************************************
+     *                                                                         *
+     * Getters/Setters                                                         *
+     *                                                                         *
+     **************************************************************************/
     @Override
     public TableViewItemDAO getDAO() {
         if(this.DAO == null)
@@ -108,6 +99,10 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
     @Override
     public ObservableList<E> getItems(){ return tableView.getItems();}
 
+    /**
+     * ONLY TableWrapper.
+     * @return tableView TableView<E>
+     */
     public  TableView<E> tableView(){ return tableView; }
     /*!******************************************************************************************************************
     *                                                                                                             TEST
@@ -128,9 +123,11 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
         setAddingCells.forEach(item -> item.commitData());
     }
 
-    /*!******************************************************************************************************************
-    *                                                                                                             METHODS
-    ********************************************************************************************************************/
+    /***************************************************************************
+     *                                                                         *
+     * Methods                                                                 *
+     *                                                                         *
+     **************************************************************************/
     /**
      * Contain :
      * <br>
@@ -227,10 +224,12 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
     }
 
 
-
-    /*!******************************************************************************************************************
-    *                                                                                                  TABLE VIEW METHODS
-    ********************************************************************************************************************/
+    /***************************************************************************
+     *                                                                         *
+     * TABLE VIEW METHODS                                                      *
+     *                                                                         *
+     **************************************************************************/
+    @Override
     public void refresh(){tableView.refresh();}
 
     public TableViewSelectionModel<E> getSelectionModel(){

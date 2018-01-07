@@ -9,6 +9,7 @@ public class ReverseTableMemento<E extends TableClone> implements Memento<E>  {
 
     public ReverseTableMemento(E treeParent) {
         this.reverseClone = this.getClone(treeParent);
+        this.reverseMain  = treeParent;
     }
 
     @Override
@@ -28,7 +29,7 @@ public class ReverseTableMemento<E extends TableClone> implements Memento<E>  {
 
     @Override
     public void clearChanges() {
-        throw new UnsupportedOperationException("ReverseTableMemento - unsupport .clearChanges() !!!!");
+        throw new UnsupportedOperationException("ReverseTableMemento: unsupported operation -> .clearChanges(); !!!!");
     }
 
     private E getClone(E items){

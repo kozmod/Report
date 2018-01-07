@@ -18,10 +18,11 @@ public abstract class AbstractTableWrapper<E> {
     Memento<E> memento;
     final String title;
 //    final CommonDAO<E> commonDao;
-
-    /*!******************************************************************************************************************
-    *                                                                                                       CONSTRUCTORS
-    ********************************************************************************************************************/
+    /***************************************************************************
+     *                                                                         *
+     * CONSTRUCTORS                                                            *
+     *                                                                         *
+     **************************************************************************/
 
 //    public AbstractTableWrapper (CommonDAO<E> commonDao) {
 //        this("TEST TITLE", commonDao);
@@ -35,42 +36,68 @@ public abstract class AbstractTableWrapper<E> {
         this.title = title;
     }
 
-    /*!******************************************************************************************************************
-    *                                                                                                      Getter/Setter
-    ********************************************************************************************************************/
+    /***************************************************************************
+     *                                                                         *
+     * Getter/Setter                                                           *
+     *                                                                         *
+     **************************************************************************/
     public String getTitle()   {return title;}
-
+    public Memento<E> getMemento(){return this.memento;};
+    /***************************************************************************
+     *                                                                         *
+     * Abstract Methods                                                        *
+     *                                                                         *
+     **************************************************************************/
+    /**
+     * Save Items to MEMENTO.
+     */
+    public abstract void saveTableItems() ;
+    /**
+     * UNDO changes from MEMENTO.
+     */
+    public abstract void undoChangeItems();
+    /**
+     * Get DAO.
+     */
     public abstract CommonDAO getDAO() ;
 //        if(this.commonDao == null)
 //            throw  new NullPointerException(TableWrapper.class.getCanonicalName());
 //        return commonDao;
 //    }
 
-
-    /*!******************************************************************************************************************
-     *                                                                                                       SQL
-     ********************************************************************************************************************/
+    /**
+     * Send data to SQL.
+     */
     public abstract void saveSQL();
 
-
-
-    /*!******************************************************************************************************************
-    *                                                                                                   Abstract MEMENTO
-    ********************************************************************************************************************/
+    /**
+     * Get ContextMenu of TableView.
+     */
     public abstract ContextMenu getContextMenu();
+    /**
+     * Set ContextMenu to TableView.
+     */
     public abstract void setContextMenu(ContextMenu contextMenu);
+    /**
+     * Get TableView's Items.
+     */
     public abstract E getItems();
+    /**
+     * Refresh TableView.
+     */
     public abstract void refresh();
 
-
-    //Table DATA
+    /**
+     * Set TableData and SAVE one to MEMENTO.
+     * @param items E
+     */
     public abstract void setTableData(E items);
+    /**
+     * Set TableData from BASE (use table SQL-name) and SAVE one to MEMENTO.
+     */
     public abstract void setDataFromBASE();
 
-    //Memento
-    public abstract void saveTableItems() ;
-    public abstract void undoChangeItems();
-    public abstract Memento<E> getMemento();
+
 
 
 

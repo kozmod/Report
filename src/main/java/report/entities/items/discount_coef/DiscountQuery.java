@@ -96,6 +96,7 @@ public class DiscountQuery implements CommonDAO<DiscountCoef> {
 
 
     public void delete(DiscountCoef disCoef){
+        System.out.println(disCoef.toString());
         String sqlMarketRisk   = "UPDATE [dbo].[KD_MarketRisk]   SET dell = 1 WHERE [id] = ? AND [dell] = 0;";
         String sqlSpecificRisk = "UPDATE [dbo].[KD_SpecificRisk] SET dell = 1 WHERE [id] = ? AND [dell] = 0;";
         String sqlDiscountCoef = "UPDATE [dbo].[KD_Discount]     SET dell = 1 WHERE [id] = ? AND [dell] = 0;";
