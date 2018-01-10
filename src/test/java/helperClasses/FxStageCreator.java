@@ -33,7 +33,7 @@ public class FxStageCreator extends Application {
     }
 
     /**
-     *  Launch the application with  "SQUARE" size.
+     * Launch the application with  "SQUARE" size.
      * @param squareSize int (squareSize size)
      * @param fxmlPath String (Path of FXML File)
      * @param args String[] (args)
@@ -42,7 +42,7 @@ public class FxStageCreator extends Application {
         FxStageCreator.launch(squareSize, squareSize,fxmlPath, args);
     }
     /**
-     *  Launch the application with  set width & height of window.
+     * Launch the application with  set width & height of window.
      * @param width int (width of window)
      * @param height int (height of window)
      * @param fxmlPath String (Path of FXML File)
