@@ -10,10 +10,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 @FixMethodOrder(MethodSorters.JVM)
-public class CounterpartiesTests {
+public class CountAgentsTests {
     @Test
-    @DisplayName("TEST")
-    public void addCounterpartiesTest(){
+    @DisplayName("Counter Agents")
+    public void addCountAgentsTestTest(){
         String sql ="";
         try(Connection connection = SQLconnector.getInstance();
             PreparedStatement pstmt  = connection.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS)) {
