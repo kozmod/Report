@@ -15,19 +15,19 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
 
-import report.entities.items.fin_res.ItemFinResDAO;
+import report.entities.items.fin_res.FinResDAO;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
-import report.entities.items.fin_res.TableItemFinRes;
+import report.entities.items.fin_res.FinResTVI;
 import report.models.numberStringConverters.dateStringConverters.LocalDayStringConverter;
 
 
 public class FinResController implements Initializable {
 
     @FXML private DatePicker dateFinResFrom, dateFinResTo;
-    @FXML private TableView<TableItemFinRes>  finResTable;
+    @FXML private TableView<FinResTVI>  finResTable;
     @FXML private TextField sumSmetCostTF, sumCostHouseTF, profitTF;
 
-    private ObservableList<TableItemFinRes> finResObs = new ItemFinResDAO().getList();
+    private ObservableList<FinResTVI> finResObs = new FinResDAO().getList();
 
 
 /*!******************************************************************************************************************
@@ -60,7 +60,7 @@ public class FinResController implements Initializable {
 
     private void setTextFieldValue(TextField textfield){
         float sumFloat = 0;
-        for(TableItemFinRes item : finResTable.getItems()){
+        for(FinResTVI item : finResTable.getItems()){
             if(textfield.equals(sumSmetCostTF)){
                 sumFloat += item.getSmetCost();
             }else if (textfield.equals(sumCostHouseTF)){
@@ -97,7 +97,7 @@ public class FinResController implements Initializable {
 
     @FXML
     private void handle_AllSite(ActionEvent event) {
-        finResObs = new ItemFinResDAO().getList();
+        finResObs = new FinResDAO().getList();
         finResTable.setItems(finResObs);
         setTextFieldValue(sumSmetCostTF);
         setTextFieldValue(sumCostHouseTF);

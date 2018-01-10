@@ -14,7 +14,7 @@
 //import report.models_view.nodes.node_wrappers.TableWrapper;
 //
 //
-//public class VariablePropertiesCommonDAOTableView implements TableViewItemDAO<TableItemVariable> {
+//public class VariablePropertiesCommonDAOTableView implements TableViewItemDAO<VariableTIV> {
 //
 //
 //
@@ -58,17 +58,17 @@
 //
 //    /**
 //     * Get List of Variable Items from SQL (SiteOSR)
-//    * @return  ObservableList of TableItemVariable
+//    * @return  ObservableList of VariableTIV
 //    */
 //    @Override
-//    public ObservableList<TableItemVariable> getData() {
-//        ObservableList<TableItemVariable> listAllOSR
+//    public ObservableList<VariableTIV> getData() {
+//        ObservableList<VariableTIV> listAllOSR
 //                = PropertiesFile.get(PathStrings.Files.VARIABLE_PROPERTIES)
 //                .entrySet()
 //                .stream()
 //                .map(temp ->
 //                        {
-//                            TableItemVariable tiv = new TableItemVariable(
+//                            VariableTIV tiv = new VariableTIV(
 //                                    0,
 //                                    temp.getKey().toString()
 ////                            ,DecimalFormatter.formatString(temp.getValue()));
@@ -78,7 +78,7 @@
 //                            return tiv;
 //                        }
 //                ).collect(Collector.of(
-//                        () -> FXCollections.observableArrayList(TableItemVariable.extractor()),
+//                        () -> FXCollections.observableArrayList(VariableTIV.extractor()),
 //                        ObservableList::add,
 //                        (l1, l2) -> { l1.addAll(l2); return l1; }
 //                        )
@@ -89,21 +89,21 @@
 //
 //
 //    /**
-//     * Delete TableItemVariable Entities from Properties File (formula.properties)
-//    * @param items (Collection of TableItemVariable)
+//     * Delete VariableTIV Entities from Properties File (formula.properties)
+//    * @param items (Collection of VariableTIV)
 //    */
 //    @Override
-//    public void delete(Collection<TableItemVariable> items) {
+//    public void delete(Collection<VariableTIV> items) {
 //
 //    }
 //
 //
 //    /**
-//     * Insert TableItemVariable Entities to Properties File (formula.properties)
-//    * @param items (Collection of TableItemVariable)
+//     * Insert VariableTIV Entities to Properties File (formula.properties)
+//    * @param items (Collection of VariableTIV)
 //    */
 //    @Override
-//    public void insert(Collection<TableItemVariable> items) {
+//    public void insert(Collection<VariableTIV> items) {
 //
 //        Properties property = items.stream()
 //                .collect(Collector.of(
@@ -125,7 +125,7 @@
 //    * Update Properties File (formula.properties)
 //    */
 //    @Override
-//    public  void dellAndInsert(AbstractTableWrapper<Collection<TableItemVariable>> tableWrapper) {
+//    public  void dellAndInsert(AbstractTableWrapper<Collection<VariableTIV>> tableWrapper) {
 //        insert(tableWrapper.getItems());
 //    }
 //

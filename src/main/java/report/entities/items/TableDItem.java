@@ -130,7 +130,7 @@ public class TableDItem implements TableClone {
     /**
     *Extractor to observe changes in "Property" fields.
     * 
-    * @return Callback<TableItemVariable, Observable[]>
+    * @return Callback<VariableTIV, Observable[]>
     */
     public static Callback<TableDItem, Observable[]> extractor() {
         return (TableDItem p) -> new Observable[]{p.secondValueProperty()};

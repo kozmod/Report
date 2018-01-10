@@ -9,11 +9,11 @@ import javafx.collections.ObservableList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import report.entities.TableViewItemDAO;
-import report.entities.items.contractor.TableItemContractor;
+import report.entities.items.contractor.ContractorTIV;
 import report.usage_strings.SQL;
 import report.layoutControllers.estimate.EstimateController.Est;
 
-import report.entities.items.site.TableItemPreview;
+import report.entities.items.site.PreviewTIV;
 import report.entities.items.TableItem;
 
 
@@ -21,8 +21,8 @@ public class PrintEstimate extends AbstractPrinterXML{
     
     private Document doc;
     private ObservableList<TableItem> obsKS; 
-    private ObservableList<TableItemPreview>  obsPreTab;
-    private TableItemContractor contractorObject;
+    private ObservableList<PreviewTIV>  obsPreTab;
+    private ContractorTIV contractorObject;
     
     //Constructor =====================================================================================================================    
     public PrintEstimate(TableViewItemDAO dao) {

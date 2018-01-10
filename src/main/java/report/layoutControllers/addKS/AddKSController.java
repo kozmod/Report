@@ -20,7 +20,7 @@ import report.usage_strings.SQL;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models_view.nodes.node_helpers.InputValidator;
 import report.entities.items.TableItem;
-import report.entities.items.KS.TableViewItemKSDAO;
+import report.entities.items.KS.KS_DAO;
 
 
 
@@ -35,7 +35,7 @@ public class AddKSController implements Initializable {
     @FXML  private DatePicker ksDatePicker;
     @FXML  private TableView<TableItem> allJMTable, selectedJMTable;
 
-//    private TableWrapperEST<TableItemKS> allJMTable      = TableFactory.getKS_add(),
+//    private TableWrapperEST<KS_TIV> allJMTable      = TableFactory.getKS_add(),
 //                                  selectedJMTable = TableFactory.getKS_add();
 
     private ObservableList<TableItem> obsAllJM, obsSelectedJM;
@@ -129,7 +129,7 @@ public class AddKSController implements Initializable {
             int ksNumber = Integer.parseInt( ksNumTextField.getText());
             int ksDate =(int) ksDatePicker.getValue().toEpochDay();
         
-            new TableViewItemKSDAO().insertNewKS(ksNumber,ksDate,obsSelectedJM);
+            new KS_DAO().insertNewKS(ksNumber,ksDate,obsSelectedJM);
          //System.out.println(obsSelectedJM);
             showEstController.update_TapKS();
         

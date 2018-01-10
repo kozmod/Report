@@ -30,9 +30,9 @@ import report.usage_strings.PathStrings;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models_view.nodes.node_helpers.StageCreator;
 import report.models.sql.sqlQuery.BackUpQuery;
-import report.entities.items.site.TableItemPreview;
+import report.entities.items.site.PreviewTIV;
 import report.models.sql.sqlQuery.InsertFileXLSQuery;
-import report.entities.items.site.SiteTableViewItemDAO;
+import report.entities.items.site.SiteDAO;
 import report.usage_strings.SQL;
 
 
@@ -84,7 +84,7 @@ public class RootLayoutController implements Initializable {
 ********************************************************************************************************************/
 
 
-    public void update_previewTable(ObservableList<TableItemPreview> items){
+    public void update_previewTable(ObservableList<PreviewTIV> items){
         previewTable.refresh();
     }
 
@@ -149,7 +149,7 @@ public class RootLayoutController implements Initializable {
 ********************************************************************************************************************/
 //Menu ITEMS -->     
     @FXML
-    private void handle_menuSqlConnect(ActionEvent event) {                   //<===SQL connect
+    private void handle_menuSqlConnect(ActionEvent event) {
         init_TreeComboBlock();
         init_siteTreeView();
         init_previewTable();
@@ -452,7 +452,7 @@ public class RootLayoutController implements Initializable {
                     printEstToXmlMenuItem.setDisable(false);
 
                     //Update Preview TableWrapper OBS-LIST
-                    Est.Common.setSiteObs(new SiteTableViewItemDAO(selectedTreeElemParent,selectedTreeElem).getData());
+                    Est.Common.setSiteObs(new SiteDAO(selectedTreeElemParent,selectedTreeElem).getData());
 //                    update_previewTable(Est.Common.getPreviewObservableList());
                     previewTable.setItems(Est.Common.getPreviewObservableList());
 

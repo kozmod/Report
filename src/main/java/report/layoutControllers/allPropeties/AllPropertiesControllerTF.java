@@ -1,13 +1,18 @@
 package report.layoutControllers.allPropeties;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import org.mockito.Mockito;
 import report.entities.items.TableDItem;
-import report.entities.items.contractor.TableViewItemContractorDAO;
+import report.entities.items.contractor.ContractorDAO;
+import report.entities.items.counterparties.CountAgentTVI;
+import report.entities.items.counterparties.CountAgentDAO;
 import report.entities.items.variable.PropertiesDAO;
-import report.entities.items.variable.TableItemVariable_new;
+import report.entities.items.variable.VariableTIV_new;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models_view.nodes.node_wrappers.ReverseTableWrapper;
 import report.models_view.nodes.node_wrappers.TableWrapper;
@@ -27,13 +32,13 @@ class AllPropertiesControllerTF implements TableFactory {
      * @return TableWrapper
      */
 //    static TableWrapper decorOSR(TableView table){
-//        TableWrapper tableWrapper = new TableWrapper(table,new TableViewItemOSRDAO());
+//        TableWrapper tableWrapper = new TableWrapper(table,new OSR_DAO());
 //
 ////        tableWrapper.setEditable(true);
 //        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 //
 //        TableColumn textColumn     = tableWrapper.addColumn("Наименование","text");
-//        TableColumn<TableItemOSR,Double> valueAllColumn
+//        TableColumn<OSR_TIV,Double> valueAllColumn
 //                = tableWrapper.addColumn("Значение (общее)","expenses");
 //        TableColumn valueColumn    = tableWrapper.addColumn("Значение (за дом)","expensesPerHouse");
 //
@@ -50,8 +55,8 @@ class AllPropertiesControllerTF implements TableFactory {
 ////        ContextMenu cm = ContextMenuFactory.getOSR(tableWrapper);
 ////        tableWrapper.setContextMenu(cm);
 //
-//        valueAllColumn.setOnEditCommit((TableColumn.CellEditEvent<TableItemOSR, Double> t) -> {
-//            TableItemOSR editingItem = (TableItemOSR) t.getTableView().getItems().get(t.getTablePosition().getRow());
+//        valueAllColumn.setOnEditCommit((TableColumn.CellEditEvent<OSR_TIV, Double> t) -> {
+//            OSR_TIV editingItem = (OSR_TIV) t.getTableView().getItems().get(t.getTablePosition().getRow());
 //
 //            editingItem.setExpenses(t.getNewValue());
 //            editingItem.setExpensesPerHouse(t.getNewValue() / Quantity.value());
@@ -72,9 +77,8 @@ class AllPropertiesControllerTF implements TableFactory {
      *
      * @return TableWrapper
      */
-
-    static ReverseTableWrapper<TableItemVariable_new> decorVariable(TableView table){
-        ReverseTableWrapper<TableItemVariable_new> tableWrapper = new ReverseTableWrapper<>("Общие параметры",table,new PropertiesDAO());
+    static ReverseTableWrapper<VariableTIV_new> decorVariable(TableView table){
+        ReverseTableWrapper<VariableTIV_new> tableWrapper = new ReverseTableWrapper<>("Общие параметры",table,new PropertiesDAO());
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
@@ -91,7 +95,7 @@ class AllPropertiesControllerTF implements TableFactory {
 
 
 //        TableColumn textColumn     = tableWrapper.addColumn("Наименование","text");
-//        TableColumn<TableItemVariable,Double> valueAllColumn
+//        TableColumn<VariableTIV,Double> valueAllColumn
 //                = tableWrapper.addColumn("Значение",   "value");
 ////
 //        valueAllColumn.setEditable(true);
@@ -101,7 +105,7 @@ class AllPropertiesControllerTF implements TableFactory {
 //                valueAllColumn
 //
 //        );
-//        valueAllColumn.setOnEditCommit((TableColumn.CellEditEvent<TableItemVariable, Double> t) -> {
+//        valueAllColumn.setOnEditCommit((TableColumn.CellEditEvent<VariableTIV, Double> t) -> {
 //            t.getRowValue().setValue(t.getNewValue());
 //        });
 
@@ -119,18 +123,46 @@ class AllPropertiesControllerTF implements TableFactory {
      * @return TableWrapper
      */
     static TableWrapper decorContractor(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table,new TableViewItemContractorDAO());
+        TableWrapper tableWrapper = new TableWrapper(table,new ContractorDAO());
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 //
         TableColumn idColumn     = tableWrapper.addColumn("ID", "id");
         TableColumn contractorColumn = tableWrapper.addColumn("Подрядчик","contractor");
 
-
         idColumn.setMaxWidth(50);
         idColumn.setMinWidth(35);
 
         return tableWrapper;
     }
+    /**
+     * Create TableWrapper "Counterparties"(AllPropertiesController).
+     * <br>
+     * Show SQL table Items where dell = 0
+     * <br>
+     *
+     * @return TableWrapper
+     */
+    static TableWrapper<CountAgentTVI> decorCountAgent(TableView<CountAgentTVI> table){
+        //TODO: delete Mock -> CountAgentTVI
+        CountAgentDAO dao =  Mockito.mock(CountAgentDAO.class);
+        ObservableList<CountAgentTVI> list = FXCollections.observableArrayList(CountAgentTVI.extractor());
+        list.addAll(new CountAgentTVI(1,"GREM", "OOO"," ИП"),
+                    new CountAgentTVI(2,"УЮТ", "OфO"," Подрядчик"),
+                    new CountAgentTVI(3,"САРАЙ", "ААO","Клиент")
+        );
+        Mockito.when(dao.getData()).thenReturn(list);
 
+        TableWrapper<CountAgentTVI> tableWrapper = new TableWrapper<>(table,dao);
+        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        TableColumn<CountAgentTVI,String> formColumn
+                = tableWrapper.addColumn("Организационно прововая Форма", cellData -> cellData.getValue().formProperty());
+        TableColumn<CountAgentTVI,String> typerColumn
+                = tableWrapper.addColumn("Тип",cellData -> cellData.getValue().typeProperty());
+        TableColumn<CountAgentTVI,String> nameColumn
+                = tableWrapper.addColumn("Наименование",cellData -> cellData.getValue().nameProperty());
+
+        return tableWrapper;
+    }
 }

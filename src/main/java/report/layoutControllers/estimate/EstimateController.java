@@ -28,12 +28,15 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import report.entities.TableViewItemDAO;
+import report.entities.items.KS.KS_TIV;
 import report.entities.items.TableItem;
-import report.entities.items.estimate.TableViewItemEstDAO;
-import report.entities.items.site.SiteTableViewItemDAO;
+import report.entities.items.estimate.EstimateDAO;
+import report.entities.items.estimate.EstimateTVI;
+import report.entities.items.site.PreviewTIV;
+import report.entities.items.site.SiteDAO;
 import report.layoutControllers.addKS.AddKSController;
 import report.layoutControllers.root.RootLayoutController;
-import report.entities.items.contractor.TableViewItemContractorDAO;
+import report.entities.items.contractor.ContractorDAO;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models.numberStringConverters.dateStringConverters.LocalDayStringConverter;
 import report.usage_strings.PathStrings;
@@ -44,13 +47,10 @@ import report.models_view.nodes.nodes_factories.FileChooserFactory;
 
 import report.models_view.nodes.node_helpers.StageCreator;
 
-import report.entities.items.KS.TableItemKS;
-import report.entities.items.site.TableItemPreview;
-import report.entities.items.estimate.TableItemEst;
 import report.models.printer.PrintKS;
 import report.models_view.nodes.TabModel;
 import report.models_view.nodes.node_wrappers.TableWrapperEST;
-import report.entities.items.KS.TableViewItemKSDAO;
+import report.entities.items.KS.KS_DAO;
 import report.models_view.nodes.ContextMenuOptional;
 
 
@@ -83,7 +83,7 @@ public class EstimateController implements Initializable {
         }
 
         //Setter ---------------------------------------------------------------------------
-        public void setSiteObs(ObservableList<TableItemPreview> siteObsList){
+        public void setSiteObs(ObservableList<PreviewTIV> siteObsList){
             Common.previewTableObs  = siteObsList;
             Base.previewTableObs    = siteObsList;
             Changed.previewTableObs = siteObsList;
@@ -104,14 +104,14 @@ public class EstimateController implements Initializable {
                     .get()
                     .getSecondValue();
         }
-        public TableItemPreview getSiteItem(String sqlField){
+        public PreviewTIV getSiteItem(String sqlField){
             return previewTableObs.stream()
                     .filter(o -> o.getSqlColumn().equals(sqlField))
                     .findFirst()
                     .get();
         }
 
-        public ObservableList<TableItemPreview> getPreviewObservableList(){return previewTableObs;}
+        public ObservableList<PreviewTIV> getPreviewObservableList(){return previewTableObs;}
 
         public   ObservableList getAllItemsList_Live(){
             Collection<List> tempCollection = this.getTabMap().values();
@@ -140,7 +140,7 @@ public class EstimateController implements Initializable {
 
 
         //Update ---------------------------------------------------------------------------
-        public void updatePreviewTable(){new SiteTableViewItemDAO().dellAndInsert(previewTableObs);}
+        public void updatePreviewTable(){new SiteDAO().dellAndInsert(previewTableObs);}
 
         public void updateTabData(){this.createTabMap(); this.tab.updateTablesItems(); }
 
@@ -158,7 +158,7 @@ public class EstimateController implements Initializable {
             switch(this){
                 case Base:
                 case Changed:
-                    allItems = new TableViewItemEstDAO(this).getData();
+                    allItems = new EstimateDAO(this).getData();
                     tabMap   = allItems.stream()
                             .filter(item  -> item.getDel() != 1 )
                             .sorted(Comparator.comparing(TableItem::getJM_name))
@@ -166,36 +166,36 @@ public class EstimateController implements Initializable {
                             .collect(Collectors.groupingBy(TableItem::getBuildingPart,
 //                                        TableItem::getBuildingPart,
                                     Collector.of(
-                                            () -> FXCollections.observableArrayList(TableItemEst.extractor()),
+                                            () -> FXCollections.observableArrayList(EstimateTVI.extractor()),
                                             ObservableList::add,
                                             (l1, l2) -> { l1.addAll(l2); return l1; })
                             ));
                     break;
                 case KS:
-                    allItems = new TableViewItemKSDAO(this).getData();
+                    allItems = new KS_DAO(this).getData();
                     tabMap   = allItems.stream()
                             .filter(item  -> item.getDel() != 1 )
                             .sorted(Comparator.comparing(TableItem::getJM_name))
-                            .collect(Collectors.groupingBy(item -> ((TableItemKS)item).getKSNumber(),
+                            .collect(Collectors.groupingBy(item -> ((KS_TIV)item).getKSNumber(),
                                     Collector.of(
-                                            () -> FXCollections.observableArrayList(TableItemKS.extractor()),
+                                            () -> FXCollections.observableArrayList(KS_TIV.extractor()),
                                             ObservableList::add,
                                             (l1, l2) -> { l1.addAll(l2); return l1; })
                             ));
 
-//                                .collect(Collectors.groupingBy((TableItem item) -> ((TableItemKS)item).getKSNumber()));
+//                                .collect(Collectors.groupingBy((TableItem item) -> ((KS_TIV)item).getKSNumber()));
                     break;
                 case Additional :
                     allItems = Base.allItems.stream()
                             .filter( item -> !Changed.allItems.contains(item))
                             .collect(Collector.of(
-                                    () -> FXCollections.observableArrayList(TableItemEst.extractor()),
+                                    () -> FXCollections.observableArrayList(EstimateTVI.extractor()),
                                     ObservableList::add,
                                     (l1, l2) -> { l1.addAll(l2); return l1; })
                             );
                     tabMap   = allItems.stream()
                             .filter(item  -> item.getDel() != 1 )
-                            .collect(Collectors.groupingBy(item -> ((TableItemEst)item).getBuildingPart(),
+                            .collect(Collectors.groupingBy(item -> ((EstimateTVI)item).getBuildingPart(),
 //                                        TableItem::getBuildingPart,
                                     Collector.of(
                                             () -> FXCollections.observableArrayList(),
@@ -222,7 +222,7 @@ public class EstimateController implements Initializable {
         private Map<Object, ObservableList<TableItem>> tabMap;
         private TabModel tab;
         private ObservableList<? extends TableItem> allItems;
-        private ObservableList<TableItemPreview>    previewTableObs;
+        private ObservableList<PreviewTIV>    previewTableObs;
     }
 /*!******************************************************************************************************************
 *                                                                                                       Fields
@@ -233,7 +233,7 @@ public class EstimateController implements Initializable {
     private AddKSController ksAddController;
 
     //preview table
-    private Map<Integer, List<TableItemKS>> ksMap;
+    private Map<Integer, List<KS_TIV>> ksMap;
     private Map<String, List<TableItem>>    mapBase,mapChange;
 
     @FXML private Label            ksSumLabel, ksDateLabel, erroeLable;
@@ -247,7 +247,7 @@ public class EstimateController implements Initializable {
     @FXML private TableView        tableKS, tableAdditional;
 
     private Label labelSumBase, labelSumChanged;
-    private TableWrapperEST<TableItemKS> tableKSWrapper ;
+    private TableWrapperEST<KS_TIV> tableKSWrapper ;
     private TableWrapper tableAdditionalWrapper;
 
 
@@ -336,7 +336,7 @@ public class EstimateController implements Initializable {
         addFromModelButton.setOnAction(event -> {
             if(!enumEst.getSiteSecondValue(SQL.Site.CONTRACTOR ).equals("-")
                     || !enumEst.getSiteSecondValue(SQL.Site.TYPE_HOME).equals("-")){
-                new TableViewItemEstDAO().insertEstNewTables(enumEst);
+                new EstimateDAO().insertEstNewTables(enumEst);
                 //            init_Lists();
                 //            if(enumEst == Est.Base)    init_EstBase();
                 //            if(enumEst == Est.Changed) init_EstChaged();
@@ -448,7 +448,7 @@ public class EstimateController implements Initializable {
                                         .mapToDouble(filtered -> filtered.getValue())
                                         .sum();
 
-                    ((TableItemKS)item).setRestOfValue(sum);
+                    ((KS_TIV)item).setRestOfValue(sum);
 
 //                                Est.Changed.findEqualsElevent(item).getValue() -
 //                                        ksMap.values().stream()
@@ -461,7 +461,7 @@ public class EstimateController implements Initializable {
 
                 //Set date Lable of selected KS
                 ksDateLabel.setText(LocalDate.ofEpochDay(
-                        ((TableItemKS)ksMap.get(newValue).get(0)).getKSDate()).toString());
+                        ((KS_TIV)ksMap.get(newValue).get(0)).getKSDate()).toString());
                 ksSumLabel.setVisible(true);
                 ksDateLabel.setVisible(true);
             }
@@ -499,7 +499,7 @@ public class EstimateController implements Initializable {
     @FXML
     private void handle_FilterKS(ActionEvent event) {
 
-        ObservableMap<Integer, List<TableItemKS>> tempKsMap = FXCollections.observableHashMap() ;
+        ObservableMap<Integer, List<KS_TIV>> tempKsMap = FXCollections.observableHashMap() ;
         if (isInputValid()){
             int dateFrom  =(int) dateKSfrom.getValue().toEpochDay();
             int dateTo    =(int) dateKSto.getValue().toEpochDay();
@@ -526,12 +526,12 @@ public class EstimateController implements Initializable {
     @FXML
     private void hanle_PrintKS(ActionEvent event) {
         File selectedFile = FileChooserFactory.Save.saveKS(listKS.getSelectionModel().getSelectedItem().toString());
-        ObservableList<TableItemKS> i = tableKSWrapper.getItems();
+        ObservableList<KS_TIV> i = tableKSWrapper.getItems();
         if(!listKS.getSelectionModel().isEmpty()
                 && selectedFile != null
                 ) {
             new PrintKS(tableKSWrapper.getItems(),
-                    new TableViewItemContractorDAO().getOne(Est.KS.getSiteSecondValue(SQL.KS.CONTRACTOR)),
+                    new ContractorDAO().getOne(Est.KS.getSiteSecondValue(SQL.KS.CONTRACTOR)),
                     selectedFile.toPath()
             );
 
@@ -551,7 +551,7 @@ public class EstimateController implements Initializable {
     private void handle_deleteKS(ActionEvent event) {
         if(!listKS.getSelectionModel().isEmpty() && listKS.getSelectionModel().getSelectedItem() != null){
             String selectedItemKS = listKS.getSelectionModel().getSelectedItem().toString();
-            new TableViewItemKSDAO().deleteKS(selectedItemKS);
+            new KS_DAO().deleteKS(selectedItemKS);
             ksMap.remove(Integer.parseInt(selectedItemKS));
             listKS.getItems().clear();
             listKS.getItems().addAll(ksMap.keySet());

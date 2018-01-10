@@ -2,7 +2,7 @@ package report.layoutControllers.root;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
-import report.entities.items.site.SiteTableViewItemDAO;
+import report.entities.items.site.SiteDAO;
 import report.layoutControllers.estimate.EstimateController;
 import report.entities.items.site.SiteCommonDAO;
 import report.models.printer.PrintEstimate;
@@ -30,11 +30,11 @@ public class RootControllerService {
 ********************************************************************************************************************/
 
     public  ObservableList<Object> getComboQueueValues(){
-       return  new SiteTableViewItemDAO().getDistinctOfColumn(SQL.Site.QUEUE_BUILDING, ServiceStrings.PERCENT);
+       return  new SiteDAO().getDistinctOfColumn(SQL.Site.QUEUE_BUILDING, ServiceStrings.PERCENT);
     }
 
     public  ObservableList<Object> getComboSiteConditionValues(){
-       return  new SiteTableViewItemDAO().getDistinctOfColumn(SQL.Site.STATUS_PAYMENT,ServiceStrings.PERCENT);
+       return  new SiteDAO().getDistinctOfColumn(SQL.Site.STATUS_PAYMENT,ServiceStrings.PERCENT);
     }
 
     /**

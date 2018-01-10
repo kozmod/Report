@@ -3,10 +3,12 @@ package report.models_view.nodes.nodes_factories;
 
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
-import report.entities.items.estimate.TableViewItemEstDAO;
-import report.entities.items.plan.TableViewItemPlanDAO;
-import report.entities.items.site.SiteTableViewItemDAO;
-import report.entities.items.site.TableItemPreview;
+import report.entities.items.estimate.EstimateDAO;
+import report.entities.items.estimate.EstimateTVI;
+import report.entities.items.osr.OSR_TIV;
+import report.entities.items.plan.PlanDAO;
+import report.entities.items.site.PreviewTIV;
+import report.entities.items.site.SiteDAO;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -25,8 +27,6 @@ import report.layoutControllers.estimate.EstimateController.Est;
 import report.entities.items.TableClone;
 import report.entities.items.TableItem;
 import report.entities.items.cb.TableItemCB;
-import report.entities.items.estimate.TableItemEst;
-import report.entities.items.osr.TableItemOSR;
 import report.usage_strings.ServiceStrings;
 
 
@@ -203,7 +203,7 @@ public class TableCellFactory{
      * Cell to EDIT TableWrapper
      * <br>[set type of currency]
      */
-    private class EditSiteCell extends TableCell<TableItemPreview, Object>{
+    private class EditSiteCell extends TableCell<PreviewTIV, Object>{
            
         private Est enumPreTable;
         
@@ -217,7 +217,7 @@ public class TableCellFactory{
         protected void updateItem(Object item, boolean empty) {
             super.updateItem(item, empty);
                 int rowIndex = this.getIndex();
-                TableItemPreview t = null ;
+                PreviewTIV t = null ;
             if(this.getItem() != null) t = this.getTableView().getItems().get(rowIndex);
            
             if (!isEmpty()) {
@@ -267,7 +267,7 @@ public class TableCellFactory{
                 }
             };
                             
-        private DatePicker createDatePicker(TableItemPreview item) {
+        private DatePicker createDatePicker(PreviewTIV item) {
             DatePicker datePicker = new DatePicker();
             datePicker.setPrefWidth(150);
             datePicker.setEditable(false);
@@ -299,20 +299,20 @@ public class TableCellFactory{
             return datePicker;   
         }
         
-        private ComboBox createComboBox(TableItemPreview item){
+        private ComboBox createComboBox(PreviewTIV item){
                    ComboBox comboBox = new ComboBox();
                    comboBox.setPrefWidth(150);
                         switch(item.getSqlColumn()){
                             case SQL.Site.CONTRACTOR :
-                                comboBox.setItems(new SiteTableViewItemDAO().getDistinctOfColumn(SQL.Common.CONTRACTOR));
+                                comboBox.setItems(new SiteDAO().getDistinctOfColumn(SQL.Common.CONTRACTOR));
 //                                comboBox.setItems(new CommonQuery().getObsDISTINCT(SQL.Tables.C, SQL.Plan.TYPE_NAME, this));
                                 break;
                             case SQL.Site.TYPE_HOME  :
-                                comboBox.setItems(new TableViewItemEstDAO().getDistinctOfColumn(SQL.Common.TYPE_HOME));
+                                comboBox.setItems(new EstimateDAO().getDistinctOfColumn(SQL.Common.TYPE_HOME));
                                 
                                 break;
                             case SQL.Site.SITE_TYPE_ID : 
-                                comboBox.setItems(new TableViewItemPlanDAO().getDistinctOfColumn(SQL.Plan.TYPE_NAME));
+                                comboBox.setItems(new PlanDAO().getDistinctOfColumn(SQL.Plan.TYPE_NAME));
                                 break;
                             case SQL.Site.STATUS_JOBS : 
                                 comboBox.setItems(FXCollections.observableArrayList("закончен","не начат","в работе"));
@@ -330,7 +330,7 @@ public class TableCellFactory{
                    return comboBox;
                 }
        
-        private TextField createTextField(TableItemPreview item) {
+        private TextField createTextField(PreviewTIV item) {
             TextField textField = new TextField(item.getSecondValue().toString());
             textField.setMaxWidth(150);
             textField.textProperty().addListener(e -> {
@@ -389,7 +389,7 @@ public class TableCellFactory{
         }
     }
    
-   private class inKsColoredCell extends TableCell<TableItemEst, Boolean> {
+   private class inKsColoredCell extends TableCell<EstimateTVI, Boolean> {
         
                 @Override
                 public void updateItem(Boolean item, boolean empty) {
@@ -593,7 +593,7 @@ public class TableCellFactory{
 //   
 //    }
     
-    private class TestID extends TableCell<TableItemOSR, Object> {
+    private class TestID extends TableCell<OSR_TIV, Object> {
         @Override
         public void updateItem(Object item, boolean empty) {
             super.updateItem(item, empty);

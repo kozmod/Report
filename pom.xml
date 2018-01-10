@@ -76,6 +76,7 @@
             <!--<systemPath>${project.basedir}/lib/dependencies/sqljdbc4.jar</systemPath>-->
         <!--</dependency>-->
         <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
+        <!-- ++++++++++++++++++++++++++++++++++++++++ Project ++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
         <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
@@ -83,7 +84,6 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/dependencies/mssql-jdbc-6.2.2.jre8.jar</systemPath>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi</artifactId>
@@ -91,7 +91,6 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/dependencies/poi-3.15.jar</systemPath>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>
@@ -99,7 +98,6 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/dependencies/poi-ooxml-3.15.jar</systemPath>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml-schemas -->
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml-schemas</artifactId>
@@ -107,7 +105,6 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/dependencies/poi-ooxml-schemas-3.15.jar</systemPath>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.xmlbeans/xmlbeans -->
         <dependency>
             <groupId>org.apache.xmlbeans</groupId>
             <artifactId>xmlbeans</artifactId>
@@ -115,7 +112,6 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/dependencies/xmlbeans.jar</systemPath>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
@@ -123,7 +119,6 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/dependencies/commons-io-2.5.jar</systemPath>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.apache.commons/commons-collections4 -->
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-collections4</artifactId>
@@ -131,15 +126,33 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/dependencies/commons-collections4-4.1.jar</systemPath>
         </dependency>
-        <!-- +++++ JUnit +++++ -->
-        <!-- https://mvnrepository.com/artifact/org.junit.vintage/junit-vintage-engine -->
+        <!-- +++++++++++++++++++++++++++++++++++++++++ JUnit +++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
         <dependency>
             <groupId>org.junit.vintage</groupId>
             <artifactId>junit-vintage-engine</artifactId>
             <version>4.12.1</version>
             <scope>test</scope>
         </dependency>
-        <!--HIBERNATE ////////////////////////////////////////////////////////////////////////////////////////////////-->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>5.1.0-M1</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>5.1.0-M1</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- ++++++++++++++++++++++++++++++++++++++++ MOCKITO ++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>2.13.0</version>
+            <!--<scope>test</scope>-->
+        </dependency>
+        <!-- +++++++++++++++++++++++++++++++++++++++ HIBERNATE++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
         <!--<dependency>-->
             <!--<groupId>org.hibernate</groupId>-->

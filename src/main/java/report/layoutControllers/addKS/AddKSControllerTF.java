@@ -2,7 +2,7 @@ package report.layoutControllers.addKS;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import report.entities.items.account.TableItemAcc;
+import report.entities.items.account.AccountTVI;
 import report.models.numberStringConverters.dateStringConverters.EpochDayStringConverter;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models_view.nodes.node_wrappers.TableWrapper;
@@ -18,7 +18,7 @@ public class AddKSControllerTF {
     /**
      * Decorate KS_add TableView (AddKSController)
      */
-    public static void decorAcc(TableView<TableItemAcc> table){
+    public static void decorAcc(TableView<AccountTVI> table){
 
         TableWrapper tableWrapper = new TableWrapper(table,null);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -27,14 +27,14 @@ public class AddKSControllerTF {
         TableColumn numCol  = tableWrapper.addColumn(" № ","num");
 
         //***************************  Client Column  ********************************
-        TableColumn<TableItemAcc,Objects> ClientCol = new TableColumn<>("Клиент");
+        TableColumn<AccountTVI,Objects> ClientCol = new TableColumn<>("Клиент");
         TableColumn ITNCol        = tableWrapper.addColumn(ClientCol, "ИНН",         "ITN_Client");
         TableColumn nameClientCol = tableWrapper.addColumn(ClientCol, "Наименование","name_Client");
         TableColumn accClientCol  = tableWrapper.addColumn(ClientCol, "Счет",        "accNum_Client");
         table.getColumns().add(ClientCol);
 
         //***************************  Correspondent Column  ***************************
-        TableColumn<TableItemAcc,Objects> CorCol = new TableColumn<>("Корреспондент");
+        TableColumn<AccountTVI,Objects> CorCol = new TableColumn<>("Корреспондент");
         TableColumn BICCOrCol   = tableWrapper.addColumn(CorCol,"BIC",         "BIC_Cor");
         TableColumn accCorCol   = tableWrapper.addColumn(CorCol,"Счет",        "accNum_Cor");
         TableColumn nameCorCol  = tableWrapper.addColumn(CorCol,"Наименование","name_Cor");
@@ -44,7 +44,7 @@ public class AddKSControllerTF {
         TableColumn dascCol = tableWrapper.addColumn("Содержание","description");
 
         //***************************  Turnover Column  ********************************
-        TableColumn<TableItemAcc,Objects> TurnoverCol = new TableColumn<>("Обороты");
+        TableColumn<AccountTVI,Objects> TurnoverCol = new TableColumn<>("Обороты");
         TableColumn  debCol         = tableWrapper.addColumn(TurnoverCol,"Дебет",  "deb");
         TableColumn credCol         = tableWrapper.addColumn(TurnoverCol,"Кредит", "cred");
         TableColumn outgoingRestCol = tableWrapper.addColumn(TurnoverCol,"Остаток","outgoingRest");

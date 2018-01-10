@@ -12,18 +12,18 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.StackPane;
-import report.entities.items.estimate.TableViewItemEstDAO;
+import report.entities.items.estimate.EstimateDAO;
+import report.entities.items.estimate.EstimateTVI;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.layoutControllers.estimate.EstimateControllerTF;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
-import report.entities.items.estimate.TableItemEst;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 import report.models_view.nodes.node_wrappers.TableWrapperEST;
 
 
 public class TitledStackModel extends StackPane{
        
-          private TableWrapperEST<TableItemEst> tableViewWrapper;
+          private TableWrapperEST<EstimateTVI> tableViewWrapper;
     final private Label                  sumLabel   = new Label();
     final private TitledPane             titledPane = new TitledPane();
     final private Est                    enumEst;
@@ -69,7 +69,7 @@ public class TitledStackModel extends StackPane{
              tableViewWrapper.setTableData((ObservableList) enumEst.getTabMap().get(title));
              ContextMenuOptional.setTableItemContextMenuListener(tableViewWrapper);
         }else{
-            tableViewWrapper.setTableData(FXCollections.observableArrayList(TableItemEst.extractor()));
+            tableViewWrapper.setTableData(FXCollections.observableArrayList(EstimateTVI.extractor()));
             ContextMenuOptional.setTableItemContextMenuListener(tableViewWrapper);
         }
 
@@ -95,7 +95,7 @@ public class TitledStackModel extends StackPane{
     
 
     public  void updateTableItems(){
-        tableViewWrapper.updateTableFromBASE(new TableViewItemEstDAO().getOneBildingPartList(enumEst, title));
+        tableViewWrapper.updateTableFromBASE(new EstimateDAO().getOneBildingPartList(enumEst, title));
     }
 
 

@@ -18,12 +18,12 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import report.entities.items.plan.TableItemFact;
-import report.entities.items.plan.TableViewItemPlanDAO;
-import report.entities.items.site.SiteTableViewItemDAO;
+import report.entities.items.plan.FactTIV;
+import report.entities.items.plan.PlanDAO;
+import report.entities.items.plan.PlanTIV;
+import report.entities.items.site.SiteDAO;
 import report.layoutControllers.root.RootLayoutController;
 import report.usage_strings.SQL;
-import report.entities.items.plan.TableItemPlan;
 import report.entities.items.site.SiteCommonDAO;
 import report.usage_strings.ServiceStrings;
 import report.models_view.nodes.node_helpers.InputValidator;
@@ -40,18 +40,18 @@ public class AddSiteController implements Initializable {
 
     final private ToggleGroup radioButtonsTG = new ToggleGroup();
 
-    private ObservableList<TableItemPlan> listPlan;
-    private ObservableList<TableItemFact> listFact;
+    private ObservableList<PlanTIV> listPlan;
+    private ObservableList<FactTIV> listFact;
     private ObservableList<Object>        listQueue;
     private ObservableList<Object>        listContractors;
     private ObservableList<Object>        listTypes;
 
     {
-        listPlan  = new TableViewItemPlanDAO().getData();
-        listFact  = new TableViewItemPlanDAO().getListFact();
-        listQueue = new SiteTableViewItemDAO().getDistinctOfColumn(SQL.Site.QUEUE_BUILDING);
-        listContractors = new SiteTableViewItemDAO().getDistinctOfColumn(SQL.Site.CONTRACTOR,ServiceStrings.Line);
-        listTypes       = new SiteTableViewItemDAO().getDistinctOfColumn(SQL.Site.TYPE_HOME, ServiceStrings.Line);
+        listPlan  = new PlanDAO().getData();
+        listFact  = new PlanDAO().getListFact();
+        listQueue = new SiteDAO().getDistinctOfColumn(SQL.Site.QUEUE_BUILDING);
+        listContractors = new SiteDAO().getDistinctOfColumn(SQL.Site.CONTRACTOR,ServiceStrings.Line);
+        listTypes       = new SiteDAO().getDistinctOfColumn(SQL.Site.TYPE_HOME, ServiceStrings.Line);
 
 
     }
@@ -97,17 +97,17 @@ public class AddSiteController implements Initializable {
 //        queueComboBox.setItems( new CommonQuery().getObsDISTINCT(SQL.Tables.SITE, SQL.Site.QUEUE_BUILDING, this));
         classComboBox.setItems(
                 listFact.stream()
-                .map(TableItemFact::getType)
+                .map(FactTIV::getType)
                 .collect(toCollection(FXCollections::observableArrayList)));
         
         classComboBox.getSelectionModel()
                 .selectedItemProperty()
                 .addListener( (options, oldValue, newValue) -> {
-           TableItemPlan plan = listPlan.stream()
+           PlanTIV plan = listPlan.stream()
                    .filter(o -> o.getType().equals(newValue))
                    .findFirst()
                    .orElse(null);
-           TableItemFact fact = listFact.stream()
+           FactTIV fact = listFact.stream()
                    .filter(o -> o.getType().equals(newValue))
                    .findFirst()
                    .orElse(null);

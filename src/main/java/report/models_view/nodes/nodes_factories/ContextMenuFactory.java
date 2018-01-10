@@ -1,9 +1,8 @@
 
 package report.models_view.nodes.nodes_factories;
 
-import javafx.beans.binding.Bindings;
 import javafx.scene.control.ContextMenu;
-import report.entities.items.estimate.TableViewItemEstDAO;
+import report.entities.items.estimate.EstimateDAO;
 import report.layoutControllers.addEstimateRow.AddEstimateRowController;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models_view.nodes.node_helpers.StageCreator;
@@ -72,9 +71,9 @@ public class ContextMenuFactory {
      */
     public static ContextMenu getEstPrint(Est enumEst){
         return ContextMenuOptional.newBuilder()
-//                .setDAO(new TableViewItemEstDAO(enumEst))
+//                .setDAO(new EstimateDAO(enumEst))
 //                    .setEnum(enumEst)
-                .addPrintSmeta(new TableViewItemEstDAO(enumEst))
+                .addPrintSmeta(new EstimateDAO(enumEst))
                 .build();
 
     }

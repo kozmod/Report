@@ -26,9 +26,9 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.ss.usermodel.WorkbookFactory;
 import org.apache.poi.xssf.usermodel.XSSFRow;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import report.entities.items.account.ItemAccDAO;
+import report.entities.items.account.AccountDAO;
+import report.entities.items.account.AccountTVI;
 import report.models.DiffList;
-import report.entities.items.account.TableItemAcc;
 import report.models.sql.SQLconnector;
 
 
@@ -324,7 +324,7 @@ public class InsertFileXLSQuery {
     
     public  void insertRowsFromXls_Account(String FilePath) {
         
-        ObservableList<TableItemAcc> AccObs = this.compareAccount(FilePath);
+        ObservableList<AccountTVI> AccObs = this.compareAccount(FilePath);
         
         String psmtmtString = "INSERT into dbo.[Account] ("
                             + "[Date]"
@@ -344,7 +344,7 @@ public class InsertFileXLSQuery {
                             + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
         try(Connection connection = SQLconnector.getInstance();
             PreparedStatement  pstmt_acc = connection.prepareStatement(psmtmtString);){  
-                for(TableItemAcc row : AccObs){
+                for(AccountTVI row : AccObs){
                     pstmt_acc.setInt    (1, row.getDate());
                     pstmt_acc.setInt    (2, row.getNum());
                     pstmt_acc.setString (3, row.getITN_Client());
@@ -372,14 +372,14 @@ public class InsertFileXLSQuery {
     
 
     //DO NOT Insert - only compare Accounts 
-    private ObservableList<TableItemAcc> compareAccount(String FilePath) {
+    private ObservableList<AccountTVI> compareAccount(String FilePath) {
         Sheet sheet = null;                                              
         Row row = null;
         double incomingRest;
 
         
-        ObservableList<TableItemAcc> existAccObs = new ItemAccDAO().getList(0,0);
-        ObservableList<TableItemAcc> xlsAccObs = FXCollections.observableArrayList();
+        ObservableList<AccountTVI> existAccObs = new AccountDAO().getList(0,0);
+        ObservableList<AccountTVI> xlsAccObs = FXCollections.observableArrayList();
 
 
         try {
@@ -408,7 +408,7 @@ public class InsertFileXLSQuery {
 //                    credString = credString.replace(String.valueOf((char) 160),"");
                     double c = Double.parseDouble(row.getCell(11).toString().replace(String.valueOf((char) 160),""));
 
-                    xlsAccObs.add(new TableItemAcc(dateParser(row.getCell(0).getStringCellValue()),
+                    xlsAccObs.add(new AccountTVI(dateParser(row.getCell(0).getStringCellValue()),
                             Integer.parseInt(row.getCell(1).toString()),
                             row.getCell(2).toString(),
                             row.getCell(3).toString(),

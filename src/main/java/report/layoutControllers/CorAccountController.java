@@ -14,7 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
-import report.entities.items.account.ItemAccDAO;
+import report.entities.items.account.AccountDAO;
 import report.layoutControllers.addKS.AddKSControllerTF;
 import report.models.sql.sqlQuery.InsertFileXLSQuery;
 import report.models.numberStringConverters.dateStringConverters.LocalDayStringConverter;
@@ -34,7 +34,7 @@ public class CorAccountController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         //decore Acc table
         AddKSControllerTF.decorAcc(accTable);
-        accTable.setItems(new ItemAccDAO().getList(0,0));
+        accTable.setItems(new AccountDAO().getList(0,0));
 
         init_DatePickers();
 //        init_AccTable();
@@ -107,11 +107,11 @@ public class CorAccountController implements Initializable {
 //        debCol.setCellValueFactory(new PropertyValueFactory("deb"));
 //        debCol.setCellFactory(cell -> TableCellFactory.getDecimalCell());
 //
-//        TableColumn<TableItemAcc,Double> credCol = new TableColumn<>("Кредит");
+//        TableColumn<AccountTVI,Double> credCol = new TableColumn<>("Кредит");
 //        credCol.setCellValueFactory(new PropertyValueFactory<>("cred"));
 //        credCol.setCellFactory(cell -> TableCellFactory.getDecimalCell());
 //
-//        TableColumn<TableItemAcc,Double> outgoingRestCol = new TableColumn<>("Остаток");
+//        TableColumn<AccountTVI,Double> outgoingRestCol = new TableColumn<>("Остаток");
 //        outgoingRestCol.setCellValueFactory(new PropertyValueFactory<>("outgoingRest"));
 //        outgoingRestCol.setCellFactory(cell -> TableCellFactory.getDecimalCell());
 //
@@ -121,7 +121,7 @@ public class CorAccountController implements Initializable {
 //        accTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 //        accTable.getColumns().setAll(dateCol, numCol,ClientCol,CorCol, VOCol,dascCol,TurnoverCol);
 //
-//        accTable.setItems(new ItemAccDAO().getObject(0,0));
+//        accTable.setItems(new AccountDAO().getObject(0,0));
 //
 //    }
 
@@ -135,7 +135,7 @@ public class CorAccountController implements Initializable {
         
         if(selectedFile != null){
             new InsertFileXLSQuery().insertRowsFromXls_Account(selectedFile.getPath());
-            accTable.setItems(new ItemAccDAO().getList(0,0));
+            accTable.setItems(new AccountDAO().getList(0,0));
         }else{
             System.out.println("Отмена FILE CHUSER xls/xlsx");
         }
@@ -144,7 +144,7 @@ public class CorAccountController implements Initializable {
     @FXML
     private void handle_OKButton(ActionEvent event) {  
         if (isInputValid()){
-            accTable.setItems(new ItemAccDAO().getList(
+            accTable.setItems(new AccountDAO().getList(
                                     (int) dateAccFrom.getValue().toEpochDay(),
                                     (int) dateAccTo.getValue().toEpochDay())
                                                         );

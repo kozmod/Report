@@ -5,11 +5,11 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import report.entities.items.KS.TableViewItemKSDAO;
-import report.entities.items.KS.TableItemKS;
+import report.entities.items.KS.KS_DAO;
+import report.entities.items.KS.KS_TIV;
 import report.entities.items.TableItem;
-import report.entities.items.estimate.TableViewItemEstDAO;
-import report.entities.items.estimate.TableItemEst;
+import report.entities.items.estimate.EstimateDAO;
+import report.entities.items.estimate.EstimateTVI;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 import report.models_view.nodes.node_wrappers.TableWrapperEST;
@@ -33,7 +33,7 @@ public class EstimateControllerTF implements TableFactory {
      * @return TableWrapper(child of TableView)
      */
     public static TableWrapperEST getEst(EstimateController.Est enumEst,String title){
-        TableWrapperEST table = new TableWrapperEST(title,new TableView(),new TableViewItemEstDAO(enumEst));
+        TableWrapperEST table = new TableWrapperEST(title,new TableView(),new EstimateDAO(enumEst));
 
 
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -87,14 +87,14 @@ public class EstimateControllerTF implements TableFactory {
                 break;
             case Changed :
                 table.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-                    if (newSelection != null && ((TableItemEst)newSelection).getInKS()) {
+                    if (newSelection != null && ((EstimateTVI)newSelection).getInKS()) {
                         table.setEditable(false);
                         Price_oneColumn.setEditable(false);
-//                    System.out.println(((TableItemEst)newSelection).getInKS());
-                    }else if (newSelection != null && !((TableItemEst)newSelection).getInKS()){
+//                    System.out.println(((EstimateTVI)newSelection).getInKS());
+                    }else if (newSelection != null && !((EstimateTVI)newSelection).getInKS()){
                         table.setEditable(true);
                         Price_oneColumn.setEditable(true);
-//                    System.out.println(((TableItemEst)newSelection).getInKS());
+//                    System.out.println(((EstimateTVI)newSelection).getInKS());
                     }
 
                 });
@@ -167,9 +167,9 @@ public class EstimateControllerTF implements TableFactory {
      * Create TableWrapper(TableWrapper KS).Contain columns and their options.
      * @return TableWrapper(child of TableView)
      */
-    public static TableWrapperEST<TableItemKS> decorKS(TableView tableView){
+    public static TableWrapperEST<KS_TIV> decorKS(TableView tableView){
         TableWrapperEST table = new TableWrapperEST(tableView,
-                new TableViewItemKSDAO(EstimateController.Est.KS));
+                new KS_DAO(EstimateController.Est.KS));
 
 
         table.setEditable(true);
@@ -198,7 +198,7 @@ public class EstimateControllerTF implements TableFactory {
             @Override
             public void handle(TableColumn.CellEditEvent<? extends TableItem, Double> t) {
 
-                TableItemKS editingItem = (TableItemKS) t.getRowValue();
+                KS_TIV editingItem = (KS_TIV) t.getRowValue();
 
                 Double price_one = editingItem.getPrice_one();
 

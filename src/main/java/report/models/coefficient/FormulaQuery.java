@@ -7,7 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import report.entities.items.variable.TableItemVariable_new;
+import report.entities.items.variable.VariableTIV_new;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.sql.SQLconnector;
 import report.usage_strings.SQL;
@@ -53,8 +53,8 @@ public class FormulaQuery {
                            rs.getDouble(SQL.Formula.SALE_COSTSUM_FROM_FINPLAN),
 //                           pse,
 //                           iTax
-                           rs.getDouble(TableItemVariable_new.SQL.SALE_EXP),
-                           rs.getDouble(TableItemVariable_new.SQL.INCOME_TAX)
+                           rs.getDouble(VariableTIV_new.SQL.SALE_EXP),
+                           rs.getDouble(VariableTIV_new.SQL.INCOME_TAX)
                    );
                }
            } catch (SQLException ex) {

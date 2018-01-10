@@ -1,27 +1,21 @@
 package report.entities.items.variable;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import report.entities.CommonDAO;
-import report.entities.TableViewItemDAO;
-import report.entities.items.TableDItem;
 import report.models.sql.SQLconnector;
-import report.usage_strings.SQL;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PropertiesDAO implements CommonDAO<TableItemVariable_new> {
+public class PropertiesDAO implements CommonDAO<VariableTIV_new> {
 
 
     @Override
-    public TableItemVariable_new getData() {
-        TableItemVariable_new item = null;
+    public VariableTIV_new getData() {
+        VariableTIV_new item = null;
         String sqlQuery = "SELECT "
                 + " * "
                 + "from dbo.[TBL_COMMAND_PROPERTY] "
@@ -32,28 +26,28 @@ public class PropertiesDAO implements CommonDAO<TableItemVariable_new> {
 
             try(ResultSet rs = pstmt.getResultSet()){
                 while(rs.next())
-                    item = new TableItemVariable_new(
+                    item = new VariableTIV_new(
                             rs.getLong("id"),
-                            rs.getDouble(TableItemVariable_new.SQL.INCOME_TAX),
-                            rs.getDouble(TableItemVariable_new.SQL.SALE_EXP)
+                            rs.getDouble(VariableTIV_new.SQL.INCOME_TAX),
+                            rs.getDouble(VariableTIV_new.SQL.SALE_EXP)
                     );
             }
             connection.commit();
         } catch (SQLException ex) {
-            Logger.getLogger(TableItemVariable.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VariableTIV.class.getName()).log(Level.SEVERE, null, ex);
         }
         if(item == null)
-            item = new TableItemVariable_new(0,0,0);
+            item = new VariableTIV_new(0,0,0);
         return  item;
     }
 
     @Override
-    public void delete(TableItemVariable_new entry) {
+    public void delete(VariableTIV_new entry) {
 
     }
 
     @Override
-    public void insert(TableItemVariable_new entry) {
+    public void insert(VariableTIV_new entry) {
 
     }
 

@@ -1,10 +1,10 @@
 package report.layoutControllers.intro;
 
 import javafx.collections.ObservableList;
-import report.entities.items.intro.ItemFinishedSiteDAO;
-import report.entities.items.intro.TableItemFinishedSite;
+import report.entities.items.intro.FinishedSiteDAO;
+import report.entities.items.intro.FinishedSiteTIV;
+import report.entities.items.site.PreviewTIV;
 import report.entities.items.site.SiteCommonDAO;
-import report.entities.items.site.TableItemPreview;
 
 public class IntroControllerService {
 
@@ -21,12 +21,12 @@ public class IntroControllerService {
 *                                                                                                             METHODS
 ********************************************************************************************************************/
 
-    public ObservableList<TableItemPreview> getListIntro(){
+    public ObservableList<PreviewTIV> getListIntro(){
         return  new SiteCommonDAO().getListIntro();
     }
 
-    public ObservableList<TableItemFinishedSite> getFinishedSiteList(){
-        return  new ItemFinishedSiteDAO().getList();
+    public ObservableList<FinishedSiteTIV> getFinishedSiteList(){
+        return  new FinishedSiteDAO().getList();
     }
 
 }

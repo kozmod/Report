@@ -18,7 +18,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import report.entities.items.estimate.TableViewItemEstDAO;
+import report.entities.items.estimate.EstimateDAO;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.usage_strings.SQL;
 import report.models.DiffList;
@@ -27,7 +27,7 @@ import report.models_view.nodes.node_helpers.InputValidator;
 
 import report.entities.items.TableItem;
 import report.entities.items.cb.TableItemCB;
-import report.entities.items.estimate.TableItemEst;
+import report.entities.items.estimate.EstimateTVI;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 
 
@@ -135,7 +135,7 @@ public class AddEstimateRowController implements Initializable {
 
         });
         ObservableList unitObs
-                = FXCollections.observableArrayList(new TableViewItemEstDAO().getDistinctOfColumn(SQL.Estimate.UNIT, "-Новый тип Ед. изм.-"));
+                = FXCollections.observableArrayList(new EstimateDAO().getDistinctOfColumn(SQL.Estimate.UNIT, "-Новый тип Ед. изм.-"));
 //                = FXCollections.observableArrayList(new CommonQuery().getObsDISTINCT("Estimate", "Unit", this));
         comboUnit.setItems(unitObs);
         comboUnit.valueProperty().addListener(new ChangeListener<String>() {
@@ -162,7 +162,7 @@ public class AddEstimateRowController implements Initializable {
 
         int check ;
 //       baseObsList = getCheckObs(commonSQL_SELECT.getEstObs_base(siteNumber, contName,typeHome, buildingPart));
-        baseObsList = new TableViewItemEstDAO().getBaseList(bildingPart);
+        baseObsList = new EstimateDAO().getBaseList(bildingPart);
         DiffList diflist = new DiffList(baseObsList, editObsList);
 
         ObservableList<TableItem> result;
@@ -211,12 +211,12 @@ public class AddEstimateRowController implements Initializable {
         return checkedObsList;
     }
 
-    public ObservableList<TableItemEst>  getSelectedCheckObs(ObservableList<TableItem> items){
-        ObservableList<TableItemEst>  checkedObsList = FXCollections.observableArrayList();
+    public ObservableList<EstimateTVI>  getSelectedCheckObs(ObservableList<TableItem> items){
+        ObservableList<EstimateTVI>  checkedObsList = FXCollections.observableArrayList();
 
         for (TableItem obsItem : items){
             if(((TableItemCB)obsItem).getCheck() == true){
-                checkedObsList.add(new TableItemEst
+                checkedObsList.add(new EstimateTVI
                                 .Builder()
                                 .setSiteNumber(obsItem.getSiteNumber())
                                 .setTypeHome(obsItem.getTypeHome())

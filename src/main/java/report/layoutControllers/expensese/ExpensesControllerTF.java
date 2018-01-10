@@ -6,10 +6,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import report.entities.items.expenses.TableViewItemExpensesDAO;
-import report.entities.items.period.TableViewItemPeriodDAO;
-import report.entities.items.period.TableItemPeriod;
-import report.entities.items.site.TableItemPreview;
+import report.entities.items.expenses.ExpensesDAO;
+import report.entities.items.period.PeriodDAO;
+import report.entities.items.period.PeriodTIV;
+import report.entities.items.site.PreviewTIV;
 import report.models.numberStringConverters.dateStringConverters.EpochDayStringConverter;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 import report.models_view.nodes.nodes_factories.TableCellFactory;
@@ -62,7 +62,7 @@ public class ExpensesControllerTF {
      * <br>
      * @return TableWrapper(child of TableView)
      */
-    public  static TableWrapper<TableItemPreview> decorProperty_Site(TableView table){
+    public  static TableWrapper<PreviewTIV> decorProperty_Site(TableView table){
         TableWrapper tableWrapper = new TableWrapper(table,null);
 
         tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -98,7 +98,7 @@ public class ExpensesControllerTF {
      * @return TableWrapper(child of TableView)
      */
     public static TableWrapper decorProperty_Expenses(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table, new TableViewItemExpensesDAO());
+        TableWrapper tableWrapper = new TableWrapper(table, new ExpensesDAO());
 
         tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
@@ -117,8 +117,8 @@ public class ExpensesControllerTF {
      * <br>
      * @return TableWrapper(child of TableView)
      */
-    public static TableWrapper<TableItemPeriod> decorProperty_JobPeriod(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table, new TableViewItemPeriodDAO());
+    public static TableWrapper<PeriodTIV> decorProperty_JobPeriod(TableView table){
+        TableWrapper tableWrapper = new TableWrapper(table, new PeriodDAO());
         tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn dateFromColumn = tableWrapper.addColumn("Датаначала",     "dateFrom");

@@ -22,9 +22,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
-import report.entities.items.expenses.TableViewItemExpensesDAO;
-import report.entities.items.period.TableViewItemPeriodDAO;
-import report.entities.items.site.SiteTableViewItemDAO;
+import report.entities.items.expenses.ExpensesTVI;
+import report.entities.items.expenses.ExpensesDAO;
+import report.entities.items.period.PeriodDAO;
+import report.entities.items.site.PreviewTIV;
+import report.entities.items.site.SiteDAO;
 import report.layoutControllers.root.RootLayoutController;
 import report.models.coefficient.Formula;
 import report.models.coefficient.FormulaQuery;
@@ -34,12 +36,10 @@ import report.usage_strings.SQL;
 
 import report.layoutControllers.estimate.EstimateController.Est;
 
-import report.entities.items.expenses.TableItemExpenses;
-import report.entities.items.period.TableItemPeriod;
+import report.entities.items.period.PeriodTIV;
 //import report.models.Formula_test;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 import report.models_view.nodes.nodes_factories.ContextMenuFactory;
-import report.entities.items.site.TableItemPreview;
 import report.models_view.nodes.ContextMenuOptional;
 
 public class ExpensesController implements Initializable {
@@ -54,9 +54,9 @@ public class ExpensesController implements Initializable {
 
 
 
-    private  TableWrapper<TableItemPreview> siteTWrapper ;
-    private  TableWrapper<TableItemExpenses> expensesTWrapper ;
-    private  TableWrapper<TableItemPeriod> periodTWrapper ;
+    private  TableWrapper<PreviewTIV> siteTWrapper ;
+    private  TableWrapper<ExpensesTVI> expensesTWrapper ;
+    private  TableWrapper<PeriodTIV> periodTWrapper ;
 
     @FXML  private ComboBox typeCB;
     @FXML  private DatePicker dateFromDP, dateToDP;
@@ -72,7 +72,7 @@ public class ExpensesController implements Initializable {
      *                                                                                                     PreConstructor
      ********************************************************************************************************************/ 
     {
-//        siteTWrapper.setTableData(FXCollections.observableArrayList(new TableItemPreview(Long.MIN_VALUE, "sss", "SSS", "s")));
+//        siteTWrapper.setTableData(FXCollections.observableArrayList(new PreviewTIV(Long.MIN_VALUE, "sss", "SSS", "s")));
 
         InvalidationListener l = (Observable observable) -> {
             if(CONTRACTOR.getValue().equals(SQL.Line) && TYPE_HOME.getValue().equals(SQL.Line) ){
@@ -119,8 +119,8 @@ public class ExpensesController implements Initializable {
         periodTWrapper = ExpensesControllerTF.decorProperty_JobPeriod(periodTV);
 
         siteTWrapper.setTableData(Est.Common.getPreviewObservableList());
-        expensesTWrapper.setTableData(new TableViewItemExpensesDAO().getData());
-        periodTWrapper.setTableData(new TableViewItemPeriodDAO().getData());
+        expensesTWrapper.setTableData(new ExpensesDAO().getData());
+        periodTWrapper.setTableData(new PeriodDAO().getData());
 
       init_expensesTab();
       init_periodTab();
@@ -186,7 +186,7 @@ public class ExpensesController implements Initializable {
     
 
     private void siteButtonAccess(){
-        siteTWrapper.getItems().addListener((ListChangeListener<? super TableItemPreview>) c -> {
+        siteTWrapper.getItems().addListener((ListChangeListener<? super PreviewTIV>) c -> {
             System.out.println("Changed on " + c + " ExpensesController" );
             siteUndoButton.setDisable(false);
             siteSaveButton.setDisable(false);
@@ -232,7 +232,7 @@ public class ExpensesController implements Initializable {
     @FXML   
     private void hendler_applySiteChanges(ActionEvent event) {
 
-            new SiteTableViewItemDAO().dellAndInsert(siteTWrapper.getItems());
+            new SiteDAO().dellAndInsert(siteTWrapper.getItems());
        
             siteTWrapper.saveTableItems();
             rootController.update_previewTable(Est.Common.getPreviewObservableList());
@@ -268,7 +268,7 @@ public class ExpensesController implements Initializable {
         }else if(typeCB.getSelectionModel().getSelectedItem().equals(" Руб. ")){
             type = 1;
         }       
-             expensesTWrapper.getItems().add(new TableItemExpenses
+             expensesTWrapper.getItems().add(new ExpensesTVI
                                         .Builder()
                                         .setId(new Long(0))
                                         .setsiteNumber(SITE_NUMBER.getValue())
@@ -283,7 +283,7 @@ public class ExpensesController implements Initializable {
  
     @FXML
     private void hendler_addJobPeriod(ActionEvent event) {                   //<===SQL connect
-        periodTWrapper.getItems().add(new TableItemPeriod
+        periodTWrapper.getItems().add(new PeriodTIV
                                         .Builder()
                                         .setsiteNumber(SITE_NUMBER.getValue())
                                         .setContractor(CONTRACTOR.getValue())
@@ -314,7 +314,7 @@ public class ExpensesController implements Initializable {
 
         }
 
-        new SiteTableViewItemDAO().dellAndInsert((Collection<TableItemPreview>) siteTWrapper);
+        new SiteDAO().dellAndInsert((Collection<PreviewTIV>) siteTWrapper);
         siteTWrapper.saveTableItems();
         siteTWrapper.refresh();
 

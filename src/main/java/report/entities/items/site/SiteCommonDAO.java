@@ -33,7 +33,7 @@ public class SiteCommonDAO {
                 
         long lBegin = System.currentTimeMillis();
                
-        ArrayList<TableItemPreview> siteList = new ArrayList<>();
+        ArrayList<PreviewTIV> siteList = new ArrayList<>();
                 
         String psmtmtString = "SELECT [id],[SiteNumber], [Contractor]  FROM dbo.[Site] "
                                    + "WHERE [StatusPayment] LIKE ? "
@@ -50,7 +50,7 @@ public class SiteCommonDAO {
                 ResultSet rs = pstmt.executeQuery();
                 
                 while(rs.next()){
-                    siteList.add(new TableItemPreview( 
+                    siteList.add(new PreviewTIV(
                                       rs.getLong  (SQL.Common.ID),
                                       "",
                                       rs.getObject(SQL.Common.SITE_NUMBER).toString(),
@@ -66,7 +66,7 @@ public class SiteCommonDAO {
        TreeItem<String> rootNode = new TreeItem<>("Участки №");
         
             rootNode.setExpanded(true);
-                for (TableItemPreview site : siteList) {
+                for (PreviewTIV site : siteList) {
                     TreeItem<String> ContratorLeaf = new TreeItem<String>(site.getSecondValue().toString());
                     boolean found = false;
                         for (TreeItem<String> siteNode : rootNode.getChildren()) {
@@ -178,11 +178,11 @@ public class SiteCommonDAO {
         }
     }
 
-    public ObservableList<TableItemPreview> getListIntro(){
+    public ObservableList<PreviewTIV> getListIntro(){
 
 
 
-        ObservableList<TableItemPreview> list = FXCollections.observableArrayList(TableItemPreview.extractor());
+        ObservableList<PreviewTIV> list = FXCollections.observableArrayList(PreviewTIV.extractor());
         String ResultSetString = "BEGIN TRAN;"
                 +"DECLARE @SumCostHouse decimal(28,2) "
                 +", @SumSmetCost decimal(28,2) "
@@ -207,20 +207,20 @@ public class SiteCommonDAO {
             if(rs.next()){
                 list.addAll(
                         //0
-                        new TableItemPreview(rs.getLong("id"),"Date", "Дата последней транзакции", rs.getLong("Date")),
+                        new PreviewTIV(rs.getLong("id"),"Date", "Дата последней транзакции", rs.getLong("Date")),
                         //1
-                        new TableItemPreview(rs.getLong("id"),"OutgoingRest", "Исходящий остаток", rs.getDouble("OutgoingRest")),
+                        new PreviewTIV(rs.getLong("id"),"OutgoingRest", "Исходящий остаток", rs.getDouble("OutgoingRest")),
                         //2
-                        new TableItemPreview(rs.getLong("id"),"Quantity", "Количество Участков", rs.getInt("Quantity")),
+                        new PreviewTIV(rs.getLong("id"),"Quantity", "Количество Участков", rs.getInt("Quantity")),
                         //3
-                        new TableItemPreview(rs.getLong("id"),"SumProfit", "Суммарная прибыль", rs.getDouble("SumProfit"))
+                        new PreviewTIV(rs.getLong("id"),"SumProfit", "Суммарная прибыль", rs.getDouble("SumProfit"))
 
                 );
 
                 //System.out.println(SiteInfoTable.saveEst(0).getFirstValue());
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SiteTableViewItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SiteDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 

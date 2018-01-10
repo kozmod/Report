@@ -60,16 +60,19 @@ public  class TableMemento<E extends TableClone<E>> implements Memento<Collectio
             if(observable.next()) {
                 if (observable.wasAdded()) {
                     insertSet.addAll(observable.getAddedSubList());
-                    System.out.println("\33[31m + Added \33[0m");
-                } else
-                if (observable.wasUpdated()) {
-                    System.out.println("\33[31m + up \33[0m");
-                    deleteSet.add(items.get(observable.getFrom()));
-                    insertSet.add(items.get(observable.getFrom()));
-                } else
-                if (observable.wasRemoved()) {
-                    System.out.println("\33[31m + rem \33[0m");
-                    deleteSet.addAll(observable.getRemoved());
+                    System.out.println("\32[31m + Added \33[0m");
+                } else if (observable.wasUpdated()) {
+                    E item = items.get(observable.getFrom());
+                    if(!insertSet.contains(item)) {
+                        deleteSet.add(item);
+                        insertSet.add(item);
+                        System.out.println("\32[31m + up \33[0m");
+                    }
+                } else if (observable.wasRemoved()) {
+                    List<? extends E> itemList = observable.getRemoved();
+                    insertSet.removeAll(itemList);
+                    deleteSet.addAll(itemList);
+                    System.out.println("\32[31m + rem \33[0m");
                 }
             }
         });

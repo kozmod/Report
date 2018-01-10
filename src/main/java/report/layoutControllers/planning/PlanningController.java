@@ -10,10 +10,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.util.converter.NumberStringConverter;
 import report.entities.items.TableDItem;
-import report.entities.items.osr.TableItemOSR;
-import report.entities.items.plan.TableViewItemPlanDAO;
-import report.entities.items.plan.TableItemFact;
-import report.entities.items.plan.TableItemPlan;
+import report.entities.items.osr.OSR_TIV;
+import report.entities.items.plan.PlanTIV;
+import report.entities.items.plan.PlanDAO;
+import report.entities.items.plan.FactTIV;
 import report.models.coefficient.Quantity;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models_view.nodes.ContextMenuOptional;
@@ -46,9 +46,9 @@ public class PlanningController implements Initializable{
     @FXML private TableView planTable,factTable,osrTable;
     @FXML private TreeTableView<TableDItem> kdTreeTable;
 
-    private TableWrapper<TableItemPlan> planTableWrapper;
-    private TableWrapper<TableItemFact> factTableWrapper;
-    private TableWrapper<TableItemOSR> osrTableWrapper;
+    private TableWrapper<PlanTIV> planTableWrapper;
+    private TableWrapper<FactTIV> factTableWrapper;
+    private TableWrapper<OSR_TIV> osrTableWrapper;
     private DiscountTreeTableWrapper kdTreeTableWrapper;
 
     /*!******************************************************************************************************************
@@ -83,7 +83,7 @@ public class PlanningController implements Initializable{
 
         //add Fact TableView
         factTableWrapper = PlaningControllerTF.decorFact(factTable);
-        factTableWrapper.setTableData(new TableViewItemPlanDAO().getListFact());
+        factTableWrapper.setTableData(new PlanDAO().getListFact());
 
         //table Context menu property
         planTableWrapper.tableView().contextMenuProperty().bind(
@@ -106,7 +106,7 @@ public class PlanningController implements Initializable{
                 .then(true)
                 .otherwise(false));
 
-        planTableWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItemPlan> c) -> {
+        planTableWrapper.getItems().addListener((ListChangeListener.Change<? extends PlanTIV> c) -> {
             System.out.println("Changed on " + c + " - allProperty /// init_PlanTab");
             if(c.next() &&
                     (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
@@ -125,7 +125,7 @@ public class PlanningController implements Initializable{
         ContextMenuOptional.setTableItemContextMenuListener(osrTableWrapper);
 
         computeSumExpTextFields();
-        osrTableWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItemOSR> c) -> {
+        osrTableWrapper.getItems().addListener((ListChangeListener.Change<? extends OSR_TIV> c) -> {
             System.out.println("Changed on " + c + " report.layoutControllers.allPropeties.AllPropertiesController.init_OSRTab()" );
             if(c.next() &&
                     (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
@@ -190,7 +190,7 @@ public class PlanningController implements Initializable{
         double SmetCost = new DoubleStringConverter().fromString(planSmetTF.getText());
         double SaleCost = new DoubleStringConverter().fromString(planSaleTF.getText());
         if(planTableWrapper.getItems()
-                .add(new TableItemPlan(
+                .add(new PlanTIV(
                                 0,
                                 new Timestamp(System.currentTimeMillis()),
                                 (planTableWrapper.getItems().stream()
@@ -234,7 +234,7 @@ public class PlanningController implements Initializable{
         Double expenses = new DoubleStringConverter().fromString(osrAddValueTF.getText());
         Double expensesPerHouse = expenses/ Quantity.value();
         osrTableWrapper.getItems()
-                .add(new TableItemOSR(0,osrAddTextTF.getText(),expenses,expensesPerHouse ));
+                .add(new OSR_TIV(0,osrAddTextTF.getText(),expenses,expensesPerHouse ));
 
 
     }
@@ -247,21 +247,21 @@ public class PlanningController implements Initializable{
         planSmetSumTF.setText(
                 new DoubleStringConverter().toString(
                     planTableWrapper.getItems().stream()
-                            .mapToDouble(TableItemPlan::getSmetCostSum)
+                            .mapToDouble(PlanTIV::getSmetCostSum)
                             .sum()
                 )
         );
         planSaleSumTF.setText(
                 new DoubleStringConverter().toString(
                     planTableWrapper.getItems().stream()
-                            .mapToDouble(TableItemPlan::getSaleCostSum)
+                            .mapToDouble(PlanTIV::getSaleCostSum)
                             .sum()
                 )
         );
         planProfitSumTF.setText(
                 new DoubleStringConverter().toString(
                     planTableWrapper.getItems().stream()
-                            .mapToDouble(TableItemPlan::getProfit)
+                            .mapToDouble(PlanTIV::getProfit)
                             .sum()
                 )
         );
@@ -271,21 +271,21 @@ public class PlanningController implements Initializable{
         factSmetSumTF.setText(
                 new DoubleStringConverter().toString(
                     factTableWrapper.getItems().stream()
-                        .mapToDouble(TableItemFact::getSmetCostSum)
+                        .mapToDouble(FactTIV::getSmetCostSum)
                         .sum()
                 )
         );
         factSaleSumTF.setText(
                 new DoubleStringConverter().toString(
                     factTableWrapper.getItems().stream()
-                        .mapToDouble(TableItemFact::getSaleCostSum)
+                        .mapToDouble(FactTIV::getSaleCostSum)
                         .sum()
             )
         );
         factProfitSumTF.setText(
                 new DoubleStringConverter().toString(
                     factTableWrapper.getItems().stream()
-                        .mapToDouble(TableItemFact::getProfit)
+                        .mapToDouble(FactTIV::getProfit)
                         .sum()
                 )
         );
@@ -326,9 +326,9 @@ public class PlanningController implements Initializable{
     ********************************************************************************************************************/
     private void computeSumExpTextFields(){
         sumExpTF.setText(new DoubleStringConverter().toString(
-                osrTableWrapper.getItems().stream().mapToDouble(TableItemOSR::getExpenses).sum()));
+                osrTableWrapper.getItems().stream().mapToDouble(OSR_TIV::getExpenses).sum()));
         sumExpPerSiteTF.setText(new DoubleStringConverter().toString(
-                osrTableWrapper.getItems().stream().mapToDouble(TableItemOSR::getExpensesPerHouse).sum()));
+                osrTableWrapper.getItems().stream().mapToDouble(OSR_TIV::getExpensesPerHouse).sum()));
     }
 
 }

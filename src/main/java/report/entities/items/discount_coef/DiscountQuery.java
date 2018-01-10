@@ -1,9 +1,9 @@
 package report.entities.items.discount_coef;
 
 import report.entities.CommonDAO;
-import report.entities.items.estimate.TableViewItemEstDAO;
-import report.entities.items.expenses.TableViewItemExpensesDAO;
-import report.entities.items.period.TableViewItemPeriodDAO;
+import report.entities.items.estimate.EstimateDAO;
+import report.entities.items.expenses.ExpensesDAO;
+import report.entities.items.period.PeriodDAO;
 import report.models.sql.SQLconnector;
 import report.usage_strings.SQL;
 import java.sql.*;
@@ -89,7 +89,7 @@ public class DiscountQuery implements CommonDAO<DiscountCoef> {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(TableViewItemPeriodDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PeriodDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return  discountCoef;
     }
@@ -119,7 +119,7 @@ public class DiscountQuery implements CommonDAO<DiscountCoef> {
             connection.commit();
             //add info to LogTextArea /LogController
         } catch (SQLException ex) {
-            Logger.getLogger(TableViewItemExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -212,7 +212,7 @@ public class DiscountQuery implements CommonDAO<DiscountCoef> {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(TableViewItemEstDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EstimateDAO.class.getName()).log(Level.SEVERE, null, ex);
 
         }
     }

@@ -6,21 +6,17 @@ import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
-import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import report.entities.items.TableDItem;
-import report.entities.items.variable.TableItemVariable_new;
-import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
+import report.entities.items.contractor.ContractorTIV;
+import report.entities.items.counterparties.CountAgentTVI;
+import report.entities.items.variable.VariableTIV_new;
 import report.models_view.nodes.node_wrappers.ReverseTableWrapper;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 import report.models_view.nodes.nodes_factories.ContextMenuFactory;
-import report.entities.items.contractor.TableItemContractor;
-import report.entities.items.plan.TableItemPlan;
-import report.entities.items.variable.TableItemVariable;
 import report.models_view.nodes.ContextMenuOptional;
 
 
@@ -48,6 +44,8 @@ public class AllPropertiesController implements Initializable {
     private CheckBox exBodyChB;
     @FXML
     private DatePicker exBodyDP;
+    @FXML
+    private TableView<CountAgentTVI> countAgentTable;
 
 
     /*!******************************************************************************************************************
@@ -71,10 +69,11 @@ public class AllPropertiesController implements Initializable {
     @FXML private Button    contractorAddItemButton, contractorSaveItemButton, contractorCencelItemButton;
 
 
-    private ReverseTableWrapper<TableItemVariable_new> variableTableWrapper ;
-    private TableWrapper<TableItemContractor> contractorTableWrapper;
-    private TableWrapper<TableItemPlan> planTableWrapper;
-    private TableWrapper<TableItemPlan> factTableWrapper ;
+    private ReverseTableWrapper<VariableTIV_new> variableTableWrapper ;
+    private TableWrapper<ContractorTIV> contractorTableWrapper;
+    private TableWrapper<CountAgentTVI> countAgentTableWrapper;
+//    private TableWrapper<PlanTIV> planTableWrapper;
+//    private TableWrapper<PlanTIV> factTableWrapper ;
 
     /*!******************************************************************************************************************
     *                                                                                                         initialize
@@ -97,6 +96,8 @@ public class AllPropertiesController implements Initializable {
         contractorTableWrapper.setDataFromBASE();
         ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapper);
 
+        countAgentTableWrapper = AllPropertiesControllerTF.decorCountAgent(countAgentTable);
+        countAgentTableWrapper.setDataFromBASE();
 //        //add Plan TableView
 //        planTableWrapper = TableFactory.decorPlan(planTable);
 //        planTableWrapper.setDataFromBASE();
@@ -104,7 +105,7 @@ public class AllPropertiesController implements Initializable {
 //
 //        //add Fact TableView
 //        factTableWrapper = TableFactory.decorFact(factTable);
-//        factTableWrapper.setTableData(new TableViewItemPlanDAO().getListFact());
+//        factTableWrapper.setTableData(new PlanDAO().getListFact());
 
 
 //        init_OSRTab();
@@ -122,7 +123,7 @@ public class AllPropertiesController implements Initializable {
 //    private void init_OSRTab(){
 //
 //       computeSumExpTextFields();
-//       osrTableWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItemOSR> c) -> {
+//       osrTableWrapper.getItems().addListener((ListChangeListener.Change<? extends OSR_TIV> c) -> {
 //                System.out.println("Changed on " + c + " report.layoutControllers.allPropeties.AllPropertiesController.init_OSRTab()" );
 //                if(c.next() &&
 //                        (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
@@ -184,7 +185,7 @@ public class AllPropertiesController implements Initializable {
         contractorAddItemButton.disableProperty().bind(contractorEditСheckBox.selectedProperty().not());
 
         contractorTableWrapper.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            TableItemContractor item = (newValue != null) ? newValue : oldValue;
+            ContractorTIV item = (newValue != null) ? newValue : oldValue;
 //            if(newValue != null)item = newValue; else item = oldValue;
             if(newValue != null && oldValue != null){
                 Bindings.unbindBidirectional(contractorNameTF    .textProperty(), oldValue.getContractorProperty());
@@ -202,7 +203,7 @@ public class AllPropertiesController implements Initializable {
                 Bindings.bindBidirectional(contractorCommentsTA.textProperty(), item.getCommentsProperty());
             }
         });
-//        contractorTableWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItemContractor> c) -> {
+//        contractorTableWrapper.getItems().addListener((ListChangeListener.Change<? extends ContractorTIV> c) -> {
 //            System.out.println("init_ContractorTab => Changed on " + c);
 //                if(c.next()){ 
 //                   if(c.wasUpdated())  contractorTableWrapper.getCRUD().addUpdate(contractorTableWrapper.getItems().saveEst(c.getFrom()));
@@ -236,7 +237,7 @@ public class AllPropertiesController implements Initializable {
 //                                    planQuantityTF,
 //                                    planAddItemButton);
 //
-//        planTableWrapper.getItems().addListener((ListChangeListener.Change<? extends TableItemPlan> c) -> {
+//        planTableWrapper.getItems().addListener((ListChangeListener.Change<? extends PlanTIV> c) -> {
 //            System.out.println("Changed on " + c + " - allProperty /// init_PlanTab");
 //            if(c.next() &&
 //                    (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
@@ -254,7 +255,7 @@ public class AllPropertiesController implements Initializable {
 //        Double expenses = new DoubleStringConverter().fromString(osrAddValueTF.getText());
 //        Double expensesPerHouse = expenses/Quantity.value();
 //        osrTableWrapper.getItems()
-//                .add(new TableItemOSR(0,osrAddTextTF.getText(),expenses,expensesPerHouse ));
+//                .add(new OSR_TIV(0,osrAddTextTF.getText(),expenses,expensesPerHouse ));
 //
 //
 //    }
@@ -263,7 +264,7 @@ public class AllPropertiesController implements Initializable {
       if(event.getSource() == contractorAddItemButton){
         setVisibleDisableContractorNodes(true);
         
-            TableItemContractor item = contractorTableWrapper.getSelectionModel().getSelectedItem();
+            ContractorTIV item = contractorTableWrapper.getSelectionModel().getSelectedItem();
                 if((item  != null)&& !contractorTableWrapper.getSelectionModel().isEmpty()){
                     Bindings.unbindBidirectional(contractorNameTF    .textProperty(), item.getContractorProperty());
                     Bindings.unbindBidirectional(contractorDirectorTF.textProperty(), item.getDirectorProperty());
@@ -274,7 +275,7 @@ public class AllPropertiesController implements Initializable {
       }else if(event.getSource() == contractorSaveItemButton){
           setVisibleDisableContractorNodes(false);
           if(
-                  contractorTableWrapper.getItems().add(new TableItemContractor(
+                  contractorTableWrapper.getItems().add(new ContractorTIV(
                                   0,
                                   contractorNameTF.getText(),
                                   contractorDirectorTF.getText(),
@@ -300,7 +301,7 @@ public class AllPropertiesController implements Initializable {
 //        double SaleCost = DecimalFormatter.formatString(planSaleTF.getText());
 //        if(
 //            planTableWrapper.getItems()
-//                .add(new TableItemPlan(
+//                .add(new PlanTIV(
 //                        0,
 //                        new Timestamp(System.currentTimeMillis()),
 //                        (planTableWrapper.getItems().stream().max(Comparator.comparing(f -> f.getTypeID())).get().getTypeID() + 1),
@@ -326,18 +327,18 @@ public class AllPropertiesController implements Initializable {
 ********************************************************************************************************************/
 //    private void computeSumExpTextFields(){
 //        sumExpTF.setText(new DoubleStringConverter().toString(
-//                                osrTableWrapper.getItems().stream().mapToDouble(TableItemOSR::getExpenses).sum()));
+//                                osrTableWrapper.getItems().stream().mapToDouble(OSR_TIV::getExpenses).sum()));
 //        sumExpPerSiteTF.setText(new DoubleStringConverter().toString(
-//                                osrTableWrapper.getItems().stream().mapToDouble(TableItemOSR::getExpensesPerHouse).sum()));
+//                                osrTableWrapper.getItems().stream().mapToDouble(OSR_TIV::getExpensesPerHouse).sum()));
 //    }
 //    private void computeSumPlanTextFields(){
 //
 //        planSmetSumTF.setText(DecimalFormatter.formatNumber(
-//                                    planTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSmetCostSum).sum()));
+//                                    planTableWrapper.getItems().stream().mapToDouble(PlanTIV::getSmetCostSum).sum()));
 //        planSaleSumTF.setText(DecimalFormatter.formatNumber(
-//                                    planTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSaleCostSum).sum()));
+//                                    planTableWrapper.getItems().stream().mapToDouble(PlanTIV::getSaleCostSum).sum()));
 //        planProfitSumTF.setText(DecimalFormatter.formatNumber(
-//                                    planTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getProfit).sum()));
+//                                    planTableWrapper.getItems().stream().mapToDouble(PlanTIV::getProfit).sum()));
 //
 //
 //
@@ -345,11 +346,11 @@ public class AllPropertiesController implements Initializable {
 //
 //    private void computeSumFactTextFields(){
 //        factSmetSumTF.setText(DecimalFormatter.formatNumber(
-//                                    factTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSmetCostSum).sum()));
+//                                    factTableWrapper.getItems().stream().mapToDouble(PlanTIV::getSmetCostSum).sum()));
 //        factSaleSumTF.setText(DecimalFormatter.formatNumber(
-//                                    factTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getSaleCostSum).sum()));
+//                                    factTableWrapper.getItems().stream().mapToDouble(PlanTIV::getSaleCostSum).sum()));
 //        factProfitSumTF.setText(DecimalFormatter.formatNumber(
-//                                    factTableWrapper.getItems().stream().mapToDouble(TableItemPlan::getProfit).sum()));
+//                                    factTableWrapper.getItems().stream().mapToDouble(PlanTIV::getProfit).sum()));
 //
 //
 //    }
