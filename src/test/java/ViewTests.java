@@ -1,8 +1,8 @@
+import helperClasses.FxStageCreator;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
-import org.mockito.Mockito;
 import report.usage_strings.PathStrings;
 
 @FixMethodOrder(MethodSorters.JVM)
