@@ -13,7 +13,7 @@ public class FxStageCreator extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
-        primaryStage.setTitle("TEST");
+        primaryStage.setTitle("TEST Scene");
         primaryStage.setScene(new Scene(root, width, height));
         primaryStage.show();
     }
