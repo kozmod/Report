@@ -48,6 +48,7 @@ public class FxStageCreator extends Application {
     /**
      * <b>**Factory Method**</b>
      * <br>
+     *
      * Launch the application with  set width & height of window.
      * @param width int (width of window)
      * @param height int (height of window)
