@@ -24,7 +24,7 @@ public class FxStageCreator extends Application {
      *                                                                         *
      **************************************************************************/
     /**
-     * <b>Factory Methods</b>
+     * <b>Factory Method</b>
      * <br>
      * Launch the application with default size.
      * @param fxmlPath String (Path of FXML File)
@@ -35,7 +35,7 @@ public class FxStageCreator extends Application {
     }
 
     /**
-     * <b>Factory Methods</b>
+     * <b>Factory Method</b>
      * <br>
      * Launch the application with  "SQUARE" size.
      * @param squareSize int (squareSize size)
@@ -46,7 +46,7 @@ public class FxStageCreator extends Application {
         FxStageCreator.launch(squareSize, squareSize,fxmlPath, args);
     }
     /**
-     * <b>Factory Methods</b>
+     * <b>Factory Method</b>
      * <br>
      * Launch the application with  set width & height of window.
      * @param width int (width of window)
