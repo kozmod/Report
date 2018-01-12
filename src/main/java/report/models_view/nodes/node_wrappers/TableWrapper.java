@@ -24,7 +24,7 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
 
     private  Set<CommittableRow> setAddingCells;
     protected final TableView<E> tableView;
-    protected final TableViewItemDAO<E> DAO;
+    protected  TableViewItemDAO<E> DAO;
     /***************************************************************************
      *                                                                         *
      * CONSTRUCTORS                                                            *
@@ -92,6 +92,12 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
             throw  new NullPointerException(TableWrapper.class.getCanonicalName());
         return DAO;
     }
+//    @Override
+//    public void setDAO(CommonDAO dao) {
+//        this.DAO = dao;
+//
+//    }
+
     @Override
     public ContextMenu getContextMenu(){ return tableView.getContextMenu();}
     @Override
