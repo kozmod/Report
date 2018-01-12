@@ -2,13 +2,14 @@
 package report.models.printer;
 
 import java.nio.file.Path;
+import java.util.Collection;
 import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import report.entities.TableViewItemDAO;
+import report.entities.CommonDAO;
 import report.entities.items.contractor.ContractorTIV;
 import report.usage_strings.SQL;
 import report.layoutControllers.estimate.EstimateController.Est;
@@ -25,8 +26,8 @@ public class PrintEstimate extends AbstractPrinterXML{
     private ContractorTIV contractorObject;
     
     //Constructor =====================================================================================================================    
-    public PrintEstimate(TableViewItemDAO dao) {
-        this.obsKS = FXCollections.observableArrayList( dao.getData());
+    public PrintEstimate(CommonDAO dao) {
+        this.obsKS = FXCollections.observableArrayList((Collection<? extends TableItem>) dao.getData());
 
 
         doc = buildDocument("\\lib\\XML_Models\\Смета.xml");

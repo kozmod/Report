@@ -10,7 +10,7 @@ import report.usage_strings.PathStrings;
 import java.awt.*;
 
 public class FxTestStage extends Application {
-    private static FxTestStage instance;
+    private static Stage primaryStage;
     private  static String fxmlFile;
     private  static int width;
     private  static  int height;
@@ -20,25 +20,14 @@ public class FxTestStage extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        this.primaryStage = primaryStage;
         Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
         primaryStage.setTitle("TEST Scene");
         primaryStage.setScene(new Scene(root, width, height));
         primaryStage.show();
     }
 
-    public FxTestStage() {
-        instance = this;
-    }
 
-    public synchronized  static FxTestStage getInstance() {
-        if (instance == null) {
-            new Thread(()->{
-                FxTestStage.launch( PathStrings.Layout.ALL_PROPERTIES);
-            }).start();
-
-        }
-        return instance;
-    }
 /***************************************************************************
      *                                                                         *
      * Factory Methods                                                         *
@@ -58,9 +47,11 @@ public class FxTestStage extends Application {
                 args[0],
                 args
         );
-
     }
 
+    public static Stage getS(){
+        return primaryStage;
+    }
     /**
      * <b>**Factory Method**</b>
      * <br>

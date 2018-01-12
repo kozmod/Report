@@ -2,7 +2,7 @@ package report.layoutControllers.addEstimateRow;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import report.entities.TableViewItemDAO;
+import report.entities.CommonDAO;
 import report.entities.items.cb.TableItemCB;
 import report.entities.items.estimate.EstimateDAO;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
@@ -22,7 +22,7 @@ public class AddEstimateRowTF {
      */
     @SuppressWarnings("unchecked")
     public static TableWrapperEST decorEst_add(TableView table){
-        TableViewItemDAO dao = new EstimateDAO();
+        CommonDAO dao = new EstimateDAO();
         TableWrapperEST<TableItemCB> tableWrapper = new TableWrapperEST<>(table, dao);
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

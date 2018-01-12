@@ -1,7 +1,7 @@
 
 package report.entities.items.osr;
 
-import report.entities.TableViewItemDAO;
+import report.entities.CommonDAO;
 import report.layoutControllers.LogController;
 import report.models.coefficient.Quantity;
 import report.usage_strings.SQL;
@@ -19,7 +19,7 @@ import javafx.collections.ObservableList;
 import report.models.sql.SQLconnector;
 
 
-public class OSR_DAO implements TableViewItemDAO<OSR_TIV> {
+public class OSR_DAO implements CommonDAO<Collection<OSR_TIV>> {
 
     /**
     * Get String of a Mirror (SQL.Tables).

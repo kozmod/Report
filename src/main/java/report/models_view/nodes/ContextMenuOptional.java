@@ -14,7 +14,6 @@ import javafx.scene.control.SeparatorMenuItem;
 
 import report.entities.CommonDAO;
 import report.entities.Reverse;
-import report.entities.TableViewItemDAO;
 import report.entities.items.TableClone;
 import report.entities.items.TableDItem;
 import report.models.mementos.TableMemento;
@@ -188,7 +187,7 @@ public class ContextMenuOptional extends ContextMenu{
             return this;
         }
 
-        public Builder addPrintSmeta(TableViewItemDAO dao) {
+        public Builder addPrintSmeta(CommonDAO dao) {
              printSmeta     = new MenuItem("Выгрузить смету");
             printSmeta.setOnAction(event -> {
                 new PrintEstimate(dao);

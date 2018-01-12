@@ -1,7 +1,7 @@
 
 package report.entities.items.site;
 
-import report.entities.TableViewItemDAO;
+import report.entities.CommonDAO;
 import report.entities.items.estimate.EstimateDAO;
 import report.layoutControllers.LogController;
 import report.usage_strings.SQL;
@@ -19,7 +19,7 @@ import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.sql.SQLconnector;
 
 
-public class SiteDAO implements TableViewItemDAO<PreviewTIV> {
+public class SiteDAO implements CommonDAO<Collection<PreviewTIV>> {
     
     private String siteNumber, contractor;
     

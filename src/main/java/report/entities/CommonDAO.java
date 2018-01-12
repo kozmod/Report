@@ -19,7 +19,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public interface CommonDAO<C> extends TableDataBaseName{
-    C getData();
+    <E>E getData();
     void delete(C entry);
     void insert(C  entry);
     /**
@@ -54,7 +54,7 @@ public interface CommonDAO<C> extends TableDataBaseName{
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(TableViewItemDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CommonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return  FXCollections.observableArrayList(disSet);
     }

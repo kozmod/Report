@@ -5,7 +5,7 @@
  */
 package report.entities.items.period;
 
-import report.entities.TableViewItemDAO;
+import report.entities.CommonDAO;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -21,7 +21,7 @@ import report.layoutControllers.LogController;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.sql.SQLconnector;
 
-public class PeriodDAO implements TableViewItemDAO<PeriodTIV> {
+public class PeriodDAO implements CommonDAO<Collection<PeriodTIV>> {
 
     /**
     * Get String of a Mirror (SQL.Tables).

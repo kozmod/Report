@@ -1,7 +1,8 @@
 
 package report.entities.items.KS;
 
-import report.entities.TableViewItemDAO;
+
+import report.entities.CommonDAO;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
 import java.sql.Connection;
@@ -21,7 +22,7 @@ import report.models.sql.SQLconnector;
 import report.entities.items.TableItem;
 
 
-public class KS_DAO implements TableViewItemDAO<KS_TIV> {
+public class KS_DAO implements CommonDAO<Collection<KS_TIV>> {
     
     private Est enumEst;
     
@@ -393,7 +394,7 @@ public class KS_DAO implements TableViewItemDAO<KS_TIV> {
 //    public void dellAndInsert(Collection<KS_TIV> dellItem, Collection<KS_TIV> newItem){
     @Override
     public void dellAndInsert(Memento<Collection<KS_TIV>> memento){
-        TableViewItemDAO.super.dellAndInsert(memento);
+        CommonDAO.super.dellAndInsert(memento);
         //??????????
 //        table.updateTableFromSQL(this.getOneKSList(Est.KS, ksNumber ));
         Est.KS.updateList_DL(this);

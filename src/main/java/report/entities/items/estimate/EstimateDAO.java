@@ -1,7 +1,7 @@
 
 package report.entities.items.estimate;
 
-import report.entities.TableViewItemDAO;
+import report.entities.CommonDAO;
 import report.layoutControllers.LogController;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
@@ -24,7 +24,7 @@ import report.entities.items.TableItem;
 import report.entities.items.cb.TableItemCB;
 
 
-public class EstimateDAO implements TableViewItemDAO<EstimateTVI> {
+public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
 
     private Est enumEst;
     private String tableName = SQL.Tables.ESTIMATE;
@@ -564,7 +564,7 @@ public class EstimateDAO implements TableViewItemDAO<EstimateTVI> {
 //           || diffList.exElements().size() > 0) delete(diffList.exElements());
 //        if(diffList.newElements()  != null 
 //           || diffList.newElements().size()  > 0) insert(diffList.newElements());     
-        TableViewItemDAO.super.dellAndInsert(memento);
+        CommonDAO.super.dellAndInsert(memento);
        //?????????????
 //        table.updateTableFromSQL(this.getOneBildingPartList(Est.Base, table.getTitle()));
         Est.Base.updateList_DL(this);

@@ -6,8 +6,10 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
-import report.entities.TableViewItemDAO;
+import report.entities.CommonDAO;
 import report.entities.items.TableItem;
+
+import java.util.Collection;
 
 
 public  class TableWrapperEST<E extends TableItem> extends TableWrapper<E> {
@@ -26,10 +28,10 @@ public  class TableWrapperEST<E extends TableItem> extends TableWrapper<E> {
     *                                                                                                       CONSTRUCTORS
     ********************************************************************************************************************/
 
-    public TableWrapperEST(TableView<E> table,TableViewItemDAO<E> dao) {
+    public TableWrapperEST(TableView<E> table,CommonDAO<Collection<E>> dao) {
         super("TEST EST TITLE",table,dao);
     }
-    public TableWrapperEST(String title, TableView<E> table, TableViewItemDAO<E> dao) {
+    public TableWrapperEST(String title, TableView<E> table, CommonDAO<Collection<E>>  dao) {
         super(title,table,dao);
     }
 

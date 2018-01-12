@@ -75,48 +75,34 @@ public class AllPropertiesController implements Initializable {
 //    private TableWrapper<PlanTIV> planTableWrapper;
 //    private TableWrapper<PlanTIV> factTableWrapper ;
 
-    /*!******************************************************************************************************************
-    *                                                                                                         initialize
-    ********************************************************************************************************************/
+    /***************************************************************************
+     *                                                                         *
+     * Initialize                                                              *
+     *                                                                         *
+     **************************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-////        //add OSR TableView
-//        osrTableWrapper = AllPropertiesControllerTF.decorOSR(osrTable);
-//        osrTableWrapper.setDataFromBASE();
-//        ContextMenuOptional.setTableItemContextMenuListener(osrTableWrapper);
-
-//        //add OSR TableView
+        //        //add OSR TableView
         variableTableWrapper = AllPropertiesControllerTF.decorVariable(variableTable);
-        variableTableWrapper.setDataFromBASE();
-//        ContextMenuOptional.setTableItemContextMenuListener(variableTableWrapper);
-
-
         //add Contractors TableView
         contractorTableWrapper = AllPropertiesControllerTF.decorContractor(contractorTable);
-        contractorTableWrapper.setDataFromBASE();
         ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapper);
 
         countAgentTableWrapper = AllPropertiesControllerTF.decorCountAgent(countAgentTable);
-        countAgentTableWrapper.setDataFromBASE();
-//        //add Plan TableView
-//        planTableWrapper = TableFactory.decorPlan(planTable);
-//        planTableWrapper.setDataFromBASE();
-//        ContextMenuOptional.setTableItemContextMenuListener(planTableWrapper);
-//
-//        //add Fact TableView
-//        factTableWrapper = TableFactory.decorFact(factTable);
-//        factTableWrapper.setTableData(new PlanDAO().getListFact());
-
-
-//        init_OSRTab();
+        ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapper);
         init_VariableTab();
         init_ContractorTab();
-//        init_PlanTab();
+        this.initData();
     }
-    
-/*!******************************************************************************************************************
-*                                                                                                               INIT
-********************************************************************************************************************/
+
+    /**
+     * Init data from Base
+     */
+    public void initData(){
+        variableTableWrapper.setDataFromBASE();
+        contractorTableWrapper.setDataFromBASE();
+        countAgentTableWrapper.setDataFromBASE();
+    }
 //    /**
 //     * Initialization of OSR Tab.
 //     */
@@ -147,6 +133,14 @@ public class AllPropertiesController implements Initializable {
 //       siteQuantityTF.textProperty().bindBidirectional(Quantity.getQuantityProperty(), new NumberStringConverter());
 //
 //    }
+
+    /***************************************************************************
+     *                                                                         *
+     * Initialize                                                              *
+     *                                                                         *
+     **************************************************************************/
+
+
     
      /**
      * Initialization of Variable Tab. 

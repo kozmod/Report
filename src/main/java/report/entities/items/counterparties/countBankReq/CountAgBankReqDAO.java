@@ -2,7 +2,7 @@ package report.entities.items.counterparties.countBankReq;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.entities.TableViewItemDAO;
+import report.entities.CommonDAO;
 import report.entities.items.expenses.ExpensesDAO;
 import report.models.sql.SQLconnector;
 import report.usage_strings.SQL;
@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CountAgBankReqDAO implements TableViewItemDAO<CountAgBankReq>{
+public class CountAgBankReqDAO implements CommonDAO<Collection<CountAgBankReq>>{
 
     /***************************************************************************
      *                                                                         *

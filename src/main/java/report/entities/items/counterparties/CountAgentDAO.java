@@ -2,7 +2,8 @@ package report.entities.items.counterparties;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.entities.TableViewItemDAO;
+
+import report.entities.CommonDAO;
 import report.entities.items.expenses.ExpensesDAO;
 import report.layoutControllers.estimate.EstimateController;
 import report.models.sql.SQLconnector;
@@ -16,7 +17,7 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CountAgentDAO implements TableViewItemDAO<CountAgentTVI> {
+public class CountAgentDAO implements CommonDAO<Collection<CountAgentTVI>> {
 
 
     @Override

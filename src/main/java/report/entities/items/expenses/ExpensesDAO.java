@@ -1,7 +1,7 @@
 
 package report.entities.items.expenses;
 
-import report.entities.TableViewItemDAO;
+import report.entities.CommonDAO;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +18,7 @@ import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.sql.SQLconnector;
 
 
-public class ExpensesDAO implements TableViewItemDAO<ExpensesTVI> {
+public class ExpensesDAO implements CommonDAO<Collection<ExpensesTVI>> {
 
     
     /**

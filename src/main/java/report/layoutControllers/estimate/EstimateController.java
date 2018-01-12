@@ -27,7 +27,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import report.entities.TableViewItemDAO;
+import report.entities.CommonDAO;
 import report.entities.items.KS.KS_TIV;
 import report.entities.items.TableItem;
 import report.entities.items.estimate.EstimateDAO;
@@ -134,7 +134,7 @@ public class EstimateController implements Initializable {
                 return FXCollections.observableArrayList();
         }
 
-        public void updateList_DL(TableViewItemDAO dao){ allItems = dao.getData();}
+        public void updateList_DL(CommonDAO dao){ allItems = (ObservableList<? extends TableItem>) dao.getData();}
 //        public void updateList_DL(){ createTab();}
 
 

@@ -1,8 +1,8 @@
 
 package report.entities.items.contractor;
 
-import report.entities.TableViewItemDAO;
 
+import report.entities.CommonDAO;
 import report.entities.items.osr.OSR_DAO;
 import report.layoutControllers.LogController;
 import report.usage_strings.SQL;
@@ -19,7 +19,7 @@ import javafx.collections.ObservableList;
 import report.models.sql.SQLconnector;
 
 
-public class ContractorDAO implements TableViewItemDAO<ContractorTIV> {
+public class ContractorDAO implements CommonDAO<Collection<ContractorTIV>> {
 
     @Override
     public String sqlTableName() {

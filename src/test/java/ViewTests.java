@@ -1,4 +1,4 @@
-import helperClasses.FxStageCreator;
+import helperClasses.FxTestStage;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,11 +12,11 @@ public class ViewTests {
     @Test
     @DisplayName("Общие параметры")
     public void allPropLayoutTest(){
-        FxStageCreator.launch(
-                1200,
-                1000,
+        FxTestStage.launch(
                 PathStrings.Layout.ALL_PROPERTIES
         );
+        FxTestStage.getS();
+//        FxTestStage.launch();
 
     }
 }

@@ -11,7 +11,6 @@ import javafx.scene.control.TableView.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import report.entities.CommonDAO;
-import report.entities.TableViewItemDAO;
 import report.entities.items.ID;
 import report.entities.items.TableClone;
 import report.models.mementos.Memento;
@@ -24,17 +23,17 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
 
     private  Set<CommittableRow> setAddingCells;
     protected final TableView<E> tableView;
-    protected  TableViewItemDAO<E> DAO;
+    protected  CommonDAO<Collection<E>> DAO;
     /***************************************************************************
      *                                                                         *
      * CONSTRUCTORS                                                            *
      *                                                                         *
      **************************************************************************/
-    public TableWrapper (TableView<E> table,TableViewItemDAO<E> commonDao) {
+    public TableWrapper (TableView<E> table,CommonDAO<Collection<E>> commonDao) {
         this("TEST TITLE",table, commonDao);
     }
 
-    public TableWrapper(String title, TableView<E> table, TableViewItemDAO<E> commonDao) {
+    public TableWrapper(String title, TableView<E> table, CommonDAO<Collection<E>> commonDao) {
         super(title);
         this.DAO = commonDao;
         tableView = table;
@@ -87,7 +86,7 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
      *                                                                         *
      **************************************************************************/
     @Override
-    public TableViewItemDAO getDAO() {
+    public CommonDAO<Collection<E>> getDAO() {
         if(this.DAO == null)
             throw  new NullPointerException(TableWrapper.class.getCanonicalName());
         return DAO;

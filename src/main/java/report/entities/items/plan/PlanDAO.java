@@ -1,7 +1,8 @@
 
 package report.entities.items.plan;
 
-import report.entities.TableViewItemDAO;
+
+import report.entities.CommonDAO;
 import report.entities.items.KS.KS_DAO;
 import report.models.coefficient.Quantity;
 import report.models.mementos.Memento;
@@ -22,7 +23,7 @@ import report.layoutControllers.LogController;
 import report.models.sql.SQLconnector;
 
 
-public class PlanDAO implements TableViewItemDAO<PlanTIV> {
+public class PlanDAO implements CommonDAO<Collection<PlanTIV>> {
 
    /**
     * 
@@ -236,7 +237,7 @@ public class PlanDAO implements TableViewItemDAO<PlanTIV> {
 
     @Override
     public void dellAndInsert(Memento<Collection<PlanTIV>> memento) {
-        TableViewItemDAO.super.dellAndInsert(memento);
+        CommonDAO.super.dellAndInsert(memento);
         //????????????????????????????????????????????
         Quantity.updateFromBase();
 //        table. setDataFromBASE();
