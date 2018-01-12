@@ -65,6 +65,9 @@ public abstract class AbstractTableWrapper<E> {
 //        return commonDao;
 //    }
 
+//    public abstract void setDAO(CommonDAO dao);
+
+
     /**
      * Send data to SQL.
      */
