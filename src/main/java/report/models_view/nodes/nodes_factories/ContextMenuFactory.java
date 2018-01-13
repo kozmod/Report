@@ -31,7 +31,7 @@ public class ContextMenuFactory {
                                 .loadNewWindow();
                         AddEstimateRowController controllerAddRow = addSiteRowLayout.getController();
                         controllerAddRow.setRootTableView(tableWrapperView);
-                        addSiteRowLayout.getStage().show();
+//                        addSiteRowLayout.getStage().show();
                     })
                     .addRemoveMenuItem()
                     .addSeparator()
@@ -52,7 +52,7 @@ public class ContextMenuFactory {
                     AddEstimateRowController controllerAddRow = addSiteRowLayout.getController();
                     controllerAddRow.setRootTableView(tableWrapperView);
 //                                                            controllerAddRow.setAditionalTableView(Est.Additional.getAllItemsList_Live());
-                    addSiteRowLayout.getStage().show();
+//                    addSiteRowLayout.getStage().show();
                 })
                 .addSeparator()
                 .addSaveMenuItem()

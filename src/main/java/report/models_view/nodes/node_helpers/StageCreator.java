@@ -62,7 +62,7 @@ public class StageCreator extends FXMLLoader{
             stage = new Stage();
             stage.setScene(new Scene(root));
             stage.setTitle(stageName);
-             
+            stage.show();
         } catch (IOException ex) {
             Logger.getLogger(StageCreator.class.getName()).log(Level.SEVERE, null, ex);
         }

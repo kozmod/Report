@@ -145,15 +145,15 @@ class AllPropertiesControllerTF implements TableFactory {
      */
     static TableWrapper<CountAgentTVI> decorCountAgent(TableView<CountAgentTVI> table){
         //TODO: delete Mock -> CountAgentTVI
-        CountAgentDAO dao =  Mockito.mock(CountAgentDAO.class);
-        ObservableList<CountAgentTVI> list = FXCollections.observableArrayList(CountAgentTVI.extractor());
-        list.addAll(new CountAgentTVI(1,"GREM", "OOO"," ИП"),
-                    new CountAgentTVI(2,"УЮТ", "OфO"," Подрядчик"),
-                    new CountAgentTVI(3,"САРАЙ", "ААO","Клиент")
-        );
-        Mockito.when(dao.getData()).thenReturn(list);
+//        CountAgentDAO dao =  Mockito.mock(CountAgentDAO.class);
+//        ObservableList<CountAgentTVI> list = FXCollections.observableArrayList(CountAgentTVI.extractor());
+//        list.addAll(new CountAgentTVI(1,"GREM", "OOO"," ИП"),
+//                    new CountAgentTVI(2,"УЮТ", "OфO"," Подрядчик"),
+//                    new CountAgentTVI(3,"САРАЙ", "ААO","Клиент")
+//        );
+//        Mockito.when(dao.getData()).thenReturn(list);
 
-        TableWrapper<CountAgentTVI> tableWrapper = new TableWrapper<>(table,dao);
+        TableWrapper<CountAgentTVI> tableWrapper = new TableWrapper(table,new CountAgentDAO());
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn<CountAgentTVI,String> formColumn

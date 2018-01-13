@@ -1,5 +1,6 @@
 package report.models_view.nodes.node_wrappers;
 
+import com.sun.istack.internal.NotNull;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ContextMenu;
@@ -8,16 +9,14 @@ import javafx.scene.control.TableSelectionModel;
 import report.entities.CommonDAO;
 import report.models.mementos.Memento;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class AbstractTableWrapper<E> {
 
     Memento<E> memento;
     final String title;
-//    final CommonDAO<E> commonDao;
+    CommonDAO<E> DAO;
+
     /***************************************************************************
      *                                                                         *
      * CONSTRUCTORS                                                            *
@@ -59,14 +58,14 @@ public abstract class AbstractTableWrapper<E> {
     /**
      * Get DAO.
      */
-    public abstract CommonDAO getDAO() ;
-//        if(this.commonDao == null)
-//            throw  new NullPointerException(TableWrapper.class.getCanonicalName());
-//        return commonDao;
-//    }
-
-
-
+    public CommonDAO<E> getDAO() {
+        if(this.DAO == null)
+            throw  new NullPointerException(TableWrapper.class.getCanonicalName());
+        return DAO;
+    }
+    public void setDAO(@NotNull final CommonDAO<E> dao) {
+        this.DAO = dao;
+    }
 
     /**
      * Send data to SQL.

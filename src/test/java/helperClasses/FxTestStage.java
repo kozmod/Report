@@ -5,30 +5,58 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.usage_strings.PathStrings;
 
 import java.awt.*;
+import java.lang.reflect.Field;
 
 public class FxTestStage extends Application {
-    private static Stage primaryStage;
     private  static String fxmlFile;
     private  static int width;
     private  static  int height;
-
-
+    private  Stage primaryStage;
+    private static  Object controller;
 
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        this.primaryStage = primaryStage;
-        Parent root = FXMLLoader.load(getClass().getResource(fxmlFile));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
+        Parent root = loader.load();
         primaryStage.setTitle("TEST Scene");
         primaryStage.setScene(new Scene(root, width, height));
+        this.controller = loader.getController();
+        this.primaryStage = primaryStage;
         primaryStage.show();
+
     }
 
+    public FxTestStage() {
+    }
 
-/***************************************************************************
+    /***************************************************************************
+     *                                                                         *
+     * Methods                                                                 *
+     *                                                                         *
+     **************************************************************************/
+
+    public static <T> T controller(){
+        return (T) controller;
+    }
+
+    /***************************************************************************
+     *                                                                         *
+     * Reflection's Methods                                                    *
+     *                                                                         *
+     **************************************************************************/
+    public static <T> T getField(String field) throws NoSuchFieldException, IllegalAccessException {
+        Field wrapperField = controller.getClass().getDeclaredField(field);
+        wrapperField.setAccessible(true);
+
+        return (T)  wrapperField.get(controller);
+    }
+
+    /***************************************************************************
      *                                                                         *
      * Factory Methods                                                         *
      *                                                                         *
@@ -38,19 +66,15 @@ public class FxTestStage extends Application {
      * <br>
      * Launch the application with default size.
      */
-    public static void launch(String[] args) {
+    public  static  void launchApp(String... args) {
         Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
         if(args.length > 0)
-        FxTestStage.launch(
+        FxTestStage.launchApp(
                 screenSize.width-200,
                 screenSize.height-200,
                 args[0],
                 args
         );
-    }
-
-    public static Stage getS(){
-        return primaryStage;
     }
     /**
      * <b>**Factory Method**</b>
@@ -60,8 +84,9 @@ public class FxTestStage extends Application {
      * @param fxmlPath String (Path of FXML File)
      * @param args String[] (args)
      */
-    public static void launch(int squareSize, String fxmlPath, String ... args) {
-        FxTestStage.launch(squareSize, squareSize,fxmlPath, args);
+    public static void launchApp(int squareSize, String fxmlPath, String ... args) {
+        FxTestStage.launchApp(squareSize, squareSize,fxmlPath, args);
+
     }
     /**
      * <b>**Factory Method**</b>
@@ -72,11 +97,11 @@ public class FxTestStage extends Application {
      * @param fxmlPath String (Path of FXML File)
      * @param args String[] (args)
      */
-    public static void launch(int width,int height, String fxmlPath, String ... args) {
+    public static void launchApp(int width,int height, String fxmlPath, String ... args) {
         FxTestStage.width = width;
         FxTestStage.height = height;
         FxTestStage.fxmlFile = fxmlPath;
         if(args.length > 0)
-        Application.launch(args);
+            Application.launch(args);
     }
 }

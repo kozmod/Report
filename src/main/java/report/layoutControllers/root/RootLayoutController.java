@@ -18,6 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 import report.layoutControllers.*;
+import report.layoutControllers.allPropeties.AllPropertiesController;
 import report.layoutControllers.estimate.EstimateController;
 import report.layoutControllers.expensese.ExpensesController;
 import report.layoutControllers.expensese.ExpensesControllerTF;
@@ -221,7 +222,6 @@ public class RootLayoutController implements Initializable {
     private void handle_AccountFilter(ActionEvent event) {
         StageCreator corFilterLayout
                         = new StageCreator(PathStrings.Layout.COR_FILTER, "Фильр / Выписка").loadNewWindow();
-         corFilterLayout.getStage().show();
 
     }
 
@@ -229,13 +229,13 @@ public class RootLayoutController implements Initializable {
     private void handle_Log(ActionEvent event) {
         StageCreator logLayout
                         = new StageCreator(PathStrings.Layout.LOG, "Log").loadNewWindow();
-        logLayout.getStage().show();
+
     }
     @FXML
     private void handle_CommonProperties(ActionEvent event) {
         StageCreator allPropLayout
                         = new StageCreator(PathStrings.Layout.ALL_PROPERTIES, "Общие параметры").loadNewWindow();
-        allPropLayout.getStage().show();
+        allPropLayout.<AllPropertiesController>getController().initData();
     }
 
     @FXML
@@ -245,7 +245,6 @@ public class RootLayoutController implements Initializable {
         siteAddController = siteAddLayout.getController();
         siteAddController.setRootController(getRootController());
 
-        siteAddLayout.getStage().show();
 
     }
 
@@ -398,7 +397,7 @@ public class RootLayoutController implements Initializable {
                     expensesController.setControllerStage(expensesLayout.getStage());
 //                    expensesController.setPreviewOBS(previewTableObs);
                     expensesLayout.getStage().setResizable(false);
-                    expensesLayout.getStage().show();
+//                    expensesLayout.getStage().show();
                 }
             });
             contAddItem.setOnAction(new EventHandler<ActionEvent>() {
@@ -411,7 +410,7 @@ public class RootLayoutController implements Initializable {
                     contAddController.setRootController(getRootController());
                     contAddController.init_InfLabels(selectedTreeElemParent);
                     contAddController.setTreeViewSite(treeViewSite);
-                    contAddLayout.getStage().show();
+//                    contAddLayout.getStage().show();
                     }
             });
             contDelItem.setOnAction(new EventHandler<ActionEvent>() {
@@ -423,7 +422,7 @@ public class RootLayoutController implements Initializable {
                     delController = delLayout.getController();
                     delController.setRootController(getRootController());
                     delController.init_delLabels(selectedTreeElem, selectedTreeElemParent);
-                    delLayout.getStage().show();
+//                    delLayout.getStage().show();
                 }
             });
 

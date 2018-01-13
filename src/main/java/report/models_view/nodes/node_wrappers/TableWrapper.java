@@ -23,17 +23,17 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
 
     private  Set<CommittableRow> setAddingCells;
     protected final TableView<E> tableView;
-    protected  CommonDAO<Collection<E>> DAO;
+
     /***************************************************************************
      *                                                                         *
      * CONSTRUCTORS                                                            *
      *                                                                         *
      **************************************************************************/
-    public TableWrapper (TableView<E> table,CommonDAO<Collection<E>> commonDao) {
+    public TableWrapper (TableView<E> table,CommonDAO<ObservableList<E>> commonDao) {
         this("TEST TITLE",table, commonDao);
     }
 
-    public TableWrapper(String title, TableView<E> table, CommonDAO<Collection<E>> commonDao) {
+    public TableWrapper(String title, TableView<E> table, CommonDAO<ObservableList<E>> commonDao) {
         super(title);
         this.DAO = commonDao;
         tableView = table;
@@ -85,12 +85,7 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
      * Getters/Setters                                                         *
      *                                                                         *
      **************************************************************************/
-    @Override
-    public CommonDAO<Collection<E>> getDAO() {
-        if(this.DAO == null)
-            throw  new NullPointerException(TableWrapper.class.getCanonicalName());
-        return DAO;
-    }
+
 //    @Override
 //    public void setDAO(CommonDAO dao) {
 //        this.DAO = dao;

@@ -69,7 +69,7 @@ public class AllPropertiesController implements Initializable {
     @FXML private Button    contractorAddItemButton, contractorSaveItemButton, contractorCencelItemButton;
 
 
-    private ReverseTableWrapper<VariableTIV_new> variableTableWrapper ;
+    public ReverseTableWrapper<VariableTIV_new> variableTableWrapper ;
     private TableWrapper<ContractorTIV> contractorTableWrapper;
     private TableWrapper<CountAgentTVI> countAgentTableWrapper;
 //    private TableWrapper<PlanTIV> planTableWrapper;
@@ -92,11 +92,11 @@ public class AllPropertiesController implements Initializable {
         ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapper);
         init_VariableTab();
         init_ContractorTab();
-        this.initData();
+//        this.initData();
     }
 
     /**
-     * Init data from Base
+     * Init Data from Base
      */
     public void initData(){
         variableTableWrapper.setDataFromBASE();

@@ -486,8 +486,7 @@ public class EstimateController implements Initializable {
             StageCreator siteAddLayout = new StageCreator(PathStrings.Layout.ADD_KS, "Добавить KC").loadNewWindow();
             ksAddController = siteAddLayout.getController();
             ksAddController.setShowEstController(this);
-
-            siteAddLayout.getStage().show();
+//            siteAddLayout.getStage().show();
         } else {
             System.out.println(">>> Измененая смета (Ch) НЕ существует !!! ");
         }
