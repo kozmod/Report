@@ -18,7 +18,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 import report.layoutControllers.*;
-import report.layoutControllers.allPropeties.AllPropertiesController;
+import report.layoutControllers.allProperties.AllPropertiesController;
 import report.layoutControllers.estimate.EstimateController;
 import report.layoutControllers.expensese.ExpensesController;
 import report.layoutControllers.expensese.ExpensesControllerTF;

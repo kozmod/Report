@@ -1,5 +1,5 @@
 
-package report.layoutControllers.allPropeties;
+package report.layoutControllers.allProperties;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -75,6 +75,7 @@ public class AllPropertiesController implements Initializable {
 //    private TableWrapper<PlanTIV> planTableWrapper;
 //    private TableWrapper<PlanTIV> factTableWrapper ;
 
+
     /***************************************************************************
      *                                                                         *
      * Initialize                                                              *
@@ -110,7 +111,7 @@ public class AllPropertiesController implements Initializable {
 //
 //       computeSumExpTextFields();
 //       osrTableWrapper.getItems().addListener((ListChangeListener.Change<? extends OSR_TIV> c) -> {
-//                System.out.println("Changed on " + c + " report.layoutControllers.allPropeties.AllPropertiesController.init_OSRTab()" );
+//                System.out.println("Changed on " + c + " report.layoutControllers.allProperties.AllPropertiesController.init_OSRTab()" );
 //                if(c.next() &&
 //                        (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
 //                            computeSumExpTextFields();

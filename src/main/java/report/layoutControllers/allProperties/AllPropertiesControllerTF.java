@@ -1,12 +1,9 @@
-package report.layoutControllers.allPropeties;
+package report.layoutControllers.allProperties;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import org.mockito.Mockito;
 import report.entities.items.TableDItem;
 import report.entities.items.contractor.ContractorDAO;
 import report.entities.items.counterparties.CountAgentTVI;

@@ -126,7 +126,7 @@ public class PlanningController implements Initializable{
 
         computeSumExpTextFields();
         osrTableWrapper.getItems().addListener((ListChangeListener.Change<? extends OSR_TIV> c) -> {
-            System.out.println("Changed on " + c + " report.layoutControllers.allPropeties.AllPropertiesController.init_OSRTab()" );
+            System.out.println("Changed on " + c + " report.layoutControllers.allProperties.AllPropertiesController.init_OSRTab()" );
             if(c.next() &&
                     (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
                 computeSumExpTextFields();
