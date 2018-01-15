@@ -4,6 +4,8 @@ package report.layoutControllers.addEstimateRow;
 import java.net.URL;
 import java.sql.Timestamp;
 import java.util.ResourceBundle;
+import java.util.stream.Collectors;
+
 import javafx.animation.PauseTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -43,7 +45,8 @@ public class AddEstimateRowController implements Initializable {
             siteNumber,
             contName,
             typeHome;
-    private TableWrapper rootTableWrapper,  elemTableWrapperView;
+    private TableWrapper rootTableWrapper;
+    private TableWrapper<AddEstTIV> elemTableWrapperView;
     private ObservableList additionalTable;
     /***************************************************************************
      *                                                                         *
@@ -106,7 +109,7 @@ public class AddEstimateRowController implements Initializable {
         baseObsList = new EstimateDAO().getBaseList(bildingPart);
         DiffList diflist = new DiffList(baseObsList, editObsList);
 
-        ObservableList<TableItem> result;
+        ObservableList<AddEstTIV> result;
         if(diflist.exElements().size() > 0)
             result =   FXCollections.observableArrayList(diflist.exElements());
         else result  =   FXCollections.observableArrayList();
@@ -153,11 +156,11 @@ public class AddEstimateRowController implements Initializable {
         return checkedObsList;
     }
 
-    public ObservableList<EstimateTVI>  getSelectedCheckObs(ObservableList<TableItem> items){
+    public ObservableList<EstimateTVI>  getSelectedCheckObs(ObservableList<AddEstTIV> items){
         ObservableList<EstimateTVI>  checkedObsList = FXCollections.observableArrayList();
 
-        for (TableItem obsItem : items){
-            if(((AddEstTIV)obsItem).getCheck() == true){
+        for (AddEstTIV obsItem : items){
+            if(obsItem.getCheck() == true){
                 checkedObsList.add(new EstimateTVI
                                 .Builder()
                                 .setSiteNumber(obsItem.getSiteNumber())
@@ -194,29 +197,35 @@ public class AddEstimateRowController implements Initializable {
                 siteNumber,
                 typeHome,
                 contName,
-                "",
-                "",
-                "",
+                "-",
+                "-",
+                "-",
                 0d,
-                "",
+                "-",
                 0d,
                 0d,
                 bildingPart
         ));
+        elemTableView.setEditable(true);
     }
-    @FXML
-    private void testCOMIT(ActionEvent event) {
-        elemTableWrapperView.commitData();
-
-    }
-
-    @FXML
-    private void testCHECK_LIST(ActionEvent event) {
-        elemTableWrapperView.getItems().forEach(i -> System.out.println(i.toString()));
-    }
+//    @FXML
+//    private void testCOMIT(ActionEvent event) {
+////        elemTableWrapperView.commitData();
+//        elemTableView.setEditable(false);
+//
+//    }
+//
+//    @FXML
+//    private void testCHECK_LIST(ActionEvent event) {
+//        elemTableWrapperView.getItems().forEach(i -> System.out.println(i.toString()));
+//    }
     @FXML
     private void handle_addMarkedRow(ActionEvent event) {
-        rootTableWrapper.getItems().addAll(getSelectedCheckObs(elemTableWrapperView.getItems()));
+        ObservableList<EstimateTVI> selectedItems = getSelectedCheckObs(elemTableWrapperView.getItems())
+                .stream()
+                .filter(item ->!"-".equals(item.getUnit()))
+                .collect(Collectors.toCollection(FXCollections::observableArrayList));
+        rootTableWrapper.getItems().addAll(selectedItems);
         Stage appStage =(Stage) ((Node)(event.getSource())).getScene().getWindow();
         appStage.close();
     }

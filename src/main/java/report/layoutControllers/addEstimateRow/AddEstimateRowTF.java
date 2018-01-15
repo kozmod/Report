@@ -2,6 +2,8 @@ package report.layoutControllers.addEstimateRow;
 
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.cell.ComboBoxTableCell;
+import javafx.scene.control.cell.TextFieldTableCell;
 import report.entities.CommonDAO;
 import report.entities.items.cb.AddEstTIV;
 import report.entities.items.estimate.EstimateDAO;
@@ -40,30 +42,8 @@ public class AddEstimateRowTF {
         checkBoxColumn.setMinWidth(30);
 
         checkBoxColumn.setCellFactory(param -> TableCellFactory.getCheckValueCell());
-        JM_nameColumn.setCellFactory(param -> new AddTextFieldTableCell(
-                        tableWrapper.getSetAddingCells()
-                )
-        );
-        BJobColumn.setCellFactory(param -> new AddComboBoxTableCell(
-                        tableWrapper.getSetAddingCells()
-                        ,dao.getDistinctOfColumn(SQL.Estimate.BINDED_JOB,"-").toArray()
-                )
-        );
-        valueColumn.setCellFactory(param -> new AddTextFieldTableCell(new DoubleStringConverter(),tableWrapper.getSetAddingCells()));
-        unitColumn.setCellFactory(param -> new AddComboBoxTableCell(
-                        tableWrapper.getSetAddingCells()
-                        ,dao.getDistinctOfColumn(SQL.Estimate.UNIT).toArray()
-                )
-        );
-        priseOneColumn.setCellFactory(param -> new AddTextFieldTableCell(new DoubleStringConverter(),tableWrapper.getSetAddingCells()));
-        priseOneColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, Double> t) ->{
-            AddEstTIV element = t.getRowValue();
-            double newValue = t.getNewValue();
-            element.setPriceOne(newValue);
-            element.setPriceSum(newValue* element.getQuantity());
-
-        });
-//        priseSumColumn.setCellFactory(param -> new AddTextFieldTableCell(new DoubleStringConverter(),tableWrapper.getSetAddingCells()));
+        JM_nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        BJobColumn.setCellFactory(ComboBoxTableCell.forTableColumn(dao.getDistinctOfColumn(SQL.Estimate.BINDED_JOB,"-")));
         BJobColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, String> t) ->{
             AddEstTIV element = t.getRowValue();
             String newValue = t.getNewValue();
@@ -75,6 +55,60 @@ public class AddEstimateRowTF {
                     element.setJobOrMat("Материал");
             }
         });
+        valueColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        valueColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, Double> t) ->{
+            AddEstTIV element = t.getRowValue();
+            double newValue = t.getNewValue();
+            element.setQuantity(newValue);
+            double priceOne = element.getPriceOne();
+            element.setPriceSum(newValue* priceOne);
+        });
+        unitColumn.setCellFactory(ComboBoxTableCell.forTableColumn(dao.getDistinctOfColumn(SQL.Estimate.UNIT)));
+        priseOneColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
+        priseOneColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, Double> t) ->{
+            AddEstTIV element = t.getRowValue();
+            double newValue = t.getNewValue();
+            element.setPriceOne(newValue);
+            double quantity = element.getQuantity();
+            element.setPriceSum(newValue* quantity);
+        });
+//        checkBoxColumn.setCellFactory(param -> TableCellFactory.getCheckValueCell());
+//        JM_nameColumn.setCellFactory(param -> new AddTextFieldTableCell(
+//                        tableWrapper.getSetAddingCells()
+//                )
+//        );
+//        BJobColumn.setCellFactory(param -> new AddComboBoxTableCell(
+//                        tableWrapper.getSetAddingCells()
+//                        ,dao.getDistinctOfColumn(SQL.Estimate.BINDED_JOB,"-").toArray()
+//                )
+//        );
+//        valueColumn.setCellFactory(param -> new AddTextFieldTableCell(new DoubleStringConverter(),tableWrapper.getSetAddingCells()));
+//        unitColumn.setCellFactory(param -> new AddComboBoxTableCell(
+//                        tableWrapper.getSetAddingCells()
+//                        ,dao.getDistinctOfColumn(SQL.Estimate.UNIT).toArray()
+//                )
+//        );
+//        priseOneColumn.setCellFactory(param -> new AddTextFieldTableCell(new DoubleStringConverter(),tableWrapper.getSetAddingCells()));
+//        priseOneColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, Double> t) ->{
+//            AddEstTIV element = t.getRowValue();
+//            double newValue = t.getNewValue();
+//            element.setPriceOne(newValue);
+//            double quantity = element.getQuantity();
+//            element.setPriceSum(newValue* quantity);
+//            System.out.println("TEST  "+element.getPriceSum() + "                 "+ quantity);
+//        });
+////        priseSumColumn.setCellFactory(param -> new AddTextFieldTableCell(new DoubleStringConverter(),tableWrapper.getSetAddingCells()));
+//        BJobColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, String> t) ->{
+//            AddEstTIV element = t.getRowValue();
+//            String newValue = t.getNewValue();
+//            element.setBindJob(newValue);
+//            switch (newValue){
+//                case "-": element.setJobOrMat("Работа");
+//                    break;
+//                default:
+//                    element.setJobOrMat("Материал");
+//            }
+//        });
         return  tableWrapper;
     }
 
