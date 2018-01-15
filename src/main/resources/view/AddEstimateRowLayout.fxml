@@ -8,7 +8,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:id="gridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="493.0" prefWidth="1300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.layoutControllers.addEstimateRow.AddEstimateRowController">
+<GridPane fx:id="gridPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="435.0" prefWidth="1298.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.layoutControllers.addEstimateRow.AddEstimateRowController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -19,7 +19,7 @@
     <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="300.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="-Infinity" minHeight="0.0" prefHeight="100.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="-Infinity" minHeight="0.0" prefHeight="30.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="40.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
@@ -72,23 +72,9 @@
           <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
         </columnConstraints>
-        <rowConstraints>
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-        </rowConstraints>
          <GridPane.margin>
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </GridPane.margin>
-         <children>
-            <TextField fx:id="bindedJobTextField" GridPane.columnSpan="2" GridPane.rowIndex="1" />
-            <TextField fx:id="JM_maneTextField" promptText="Наименование работ/затрат" />
-            <ComboBox fx:id="comboUnit" maxWidth="1.7976931348623157E308" promptText="Выберите Ед. изм." GridPane.columnIndex="2" />
-            <TextField fx:id="price_oneTextField" promptText="Стоимость (за единицу" GridPane.columnIndex="4" />
-            <TextField fx:id="valueTextField" promptText="Кол-во" GridPane.columnIndex="3" />
-            <ComboBox fx:id="comboJobOrMat" maxWidth="1.7976931348623157E308" promptText="Выберите Тип" GridPane.columnIndex="1" />
-            <Button mnemonicParsing="false" onAction="#handle_addRow" text="Добавить новую" GridPane.columnIndex="5" />
-            <TextField fx:id="unitTextField" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-         </children>
       </GridPane>
       <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="15.0" GridPane.columnIndex="3" GridPane.rowIndex="4">
          <padding>
