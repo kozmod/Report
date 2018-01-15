@@ -19,7 +19,7 @@ import report.entities.items.TableClone;
 
 //@Entity
 //@Table(name="SiteOSR", schema="dbo")
-//@Access(value = AccessType.PROPERTY)
+//@Access(quantity = AccessType.PROPERTY)
 public class OSR_TIV implements TableClone {
 
     private Long  id;

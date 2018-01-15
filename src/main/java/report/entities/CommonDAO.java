@@ -31,7 +31,7 @@ public interface CommonDAO<C> extends TableDataBaseName{
         this.insert(memento.toInsert());
     }
     /**
-     * Get <b>Unique</b> value of column.
+     * Get <b>Unique</b> quantity of column.
      * @return ObservableList
      */
     //Procedure

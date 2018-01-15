@@ -26,7 +26,7 @@
     </database>
     <schema id="8" parent="2" name="dbo">
       <ObjectId>1</ObjectId>
-      <IntrospectionTimestamp>2018-01-08.18:37:13.247</IntrospectionTimestamp>
+      <IntrospectionTimestamp>2018-01-13.17:18:00.803</IntrospectionTimestamp>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -186,147 +186,152 @@
       <CreatedTimestamp>2017-12-09.03:25:33.537</CreatedTimestamp>
       <ModifiedTimestamp>2017-12-09.03:25:33.537</ModifiedTimestamp>
     </table>
-    <routine id="45" parent="8" name="Coeff_TEST">
+    <view id="45" parent="8" name="vConterpaties">
+      <ObjectId>1271011609</ObjectId>
+      <CreatedTimestamp>2018-01-08.19:13:18.120</CreatedTimestamp>
+      <ModifiedTimestamp>2018-01-08.19:21:04.747</ModifiedTimestamp>
+    </view>
+    <routine id="46" parent="8" name="Coeff_TEST">
       <ObjectId>1057438841</ObjectId>
       <CreatedTimestamp>2017-07-15.03:53:47.540</CreatedTimestamp>
       <ModifiedTimestamp>2017-09-23.17:49:26.020</ModifiedTimestamp>
       <RoutineKind>procedure</RoutineKind>
       <RoutineType>proc</RoutineType>
     </routine>
-    <routine id="46" parent="8" name="Coeff_TEST_2">
+    <routine id="47" parent="8" name="Coeff_TEST_2">
       <ObjectId>829962033</ObjectId>
       <CreatedTimestamp>2017-12-09.03:32:10.253</CreatedTimestamp>
       <ModifiedTimestamp>2017-12-09.03:32:10.253</ModifiedTimestamp>
       <RoutineKind>procedure</RoutineKind>
       <RoutineType>proc</RoutineType>
     </routine>
-    <routine id="47" parent="8" name="ComputeK">
+    <routine id="48" parent="8" name="ComputeK">
       <ObjectId>353436333</ObjectId>
       <CreatedTimestamp>2017-07-06.14:51:43.473</CreatedTimestamp>
       <ModifiedTimestamp>2017-07-06.14:51:43.473</ModifiedTimestamp>
       <RoutineKind>procedure</RoutineKind>
       <RoutineType>proc</RoutineType>
     </routine>
-    <routine id="48" parent="8" name="FinResFormula">
+    <routine id="49" parent="8" name="FinResFormula">
       <ObjectId>1604916789</ObjectId>
       <CreatedTimestamp>2017-07-02.01:02:24.587</CreatedTimestamp>
       <ModifiedTimestamp>2017-09-23.17:51:16.867</ModifiedTimestamp>
       <RoutineKind>procedure</RoutineKind>
       <RoutineType>proc</RoutineType>
     </routine>
-    <routine id="49" parent="8" name="INSERT_DIC_COUNT_FORM">
+    <routine id="50" parent="8" name="INSERT_DIC_COUNT_FORM">
       <ObjectId>1095010982</ObjectId>
       <CreatedTimestamp>2018-01-08.17:22:01.867</CreatedTimestamp>
-      <ModifiedTimestamp>2018-01-08.18:08:57.640</ModifiedTimestamp>
+      <ModifiedTimestamp>2018-01-13.15:51:39.990</ModifiedTimestamp>
       <RoutineKind>procedure</RoutineKind>
       <RoutineType>proc</RoutineType>
     </routine>
-    <routine id="50" parent="8" name="INSERT_DIC_COUNT_NAME">
-      <ObjectId>1111011039</ObjectId>
-      <CreatedTimestamp>2018-01-08.17:22:01.873</CreatedTimestamp>
-      <ModifiedTimestamp>2018-01-08.18:29:53.773</ModifiedTimestamp>
+    <routine id="51" parent="8" name="INSERT_DIC_COUNT_NAME">
+      <ObjectId>1607012806</ObjectId>
+      <CreatedTimestamp>2018-01-13.17:13:20.610</CreatedTimestamp>
+      <ModifiedTimestamp>2018-01-13.17:13:20.610</ModifiedTimestamp>
       <RoutineKind>procedure</RoutineKind>
       <RoutineType>proc</RoutineType>
     </routine>
-    <routine id="51" parent="8" name="INSERT_DIC_COUNT_TYPE">
+    <routine id="52" parent="8" name="INSERT_DIC_COUNT_TYPE">
       <ObjectId>1127011096</ObjectId>
       <CreatedTimestamp>2018-01-08.17:22:01.880</CreatedTimestamp>
-      <ModifiedTimestamp>2018-01-08.18:31:25</ModifiedTimestamp>
+      <ModifiedTimestamp>2018-01-13.15:52:12.277</ModifiedTimestamp>
       <RoutineKind>procedure</RoutineKind>
       <RoutineType>proc</RoutineType>
     </routine>
-    <routine id="52" parent="8" name="getListDist">
+    <routine id="53" parent="8" name="getListDist">
       <ObjectId>715865617</ObjectId>
       <CreatedTimestamp>2017-05-12.16:04:37.100</CreatedTimestamp>
       <ModifiedTimestamp>2017-05-12.16:04:37.100</ModifiedTimestamp>
       <RoutineKind>procedure</RoutineKind>
       <RoutineType>proc</RoutineType>
     </routine>
-    <column id="53" parent="21" name="id">
+    <column id="54" parent="21" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="54" parent="21" name="Date">
+    <column id="55" parent="21" name="Date">
       <Position>2</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="55" parent="21" name="Num">
+    <column id="56" parent="21" name="Num">
       <Position>3</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="56" parent="21" name="ITN_Client">
+    <column id="57" parent="21" name="ITN_Client">
       <Position>4</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="57" parent="21" name="Name_Client">
+    <column id="58" parent="21" name="Name_Client">
       <Position>5</Position>
       <DataType>varchar(200)|0</DataType>
     </column>
-    <column id="58" parent="21" name="AccNum_Client">
+    <column id="59" parent="21" name="AccNum_Client">
       <Position>6</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="59" parent="21" name="BIC_Cor">
+    <column id="60" parent="21" name="BIC_Cor">
       <Position>7</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="60" parent="21" name="AccNum_Cor">
+    <column id="61" parent="21" name="AccNum_Cor">
       <Position>8</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="61" parent="21" name="Name_Cor">
+    <column id="62" parent="21" name="Name_Cor">
       <Position>9</Position>
       <DataType>varchar(200)|0</DataType>
     </column>
-    <column id="62" parent="21" name="VO">
+    <column id="63" parent="21" name="VO">
       <Position>10</Position>
       <DataType>int|0</DataType>
     </column>
-    <column id="63" parent="21" name="Description">
+    <column id="64" parent="21" name="Description">
       <Position>11</Position>
       <DataType>varchar(500)|0</DataType>
     </column>
-    <column id="64" parent="21" name="Deb">
+    <column id="65" parent="21" name="Deb">
       <Position>12</Position>
       <DataType>decimal(28,2)|0</DataType>
     </column>
-    <column id="65" parent="21" name="Cred">
+    <column id="66" parent="21" name="Cred">
       <Position>13</Position>
       <DataType>decimal(28,2)|0</DataType>
     </column>
-    <column id="66" parent="21" name="OutgoingRest">
+    <column id="67" parent="21" name="OutgoingRest">
       <Position>14</Position>
       <DataType>decimal(28,2)|0</DataType>
     </column>
-    <column id="67" parent="21" name="NumberSession">
+    <column id="68" parent="21" name="NumberSession">
       <Position>15</Position>
       <DefaultExpression>NULL</DefaultExpression>
       <DataType>int|0</DataType>
     </column>
-    <column id="68" parent="21" name="dell">
+    <column id="69" parent="21" name="dell">
       <Position>16</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="69" parent="21" name="DateCreate">
+    <column id="70" parent="21" name="DateCreate">
       <Position>17</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="70" parent="21" name="PK__Account__3213E83F3136A91B">
+    <index id="71" parent="21" name="PK__Account__3213E83F3136A91B">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="71" parent="21" name="PK__Account__3213E83F3136A91B">
+    <key id="72" parent="21" name="PK__Account__3213E83F3136A91B">
       <ObjectId>1745441292</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-08-19.03:16:58.300</CreatedTimestamp>
@@ -335,53 +340,53 @@
       <UnderlyingIndexName>PK__Account__3213E83F3136A91B</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="72" parent="22" name="id">
+    <column id="73" parent="22" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="73" parent="22" name="Contractor">
+    <column id="74" parent="22" name="Contractor">
       <Position>2</Position>
       <DataType>varchar(30)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="74" parent="22" name="Director">
+    <column id="75" parent="22" name="Director">
       <Position>3</Position>
       <DataType>varchar(30)|0</DataType>
     </column>
-    <column id="75" parent="22" name="Adress">
+    <column id="76" parent="22" name="Adress">
       <Position>4</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="76" parent="22" name="Comments">
+    <column id="77" parent="22" name="Comments">
       <Position>5</Position>
       <DataType>varchar(200)|0</DataType>
     </column>
-    <column id="77" parent="22" name="dell">
+    <column id="78" parent="22" name="dell">
       <Position>6</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="78" parent="22" name="DateCreate">
+    <column id="79" parent="22" name="DateCreate">
       <Position>7</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="79" parent="22" name="ContractorID">
+    <column id="80" parent="22" name="ContractorID">
       <Position>8</Position>
       <DataType>int|0</DataType>
     </column>
-    <index id="80" parent="22" name="PK__Contract__3213E83F0CC8B4E4">
+    <index id="81" parent="22" name="PK__Contract__3213E83F0CC8B4E4">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="81" parent="22" name="PK__Contract__3213E83F0CC8B4E4">
+    <key id="82" parent="22" name="PK__Contract__3213E83F0CC8B4E4">
       <ObjectId>1144391146</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-06-19.23:05:46.207</CreatedTimestamp>
@@ -390,77 +395,77 @@
       <UnderlyingIndexName>PK__Contract__3213E83F0CC8B4E4</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="82" parent="23" name="id">
+    <column id="83" parent="23" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="83" parent="23" name="Name_Cor">
+    <column id="84" parent="23" name="Name_Cor">
       <Position>2</Position>
       <DataType>varchar(200)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="84" parent="23" name="Mark">
+    <column id="85" parent="23" name="Mark">
       <Position>3</Position>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="85" parent="23" name="NumberSession">
+    <column id="86" parent="23" name="NumberSession">
       <Position>4</Position>
       <DataType>int|0</DataType>
     </column>
-    <column id="86" parent="23" name="DateCreate">
+    <column id="87" parent="23" name="DateCreate">
       <Position>5</Position>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="87" parent="23" name="dell">
+    <column id="88" parent="23" name="dell">
       <Position>6</Position>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="88" parent="24" name="id">
+    <column id="89" parent="24" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="89" parent="24" name="id_Form">
+    <column id="90" parent="24" name="id_Form">
       <Position>2</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="90" parent="24" name="Contract">
+    <column id="91" parent="24" name="Contract">
       <Position>3</Position>
       <DataType>varchar(10)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="91" parent="24" name="NumberSession">
+    <column id="92" parent="24" name="NumberSession">
       <Position>4</Position>
       <DefaultExpression>NULL</DefaultExpression>
       <DataType>int|0</DataType>
     </column>
-    <column id="92" parent="24" name="dell">
+    <column id="93" parent="24" name="dell">
       <Position>5</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="93" parent="24" name="DateCreate">
+    <column id="94" parent="24" name="DateCreate">
       <Position>6</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="94" parent="24" name="PK__Count_Co__3213E83F805D253B">
+    <index id="95" parent="24" name="PK__Count_Co__3213E83F805D253B">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="95" parent="24" name="PK__Count_Co__3213E83F805D253B">
+    <key id="96" parent="24" name="PK__Count_Co__3213E83F805D253B">
       <ObjectId>839010070</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-12-21.01:22:03.413</CreatedTimestamp>
@@ -469,62 +474,62 @@
       <UnderlyingIndexName>PK__Count_Co__3213E83F805D253B</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="96" parent="25" name="id">
+    <column id="97" parent="25" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="97" parent="25" name="id_Count">
+    <column id="98" parent="25" name="id_Count">
       <Position>2</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="98" parent="25" name="AccNumber">
+    <column id="99" parent="25" name="AccNumber">
       <Position>3</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="99" parent="25" name="BankName">
+    <column id="100" parent="25" name="BankName">
       <Position>4</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="100" parent="25" name="BIC">
+    <column id="101" parent="25" name="BIC">
       <Position>5</Position>
       <DataType>bigint|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="101" parent="25" name="CorAcc">
+    <column id="102" parent="25" name="CorAcc">
       <Position>6</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="102" parent="25" name="NumberSession">
+    <column id="103" parent="25" name="NumberSession">
       <Position>7</Position>
       <DefaultExpression>NULL</DefaultExpression>
       <DataType>int|0</DataType>
     </column>
-    <column id="103" parent="25" name="dell">
+    <column id="104" parent="25" name="dell">
       <Position>8</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="104" parent="25" name="DateCreate">
+    <column id="105" parent="25" name="DateCreate">
       <Position>9</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="105" parent="25" name="PK__Count_Re__3213E83F8A7AAF4E">
+    <index id="106" parent="25" name="PK__Count_Re__3213E83F8A7AAF4E">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="106" parent="25" name="PK__Count_Re__3213E83F8A7AAF4E">
+    <key id="107" parent="25" name="PK__Count_Re__3213E83F8A7AAF4E">
       <ObjectId>167007676</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-12-20.23:11:56.450</CreatedTimestamp>
@@ -533,82 +538,82 @@
       <UnderlyingIndexName>PK__Count_Re__3213E83F8A7AAF4E</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="107" parent="26" name="id">
+    <column id="108" parent="26" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="108" parent="26" name="is_IP">
+    <column id="109" parent="26" name="is_IP">
       <Position>2</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="109" parent="26" name="id_Count">
+    <column id="110" parent="26" name="id_Count">
       <Position>3</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="110" parent="26" name="OGRN">
+    <column id="111" parent="26" name="OGRN">
       <Position>4</Position>
       <DataType>bigint|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="111" parent="26" name="DateOGRN">
+    <column id="112" parent="26" name="DateOGRN">
       <Position>5</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="112" parent="26" name="INN">
+    <column id="113" parent="26" name="INN">
       <Position>6</Position>
       <DataType>bigint|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="113" parent="26" name="KPP">
+    <column id="114" parent="26" name="KPP">
       <Position>7</Position>
       <DataType>bigint|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="114" parent="26" name="Adress_L">
+    <column id="115" parent="26" name="Adress_L">
       <Position>8</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="115" parent="26" name="Adress_F">
+    <column id="116" parent="26" name="Adress_F">
       <Position>9</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="116" parent="26" name="Adress_P">
+    <column id="117" parent="26" name="Adress_P">
       <Position>10</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="117" parent="26" name="NumberSession">
+    <column id="118" parent="26" name="NumberSession">
       <Position>11</Position>
       <DefaultExpression>NULL</DefaultExpression>
       <DataType>int|0</DataType>
     </column>
-    <column id="118" parent="26" name="dell">
+    <column id="119" parent="26" name="dell">
       <Position>12</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="119" parent="26" name="DateCreate">
+    <column id="120" parent="26" name="DateCreate">
       <Position>13</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="120" parent="26" name="PK__Count_Re__3213E83F04058DEE">
+    <index id="121" parent="26" name="PK__Count_Re__3213E83F04058DEE">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="121" parent="26" name="PK__Count_Re__3213E83F04058DEE">
+    <key id="122" parent="26" name="PK__Count_Re__3213E83F04058DEE">
       <ObjectId>87007391</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-12-20.23:11:33.863</CreatedTimestamp>
@@ -617,113 +622,113 @@
       <UnderlyingIndexName>PK__Count_Re__3213E83F04058DEE</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="122" parent="27" name="id">
+    <column id="123" parent="27" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="123" parent="27" name="id_Count">
+    <column id="124" parent="27" name="id_Count">
       <Position>2</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="124" parent="27" name="id_ExBody">
+    <column id="125" parent="27" name="id_ExBody">
       <Position>3</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="125" parent="27" name="ExBody">
+    <column id="126" parent="27" name="ExBody">
       <Position>4</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="126" parent="27" name="ExBody_Surname">
+    <column id="127" parent="27" name="ExBody_Surname">
       <Position>5</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="127" parent="27" name="ExBody_Name">
+    <column id="128" parent="27" name="ExBody_Name">
       <Position>6</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="128" parent="27" name="ExBody_FName">
+    <column id="129" parent="27" name="ExBody_FName">
       <Position>7</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="129" parent="27" name="Bookkeeper_Surname">
+    <column id="130" parent="27" name="Bookkeeper_Surname">
       <Position>8</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="130" parent="27" name="Bookkeeper_Name">
+    <column id="131" parent="27" name="Bookkeeper_Name">
       <Position>9</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="131" parent="27" name="Bookkeeper_FName">
+    <column id="132" parent="27" name="Bookkeeper_FName">
       <Position>10</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="132" parent="27" name="ID_Series">
+    <column id="133" parent="27" name="ID_Series">
       <Position>11</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="133" parent="27" name="ID_Number">
+    <column id="134" parent="27" name="ID_Number">
       <Position>12</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="134" parent="27" name="ID_Date">
+    <column id="135" parent="27" name="ID_Date">
       <Position>13</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="135" parent="27" name="ID_Text">
+    <column id="136" parent="27" name="ID_Text">
       <Position>14</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="136" parent="27" name="ID_Code">
+    <column id="137" parent="27" name="ID_Code">
       <Position>15</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="137" parent="27" name="NumberSession">
+    <column id="138" parent="27" name="NumberSession">
       <Position>16</Position>
       <DefaultExpression>NULL</DefaultExpression>
       <DataType>int|0</DataType>
     </column>
-    <column id="138" parent="27" name="dell">
+    <column id="139" parent="27" name="dell">
       <Position>17</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="139" parent="27" name="DateCreate">
+    <column id="140" parent="27" name="DateCreate">
       <Position>18</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="140" parent="27" name="ActionBasis">
+    <column id="141" parent="27" name="ActionBasis">
       <Position>20</Position>
       <DefaultExpression>(-1)</DefaultExpression>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="141" parent="27" name="PK__Count_Re__3213E83F13E0ECEF">
+    <index id="142" parent="27" name="PK__Count_Re__3213E83F13E0ECEF">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="142" parent="27" name="PK__Count_Re__3213E83F13E0ECEF">
+    <key id="143" parent="27" name="PK__Count_Re__3213E83F13E0ECEF">
       <ObjectId>743009728</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-12-20.23:37:53.383</CreatedTimestamp>
@@ -732,52 +737,52 @@
       <UnderlyingIndexName>PK__Count_Re__3213E83F13E0ECEF</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="143" parent="28" name="id">
+    <column id="144" parent="28" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="144" parent="28" name="id_Count">
+    <column id="145" parent="28" name="id_Count">
       <Position>2</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="145" parent="28" name="Form">
+    <column id="146" parent="28" name="Form">
       <Position>3</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="146" parent="28" name="Type">
+    <column id="147" parent="28" name="Type">
       <Position>4</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="147" parent="28" name="NumberSession">
+    <column id="148" parent="28" name="NumberSession">
       <Position>5</Position>
       <DefaultExpression>NULL</DefaultExpression>
       <DataType>int|0</DataType>
     </column>
-    <column id="148" parent="28" name="dell">
+    <column id="149" parent="28" name="dell">
       <Position>6</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="149" parent="28" name="DateCreate">
+    <column id="150" parent="28" name="DateCreate">
       <Position>7</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="150" parent="28" name="PK__Counterp__3213E83FC9E01501">
+    <index id="151" parent="28" name="PK__Counterp__3213E83FC9E01501">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="151" parent="28" name="PK__Counterp__3213E83FC9E01501">
+    <key id="152" parent="28" name="PK__Counterp__3213E83FC9E01501">
       <ObjectId>1594488759</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-12-20.23:04:36.547</CreatedTimestamp>
@@ -786,44 +791,44 @@
       <UnderlyingIndexName>PK__Counterp__3213E83FC9E01501</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="152" parent="29" name="id">
+    <column id="153" parent="29" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="153" parent="29" name="id_Count">
+    <column id="154" parent="29" name="id_Count">
       <Position>2</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="154" parent="29" name="LinkedName">
+    <column id="155" parent="29" name="LinkedName">
       <Position>3</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="155" parent="29" name="NumberSession">
+    <column id="156" parent="29" name="NumberSession">
       <Position>4</Position>
       <DataType>int|0</DataType>
     </column>
-    <column id="156" parent="29" name="dell">
+    <column id="157" parent="29" name="dell">
       <Position>5</Position>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="157" parent="29" name="DateCreate">
+    <column id="158" parent="29" name="DateCreate">
       <Position>6</Position>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="158" parent="29" name="PK__Counterp__3213E83FD5F899F3">
+    <index id="159" parent="29" name="PK__Counterp__3213E83FD5F899F3">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="159" parent="29" name="PK__Counterp__3213E83FD5F899F3">
+    <key id="160" parent="29" name="PK__Counterp__3213E83FD5F899F3">
       <ObjectId>762485795</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-12-17.20:41:37.930</CreatedTimestamp>
@@ -832,47 +837,47 @@
       <UnderlyingIndexName>PK__Counterp__3213E83FD5F899F3</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="160" parent="30" name="id">
+    <column id="161" parent="30" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="161" parent="30" name="id_Form">
+    <column id="162" parent="30" name="id_Form">
       <Position>2</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="162" parent="30" name="Name">
+    <column id="163" parent="30" name="Name">
       <Position>3</Position>
       <DataType>varchar(10)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="163" parent="30" name="NumberSession">
+    <column id="164" parent="30" name="NumberSession">
       <Position>4</Position>
       <DefaultExpression>NULL</DefaultExpression>
       <DataType>int|0</DataType>
     </column>
-    <column id="164" parent="30" name="dell">
+    <column id="165" parent="30" name="dell">
       <Position>5</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="165" parent="30" name="DateCreate">
+    <column id="166" parent="30" name="DateCreate">
       <Position>6</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="166" parent="30" name="PK__DIC_Coun__3213E83F2237346E">
+    <index id="167" parent="30" name="PK__DIC_Coun__3213E83F2237346E">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="167" parent="30" name="PK__DIC_Coun__3213E83F2237346E">
+    <key id="168" parent="30" name="PK__DIC_Coun__3213E83F2237346E">
       <ObjectId>327008246</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-12-20.23:26:02.937</CreatedTimestamp>
@@ -881,47 +886,47 @@
       <UnderlyingIndexName>PK__DIC_Coun__3213E83F2237346E</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="168" parent="31" name="id">
+    <column id="169" parent="31" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="169" parent="31" name="id_Count">
+    <column id="170" parent="31" name="id_Count">
       <Position>2</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="170" parent="31" name="Name">
+    <column id="171" parent="31" name="Name">
       <Position>3</Position>
       <DataType>varchar(10)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="171" parent="31" name="NumberSession">
+    <column id="172" parent="31" name="NumberSession">
       <Position>4</Position>
       <DefaultExpression>NULL</DefaultExpression>
       <DataType>int|0</DataType>
     </column>
-    <column id="172" parent="31" name="dell">
+    <column id="173" parent="31" name="dell">
       <Position>5</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="173" parent="31" name="DateCreate">
+    <column id="174" parent="31" name="DateCreate">
       <Position>6</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="174" parent="31" name="PK__DIC_Coun__3213E83F18C1C258">
+    <index id="175" parent="31" name="PK__DIC_Coun__3213E83F18C1C258">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="175" parent="31" name="PK__DIC_Coun__3213E83F18C1C258">
+    <key id="176" parent="31" name="PK__DIC_Coun__3213E83F18C1C258">
       <ObjectId>407008531</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-12-20.23:26:44.950</CreatedTimestamp>
@@ -930,47 +935,47 @@
       <UnderlyingIndexName>PK__DIC_Coun__3213E83F18C1C258</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="176" parent="32" name="id">
+    <column id="177" parent="32" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="177" parent="32" name="id_Type">
+    <column id="178" parent="32" name="id_Type">
       <Position>2</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="178" parent="32" name="Name">
+    <column id="179" parent="32" name="Name">
       <Position>3</Position>
       <DataType>varchar(50)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="179" parent="32" name="NumberSession">
+    <column id="180" parent="32" name="NumberSession">
       <Position>4</Position>
       <DefaultExpression>NULL</DefaultExpression>
       <DataType>int|0</DataType>
     </column>
-    <column id="180" parent="32" name="dell">
+    <column id="181" parent="32" name="dell">
       <Position>5</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="181" parent="32" name="DateCreate">
+    <column id="182" parent="32" name="DateCreate">
       <Position>6</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="182" parent="32" name="PK__DIC_Coun__3213E83F7B82D86E">
+    <index id="183" parent="32" name="PK__DIC_Coun__3213E83F7B82D86E">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="183" parent="32" name="PK__DIC_Coun__3213E83F7B82D86E">
+    <key id="184" parent="32" name="PK__DIC_Coun__3213E83F7B82D86E">
       <ObjectId>647009386</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-12-20.23:31:01.290</CreatedTimestamp>
@@ -979,91 +984,91 @@
       <UnderlyingIndexName>PK__DIC_Coun__3213E83F7B82D86E</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="184" parent="33" name="id">
+    <column id="185" parent="33" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="185" parent="33" name="SiteNumber">
+    <column id="186" parent="33" name="SiteNumber">
       <Position>2</Position>
       <DataType>varchar(10)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="186" parent="33" name="TypeHome">
+    <column id="187" parent="33" name="TypeHome">
       <Position>3</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="187" parent="33" name="Contractor">
+    <column id="188" parent="33" name="Contractor">
       <Position>4</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="188" parent="33" name="JM_name">
+    <column id="189" parent="33" name="JM_name">
       <Position>5</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="189" parent="33" name="JobsOrMaterials">
+    <column id="190" parent="33" name="JobsOrMaterials">
       <Position>6</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="190" parent="33" name="BindedJob">
+    <column id="191" parent="33" name="BindedJob">
       <Position>7</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="191" parent="33" name="Unit">
+    <column id="192" parent="33" name="Unit">
       <Position>8</Position>
       <DataType>varchar(10)|0</DataType>
     </column>
-    <column id="192" parent="33" name="Value">
+    <column id="193" parent="33" name="Value">
       <Position>9</Position>
       <DataType>float|0</DataType>
     </column>
-    <column id="193" parent="33" name="Price_one">
+    <column id="194" parent="33" name="Price_one">
       <Position>10</Position>
       <DataType>float|0</DataType>
     </column>
-    <column id="194" parent="33" name="Price_sum">
+    <column id="195" parent="33" name="Price_sum">
       <Position>11</Position>
       <Computed>1</Computed>
       <DefaultExpression>round([Price_one]*[Value],2)</DefaultExpression>
       <DataType>float|0</DataType>
     </column>
-    <column id="195" parent="33" name="BuildingPart">
+    <column id="196" parent="33" name="BuildingPart">
       <Position>12</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="196" parent="33" name="TableType">
+    <column id="197" parent="33" name="TableType">
       <Position>13</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="197" parent="33" name="NumberSession">
+    <column id="198" parent="33" name="NumberSession">
       <Position>14</Position>
       <DefaultExpression>NULL</DefaultExpression>
       <DataType>int|0</DataType>
     </column>
-    <column id="198" parent="33" name="dell">
+    <column id="199" parent="33" name="dell">
       <Position>15</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="199" parent="33" name="DateCreate">
+    <column id="200" parent="33" name="DateCreate">
       <Position>16</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="200" parent="33" name="PK__Estimate__3213E83F228A4EE0">
+    <index id="201" parent="33" name="PK__Estimate__3213E83F228A4EE0">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="201" parent="33" name="PK__Estimate__3213E83F228A4EE0">
+    <key id="202" parent="33" name="PK__Estimate__3213E83F228A4EE0">
       <ObjectId>1506820430</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-02-25.11:53:33.250</CreatedTimestamp>
@@ -1072,57 +1077,57 @@
       <UnderlyingIndexName>PK__Estimate__3213E83F228A4EE0</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="202" parent="34" name="ID">
+    <column id="203" parent="34" name="ID">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="203" parent="34" name="ID_ACCOUNT">
+    <column id="204" parent="34" name="ID_ACCOUNT">
       <Position>2</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="204" parent="34" name="ID_COUNT">
+    <column id="205" parent="34" name="ID_COUNT">
       <Position>3</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="205" parent="34" name="ID_FORM">
+    <column id="206" parent="34" name="ID_FORM">
       <Position>4</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="206" parent="34" name="ID_TYPE">
+    <column id="207" parent="34" name="ID_TYPE">
       <Position>5</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="207" parent="34" name="NumberSession">
+    <column id="208" parent="34" name="NumberSession">
       <Position>6</Position>
       <DefaultExpression>NULL</DefaultExpression>
       <DataType>int|0</DataType>
     </column>
-    <column id="208" parent="34" name="dell">
+    <column id="209" parent="34" name="dell">
       <Position>7</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="209" parent="34" name="DateCreate">
+    <column id="210" parent="34" name="DateCreate">
       <Position>8</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="210" parent="34" name="PK__FRK_ACCO__3214EC276951A81D">
+    <index id="211" parent="34" name="PK__FRK_ACCO__3214EC276951A81D">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="211" parent="34" name="PK__FRK_ACCO__3214EC276951A81D">
+    <key id="212" parent="34" name="PK__FRK_ACCO__3214EC276951A81D">
       <ObjectId>967010526</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2018-01-08.17:22:01.817</CreatedTimestamp>
@@ -1131,7 +1136,7 @@
       <UnderlyingIndexName>PK__FRK_ACCO__3214EC276951A81D</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="212" parent="34" name="FK_ACCOUNT_ID_ID_ACCOUNT">
+    <foreign-key id="213" parent="34" name="FK_ACCOUNT_ID_ID_ACCOUNT">
       <ObjectId>1031010754</ObjectId>
       <CreatedTimestamp>2018-01-08.17:22:01.830</CreatedTimestamp>
       <ModifiedTimestamp>2018-01-08.17:22:01.830</ModifiedTimestamp>
@@ -1142,7 +1147,7 @@
       <RefKeyName>PK__Account__3213E83F3136A91B</RefKeyName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="213" parent="34" name="FK_DIC_COUNT_FORM_ID_ID_COUNT">
+    <foreign-key id="214" parent="34" name="FK_DIC_COUNT_FORM_ID_ID_COUNT">
       <ObjectId>1047010811</ObjectId>
       <CreatedTimestamp>2018-01-08.17:22:01.840</CreatedTimestamp>
       <ModifiedTimestamp>2018-01-08.17:22:01.840</ModifiedTimestamp>
@@ -1153,7 +1158,7 @@
       <RefKeyName>PK__DIC_Coun__3213E83F18C1C258</RefKeyName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="214" parent="34" name="FK_DIC_COUNT_FORM_ID_ID_FORM">
+    <foreign-key id="215" parent="34" name="FK_DIC_COUNT_FORM_ID_ID_FORM">
       <ObjectId>1063010868</ObjectId>
       <CreatedTimestamp>2018-01-08.17:22:01.843</CreatedTimestamp>
       <ModifiedTimestamp>2018-01-08.17:22:01.843</ModifiedTimestamp>
@@ -1164,7 +1169,7 @@
       <RefKeyName>PK__DIC_Coun__3213E83F2237346E</RefKeyName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <foreign-key id="215" parent="34" name="FK_DIC_COUNT_TYPE_ID_ID_TYPE">
+    <foreign-key id="216" parent="34" name="FK_DIC_COUNT_TYPE_ID_ID_TYPE">
       <ObjectId>1079010925</ObjectId>
       <CreatedTimestamp>2018-01-08.17:22:01.847</CreatedTimestamp>
       <ModifiedTimestamp>2018-01-08.17:22:01.847</ModifiedTimestamp>
@@ -1175,62 +1180,62 @@
       <RefKeyName>PK__DIC_Coun__3213E83F7B82D86E</RefKeyName>
       <RefColNames>id</RefColNames>
     </foreign-key>
-    <column id="216" parent="35" name="id">
+    <column id="217" parent="35" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="217" parent="35" name="TypeName">
+    <column id="218" parent="35" name="TypeName">
       <Position>2</Position>
       <DataType>varchar(20)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="218" parent="35" name="Quantity">
+    <column id="219" parent="35" name="Quantity">
       <Position>3</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="219" parent="35" name="SmetCost">
+    <column id="220" parent="35" name="SmetCost">
       <Position>4</Position>
       <DataType>decimal(28,2)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="220" parent="35" name="SaleCost">
+    <column id="221" parent="35" name="SaleCost">
       <Position>5</Position>
       <DataType>decimal(28,2)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="221" parent="35" name="NumberSession">
+    <column id="222" parent="35" name="NumberSession">
       <Position>6</Position>
       <DefaultExpression>NULL</DefaultExpression>
       <DataType>int|0</DataType>
     </column>
-    <column id="222" parent="35" name="dell">
+    <column id="223" parent="35" name="dell">
       <Position>7</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="223" parent="35" name="DateCreate">
+    <column id="224" parent="35" name="DateCreate">
       <Position>8</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="224" parent="35" name="TypeID">
+    <column id="225" parent="35" name="TypeID">
       <Position>9</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="225" parent="35" name="PK__FinPlan__3213E83F90DFDB1C">
+    <index id="226" parent="35" name="PK__FinPlan__3213E83F90DFDB1C">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="226" parent="35" name="PK__FinPlan__3213E83F90DFDB1C">
+    <key id="227" parent="35" name="PK__FinPlan__3213E83F90DFDB1C">
       <ObjectId>1252915535</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-07-01.12:59:27.153</CreatedTimestamp>
@@ -1239,52 +1244,52 @@
       <UnderlyingIndexName>PK__FinPlan__3213E83F90DFDB1C</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="227" parent="36" name="id">
+    <column id="228" parent="36" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="228" parent="36" name="RateOfReturn">
+    <column id="229" parent="36" name="RateOfReturn">
       <Position>2</Position>
       <DataType>decimal(28,2)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="229" parent="36" name="KD">
+    <column id="230" parent="36" name="KD">
       <Position>3</Position>
       <DataType>decimal(28,2)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="230" parent="36" name="MarketRisks">
+    <column id="231" parent="36" name="MarketRisks">
       <Position>4</Position>
       <DataType>decimal(28,2)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="231" parent="36" name="SpecificRisk">
+    <column id="232" parent="36" name="SpecificRisk">
       <Position>5</Position>
       <DataType>decimal(28,2)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="232" parent="36" name="dell">
+    <column id="233" parent="36" name="dell">
       <Position>6</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="233" parent="36" name="DateCreate">
+    <column id="234" parent="36" name="DateCreate">
       <Position>7</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="234" parent="36" name="PK__KD_Disco__3213E83F79AA7425">
+    <index id="235" parent="36" name="PK__KD_Disco__3213E83F79AA7425">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="235" parent="36" name="PK__KD_Disco__3213E83F79AA7425">
+    <key id="236" parent="36" name="PK__KD_Disco__3213E83F79AA7425">
       <ObjectId>141959582</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-11-11.00:34:51.890</CreatedTimestamp>
@@ -1293,72 +1298,72 @@
       <UnderlyingIndexName>PK__KD_Disco__3213E83F79AA7425</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="236" parent="37" name="id">
+    <column id="237" parent="37" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="237" parent="37" name="SocialRisks">
+    <column id="238" parent="37" name="SocialRisks">
       <Position>2</Position>
       <DataType>decimal(28,1)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="238" parent="37" name="InternalRisks">
+    <column id="239" parent="37" name="InternalRisks">
       <Position>3</Position>
       <DataType>decimal(28,1)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="239" parent="37" name="ExternalRisks">
+    <column id="240" parent="37" name="ExternalRisks">
       <Position>4</Position>
       <DataType>decimal(28,1)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="240" parent="37" name="CyclicalChar">
+    <column id="241" parent="37" name="CyclicalChar">
       <Position>5</Position>
       <DataType>decimal(28,1)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="241" parent="37" name="DevStage">
+    <column id="242" parent="37" name="DevStage">
       <Position>6</Position>
       <DataType>decimal(28,1)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="242" parent="37" name="Competition">
+    <column id="243" parent="37" name="Competition">
       <Position>7</Position>
       <DataType>decimal(28,1)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="243" parent="37" name="Regulation">
+    <column id="244" parent="37" name="Regulation">
       <Position>8</Position>
       <DataType>decimal(28,1)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="244" parent="37" name="MarketBarriers">
+    <column id="245" parent="37" name="MarketBarriers">
       <Position>9</Position>
       <DataType>decimal(28,1)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="245" parent="37" name="dell">
+    <column id="246" parent="37" name="dell">
       <Position>10</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="246" parent="37" name="DateCreate">
+    <column id="247" parent="37" name="DateCreate">
       <Position>11</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="247" parent="37" name="PK__KD_Marke__3213E83FCA577A66">
+    <index id="248" parent="37" name="PK__KD_Marke__3213E83FCA577A66">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="248" parent="37" name="PK__KD_Marke__3213E83FCA577A66">
+    <key id="249" parent="37" name="PK__KD_Marke__3213E83FCA577A66">
       <ObjectId>285960095</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-11-11.00:43:33.677</CreatedTimestamp>
@@ -1367,57 +1372,57 @@
       <UnderlyingIndexName>PK__KD_Marke__3213E83FCA577A66</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="249" parent="38" name="id">
+    <column id="250" parent="38" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="250" parent="38" name="KeyChar">
+    <column id="251" parent="38" name="KeyChar">
       <Position>2</Position>
       <DataType>decimal(28,1)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="251" parent="38" name="EntSize">
+    <column id="252" parent="38" name="EntSize">
       <Position>3</Position>
       <DataType>decimal(28,1)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="252" parent="38" name="FinStruct">
+    <column id="253" parent="38" name="FinStruct">
       <Position>4</Position>
       <DataType>decimal(28,1)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="253" parent="38" name="ClientDiv">
+    <column id="254" parent="38" name="ClientDiv">
       <Position>5</Position>
       <DataType>decimal(28,1)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="254" parent="38" name="OtherRisks">
+    <column id="255" parent="38" name="OtherRisks">
       <Position>6</Position>
       <DataType>decimal(28,1)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="255" parent="38" name="dell">
+    <column id="256" parent="38" name="dell">
       <Position>7</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="256" parent="38" name="DateCreate">
+    <column id="257" parent="38" name="DateCreate">
       <Position>8</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="257" parent="38" name="PK__KD_Speci__3213E83F8275C299">
+    <index id="258" parent="38" name="PK__KD_Speci__3213E83F8275C299">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="258" parent="38" name="PK__KD_Speci__3213E83F8275C299">
+    <key id="259" parent="38" name="PK__KD_Speci__3213E83F8275C299">
       <ObjectId>205959810</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-11-11.00:42:44.203</CreatedTimestamp>
@@ -1426,96 +1431,96 @@
       <UnderlyingIndexName>PK__KD_Speci__3213E83F8275C299</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="259" parent="39" name="id">
+    <column id="260" parent="39" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="260" parent="39" name="KS_Number">
+    <column id="261" parent="39" name="KS_Number">
       <Position>2</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="261" parent="39" name="KS_Date">
+    <column id="262" parent="39" name="KS_Date">
       <Position>3</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="262" parent="39" name="SiteNumber">
+    <column id="263" parent="39" name="SiteNumber">
       <Position>4</Position>
       <DataType>varchar(10)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="263" parent="39" name="TypeHome">
+    <column id="264" parent="39" name="TypeHome">
       <Position>5</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="264" parent="39" name="Contractor">
+    <column id="265" parent="39" name="Contractor">
       <Position>6</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="265" parent="39" name="JM_name">
+    <column id="266" parent="39" name="JM_name">
       <Position>7</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="266" parent="39" name="JobsOrMaterials">
+    <column id="267" parent="39" name="JobsOrMaterials">
       <Position>8</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="267" parent="39" name="BindedJob">
+    <column id="268" parent="39" name="BindedJob">
       <Position>9</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="268" parent="39" name="Unit">
+    <column id="269" parent="39" name="Unit">
       <Position>10</Position>
       <DataType>varchar(10)|0</DataType>
     </column>
-    <column id="269" parent="39" name="Value">
+    <column id="270" parent="39" name="Value">
       <Position>11</Position>
       <DataType>decimal(32,2)|0</DataType>
     </column>
-    <column id="270" parent="39" name="Price_one">
+    <column id="271" parent="39" name="Price_one">
       <Position>12</Position>
       <DataType>decimal(32,2)|0</DataType>
     </column>
-    <column id="271" parent="39" name="Price_sum">
+    <column id="272" parent="39" name="Price_sum">
       <Position>13</Position>
       <Computed>1</Computed>
       <DefaultExpression>round([Price_one]*[Value],2)</DefaultExpression>
       <DataType>decimal(38,4)|0</DataType>
     </column>
-    <column id="272" parent="39" name="BuildingPart">
+    <column id="273" parent="39" name="BuildingPart">
       <Position>14</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="273" parent="39" name="NumberSession">
+    <column id="274" parent="39" name="NumberSession">
       <Position>15</Position>
       <DefaultExpression>NULL</DefaultExpression>
       <DataType>int|0</DataType>
     </column>
-    <column id="274" parent="39" name="dell">
+    <column id="275" parent="39" name="dell">
       <Position>16</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="275" parent="39" name="DateCreate">
+    <column id="276" parent="39" name="DateCreate">
       <Position>17</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="276" parent="39" name="PK__KS__3213E83F3CFD3FA5">
+    <index id="277" parent="39" name="PK__KS__3213E83F3CFD3FA5">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="277" parent="39" name="PK__KS__3213E83F3CFD3FA5">
+    <key id="278" parent="39" name="PK__KS__3213E83F3CFD3FA5">
       <ObjectId>281768061</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2016-12-17.16:19:40.173</CreatedTimestamp>
@@ -1524,115 +1529,115 @@
       <UnderlyingIndexName>PK__KS__3213E83F3CFD3FA5</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="278" parent="40" name="id">
+    <column id="279" parent="40" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="279" parent="40" name="SiteNumber">
+    <column id="280" parent="40" name="SiteNumber">
       <Position>2</Position>
       <DataType>varchar(10)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="280" parent="40" name="TypeHome">
+    <column id="281" parent="40" name="TypeHome">
       <Position>3</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="281" parent="40" name="NContract">
+    <column id="282" parent="40" name="NContract">
       <Position>4</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="282" parent="40" name="DateContract">
+    <column id="283" parent="40" name="DateContract">
       <Position>5</Position>
       <DataType>int|0</DataType>
     </column>
-    <column id="283" parent="40" name="SmetCost">
+    <column id="284" parent="40" name="SmetCost">
       <Position>6</Position>
       <DataType>float|0</DataType>
     </column>
-    <column id="284" parent="40" name="SumCost">
+    <column id="285" parent="40" name="SumCost">
       <Position>7</Position>
       <DataType>float|0</DataType>
     </column>
-    <column id="285" parent="40" name="FinishBuilding">
+    <column id="286" parent="40" name="FinishBuilding">
       <Position>8</Position>
       <DataType>int|0</DataType>
     </column>
-    <column id="286" parent="40" name="Contractor">
+    <column id="287" parent="40" name="Contractor">
       <Position>9</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="287" parent="40" name="CostHouse">
+    <column id="288" parent="40" name="CostHouse">
       <Position>10</Position>
       <DataType>float|0</DataType>
     </column>
-    <column id="288" parent="40" name="CostSite">
+    <column id="289" parent="40" name="CostSite">
       <Position>11</Position>
       <DataType>float|0</DataType>
     </column>
-    <column id="289" parent="40" name="SaleClients">
+    <column id="290" parent="40" name="SaleClients">
       <Position>12</Position>
       <DataType>float|0</DataType>
     </column>
-    <column id="290" parent="40" name="DebtClients">
+    <column id="291" parent="40" name="DebtClients">
       <Position>13</Position>
       <DataType>float|0</DataType>
     </column>
-    <column id="291" parent="40" name="StatusPayment">
+    <column id="292" parent="40" name="StatusPayment">
       <Position>14</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="292" parent="40" name="StatusJobs">
+    <column id="293" parent="40" name="StatusJobs">
       <Position>15</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="293" parent="40" name="QueueBuilding">
+    <column id="294" parent="40" name="QueueBuilding">
       <Position>16</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="294" parent="40" name="SaleHouse">
+    <column id="295" parent="40" name="SaleHouse">
       <Position>17</Position>
       <DataType>float|0</DataType>
     </column>
-    <column id="295" parent="40" name="NumberSession">
+    <column id="296" parent="40" name="NumberSession">
       <Position>18</Position>
       <DefaultExpression>NULL</DefaultExpression>
       <DataType>int|0</DataType>
     </column>
-    <column id="296" parent="40" name="k">
+    <column id="297" parent="40" name="k">
       <Position>19</Position>
       <DefaultExpression>1</DefaultExpression>
       <DataType>decimal(28,4)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="297" parent="40" name="dell">
+    <column id="298" parent="40" name="dell">
       <Position>20</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="298" parent="40" name="DateCreate">
+    <column id="299" parent="40" name="DateCreate">
       <Position>21</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="299" parent="40" name="SiteTypeID">
+    <column id="300" parent="40" name="SiteTypeID">
       <Position>22</Position>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="300" parent="40" name="PK__Site__3213E83FC12AD709">
+    <index id="301" parent="40" name="PK__Site__3213E83FC12AD709">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="301" parent="40" name="PK__Site__3213E83FC12AD709">
+    <key id="302" parent="40" name="PK__Site__3213E83FC12AD709">
       <ObjectId>1409440095</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-08-19.00:42:52.383</CreatedTimestamp>
@@ -1641,59 +1646,59 @@
       <UnderlyingIndexName>PK__Site__3213E83FC12AD709</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="302" parent="41" name="id">
+    <column id="303" parent="41" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="303" parent="41" name="SiteNumber">
+    <column id="304" parent="41" name="SiteNumber">
       <Position>2</Position>
       <DataType>varchar(10)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="304" parent="41" name="Contractor">
+    <column id="305" parent="41" name="Contractor">
       <Position>3</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="305" parent="41" name="Text">
+    <column id="306" parent="41" name="Text">
       <Position>4</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="306" parent="41" name="Type">
+    <column id="307" parent="41" name="Type">
       <Position>5</Position>
       <DataType>int|0</DataType>
     </column>
-    <column id="307" parent="41" name="Value">
+    <column id="308" parent="41" name="Value">
       <Position>6</Position>
       <DataType>float|0</DataType>
     </column>
-    <column id="308" parent="41" name="NumberSession">
+    <column id="309" parent="41" name="NumberSession">
       <Position>7</Position>
       <DefaultExpression>NULL</DefaultExpression>
       <DataType>int|0</DataType>
     </column>
-    <column id="309" parent="41" name="dell">
+    <column id="310" parent="41" name="dell">
       <Position>8</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="310" parent="41" name="DateCreate">
+    <column id="311" parent="41" name="DateCreate">
       <Position>9</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="311" parent="41" name="PK__SiteExpe__3213E83F0F2797FE">
+    <index id="312" parent="41" name="PK__SiteExpe__3213E83F0F2797FE">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="312" parent="41" name="PK__SiteExpe__3213E83F0F2797FE">
+    <key id="313" parent="41" name="PK__SiteExpe__3213E83F0F2797FE">
       <ObjectId>1359343907</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-03-11.01:12:27.870</CreatedTimestamp>
@@ -1702,59 +1707,59 @@
       <UnderlyingIndexName>PK__SiteExpe__3213E83F0F2797FE</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="313" parent="42" name="id">
+    <column id="314" parent="42" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="314" parent="42" name="SiteNumber">
+    <column id="315" parent="42" name="SiteNumber">
       <Position>2</Position>
       <DataType>varchar(10)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="315" parent="42" name="Contractor">
+    <column id="316" parent="42" name="Contractor">
       <Position>3</Position>
       <DataType>varchar(100)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="316" parent="42" name="Text">
+    <column id="317" parent="42" name="Text">
       <Position>4</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="317" parent="42" name="DateFrom">
+    <column id="318" parent="42" name="DateFrom">
       <Position>5</Position>
       <DataType>int|0</DataType>
     </column>
-    <column id="318" parent="42" name="DateTo">
+    <column id="319" parent="42" name="DateTo">
       <Position>6</Position>
       <DataType>int|0</DataType>
     </column>
-    <column id="319" parent="42" name="NumberSession">
+    <column id="320" parent="42" name="NumberSession">
       <Position>7</Position>
       <DefaultExpression>NULL</DefaultExpression>
       <DataType>int|0</DataType>
     </column>
-    <column id="320" parent="42" name="dell">
+    <column id="321" parent="42" name="dell">
       <Position>8</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="321" parent="42" name="DateCreate">
+    <column id="322" parent="42" name="DateCreate">
       <Position>9</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="322" parent="42" name="PK__SiteJobP__3213E83F91BF005A">
+    <index id="323" parent="42" name="PK__SiteJobP__3213E83F91BF005A">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="323" parent="42" name="PK__SiteJobP__3213E83F91BF005A">
+    <key id="324" parent="42" name="PK__SiteJobP__3213E83F91BF005A">
       <ObjectId>399340487</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-03-09.21:41:52.660</CreatedTimestamp>
@@ -1763,46 +1768,46 @@
       <UnderlyingIndexName>PK__SiteJobP__3213E83F91BF005A</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="324" parent="43" name="id">
+    <column id="325" parent="43" name="id">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="325" parent="43" name="Text">
+    <column id="326" parent="43" name="Text">
       <Position>2</Position>
       <DataType>varchar(100)|0</DataType>
     </column>
-    <column id="326" parent="43" name="Value">
+    <column id="327" parent="43" name="Value">
       <Position>3</Position>
       <DataType>decimal(28,2)|0</DataType>
     </column>
-    <column id="327" parent="43" name="dell">
+    <column id="328" parent="43" name="dell">
       <Position>5</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="328" parent="43" name="DateCreate">
+    <column id="329" parent="43" name="DateCreate">
       <Position>6</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="329" parent="43" name="DateOSR">
+    <column id="330" parent="43" name="DateOSR">
       <Position>8</Position>
       <DefaultExpression>15340</DefaultExpression>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <index id="330" parent="43" name="PK__SiteOSR___3213E83F850DAF4C">
+    <index id="331" parent="43" name="PK__SiteOSR___3213E83F850DAF4C">
       <Position>1</Position>
       <NameSurrogate>1</NameSurrogate>
       <ColNames>id</ColNames>
       <Clustering>1</Clustering>
       <Unique>1</Unique>
     </index>
-    <key id="331" parent="43" name="PK__SiteOSR___3213E83F850DAF4C">
+    <key id="332" parent="43" name="PK__SiteOSR___3213E83F850DAF4C">
       <ObjectId>824390006</ObjectId>
       <NameSurrogate>1</NameSurrogate>
       <CreatedTimestamp>2017-06-18.15:53:52.330</CreatedTimestamp>
@@ -1811,92 +1816,108 @@
       <UnderlyingIndexName>PK__SiteOSR___3213E83F850DAF4C</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <column id="332" parent="44" name="ID">
+    <column id="333" parent="44" name="ID">
       <Position>1</Position>
       <SequenceIdentity>1</SequenceIdentity>
       <DataType>int|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="333" parent="44" name="INCOMTAX">
+    <column id="334" parent="44" name="INCOMTAX">
       <Position>2</Position>
       <DataType>decimal(29,3)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="334" parent="44" name="sale_Exp">
+    <column id="335" parent="44" name="sale_Exp">
       <Position>3</Position>
       <DataType>decimal(29,3)|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="335" parent="44" name="NumberSession">
+    <column id="336" parent="44" name="NumberSession">
       <Position>4</Position>
       <DefaultExpression>NULL</DefaultExpression>
       <DataType>int|0</DataType>
     </column>
-    <column id="336" parent="44" name="dell">
+    <column id="337" parent="44" name="dell">
       <Position>5</Position>
       <DefaultExpression>0</DefaultExpression>
       <DataType>bit|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="337" parent="44" name="DateCreate">
+    <column id="338" parent="44" name="DateCreate">
       <Position>6</Position>
       <DefaultExpression>getdate()</DefaultExpression>
       <DataType>datetime|0</DataType>
       <NotNull>1</NotNull>
     </column>
-    <argument id="338" parent="45" name="@SiteNumber">
+    <column id="339" parent="45" name="FormName">
+      <Position>1</Position>
+      <DataType>varchar(10)|0</DataType>
+    </column>
+    <column id="340" parent="45" name="TypeName">
+      <Position>2</Position>
+      <DataType>varchar(50)|0</DataType>
+    </column>
+    <column id="341" parent="45" name="CountName">
+      <Position>3</Position>
+      <DataType>varchar(10)|0</DataType>
+    </column>
+    <column id="342" parent="45" name="AccountName">
+      <Position>4</Position>
+      <DataType>varchar(200)|0</DataType>
+    </column>
+    <argument id="343" parent="46" name="@SiteNumber">
       <Position>1</Position>
       <DataType>varchar(10)|0</DataType>
     </argument>
-    <argument id="339" parent="45" name="@Contractor">
+    <argument id="344" parent="46" name="@Contractor">
       <Position>2</Position>
       <DataType>varchar(100)|0</DataType>
     </argument>
-    <argument id="340" parent="46" name="@SiteNumber">
+    <argument id="345" parent="47" name="@SiteNumber">
       <Position>1</Position>
       <DataType>varchar(10)|0</DataType>
     </argument>
-    <argument id="341" parent="46" name="@Contractor">
+    <argument id="346" parent="47" name="@Contractor">
       <Position>2</Position>
       <DataType>varchar(100)|0</DataType>
     </argument>
-    <argument id="342" parent="47" name="@SiteNumber">
+    <argument id="347" parent="48" name="@SiteNumber">
       <DataType>varchar(200)|0</DataType>
     </argument>
-    <argument id="343" parent="47" name="@Contractor">
+    <argument id="348" parent="48" name="@Contractor">
       <DataType>varchar(200)|0</DataType>
     </argument>
-    <argument id="344" parent="47" name="@K">
+    <argument id="349" parent="48" name="@K">
       <DataType>decimal(34,2)|0</DataType>
     </argument>
-    <argument id="345" parent="49" name="@New_Name">
+    <argument id="350" parent="50" name="@Name">
       <Position>1</Position>
       <DataType>varchar(100)|0</DataType>
     </argument>
-    <argument id="346" parent="49" name="@Name">
+    <argument id="351" parent="50" name="@New_name">
       <Position>2</Position>
       <DataType>varchar(100)|0</DataType>
     </argument>
-    <argument id="347" parent="50" name="@Name">
+    <argument id="352" parent="51" name="@Name">
       <Position>1</Position>
       <DataType>varchar(100)|0</DataType>
     </argument>
-    <argument id="348" parent="50" name="@New_name">
+    <argument id="353" parent="51" name="@New_name">
       <Position>2</Position>
       <DataType>varchar(100)|0</DataType>
     </argument>
-    <argument id="349" parent="51" name="@Name">
+    <argument id="354" parent="52" name="@Name">
       <Position>1</Position>
       <DataType>varchar(100)|0</DataType>
     </argument>
-    <argument id="350" parent="51" name="@New_Name">
+    <argument id="355" parent="52" name="@New_name">
       <Position>2</Position>
       <DataType>varchar(100)|0</DataType>
     </argument>
-    <argument id="351" parent="52" name="@ColumnName">
+    <argument id="356" parent="53" name="@ColumnName">
       <DataType>varchar(200)|0</DataType>
     </argument>
-    <argument id="352" parent="52" name="@TableName">
+    <argument id="357" parent="53" name="@TableName">
       <DataType>varchar(200)|0</DataType>
     </argument>
   </database-model>

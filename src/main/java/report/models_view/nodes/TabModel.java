@@ -78,7 +78,7 @@ public class TabModel {
 //                double f4 = DecimalFormatter.stringToDouble(apertureTP.getLabelProperty().getValueSafe());
 //                double f5 = DecimalFormatter.stringToDouble(finishingWorkTP.getLabelProperty().getValueSafe());
 //
-////                return faundationTP.getLabelProperty().getValue();
+////                return faundationTP.getLabelProperty().getQuantity();
 //                return DecimalFormatter.formatNumber(f1 + f2 + f3+ f4 + f5);
 //            }
 //        });
@@ -99,7 +99,7 @@ public class TabModel {
                 double f3 = roofTP.getLabelDoubleProperty().get();
                 double f4 = apertureTP.getLabelDoubleProperty().get();
                 double f5 = finishingWorkTP.getLabelDoubleProperty().get();
-//                return faundationTP.getLabelProperty().getValue();
+//                return faundationTP.getLabelProperty().getQuantity();
                 return f1 + f2 + f3+ f4 + f5;
             }
         };

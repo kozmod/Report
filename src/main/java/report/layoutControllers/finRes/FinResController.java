@@ -49,7 +49,7 @@ public class FinResController implements Initializable {
                         new LocalDayStringConverter()
         );
 
-        //set TF value
+        //set TF quantity
         setTextFieldValue(sumSmetCostTF);
         setTextFieldValue(sumCostHouseTF);
         setTextFieldValue(profitTF);

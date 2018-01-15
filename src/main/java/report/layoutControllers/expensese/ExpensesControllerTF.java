@@ -34,14 +34,14 @@ public class ExpensesControllerTF {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn columnV = new TableColumn("K");
-        columnV.setCellValueFactory(new PropertyValueFactory("value"));
+        columnV.setCellValueFactory(new PropertyValueFactory("quantity"));
 
 
         TableColumn columnPO = new TableColumn("Onew");
-        columnPO.setCellValueFactory(new PropertyValueFactory("price_one"));
+        columnPO.setCellValueFactory(new PropertyValueFactory("priceOne"));
 
         TableColumn columnPS = new TableColumn("Sum");
-        columnPS.setCellValueFactory(new PropertyValueFactory("price_sum"));
+        columnPS.setCellValueFactory(new PropertyValueFactory("priceSum"));
 
         TableColumn columnDate = new TableColumn("Date");
         columnDate.setCellValueFactory(new PropertyValueFactory("dateCreate"));
@@ -105,7 +105,7 @@ public class ExpensesControllerTF {
 
         TableColumn textColumn   = tableWrapper.addColumn("Наименование", "text");
         TableColumn typeColumn   = tableWrapper.addColumn("Тип",          "type");
-        TableColumn valueColumn  = tableWrapper.addColumn("Значение",     "value");
+        TableColumn valueColumn  = tableWrapper.addColumn("Значение",     "quantity");
 
         typeColumn.setCellFactory(param ->  TableCellFactory.getExpenseesCell());
 

@@ -38,7 +38,7 @@
                         <manifestEntries>
                             <mode>development</mode>
                             <url>${project.url}</url>
-                            <key>value</key>
+                            <key>quantity</key>
                         </manifestEntries>
                     </archive>
                 </configuration>

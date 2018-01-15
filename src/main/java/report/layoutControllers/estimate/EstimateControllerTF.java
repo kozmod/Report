@@ -41,10 +41,10 @@ public class EstimateControllerTF implements TableFactory {
 
         TableColumn JM_nameColumn   = table.addColumn("Наименование работ/затрат", "JM_name");
         TableColumn BJobColumnn     = table.addColumn("Связанная работа",          "bindJob");
-        TableColumn valueColumn     = table.addColumn("Кол-во",                    "value");
+        TableColumn valueColumn     = table.addColumn("Кол-во",                    "quantity");
         TableColumn unitColumn      = table.addColumn("Eд. изм.",                  "unit");
-        TableColumn Price_oneColumn = table.addColumn("Стоимость (за единицу)",    "price_one");
-        TableColumn Price_sumColumn = table.addColumn("Стоимость (общая)",         "price_sum");
+        TableColumn Price_oneColumn = table.addColumn("Стоимость (за единицу)",    "priceOne");
+        TableColumn Price_sumColumn = table.addColumn("Стоимость (общая)",         "priceSum");
         TableColumn isInKSColumn    = table.addColumn("КС",                        "inKS");
 
 
@@ -71,11 +71,11 @@ public class EstimateControllerTF implements TableFactory {
 
                         TableItem editingItem = (TableItem) t.getTableView().getItems().get(t.getTablePosition().getRow());
 
-                        Double price_one = editingItem.getPrice_one();
+                        Double price_one = editingItem.getPriceOne();
                         Double value = t.getNewValue();
 
-                        editingItem.setValue(value);
-                        editingItem.setPrice_sum(value*price_one);
+                        editingItem.setQuantity(value);
+                        editingItem.setPriceSum(value*price_one);
 
                         table.computeSum();
                         t.getTableView().refresh();
@@ -106,10 +106,10 @@ public class EstimateControllerTF implements TableFactory {
             public void handle(TableColumn.CellEditEvent<TableItem, Double> t) {
                 TableItem editingItem = (TableItem) t.getTableView().getItems().get(t.getTablePosition().getRow());
                 Double price_one = t.getNewValue();
-                Double value     = editingItem.getValue();
+                Double value     = editingItem.getQuantity();
 
-                editingItem.setPrice_one(price_one);
-                editingItem.setPrice_sum(value*price_one);
+                editingItem.setPriceOne(price_one);
+                editingItem.setPriceSum(value*price_one);
 
                 table.computeSum();
                 t.getTableView().refresh();
@@ -151,10 +151,10 @@ public class EstimateControllerTF implements TableFactory {
 
         TableColumn JM_nameColumn   = tableWrapper.addColumn("Наименование работ/затрат", "JM_name");
         TableColumn BJobColumnn     = tableWrapper.addColumn("Связанная работа",          "bindJob");
-        TableColumn valueColumn     = tableWrapper.addColumn("Кол-во",                    "value");
+        TableColumn valueColumn     = tableWrapper.addColumn("Кол-во",                    "quantity");
         TableColumn unitColumn      = tableWrapper.addColumn("Eд. изм.",                  "unit");
-        TableColumn Price_oneColumn = tableWrapper.addColumn("Стоимость (за единицу)",    "price_one");
-        TableColumn Price_sumColumn = tableWrapper.addColumn("Стоимость (общая)",         "price_sum");
+        TableColumn Price_oneColumn = tableWrapper.addColumn("Стоимость (за единицу)",    "priceOne");
+        TableColumn Price_sumColumn = tableWrapper.addColumn("Стоимость (общая)",         "priceSum");
         TableColumn isInKSColumn    = tableWrapper.addColumn("КС",                        "inKS");
 
         JM_nameColumn.setMinWidth(300);
@@ -178,10 +178,10 @@ public class EstimateControllerTF implements TableFactory {
         TableColumn JM_nameColumn       = table.addColumn("Наименование работ/затрат", "JM_name");
         TableColumn BJobColumnn         = table.addColumn("Связанная работа",          "bindJob");
         TableColumn BPartColumns        = table.addColumn("Часть",                     "buildingPart");
-        TableColumn valueColumn         = table.addColumn("Кол-во",                    "value");
+        TableColumn valueColumn         = table.addColumn("Кол-во",                    "quantity");
         TableColumn unitColumn          = table.addColumn("Eд. изм.",                  "unit");
-        TableColumn Price_oneColumn     = table.addColumn("Стоимость (за единицу)",    "price_one");
-        TableColumn Price_sumColumn     = table.addColumn("Стоимость (общая)",         "price_sum");
+        TableColumn Price_oneColumn     = table.addColumn("Стоимость (за единицу)",    "priceOne");
+        TableColumn Price_sumColumn     = table.addColumn("Стоимость (общая)",         "priceSum");
         TableColumn restPriceSumColumn  = table.addColumn("Остаток (общий)",           "restOfValue");
 
         JM_nameColumn.setCellFactory(param -> TableCellFactory.getOnMouseEnteredTableCell(EstimateController.Est.KS));
@@ -200,10 +200,10 @@ public class EstimateControllerTF implements TableFactory {
 
                 KS_TIV editingItem = (KS_TIV) t.getRowValue();
 
-                Double price_one = editingItem.getPrice_one();
+                Double price_one = editingItem.getPriceOne();
 
                 //Value of editing item in Chaged Tables
-                Double valueInChanged = EstimateController.Est.Changed.findEqualsElevent(editingItem).getValue();
+                Double valueInChanged = EstimateController.Est.Changed.findEqualsElevent(editingItem).getQuantity();
 
                 //rest of Value in KS Lists
                 double restOfValue = valueInChanged -
@@ -211,16 +211,16 @@ public class EstimateControllerTF implements TableFactory {
                                 .stream()
                                 .flatMap(mapItem ->((List)mapItem).stream())
                                 .filter(editingItem::equalsSuperClass)
-                                .mapToDouble(filtered -> ((TableItem)filtered).getValue())
+                                .mapToDouble(filtered -> ((TableItem)filtered).getQuantity())
                                 .sum()
                                 - t.getOldValue()
                                 + t.getNewValue());
 
                 //set Value
-                editingItem.setValue(t.getNewValue());
+                editingItem.setQuantity(t.getNewValue());
 
                 //count new Price Sum
-                editingItem.setPrice_sum(t.getNewValue()*price_one);
+                editingItem.setPriceSum(t.getNewValue()*price_one);
 
 //                Set new Rest of Value
                 editingItem.setRestOfValue(restOfValue);

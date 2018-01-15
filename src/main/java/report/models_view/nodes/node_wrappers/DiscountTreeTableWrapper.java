@@ -79,7 +79,7 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef>
     public void setContextMenu(ContextMenu contextMenu) {
         treeTableView.setContextMenu(contextMenu);
 //        treeTableView.getRoo ContextMenuOptional.setTableItemContextMenuListener(this);t()
-//                .getValue()
+//                .getQuantity()
 //                .secondValueProperty()
 //                .addListener((ChangeListener) (observable, oldValue, newValue) ->{
 //                    contextMenu.setImpl_showRelativeToWindow(false);

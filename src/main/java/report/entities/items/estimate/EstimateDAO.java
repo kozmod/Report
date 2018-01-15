@@ -21,7 +21,7 @@ import report.layoutControllers.estimate.EstimateController.Est;
 //import report.models.Formula_test;
 import report.models.sql.SQLconnector;
 import report.entities.items.TableItem;
-import report.entities.items.cb.TableItemCB;
+import report.entities.items.cb.AddEstTIV;
 
 
 public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
@@ -138,8 +138,8 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
     * Get <b>BASE</b>List of TableWrapper Items (EstimateTVI) from SQL
     * @return  List of TableItem
     */
-    public ObservableList<TableItemCB> getBaseList(String BildingPart) {
-              ObservableList<TableItemCB> list =  FXCollections.observableArrayList();
+    public ObservableList<AddEstTIV> getBaseList(String BildingPart) {
+              ObservableList<AddEstTIV> list =  FXCollections.observableArrayList();
       
             String psmtmtString ="SELECT"
                                         + " * "
@@ -157,7 +157,7 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
             ResultSet rs = pstmt.executeQuery();
                    while(rs.next()){
 //                            ceckResult = true;
-                            list.add(new TableItemCB(
+                            list.add(new AddEstTIV(
                                     0,
                                     false, 
                                     new Timestamp(System.currentTimeMillis()),
@@ -375,8 +375,8 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
                     pstmt.setString   (5,  obsItem.getJobOrMat());
                     pstmt.setString   (6,  obsItem.getBindJob());
                     pstmt.setString   (7,  obsItem.getUnit());
-                    pstmt.setDouble    (8,  obsItem.getValue());
-                    pstmt.setDouble    (9,  obsItem.getPrice_one());
+                    pstmt.setDouble    (8,  obsItem.getQuantity());
+                    pstmt.setDouble    (9,  obsItem.getPriceOne());
                     pstmt.setString   (10,  obsItem.getBuildingPart());
                     pstmt.setInt      (11,  ((EstimateTVI)obsItem).getTableType());
 
@@ -477,8 +477,8 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
 //                pstmt.setInt    (7,  0); 
 //            } else
 //            if(enumEst == Est.Changed){
-//                pstmt.setDouble  (1, Formula.getValue());
-////                pstmt.setFloat  (1, coefficient.getValue());
+//                pstmt.setDouble  (1, Formula.getQuantity());
+////                pstmt.setFloat  (1, coefficient.getQuantity());
 //                pstmt.setString (5, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
 //                pstmt.setString (6, enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR));
 //                pstmt.setInt    (7, 1); 
@@ -503,7 +503,7 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
 
             
             pstmt.execute();
-//            System.out.println("OEF INSERRT " + coefficient.getValue());
+//            System.out.println("OEF INSERRT " + coefficient.getQuantity());
         } catch (SQLException ex) {
             Logger.getLogger(EstimateDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -523,9 +523,9 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
 //                    pstmt.setString   (5,  obsItem.getBindJob());
 //                    pstmt.setInt      (6,  ((EstimateTVI)obsItem).getTableType());
 //                    pstmt.setString   (7,  obsItem.getJobOrMat());
-//                    pstmt.setFloat    (8,  obsItem.getValue());
+//                    pstmt.setFloat    (8,  obsItem.getQuantity());
 //                    pstmt.setString   (9,  obsItem.getUnit());
-//                    pstmt.setFloat    (10, obsItem.getPrice_one());
+//                    pstmt.setFloat    (10, obsItem.getPriceOne());
 //                    pstmt.setString   (11, obsItem.getTypeHome());
 //                    
 //                    pstmt.addBatch();  

@@ -38,7 +38,7 @@ public class DiffList<T>{
 //                .filter((T item) -> !editList.contains(item))
 //                .collect(Collectors.toList());
 //            intersection.forEach(item ->{
-//                System.out.println("diff item  "+ item.getJM_name() +" v "+item.getValue());
+//                System.out.println("diff item  "+ item.getJM_name() +" v "+item.getQuantity());
 //            });
 //            
 //                 System.out.println("diff --- " + result.size());
@@ -58,7 +58,7 @@ public class DiffList<T>{
                 .filter(item -> !editedList.contains(item))
                 .collect(Collectors.toList());
 //                rr.forEach(item -> {
-//                 System.out.println("dell item  "+ ((TableItem)item).getJM_name() +" v "+((TableItem)item).getValue());
+//                 System.out.println("dell item  "+ ((TableItem)item).getJM_name() +" v "+((TableItem)item).getQuantity());
 //                });
 //                System.out.println("dell  --- " + rr.size());
 //                return rr;
@@ -69,7 +69,7 @@ public class DiffList<T>{
                 .filter(item -> !baseList.contains(item))
                 .collect(Collectors.toList());
 //                result.forEach(item -> {
-//                 System.out.println("add item  "+ item.getJM_name() +" v "+item.getValue());
+//                 System.out.println("add item  "+ item.getJM_name() +" v "+item.getQuantity());
 //                });
 //                System.out.println("add  --- " + result.size());
     }

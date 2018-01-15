@@ -9,8 +9,6 @@ import javafx.scene.control.TableView;
 import report.entities.CommonDAO;
 import report.entities.items.TableItem;
 
-import java.util.Collection;
-
 
 public  class TableWrapperEST<E extends TableItem> extends TableWrapper<E> {
 
@@ -71,7 +69,7 @@ public  class TableWrapperEST<E extends TableItem> extends TableWrapper<E> {
     public void computeSum(){
         Double summ = new Double(0);
         for (TableItem  obsItem : super.tableView().getItems())
-            summ = summ + obsItem.getPrice_sum();
+            summ = summ + obsItem.getPriceSum();
         sum.setValue(summ);
 
     }

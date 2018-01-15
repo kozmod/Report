@@ -84,7 +84,7 @@ public class AddSiteController implements Initializable {
         queueComboBox.disableProperty().bind(queueRB_list.selectedProperty().not());
         queueTF.disableProperty().bind(queueRB_new.selectedProperty().not());
 
-        //set def value TextFields
+        //set def quantity TextFields
         planTF.setText(" - ");
         factTF.setText(" - ");
 

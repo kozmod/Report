@@ -12,11 +12,12 @@ import java.awt.*;
 import java.lang.reflect.Field;
 
 public class FxTestStage extends Application {
+    static  FxTestStage thisApplication;
     private  static String fxmlFile;
     private  static int width;
     private  static  int height;
     private  Stage primaryStage;
-    private static  Object controller;
+    private  Object controller;
 
 
     @Override
@@ -32,6 +33,7 @@ public class FxTestStage extends Application {
     }
 
     public FxTestStage() {
+        thisApplication = this;
     }
 
     /***************************************************************************
@@ -40,20 +42,9 @@ public class FxTestStage extends Application {
      *                                                                         *
      **************************************************************************/
 
-    public static <T> T controller(){
-        return (T) controller;
-    }
 
-    /***************************************************************************
-     *                                                                         *
-     * Reflection's Methods                                                    *
-     *                                                                         *
-     **************************************************************************/
-    public static <T> T getField(String field) throws NoSuchFieldException, IllegalAccessException {
-        Field wrapperField = controller.getClass().getDeclaredField(field);
-        wrapperField.setAccessible(true);
-
-        return (T)  wrapperField.get(controller);
+    public static FxTestStage applicationInstance() {
+        return thisApplication;
     }
 
     /***************************************************************************

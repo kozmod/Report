@@ -66,7 +66,7 @@ public class ExpensesController implements Initializable {
     private final StringProperty CONTRACTOR  = new SimpleStringProperty(Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
     private final StringProperty TYPE_HOME   = new SimpleStringProperty(Est.Common.getSiteSecondValue(SQL.Common.TYPE_HOME));
     
-//    private final  DoubleProperty COEFFICIENT = new SimpleDoubleProperty(new FormulaQuery().getFormula().getValue());
+//    private final  DoubleProperty COEFFICIENT = new SimpleDoubleProperty(new FormulaQuery().getFormula().getQuantity());
     private final  DoubleProperty COEFFICIENT = new SimpleDoubleProperty(Formula.formulaFromBase().computeCoefficient());
     /*!*******************************************************************************************************************
      *                                                                                                     PreConstructor
@@ -137,7 +137,7 @@ public class ExpensesController implements Initializable {
         expensesTWrapper.getContextMenu().getItems().get(2)
                 .addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
                     System.out.println("SAVEITEM ->>  report.layoutControllers.expensese.ExpensesController.init_expensesTab()");
-//                    COEFFICIENT.setValue(new FormulaQuery().getFormula().getValue());
+//                    COEFFICIENT.setQuantity(new FormulaQuery().getFormula().getQuantity());
                     COEFFICIENT.setValue(Formula.formulaFromBase().computeCoefficient());
                     System.out.println("COEF - >"  + COEFFICIENT.getValue());
                 });
@@ -237,7 +237,7 @@ public class ExpensesController implements Initializable {
             siteTWrapper.saveTableItems();
             rootController.update_previewTable(Est.Common.getPreviewObservableList());
             
-//            COEFFICIENT.setValue(new FormulaQuery().getFormula().getValue());
+//            COEFFICIENT.setQuantity(new FormulaQuery().getFormula().getQuantity());
             COEFFICIENT.setValue(Formula.formulaFromBase().computeCoefficient());
 
             CONTRACTOR.setValue(Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
@@ -318,7 +318,7 @@ public class ExpensesController implements Initializable {
         siteTWrapper.saveTableItems();
         siteTWrapper.refresh();
 
-//        System.out.println(COEFFICIENT.getValue());
+//        System.out.println(COEFFICIENT.getQuantity());
 
         applyCoefButton.setDisable(true);
         siteUndoButton.setDisable(true);
@@ -330,9 +330,9 @@ public class ExpensesController implements Initializable {
 //    class StringConverterTF extends StringConverter{
 //
 //        @Override
-//        public String formatNumber(Object value) {
-//            if(value != null){
-//                return value.formatNumber();
+//        public String formatNumber(Object quantity) {
+//            if(quantity != null){
+//                return quantity.formatNumber();
 //            }else {
 //                return "";
 //            }

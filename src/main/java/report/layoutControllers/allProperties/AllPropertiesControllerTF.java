@@ -56,7 +56,7 @@ class AllPropertiesControllerTF implements TableFactory {
 //            OSR_TIV editingItem = (OSR_TIV) t.getTableView().getItems().get(t.getTablePosition().getRow());
 //
 //            editingItem.setExpenses(t.getNewValue());
-//            editingItem.setExpensesPerHouse(t.getNewValue() / Quantity.value());
+//            editingItem.setExpensesPerHouse(t.getNewValue() / Quantity.quantity());
 //
 //            t.getTableView().refresh();
 //            //Diseble Save & Cancel Context menu Item
@@ -93,7 +93,7 @@ class AllPropertiesControllerTF implements TableFactory {
 
 //        TableColumn textColumn     = tableWrapper.addColumn("Наименование","text");
 //        TableColumn<VariableTIV,Double> valueAllColumn
-//                = tableWrapper.addColumn("Значение",   "value");
+//                = tableWrapper.addColumn("Значение",   "quantity");
 ////
 //        valueAllColumn.setEditable(true);
 ////        TableFactory.setTextFieldCell_NumbertringConverter_threeZeroes(valueAllColumn);
@@ -103,7 +103,7 @@ class AllPropertiesControllerTF implements TableFactory {
 //
 //        );
 //        valueAllColumn.setOnEditCommit((TableColumn.CellEditEvent<VariableTIV, Double> t) -> {
-//            t.getRowValue().setValue(t.getNewValue());
+//            t.getRowValue().setQuantity(t.getNewValue());
 //        });
 
 

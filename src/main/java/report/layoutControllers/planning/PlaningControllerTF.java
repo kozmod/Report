@@ -241,13 +241,13 @@ public class PlaningControllerTF implements TableFactory {
 //        TreeTableColumn<TableDItem, String> nameColumn =  new TreeTableColumn<>("Наименование");
 //        nameColumn.setSortable(false);
 //        nameColumn.setCellValueFactory((param) ->
-//                param.getValue().getValue().firstValueProperty()
+//                param.getQuantity().getQuantity().firstValueProperty()
 //        );
 //
 //        TreeTableColumn<TableDItem, Double> valueColumn = new TreeTableColumn<>("Значение");
 //        valueColumn.setSortable(false);
 //        valueColumn.setCellValueFactory((param) ->
-//                param.getValue().getValue().secondValueProperty().asObject()
+//                param.getQuantity().getQuantity().secondValueProperty().asObject()
 //        );
 ////        Callback<TreeTableColumn<TableDItem,Double>, TreeTableCell<TableDItem,Double>> defaultCellFactory2
 ////                =  ComboBoxTreeTableCell.forTreeTableColumn(2d,3d,4d);
@@ -258,10 +258,10 @@ public class PlaningControllerTF implements TableFactory {
 //        valueColumn.setOnEditCommit(event ->{
 //            final TreeItem<TableDItem> parent =  event.getTreeTablePosition().getTreeItem().getParent();
 //            final TreeItem<TableDItem> current =  event.getTreeTablePosition().getTreeItem();
-//            current.getValue().setSecondValue(event.getNewValue());
-////           final double parentNewValue = parent.getChildren().stream().mapToDouble(i -> i.getValue().getSecondValue()).sum();
-////           parent.getValue().setSecondValue(parentNewValue);
-//            event.getTreeTableView().getRoot().getValue().setSecondValue(Math.random());
+//            current.getQuantity().setSecondValue(event.getNewValue());
+////           final double parentNewValue = parent.getChildren().stream().mapToDouble(i -> i.getQuantity().getSecondValue()).sum();
+////           parent.getQuantity().setSecondValue(parentNewValue);
+//            event.getTreeTableView().getRoot().getQuantity().setSecondValue(Math.random());
 //            event.getTreeTableView().refresh();
 //        });
 //

@@ -227,11 +227,11 @@ public class PrintKS extends AbstractPrinterXML{
                                  .build());
             row.appendChild(new CellBuilder(doc)
                                  .setCellStyle("s173")
-                                 .setCellValue("Number", Double.toString(item.getValue()) )
+                                 .setCellValue("Number", Double.toString(item.getQuantity()) )
                                  .build());
             row.appendChild(new CellBuilder(doc)
                                  .setCellStyle("s174")
-                                 .setCellValue("Number",new DoubleStringConverter().toString(item.getPrice_one())
+                                 .setCellValue("Number",new DoubleStringConverter().toString(item.getPriceOne())
                                          .replace(" ","") )
                                  .build());
             row.appendChild(new CellBuilder(doc)

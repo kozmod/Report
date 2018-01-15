@@ -10,7 +10,7 @@ import javafx.beans.property.StringProperty;
 
 //Estimate Tabble Items to ObsList
 public abstract class TableItem implements TableClone {
-    //new value
+    //new quantity
     private long id;
     private int  del;
     private Timestamp dateCreate;
@@ -22,10 +22,10 @@ public abstract class TableItem implements TableClone {
     protected final StringProperty JM_name;
     protected final StringProperty JobOrMat;
     protected final StringProperty bindJob;
-    protected final DoubleProperty value;
+    protected final DoubleProperty quantity;
     protected final StringProperty unit;
-    protected final DoubleProperty price_one;
-    protected final DoubleProperty price_sum;
+    protected final DoubleProperty priceOne;
+    protected final DoubleProperty priceSum;
 
 
     public TableItem(
@@ -37,10 +37,10 @@ public abstract class TableItem implements TableClone {
             String JM_name,
             String JobOrMat,
             String bindJob,
-            Double  value,
+            Double quantity,
             String unit,
-            Double  price_one,
-            Double  price_sum,
+            Double priceOne,
+            Double priceSum,
             String buildingPart
 
     ) {
@@ -52,10 +52,10 @@ public abstract class TableItem implements TableClone {
         this.JM_name       = new SimpleStringProperty(JM_name);
         this.JobOrMat      = new SimpleStringProperty(JobOrMat);
         this.bindJob = new SimpleStringProperty(bindJob);
-        this.value         = new SimpleDoubleProperty(value);
+        this.quantity = new SimpleDoubleProperty(quantity);
         this.unit          = new SimpleStringProperty(unit);
-        this.price_one     = new SimpleDoubleProperty(price_one);
-        this.price_sum     = new SimpleDoubleProperty(price_sum);
+        this.priceOne = new SimpleDoubleProperty(priceOne);
+        this.priceSum = new SimpleDoubleProperty(priceSum);
         this.buildingPart = new SimpleStringProperty(buildingPart);
 
     }
@@ -70,10 +70,10 @@ public abstract class TableItem implements TableClone {
 //                                    this.getJM_name(),
 //                                    this.getJobOrMat(),
 //                                    this.getBindJob(),
-//                                    this.getValue(),
+//                                    this.getQuantity(),
 //                                    this.getUnit(),
-//                                    this.getPrice_one(),
-//                                    this.getPrice_sum(),
+//                                    this.getPriceOne(),
+//                                    this.getPriceSum(),
 //                                    this.getBuildingPart()
 //                                    );
 //            return clone;
@@ -88,10 +88,10 @@ public abstract class TableItem implements TableClone {
 //        private  StringProperty JM_name;                          
 //        private  StringProperty JobOrMat;                          
 //        private  StringProperty bindJob;
-//        private  FloatProperty  value;                            
+//        private  FloatProperty  quantity;
 //        private  StringProperty unit;                            
-//        private  FloatProperty  price_one;                            
-//        private  FloatProperty  price_sum;
+//        private  FloatProperty  priceOne;
+//        private  FloatProperty  priceSum;
 //        
 //    
 //            public Builder setSiteNumber(String value_inp)  {this.siteNumber    = new SimpleStringProperty(value_inp);  return this;}
@@ -100,25 +100,25 @@ public abstract class TableItem implements TableClone {
 //            public Builder setJM_name(String value_inp)     {this.JM_name       = new SimpleStringProperty(value_inp);  return this;}
 //            public Builder setJobOrMat(String value_inp)    {this.JobOrMat      = new SimpleStringProperty(value_inp);  return this;}
 //            public Builder setBindJob(String value_inp)   {this.bindJob     = new SimpleStringProperty(value_inp);  return this;}
-//            public Builder setValue(float value_inp)        {this.value         = new SimpleFloatProperty (value_inp);  return this;}      
+//            public Builder setQuantity(float value_inp)        {this.quantity         = new SimpleFloatProperty (value_inp);  return this;}
 //            public Builder setUnit(String value_inp)        {this.unit          = new SimpleStringProperty(value_inp);  return this;}
-//            public Builder setPrice_one (float value_inp)   {this.price_one     = new SimpleFloatProperty (value_inp);  return this;}
-//            public Builder setPrice_sum(float value_inp)    {this.price_sum     = new SimpleFloatProperty (value_inp);  return this;}
+//            public Builder setPriceOne (float value_inp)   {this.priceOne     = new SimpleFloatProperty (value_inp);  return this;}
+//            public Builder setPriceSum(float value_inp)    {this.priceSum     = new SimpleFloatProperty (value_inp);  return this;}
 //            public Builder setBuildingPart(String value_inp) {this.buildingPart   = new SimpleStringProperty(value_inp);  return this;}
 //            
 ////            public TableItem build() {
 ////                return new TableItem(
-////                      siteNumber .getValue(), 
-////                      typeHome   .getValue(),   
-////                      contractor .getValue(), 
-////                      JM_name    .getValue(),    
-////                      JobOrMat   .getValue(),
-////                      bindJob  .getValue(),
-////                      value      .getValue(), 
-////                      unit       .getValue(), 
-////                      price_one  .getValue(),
-////                      price_sum  .getValue(),
-////                      buildingPart.getValue()
+////                      siteNumber .getQuantity(),
+////                      typeHome   .getQuantity(),
+////                      contractor .getQuantity(),
+////                      JM_name    .getQuantity(),
+////                      JobOrMat   .getQuantity(),
+////                      bindJob  .getQuantity(),
+////                      quantity      .getQuantity(),
+////                      unit       .getQuantity(),
+////                      priceOne  .getQuantity(),
+////                      priceSum  .getQuantity(),
+////                      buildingPart.getQuantity()
 ////                    );
 ////            }  
 //        }
@@ -168,20 +168,23 @@ public abstract class TableItem implements TableClone {
         return bindJob;
     }
 
-    public Double getValue()                {return value.get();}
-    public void  setValue(double value_inp) {value.set(value_inp);}
-    public DoubleProperty valueProperty() {return value;}
+    public Double getQuantity()                {return quantity.get();}
+    public void setQuantity(double value_inp) {
+        quantity.set(value_inp);}
+    public DoubleProperty quantityProperty() {return quantity;}
 
     public String getUnit() {return unit.get();}
     public void   setUnit(String value_inp) {unit.set(value_inp);}
     public StringProperty unitProperty() {return unit;}
-    public Double getPrice_one() {return price_one.get();}
-    public void  setPrice_one (double value_inp) {price_one.set(value_inp);}
-    public DoubleProperty price_oneProperty() {return price_one;}
+    public Double getPriceOne() {return priceOne.get();}
+    public void setPriceOne(double value_inp) {
+        priceOne.set(value_inp);}
+    public DoubleProperty priceOneProperty() {return priceOne;}
 
-    public Double getPrice_sum() {return price_sum.get();}
-    public void  setPrice_sum (double value_inp) {price_sum.set(value_inp);}
-    public DoubleProperty price_sumProperty() {return price_sum;}
+    public Double getPriceSum() {return priceSum.get();}
+    public void setPriceSum(double value_inp) {
+        priceSum.set(value_inp);}
+    public DoubleProperty priceSumProperty() {return priceSum;}
 
     public String getBuildingPart() {return buildingPart.get();}
     public void setBuildingPart(String value_inp) {
@@ -193,9 +196,9 @@ public abstract class TableItem implements TableClone {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 23 * hash + (this.value     != null ? this.value.hashCode()     : 0);
-        hash = 23 * hash + (this.price_one != null ? this.price_one.hashCode() : 0);
-        hash = 23 * hash + (this.price_sum != null ? this.price_sum.hashCode() : 0);
+        hash = 23 * hash + (this.quantity != null ? this.quantity.hashCode()     : 0);
+        hash = 23 * hash + (this.priceOne != null ? this.priceOne.hashCode() : 0);
+        hash = 23 * hash + (this.priceSum != null ? this.priceSum.hashCode() : 0);
         return hash;
     }
 
@@ -227,16 +230,16 @@ public abstract class TableItem implements TableClone {
         if ((this.bindJob.get() == null) ? (other.bindJob.get() != null) : !this.bindJob.get().equals(other.bindJob.get())) {
             return false;
         }
-        if (this.value.get() != other.value.get()) {
+        if (this.quantity.get() != other.quantity.get()) {
             return false;
         }
         if ((this.unit.get() == null) ? (other.unit.get() != null) : !this.unit.get().equals(other.unit.get())) {
             return false;
         }
-        if (this.price_one.get() != other.price_one.get()) {
+        if (this.priceOne.get() != other.priceOne.get()) {
             return false;
         }
-        if (this.price_sum.get() != other.price_sum.get()) {
+        if (this.priceSum.get() != other.priceSum.get()) {
             return false;
         }
         if ((this.buildingPart.get() == null) ? (other.buildingPart.getValue() != null) : !this.buildingPart.get().equals(other.buildingPart.get())) {
@@ -286,7 +289,7 @@ public abstract class TableItem implements TableClone {
 
     //Extractor
 //   public static Callback<TableItem, Observable[]> extractor() {
-//        return (TableItem p) -> new Observable[]{p.valueProperty(), p.price_oneProperty()};
+//        return (TableItem p) -> new Observable[]{p.quantityProperty(), p.priceOneProperty()};
 //    }
 
 

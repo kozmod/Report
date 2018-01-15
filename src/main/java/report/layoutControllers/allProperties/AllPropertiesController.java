@@ -248,7 +248,7 @@ public class AllPropertiesController implements Initializable {
 //    @FXML
 //    private void handle_osrAddItemButton(ActionEvent event) {
 //        Double expenses = new DoubleStringConverter().fromString(osrAddValueTF.getText());
-//        Double expensesPerHouse = expenses/Quantity.value();
+//        Double expensesPerHouse = expenses/Quantity.quantity();
 //        osrTableWrapper.getItems()
 //                .add(new OSR_TIV(0,osrAddTextTF.getText(),expenses,expensesPerHouse ));
 //

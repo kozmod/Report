@@ -50,7 +50,7 @@
 //
 //    /**
 //    * Get variable Properties.
-//    * @return value (converted string to Double value)
+//    * @return quantity (converted string to Double quantity)
 //    */
 //    public Properties getProperties(){return  PropertiesFile.get(sqlTableName());}
 ////    public Properties getProperties(){return  PropertiesFactory.getUsePath(sqlTableName());}
@@ -71,9 +71,9 @@
 //                            VariableTIV tiv = new VariableTIV(
 //                                    0,
 //                                    temp.getKey().toString()
-////                            ,DecimalFormatter.formatString(temp.getValue()));
-////                            ,DecimalFormatter.stringToDouble_threeZeroes(temp.getValue()));
-//                                    ,doubleStringConverter.fromString(temp.getValue().toString())
+////                            ,DecimalFormatter.formatString(temp.getQuantity()));
+////                            ,DecimalFormatter.stringToDouble_threeZeroes(temp.getQuantity()));
+//                                    ,doubleStringConverter.fromString(temp.getQuantity().toString())
 //                            );
 //                            return tiv;
 //                        }
@@ -110,9 +110,9 @@
 //                    Properties::new,
 //                    (prop, item) -> prop.put(
 //                        item.getText(),
-////                        DecimalFormatter.toString_threeZeroes(item.getValue())
-//                            doubleStringConverter.fromString(item.getValue().toString())
-////                        DecimalFormatter.formatNumber(item.getValue())
+////                        DecimalFormatter.toString_threeZeroes(item.getQuantity())
+//                            doubleStringConverter.fromString(item.getQuantity().toString())
+////                        DecimalFormatter.formatNumber(item.getQuantity())
 //                    ),
 //                    (p1, p2) -> { p1.putAll(p2); return p1; })
 //                );

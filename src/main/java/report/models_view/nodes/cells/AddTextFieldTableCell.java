@@ -74,7 +74,7 @@ public class AddTextFieldTableCell<S extends ID,T > extends TableCell<S,T> imple
             this.setText(null);
             this.setGraphic(textField);
             textField.selectAll();
-//            this.getTableView().editableProperty().setValue(false);
+//            this.getTableView().editableProperty().setQuantity(false);
          }
     }
 

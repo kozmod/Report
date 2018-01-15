@@ -26,7 +26,7 @@ import report.layoutControllers.root.RootLayoutController;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.entities.items.TableClone;
 import report.entities.items.TableItem;
-import report.entities.items.cb.TableItemCB;
+import report.entities.items.cb.AddEstTIV;
 import report.usage_strings.ServiceStrings;
 
 
@@ -80,7 +80,7 @@ public class TableCellFactory{
     /**
      * Cell to inKS (EST)
      * <br>(true - RED / false - GREEN).  
-     * <br>[set text value color]
+     * <br>[set text quantity color]
      * @return inKsColoredCell
      */
     public static TableCell getInKsColoredCell(){
@@ -356,7 +356,7 @@ public class TableCellFactory{
   /**
    * Cell to "Add Row Estimate" TableWrapper (addSiteRowlayoutController)
    */
-   private class CheckValueCell extends TableCell<TableItemCB, Boolean> {
+   private class CheckValueCell extends TableCell<AddEstTIV, Boolean> {
         private CheckBox checkBox;
     
         public CheckValueCell() { }
@@ -384,7 +384,7 @@ public class TableCellFactory{
             checkBox = new CheckBox();
             checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
                 getTableView().getItems().get(getIndex()).setCheck(newValue);
-//                ((TableItemCB)treeTableView().getItems().saveEst(getIndex())).setCheck(newValue);
+//                ((AddEstTIV)treeTableView().getItems().saveEst(getIndex())).setCheck(newValue);
             });
         }
     }
@@ -546,7 +546,7 @@ public class TableCellFactory{
 //                this.setOnMouseEntered(null);
 //             } else {
 //                setText(item.formatNumber());
-//                setOnMouseEntered(value ->{
+//                setOnMouseEntered(quantity ->{
 ////                     
 //                   
 //                     RootLayoutController.update_changeTable((ObservableList) Est.Base.findItemsList_DL(this.treeTableView().getItems().saveEst(this.getIndex())));
@@ -563,9 +563,9 @@ public class TableCellFactory{
 //               table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 //               
 //               TableColumn tc1 = table.createColumn("Name", "JM_name");
-//               TableColumn tc2 = table.createColumn("Кол-во", "value");
-//               TableColumn Price_oneColumn = table.createColumn("Стоимость (за единицу)", "price_one");
-//               TableColumn Price_sumColumn = table.createColumn("Стоимость (общая)", "price_sum");
+//               TableColumn tc2 = table.createColumn("Кол-во", "quantity");
+//               TableColumn Price_oneColumn = table.createColumn("Стоимость (за единицу)", "priceOne");
+//               TableColumn Price_sumColumn = table.createColumn("Стоимость (общая)", "priceSum");
 // 
 //        }
 //        

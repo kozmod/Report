@@ -275,8 +275,8 @@ public class KS_DAO implements CommonDAO<Collection<KS_TIV>> {
                     pstmt.setString   (7,  obsItem.getJobOrMat());
                     pstmt.setString   (8,  obsItem.getBindJob());
                     pstmt.setString   (9,  obsItem.getUnit());
-                    pstmt.setDouble    (10, obsItem.getValue());
-                    pstmt.setDouble    (11, obsItem.getPrice_one());
+                    pstmt.setDouble    (10, obsItem.getQuantity());
+                    pstmt.setDouble    (11, obsItem.getPriceOne());
                     pstmt.setString   (12, obsItem.getBuildingPart());
                     
                     int affectedRows = pstmt.executeUpdate();
@@ -305,9 +305,9 @@ public class KS_DAO implements CommonDAO<Collection<KS_TIV>> {
 //                    pstmt.setString   (6,  obsItem.getJM_name());
 //                    pstmt.setString   (7,  obsItem.getBindJob());
 //                    pstmt.setString   (8,  obsItem.getJobOrMat());
-//                    pstmt.setFloat    (9,  obsItem.getValue());
+//                    pstmt.setFloat    (9,  obsItem.getQuantity());
 //                    pstmt.setString   (10,  obsItem.getUnit());
-//                    pstmt.setFloat    (11, obsItem.getPrice_one());
+//                    pstmt.setFloat    (11, obsItem.getPriceOne());
 //                    pstmt.setString   (12, obsItem.getTypeHome());
 //                    
 //                    pstmt.addBatch();

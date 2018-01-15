@@ -3,7 +3,7 @@ package report.layoutControllers.addEstimateRow;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import report.entities.CommonDAO;
-import report.entities.items.cb.TableItemCB;
+import report.entities.items.cb.AddEstTIV;
 import report.entities.items.estimate.EstimateDAO;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models_view.nodes.cells.AddComboBoxTableCell;
@@ -23,23 +23,23 @@ public class AddEstimateRowTF {
     @SuppressWarnings("unchecked")
     public static TableWrapperEST decorEst_add(TableView table){
         CommonDAO dao = new EstimateDAO();
-        TableWrapperEST<TableItemCB> tableWrapper = new TableWrapperEST<>(table, dao);
+        TableWrapperEST<AddEstTIV> tableWrapper = new TableWrapperEST<>(table, dao);
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        TableColumn CheckBoxColumn = tableWrapper.addColumn(" * ","check");
-        TableColumn<TableItemCB, String>  JM_nameColumn  = tableWrapper.addColumn("Наименование работ/затрат", "JM_name");
-        TableColumn<TableItemCB, String>   BJobColumn    = tableWrapper.addColumn("Связанная работа",cellData -> cellData.getValue().bindJobProperty());
-        TableColumn valueColumn    = tableWrapper.addColumn("Кол-во",                    "value");
-        TableColumn unitColumn     = tableWrapper.addColumn("Eд. изм.",                  "unit");
-        TableColumn Price_one      = tableWrapper.addColumn("Стоимость (за единицу)",    "price_one");
-        TableColumn Price_sum      = tableWrapper.addColumn("Стоимость (общая)",         "price_sum");
+        TableColumn checkBoxColumn = tableWrapper.addColumn(" * ","check");
+        TableColumn<AddEstTIV, String>  JM_nameColumn  = tableWrapper.addColumn("Наименование работ/затрат", "JM_name");
+        TableColumn<AddEstTIV, String>  BJobColumn     = tableWrapper.addColumn("Связанная работа", cellData -> cellData.getValue().bindJobProperty());
+        TableColumn<AddEstTIV, Double>  valueColumn    = tableWrapper.addColumn("Кол-во",                    "quantity");
+        TableColumn<AddEstTIV, String>  unitColumn     = tableWrapper.addColumn("Eд. изм.",                  "unit");
+        TableColumn<AddEstTIV, Double>  priseOneColumn = tableWrapper.addColumn("Стоимость (за единицу)",    "priceOne");
+        TableColumn<AddEstTIV, Double> priseSumColumn  = tableWrapper.addColumn("Стоимость (общая)",         "priceSum");
 //
 
-        CheckBoxColumn.setMaxWidth(60);
-        CheckBoxColumn.setMinWidth(30);
+        checkBoxColumn.setMaxWidth(60);
+        checkBoxColumn.setMinWidth(30);
 
-        CheckBoxColumn.setCellFactory(param -> TableCellFactory.getCheckValueCell());
+        checkBoxColumn.setCellFactory(param -> TableCellFactory.getCheckValueCell());
         JM_nameColumn.setCellFactory(param -> new AddTextFieldTableCell(
                         tableWrapper.getSetAddingCells()
                 )
@@ -55,10 +55,17 @@ public class AddEstimateRowTF {
                         ,dao.getDistinctOfColumn(SQL.Estimate.UNIT).toArray()
                 )
         );
-        Price_one.setCellFactory(param -> new AddTextFieldTableCell(new DoubleStringConverter(),tableWrapper.getSetAddingCells()));
-        Price_sum.setCellFactory(param -> new AddTextFieldTableCell(new DoubleStringConverter(),tableWrapper.getSetAddingCells()));
-        BJobColumn.setOnEditCommit((TableColumn.CellEditEvent<TableItemCB, String> t) ->{
-            TableItemCB element = t.getRowValue();
+        priseOneColumn.setCellFactory(param -> new AddTextFieldTableCell(new DoubleStringConverter(),tableWrapper.getSetAddingCells()));
+        priseOneColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, Double> t) ->{
+            AddEstTIV element = t.getRowValue();
+            double newValue = t.getNewValue();
+            element.setPriceOne(newValue);
+            element.setPriceSum(newValue* element.getQuantity());
+
+        });
+//        priseSumColumn.setCellFactory(param -> new AddTextFieldTableCell(new DoubleStringConverter(),tableWrapper.getSetAddingCells()));
+        BJobColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, String> t) ->{
+            AddEstTIV element = t.getRowValue();
             String newValue = t.getNewValue();
             element.setBindJob(newValue);
             switch (newValue){

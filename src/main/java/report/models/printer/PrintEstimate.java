@@ -158,13 +158,13 @@ public class PrintEstimate extends AbstractPrinterXML{
             //Value
             row.appendChild(new CellBuilder(doc)
                                  .setCellStyle("s148")
-                                 .setCellValue("Number", Double.toString(item.getValue()) )
+                                 .setCellValue("Number", Double.toString(item.getQuantity()) )
                                  .build());
             if(item.getBindJob().endsWith("-")){
                 //Price one - JOB
                 row.appendChild(new CellBuilder(doc)
                                  .setCellStyle("s148")
-                                 .setCellValue("Number", Double.toString(item.getPrice_one()) )
+                                 .setCellValue("Number", Double.toString(item.getPriceOne()) )
                                  .build());
                 //Price Sum - JOB
                 row.appendChild(new CellBuilder(doc)
@@ -199,7 +199,7 @@ public class PrintEstimate extends AbstractPrinterXML{
                 //Price one - Material
                 row.appendChild(new CellBuilder(doc)
                                  .setCellStyle("s148")
-                                 .setCellValue("Number",  Double.toString(item.getPrice_one()) )
+                                 .setCellValue("Number",  Double.toString(item.getPriceOne()) )
                                  .build());
                 //Price one - Material
                 row.appendChild(new CellBuilder(doc)

@@ -55,10 +55,10 @@ public class EstimateTVI extends TableItem {
                                     super.getJM_name(),
                                     super.getJobOrMat(),
                                     super.getBindJob(),
-                                    super.getValue(),
+                                    super.getQuantity(),
                                     super.getUnit(),
-                                    super.getPrice_one(),
-                                    super.getPrice_sum(),
+                                    super.getPriceOne(),
+                                    super.getPriceSum(),
                                     super.getBuildingPart(),
                                     this.getTableType(),
                                     this.getInKS()
@@ -139,9 +139,9 @@ public class EstimateTVI extends TableItem {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 2 * hash + (super.value     != null ? super.value.hashCode()     >>>3  : 0);
-        hash = 2 * hash + (super.price_one != null ? super.price_one.hashCode() >>>3  : 0);
-        hash = 2 * hash + (super.price_sum != null ? super.price_sum.hashCode() >>>3  : 0);
+        hash = 2 * hash + (super.quantity != null ? super.quantity.hashCode()     >>>3  : 0);
+        hash = 2 * hash + (super.priceOne != null ? super.priceOne.hashCode() >>>3  : 0);
+        hash = 2 * hash + (super.priceSum != null ? super.priceSum.hashCode() >>>3  : 0);
         hash = 2 * hash + (this.tableType  != null ? this.tableType.hashCode()  >>>3  : 0);
             
         return hash;
@@ -157,16 +157,16 @@ public class EstimateTVI extends TableItem {
 //            return false;
 //        }
 //        final EstimateTVI other = (EstimateTVI) obj;
-//        if ((super.siteNumber.get() == null) ? (other.siteNumber.getValue() != null) : !super.siteNumber.get().equals(other.siteNumber.get())) {
+//        if ((super.siteNumber.get() == null) ? (other.siteNumber.getQuantity() != null) : !super.siteNumber.get().equals(other.siteNumber.get())) {
 //            return false;
 //        }
-//        if ((super.typeHome.get() == null) ? (other.typeHome.getValue() != null) : !super.typeHome.get().equals(other.typeHome.get())) {
+//        if ((super.typeHome.get() == null) ? (other.typeHome.getQuantity() != null) : !super.typeHome.get().equals(other.typeHome.get())) {
 //            return false;
 //        }
-//        if ((super.contractor.get() == null) ? (other.contractor.getValue() != null) : !super.contractor.get().equals(other.contractor.get())) {
+//        if ((super.contractor.get() == null) ? (other.contractor.getQuantity() != null) : !super.contractor.get().equals(other.contractor.get())) {
 //            return false;
 //        }
-//        if ((super.JM_name.get() == null) ? (other.JM_name.getValue() != null) : !super.JM_name.get().equals(other.JM_name.get())) {
+//        if ((super.JM_name.get() == null) ? (other.JM_name.getQuantity() != null) : !super.JM_name.get().equals(other.JM_name.get())) {
 //            return false;
 //        }
 //        if ((super.JobOrMat.get() == null) ? (other.JobOrMat.get() != null) : !super.JobOrMat.get().equals(other.JobOrMat.get())) {
@@ -175,19 +175,19 @@ public class EstimateTVI extends TableItem {
 //        if ((super.bindJob.get() == null) ? (other.bindJob.get() != null) : !super.bindJob.get().equals(other.bindJob.get())) {
 //            return false;
 //        }
-//        if (super.value.get() != other.value.get()) {
+//        if (super.quantity.get() != other.quantity.get()) {
 //            return false;
 //        }
 //        if ((super.unit.get() == null) ? (other.unit.get() != null) : !super.unit.get().equals(other.unit.get())) {
 //            return false;
 //        }
-//        if (super.price_one.get() != other.price_one.get()) {
+//        if (super.priceOne.get() != other.priceOne.get()) {
 //            return false;
 //        }
-//        if (super.price_sum.get() != other.price_sum.get()) {
+//        if (super.priceSum.get() != other.priceSum.get()) {
 //            return false;
 //        }
-//        if ((super.buildingPart.get() == null) ? (other.buildingPart.getValue() != null) : !super.buildingPart.get().equals(other.buildingPart.get())) {
+//        if ((super.buildingPart.get() == null) ? (other.buildingPart.getQuantity() != null) : !super.buildingPart.get().equals(other.buildingPart.get())) {
 //            return false;
 //        }
 //    return true;
@@ -198,7 +198,7 @@ public class EstimateTVI extends TableItem {
      * @return extractor
     */
     public static Callback<TableItem, Observable[]> extractor() {
-        return (TableItem p) -> new Observable[]{p.valueProperty(), p.price_oneProperty()};
+        return (TableItem p) -> new Observable[]{p.quantityProperty(), p.priceOneProperty()};
     }
     
 

@@ -56,10 +56,10 @@ public class KS_TIV extends TableItem {
                                     super.getJM_name(),
                                     super.getJobOrMat(),
                                     super.getBindJob(),
-                                    super.getValue(),
+                                    super.getQuantity(),
                                     super.getUnit(),
-                                    super.getPrice_one(),
-                                    super.getPrice_sum(),
+                                    super.getPriceOne(),
+                                    super.getPriceSum(),
                                     super.getBuildingPart()
                                     );
             return clone;
@@ -81,11 +81,11 @@ public class KS_TIV extends TableItem {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 2 * hash + (this.ksDate     != null ? this.price_sum.hashCode()  : 0);
+        hash = 2 * hash + (this.ksDate     != null ? this.priceSum.hashCode()  : 0);
         hash = 2 * hash + (this.ksNumber   != null ? this.ksNumber.hashCode()   : 0);
-        hash = 2 * hash + (super.value     != null ? super.value.hashCode()     : 0);
-        hash = 2 * hash + (super.price_one != null ? super.price_one.hashCode() : 0);
-        hash = 2 * hash + (super.price_sum != null ? super.price_sum.hashCode() : 0);
+        hash = 2 * hash + (super.quantity != null ? super.quantity.hashCode()     : 0);
+        hash = 2 * hash + (super.priceOne != null ? super.priceOne.hashCode() : 0);
+        hash = 2 * hash + (super.priceSum != null ? super.priceSum.hashCode() : 0);
             
     return hash;
    }
@@ -124,16 +124,16 @@ public class KS_TIV extends TableItem {
         if ((super.bindJob.get() == null) ? (other.bindJob.get() != null) : !super.bindJob.get().equals(other.bindJob.get())) {
             return false;
         }
-        if (super.value.get() != other.value.get()) {
+        if (super.quantity.get() != other.quantity.get()) {
             return false;
         }
         if ((super.unit.get() == null) ? (other.unit.get() != null) : !super.unit.get().equals(other.unit.get())) {
             return false;
         }
-        if (super.price_one.get() != other.price_one.get()) {
+        if (super.priceOne.get() != other.priceOne.get()) {
             return false;
         }
-        if (super.price_sum.get() != other.price_sum.get()) {
+        if (super.priceSum.get() != other.priceSum.get()) {
             return false;
         }
         if ((super.buildingPart.get() == null) ? (other.buildingPart.getValue() != null) : !super.buildingPart.get().equals(other.buildingPart.get())) {
@@ -144,7 +144,7 @@ public class KS_TIV extends TableItem {
     
     
     public static Callback<TableItem, Observable[]> extractor() {
-        return (TableItem p) -> new Observable[]{p.valueProperty()};
+        return (TableItem p) -> new Observable[]{p.quantityProperty()};
     }
 
 }

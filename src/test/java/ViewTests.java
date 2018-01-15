@@ -3,6 +3,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
@@ -13,12 +14,31 @@ import report.layoutControllers.allProperties.AllPropertiesController;
 import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.usage_strings.PathStrings;
 
+import java.lang.reflect.Field;
 import java.util.concurrent.TimeUnit;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class ViewTests {
-
-
+    /**
+     * Get Class's field reference
+     * @param field String(Field's name)
+     * @param instObject Object(Instance)
+     * @param <T> return type
+     * @return T
+     * @throws NoSuchFieldException  (.getDeclaredField( ... ))
+     * @throws IllegalAccessException (Field.get( ... ))
+     */
+    @SuppressWarnings("unchecked")
+    public static <T> T getField(String field, Object instObject) throws NoSuchFieldException, IllegalAccessException {
+        Field wrapperField = instObject.getClass().getDeclaredField(field);
+        wrapperField.setAccessible(true);
+        return (T)  wrapperField.get(instObject);
+    }
+    /***************************************************************************
+     *                                                                         *
+     * TESTS                                                                   *
+     *                                                                         *
+     **************************************************************************/
     static Thread appThread;
     @BeforeAll
     @DisplayName("Общие параметры")
@@ -33,25 +53,35 @@ public class ViewTests {
         TimeUnit.SECONDS.sleep(3);
     }
 
-        @Test
-        @DisplayName("Общие параметры")
+    @Test
+    @DisplayName("Общие параметры")
 //    @Disabled
-        public void allPropLayoutTest() throws InterruptedException, NoSuchFieldException, IllegalAccessException {
+    public void allPropLayoutTest() throws InterruptedException, NoSuchFieldException, IllegalAccessException {
 
-            AllPropertiesController  controller = FxTestStage.controller();
-            AbstractTableWrapper wrapper = FxTestStage.getField("countAgentTableWrapper");
-
-            CountAgentDAO dao =  Mockito.mock(CountAgentDAO.class);
-            ObservableList<CountAgentTVI> list = FXCollections.observableArrayList(CountAgentTVI.extractor());
-            list.addAll(
-                    new CountAgentTVI(1,"GREM", "OOO"," ИП"),
-                    new CountAgentTVI(2,"УЮТ", "OфO"," Подрядчик"),
-                    new CountAgentTVI(3,"САРАЙ", "ААO","Клиент")
-            );
-            Mockito.when(dao.getData()).thenReturn(list);
+        FxTestStage fx = FxTestStage.applicationInstance();
+        AllPropertiesController controller = getField("controller",fx);
+        AbstractTableWrapper wrapper = getField("countAgentTableWrapper",controller);
+        CountAgentDAO dao =  Mockito.mock(CountAgentDAO.class);
+        ObservableList<CountAgentTVI> list = FXCollections.observableArrayList(CountAgentTVI.extractor());
+        list.addAll(
+                new CountAgentTVI(1,"GREM", "OOO"," Клиент"),
+                new CountAgentTVI(2,"УЮТ", "OфO"," Подрядчик"),
+                new CountAgentTVI(3,"САРАЙ", "ААO","Клиент")
+        );
+        Mockito.when(dao.getData()).thenReturn(list);
         wrapper.setDAO(dao);
         controller.initData();
+
         appThread.join();
+
+    }
+
+    @Test
+    @DisplayName("reflection test")
+    @Disabled
+    public void refTest() throws InterruptedException, NoSuchFieldException, IllegalAccessException {
+
+
 
     }
 

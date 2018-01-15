@@ -265,8 +265,8 @@ public class EstimateController implements Initializable {
     ********************************************************************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-//        scrollPaneBase.setPrefHeight(ScreenSize.height.getValue() - 200);
-//        scrollPaneChanged.setPrefHeight(ScreenSize.height.getValue() - 200);
+//        scrollPaneBase.setPrefHeight(ScreenSize.height.getQuantity() - 200);
+//        scrollPaneChanged.setPrefHeight(ScreenSize.height.getQuantity() - 200);
 
         dateKSfrom.setEditable(true);
 //        dateKSfrom.setConverter(new EpochDatePickerConverter());
@@ -441,20 +441,20 @@ public class EstimateController implements Initializable {
                     TableItem equalsItem = Est.Changed.findEqualsElevent(item);
                     double sum =0;
                     if(item != null && equalsItem != null)
-                        sum =  equalsItem.getValue() -
+                        sum =  equalsItem.getQuantity() -
                                 ksMap.values().stream()
                                         .flatMap(mapItem ->mapItem.stream())
                                         .filter(item::equalsSuperClass)
-                                        .mapToDouble(filtered -> filtered.getValue())
+                                        .mapToDouble(filtered -> filtered.getQuantity())
                                         .sum();
 
                     ((KS_TIV)item).setRestOfValue(sum);
 
-//                                Est.Changed.findEqualsElevent(item).getValue() -
+//                                Est.Changed.findEqualsElevent(item).getQuantity() -
 //                                        ksMap.values().stream()
 //                                                .flatMap(mapItem ->mapItem.stream())
 //                                                .filter(item::equalsSuperClass)
-//                                                .mapToDouble(filtered -> filtered.getValue())
+//                                                .mapToDouble(filtered -> filtered.getQuantity())
 //                                                .sum()
 //                        );
                 });
