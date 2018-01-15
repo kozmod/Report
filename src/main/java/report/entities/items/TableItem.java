@@ -150,7 +150,7 @@ public abstract class TableItem implements TableClone {
     public StringProperty JM_nameProperty() {return JM_name;}
 
     public String getJobOrMat() {return JobOrMat.get();}
-    public void   setJobOrMat(String value_inp) {JobOrMat.set(value_inp);}
+//    public void   setJobOrMat(String value_inp) {JobOrMat.set(value_inp);}
     public StringProperty jobOrMatProperty() {return JobOrMat;}
 
 //    public String getBindJob() {return bindJob.get();}
@@ -163,6 +163,11 @@ public abstract class TableItem implements TableClone {
     }
     public void setBindJob(String bindJob) {
         this.bindJob.set(bindJob);
+        if(bindJob.equals("-")){
+            this.JobOrMat.setValue("Работа");
+        }else{
+            this.JobOrMat.setValue("Материал");
+        }
     }
     public StringProperty bindJobProperty() {
         return bindJob;

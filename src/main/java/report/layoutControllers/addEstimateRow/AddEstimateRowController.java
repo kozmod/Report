@@ -6,28 +6,20 @@ import java.sql.Timestamp;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
-import javafx.animation.PauseTransition;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import javafx.util.Duration;
 
-import org.omg.CORBA.Object;
 import report.entities.items.cb.AddEstTIV;
 import report.entities.items.estimate.EstimateDAO;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.usage_strings.SQL;
 import report.models.DiffList;
-
-import report.models_view.nodes.node_helpers.InputValidator;
 
 import report.entities.items.TableItem;
 import report.entities.items.estimate.EstimateTVI;
@@ -41,7 +33,7 @@ public class AddEstimateRowController implements Initializable {
     private ObservableList<AddEstTIV> editObsList,
             baseObsList;
 
-    private String bildingPart,
+    private String buildingPart,
             siteNumber,
             contName,
             typeHome;
@@ -68,11 +60,11 @@ public class AddEstimateRowController implements Initializable {
 
     public void setRootTableView(TableWrapper t) {
         this.rootTableWrapper = t;
-        this.editObsList = getCheckObs(t.getItems());
-        this.bildingPart = t.getTitle();
-        this.siteNumber  = Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER);
-        this.contName    = Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR);
-        this.typeHome    = Est.Common.getSiteSecondValue(SQL.Common.TYPE_HOME);
+        this.editObsList  = getCheckObs(t.getItems());
+        this.buildingPart = t.getTitle();
+        this.siteNumber   = Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER);
+        this.contName     = Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR);
+        this.typeHome     = Est.Common.getSiteSecondValue(SQL.Common.TYPE_HOME);
 //        this.tableType   = enumEst.getTaleType();
 
         init_Labels();
@@ -93,11 +85,10 @@ public class AddEstimateRowController implements Initializable {
 
     }
 
-
     private void init_Labels(){
         siteNumLabel.setText(siteNumber);
         contHomeLabel.setText(contName);
-        buildingPartLabel.setText(bildingPart);
+        buildingPartLabel.setText(buildingPart);
     }
 
 
@@ -106,7 +97,7 @@ public class AddEstimateRowController implements Initializable {
 
         int check ;
 //       baseObsList = getCheckObs(commonSQL_SELECT.getEstObs_base(siteNumber, contName,typeHome, buildingPart));
-        baseObsList = new EstimateDAO().getBaseList(bildingPart);
+        baseObsList = new EstimateDAO().getBaseList(buildingPart);
         DiffList diflist = new DiffList(baseObsList, editObsList);
 
         ObservableList<AddEstTIV> result;
@@ -204,7 +195,7 @@ public class AddEstimateRowController implements Initializable {
                 "-",
                 0d,
                 0d,
-                bildingPart
+                buildingPart
         ));
         elemTableView.setEditable(true);
     }

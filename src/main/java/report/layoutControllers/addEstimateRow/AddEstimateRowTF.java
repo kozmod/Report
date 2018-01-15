@@ -23,7 +23,7 @@ public class AddEstimateRowTF {
      * @return TableWrapper(child of TableView)
      */
     @SuppressWarnings("unchecked")
-    public static TableWrapperEST decorEst_add(TableView table){
+    public static TableWrapperEST<AddEstTIV> decorEst_add(TableView table){
         CommonDAO dao = new EstimateDAO();
         TableWrapperEST<AddEstTIV> tableWrapper = new TableWrapperEST<>(table, dao);
 
@@ -43,18 +43,16 @@ public class AddEstimateRowTF {
 
         checkBoxColumn.setCellFactory(param -> TableCellFactory.getCheckValueCell());
         JM_nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
-        BJobColumn.setCellFactory(ComboBoxTableCell.forTableColumn(dao.getDistinctOfColumn(SQL.Estimate.BINDED_JOB,"-")));
-        BJobColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, String> t) ->{
-            AddEstTIV element = t.getRowValue();
-            String newValue = t.getNewValue();
-            element.setBindJob(newValue);
-            switch (newValue){
-                case "-": element.setJobOrMat("Работа");
-                    break;
-                default:
-                    element.setJobOrMat("Материал");
-            }
-        });
+        BJobColumn.setCellFactory(ComboBoxTableCell.forTableColumn(
+                dao.getDistinctOfColumn(SQL.Estimate.BINDED_JOB,"-")
+        ));
+//        BJobColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, String> t) ->{
+//            AddEstTIV element = t.getRowValue();
+//            String newValue = t.getNewValue();
+//            element.setBindJob(newValue);
+//            System.out.println("JOB or Mat " + element.getJobOrMat());
+//
+//        });
         valueColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         valueColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, Double> t) ->{
             AddEstTIV element = t.getRowValue();
@@ -63,7 +61,9 @@ public class AddEstimateRowTF {
             double priceOne = element.getPriceOne();
             element.setPriceSum(newValue* priceOne);
         });
-        unitColumn.setCellFactory(ComboBoxTableCell.forTableColumn(dao.getDistinctOfColumn(SQL.Estimate.UNIT)));
+        unitColumn.setCellFactory(ComboBoxTableCell.forTableColumn(
+                dao.getDistinctOfColumn(SQL.Estimate.UNIT)
+        ));
         priseOneColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         priseOneColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, Double> t) ->{
             AddEstTIV element = t.getRowValue();

@@ -183,7 +183,6 @@ public class RootLayoutController implements Initializable {
     @FXML
     private void handle_menuFileLoad(ActionEvent event) {
         File selectedFile = FileChooserFactory.Open.getExcel();
-
         if(selectedFile != null){
             new InsertFileXLSQuery().insertRowsFromXls_Site_Numeric(selectedFile.getPath());
 //            System.out.println(selectedFile.getPath());
