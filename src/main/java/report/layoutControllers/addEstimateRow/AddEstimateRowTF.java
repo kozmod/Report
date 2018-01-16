@@ -1,9 +1,11 @@
 package report.layoutControllers.addEstimateRow;
 
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.Callback;
 import report.entities.CommonDAO;
 import report.entities.items.cb.AddEstTIV;
 import report.entities.items.estimate.EstimateDAO;
@@ -46,13 +48,31 @@ public class AddEstimateRowTF {
         BJobColumn.setCellFactory(ComboBoxTableCell.forTableColumn(
                 dao.getDistinctOfColumn(SQL.Estimate.BINDED_JOB,"-")
         ));
-//        BJobColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, String> t) ->{
-//            AddEstTIV element = t.getRowValue();
-//            String newValue = t.getNewValue();
-//            element.setBindJob(newValue);
-//            System.out.println("JOB or Mat " + element.getJobOrMat());
-//
-//        });
+        //TODO: !!!! Check this new issue to add items in table. !!!
+        table.setRowFactory(new Callback<TableView<AddEstTIV>, TableRow<AddEstTIV>>() {
+            @Override
+            public TableRow<AddEstTIV> call(TableView<AddEstTIV> tableView) {
+                final TableRow<AddEstTIV> row = new TableRow<AddEstTIV>() {
+                    @Override
+                    protected void updateItem(AddEstTIV newRow, boolean empty) {
+                        super.updateItem(newRow, empty);
+                        if(super.getTableView().isEditable()) {
+                            super.setDisable(true);
+                            if (newRow != null)
+                                if (newRow.getJM_name().equals("-")
+                                        || newRow.getUnit().equals("-")
+                                        || newRow.getPriceSum().equals(0)) {
+                                    super.setDisable(false);
+                                }
+                        }else if(!super.getTableView().isEditable()){
+                            super.setDisable(false);
+                        }
+                    }
+                };
+                return row;
+
+            }
+        });
         valueColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         valueColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, Double> t) ->{
             AddEstTIV element = t.getRowValue();

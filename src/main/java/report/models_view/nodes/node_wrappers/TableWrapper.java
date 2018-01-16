@@ -21,7 +21,7 @@ import java.util.*;
 
 public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<ObservableList<E>> {
 
-    private  Set<CommittableRow> setAddingCells;
+//    private  Set<CommittableRow> setAddingCells;
     protected final TableView<E> tableView;
 
     /***************************************************************************
@@ -110,18 +110,18 @@ public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<Obs
     /**
      * Lazy init Set of Cell witch have to be commit and return one.
      */
-    public Set<CommittableRow> getSetAddingCells() {
-        if(setAddingCells == null )setAddingCells = new HashSet<>();
-        return setAddingCells;
-    }
-    /**
-     * Commit all cells in "SetAddingCells" Collection.
-     */
-    public void  commitData() {
-        if(setAddingCells == null )
-            throw new NullPointerException("setAddingCells does not exist");
-        setAddingCells.forEach(item -> item.commitData());
-    }
+//    public Set<CommittableRow> getSetAddingCells() {
+//        if(setAddingCells == null )setAddingCells = new HashSet<>();
+//        return setAddingCells;
+//    }
+//    /**
+//     * Commit all cells in "SetAddingCells" Collection.
+//     */
+//    public void  commitData() {
+//        if(setAddingCells == null )
+//            throw new NullPointerException("setAddingCells does not exist");
+//        setAddingCells.forEach(item -> item.commitData());
+//    }
 
     /***************************************************************************
      *                                                                         *

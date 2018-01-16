@@ -3,6 +3,7 @@ package report.layoutControllers.addEstimateRow;
 
 import java.net.URL;
 import java.sql.Timestamp;
+import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -25,6 +26,8 @@ import report.entities.items.TableItem;
 import report.entities.items.estimate.EstimateTVI;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 
+import javax.sound.midi.Soundbank;
+
 
 public class AddEstimateRowController implements Initializable {
 
@@ -45,10 +48,11 @@ public class AddEstimateRowController implements Initializable {
      * FXML Var                                                                *
      *                                                                         *
      **************************************************************************/
-    @FXML private TableView elemTableView;
+    @FXML private TableView<AddEstTIV>  elemTableView;
     @FXML private Label    siteNumLabel,
             contHomeLabel,
             buildingPartLabel;
+    @FXML private Button addButton;
 
 
     /***************************************************************************
@@ -181,30 +185,49 @@ public class AddEstimateRowController implements Initializable {
      **************************************************************************/
     @FXML
     private void testADD(ActionEvent event) {
-        elemTableWrapperView.getItems().add(new AddEstTIV(
-                -1L,
-                false,
-                todayDate,
-                siteNumber,
-                typeHome,
-                contName,
-                "-",
-                "-",
-                "-",
-                0d,
-                "-",
-                0d,
-                0d,
-                buildingPart
-        ));
-        elemTableView.setEditable(true);
+        if(!elemTableView.isEditable()) {
+            addButton.setText("Ok");
+            elemTableWrapperView.getItems().add(new AddEstTIV(
+                    -1L,
+                    false,
+                    todayDate,
+                    siteNumber,
+                    typeHome,
+                    contName,
+                    "-",
+                    "-",
+                    "-",
+                    0d,
+                    "-",
+                    0d,
+                    0d,
+                    buildingPart
+            ));
+            elemTableView.setEditable(true);
+        }else{
+            AddEstTIV lastItem = elemTableView.getItems().get(elemTableView.getItems().size() - 1);
+            if (lastItem.getJM_name().equals("-")
+                    || lastItem.getUnit().equals("-")
+                    || lastItem.getPriceSum().equals(0)) {
+                System.out.println("\033[34m ---> wrong edit in last added item");
+                System.out.println(lastItem.toString());
+
+            }else {
+                addButton.setText("+");
+                elemTableView.refresh();
+                elemTableView.setEditable(false);
+            }
+        }
+
     }
-//    @FXML
-//    private void testCOMIT(ActionEvent event) {
+    @FXML
+    private void testCOMIT(ActionEvent event) {
 ////        elemTableWrapperView.commitData();
 //        elemTableView.setEditable(false);
-//
-//    }
+        elemTableView.refresh();
+        elemTableView.setEditable(false);
+
+    }
 //
 //    @FXML
 //    private void testCHECK_LIST(ActionEvent event) {

@@ -1,6 +1,7 @@
 package report.layoutControllers.planning;
 
 import javafx.scene.control.*;
+import javafx.scene.control.cell.TextFieldTableCell;
 import report.entities.items.discount_coef.DiscountQuery;
 import report.entities.items.TableDItem;
 import report.entities.items.osr.OSR_TIV;
@@ -92,7 +93,9 @@ public class PlaningControllerTF implements TableFactory {
             }
         });
 
-        quantityColumn.setCellFactory(cell -> new AddTextFieldTableCell(new IntegerStringConverter(),tableWrapper.getSetAddingCells()));
+        //TODO: add "ROW_Adding" mechanism )))
+//        quantityColumn.setCellFactory(cell -> new AddTextFieldTableCell(new IntegerStringConverter(),tableWrapper.getSetAddingCells()));
+        quantityColumn.setCellFactory(TextFieldTableCell.forTableColumn(new IntegerStringConverter()));
         TableFactory.setCellFactory(
                 new DoubleStringConverter(),
                 smetColumn,

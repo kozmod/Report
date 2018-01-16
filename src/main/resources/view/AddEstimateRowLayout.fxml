@@ -79,7 +79,7 @@
             <RowConstraints />
          </rowConstraints>
          <children>
-            <Button mnemonicParsing="false" onAction="#testADD" text="+">
+            <Button fx:id="addButton" mnemonicParsing="false" onAction="#testADD" text="+">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font></Button>
@@ -99,6 +99,9 @@
             <Insets left="10.0" right="10.0" />
          </GridPane.margin>
       </TableView>
-      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4" />
+      <HBox prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
+         <children>
+            <Button mnemonicParsing="false" onAction="#testCOMIT" text="Button" />
+         </children></HBox>
    </children>
 </GridPane>
