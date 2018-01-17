@@ -4,15 +4,14 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TreeTableView;
 import report.entities.CommonDAO;
 import report.entities.items.discount_coef.DiscountCoef;
-import report.entities.items.TableDItem;
+import report.entities.items.DItemInterface;
 import report.models.mementos.Memento;
 import report.models.mementos.ReverseTableMemento;
 import report.models_view.nodes.ContextMenuOptional;
-import report.usage_strings.SQL;
 
 public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef> {
 
-    private final TreeTableView<TableDItem> treeTableView;
+    private final TreeTableView<DItemInterface> treeTableView;
     private DiscountCoef discountCoef;
     private CommonDAO<DiscountCoef> commonDAO;
 
@@ -55,7 +54,7 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef>
         return super.memento;
     }
 
-    public  TreeTableView<TableDItem> tableView() {
+    public  TreeTableView<DItemInterface> tableView() {
         return  treeTableView;
     }
 

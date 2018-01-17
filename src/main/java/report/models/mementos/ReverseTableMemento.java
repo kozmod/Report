@@ -1,9 +1,7 @@
 package report.models.mementos;
-import report.entities.items.TableClone;
+import report.entities.items.CloneInterface;
 
-import java.util.Collection;
-
-public class ReverseTableMemento<E extends TableClone> implements Memento<E>  {
+public class ReverseTableMemento<E extends CloneInterface> implements Memento<E>  {
     private E reverseClone;
     private E reverseMain;
 

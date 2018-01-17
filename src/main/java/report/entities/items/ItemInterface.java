@@ -9,7 +9,7 @@ import javafx.beans.property.StringProperty;
 
 
 //Estimate Tabble Items to ObsList
-public abstract class TableItem implements TableClone {
+public abstract class ItemInterface implements CloneInterface {
     //new quantity
     private long id;
     private int  del;
@@ -28,7 +28,7 @@ public abstract class TableItem implements TableClone {
     protected final DoubleProperty priceSum;
 
 
-    public TableItem(
+    public ItemInterface(
             long id,
             Timestamp dateCreate,
             String siteNumber,
@@ -62,8 +62,8 @@ public abstract class TableItem implements TableClone {
 
 //        Clone CONSTRUCTOR implementation
 //        @Override
-//        public  TableClone getClone() {
-//            TableClone clone = new TableItem(
+//        public  CloneInterface getClone() {
+//            CloneInterface clone = new ItemInterface(
 //                                    this.getSiteNumber(),
 //                                    this.getTypeHome(),
 //                                    this.getContractor(),
@@ -106,8 +106,8 @@ public abstract class TableItem implements TableClone {
 //            public Builder setPriceSum(float value_inp)    {this.priceSum     = new SimpleFloatProperty (value_inp);  return this;}
 //            public Builder setBuildingPart(String value_inp) {this.buildingPart   = new SimpleStringProperty(value_inp);  return this;}
 //            
-////            public TableItem build() {
-////                return new TableItem(
+////            public ItemInterface build() {
+////                return new ItemInterface(
 ////                      siteNumber .getQuantity(),
 ////                      typeHome   .getQuantity(),
 ////                      contractor .getQuantity(),
@@ -213,10 +213,10 @@ public abstract class TableItem implements TableClone {
         if (obj == null) {
             return false;
         }
-        if (!TableItem.class.isAssignableFrom(obj.getClass())) {
+        if (!ItemInterface.class.isAssignableFrom(obj.getClass())) {
             return false;
         }
-        final TableItem other = (TableItem) obj;
+        final ItemInterface other = (ItemInterface) obj;
         if ((this.siteNumber.get() == null) ? (other.siteNumber.getValue() != null) : !this.siteNumber.get().equals(other.siteNumber.get())) {
             return false;
         }
@@ -258,10 +258,10 @@ public abstract class TableItem implements TableClone {
         if (obj == null) {
             return false;
         }
-        if (!TableItem.class.isAssignableFrom(obj.getClass())) {
+        if (!ItemInterface.class.isAssignableFrom(obj.getClass())) {
             return false;
         }
-        final TableItem other = (TableItem) obj;
+        final ItemInterface other = (ItemInterface) obj;
         if ((this.siteNumber.get() == null) ? (other.siteNumber.getValue() != null) : !this.siteNumber.get().equals(other.siteNumber.get())) {
             return false;
         }
@@ -293,8 +293,8 @@ public abstract class TableItem implements TableClone {
 
 
     //Extractor
-//   public static Callback<TableItem, Observable[]> extractor() {
-//        return (TableItem p) -> new Observable[]{p.quantityProperty(), p.priceOneProperty()};
+//   public static Callback<ItemInterface, Observable[]> extractor() {
+//        return (ItemInterface p) -> new Observable[]{p.quantityProperty(), p.priceOneProperty()};
 //    }
 
 

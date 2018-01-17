@@ -116,8 +116,8 @@ public class ContractorDAO implements CommonDAO<Collection<ContractorTIV>> {
 //                LogController.appendLogViewText("deleted item: "+ ((OSR_TIV)item).getJM_name()
 //                                                         +" [JM/ "+((OSR_TIV)item).getJobOrMat()      + "]"
 //                                                         +" [BP/ "+((OSR_TIV)item).getBindedJob()     + "]"
-//                                                         +" [S#/ " + ((TableItem)item).getSiteNumber()  + "]"
-//                                                         +" [C/ " + ((TableItem)item).getContractor()   + "]");
+//                                                         +" [S#/ " + ((ItemInterface)item).getSiteNumber()  + "]"
+//                                                         +" [C/ " + ((ItemInterface)item).getContractor()   + "]");
                 });
             LogController.appendLogViewText(items.size() + " deleted");
             
@@ -166,11 +166,11 @@ public class ContractorDAO implements CommonDAO<Collection<ContractorTIV>> {
            connection.commit();
            //add info to LogTextArea / LogController
 //           items.forEach(item -> {
-////                LogController.appendLogViewText("inserted item: "+ ((TableItem)item).getJM_name()
-////                                                         +" [JM/ "+((TableItem)item).getJobOrMat()      + "]"
-////                                                         +" [BP/ "+((TableItem)item).getBindedJob()     + "]"
-////                                                         +" [S#/ " + ((TableItem)item).getSiteNumber()  + "]"
-////                                                         +" [C/ " + ((TableItem)item).getContractor()   + "]");
+////                LogController.appendLogViewText("inserted item: "+ ((ItemInterface)item).getJM_name()
+////                                                         +" [JM/ "+((ItemInterface)item).getJobOrMat()      + "]"
+////                                                         +" [BP/ "+((ItemInterface)item).getBindedJob()     + "]"
+////                                                         +" [S#/ " + ((ItemInterface)item).getSiteNumber()  + "]"
+////                                                         +" [C/ " + ((ItemInterface)item).getContractor()   + "]");
 //                });
             LogController.appendLogViewText(items.size() + " inserted");
         } catch (SQLException ex) {

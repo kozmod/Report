@@ -7,10 +7,10 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
 import report.entities.CommonDAO;
-import report.entities.items.TableItem;
+import report.entities.items.ItemInterface;
 
 
-public  class TableWrapperEST<E extends TableItem> extends TableWrapper<E> {
+public  class TableWrapperEST<E extends ItemInterface> extends TableWrapper<E> {
 
     private DoubleProperty sum = new SimpleDoubleProperty();
 
@@ -51,7 +51,7 @@ public  class TableWrapperEST<E extends TableItem> extends TableWrapper<E> {
     public void setTableData(ObservableList items){
         super.setTableData(items);
         computeSum();
-        super.tableView().getItems().addListener((ListChangeListener.Change<? extends TableItem> c) -> {
+        super.tableView().getItems().addListener((ListChangeListener.Change<? extends ItemInterface> c) -> {
             if(c.next() &&
                     (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
                 this.computeSum();
@@ -68,7 +68,7 @@ public  class TableWrapperEST<E extends TableItem> extends TableWrapper<E> {
      */
     public void computeSum(){
         Double summ = new Double(0);
-        for (TableItem  obsItem : super.tableView().getItems())
+        for (ItemInterface obsItem : super.tableView().getItems())
             summ = summ + obsItem.getPriceSum();
         sum.setValue(summ);
 

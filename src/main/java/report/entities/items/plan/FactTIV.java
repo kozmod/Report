@@ -3,11 +3,11 @@ package report.entities.items.plan;
 import javafx.beans.Observable;
 import javafx.beans.property.*;
 import javafx.util.Callback;
-import report.entities.items.TableClone;
+import report.entities.items.CloneInterface;
 
 import java.sql.Timestamp;
 
-public  class FactTIV implements TableClone  {
+public  class FactTIV implements CloneInterface {
     private long id;
     private Timestamp dateCreate;
 
@@ -51,8 +51,8 @@ public  class FactTIV implements TableClone  {
 
     //Clone CONSTRUCTOR
     @Override
-    public TableClone getClone() {
-        TableClone clone = new FactTIV(
+    public CloneInterface getClone() {
+        CloneInterface clone = new FactTIV(
                 this.getId(),
                 this.getDateCreate(),
                 this.getTypeID(),

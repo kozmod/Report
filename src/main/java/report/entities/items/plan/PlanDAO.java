@@ -27,14 +27,14 @@ public class PlanDAO implements CommonDAO<Collection<PlanTIV>> {
 
    /**
     * 
-    * @return  List of TableItem
+    * @return  List of ItemInterface
     */
     @Override
     public String sqlTableName() {return SQL.Tables.FIN_PLAN;}
     
     /**
     * Get String of a Mirror (SQL.Tables).
-    * @return  List of TableItem
+    * @return  List of ItemInterface
     */
     @Override
     public ObservableList<PlanTIV> getData() {

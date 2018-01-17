@@ -3,6 +3,8 @@ package report.models_view.nodes.nodes_factories;
 
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
+import report.entities.items.CloneInterface;
+import report.entities.items.ItemInterface;
 import report.entities.items.estimate.EstimateDAO;
 import report.entities.items.estimate.EstimateTVI;
 import report.entities.items.osr.OSR_TIV;
@@ -24,8 +26,6 @@ import report.usage_strings.SQL;
 
 import report.layoutControllers.root.RootLayoutController;
 import report.layoutControllers.estimate.EstimateController.Est;
-import report.entities.items.TableClone;
-import report.entities.items.TableItem;
 import report.entities.items.cb.AddEstTIV;
 import report.usage_strings.ServiceStrings;
 
@@ -404,7 +404,7 @@ public class TableCellFactory{
    
    }
    
-    class EqualToAboveTableCell<T extends Number & Comparable> extends TableCell<TableClone, T >{
+    class EqualToAboveTableCell<T extends Number & Comparable> extends TableCell<CloneInterface, T >{
         
         @Override
         public void updateItem(T item, boolean empty) {
@@ -437,7 +437,7 @@ public class TableCellFactory{
     
     
    
-    private class OnMouseEnteredTableCell extends TableCell<TableItem, Object> {
+    private class OnMouseEnteredTableCell extends TableCell<ItemInterface, Object> {
         private Est enumEst;
         
         private OnMouseEnteredTableCell(Est enumEst){
@@ -467,7 +467,7 @@ public class TableCellFactory{
         } 
     }
 
-    private  class OnDoubleMouseClickMoveToCell extends TableCell<TableItem, Object> {
+    private  class OnDoubleMouseClickMoveToCell extends TableCell<ItemInterface, Object> {
 
         @Override
         public void updateItem(Object item, boolean empty) {
@@ -482,7 +482,7 @@ public class TableCellFactory{
                 setOnMouseClicked(mouseEvent ->{
                     if(mouseEvent.getButton().equals(MouseButton.PRIMARY) & mouseEvent.getClickCount() == 2){
                             String text = this.getText();
-//                            TableItem itemW = this.treeTableView().getItems()
+//                            ItemInterface itemW = this.treeTableView().getItems()
 //                                    .stream()
 //                                    .filter(i -> i.getJM_name().equals(text))
 //                                    .findFirst()
@@ -526,7 +526,7 @@ public class TableCellFactory{
                     }
                 };
     }
-//   private class TooltipTableCell extends TableCell<TableItem, Object> {
+//   private class TooltipTableCell extends TableCell<ItemInterface, Object> {
 //       TableWrapper table = new TableWrapper();
 //       Tooltip tooltip = new Tooltip();
 //         

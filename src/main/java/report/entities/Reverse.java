@@ -1,8 +1,8 @@
 package report.entities;
 
 import javafx.collections.ObservableList;
-import report.entities.items.TableDItem;
+import report.entities.items.DItemInterface;
 
 public interface Reverse {
-    ObservableList<TableDItem> reverse();
+    ObservableList<DItemInterface> reverse();
 }

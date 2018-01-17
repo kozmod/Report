@@ -1,17 +1,18 @@
-package report.entities.items.counterparties;
+package report.entities.items.counterparties.commonReq;
 
 import javafx.beans.Observable;
 import javafx.beans.property.*;
 import javafx.util.Callback;
-import report.entities.items.TableClone;
+import report.entities.items.CloneInterface;
 
 import java.math.BigInteger;
+import java.time.LocalDate;
 
-public class CountAgentCommonReq implements TableClone<CountAgentCommonReq> {
+public class CountAgentCommonReq implements CloneInterface<CountAgentCommonReq> {
     private long id;
     private BooleanProperty isIP;
     private ObjectProperty<BigInteger> OGRN;
-    private IntegerProperty dateOGRN;
+    private ObjectProperty<LocalDate> dateOGRN;
     private ObjectProperty<BigInteger> inn;
     private ObjectProperty<BigInteger> kpp;
     private StringProperty addressLow;
@@ -35,7 +36,7 @@ public class CountAgentCommonReq implements TableClone<CountAgentCommonReq> {
         this.id = id;
         this.isIP = new SimpleBooleanProperty(isIP);
         this.OGRN = new SimpleObjectProperty<>(OGRN);
-        this.dateOGRN = new  SimpleIntegerProperty(dateOGRN);
+        this.dateOGRN = new  SimpleObjectProperty<>(LocalDate.ofEpochDay(dateOGRN));
         this.inn = new SimpleObjectProperty<>(inn);
         this.kpp =  new SimpleObjectProperty<>(kpp);
         this.addressLow = new SimpleStringProperty(addressLow);
@@ -51,7 +52,7 @@ public class CountAgentCommonReq implements TableClone<CountAgentCommonReq> {
         this.id = source.id;
         this.isIP = new SimpleBooleanProperty(source.isIP.getValue());
         this.OGRN = new SimpleObjectProperty<>(source.OGRN.getValue());
-        this.dateOGRN = new  SimpleIntegerProperty(source.dateOGRN.getValue());
+        this.dateOGRN = new  SimpleObjectProperty<>(source.dateOGRN.getValue());
         this.inn = new SimpleObjectProperty<>(source.inn.getValue());
         this.kpp =  new SimpleObjectProperty<>(source.kpp.getValue());
         this.addressLow = new SimpleStringProperty(source.addressLow.getValue());
@@ -104,15 +105,15 @@ public class CountAgentCommonReq implements TableClone<CountAgentCommonReq> {
         this.OGRN.set(OGRN);
     }
 
-    public int getDateOGRN() {
+    public LocalDate getDateOGRN() {
         return dateOGRN.get();
     }
 
-    public IntegerProperty dateOGRNProperty() {
+    public ObjectProperty<LocalDate> dateOGRNProperty() {
         return dateOGRN;
     }
 
-    public void setDateOGRN(int dateOGRN) {
+    public void setDateOGRN(LocalDate dateOGRN) {
         this.dateOGRN.set(dateOGRN);
     }
 

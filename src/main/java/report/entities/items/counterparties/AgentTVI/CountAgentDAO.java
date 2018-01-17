@@ -1,11 +1,10 @@
-package report.entities.items.counterparties;
+package report.entities.items.counterparties.AgentTVI;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import report.entities.CommonDAO;
 import report.entities.items.expenses.ExpensesDAO;
-import report.layoutControllers.estimate.EstimateController;
 import report.models.sql.SQLconnector;
 import report.usage_strings.SQL;
 

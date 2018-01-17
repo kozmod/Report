@@ -15,19 +15,19 @@ import report.usage_strings.SQL;
 import report.layoutControllers.estimate.EstimateController.Est;
 
 import report.entities.items.site.PreviewTIV;
-import report.entities.items.TableItem;
+import report.entities.items.ItemInterface;
 
 
 public class PrintEstimate extends AbstractPrinterXML{
     
     private Document doc;
-    private ObservableList<TableItem> obsKS; 
+    private ObservableList<ItemInterface> obsKS;
     private ObservableList<PreviewTIV>  obsPreTab;
     private ContractorTIV contractorObject;
     
     //Constructor =====================================================================================================================    
     public PrintEstimate(CommonDAO dao) {
-        this.obsKS = FXCollections.observableArrayList((Collection<? extends TableItem>) dao.getData());
+        this.obsKS = FXCollections.observableArrayList((Collection<? extends ItemInterface>) dao.getData());
 
 
         doc = buildDocument("\\lib\\XML_Models\\Смета.xml");
@@ -83,7 +83,7 @@ public class PrintEstimate extends AbstractPrinterXML{
         int rowsQuantity = 1;
         String buildingPart = null;
         
-        for(TableItem item : obsKS){
+        for(ItemInterface item : obsKS){
             
             
             Element targetRow = getTargetElement("SumRow");
@@ -229,11 +229,11 @@ public class PrintEstimate extends AbstractPrinterXML{
     
 //Builder ==========================================================================================================================  
 //    public static class Builder{
-//        private ObservableList<TableItem> obsKS; 
+//        private ObservableList<ItemInterface> obsKS;
 //        private ObservableList<PreviewTableItem>  obsPreTab;
 //        private String ksNumber, ksDate;
 //
-//        public Builder setObsKS(ObservableList<TableItem> obsKS) {
+//        public Builder setObsKS(ObservableList<ItemInterface> obsKS) {
 //            this.obsKS = obsKS;
 //        return this;
 //        }

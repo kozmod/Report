@@ -13,11 +13,11 @@ import javafx.scene.control.TreeTableCell;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.HBox;
 import javafx.util.StringConverter;
+import report.entities.items.DItemInterface;
 import report.entities.items.discount_coef.DiscountCoef;
-import report.entities.items.TableDItem;
 
 
-public class EditingTreeTableCell extends TreeTableCell<TableDItem,Double> {
+public class EditingTreeTableCell extends TreeTableCell<DItemInterface,Double> {
     private static byte TYPE = 0;
     private TextField textField;
     private ComboBox comboBox;

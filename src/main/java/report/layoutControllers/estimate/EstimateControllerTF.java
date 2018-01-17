@@ -5,9 +5,9 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import report.entities.items.ItemInterface;
 import report.entities.items.KS.KS_DAO;
 import report.entities.items.KS.KS_TIV;
-import report.entities.items.TableItem;
 import report.entities.items.estimate.EstimateDAO;
 import report.entities.items.estimate.EstimateTVI;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
@@ -65,11 +65,11 @@ public class EstimateControllerTF implements TableFactory {
         switch(enumEst){
             case Base :
 //                TableFactory.setTextFieldCell_NumberStringConverter(valueColumn);
-                valueColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<? extends TableItem, Double>>() {
+                valueColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<? extends ItemInterface, Double>>() {
                     @Override
-                    public void handle(TableColumn.CellEditEvent<? extends TableItem, Double> t) {
+                    public void handle(TableColumn.CellEditEvent<? extends ItemInterface, Double> t) {
 
-                        TableItem editingItem = (TableItem) t.getTableView().getItems().get(t.getTablePosition().getRow());
+                        ItemInterface editingItem = (ItemInterface) t.getTableView().getItems().get(t.getTablePosition().getRow());
 
                         Double price_one = editingItem.getPriceOne();
                         Double value = t.getNewValue();
@@ -101,10 +101,10 @@ public class EstimateControllerTF implements TableFactory {
                 break;
         }
 //        TableFactory.setTextFieldCell_NumberStringConverter(Price_oneColumn);
-        Price_oneColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<TableItem, Double>>() {
+        Price_oneColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<ItemInterface, Double>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<TableItem, Double> t) {
-                TableItem editingItem = (TableItem) t.getTableView().getItems().get(t.getTablePosition().getRow());
+            public void handle(TableColumn.CellEditEvent<ItemInterface, Double> t) {
+                ItemInterface editingItem = (ItemInterface) t.getTableView().getItems().get(t.getTablePosition().getRow());
                 Double price_one = t.getNewValue();
                 Double value     = editingItem.getQuantity();
 
@@ -194,9 +194,9 @@ public class EstimateControllerTF implements TableFactory {
                 valueColumn
         );
 
-        valueColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<? extends TableItem, Double>>() {
+        valueColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<? extends ItemInterface, Double>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<? extends TableItem, Double> t) {
+            public void handle(TableColumn.CellEditEvent<? extends ItemInterface, Double> t) {
 
                 KS_TIV editingItem = (KS_TIV) t.getRowValue();
 
@@ -211,7 +211,7 @@ public class EstimateControllerTF implements TableFactory {
                                 .stream()
                                 .flatMap(mapItem ->((List)mapItem).stream())
                                 .filter(editingItem::equalsSuperClass)
-                                .mapToDouble(filtered -> ((TableItem)filtered).getQuantity())
+                                .mapToDouble(filtered -> ((ItemInterface)filtered).getQuantity())
                                 .sum()
                                 - t.getOldValue()
                                 + t.getNewValue());
@@ -234,10 +234,10 @@ public class EstimateControllerTF implements TableFactory {
         ContextMenu contextMenuKS = ContextMenuFactory.getCommonSU(table);
         table.setContextMenu(contextMenuKS);
 //
-//        Est.KS.getTabMap().values().forEach(new Consumer<ObservableList<TableItem>>() {
+//        Est.KS.getTabMap().values().forEach(new Consumer<ObservableList<ItemInterface>>() {
 //            @Override
-//            public void accept(ObservableList<TableItem> coll) {
-//                coll.addListener((ListChangeListener.Change<? extends TableItem> c) -> {
+//            public void accept(ObservableList<ItemInterface> coll) {
+//                coll.addListener((ListChangeListener.Change<? extends ItemInterface> c) -> {
 //                    System.out.println("Changed on " + c);
 //                    if(c.next() &&
 //                            (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){

@@ -2,8 +2,8 @@ package report.layoutControllers.planning;
 
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
+import report.entities.items.DItemInterface;
 import report.entities.items.discount_coef.DiscountQuery;
-import report.entities.items.TableDItem;
 import report.entities.items.osr.OSR_TIV;
 import report.entities.items.osr.OSR_DAO;
 import report.entities.items.plan.PlanTIV;
@@ -12,7 +12,6 @@ import report.layoutControllers.planning.temp.*;
 import report.models.coefficient.Quantity;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models.numberStringConverters.numberStringConverters.IntegerStringConverter;
-import report.models_view.nodes.cells.AddTextFieldTableCell;
 import report.models_view.nodes.node_wrappers.DiscountTreeTableWrapper;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 import report.models_view.nodes.nodes_factories.TableCellFactory;
@@ -203,23 +202,23 @@ public class PlaningControllerTF implements TableFactory {
      * @param treeTable
      * @return
      */
-    public static DiscountTreeTableWrapper decorKD(TreeTableView<TableDItem> treeTable){
+    public static DiscountTreeTableWrapper decorKD(TreeTableView<DItemInterface> treeTable){
         DiscountTreeTableWrapper treeTableWrapper = new DiscountTreeTableWrapper("Коэффициент Дисконтирования",treeTable, new DiscountQuery());
 
-        TreeTableColumn<TableDItem, String> nameColumn =  new TreeTableColumn<>("Наименование");
+        TreeTableColumn<DItemInterface, String> nameColumn =  new TreeTableColumn<>("Наименование");
         nameColumn.setSortable(false);
         nameColumn.setCellValueFactory((param) ->
                 param.getValue().getValue().firstValueProperty()
         );
 
-        TreeTableColumn<TableDItem, Double> valueColumn = new TreeTableColumn<>("Значение");
+        TreeTableColumn<DItemInterface, Double> valueColumn = new TreeTableColumn<>("Значение");
         valueColumn.setSortable(false);
         valueColumn.setCellValueFactory((param) ->
                 param.getValue().getValue().secondValueProperty().asObject()
         );
         valueColumn.setCellFactory(p -> new EditingTreeTableCell(new DoubleStringConverter()));
         valueColumn.setOnEditCommit(event ->{
-            final TreeItem<TableDItem> current =  event.getTreeTablePosition().getTreeItem();
+            final TreeItem<DItemInterface> current =  event.getTreeTablePosition().getTreeItem();
             current.getValue().setSecondValue(event.getNewValue());
             event.getTreeTableView().getRoot().getValue().setSecondValue(Math.random());
             event.getTreeTableView().refresh();
@@ -236,31 +235,31 @@ public class PlaningControllerTF implements TableFactory {
         return treeTableWrapper;
 
     }
-//      public static TreeTableView decorKD(TreeTableView<TableDItem> treeTable){
+//      public static TreeTableView decorKD(TreeTableView<DItemInterface> treeTable){
 ////        DiscountCoef dc = new DiscountCoef(1,9.2,
 ////                new SpecificRisk(1,1d,1d,1d,1d,1d),
 ////                new MarketRisk(1,1d,1d,1d,1d,1d,1d,1d,1d)
 ////        );
-//        TreeTableColumn<TableDItem, String> nameColumn =  new TreeTableColumn<>("Наименование");
+//        TreeTableColumn<DItemInterface, String> nameColumn =  new TreeTableColumn<>("Наименование");
 //        nameColumn.setSortable(false);
 //        nameColumn.setCellValueFactory((param) ->
 //                param.getQuantity().getQuantity().firstValueProperty()
 //        );
 //
-//        TreeTableColumn<TableDItem, Double> valueColumn = new TreeTableColumn<>("Значение");
+//        TreeTableColumn<DItemInterface, Double> valueColumn = new TreeTableColumn<>("Значение");
 //        valueColumn.setSortable(false);
 //        valueColumn.setCellValueFactory((param) ->
 //                param.getQuantity().getQuantity().secondValueProperty().asObject()
 //        );
-////        Callback<TreeTableColumn<TableDItem,Double>, TreeTableCell<TableDItem,Double>> defaultCellFactory2
+////        Callback<TreeTableColumn<DItemInterface,Double>, TreeTableCell<DItemInterface,Double>> defaultCellFactory2
 ////                =  ComboBoxTreeTableCell.forTreeTableColumn(2d,3d,4d);
 //
-////        Callback<TreeTableColumn<TableDItem,Double>, TreeTableCell<TableDItem,Double>> defaultCellFactory = TextFieldTreeTableCell.forTreeTableColumn(new DoubleStringConverter());
+////        Callback<TreeTableColumn<DItemInterface,Double>, TreeTableCell<DItemInterface,Double>> defaultCellFactory = TextFieldTreeTableCell.forTreeTableColumn(new DoubleStringConverter());
 //        valueColumn.setCellFactory(p -> new EditingTreeTableCell(new DoubleStringConverter()));
 //
 //        valueColumn.setOnEditCommit(event ->{
-//            final TreeItem<TableDItem> parent =  event.getTreeTablePosition().getTreeItem().getParent();
-//            final TreeItem<TableDItem> current =  event.getTreeTablePosition().getTreeItem();
+//            final TreeItem<DItemInterface> parent =  event.getTreeTablePosition().getTreeItem().getParent();
+//            final TreeItem<DItemInterface> current =  event.getTreeTablePosition().getTreeItem();
 //            current.getQuantity().setSecondValue(event.getNewValue());
 ////           final double parentNewValue = parent.getChildren().stream().mapToDouble(i -> i.getQuantity().getSecondValue()).sum();
 ////           parent.getQuantity().setSecondValue(parentNewValue);
@@ -269,11 +268,11 @@ public class PlaningControllerTF implements TableFactory {
 //        });
 //
 //
-////        Callback<TreeTableColumn<TableDItem,Double>, TreeTableCell<TableDItem,Double>> defaultCellFactory = TextFieldTreeTableCell.forTreeTableColumn(new DoubleStringConverter());
-////        valueColumn.setCellFactory((TreeTableColumn<TableDItem,Double> tv) -> {
-////            TreeTableCell<TableDItem,Double> cell = defaultCellFactory.call(tv);
+////        Callback<TreeTableColumn<DItemInterface,Double>, TreeTableCell<DItemInterface,Double>> defaultCellFactory = TextFieldTreeTableCell.forTreeTableColumn(new DoubleStringConverter());
+////        valueColumn.setCellFactory((TreeTableColumn<DItemInterface,Double> tv) -> {
+////            TreeTableCell<DItemInterface,Double> cell = defaultCellFactory.call(tv);
 ////            cell.itemProperty().addListener((obs, oldTreeItem, newTreeItem) -> {
-////                TreeItem<TableDItem> item = cell.getTreeTableView().getTreeItem(cell.getIndex());
+////                TreeItem<DItemInterface> item = cell.getTreeTableView().getTreeItem(cell.getIndex());
 ////                if (newTreeItem == null) {
 ////                    cell.setEditable(false);
 ////                } else if ( item !=null && item.isLeaf()  ) {

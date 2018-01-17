@@ -3,7 +3,6 @@ package report.models_view.nodes;
 
 
 import javafx.beans.binding.Bindings;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -14,18 +13,13 @@ import javafx.scene.control.SeparatorMenuItem;
 
 import report.entities.CommonDAO;
 import report.entities.Reverse;
-import report.entities.items.TableClone;
-import report.entities.items.TableDItem;
-import report.models.mementos.TableMemento;
+import report.entities.items.CloneInterface;
+import report.entities.items.DItemInterface;
 import report.models.printer.PrintEstimate;
 import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.models_view.nodes.node_wrappers.DiscountTreeTableWrapper;
 import report.models_view.nodes.node_wrappers.ReverseTableWrapper;
 import report.models_view.nodes.node_wrappers.TableWrapper;
-
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 
 public class ContextMenuOptional extends ContextMenu{
@@ -51,7 +45,7 @@ public class ContextMenuOptional extends ContextMenu{
      * Static Methods                                                            *
      *                                                                         *
      **************************************************************************/
-    public static <S extends TableClone> void setTableItemContextMenuListener(TableWrapper<S> tableWrapper){
+    public static <S extends CloneInterface> void setTableItemContextMenuListener(TableWrapper<S> tableWrapper){
         tableWrapper.getItems().addListener((ListChangeListener.Change<? extends S> c) -> {
             System.out.println("Changed on " + c + " - ContextMenuOptional");
             if(c.next() && (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
@@ -65,8 +59,8 @@ public class ContextMenuOptional extends ContextMenu{
             ((ContextMenuOptional) tableWrapper.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
         });
     }
-    public static <S extends TableClone & Reverse> void setTableItemContextMenuListener(ReverseTableWrapper<S> tableWrapper,ObservableList<TableDItem> list){
-        list.addListener((ListChangeListener.Change<? extends TableDItem> c) -> {
+    public static <S extends CloneInterface & Reverse> void setTableItemContextMenuListener(ReverseTableWrapper<S> tableWrapper, ObservableList<DItemInterface> list){
+        list.addListener((ListChangeListener.Change<? extends DItemInterface> c) -> {
             ((ContextMenuOptional) tableWrapper.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
         });
     }

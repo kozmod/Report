@@ -10,12 +10,12 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
-import report.entities.items.TableClone;
+import report.entities.items.CloneInterface;
 
 import java.util.Objects;
 
 
-public class ExpensesTVI implements TableClone {
+public class ExpensesTVI implements CloneInterface {
     
     private Long  id;
     private final StringProperty  siteNumber;    
@@ -42,8 +42,8 @@ public class ExpensesTVI implements TableClone {
     
         //Clone  implementation
         @Override
-        public  TableClone getClone() {
-            TableClone clone = new ExpensesTVI
+        public CloneInterface getClone() {
+            CloneInterface clone = new ExpensesTVI
                            .Builder()
                            .setId(this.getId())
                            .setsiteNumber(this.getSiteNumber())

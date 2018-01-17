@@ -1,4 +1,4 @@
-package report.entities.items.counterparties;
+package report.entities.items.counterparties.executiveBody;
 
 import javafx.beans.Observable;
 import javafx.beans.property.IntegerProperty;
@@ -6,9 +6,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
-import report.entities.items.TableClone;
+import report.entities.items.CloneInterface;
 
-public class CountAgentEcBody implements TableClone<CountAgentEcBody>{
+public class CountAgentExBody implements CloneInterface<CountAgentExBody> {
     private long id;
     private StringProperty exBody;
     private StringProperty exBodyName;
@@ -27,7 +27,7 @@ public class CountAgentEcBody implements TableClone<CountAgentEcBody>{
      * Constructors                                                            *
      *                                                                         *
      **************************************************************************/
-    public CountAgentEcBody(
+    public CountAgentExBody(
             long id,
             String exBody,
             String exBodyName,
@@ -61,7 +61,7 @@ public class CountAgentEcBody implements TableClone<CountAgentEcBody>{
      * Clone Constructors                                                      *
      *                                                                         *
      **************************************************************************/
-    public CountAgentEcBody(CountAgentEcBody source ) {
+    public CountAgentExBody(CountAgentExBody source ) {
         this.id = id;
         this.exBody = new SimpleStringProperty(source.exBody.getValue());
         this.exBodyName = new SimpleStringProperty(source.exBodyName.getValue());
@@ -84,7 +84,7 @@ public class CountAgentEcBody implements TableClone<CountAgentEcBody>{
      **************************************************************************/
 
     @Override
-    public CountAgentEcBody getClone() {
+    public CountAgentExBody getClone() {
         return null;
     }
 
@@ -246,8 +246,8 @@ public class CountAgentEcBody implements TableClone<CountAgentEcBody>{
      *
      * @return Callback<CountAgentTVI, Observable[]>
      */
-    public static Callback<CountAgentEcBody, Observable[]> extractor() {
-        return (CountAgentEcBody p) -> new Observable[]{
+    public static Callback<CountAgentExBody, Observable[]> extractor() {
+        return (CountAgentExBody p) -> new Observable[]{
                 p.exBodyProperty(),
                 p.exBodyNameProperty(),
                 p.exBodySurnameProperty(),

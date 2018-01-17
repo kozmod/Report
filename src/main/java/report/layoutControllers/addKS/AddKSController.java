@@ -14,12 +14,12 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import report.entities.items.ItemInterface;
 import report.layoutControllers.estimate.EstimateController;
 import report.usage_strings.SQL;
 
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models_view.nodes.node_helpers.InputValidator;
-import report.entities.items.TableItem;
 import report.entities.items.KS.KS_DAO;
 
 
@@ -33,12 +33,12 @@ public class AddKSController implements Initializable {
     @FXML  private GridPane gridPane;
     @FXML  private TextField ksNumTextField;
     @FXML  private DatePicker ksDatePicker;
-    @FXML  private TableView<TableItem> allJMTable, selectedJMTable;
+    @FXML  private TableView<ItemInterface> allJMTable, selectedJMTable;
 
 //    private TableWrapperEST<KS_TIV> allJMTable      = TableFactory.getKS_add(),
 //                                  selectedJMTable = TableFactory.getKS_add();
 
-    private ObservableList<TableItem> obsAllJM, obsSelectedJM;
+    private ObservableList<ItemInterface> obsAllJM, obsSelectedJM;
     private ObservableList<Object>    comboBuildingPartList;
 
     {
@@ -107,7 +107,7 @@ public class AddKSController implements Initializable {
     @FXML
     private void handle_addSelectedTableButton(ActionEvent event) {                   //add Selected List            
         if(allJMTable.getSelectionModel().getSelectedItem() != null){
-            TableItem sItem_allJM =  allJMTable.getSelectionModel().getSelectedItem();
+            ItemInterface sItem_allJM =  allJMTable.getSelectionModel().getSelectedItem();
             obsAllJM.remove(sItem_allJM);
             obsSelectedJM.add(sItem_allJM);
         }
@@ -117,7 +117,7 @@ public class AddKSController implements Initializable {
     @FXML
     private void handle_removeSelectedTableButton(ActionEvent event) {                 //remove Selected List
         if(selectedJMTable.getSelectionModel().getSelectedItem() != null){
-            TableItem sItem = selectedJMTable.getSelectionModel().getSelectedItem();
+            ItemInterface sItem = selectedJMTable.getSelectionModel().getSelectedItem();
             obsSelectedJM.remove(sItem);
             obsAllJM.add(sItem);
         }

@@ -2,7 +2,6 @@
 package report.models_view.nodes.node_wrappers;
 
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableColumn;
@@ -11,15 +10,12 @@ import javafx.scene.control.TableView.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import report.entities.CommonDAO;
-import report.entities.items.ID;
-import report.entities.items.TableClone;
-import report.models.mementos.Memento;
+import report.entities.items.CloneInterface;
 import report.models.mementos.TableMemento;
-import report.models_view.nodes.cells.CommittableRow;
 
 import java.util.*;
 
-public class TableWrapper<E extends TableClone> extends AbstractTableWrapper<ObservableList<E>> {
+public class TableWrapper<E extends CloneInterface> extends AbstractTableWrapper<ObservableList<E>> {
 
 //    private  Set<CommittableRow> setAddingCells;
     protected final TableView<E> tableView;

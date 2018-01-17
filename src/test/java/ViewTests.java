@@ -8,13 +8,15 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
 import org.mockito.Mockito;
-import report.entities.items.counterparties.CountAgentDAO;
-import report.entities.items.counterparties.CountAgentTVI;
+import report.entities.items.counterparties.AgentTVI.CountAgentDAO;
+import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
+import report.entities.items.counterparties.commonReq.CountAgentCommonReq;
 import report.layoutControllers.allProperties.AllPropertiesController;
 import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.usage_strings.PathStrings;
 
 import java.lang.reflect.Field;
+import java.math.BigInteger;
 import java.util.concurrent.TimeUnit;
 
 @FixMethodOrder(MethodSorters.JVM)
@@ -42,7 +44,6 @@ public class ViewTests {
     static Thread appThread;
     @BeforeAll
     @DisplayName("Общие параметры")
-//    @Disabled
     public static void startApp() throws InterruptedException {
         appThread = new Thread(() -> {
             FxTestStage.launchApp(
@@ -80,7 +81,20 @@ public class ViewTests {
     @DisplayName("reflection test")
     @Disabled
     public void refTest() throws InterruptedException, NoSuchFieldException, IllegalAccessException {
-
+        CountAgentCommonReq commonReq = new CountAgentCommonReq(
+                1,
+                false,
+                new BigInteger("12345678901234567890"),
+                100000,
+                new BigInteger("12345678901234567890"),
+                new BigInteger("12345678901234567890"),
+                "adress",
+                "factAdress",
+                "postAdress"
+        );
+        System.out.println(
+        commonReq.getDateOGRN()
+        );
 
 
     }

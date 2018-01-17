@@ -2,6 +2,7 @@
 package report.entities.items.estimate;
 
 import report.entities.CommonDAO;
+import report.entities.items.ItemInterface;
 import report.layoutControllers.LogController;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
@@ -20,7 +21,6 @@ import javafx.collections.ObservableList;
 import report.layoutControllers.estimate.EstimateController.Est;
 //import report.models.Formula_test;
 import report.models.sql.SQLconnector;
-import report.entities.items.TableItem;
 import report.entities.items.cb.AddEstTIV;
 
 
@@ -34,14 +34,14 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
     
     /**
     * Get String of a Mirror (SQL.Tables).
-    * @return  List of TableItem
+    * @return  List of ItemInterface
     */
     @Override
     public String sqlTableName() {return this.tableName;}
     
     /**
     * Get List of TableWrapper Items (EstimateTVI) from SQL
-    * @return  List of TableItem
+    * @return  List of ItemInterface
     */
     @Override
     public ObservableList<EstimateTVI> getData() {
@@ -136,7 +136,7 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
      
     /**
     * Get <b>BASE</b>List of TableWrapper Items (EstimateTVI) from SQL
-    * @return  List of TableItem
+    * @return  List of ItemInterface
     */
     public ObservableList<AddEstTIV> getBaseList(String BildingPart) {
               ObservableList<AddEstTIV> list =  FXCollections.observableArrayList();
@@ -188,7 +188,7 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
      * 
      * @param enumEst (enumeration)
      * @param title   (String)
-     * @return List of TableItem
+     * @return List of ItemInterface
     */
     public ObservableList<EstimateTVI> getOneBildingPartList(Est enumEst, String  title) {
         
@@ -274,7 +274,7 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
 
     /**
      * Delete EstimateTVI  Entities from SQL
-    * @param items (Collection of TableItem) 
+    * @param items (Collection of ItemInterface)
     */
     @Override
     public void delete(Collection<EstimateTVI> items) {
@@ -283,7 +283,7 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
             PreparedStatement pstmt = connection.prepareStatement("update [dbo].[Estimate] SET dell = 1 WHERE [id] = ? AND [dell] = 0;");) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
-                for (TableItem obsItem : items) {
+                for (ItemInterface obsItem : items) {
                     pstmt.setLong   (1, obsItem.getId());
                     pstmt.addBatch();  
                 }
@@ -292,11 +292,11 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
            connection.commit();
            //add info to LogTextArea / LogController
            items.forEach(item -> {
-                LogController.appendLogViewText("deleted EST item: "+ ((TableItem)item).getJM_name()
-                                                         +" [JM/ "+((TableItem)item).getJobOrMat()      + "]"
-                                                         +" [BP/ "+((TableItem)item).getBindJob()     + "]"
-                                                         +" [S#/ " + ((TableItem)item).getSiteNumber()  + "]"
-                                                         +" [C/ " + ((TableItem)item).getContractor()   + "]");
+                LogController.appendLogViewText("deleted EST item: "+ ((ItemInterface)item).getJM_name()
+                                                         +" [JM/ "+((ItemInterface)item).getJobOrMat()      + "]"
+                                                         +" [BP/ "+((ItemInterface)item).getBindJob()     + "]"
+                                                         +" [S#/ " + ((ItemInterface)item).getSiteNumber()  + "]"
+                                                         +" [C/ " + ((ItemInterface)item).getContractor()   + "]");
                 });
             LogController.appendLogViewText(items.size() + " deleted");
             
@@ -305,13 +305,13 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
         }
     }
 //    @Override
-//    public void delete(Collection<TableItem> items) {
+//    public void delete(Collection<ItemInterface> items) {
 //                
 //        try(Connection connection   = SQLconnector.getInstance();
 //            PreparedStatement pstmt = connection.prepareStatement("execute dellRowEst ?,?,?,?,?,?");) {
 //            //set false SQL Autocommit
 //            connection.setAutoCommit(false);
-//                for (TableItem obsItem : items) {
+//                for (ItemInterface obsItem : items) {
 //                    pstmt.setString   (1, obsItem.getSiteNumber());
 //                    pstmt.setString   (2, obsItem.getContractor());
 //                    pstmt.setString   (3, obsItem.getBuildingPart());
@@ -326,11 +326,11 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
 //           connection.commit();
 //           //add info to LogTextArea / LogController
 //           items.forEach(item -> {
-//                LogController.appendLogViewText("deleted item: "+ ((TableItem)item).getJM_name()
-//                                                         +" [JM/ "+((TableItem)item).getJobOrMat()      + "]"
-//                                                         +" [BP/ "+((TableItem)item).getBindJob()     + "]"
-//                                                         +" [S#/ " + ((TableItem)item).getSiteNumber()  + "]"
-//                                                         +" [C/ " + ((TableItem)item).getContractor()   + "]");
+//                LogController.appendLogViewText("deleted item: "+ ((ItemInterface)item).getJM_name()
+//                                                         +" [JM/ "+((ItemInterface)item).getJobOrMat()      + "]"
+//                                                         +" [BP/ "+((ItemInterface)item).getBindJob()     + "]"
+//                                                         +" [S#/ " + ((ItemInterface)item).getSiteNumber()  + "]"
+//                                                         +" [C/ " + ((ItemInterface)item).getContractor()   + "]");
 //                });
 //            LogController.appendLogViewText(items.size() + " deleted");
 //            
@@ -342,7 +342,7 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
     
     /**
      * Delete EstimateTVI  Entities from SQL
-    * @param items (Collection of TableItem) 
+    * @param items (Collection of ItemInterface)
     */
     @Override
     public void insert(Collection<EstimateTVI> items) {
@@ -367,7 +367,7 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
                                                                    Statement.RETURN_GENERATED_KEYS);) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
-                for (TableItem obsItem : items) {
+                for (ItemInterface obsItem : items) {
                     pstmt.setString   (1,  obsItem.getSiteNumber());
                     pstmt.setString   (2,  obsItem.getTypeHome());
                     pstmt.setString   (3,  obsItem.getContractor());
@@ -392,11 +392,11 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
            connection.commit();
            //add info to LogTextArea / LogController
            items.forEach(item -> {
-                LogController.appendLogViewText("inserted item: "+ ((TableItem)item).getJM_name()
-                                                         +" [JM/ "+((TableItem)item).getJobOrMat()      + "]"
-                                                         +" [BP/ "+((TableItem)item).getBindJob()     + "]"
-                                                         +" [S#/ " + ((TableItem)item).getSiteNumber()  + "]"
-                                                         +" [C/ " + ((TableItem)item).getContractor()   + "]");
+                LogController.appendLogViewText("inserted item: "+ ((ItemInterface)item).getJM_name()
+                                                         +" [JM/ "+((ItemInterface)item).getJobOrMat()      + "]"
+                                                         +" [BP/ "+((ItemInterface)item).getBindJob()     + "]"
+                                                         +" [S#/ " + ((ItemInterface)item).getSiteNumber()  + "]"
+                                                         +" [C/ " + ((ItemInterface)item).getContractor()   + "]");
                 });
             LogController.appendLogViewText(items.size() + " inserted");
         } catch (SQLException ex) {
@@ -510,12 +510,12 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
 
     }
 //    @Override
-//    public void insert(Collection<TableItem> items) {
+//    public void insert(Collection<ItemInterface> items) {
 //        try(Connection connection = SQLconnector.getInstance();
 //            PreparedStatement pstmt  = connection.prepareStatement("execute addRowEst ?,?,?,?,?,?,?,?,?,?,?");) {
 //            //set false SQL Autocommit
 //            connection.setAutoCommit(false);
-//                for (TableItem obsItem : items) {
+//                for (ItemInterface obsItem : items) {
 //                    pstmt.setString   (1,  obsItem.getSiteNumber());
 //                    pstmt.setString   (2,  obsItem.getContractor());
 //                    pstmt.setString   (3,  obsItem.getBuildingPart());
@@ -535,11 +535,11 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
 //           connection.commit();
 //           //add info to LogTextArea / LogController
 //           items.forEach(item -> {
-//                LogController.appendLogViewText("inserted item: "+ ((TableItem)item).getJM_name()
-//                                                         +" [JM/ "+((TableItem)item).getJobOrMat()      + "]"
-//                                                         +" [BP/ "+((TableItem)item).getBindJob()     + "]"
-//                                                         +" [S#/ " + ((TableItem)item).getSiteNumber()  + "]"
-//                                                         +" [C/ " + ((TableItem)item).getContractor()   + "]");
+//                LogController.appendLogViewText("inserted item: "+ ((ItemInterface)item).getJM_name()
+//                                                         +" [JM/ "+((ItemInterface)item).getJobOrMat()      + "]"
+//                                                         +" [BP/ "+((ItemInterface)item).getBindJob()     + "]"
+//                                                         +" [S#/ " + ((ItemInterface)item).getSiteNumber()  + "]"
+//                                                         +" [C/ " + ((ItemInterface)item).getContractor()   + "]");
 //                });
 //            LogController.appendLogViewText(items.size() + " inserted");
 //        } catch (SQLException ex) {

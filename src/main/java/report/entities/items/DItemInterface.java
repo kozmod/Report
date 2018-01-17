@@ -12,7 +12,7 @@ import java.util.Objects;
 
 
 //Preview Tabble Items to ObsList
-public class TableDItem implements TableClone {
+public class DItemInterface implements CloneInterface {
 
         private Long id;
         private final String sqlColumn;
@@ -22,14 +22,14 @@ public class TableDItem implements TableClone {
 
 
 
-    public TableDItem(long id, String sqlColumnName, String fValue, double sValue) {
+    public DItemInterface(long id, String sqlColumnName, String fValue, double sValue) {
             this.id        = id;
             this.sqlColumn = sqlColumnName;
             this.firstValue  = new SimpleStringProperty(fValue);
             this.secondValue = new SimpleDoubleProperty(sValue);
         }
 
-    public TableDItem(long id, String sqlColumn, String fValue, DoubleProperty secondValue) {
+    public DItemInterface(long id, String sqlColumn, String fValue, DoubleProperty secondValue) {
         this.id = id;
         this.sqlColumn = sqlColumn;
         this.firstValue  = new SimpleStringProperty(fValue);
@@ -38,8 +38,8 @@ public class TableDItem implements TableClone {
 
     //Clone CONSTRUCTOR implementation
         @Override
-        public TableDItem getClone() {
-            TableDItem clone = new TableDItem(
+        public DItemInterface getClone() {
+            DItemInterface clone = new DItemInterface(
                                 this.id,
                                 this.sqlColumn,
                                 this.getFirstValue(),
@@ -104,7 +104,7 @@ public class TableDItem implements TableClone {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final TableDItem other = (TableDItem) obj;
+        final DItemInterface other = (DItemInterface) obj;
         if (!Objects.equals(this.id, other.id)) {
             return false;
         }
@@ -132,8 +132,8 @@ public class TableDItem implements TableClone {
     * 
     * @return Callback<VariableTIV, Observable[]>
     */
-    public static Callback<TableDItem, Observable[]> extractor() {
-        return (TableDItem p) -> new Observable[]{p.secondValueProperty()};
+    public static Callback<DItemInterface, Observable[]> extractor() {
+        return (DItemInterface p) -> new Observable[]{p.secondValueProperty()};
     }
 
    

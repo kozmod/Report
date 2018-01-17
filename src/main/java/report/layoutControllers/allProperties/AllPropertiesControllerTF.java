@@ -4,10 +4,10 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import report.entities.items.TableDItem;
+import report.entities.items.DItemInterface;
 import report.entities.items.contractor.ContractorDAO;
-import report.entities.items.counterparties.CountAgentTVI;
-import report.entities.items.counterparties.CountAgentDAO;
+import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
+import report.entities.items.counterparties.AgentTVI.CountAgentDAO;
 import report.entities.items.variable.PropertiesDAO;
 import report.entities.items.variable.VariableTIV_new;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
@@ -79,10 +79,10 @@ class AllPropertiesControllerTF implements TableFactory {
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        TableColumn<TableDItem,String> titleCol = new TableColumn<>("Параметр");
+        TableColumn<DItemInterface,String> titleCol = new TableColumn<>("Параметр");
         titleCol.setCellValueFactory(cellData -> cellData.getValue().firstValueProperty());
 
-        TableColumn<TableDItem,Double> valueCol = new TableColumn<>("Значение");
+        TableColumn<DItemInterface,Double> valueCol = new TableColumn<>("Значение");
         valueCol.setCellValueFactory(new PropertyValueFactory("secondValue"));
 
         titleCol.setCellFactory(TextFieldTableCell.forTableColumn());

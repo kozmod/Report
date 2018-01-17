@@ -4,15 +4,15 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableView;
 import report.entities.CommonDAO;
 import report.entities.Reverse;
-import report.entities.items.TableClone;
-import report.entities.items.TableDItem;
+import report.entities.items.CloneInterface;
+import report.entities.items.DItemInterface;
 import report.models.mementos.Memento;
 import report.models.mementos.ReverseTableMemento;
 import report.models_view.nodes.ContextMenuOptional;
 
-public class ReverseTableWrapper<E extends Reverse & TableClone> extends AbstractTableWrapper<E> {
+public class ReverseTableWrapper<E extends Reverse & CloneInterface> extends AbstractTableWrapper<E> {
 
-        private final TableView<TableDItem> tableView;
+        private final TableView<DItemInterface> tableView;
         private E reverseObj;
         private CommonDAO<E> commonDAO;
 
@@ -21,10 +21,10 @@ public class ReverseTableWrapper<E extends Reverse & TableClone> extends Abstrac
          * Constructor                                                             *
          *                                                                         *
          **************************************************************************/
-        public ReverseTableWrapper(String title, TableView<TableDItem> table, CommonDAO<E> commonDao) {
+        public ReverseTableWrapper(String title, TableView<DItemInterface> table, CommonDAO<E> commonDao) {
             this(title,table,null,commonDao);
         }
-        public ReverseTableWrapper(String title, TableView<TableDItem> table , E reverseObj, CommonDAO<E> commonDao) {
+        public ReverseTableWrapper(String title, TableView<DItemInterface> table , E reverseObj, CommonDAO<E> commonDao) {
             super(title);
             this.commonDAO = commonDao;
             this.reverseObj = reverseObj;
@@ -105,7 +105,7 @@ public class ReverseTableWrapper<E extends Reverse & TableClone> extends Abstrac
             tableView.refresh();
         }
 
-        public  TableView<TableDItem> tableView(){
+        public  TableView<DItemInterface> tableView(){
             return this.tableView;
         }
 

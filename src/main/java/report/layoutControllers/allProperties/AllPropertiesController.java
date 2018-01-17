@@ -1,19 +1,25 @@
 
 package report.layoutControllers.allProperties;
 
+import java.math.BigInteger;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import report.entities.items.contractor.ContractorTIV;
-import report.entities.items.counterparties.CountAgentTVI;
+import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
+import report.entities.items.counterparties.commonReq.CountAgentCommonReq;
 import report.entities.items.variable.VariableTIV_new;
+import report.models.numberStringConverters.dateStringConverters.LocalDayStringConverter;
+import report.models.numberStringConverters.numberStringConverters.BigIntegerStringConverter;
 import report.models_view.nodes.node_wrappers.ReverseTableWrapper;
 import report.models_view.nodes.node_wrappers.TableWrapper;
 import report.models_view.nodes.nodes_factories.ContextMenuFactory;
@@ -25,7 +31,7 @@ public class AllPropertiesController implements Initializable {
     *                                                                                                         Tab 3 FXML
     ********************************************************************************************************************/
     @FXML
-    private TextField commonOgrnTF,  commonInnTF, commonAdresTF;
+    private TextField commonOgrnTF,  commonInnTF, lowAddressTF,factAddressTF,postAddressTF;
     @FXML
     private CheckBox commonChB;
     @FXML
@@ -59,22 +65,14 @@ public class AllPropertiesController implements Initializable {
      ********************************************************************************************************************/
     @FXML private TableView contractorTable;
     @FXML private TextField contractorNameTF,contractorDirectorTF;
-//    @FXML private TextField planTypeTF,planSmetTF,planSaleTF, planQuantityTF ;
-//    @FXML private TextField planSmetSumTF,planSaleSumTF, planProfitSumTF;
-//    @FXML private TextField factSmetSumTF,factSaleSumTF, factProfitSumTF;
     @FXML private TextArea  contractorAdressTA,contractorCommentsTA;
-//    @FXML private CheckBox  osrEditСheckBox;
     @FXML private CheckBox  contractorEditСheckBox, planEditСheckBox;
-//    @FXML private Button    osrAddItemButton, planAddItemButton;
     @FXML private Button    contractorAddItemButton, contractorSaveItemButton, contractorCencelItemButton;
 
 
     public ReverseTableWrapper<VariableTIV_new> variableTableWrapper ;
     private TableWrapper<ContractorTIV> contractorTableWrapper;
     private TableWrapper<CountAgentTVI> countAgentTableWrapper;
-//    private TableWrapper<PlanTIV> planTableWrapper;
-//    private TableWrapper<PlanTIV> factTableWrapper ;
-
 
     /***************************************************************************
      *                                                                         *
@@ -83,19 +81,11 @@ public class AllPropertiesController implements Initializable {
      **************************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //        //add OSR TableView
-        variableTableWrapper = AllPropertiesControllerTF.decorVariable(variableTable);
-        //add Contractors TableView
-        contractorTableWrapper = AllPropertiesControllerTF.decorContractor(contractorTable);
-        ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapper);
-
-        countAgentTableWrapper = AllPropertiesControllerTF.decorCountAgent(countAgentTable);
-        ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapper);
-        init_VariableTab();
-        init_ContractorTab();
+        this.init_VariableTab();
+        this.init_ContractorTab();
+        this.init_CounterpatiesTab();
 //        this.initData();
     }
-
     /**
      * Init Data from Base
      */
@@ -104,50 +94,17 @@ public class AllPropertiesController implements Initializable {
         contractorTableWrapper.setDataFromBASE();
         countAgentTableWrapper.setDataFromBASE();
     }
-//    /**
-//     * Initialization of OSR Tab.
-//     */
-//    private void init_OSRTab(){
-//
-//       computeSumExpTextFields();
-//       osrTableWrapper.getItems().addListener((ListChangeListener.Change<? extends OSR_TIV> c) -> {
-//                System.out.println("Changed on " + c + " report.layoutControllers.allProperties.AllPropertiesController.init_OSRTab()" );
-//                if(c.next() &&
-//                        (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
-//                            computeSumExpTextFields();
-//                }
-//        });
-//
-//       //table Context menu property
-//        osrTableWrapper.treeTableView().contextMenuProperty().bind(
-//            Bindings.when(osrEditСheckBox.selectedProperty() )
-//                .then(ContextMenuFactory.getCommonDSU(osrTableWrapper))
-//                .otherwise( (ContextMenu) null  ));
-//        //TableWrapper Editable property
-//        osrTableWrapper.treeTableView().editableProperty()
-//                    .bind(osrEditСheckBox.selectedProperty());
-//        setGroupNodeDisableProperty(osrEditСheckBox.selectedProperty(),
-//                                    osrAddTextTF,
-//                                    osrAddValueTF,
-//                                    osrAddItemButton);
-//
-//       siteQuantityTF.textProperty().bindBidirectional(Quantity.getQuantityProperty(), new NumberStringConverter());
-//
-//    }
-
     /***************************************************************************
      *                                                                         *
-     * Initialize                                                              *
+     * Init Variable                                                           *
      *                                                                         *
      **************************************************************************/
-
-
-    
      /**
      * Initialization of Variable Tab. 
      */
     private void init_VariableTab(){
-        
+        //add OSR TableView
+        variableTableWrapper = AllPropertiesControllerTF.decorVariable(variableTable);
         //table Context menu property
         variableTableWrapper.tableView().contextMenuProperty().bind(
             Bindings.when(variableEditСheckBox.selectedProperty() )
@@ -156,14 +113,19 @@ public class AllPropertiesController implements Initializable {
         //TableWrapper Editable property
         variableTableWrapper.tableView().editableProperty()
                          .bind(variableEditСheckBox.selectedProperty());
-    
-        
-       
     }
+    /***************************************************************************
+     *                                                                         *
+     * Init Contractor                                                         *
+     *                                                                         *
+     **************************************************************************/
      /**
      * Initialization of Contractor Tab. 
      */
     private void init_ContractorTab(){
+        //add Contractors TableView
+        contractorTableWrapper = AllPropertiesControllerTF.decorContractor(contractorTable);
+        ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapper);
         //bing ContextMenu
         contractorTableWrapper.tableView().contextMenuProperty().bind(
                 Bindings.when(contractorEditСheckBox.selectedProperty() )
@@ -181,7 +143,6 @@ public class AllPropertiesController implements Initializable {
 
         contractorTableWrapper.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             ContractorTIV item = (newValue != null) ? newValue : oldValue;
-//            if(newValue != null)item = newValue; else item = oldValue;
             if(newValue != null && oldValue != null){
                 Bindings.unbindBidirectional(contractorNameTF    .textProperty(), oldValue.getContractorProperty());
                 Bindings.unbindBidirectional(contractorDirectorTF.textProperty(), oldValue.getDirectorProperty());
@@ -198,62 +159,47 @@ public class AllPropertiesController implements Initializable {
                 Bindings.bindBidirectional(contractorCommentsTA.textProperty(), item.getCommentsProperty());
             }
         });
-//        contractorTableWrapper.getItems().addListener((ListChangeListener.Change<? extends ContractorTIV> c) -> {
-//            System.out.println("init_ContractorTab => Changed on " + c);
-//                if(c.next()){ 
-//                   if(c.wasUpdated())  contractorTableWrapper.getCRUD().addUpdate(contractorTableWrapper.getItems().saveEst(c.getFrom()));
-//                   if(c.wasAdded()) contractorTableWrapper.getCRUD().addCreate(c.getAddedSubList());
-//                   if(c.wasRemoved()) contractorTableWrapper.getCRUD().addDelete(c.getRemoved());
-//                }
-//        });
-
-
-//        variableTableWrapper.editableProperty().bind(variableEditСheckBox.selectedProperty());
-//
     }
-    
-//    private void init_PlanTab(){
-//        //table Context menu property
-//        planTableWrapper.contextMenuProperty().bind(
-//            Bindings.when(planEditСheckBox.selectedProperty() )
-//                .then( ContextMenuFactory.getCommonDSU(planTableWrapper))
-//                .otherwise( (ContextMenu) null));
-//        //TableWrapper Editable property
-//        planTableWrapper.editableProperty()
-//                     .bind(planEditСheckBox.selectedProperty());
-//        //Compute Sum Text fields
-//        this.computeSumPlanTextFields();
-//        this.computeSumFactTextFields();
-//
-//        setGroupNodeDisableProperty(planEditСheckBox.selectedProperty(),
-//                                    planTypeTF,
-//                                    planSmetTF,
-//                                    planSaleTF,
-//                                    planQuantityTF,
-//                                    planAddItemButton);
-//
-//        planTableWrapper.getItems().addListener((ListChangeListener.Change<? extends PlanTIV> c) -> {
-//            System.out.println("Changed on " + c + " - allProperty /// init_PlanTab");
-//            if(c.next() &&
-//                    (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
-//                    this.computeSumPlanTextFields();
-//            }
-//        });
-//    }
-    
-/*!******************************************************************************************************************
-*                                                                                                     	    HANDLERS
-********************************************************************************************************************/
+    /***************************************************************************
+     *                                                                         *
+     * Init 3                                                                  *
+     *                                                                         *
+     **************************************************************************/
+    private void init_CounterpatiesTab(){
+        countAgentTableWrapper = AllPropertiesControllerTF.decorCountAgent(countAgentTable);
+        ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapper);
+        init_CommonReq();
+    }
+    private void init_CommonReq(){
+        countAgentTableWrapper.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            CountAgentCommonReq commonReq = new CountAgentCommonReq(
+                    1,
+                    false,
+                    new BigInteger("12345678901234567890"),
+                    100000,
+                    new BigInteger("12345678901234567890"),
+                    new BigInteger("12345678901234567890"),
+                    "lowadress",
+                    "factAdress",
+                    "postAdress"
+                    );
+            Bindings.bindBidirectional(commonOgrnTF    .textProperty(), commonReq.OGRNProperty(), new BigIntegerStringConverter());
+            Bindings.bindBidirectional(commonInnTF     .textProperty(), commonReq.innProperty(),  new BigIntegerStringConverter());
+            Bindings.bindBidirectional(commonDateOgrnDP.valueProperty(),commonReq.dateOGRNProperty());
+            Bindings.bindBidirectional(lowAddressTF    .textProperty(), commonReq.addressLowProperty());
+            Bindings.bindBidirectional(factAddressTF   .textProperty(), commonReq.addressFactProperty());
+            Bindings.bindBidirectional(postAddressTF   .textProperty(), commonReq.addressPostProperty());
 
-//    @FXML
-//    private void handle_osrAddItemButton(ActionEvent event) {
-//        Double expenses = new DoubleStringConverter().fromString(osrAddValueTF.getText());
-//        Double expensesPerHouse = expenses/Quantity.quantity();
-//        osrTableWrapper.getItems()
-//                .add(new OSR_TIV(0,osrAddTextTF.getText(),expenses,expensesPerHouse ));
-//
-//
-//    }
+
+
+        });
+
+    }
+    /***************************************************************************
+     *                                                                         *
+     * HANDLERS                                                                *
+     *                                                                         *
+     **************************************************************************/
     @FXML
     private void handle_contractorItemButton(ActionEvent event) {  
       if(event.getSource() == contractorAddItemButton){
@@ -290,66 +236,6 @@ public class AllPropertiesController implements Initializable {
         );
       }
     }
-//    @FXML
-//    private void handle_planAddItemButton(ActionEvent event) {
-//        double SmetCost = DecimalFormatter.formatString(planSmetTF.getText());
-//        double SaleCost = DecimalFormatter.formatString(planSaleTF.getText());
-//        if(
-//            planTableWrapper.getItems()
-//                .add(new PlanTIV(
-//                        0,
-//                        new Timestamp(System.currentTimeMillis()),
-//                        (planTableWrapper.getItems().stream().max(Comparator.comparing(f -> f.getTypeID())).get().getTypeID() + 1),
-//                        planTypeTF.getText(),
-//                        Integer.parseInt(planQuantityTF.getText()),
-//                        0,
-//                        SmetCost,
-//                        (double)0,
-//                        SaleCost,
-//                        (double)0,
-//                        (double)0
-//                ))
-//        )clearGroupOfTextInputControl(planTypeTF,planQuantityTF,planSmetTF,planSaleTF);
-//
-//
-//    }
-
-
-
-
-/*!******************************************************************************************************************
-*                                                                                                             METHODS
-********************************************************************************************************************/
-//    private void computeSumExpTextFields(){
-//        sumExpTF.setText(new DoubleStringConverter().toString(
-//                                osrTableWrapper.getItems().stream().mapToDouble(OSR_TIV::getExpenses).sum()));
-//        sumExpPerSiteTF.setText(new DoubleStringConverter().toString(
-//                                osrTableWrapper.getItems().stream().mapToDouble(OSR_TIV::getExpensesPerHouse).sum()));
-//    }
-//    private void computeSumPlanTextFields(){
-//
-//        planSmetSumTF.setText(DecimalFormatter.formatNumber(
-//                                    planTableWrapper.getItems().stream().mapToDouble(PlanTIV::getSmetCostSum).sum()));
-//        planSaleSumTF.setText(DecimalFormatter.formatNumber(
-//                                    planTableWrapper.getItems().stream().mapToDouble(PlanTIV::getSaleCostSum).sum()));
-//        planProfitSumTF.setText(DecimalFormatter.formatNumber(
-//                                    planTableWrapper.getItems().stream().mapToDouble(PlanTIV::getProfit).sum()));
-//
-//
-//
-//    }
-//
-//    private void computeSumFactTextFields(){
-//        factSmetSumTF.setText(DecimalFormatter.formatNumber(
-//                                    factTableWrapper.getItems().stream().mapToDouble(PlanTIV::getSmetCostSum).sum()));
-//        factSaleSumTF.setText(DecimalFormatter.formatNumber(
-//                                    factTableWrapper.getItems().stream().mapToDouble(PlanTIV::getSaleCostSum).sum()));
-//        factProfitSumTF.setText(DecimalFormatter.formatNumber(
-//                                    factTableWrapper.getItems().stream().mapToDouble(PlanTIV::getProfit).sum()));
-//
-//
-//    }
-
      /**
      * Bind disable property to group of 
      */

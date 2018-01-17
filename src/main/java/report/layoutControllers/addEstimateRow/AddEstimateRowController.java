@@ -3,7 +3,6 @@ package report.layoutControllers.addEstimateRow;
 
 import java.net.URL;
 import java.sql.Timestamp;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.stream.Collectors;
 
@@ -16,17 +15,15 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import report.entities.items.ItemInterface;
 import report.entities.items.cb.AddEstTIV;
 import report.entities.items.estimate.EstimateDAO;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.usage_strings.SQL;
 import report.models.DiffList;
 
-import report.entities.items.TableItem;
 import report.entities.items.estimate.EstimateTVI;
 import report.models_view.nodes.node_wrappers.TableWrapper;
-
-import javax.sound.midi.Soundbank;
 
 
 public class AddEstimateRowController implements Initializable {
@@ -126,10 +123,10 @@ public class AddEstimateRowController implements Initializable {
      * Methods                                                                 *
      *                                                                         *
      **************************************************************************/
-    private ObservableList<AddEstTIV>  getCheckObs(ObservableList<TableItem> items){
+    private ObservableList<AddEstTIV>  getCheckObs(ObservableList<ItemInterface> items){
         ObservableList<AddEstTIV>  checkedObsList = FXCollections.observableArrayList();
         if(items != null)
-            for (TableItem obsItem : items){
+            for (ItemInterface obsItem : items){
                 checkedObsList.add(new AddEstTIV(
                         0,
                         false,

@@ -7,10 +7,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
-import report.entities.items.TableClone;
+import report.entities.items.CloneInterface;
 
 
-public class PeriodTIV implements TableClone {
+public class PeriodTIV implements CloneInterface {
     
     private Long  id;
     private final StringProperty  siteNumber;    
@@ -37,8 +37,8 @@ public class PeriodTIV implements TableClone {
     
         //Clone  implementation
         @Override
-        public  TableClone getClone() {
-            TableClone clone = new PeriodTIV(
+        public CloneInterface getClone() {
+            CloneInterface clone = new PeriodTIV(
                                 this.getId(),
                                 this.getSiteNumber(),
                                 this.getContractor(),

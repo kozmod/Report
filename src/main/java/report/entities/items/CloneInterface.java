@@ -3,10 +3,10 @@ package report.entities.items;
 
 
 
-public interface TableClone<E> extends ID {
+public interface CloneInterface<E> extends ID {
     /**
      * Get clone Constructor
-     * @return TableClone
+     * @return CloneInterface
      */
      E getClone();
 

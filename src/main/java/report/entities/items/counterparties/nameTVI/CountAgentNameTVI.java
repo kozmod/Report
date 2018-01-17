@@ -1,12 +1,12 @@
-package report.entities.items.counterparties;
+package report.entities.items.counterparties.nameTVI;
 
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
-import report.entities.items.TableClone;
+import report.entities.items.CloneInterface;
 
-public class CountAgentNameTVI implements TableClone<CountAgentNameTVI> {
+public class CountAgentNameTVI implements CloneInterface<CountAgentNameTVI> {
     private long id;
     private StringProperty linkedName;
     /***************************************************************************

@@ -3,6 +3,7 @@ package report.entities.items.KS;
 
 
 import report.entities.CommonDAO;
+import report.entities.items.ItemInterface;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
 import java.sql.Connection;
@@ -19,7 +20,6 @@ import javafx.collections.ObservableList;
 import report.layoutControllers.LogController;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.sql.SQLconnector;
-import report.entities.items.TableItem;
 
 
 public class KS_DAO implements CommonDAO<Collection<KS_TIV>> {
@@ -33,7 +33,7 @@ public class KS_DAO implements CommonDAO<Collection<KS_TIV>> {
     
     /**
     * Get String of a Mirror (SQL.Tables).
-    * @return  List of TableItem
+    * @return  List of ItemInterface
     */
     @Override
     public String sqlTableName() {return SQL.Tables.KS;}
@@ -325,9 +325,9 @@ public class KS_DAO implements CommonDAO<Collection<KS_TIV>> {
      * 
      * @param ks_Number
      * @param ks_Date
-     * @param listKS (List<TableItem> listKS)
+     * @param listKS (List<ItemInterface> listKS)
      */
-    public void insertNewKS(int ks_Number,int ks_Date, List<TableItem> listKS){
+    public void insertNewKS(int ks_Number,int ks_Date, List<ItemInterface> listKS){
                      
         String pstString ="INSERT into dbo.[KS] ("
                                             + " [KS_Number]"
@@ -372,7 +372,7 @@ public class KS_DAO implements CommonDAO<Collection<KS_TIV>> {
         
         try(Connection connection = SQLconnector.getInstance();
             PreparedStatement pstmt  = connection.prepareStatement(pstString);) {
-                for (TableItem item : listKS) {
+                for (ItemInterface item : listKS) {
             
                     pstmt.setInt   (1, ks_Number);
                     pstmt.setInt   (2, (int)(Math.round(ks_Date*100)/100));

@@ -5,16 +5,16 @@ import java.sql.Timestamp;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import report.entities.items.TableItem;
+import report.entities.items.ItemInterface;
 
 /**
 * 
-* TableItem to CheckBox TableWrapper.
+* ItemInterface to CheckBox TableWrapper.
 *Use into AddRowLayout (addSiteRowController)
 * 
 */
 
-public class AddEstTIV extends TableItem {
+public class AddEstTIV extends ItemInterface {
 
     private final BooleanProperty check;
     

@@ -221,9 +221,11 @@
                                               <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                                                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                           </rowConstraints>
                                           <children>
-                                                <TextField fx:id="commonAdresTF" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                                                <TextField fx:id="lowAddressTF" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                                               <TextField fx:id="commonOgrnTF" GridPane.columnIndex="1" />
                                               <Text strokeType="OUTSIDE" strokeWidth="0.0" text="ОГРН">
                                                    <GridPane.margin>
@@ -241,12 +243,24 @@
                                                    </GridPane.margin>
                                                 </Text>
                                               <TextField fx:id="commonInnTF" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Адрес" GridPane.rowIndex="3">
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Юридический Адрес" GridPane.rowIndex="3">
                                                    <GridPane.margin>
                                                       <Insets left="5.0" />
                                                    </GridPane.margin>
                                                 </Text>
-                                                <DatePicker fx:id="commonDateOgrnTF" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <DatePicker fx:id="commonDateOgrnDP" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Фактический Адрес" GridPane.rowIndex="4">
+                                                   <GridPane.margin>
+                                                      <Insets left="5.0" />
+                                                   </GridPane.margin>
+                                                </Text>
+                                                <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Адрес (Post)" GridPane.rowIndex="5">
+                                                   <GridPane.margin>
+                                                      <Insets left="5.0" />
+                                                   </GridPane.margin>
+                                                </Text>
+                                                <TextField fx:id="factAddressTF" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                                                <TextField fx:id="postAddressTF" GridPane.columnIndex="1" GridPane.rowIndex="5" />
                                           </children>
                                       </GridPane>
                                        </content>

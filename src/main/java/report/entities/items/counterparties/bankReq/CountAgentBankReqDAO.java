@@ -1,4 +1,4 @@
-package report.entities.items.counterparties.countBankReq;
+package report.entities.items.counterparties.bankReq;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,7 +14,7 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CountAgBankReqDAO implements CommonDAO<Collection<CountAgBankReq>>{
+public class CountAgentBankReqDAO implements CommonDAO<Collection<CountAgentBankReq>>{
 
     /***************************************************************************
      *                                                                         *
@@ -24,8 +24,8 @@ public class CountAgBankReqDAO implements CommonDAO<Collection<CountAgBankReq>>{
 
 
     @Override
-    public ObservableList<CountAgBankReq> getData() {
-        ObservableList<CountAgBankReq> list =  FXCollections.observableArrayList(CountAgBankReq.extractor());
+    public ObservableList<CountAgentBankReq> getData() {
+        ObservableList<CountAgentBankReq> list =  FXCollections.observableArrayList(CountAgentBankReq.extractor());
 
         String sqlQuery = "SELECT "       //[id] [SiteNumber] [Contractor][Text][Type][Value]
                 + " * "
@@ -44,12 +44,12 @@ public class CountAgBankReqDAO implements CommonDAO<Collection<CountAgBankReq>>{
     }
 
     @Override
-    public void delete(Collection<CountAgBankReq> entry) {
+    public void delete(Collection<CountAgentBankReq> entry) {
 
     }
 
     @Override
-    public void insert(Collection<CountAgBankReq> entry) {
+    public void insert(Collection<CountAgentBankReq> entry) {
 
     }
 

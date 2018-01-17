@@ -4,11 +4,11 @@ package report.models.mementos;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import report.entities.items.TableClone;
+import report.entities.items.CloneInterface;
 
 import java.util.*;
 
-public  class TableMemento<E extends TableClone<E>> implements Memento<Collection<E>> {
+public  class TableMemento<E extends CloneInterface<E>> implements Memento<Collection<E>> {
 
     Set<E> deleteSet = Collections.newSetFromMap(new IdentityHashMap<>());
     Set<E> insertSet = Collections.newSetFromMap(new IdentityHashMap<>());
@@ -80,7 +80,7 @@ public  class TableMemento<E extends TableClone<E>> implements Memento<Collectio
 
 }
 
-//public  class TableMemento<S extends TableClone> {
+//public  class TableMemento<S extends CloneInterface> {
 //
 //    private  ObservableList<S> tableMemento;
 //

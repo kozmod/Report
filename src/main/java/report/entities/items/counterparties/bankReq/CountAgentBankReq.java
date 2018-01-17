@@ -1,4 +1,4 @@
-package report.entities.items.counterparties.countBankReq;
+package report.entities.items.counterparties.bankReq;
 
 import javafx.beans.Observable;
 import javafx.beans.property.LongProperty;
@@ -6,10 +6,10 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
-import report.entities.items.TableClone;
+import report.entities.items.CloneInterface;
 
 
-public class CountAgBankReq implements TableClone<CountAgBankReq> {
+public class CountAgentBankReq implements CloneInterface<CountAgentBankReq> {
     private long id;
     private StringProperty accNumber;
     private StringProperty bankName;
@@ -20,7 +20,7 @@ public class CountAgBankReq implements TableClone<CountAgBankReq> {
      * Constructors                                                            *
      *                                                                         *
      **************************************************************************/
-    public CountAgBankReq(long id, String accNumber, String bankName, long bic, String corAcc) {
+    public CountAgentBankReq(long id, String accNumber, String bankName, long bic, String corAcc) {
         this.id = id;
         this.accNumber = new SimpleStringProperty(accNumber);
         this.bankName = new SimpleStringProperty(bankName);
@@ -32,7 +32,7 @@ public class CountAgBankReq implements TableClone<CountAgBankReq> {
      * Clone Constructors                                                      *
      *                                                                         *
      **************************************************************************/
-    public CountAgBankReq(CountAgBankReq source) {
+    public CountAgentBankReq(CountAgentBankReq source) {
         this.id = id;
         this.accNumber = new SimpleStringProperty(source.accNumber.getValue());
         this.bankName = new SimpleStringProperty(source.bankName.getValue());
@@ -45,8 +45,8 @@ public class CountAgBankReq implements TableClone<CountAgBankReq> {
      *                                                                         *
      **************************************************************************/
     @Override
-    public CountAgBankReq getClone() {
-        return new CountAgBankReq(this);
+    public CountAgentBankReq getClone() {
+        return new CountAgentBankReq(this);
     }
 
     @Override
@@ -116,7 +116,7 @@ public class CountAgBankReq implements TableClone<CountAgBankReq> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        CountAgBankReq that = (CountAgBankReq) o;
+        CountAgentBankReq that = (CountAgentBankReq) o;
 
 //        if (id != that.id) return false;
         if (accNumber != null ? !accNumber.getValue().equals(that.accNumber.getValue()) : that.accNumber.getValue() != null) return false;
@@ -140,8 +140,8 @@ public class CountAgBankReq implements TableClone<CountAgBankReq> {
      *
      * @return Callback<CountAgentNameTVI, Observable[]>
      */
-    public static Callback<CountAgBankReq, Observable[]> extractor() {
-        return (CountAgBankReq p) -> new Observable[]{
+    public static Callback<CountAgentBankReq, Observable[]> extractor() {
+        return (CountAgentBankReq p) -> new Observable[]{
                 p.accNumberProperty(),
                 p.bankNameProperty(),
                 p.bicProperty(),
