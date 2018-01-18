@@ -81,6 +81,7 @@ public class AllPropertiesController implements Initializable {
      **************************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+
         this.init_VariableTab();
         this.init_ContractorTab();
         this.init_CounterpatiesTab();
@@ -103,8 +104,7 @@ public class AllPropertiesController implements Initializable {
      * Initialization of Variable Tab. 
      */
     private void init_VariableTab(){
-        //add OSR TableView
-        variableTableWrapper = AllPropertiesControllerTF.decorVariable(variableTable);
+
         //table Context menu property
         variableTableWrapper.tableView().contextMenuProperty().bind(
             Bindings.when(variableEditСheckBox.selectedProperty() )
@@ -189,6 +189,9 @@ public class AllPropertiesController implements Initializable {
             Bindings.bindBidirectional(lowAddressTF    .textProperty(), commonReq.addressLowProperty());
             Bindings.bindBidirectional(factAddressTF   .textProperty(), commonReq.addressFactProperty());
             Bindings.bindBidirectional(postAddressTF   .textProperty(), commonReq.addressPostProperty());
+            commonReq.addListener(listener  ->{
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa");
+            });
 
 
 
