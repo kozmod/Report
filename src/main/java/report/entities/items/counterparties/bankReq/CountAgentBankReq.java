@@ -6,10 +6,10 @@ import javafx.beans.property.SimpleLongProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
-import report.entities.items.CloneInterface;
+import report.entities.items.Clone;
 
 
-public class CountAgentBankReq implements CloneInterface<CountAgentBankReq> {
+public class CountAgentBankReq implements Clone {
     private long id;
     private StringProperty accNumber;
     private StringProperty bankName;

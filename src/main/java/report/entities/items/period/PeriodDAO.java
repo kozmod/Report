@@ -25,7 +25,7 @@ public class PeriodDAO implements CommonDAO<Collection<PeriodTIV>> {
 
     /**
     * Get String of a Mirror (SQL.Tables).
-    * @return  List of ItemInterface
+    * @return  List of Item
     */
     @Override
     public String sqlTableName() {return SQL.Tables.SITE_JOB_PERIOD;}
@@ -88,8 +88,8 @@ public class PeriodDAO implements CommonDAO<Collection<PeriodTIV>> {
 //                LogController.appendLogViewText("deleted item: "+ ((OSR_TIV)item).getJM_name()
 //                                                         +" [JM/ "+((OSR_TIV)item).getJobOrMat()      + "]"
 //                                                         +" [BP/ "+((OSR_TIV)item).getBindedJob()     + "]"
-//                                                         +" [S#/ " + ((ItemInterface)item).getSiteNumber()  + "]"
-//                                                         +" [C/ " + ((ItemInterface)item).getContractor()   + "]");
+//                                                         +" [S#/ " + ((Item)item).getSiteNumber()  + "]"
+//                                                         +" [C/ " + ((Item)item).getContractor()   + "]");
                 });
             LogController.appendLogViewText(items.size() + " deleted");
             
@@ -134,11 +134,11 @@ public class PeriodDAO implements CommonDAO<Collection<PeriodTIV>> {
            connection.commit();
            //add info to LogTextArea / LogController
 //           items.forEach(item -> {
-////                LogController.appendLogViewText("inserted item: "+ ((ItemInterface)item).getJM_name()
-////                                                         +" [JM/ "+((ItemInterface)item).getJobOrMat()      + "]"
-////                                                         +" [BP/ "+((ItemInterface)item).getBindedJob()     + "]"
-////                                                         +" [S#/ " + ((ItemInterface)item).getSiteNumber()  + "]"
-////                                                         +" [C/ " + ((ItemInterface)item).getContractor()   + "]");
+////                LogController.appendLogViewText("inserted item: "+ ((Item)item).getJM_name()
+////                                                         +" [JM/ "+((Item)item).getJobOrMat()      + "]"
+////                                                         +" [BP/ "+((Item)item).getBindedJob()     + "]"
+////                                                         +" [S#/ " + ((Item)item).getSiteNumber()  + "]"
+////                                                         +" [C/ " + ((Item)item).getContractor()   + "]");
 //                });
             LogController.appendLogViewText(items.size() + " inserted");
         } catch (SQLException ex) {

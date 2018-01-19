@@ -7,7 +7,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
-import report.entities.items.CloneInterface;
+import report.entities.items.Clone;
 
 //import javax.persistence.*;
 
@@ -20,7 +20,7 @@ import report.entities.items.CloneInterface;
 //@Entity
 //@Table(name="SiteOSR", schema="dbo")
 //@Access(quantity = AccessType.PROPERTY)
-public class OSR_TIV implements CloneInterface {
+public class OSR_TIV implements Clone {
 
     private Long  id;
     private final StringProperty  text;    
@@ -42,8 +42,8 @@ public class OSR_TIV implements CloneInterface {
     */
 //    @Transient
     @Override
-    public CloneInterface getClone() {
-        CloneInterface clone = new OSR_TIV(
+    public Clone getClone() {
+        Clone clone = new OSR_TIV(
                                     this.getId(),
                                     this.getText(),
                                     this.getExpenses(),

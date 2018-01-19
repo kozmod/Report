@@ -6,9 +6,9 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
-import report.entities.items.CloneInterface;
+import report.entities.items.Clone;
 
-public class CountAgentExBody implements CloneInterface<CountAgentExBody> {
+public class CountAgentExBody implements Clone {
     private long id;
     private StringProperty exBody;
     private StringProperty exBodyName;

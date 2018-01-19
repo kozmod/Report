@@ -5,10 +5,10 @@ import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
-import report.entities.items.CloneInterface;
+import report.entities.items.Clone;
 
 
-public class ContractorTIV implements CloneInterface<ContractorTIV> {
+public class ContractorTIV implements Clone {
     
     private Long id;
     private final StringProperty  contractor;  

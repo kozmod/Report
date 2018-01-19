@@ -9,7 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.util.converter.NumberStringConverter;
-import report.entities.items.DItemInterface;
+import report.entities.items.DItem;
 import report.entities.items.osr.OSR_TIV;
 import report.entities.items.plan.PlanTIV;
 import report.entities.items.plan.PlanDAO;
@@ -44,7 +44,7 @@ public class PlanningController implements Initializable{
     @FXML private Button   osrAddItemButton;
 
     @FXML private TableView planTable,factTable,osrTable;
-    @FXML private TreeTableView<DItemInterface> kdTreeTable;
+    @FXML private TreeTableView<DItem> kdTreeTable;
 
     private TableWrapper<PlanTIV> planTableWrapper;
     private TableWrapper<FactTIV> factTableWrapper;

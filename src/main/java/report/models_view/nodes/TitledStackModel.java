@@ -104,7 +104,7 @@ public class TitledStackModel extends StackPane{
 //    public void initContextMenu(ContextMenu cm){
 //        
 //            tableViewWrapper.setContextMenu(cm);
-//            tableViewWrapper.getItems().addListener((ListChangeListener.Change<? extends ItemInterface> c) -> {
+//            tableViewWrapper.getItems().addListener((ListChangeListener.Change<? extends Item> c) -> {
 //                System.out.println("Changed on " + c);
 //                if(c.next() && 
 //                        (c.wasUpdated() || c.wasAdded() || c.wasRemoved() )){

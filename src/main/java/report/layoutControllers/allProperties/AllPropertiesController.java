@@ -7,8 +7,6 @@ import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -18,7 +16,6 @@ import report.entities.items.contractor.ContractorTIV;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.counterparties.commonReq.CountAgentCommonReq;
 import report.entities.items.variable.VariableTIV_new;
-import report.models.numberStringConverters.dateStringConverters.LocalDayStringConverter;
 import report.models.numberStringConverters.numberStringConverters.BigIntegerStringConverter;
 import report.models_view.nodes.node_wrappers.ReverseTableWrapper;
 import report.models_view.nodes.node_wrappers.TableWrapper;
@@ -81,7 +78,6 @@ public class AllPropertiesController implements Initializable {
      **************************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         this.init_VariableTab();
         this.init_ContractorTab();
         this.init_CounterpatiesTab();
@@ -104,7 +100,8 @@ public class AllPropertiesController implements Initializable {
      * Initialization of Variable Tab. 
      */
     private void init_VariableTab(){
-
+        //add OSR TableView
+        variableTableWrapper = AllPropertiesControllerTF.decorVariable(variableTable);
         //table Context menu property
         variableTableWrapper.tableView().contextMenuProperty().bind(
             Bindings.when(variableEditСheckBox.selectedProperty() )
@@ -113,6 +110,7 @@ public class AllPropertiesController implements Initializable {
         //TableWrapper Editable property
         variableTableWrapper.tableView().editableProperty()
                          .bind(variableEditСheckBox.selectedProperty());
+
     }
     /***************************************************************************
      *                                                                         *
@@ -126,6 +124,7 @@ public class AllPropertiesController implements Initializable {
         //add Contractors TableView
         contractorTableWrapper = AllPropertiesControllerTF.decorContractor(contractorTable);
         ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapper);
+
         //bing ContextMenu
         contractorTableWrapper.tableView().contextMenuProperty().bind(
                 Bindings.when(contractorEditСheckBox.selectedProperty() )
@@ -190,10 +189,12 @@ public class AllPropertiesController implements Initializable {
             Bindings.bindBidirectional(factAddressTF   .textProperty(), commonReq.addressFactProperty());
             Bindings.bindBidirectional(postAddressTF   .textProperty(), commonReq.addressPostProperty());
             commonReq.addListener(listener  ->{
-                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAaa");
+                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                System.out.println( commonReq.OGRNProperty().getName());
             });
 
 
+            System.out.println(commonInnTF.getId());
 
         });
 

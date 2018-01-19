@@ -10,24 +10,24 @@ import javafx.collections.ObservableList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import report.entities.CommonDAO;
+import report.entities.items.Item;
 import report.entities.items.contractor.ContractorTIV;
 import report.usage_strings.SQL;
 import report.layoutControllers.estimate.EstimateController.Est;
 
 import report.entities.items.site.PreviewTIV;
-import report.entities.items.ItemInterface;
 
 
 public class PrintEstimate extends AbstractPrinterXML{
     
     private Document doc;
-    private ObservableList<ItemInterface> obsKS;
+    private ObservableList<Item> obsKS;
     private ObservableList<PreviewTIV>  obsPreTab;
     private ContractorTIV contractorObject;
     
     //Constructor =====================================================================================================================    
     public PrintEstimate(CommonDAO dao) {
-        this.obsKS = FXCollections.observableArrayList((Collection<? extends ItemInterface>) dao.getData());
+        this.obsKS = FXCollections.observableArrayList((Collection<? extends Item>) dao.getData());
 
 
         doc = buildDocument("\\lib\\XML_Models\\Смета.xml");
@@ -83,7 +83,7 @@ public class PrintEstimate extends AbstractPrinterXML{
         int rowsQuantity = 1;
         String buildingPart = null;
         
-        for(ItemInterface item : obsKS){
+        for(Item item : obsKS){
             
             
             Element targetRow = getTargetElement("SumRow");
@@ -229,11 +229,11 @@ public class PrintEstimate extends AbstractPrinterXML{
     
 //Builder ==========================================================================================================================  
 //    public static class Builder{
-//        private ObservableList<ItemInterface> obsKS;
+//        private ObservableList<Item> obsKS;
 //        private ObservableList<PreviewTableItem>  obsPreTab;
 //        private String ksNumber, ksDate;
 //
-//        public Builder setObsKS(ObservableList<ItemInterface> obsKS) {
+//        public Builder setObsKS(ObservableList<Item> obsKS) {
 //            this.obsKS = obsKS;
 //        return this;
 //        }

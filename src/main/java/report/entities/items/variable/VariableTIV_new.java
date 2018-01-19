@@ -5,10 +5,10 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.entities.Reverse;
-import report.entities.items.CloneInterface;
-import report.entities.items.DItemInterface;
+import report.entities.items.Clone;
+import report.entities.items.DItem;
 
-public class VariableTIV_new implements CloneInterface<VariableTIV_new>, Reverse {
+public class VariableTIV_new implements Clone, Reverse {
 
     public interface SQL{
         String SQL_TABLE = "TBL_COMMAND_PROPERTY";
@@ -51,16 +51,16 @@ public class VariableTIV_new implements CloneInterface<VariableTIV_new>, Reverse
      * @return
      */
     @Override
-    public ObservableList<DItemInterface> reverse(){
-        ObservableList<DItemInterface>  reverseList = FXCollections.observableArrayList(DItemInterface.extractor());
-        reverseList.add(new DItemInterface(
+    public ObservableList<DItem> reverse(){
+        ObservableList<DItem>  reverseList = FXCollections.observableArrayList(DItem.extractor());
+        reverseList.add(new DItem(
                         this.id,
                         SQL.SQL_TABLE,
                         SQL.INCOME_TAX,
                         this.incomeTax.getValue()
                 )
         );
-        reverseList.add(new DItemInterface(
+        reverseList.add(new DItem(
                         this.id,
                         SQL.SQL_TABLE,
                         SQL.SALE_EXP,

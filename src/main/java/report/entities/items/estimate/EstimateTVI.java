@@ -14,10 +14,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
-import report.entities.items.ItemInterface;
+import report.entities.items.Item;
 
 
-public class EstimateTVI extends ItemInterface {
+public class EstimateTVI extends Item {
     private final IntegerProperty tableType;
     private final BooleanProperty inKS;
     //Constructor
@@ -153,7 +153,7 @@ public class EstimateTVI extends ItemInterface {
 //        if (obj == null) {
 //            return false;
 //        }
-//        if (!ItemInterface.class.isAssignableFrom(obj.getClass())) {
+//        if (!Item.class.isAssignableFrom(obj.getClass())) {
 //            return false;
 //        }
 //        final EstimateTVI other = (EstimateTVI) obj;
@@ -197,8 +197,8 @@ public class EstimateTVI extends ItemInterface {
     *Extractor to observe changes in "Property" fields.
      * @return extractor
     */
-    public static Callback<ItemInterface, Observable[]> extractor() {
-        return (ItemInterface p) -> new Observable[]{p.quantityProperty(), p.priceOneProperty()};
+    public static Callback<Item, Observable[]> extractor() {
+        return (Item p) -> new Observable[]{p.quantityProperty(), p.priceOneProperty()};
     }
     
 

@@ -3,7 +3,7 @@ package report.entities.items.KS;
 
 
 import report.entities.CommonDAO;
-import report.entities.items.ItemInterface;
+import report.entities.items.Item;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
 import java.sql.Connection;
@@ -33,7 +33,7 @@ public class KS_DAO implements CommonDAO<Collection<KS_TIV>> {
     
     /**
     * Get String of a Mirror (SQL.Tables).
-    * @return  List of ItemInterface
+    * @return  List of Item
     */
     @Override
     public String sqlTableName() {return SQL.Tables.KS;}
@@ -325,9 +325,9 @@ public class KS_DAO implements CommonDAO<Collection<KS_TIV>> {
      * 
      * @param ks_Number
      * @param ks_Date
-     * @param listKS (List<ItemInterface> listKS)
+     * @param listKS (List<Item> listKS)
      */
-    public void insertNewKS(int ks_Number,int ks_Date, List<ItemInterface> listKS){
+    public void insertNewKS(int ks_Number,int ks_Date, List<Item> listKS){
                      
         String pstString ="INSERT into dbo.[KS] ("
                                             + " [KS_Number]"
@@ -372,7 +372,7 @@ public class KS_DAO implements CommonDAO<Collection<KS_TIV>> {
         
         try(Connection connection = SQLconnector.getInstance();
             PreparedStatement pstmt  = connection.prepareStatement(pstString);) {
-                for (ItemInterface item : listKS) {
+                for (Item item : listKS) {
             
                     pstmt.setInt   (1, ks_Number);
                     pstmt.setInt   (2, (int)(Math.round(ks_Date*100)/100));

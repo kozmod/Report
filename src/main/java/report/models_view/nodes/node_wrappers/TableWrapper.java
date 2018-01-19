@@ -10,12 +10,12 @@ import javafx.scene.control.TableView.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import report.entities.CommonDAO;
-import report.entities.items.CloneInterface;
+import report.entities.items.Clone;
 import report.models.mementos.TableMemento;
 
 import java.util.*;
 
-public class TableWrapper<E extends CloneInterface> extends AbstractTableWrapper<ObservableList<E>> {
+public class TableWrapper<E extends Clone> extends AbstractTableWrapper<ObservableList<E>> {
 
 //    private  Set<CommittableRow> setAddingCells;
     protected final TableView<E> tableView;

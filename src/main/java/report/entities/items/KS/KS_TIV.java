@@ -9,10 +9,10 @@ import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.util.Callback;
-import report.entities.items.ItemInterface;
+import report.entities.items.Item;
 
 
-public class KS_TIV extends ItemInterface {
+public class KS_TIV extends Item {
     
     private final IntegerProperty ksNumber; 
     private final IntegerProperty ksDate;
@@ -143,8 +143,8 @@ public class KS_TIV extends ItemInterface {
     }
     
     
-    public static Callback<ItemInterface, Observable[]> extractor() {
-        return (ItemInterface p) -> new Observable[]{p.quantityProperty()};
+    public static Callback<Item, Observable[]> extractor() {
+        return (Item p) -> new Observable[]{p.quantityProperty()};
     }
 
 }

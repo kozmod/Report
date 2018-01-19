@@ -7,11 +7,11 @@ import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.util.Callback;
-import report.entities.items.CloneInterface;
+import report.entities.items.Clone;
 
 
 //Preview Tabble Items to ObsList
-    public class PreviewTIV implements CloneInterface {
+    public class PreviewTIV implements Clone {
  
         private Long id;
         private String sqlColumn;

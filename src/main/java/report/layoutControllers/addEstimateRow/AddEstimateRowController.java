@@ -15,7 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import report.entities.items.ItemInterface;
+import report.entities.items.Item;
 import report.entities.items.cb.AddEstTIV;
 import report.entities.items.estimate.EstimateDAO;
 import report.layoutControllers.estimate.EstimateController.Est;
@@ -123,10 +123,10 @@ public class AddEstimateRowController implements Initializable {
      * Methods                                                                 *
      *                                                                         *
      **************************************************************************/
-    private ObservableList<AddEstTIV>  getCheckObs(ObservableList<ItemInterface> items){
+    private ObservableList<AddEstTIV>  getCheckObs(ObservableList<Item> items){
         ObservableList<AddEstTIV>  checkedObsList = FXCollections.observableArrayList();
         if(items != null)
-            for (ItemInterface obsItem : items){
+            for (Item obsItem : items){
                 checkedObsList.add(new AddEstTIV(
                         0,
                         false,

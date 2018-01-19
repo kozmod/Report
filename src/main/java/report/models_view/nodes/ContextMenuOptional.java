@@ -13,8 +13,8 @@ import javafx.scene.control.SeparatorMenuItem;
 
 import report.entities.CommonDAO;
 import report.entities.Reverse;
-import report.entities.items.CloneInterface;
-import report.entities.items.DItemInterface;
+import report.entities.items.Clone;
+import report.entities.items.DItem;
 import report.models.printer.PrintEstimate;
 import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.models_view.nodes.node_wrappers.DiscountTreeTableWrapper;
@@ -45,7 +45,7 @@ public class ContextMenuOptional extends ContextMenu{
      * Static Methods                                                            *
      *                                                                         *
      **************************************************************************/
-    public static <S extends CloneInterface> void setTableItemContextMenuListener(TableWrapper<S> tableWrapper){
+    public static <S extends Clone> void setTableItemContextMenuListener(TableWrapper<S> tableWrapper){
         tableWrapper.getItems().addListener((ListChangeListener.Change<? extends S> c) -> {
             System.out.println("Changed on " + c + " - ContextMenuOptional");
             if(c.next() && (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
@@ -59,8 +59,8 @@ public class ContextMenuOptional extends ContextMenu{
             ((ContextMenuOptional) tableWrapper.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
         });
     }
-    public static <S extends CloneInterface & Reverse> void setTableItemContextMenuListener(ReverseTableWrapper<S> tableWrapper, ObservableList<DItemInterface> list){
-        list.addListener((ListChangeListener.Change<? extends DItemInterface> c) -> {
+    public static <S extends Clone & Reverse> void setTableItemContextMenuListener(ReverseTableWrapper<S> tableWrapper, ObservableList<DItem> list){
+        list.addListener((ListChangeListener.Change<? extends DItem> c) -> {
             ((ContextMenuOptional) tableWrapper.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
         });
     }

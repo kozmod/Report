@@ -10,13 +10,13 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
-import report.entities.items.CloneInterface;
+import report.entities.items.Clone;
 
 /**
  * FACT
  * @author xxx
  */
-public class PlanTIV implements CloneInterface {
+public class PlanTIV implements Clone {
 
     private long id;
     private Timestamp dateCreate;
@@ -61,8 +61,8 @@ public class PlanTIV implements CloneInterface {
     
     //Clone CONSTRUCTOR
     @Override
-    public CloneInterface getClone() {
-         CloneInterface clone = new PlanTIV(
+    public Clone getClone() {
+         Clone clone = new PlanTIV(
                                         this.getId(),
                                         this.getDateCreate(),
                                         this.getTypeID(),

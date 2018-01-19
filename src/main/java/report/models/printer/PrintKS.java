@@ -6,7 +6,7 @@ import java.time.LocalDate;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import report.entities.items.ItemInterface;
+import report.entities.items.Item;
 import report.entities.items.KS.KS_TIV;
 import report.entities.items.contractor.ContractorTIV;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
@@ -77,7 +77,7 @@ public class PrintKS extends AbstractPrinterXML{
 
 
 //    public  PrintKS(String ksNamber) {
-//        this.obsKS = (ObservableList<ItemInterface>) Est.KS.getTabMap().saveEst(ksNamber);
+//        this.obsKS = (ObservableList<Item>) Est.KS.getTabMap().saveEst(ksNamber);
 //
 //        this.ksNumber = ksNamber;
 //        this.ksDate = obsKS.saveEst(2).formatNumber();
@@ -151,7 +151,7 @@ public class PrintKS extends AbstractPrinterXML{
         int rowsQuantity = 1;
         String buildingPart = null;
         
-        for(ItemInterface item : obsKS){
+        for(Item item : obsKS){
             
             
             Element targetRow = getTargetElement("SumRow");
@@ -256,11 +256,11 @@ public class PrintKS extends AbstractPrinterXML{
     
 //Builder ==========================================================================================================================  
 //    public static class Builder{
-//        private ObservableList<ItemInterface> obsKS;
+//        private ObservableList<Item> obsKS;
 //        private ObservableList<PreviewTIV>  obsPreTab;
 //        private String ksNumber, ksDate;
 //
-//        public Builder setObsKS(ObservableList<ItemInterface> obsKS) {
+//        public Builder setObsKS(ObservableList<Item> obsKS) {
 //            this.obsKS = obsKS;
 //        return this;
 //        }

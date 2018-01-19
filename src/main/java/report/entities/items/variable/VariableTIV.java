@@ -11,10 +11,10 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
-import report.entities.items.CloneInterface;
+import report.entities.items.Clone;
 
 
-public class VariableTIV implements CloneInterface {
+public class VariableTIV implements Clone {
     private Long  id;
     private final StringProperty  text;    
     private final DoubleProperty  value;
@@ -29,8 +29,8 @@ public class VariableTIV implements CloneInterface {
     * Clone CONSTRUCTOR implementation
     */
     @Override
-    public CloneInterface getClone() {
-        CloneInterface clone = new VariableTIV(
+    public Clone getClone() {
+        Clone clone = new VariableTIV(
                                             this.getId(),
                                             this.getText(),
                                             this.getValue()

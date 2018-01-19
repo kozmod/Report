@@ -3,15 +3,15 @@ package report.models_view.nodes.node_wrappers;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TreeTableView;
 import report.entities.CommonDAO;
+import report.entities.items.DItem;
 import report.entities.items.discount_coef.DiscountCoef;
-import report.entities.items.DItemInterface;
+import report.models.mementos.EntityMemento;
 import report.models.mementos.Memento;
-import report.models.mementos.ReverseTableMemento;
 import report.models_view.nodes.ContextMenuOptional;
 
 public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef> {
 
-    private final TreeTableView<DItemInterface> treeTableView;
+    private final TreeTableView<DItem> treeTableView;
     private DiscountCoef discountCoef;
     private CommonDAO<DiscountCoef> commonDAO;
 
@@ -38,7 +38,7 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef>
      **************************************************************************/
     @Override
     public void saveTableItems() {
-        super.memento = new ReverseTableMemento<>(discountCoef);
+        super.memento = new EntityMemento<>(discountCoef);
         ContextMenuOptional.setTableItemContextMenuListener(this);
     }
 
@@ -54,7 +54,7 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef>
         return super.memento;
     }
 
-    public  TreeTableView<DItemInterface> tableView() {
+    public  TreeTableView<DItem> tableView() {
         return  treeTableView;
     }
 

@@ -4,10 +4,10 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.scene.control.TreeItem;
-import report.entities.items.CloneInterface;
-import report.entities.items.DItemInterface;
+import report.entities.items.Clone;
+import report.entities.items.DItem;
 
-public class DiscountCoef implements CloneInterface<DiscountCoef> {
+public class DiscountCoef implements Clone {
 
 
     interface SQL{
@@ -125,20 +125,20 @@ public class DiscountCoef implements CloneInterface<DiscountCoef> {
      * TreeItem from Object
      * @return
      */
-    public TreeItem<DItemInterface> tree(){
-        final TreeItem<DItemInterface> specificRoot = new TreeItem<>(
-                new DItemInterface(id,"",SPECIFIC_RISKS,specificRisk.valueProperty())
+    public TreeItem<DItem> tree(){
+        final TreeItem<DItem> specificRoot = new TreeItem<>(
+                new DItem(id,"",SPECIFIC_RISKS,specificRisk.valueProperty())
         );
         specificRoot.getChildren().addAll(
                 new TreeItem<>(
-                        new DItemInterface(id,
+                        new DItem(id,
                                 "",
                                 SpecificRisk.KEY_CHAR,
                                 specificRisk.keyCharProperty()
                         )
                 ),
                 new TreeItem<>(
-                        new DItemInterface(
+                        new DItem(
                                 id,
                                 "",
                                 SpecificRisk.ENTERPRISE_SIZE,
@@ -146,21 +146,21 @@ public class DiscountCoef implements CloneInterface<DiscountCoef> {
                         )
                 ),
                 new TreeItem<>(
-                        new DItemInterface(id,
+                        new DItem(id,
                                 "",
                                 SpecificRisk.FIN_STRUCT,
                                 specificRisk.finStructProperty()
                         )
                 ),
                 new TreeItem<>(
-                        new DItemInterface(id,
+                        new DItem(id,
                                 "",
                                 SpecificRisk.CLIENT_DIV,
                                 specificRisk.clientDivProperty()
                         )
                 ),
                 new TreeItem<>(
-                        new DItemInterface(id,
+                        new DItem(id,
                                 "",
                                 SpecificRisk.OTHER_RISKS,
                                 specificRisk.otherRisksProperty()
@@ -168,19 +168,19 @@ public class DiscountCoef implements CloneInterface<DiscountCoef> {
                 )
         );
 
-        final TreeItem<DItemInterface> marketRoot = new TreeItem<>(
-                new DItemInterface(id,"",MARKET_RISKS,marketRisk.valueProperty())
+        final TreeItem<DItem> marketRoot = new TreeItem<>(
+                new DItem(id,"",MARKET_RISKS,marketRisk.valueProperty())
         );
         marketRoot.getChildren().addAll(
                 new TreeItem<>(
-                        new DItemInterface(id,
+                        new DItem(id,
                                 "",
                                 MarketRisk.SOCIAL_RISKS,
                                 marketRisk.socialProperty()
                         )
                 ),
                 new TreeItem<>(
-                        new DItemInterface(
+                        new DItem(
                                 id,
                                 "",
                                 MarketRisk.INTERNAL_RISKS,
@@ -188,42 +188,42 @@ public class DiscountCoef implements CloneInterface<DiscountCoef> {
                         )
                 ),
                 new TreeItem<>(
-                        new DItemInterface(id,
+                        new DItem(id,
                                 "",
                                 MarketRisk.EXTERNAL_RISKS,
                                 marketRisk.externalProperty()
                         )
                 ),
                 new TreeItem<>(
-                        new DItemInterface(id,
+                        new DItem(id,
                                 "",
                                 MarketRisk.CYCLICAL_CHAR,
                                 marketRisk.cyclicalCharProperty()
                         )
                 ),
                 new TreeItem<>(
-                        new DItemInterface(id,
+                        new DItem(id,
                                 "",
                                 MarketRisk.DEV_STAGE,
                                 marketRisk.devStageProperty()
                         )
                 ),
                 new TreeItem<>(
-                        new DItemInterface(id,
+                        new DItem(id,
                                 "",
                                 MarketRisk.COMPETITION,
                                 marketRisk.competitionProperty()
                         )
                 ),
                 new TreeItem<>(
-                        new DItemInterface(id,
+                        new DItem(id,
                                 "",
                                 MarketRisk.REGULATION,
                                 marketRisk.regulationProperty()
                         )
                 ),
                 new TreeItem<>(
-                        new DItemInterface(id,
+                        new DItem(id,
                                 "",
                                 MarketRisk.MARKET_BARRIERS,
                                 marketRisk.marketBarriersProperty()
@@ -231,10 +231,10 @@ public class DiscountCoef implements CloneInterface<DiscountCoef> {
                 )
         );
 
-        final TreeItem<DItemInterface> RORLeaf = new TreeItem<>( new DItemInterface(id,"",RATE_OF_RETURN,this.rateOfReturn));
-        final TreeItem<DItemInterface> KD = new TreeItem<>( new DItemInterface(id,"", this.KD,this.kd));
-        final TreeItem<DItemInterface> KDperMonth = new TreeItem<>( new DItemInterface(id,"", this.KD,this.kdPerMonth));
-        final TreeItem<DItemInterface> root = new TreeItem<>( new DItemInterface(id,"",ROOT_ELEMENT,0d));
+        final TreeItem<DItem> RORLeaf = new TreeItem<>( new DItem(id,"",RATE_OF_RETURN,this.rateOfReturn));
+        final TreeItem<DItem> KD = new TreeItem<>( new DItem(id,"", this.KD,this.kd));
+        final TreeItem<DItem> KDperMonth = new TreeItem<>( new DItem(id,"", this.KD,this.kdPerMonth));
+        final TreeItem<DItem> root = new TreeItem<>( new DItem(id,"",ROOT_ELEMENT,0d));
         root.getChildren().addAll(RORLeaf,specificRoot,marketRoot,KD,KDperMonth);
 
         root.getValue().secondValueProperty().addListener((ChangeListener) (observable, oldValue, newValue) ->{

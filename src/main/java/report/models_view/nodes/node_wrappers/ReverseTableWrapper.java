@@ -4,15 +4,15 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableView;
 import report.entities.CommonDAO;
 import report.entities.Reverse;
-import report.entities.items.CloneInterface;
-import report.entities.items.DItemInterface;
+import report.entities.items.Clone;
+import report.entities.items.DItem;
+import report.models.mementos.EntityMemento;
 import report.models.mementos.Memento;
-import report.models.mementos.ReverseTableMemento;
 import report.models_view.nodes.ContextMenuOptional;
 
-public class ReverseTableWrapper<E extends Reverse & CloneInterface> extends AbstractTableWrapper<E> {
+public class ReverseTableWrapper<E extends Reverse & Clone> extends AbstractTableWrapper<E> {
 
-        private final TableView<DItemInterface> tableView;
+        private final TableView<DItem> tableView;
         private E reverseObj;
         private CommonDAO<E> commonDAO;
 
@@ -21,10 +21,10 @@ public class ReverseTableWrapper<E extends Reverse & CloneInterface> extends Abs
          * Constructor                                                             *
          *                                                                         *
          **************************************************************************/
-        public ReverseTableWrapper(String title, TableView<DItemInterface> table, CommonDAO<E> commonDao) {
+        public ReverseTableWrapper(String title, TableView<DItem> table, CommonDAO<E> commonDao) {
             this(title,table,null,commonDao);
         }
-        public ReverseTableWrapper(String title, TableView<DItemInterface> table , E reverseObj, CommonDAO<E> commonDao) {
+        public ReverseTableWrapper(String title, TableView<DItem> table , E reverseObj, CommonDAO<E> commonDao) {
             super(title);
             this.commonDAO = commonDao;
             this.reverseObj = reverseObj;
@@ -38,7 +38,7 @@ public class ReverseTableWrapper<E extends Reverse & CloneInterface> extends Abs
          **************************************************************************/
         @Override
         public void saveTableItems() {
-            super.memento = new ReverseTableMemento<>(reverseObj);
+            super.memento = new EntityMemento<>(reverseObj);
         }
 
         @Override
@@ -105,7 +105,7 @@ public class ReverseTableWrapper<E extends Reverse & CloneInterface> extends Abs
             tableView.refresh();
         }
 
-        public  TableView<DItemInterface> tableView(){
+        public  TableView<DItem> tableView(){
             return this.tableView;
         }
 

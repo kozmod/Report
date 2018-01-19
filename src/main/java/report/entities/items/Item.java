@@ -9,7 +9,7 @@ import javafx.beans.property.StringProperty;
 
 
 //Estimate Tabble Items to ObsList
-public abstract class ItemInterface implements CloneInterface {
+public abstract class Item implements Clone {
     //new quantity
     private long id;
     private int  del;
@@ -28,7 +28,7 @@ public abstract class ItemInterface implements CloneInterface {
     protected final DoubleProperty priceSum;
 
 
-    public ItemInterface(
+    public Item(
             long id,
             Timestamp dateCreate,
             String siteNumber,
@@ -62,8 +62,8 @@ public abstract class ItemInterface implements CloneInterface {
 
 //        Clone CONSTRUCTOR implementation
 //        @Override
-//        public  CloneInterface getClone() {
-//            CloneInterface clone = new ItemInterface(
+//        public  Clone getClone() {
+//            Clone clone = new Item(
 //                                    this.getSiteNumber(),
 //                                    this.getTypeHome(),
 //                                    this.getContractor(),
@@ -106,8 +106,8 @@ public abstract class ItemInterface implements CloneInterface {
 //            public Builder setPriceSum(float value_inp)    {this.priceSum     = new SimpleFloatProperty (value_inp);  return this;}
 //            public Builder setBuildingPart(String value_inp) {this.buildingPart   = new SimpleStringProperty(value_inp);  return this;}
 //            
-////            public ItemInterface build() {
-////                return new ItemInterface(
+////            public Item build() {
+////                return new Item(
 ////                      siteNumber .getQuantity(),
 ////                      typeHome   .getQuantity(),
 ////                      contractor .getQuantity(),
@@ -213,10 +213,10 @@ public abstract class ItemInterface implements CloneInterface {
         if (obj == null) {
             return false;
         }
-        if (!ItemInterface.class.isAssignableFrom(obj.getClass())) {
+        if (!Item.class.isAssignableFrom(obj.getClass())) {
             return false;
         }
-        final ItemInterface other = (ItemInterface) obj;
+        final Item other = (Item) obj;
         if ((this.siteNumber.get() == null) ? (other.siteNumber.getValue() != null) : !this.siteNumber.get().equals(other.siteNumber.get())) {
             return false;
         }
@@ -258,10 +258,10 @@ public abstract class ItemInterface implements CloneInterface {
         if (obj == null) {
             return false;
         }
-        if (!ItemInterface.class.isAssignableFrom(obj.getClass())) {
+        if (!Item.class.isAssignableFrom(obj.getClass())) {
             return false;
         }
-        final ItemInterface other = (ItemInterface) obj;
+        final Item other = (Item) obj;
         if ((this.siteNumber.get() == null) ? (other.siteNumber.getValue() != null) : !this.siteNumber.get().equals(other.siteNumber.get())) {
             return false;
         }
@@ -293,8 +293,8 @@ public abstract class ItemInterface implements CloneInterface {
 
 
     //Extractor
-//   public static Callback<ItemInterface, Observable[]> extractor() {
-//        return (ItemInterface p) -> new Observable[]{p.quantityProperty(), p.priceOneProperty()};
+//   public static Callback<Item, Observable[]> extractor() {
+//        return (Item p) -> new Observable[]{p.quantityProperty(), p.priceOneProperty()};
 //    }
 
 

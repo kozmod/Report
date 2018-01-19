@@ -1,4 +1,5 @@
 import helperClasses.FxTestStage;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.junit.FixMethodOrder;
@@ -10,6 +11,7 @@ import org.junit.runners.MethodSorters;
 import org.mockito.Mockito;
 import report.entities.items.counterparties.AgentTVI.CountAgentDAO;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
+import report.entities.items.counterparties.ObservablWrapper;
 import report.entities.items.counterparties.commonReq.CountAgentCommonReq;
 import report.layoutControllers.allProperties.AllPropertiesController;
 import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
@@ -95,9 +97,29 @@ public class ViewTests {
         System.out.println(
         commonReq.getDateOGRN()
         );
-
-
     }
+    @Test
+    @DisplayName("reflection test")
+    @Disabled
+    public void mementoTest() throws InterruptedException, NoSuchFieldException, IllegalAccessException {
+
+        ObservablWrapper o = new  ObservablWrapper();
+        CountAgentCommonReq commonReq = new CountAgentCommonReq(
+                1,
+                false,
+                new BigInteger("12345678901234567890"),
+                100000,
+                new BigInteger("12345678901234567890"),
+                new BigInteger("12345678901234567890"),
+                "lowadress",
+                "factAdress",
+                "postAdress"
+        );
+        o.put(commonReq);
+
+//        System.out.println(o.undoChanges(CountAgentCommonReq.class));
+    }
+
 
 
 }

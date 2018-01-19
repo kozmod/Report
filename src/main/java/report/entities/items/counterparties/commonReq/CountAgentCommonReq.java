@@ -1,14 +1,19 @@
 package report.entities.items.counterparties.commonReq;
 
+import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 import javafx.beans.property.*;
+import javafx.beans.value.ObservableValue;
 import javafx.util.Callback;
-import report.entities.items.CloneInterface;
+import report.entities.items.Clone;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Properties;
 
-public class CountAgentCommonReq implements CloneInterface<CountAgentCommonReq> {
+public class CountAgentCommonReq implements Observable,Clone {
     private long id;
     private BooleanProperty isIP;
     private ObjectProperty<BigInteger> OGRN;
@@ -18,6 +23,7 @@ public class CountAgentCommonReq implements CloneInterface<CountAgentCommonReq> 
     private StringProperty addressLow;
     private StringProperty addressFact;
     private StringProperty addressPost;
+
     /***************************************************************************
      *                                                                         *
      * Constructors                                                            *
@@ -42,6 +48,7 @@ public class CountAgentCommonReq implements CloneInterface<CountAgentCommonReq> 
         this.addressLow = new SimpleStringProperty(addressLow);
         this.addressFact = new SimpleStringProperty(addressFact);
         this.addressPost = new SimpleStringProperty(addressPost);
+
     }
     /***************************************************************************
      *                                                                         *
@@ -58,6 +65,34 @@ public class CountAgentCommonReq implements CloneInterface<CountAgentCommonReq> 
         this.addressLow = new SimpleStringProperty(source.addressLow.getValue());
         this.addressFact = new SimpleStringProperty(source.addressFact.getValue());
         this.addressPost = new SimpleStringProperty(source.addressPost.getValue());
+    }
+    /***************************************************************************
+     *                                                                         *
+     * Override - Observable                                                   *
+     *                                                                         *
+     **************************************************************************/
+    @Override
+    public void addListener(InvalidationListener listener) {
+        this.isIP.addListener(listener);
+        this.OGRN.addListener(listener);
+        this.dateOGRN.addListener(listener);
+        this.inn.addListener(listener);
+        this.kpp.addListener(listener);
+        this.addressLow.addListener(listener);
+        this.addressFact.addListener(listener);
+        this.addressPost.addListener(listener);
+    }
+
+    @Override
+    public void removeListener(InvalidationListener listener) {
+        this.isIP.removeListener(listener);
+        this.OGRN.removeListener(listener);
+        this.dateOGRN.removeListener(listener);
+        this.inn.removeListener(listener);
+        this.kpp.removeListener(listener);
+        this.addressLow.removeListener(listener);
+        this.addressFact.removeListener(listener);
+        this.addressPost.removeListener(listener);
     }
 
     /***************************************************************************
@@ -191,7 +226,6 @@ public class CountAgentCommonReq implements CloneInterface<CountAgentCommonReq> 
                 p.addressFactProperty(),
                 p.addressPostProperty()
         };
-
-
     }
+
 }

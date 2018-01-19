@@ -4,9 +4,9 @@ import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
-import report.entities.items.CloneInterface;
+import report.entities.items.Clone;
 
-public class CountAgentTVI implements CloneInterface<CountAgentTVI> {
+public class CountAgentTVI implements Clone {
     private long id;
     private StringProperty name;
     private StringProperty form;
