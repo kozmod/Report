@@ -9,9 +9,9 @@
 //import javafx.collections.ObservableList;
 //import report.entities.TableViewItemDAO;
 //import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
-//import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
+//import report.models_view.nodes.table_wrappers.AbstractTableWrapper;
 //import report.usage_strings.PathStrings;
-//import report.models_view.nodes.node_wrappers.TableWrapper;
+//import report.models_view.nodes.table_wrappers.TableWrapper;
 //
 //
 //public class VariablePropertiesCommonDAOTableView implements TableViewItemDAO<VariableTIV> {

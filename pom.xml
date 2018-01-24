@@ -126,6 +126,12 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/dependencies/commons-collections4-4.1.jar</systemPath>
         </dependency>
+        <!-- +++++++++++++++++++++++++++++++++++++++++ CONTROL FX  +++++++++++++++++++++++++++++++++++++++++++++++++ -->
+        <dependency>
+            <groupId>org.controlsfx</groupId>
+            <artifactId>controlsfx</artifactId>
+            <version>8.40.14</version>
+        </dependency>
         <!-- +++++++++++++++++++++++++++++++++++++++++ JUnit +++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
         <dependency>
             <groupId>org.junit.vintage</groupId>

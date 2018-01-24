@@ -17,8 +17,8 @@ import report.entities.items.plan.FactTIV;
 import report.models.coefficient.Quantity;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
 import report.models_view.nodes.ContextMenuOptional;
-import report.models_view.nodes.node_wrappers.DiscountTreeTableWrapper;
-import report.models_view.nodes.node_wrappers.TableWrapper;
+import report.models_view.nodes.table_wrappers.DiscountTreeTableWrapper;
+import report.models_view.nodes.table_wrappers.TableWrapper;
 import report.models_view.nodes.nodes_factories.ContextMenuFactory;
 
 import java.net.URL;

@@ -5,7 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.models.mementos.Memento;
 import report.models.sql.SQLconnector;
-import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
 import report.usage_strings.ServiceStrings;
 
 import java.sql.Connection;

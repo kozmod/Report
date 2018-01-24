@@ -23,7 +23,7 @@ import report.usage_strings.SQL;
 import report.models.DiffList;
 
 import report.entities.items.estimate.EstimateTVI;
-import report.models_view.nodes.node_wrappers.TableWrapper;
+import report.models_view.nodes.table_wrappers.TableWrapper;
 
 
 public class AddEstimateRowController implements Initializable {
@@ -219,10 +219,11 @@ public class AddEstimateRowController implements Initializable {
     }
     @FXML
     private void testCOMIT(ActionEvent event) {
-////        elemTableWrapperView.commitData();
+//////        elemTableWrapperView.commitData();
+////        elemTableView.setEditable(false);
+//        elemTableView.refresh();
 //        elemTableView.setEditable(false);
-        elemTableView.refresh();
-        elemTableView.setEditable(false);
+        System.out.println("TestCommit");
 
     }
 //

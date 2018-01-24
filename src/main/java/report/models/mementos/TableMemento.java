@@ -55,6 +55,10 @@ public  class TableMemento<E extends Clone> implements Memento<Collection<E>> {
 
         return newObsList;
     }
+    /**
+     *
+     * @param items
+     */
     private void addListener(ObservableList<E> items){
         items.addListener((ListChangeListener<E>) observable -> {
             if(observable.next()) {

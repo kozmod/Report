@@ -16,11 +16,11 @@
 //import javafx.collections.ObservableSet;
 //import report.models.mementos.Memento;
 //import report.models.sql.SQLconnector;
-//import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
+//import report.models_view.nodes.table_wrappers.AbstractTableWrapper;
 //import report.usage_strings.ServiceStrings;
 //import report.models.DiffList;
 //
-//import report.models_view.nodes.node_wrappers.TableWrapper;
+//import report.models_view.nodes.table_wrappers.TableWrapper;
 //
 //
 //public interface TableViewItemDAO<E> extends CommonDAO<Collection<E>> {

@@ -1,4 +1,4 @@
-package report.models_view.nodes.node_wrappers;
+package report.models_view.nodes.table_wrappers;
 
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TreeTableView;
@@ -106,7 +106,7 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef>
     }
 
     @Override
-    public void saveSQL() {
+    public void interactSQL() {
         this.commonDAO.dellAndInsert(this.memento);
     }
 

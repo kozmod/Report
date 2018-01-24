@@ -41,7 +41,7 @@ import report.models.numberStringConverters.numberStringConverters.DoubleStringC
 import report.models.numberStringConverters.dateStringConverters.LocalDayStringConverter;
 import report.usage_strings.PathStrings;
 import report.usage_strings.SQL;
-import report.models_view.nodes.node_wrappers.TableWrapper;
+import report.models_view.nodes.table_wrappers.TableWrapper;
 import report.models_view.nodes.nodes_factories.FileChooserFactory;
 
 
@@ -49,7 +49,7 @@ import report.models_view.nodes.node_helpers.StageCreator;
 
 import report.models.printer.PrintKS;
 import report.models_view.nodes.TabModel;
-import report.models_view.nodes.node_wrappers.TableWrapperEST;
+import report.models_view.nodes.table_wrappers.TableWrapperEST;
 import report.entities.items.KS.KS_DAO;
 import report.models_view.nodes.ContextMenuOptional;
 

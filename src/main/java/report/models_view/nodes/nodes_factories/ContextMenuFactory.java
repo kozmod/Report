@@ -6,10 +6,10 @@ import report.entities.items.estimate.EstimateDAO;
 import report.layoutControllers.addEstimateRow.AddEstimateRowController;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models_view.nodes.node_helpers.StageCreator;
-import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
+import report.models_view.nodes.table_wrappers.AbstractTableWrapper;
 import report.usage_strings.PathStrings;
 import report.models_view.nodes.ContextMenuOptional;
-import report.models_view.nodes.node_wrappers.TableWrapper;
+import report.models_view.nodes.table_wrappers.TableWrapper;
 
 
 public class ContextMenuFactory {

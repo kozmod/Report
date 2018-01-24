@@ -16,10 +16,10 @@ import report.entities.Reverse;
 import report.entities.items.Clone;
 import report.entities.items.DItem;
 import report.models.printer.PrintEstimate;
-import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
-import report.models_view.nodes.node_wrappers.DiscountTreeTableWrapper;
-import report.models_view.nodes.node_wrappers.ReverseTableWrapper;
-import report.models_view.nodes.node_wrappers.TableWrapper;
+import report.models_view.nodes.table_wrappers.AbstractTableWrapper;
+import report.models_view.nodes.table_wrappers.DiscountTreeTableWrapper;
+import report.models_view.nodes.table_wrappers.ReverseTableWrapper;
+import report.models_view.nodes.table_wrappers.TableWrapper;
 
 
 public class ContextMenuOptional extends ContextMenu{
@@ -160,7 +160,7 @@ public class ContextMenuOptional extends ContextMenu{
             saveMenuItem.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
                 System.out.println("saveMenuItem");
 //                commonDao.dellAndInsert(tableWrapper.getMemento());
-                tableWrapper.saveSQL();
+                tableWrapper.interactSQL();
                 tableWrapper.saveTableItems();
                 setDisable_SaveUndoPrint_groupe(true);
                 tableWrapper.refresh();

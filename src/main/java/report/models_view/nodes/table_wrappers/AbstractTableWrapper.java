@@ -1,15 +1,9 @@
-package report.models_view.nodes.node_wrappers;
+package report.models_view.nodes.table_wrappers;
 
 import com.sun.istack.internal.NotNull;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.scene.control.ContextMenu;
-import javafx.scene.control.Control;
-import javafx.scene.control.TableSelectionModel;
 import report.entities.CommonDAO;
 import report.models.mementos.Memento;
-
-import java.util.*;
 
 public abstract class AbstractTableWrapper<E> {
 
@@ -70,7 +64,7 @@ public abstract class AbstractTableWrapper<E> {
     /**
      * Send data to SQL.
      */
-    public abstract void saveSQL();
+    public abstract void interactSQL();
 
     /**
      * Get ContextMenu of TableView.

@@ -1,5 +1,5 @@
 
-package report.models_view.nodes.node_wrappers;
+package report.models_view.nodes.table_wrappers;
 
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
@@ -17,10 +17,9 @@ import java.util.*;
 
 public class TableWrapper<E extends Clone> extends AbstractTableWrapper<ObservableList<E>> {
 
-//    private  Set<CommittableRow> setAddingCells;
     protected final TableView<E> tableView;
 
-    /***************************************************************************
+     /***************************************************************************
      *                                                                         *
      * CONSTRUCTORS                                                            *
      *                                                                         *
@@ -66,7 +65,7 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
      *                                                                         *
      **************************************************************************/
     @Override
-    public void saveSQL(){
+    public void interactSQL(){
         Collection<E> deleteCollection = this.memento.toDelete();
         Collection<E> insertCollection = this.memento.toInsert();
         if(!deleteCollection.isEmpty())

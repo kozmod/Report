@@ -17,8 +17,8 @@ import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.counterparties.commonReq.CountAgentCommonReq;
 import report.entities.items.variable.VariableTIV_new;
 import report.models.numberStringConverters.numberStringConverters.BigIntegerStringConverter;
-import report.models_view.nodes.node_wrappers.ReverseTableWrapper;
-import report.models_view.nodes.node_wrappers.TableWrapper;
+import report.models_view.nodes.table_wrappers.ReverseTableWrapper;
+import report.models_view.nodes.table_wrappers.TableWrapper;
 import report.models_view.nodes.nodes_factories.ContextMenuFactory;
 import report.models_view.nodes.ContextMenuOptional;
 

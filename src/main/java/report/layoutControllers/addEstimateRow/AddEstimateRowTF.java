@@ -10,9 +10,7 @@ import report.entities.CommonDAO;
 import report.entities.items.cb.AddEstTIV;
 import report.entities.items.estimate.EstimateDAO;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
-import report.models_view.nodes.cells.AddComboBoxTableCell;
-import report.models_view.nodes.cells.AddTextFieldTableCell;
-import report.models_view.nodes.node_wrappers.TableWrapperEST;
+import report.models_view.nodes.table_wrappers.TableWrapperEST;
 import report.models_view.nodes.nodes_factories.TableCellFactory;
 import report.usage_strings.SQL;
 
@@ -32,12 +30,12 @@ public class AddEstimateRowTF {
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn checkBoxColumn = tableWrapper.addColumn(" * ","check");
-        TableColumn<AddEstTIV, String>  JM_nameColumn  = tableWrapper.addColumn("Наименование работ/затрат", "JM_name");
+        TableColumn<AddEstTIV, String>  JM_nameColumn  = tableWrapper.addColumn("Наименование работ/затрат", cellData -> cellData.getValue().JM_nameProperty());
         TableColumn<AddEstTIV, String>  BJobColumn     = tableWrapper.addColumn("Связанная работа", cellData -> cellData.getValue().bindJobProperty());
         TableColumn<AddEstTIV, Double>  valueColumn    = tableWrapper.addColumn("Кол-во",                    "quantity");
         TableColumn<AddEstTIV, String>  unitColumn     = tableWrapper.addColumn("Eд. изм.",                  "unit");
         TableColumn<AddEstTIV, Double>  priseOneColumn = tableWrapper.addColumn("Стоимость (за единицу)",    "priceOne");
-        TableColumn<AddEstTIV, Double> priseSumColumn  = tableWrapper.addColumn("Стоимость (общая)",         "priceSum");
+        TableColumn<AddEstTIV, Double>  priseSumColumn = tableWrapper.addColumn("Стоимость (общая)",         "priceSum");
 //
 
         checkBoxColumn.setMaxWidth(60);
@@ -80,6 +78,7 @@ public class AddEstimateRowTF {
             element.setQuantity(newValue);
             double priceOne = element.getPriceOne();
             element.setPriceSum(newValue* priceOne);
+
         });
         unitColumn.setCellFactory(ComboBoxTableCell.forTableColumn(
                 dao.getDistinctOfColumn(SQL.Estimate.UNIT)
@@ -92,43 +91,6 @@ public class AddEstimateRowTF {
             double quantity = element.getQuantity();
             element.setPriceSum(newValue* quantity);
         });
-//        checkBoxColumn.setCellFactory(param -> TableCellFactory.getCheckValueCell());
-//        JM_nameColumn.setCellFactory(param -> new AddTextFieldTableCell(
-//                        tableWrapper.getSetAddingCells()
-//                )
-//        );
-//        BJobColumn.setCellFactory(param -> new AddComboBoxTableCell(
-//                        tableWrapper.getSetAddingCells()
-//                        ,dao.getDistinctOfColumn(SQL.Estimate.BINDED_JOB,"-").toArray()
-//                )
-//        );
-//        valueColumn.setCellFactory(param -> new AddTextFieldTableCell(new DoubleStringConverter(),tableWrapper.getSetAddingCells()));
-//        unitColumn.setCellFactory(param -> new AddComboBoxTableCell(
-//                        tableWrapper.getSetAddingCells()
-//                        ,dao.getDistinctOfColumn(SQL.Estimate.UNIT).toArray()
-//                )
-//        );
-//        priseOneColumn.setCellFactory(param -> new AddTextFieldTableCell(new DoubleStringConverter(),tableWrapper.getSetAddingCells()));
-//        priseOneColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, Double> t) ->{
-//            AddEstTIV element = t.getRowValue();
-//            double newValue = t.getNewValue();
-//            element.setPriceOne(newValue);
-//            double quantity = element.getQuantity();
-//            element.setPriceSum(newValue* quantity);
-//            System.out.println("TEST  "+element.getPriceSum() + "                 "+ quantity);
-//        });
-////        priseSumColumn.setCellFactory(param -> new AddTextFieldTableCell(new DoubleStringConverter(),tableWrapper.getSetAddingCells()));
-//        BJobColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, String> t) ->{
-//            AddEstTIV element = t.getRowValue();
-//            String newValue = t.getNewValue();
-//            element.setBindJob(newValue);
-//            switch (newValue){
-//                case "-": element.setJobOrMat("Работа");
-//                    break;
-//                default:
-//                    element.setJobOrMat("Материал");
-//            }
-//        });
         return  tableWrapper;
     }
 

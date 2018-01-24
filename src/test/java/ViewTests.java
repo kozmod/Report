@@ -1,5 +1,4 @@
 import helperClasses.FxTestStage;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.junit.FixMethodOrder;
@@ -14,7 +13,7 @@ import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.counterparties.ObservablWrapper;
 import report.entities.items.counterparties.commonReq.CountAgentCommonReq;
 import report.layoutControllers.allProperties.AllPropertiesController;
-import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
+import report.models_view.nodes.table_wrappers.AbstractTableWrapper;
 import report.usage_strings.PathStrings;
 
 import java.lang.reflect.Field;

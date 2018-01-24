@@ -17,8 +17,8 @@ import report.entities.items.estimate.EstimateTVI;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.layoutControllers.estimate.EstimateControllerTF;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
-import report.models_view.nodes.node_wrappers.TableWrapper;
-import report.models_view.nodes.node_wrappers.TableWrapperEST;
+import report.models_view.nodes.table_wrappers.TableWrapper;
+import report.models_view.nodes.table_wrappers.TableWrapperEST;
 
 
 public class TitledStackModel extends StackPane{

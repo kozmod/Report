@@ -1,5 +1,5 @@
 
-package report.models_view.nodes.node_wrappers;
+package report.models_view.nodes.table_wrappers;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -55,7 +55,7 @@ public  class TableWrapperEST<E extends Item> extends TableWrapper<E> {
             if(c.next() &&
                     (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
                 this.computeSum();
-                System.out.println("report.report.models_view.nodes.node_wrappers.TableWrapperEST.setTableData() == sum -> " + sum.getValue());
+                System.out.println("report.report.models_view.nodes.table_wrappers.TableWrapperEST.setTableData() == sum -> " + sum.getValue());
             }
         });
 

@@ -5,11 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import report.models_view.nodes.node_wrappers.AbstractTableWrapper;
-import report.usage_strings.PathStrings;
 
 import java.awt.*;
-import java.lang.reflect.Field;
 
 public class FxTestStage extends Application {
     static  FxTestStage thisApplication;

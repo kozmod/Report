@@ -40,14 +40,14 @@ public class CountAgentCommonReq implements Observable,Clone {
             String addressFact,
             String addressPost) {
         this.id = id;
-        this.isIP = new SimpleBooleanProperty(isIP);
-        this.OGRN = new SimpleObjectProperty<>(OGRN);
-        this.dateOGRN = new  SimpleObjectProperty<>(LocalDate.ofEpochDay(dateOGRN));
-        this.inn = new SimpleObjectProperty<>(inn);
-        this.kpp =  new SimpleObjectProperty<>(kpp);
-        this.addressLow = new SimpleStringProperty(addressLow);
-        this.addressFact = new SimpleStringProperty(addressFact);
-        this.addressPost = new SimpleStringProperty(addressPost);
+        this.isIP = new SimpleBooleanProperty(this,"sql",isIP);
+        this.OGRN = new SimpleObjectProperty<>(this,"sql",OGRN);
+        this.dateOGRN = new  SimpleObjectProperty<>(this,"sql",LocalDate.ofEpochDay(dateOGRN));
+        this.inn = new SimpleObjectProperty<>(this,"sql",inn);
+        this.kpp =  new SimpleObjectProperty<>(this,"sql",kpp);
+        this.addressLow = new SimpleStringProperty(this,"sql",addressLow);
+        this.addressFact = new SimpleStringProperty(this,"sql",addressFact);
+        this.addressPost = new SimpleStringProperty(this,"sql",addressPost);
 
     }
     /***************************************************************************

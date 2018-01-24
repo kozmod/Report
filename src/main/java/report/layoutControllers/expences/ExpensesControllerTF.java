@@ -1,4 +1,4 @@
-package report.layoutControllers.expensese;
+package report.layoutControllers.expences;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -11,7 +11,7 @@ import report.entities.items.period.PeriodDAO;
 import report.entities.items.period.PeriodTIV;
 import report.entities.items.site.PreviewTIV;
 import report.models.numberStringConverters.dateStringConverters.EpochDayStringConverter;
-import report.models_view.nodes.node_wrappers.TableWrapper;
+import report.models_view.nodes.table_wrappers.TableWrapper;
 import report.models_view.nodes.nodes_factories.TableCellFactory;
 import report.models_view.nodes.nodes_factories.TableFactory;
 

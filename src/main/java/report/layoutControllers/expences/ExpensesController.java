@@ -1,5 +1,5 @@
 
-package report.layoutControllers.expensese;
+package report.layoutControllers.expences;
 
 import java.net.URL;
 import java.time.LocalDate;
@@ -38,7 +38,7 @@ import report.layoutControllers.estimate.EstimateController.Est;
 
 import report.entities.items.period.PeriodTIV;
 //import report.models.Formula_test;
-import report.models_view.nodes.node_wrappers.TableWrapper;
+import report.models_view.nodes.table_wrappers.TableWrapper;
 import report.models_view.nodes.nodes_factories.ContextMenuFactory;
 import report.models_view.nodes.ContextMenuOptional;
 
@@ -136,7 +136,7 @@ public class ExpensesController implements Initializable {
         ContextMenuOptional.setTableItemContextMenuListener(expensesTWrapper);
         expensesTWrapper.getContextMenu().getItems().get(2)
                 .addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
-                    System.out.println("SAVEITEM ->>  report.layoutControllers.expensese.ExpensesController.init_expensesTab()");
+                    System.out.println("SAVEITEM ->>  report.layoutControllers.expences.ExpensesController.init_expensesTab()");
 //                    COEFFICIENT.setQuantity(new FormulaQuery().getFormula().getQuantity());
                     COEFFICIENT.setValue(Formula.formulaFromBase().computeCoefficient());
                     System.out.println("COEF - >"  + COEFFICIENT.getValue());

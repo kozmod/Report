@@ -48,7 +48,7 @@ public class PeriodDAO implements CommonDAO<Collection<PeriodTIV>> {
                 pstmt.setString(2, Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
                 pstmt.execute();
                 
-                try(ResultSet rs = pstmt.getResultSet();){
+                try(ResultSet rs = pstmt.getResultSet()){
                    while(rs.next())
                     list.add(new PeriodTIV(
                                                 rs.getLong  (SQL.Common.ID),

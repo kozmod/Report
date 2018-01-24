@@ -1,19 +1,28 @@
 package report.layoutControllers.allProperties;
 
+import javafx.collections.FXCollections;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import org.controlsfx.control.PropertySheet;
+import org.controlsfx.property.editor.Editors;
+import org.controlsfx.property.editor.PropertyEditor;
 import report.entities.items.DItem;
 import report.entities.items.contractor.ContractorDAO;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.counterparties.AgentTVI.CountAgentDAO;
+import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.entities.items.variable.PropertiesDAO;
 import report.entities.items.variable.VariableTIV_new;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
-import report.models_view.nodes.node_wrappers.ReverseTableWrapper;
-import report.models_view.nodes.node_wrappers.TableWrapper;
+import report.models_view.nodes.table_wrappers.ReverseTableWrapper;
+import report.models_view.nodes.table_wrappers.TableWrapper;
 import report.models_view.nodes.nodes_factories.TableFactory;
+
+import java.math.BigInteger;
+import java.time.LocalDate;
+import java.util.List;
 
 class AllPropertiesControllerTF implements TableFactory {
 
@@ -161,5 +170,59 @@ class AllPropertiesControllerTF implements TableFactory {
                 = tableWrapper.addColumn("Наименование",cellData -> cellData.getValue().nameProperty());
 
         return tableWrapper;
+    }
+
+    static PropertySheet getCountPropertySheet(){
+        PropertySheet countSheet = new PropertySheet();
+
+        List<ObjectPSI<?>> list = FXCollections.observableArrayList();
+        list.add(new ObjectPSI<>("ОГРН",
+                "Общие реквизиты",
+                new BigInteger("123")));
+        list.add(new ObjectPSI<>("Дата присвоения ОГРН",
+                "Общие реквизиты",
+                LocalDate.ofEpochDay(12345)));
+        list.add(new ObjectPSI<>("ИНН",
+                "Общие реквизиты",
+                new BigInteger("123")));
+        list.add(new ObjectPSI<>("Юридический Адрес",
+                "Общие реквизиты",
+                "aaa"));
+        list.add(new ObjectPSI<>("Фактический Адрес",
+                "Общие реквизиты",
+                "bbb"));
+        list.add(new ObjectPSI<>("Адрес (Post)",
+                "Общие реквизиты",
+                "CCC"));
+
+        countSheet.getItems().addAll(list);
+
+        countSheet.getItems().addAll(list);
+
+        countSheet.setMode(PropertySheet.Mode.CATEGORY);
+        countSheet.setModeSwitcherVisible(false);
+        countSheet.setSearchBoxVisible(false);
+        countSheet.setPropertyEditorFactory(param -> {
+            PropertyEditor<?> editor = null;
+            switch(param.getName()){
+                case "ОГРН":
+                case "ИНН":
+                    editor = Editors.createNumericEditor(param);
+                    return editor;
+                case "Дата присвоения ОГРН":
+                    editor = Editors.createDateEditor(param);
+                    return editor;
+                case "Юридический Адрес":
+                case "Фактический Адрес":
+                case "Адрес (Post)":
+                    editor = Editors.createTextEditor(param);
+                    return editor;
+                default:
+                    return editor;
+            }
+        });
+
+
+        return countSheet;
     }
 }
