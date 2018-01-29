@@ -33,20 +33,12 @@ public interface CommonDAO<C> extends TableDataBaseName{
      * Get <b>Unique</b> quantity of column.
      * @return ObservableList
      */
-    //Procedure
     default <X> ObservableList<X> getDistinct(String column, X ... fistNodes){
-        return  this.getDistinct(this.sqlTableName(),column,fistNodes);
-    }
-    /**
-     * Get <b>Unique</b> quantity of column.
-     * @return ObservableList
-     */
-    default <X> ObservableList<X> getDistinct(String table, String column, X ... fistNodes){
         Set<X> disSet = new TreeSet<>(Arrays.asList(fistNodes));
         try (Connection connection = SQLconnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement("execute getListDIST ?,?")){
             pstmt.setString(1, column);
-            pstmt.setString(2, table);
+            pstmt.setString(2, this.sqlTableName());
             pstmt.execute();
             try ( ResultSet resSet = pstmt.getResultSet()){
                 while(resSet.next()){

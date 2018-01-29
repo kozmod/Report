@@ -113,12 +113,10 @@ public class ObjectPSI<T> implements  Clone,PropertySheet.Item{
                 this.getValue()
         );
     }
-    @Override
     public long getId() {
         return 0;
     }
 
-    @Override
     public void setId(long id) {
 
     }

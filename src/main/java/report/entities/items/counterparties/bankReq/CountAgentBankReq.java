@@ -49,12 +49,10 @@ public class CountAgentBankReq implements Clone {
         return new CountAgentBankReq(this);
     }
 
-    @Override
     public long getId() {
         return this.id;
     }
 
-    @Override
     public void setId(long id) { this.id = id;
 
     }

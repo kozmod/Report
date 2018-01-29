@@ -75,11 +75,11 @@ public class VariableTIV_new implements Clone, Reverse {
      *                                                                         *
      **************************************************************************/
 
-    @Override
+
     public long getId() {
         return id;
     }
-    @Override
+
     public void setId(long id) {
         this.id = id;
     }

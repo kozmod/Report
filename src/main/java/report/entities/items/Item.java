@@ -10,7 +10,6 @@ import javafx.beans.property.StringProperty;
 
 //Estimate Tabble Items to ObsList
 public abstract class Item implements Clone {
-    //new quantity
     private long id;
     private int  del;
     private Timestamp dateCreate;
@@ -60,74 +59,9 @@ public abstract class Item implements Clone {
 
     }
 
-//        Clone CONSTRUCTOR implementation
-//        @Override
-//        public  Clone getClone() {
-//            Clone clone = new Item(
-//                                    this.getSiteNumber(),
-//                                    this.getTypeHome(),
-//                                    this.getContractor(),
-//                                    this.getJM_name(),
-//                                    this.getJobOrMat(),
-//                                    this.getBindJob(),
-//                                    this.getQuantity(),
-//                                    this.getUnit(),
-//                                    this.getPriceOne(),
-//                                    this.getPriceSum(),
-//                                    this.getBuildingPart()
-//                                    );
-//            return clone;
-//        }
 
-//        //Static BUILDER
-//    public static class Builder {
-//        private  StringProperty siteNumber; 
-//        private  StringProperty typeHome;
-//        private  StringProperty contractor; 
-//        private  StringProperty buildingPart;
-//        private  StringProperty JM_name;                          
-//        private  StringProperty JobOrMat;                          
-//        private  StringProperty bindJob;
-//        private  FloatProperty  quantity;
-//        private  StringProperty unit;                            
-//        private  FloatProperty  priceOne;
-//        private  FloatProperty  priceSum;
-//        
-//    
-//            public Builder setSiteNumber(String value_inp)  {this.siteNumber    = new SimpleStringProperty(value_inp);  return this;}
-//            public Builder setTypeHome(String value_inp)    {this.typeHome      = new SimpleStringProperty(value_inp);  return this;}
-//            public Builder setContractor(String value_inp)  {this.contractor    = new SimpleStringProperty(value_inp);  return this;}
-//            public Builder setJM_name(String value_inp)     {this.JM_name       = new SimpleStringProperty(value_inp);  return this;}
-//            public Builder setJobOrMat(String value_inp)    {this.JobOrMat      = new SimpleStringProperty(value_inp);  return this;}
-//            public Builder setBindJob(String value_inp)   {this.bindJob     = new SimpleStringProperty(value_inp);  return this;}
-//            public Builder setQuantity(float value_inp)        {this.quantity         = new SimpleFloatProperty (value_inp);  return this;}
-//            public Builder setUnit(String value_inp)        {this.unit          = new SimpleStringProperty(value_inp);  return this;}
-//            public Builder setPriceOne (float value_inp)   {this.priceOne     = new SimpleFloatProperty (value_inp);  return this;}
-//            public Builder setPriceSum(float value_inp)    {this.priceSum     = new SimpleFloatProperty (value_inp);  return this;}
-//            public Builder setBuildingPart(String value_inp) {this.buildingPart   = new SimpleStringProperty(value_inp);  return this;}
-//            
-////            public Item build() {
-////                return new Item(
-////                      siteNumber .getQuantity(),
-////                      typeHome   .getQuantity(),
-////                      contractor .getQuantity(),
-////                      JM_name    .getQuantity(),
-////                      JobOrMat   .getQuantity(),
-////                      bindJob  .getQuantity(),
-////                      quantity      .getQuantity(),
-////                      unit       .getQuantity(),
-////                      priceOne  .getQuantity(),
-////                      priceSum  .getQuantity(),
-////                      buildingPart.getQuantity()
-////                    );
-////            }  
-//        }
-
-    //Getter / Setter
-//  public Long getId() {return id;}
-//  public void setId(Long id) {this.id = id;}
-    @Override  public long getId() {return id;}
-    @Override  public void setId(long id) {this.id = id;}
+    public long getId() {return id;}
+    public void setId(long id) {this.id = id;}
 
     public Timestamp getDateCreate() {return dateCreate;}
     public void      setDateCreate(Timestamp value_inp) {this.dateCreate = value_inp;}
@@ -150,12 +84,8 @@ public abstract class Item implements Clone {
     public StringProperty JM_nameProperty() {return JM_name;}
 
     public String getJobOrMat() {return JobOrMat.get();}
-//    public void   setJobOrMat(String value_inp) {JobOrMat.set(value_inp);}
     public StringProperty jobOrMatProperty() {return JobOrMat;}
 
-//    public String getBindJob() {return bindJob.get();}
-//    public void   setBindJob(String value_inp) {bindJob.set(value_inp);}
-//    public StringProperty bindJobProperty() {return bindJob; }
 
 
     public String getBindJob() {
@@ -201,7 +131,7 @@ public abstract class Item implements Clone {
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 23 * hash + (this.quantity != null ? this.quantity.hashCode()     : 0);
+        hash = 23 * hash + (this.quantity != null ? this.quantity.hashCode() : 0);
         hash = 23 * hash + (this.priceOne != null ? this.priceOne.hashCode() : 0);
         hash = 23 * hash + (this.priceSum != null ? this.priceSum.hashCode() : 0);
         return hash;

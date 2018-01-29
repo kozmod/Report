@@ -57,12 +57,12 @@ public class CountAgentTVI implements Clone {
     public CountAgentTVI getClone() {
         return new CountAgentTVI(this);
     }
-    @Override
+
     public long getId() {
         //TODO - thinking about ID-interface
         return 0;
     }
-    @Override
+
     public void setId(long id) {
         //TODO - thinking about ID-interface
     }

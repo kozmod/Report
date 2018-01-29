@@ -3,7 +3,7 @@ package report.entities.items;
 
 
 
-public interface Clone extends ID {
+public interface Clone  {
     /**
      * Get clone Constructor
      * @return Clone

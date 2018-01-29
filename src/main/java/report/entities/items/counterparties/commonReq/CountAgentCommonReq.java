@@ -106,12 +106,10 @@ public class CountAgentCommonReq implements Observable,Clone {
         return null;
     }
 
-    @Override
     public long getId() {
         return 0;
     }
 
-    @Override
     public void setId(long id) {
 
     }
