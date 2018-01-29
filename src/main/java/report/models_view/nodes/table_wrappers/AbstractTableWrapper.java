@@ -5,7 +5,7 @@ import javafx.scene.control.ContextMenu;
 import report.entities.CommonDAO;
 import report.models.mementos.Memento;
 
-public abstract class AbstractTableWrapper<E> {
+public abstract class AbstractTableWrapper<E> implements BindBase {
 
     Memento<E> memento;
     final String title;
@@ -60,12 +60,6 @@ public abstract class AbstractTableWrapper<E> {
     public void setDAO(@NotNull final CommonDAO<E> dao) {
         this.DAO = dao;
     }
-
-    /**
-     * Send data to SQL.
-     */
-    public abstract void interactSQL();
-
     /**
      * Get ContextMenu of TableView.
      */
@@ -88,13 +82,5 @@ public abstract class AbstractTableWrapper<E> {
      * @param items E
      */
     public abstract void setTableData(E items);
-    /**
-     * Set TableData from BASE (use table SQL-name) and SAVE one to MEMENTO.
-     */
-    public abstract void setDataFromBASE();
-
-
-
-
 
 }

@@ -65,7 +65,7 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
      *                                                                         *
      **************************************************************************/
     @Override
-    public void interactSQL(){
+    public void toBase(){
         Collection<E> deleteCollection = this.memento.toDelete();
         Collection<E> insertCollection = this.memento.toInsert();
         if(!deleteCollection.isEmpty())
@@ -75,6 +75,21 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
 //       this.DAO.dellAndInsert(this.memento);
 
     }
+    /**
+     * Contain :
+     * <br>
+     * 1. setItems() from <b>SQL</b> if <u>CommonDAO</u> != <b>NULL</b>
+     * <br>
+     * 2. saveTableItems() - save table items to TableMemento.
+     * <br>
+     */
+    @Override
+    public void setFromBase(){
+        tableView.setItems(DAO.getData());
+        this.saveTableItems();
+//        treeTableView.refresh();
+    }
+
     /***************************************************************************
      *                                                                         *
      * Getters/Setters                                                         *
@@ -142,20 +157,6 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
      * <br><b>this.</b>getItems().setAll(newItems);
      */
     public void updateTableFromBASE(List newItems){tableView.getItems().setAll(newItems);}
-    /**
-     * Contain :
-     * <br>
-     * 1. setItems() from <b>SQL</b> if <u>CommonDAO</u> != <b>NULL</b>
-     * <br>
-     * 2. saveTableItems() - save table items to TableMemento.
-     * <br>
-     */
-    @Override
-    public void setDataFromBASE(){
-        tableView.setItems(DAO.getData());
-        this.saveTableItems();
-//        treeTableView.refresh();
-    }
 
 
 

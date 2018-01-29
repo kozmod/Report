@@ -160,7 +160,7 @@ public class ContextMenuOptional extends ContextMenu{
             saveMenuItem.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
                 System.out.println("saveMenuItem");
 //                commonDao.dellAndInsert(tableWrapper.getMemento());
-                tableWrapper.interactSQL();
+                tableWrapper.toBase();
                 tableWrapper.saveTableItems();
                 setDisable_SaveUndoPrint_groupe(true);
                 tableWrapper.refresh();

@@ -80,7 +80,7 @@ public class ReverseTableWrapper<E extends Reverse & Clone> extends AbstractTabl
         }
 
         @Override
-        public void setDataFromBASE() {
+        public void setFromBase() {
             this.setTableData( commonDAO.getData());
 
         }
@@ -91,7 +91,7 @@ public class ReverseTableWrapper<E extends Reverse & Clone> extends AbstractTabl
     }
 
     @Override
-    public void interactSQL() {
+    public void toBase() {
         this.commonDAO.dellAndInsert(this.memento);
     }
 

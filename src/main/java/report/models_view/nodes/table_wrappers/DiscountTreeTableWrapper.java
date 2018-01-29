@@ -94,7 +94,7 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef>
     }
 
     @Override
-    public void setDataFromBASE() {
+    public void setFromBase() {
         this.discountCoef = commonDAO.getData();
         treeTableView.setRoot(discountCoef.tree());
         this.saveTableItems();
@@ -106,7 +106,7 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef>
     }
 
     @Override
-    public void interactSQL() {
+    public void toBase() {
         this.commonDAO.dellAndInsert(this.memento);
     }
 

@@ -63,10 +63,10 @@ public class PlanningController implements Initializable{
         Quantity.getQuantityProperty().addListener(e ->{
             Quantity.updateFromBase();
             //plan table
-            planTableWrapper.setDataFromBASE();
+            planTableWrapper.setFromBase();
             ContextMenuOptional.setTableItemContextMenuListener(planTableWrapper);
             //osr table
-            osrTableWrapper.setDataFromBASE();
+            osrTableWrapper.setFromBase();
             ContextMenuOptional.setTableItemContextMenuListener(osrTableWrapper);
             //TF
             computeSumExpTextFields();
@@ -78,7 +78,7 @@ public class PlanningController implements Initializable{
     private void init_PlanTab(){
         //add Plan TableView
         planTableWrapper = PlaningControllerTF.decorPlan(planTable);
-        planTableWrapper.setDataFromBASE();
+        planTableWrapper.setFromBase();
         ContextMenuOptional.setTableItemContextMenuListener(planTableWrapper);
 
         //add Fact TableView
@@ -121,7 +121,7 @@ public class PlanningController implements Initializable{
     private void init_OSRTab(){
         //add OSR TableView
         osrTableWrapper = PlaningControllerTF.decorOSR(osrTable);
-        osrTableWrapper.setDataFromBASE();
+        osrTableWrapper.setFromBase();
         ContextMenuOptional.setTableItemContextMenuListener(osrTableWrapper);
 
         computeSumExpTextFields();
@@ -169,7 +169,7 @@ public class PlanningController implements Initializable{
         kdTreeTableWrapper = PlaningControllerTF.decorKD(kdTreeTable);
 //        PlaningControllerTF.decorKD(kdTreeTable);
 //        kdTreeTableWrapper.tableView().setRoot(new DiscountQuery().getData().tree());
-        kdTreeTableWrapper.setDataFromBASE();
+        kdTreeTableWrapper.setFromBase();
         kdTreeTableWrapper.tableView().editableProperty().bind(Bindings
                 .when(kdEditСheckBox.selectedProperty())
                 .then(true)

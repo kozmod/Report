@@ -3,20 +3,24 @@ package report.layoutControllers.allProperties;
 
 import java.math.BigInteger;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import org.controlsfx.control.PropertySheet;
 import report.entities.items.contractor.ContractorTIV;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
-import report.entities.items.counterparties.commonReq.CountAgentCommonReq;
+import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.entities.items.variable.VariableTIV_new;
-import report.models.numberStringConverters.numberStringConverters.BigIntegerStringConverter;
+import report.models_view.nodes.propertySheet_wrappers.PropertySheetWrapper;
 import report.models_view.nodes.table_wrappers.ReverseTableWrapper;
 import report.models_view.nodes.table_wrappers.TableWrapper;
 import report.models_view.nodes.nodes_factories.ContextMenuFactory;
@@ -27,29 +31,14 @@ public class AllPropertiesController implements Initializable {
     /*!******************************************************************************************************************
     *                                                                                                         Tab 3 FXML
     ********************************************************************************************************************/
-    @FXML
-    private TextField commonOgrnTF,  commonInnTF, lowAddressTF,factAddressTF,postAddressTF;
-    @FXML
-    private CheckBox commonChB;
-    @FXML
-    private DatePicker commonDateOgrnDP;
-    @FXML
-    private TextField bankNameTF, bankBicTF, bankAccNumTF, bankCorAccTF;
-    @FXML
-    private CheckBox bankChB;
-    @FXML
-    private TextField exBodyTF, exBodyNameTF, exBodySurnameTF, exFNameBodyTF,exBaseTF,
-            exBcNameTF,exBcSurnameTF,exBcFNameTF,
-            exBodyIdSeriesTF,exBodyIdNumberTF, exBodyIdCodeTF;
-    @FXML
-    private TextArea exBodyIdTextTA;
-    @FXML
-    private CheckBox exBodyChB;
-    @FXML
-    private DatePicker exBodyDP;
+
+
     @FXML
     private TableView<CountAgentTVI> countAgentTable;
 
+    @FXML
+    private ScrollPane reqBankScrollPane;
+    private PropertySheetWrapper counterPropSheet;
 
     /*!******************************************************************************************************************
     *                                                                                                 Tab Variable FXML
@@ -81,15 +70,17 @@ public class AllPropertiesController implements Initializable {
         this.init_VariableTab();
         this.init_ContractorTab();
         this.init_CounterpatiesTab();
+
+
 //        this.initData();
     }
     /**
      * Init Data from Base
      */
     public void initData(){
-        variableTableWrapper.setDataFromBASE();
-        contractorTableWrapper.setDataFromBASE();
-        countAgentTableWrapper.setDataFromBASE();
+        variableTableWrapper.setFromBase();
+        contractorTableWrapper.setFromBase();
+//        countAgentTableWrapper.setFromBase();
     }
     /***************************************************************************
      *                                                                         *
@@ -167,38 +158,15 @@ public class AllPropertiesController implements Initializable {
     private void init_CounterpatiesTab(){
         countAgentTableWrapper = AllPropertiesControllerTF.decorCountAgent(countAgentTable);
         ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapper);
-        init_CommonReq();
-    }
-    private void init_CommonReq(){
         countAgentTableWrapper.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            CountAgentCommonReq commonReq = new CountAgentCommonReq(
-                    1,
-                    false,
-                    new BigInteger("12345678901234567890"),
-                    100000,
-                    new BigInteger("12345678901234567890"),
-                    new BigInteger("12345678901234567890"),
-                    "lowadress",
-                    "factAdress",
-                    "postAdress"
-                    );
-            Bindings.bindBidirectional(commonOgrnTF    .textProperty(), commonReq.OGRNProperty(), new BigIntegerStringConverter());
-            Bindings.bindBidirectional(commonInnTF     .textProperty(), commonReq.innProperty(),  new BigIntegerStringConverter());
-            Bindings.bindBidirectional(commonDateOgrnDP.valueProperty(),commonReq.dateOGRNProperty());
-            Bindings.bindBidirectional(lowAddressTF    .textProperty(), commonReq.addressLowProperty());
-            Bindings.bindBidirectional(factAddressTF   .textProperty(), commonReq.addressFactProperty());
-            Bindings.bindBidirectional(postAddressTF   .textProperty(), commonReq.addressPostProperty());
-            commonReq.addListener(listener  ->{
-                System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-                System.out.println( commonReq.OGRNProperty().getName());
-            });
-
-
-            System.out.println(commonInnTF.getId());
 
         });
+        counterPropSheet = AllPropertiesControllerTF.getCountPropertySheet();
+        reqBankScrollPane.setContent(counterPropSheet.getSheet());
 
     }
+
+
     /***************************************************************************
      *                                                                         *
      * HANDLERS                                                                *

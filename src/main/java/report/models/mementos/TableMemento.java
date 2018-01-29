@@ -9,10 +9,9 @@ import report.entities.items.Clone;
 import java.util.*;
 
 public  class TableMemento<E extends Clone> implements Memento<Collection<E>> {
-
-    Set<E> deleteSet = Collections.newSetFromMap(new IdentityHashMap<>());
-    Set<E> insertSet = Collections.newSetFromMap(new IdentityHashMap<>());
-    private  ObservableList<E> tableMemento;
+    private Set<E> deleteSet = Collections.newSetFromMap(new IdentityHashMap<>());
+    private Set<E> insertSet = Collections.newSetFromMap(new IdentityHashMap<>());
+    private ObservableList<E> tableMemento;
     /***************************************************************************
      *                                                                         *
      * Constructors                                                            *
@@ -21,7 +20,6 @@ public  class TableMemento<E extends Clone> implements Memento<Collection<E>> {
     public TableMemento(ObservableList<E>  tableItems) {
         this.tableMemento  = getNewObs( tableItems);
         addListener(tableItems);
-
     }
     /***************************************************************************
      *                                                                         *
