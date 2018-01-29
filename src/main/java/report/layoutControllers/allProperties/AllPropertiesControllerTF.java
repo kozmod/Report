@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.scene.effect.BlendMode;
@@ -14,6 +15,7 @@ import org.controlsfx.control.PropertySheet;
 import org.controlsfx.property.editor.AbstractPropertyEditor;
 import org.controlsfx.property.editor.Editors;
 import org.controlsfx.property.editor.PropertyEditor;
+import report.entities.CommonDAO;
 import report.entities.items.DItem;
 import report.entities.items.contractor.ContractorDAO;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
@@ -26,6 +28,7 @@ import report.models_view.nodes.propertySheet_wrappers.PropertySheetWrapper;
 import report.models_view.nodes.table_wrappers.ReverseTableWrapper;
 import report.models_view.nodes.table_wrappers.TableWrapper;
 import report.models_view.nodes.nodes_factories.TableFactory;
+import report.usage_strings.SQL;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
@@ -80,8 +83,6 @@ class AllPropertiesControllerTF implements TableFactory {
 //
 //        return tableWrapper;
 //    }
-
-
     /**
      * Create TableWrapper "Variable"(AllPropertiesController).
      * <br>
@@ -121,8 +122,6 @@ class AllPropertiesControllerTF implements TableFactory {
 //        valueAllColumn.setOnEditCommit((TableColumn.CellEditEvent<VariableTIV, Double> t) -> {
 //            t.getRowValue().setQuantity(t.getNewValue());
 //        });
-
-
         return tableWrapper;
     }
 
@@ -157,16 +156,8 @@ class AllPropertiesControllerTF implements TableFactory {
      * @return TableWrapper
      */
     static TableWrapper<CountAgentTVI> decorCountAgent(TableView<CountAgentTVI> table){
-        //TODO: delete Mock -> CountAgentTVI
-//        CountAgentDAO dao =  Mockito.mock(CountAgentDAO.class);
-//        ObservableList<CountAgentTVI> list = FXCollections.observableArrayList(CountAgentTVI.extractor());
-//        list.addAll(new CountAgentTVI(1,"GREM", "OOO"," ИП"),
-//                    new CountAgentTVI(2,"УЮТ", "OфO"," Подрядчик"),
-//                    new CountAgentTVI(3,"САРАЙ", "ААO","Клиент")
-//        );
-//        Mockito.when(dao.getData()).thenReturn(list);
-
-        TableWrapper<CountAgentTVI> tableWrapper = new TableWrapper(table,new CountAgentDAO());
+        CommonDAO dao = new CountAgentDAO();
+        TableWrapper<CountAgentTVI> tableWrapper = new TableWrapper(table,dao);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn<CountAgentTVI,String> formColumn
@@ -175,6 +166,9 @@ class AllPropertiesControllerTF implements TableFactory {
                 = tableWrapper.addColumn("Тип",cellData -> cellData.getValue().typeProperty());
         TableColumn<CountAgentTVI,String> nameColumn
                 = tableWrapper.addColumn("Наименование",cellData -> cellData.getValue().nameProperty());
+        formColumn.setCellFactory(ComboBoxTableCell.forTableColumn());
+        typerColumn.setCellFactory(ComboBoxTableCell.forTableColumn());
+        nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
 
         return tableWrapper;
     }

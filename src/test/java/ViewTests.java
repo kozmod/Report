@@ -65,11 +65,11 @@ public class ViewTests {
         AbstractTableWrapper wrapper = getField("countAgentTableWrapper",controller);
         CountAgentDAO dao =  Mockito.mock(CountAgentDAO.class);
         ObservableList<CountAgentTVI> list = FXCollections.observableArrayList(CountAgentTVI.extractor());
-        list.addAll(
-                new CountAgentTVI(1,"GREM", "OOO"," Клиент"),
-                new CountAgentTVI(2,"УЮТ", "OфO"," Подрядчик"),
-                new CountAgentTVI(3,"САРАЙ", "ААO","Клиент")
-        );
+//        list.addAll(
+//                new CountAgentTVI(1,"GREM", "OOO"," Клиент"),
+//                new CountAgentTVI(2,"УЮТ", "OфO"," Подрядчик"),
+//                new CountAgentTVI(3,"САРАЙ", "ААO","Клиент")
+//        );
         Mockito.when(dao.getData()).thenReturn(list);
         wrapper.setDAO(dao);
         controller.initData();

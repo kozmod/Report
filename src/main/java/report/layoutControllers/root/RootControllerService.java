@@ -30,11 +30,11 @@ public class RootControllerService {
 ********************************************************************************************************************/
 
     public  ObservableList<Object> getComboQueueValues(){
-       return  new SiteDAO().getDistinctOfColumn(SQL.Site.QUEUE_BUILDING, ServiceStrings.PERCENT);
+       return  new SiteDAO().getDistinct(SQL.Site.QUEUE_BUILDING, ServiceStrings.PERCENT);
     }
 
     public  ObservableList<Object> getComboSiteConditionValues(){
-       return  new SiteDAO().getDistinctOfColumn(SQL.Site.STATUS_PAYMENT,ServiceStrings.PERCENT);
+       return  new SiteDAO().getDistinct(SQL.Site.STATUS_PAYMENT,ServiceStrings.PERCENT);
     }
 
     /**

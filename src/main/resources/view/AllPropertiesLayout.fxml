@@ -195,6 +195,11 @@
               </VBox>
               <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                   <children>
+                        <CheckBox fx:id="countAgentСheckBox" mnemonicParsing="false" text="Редактировать">
+                           <padding>
+                              <Insets right="5.0" />
+                           </padding>
+                        </CheckBox>
                       <TextField alignment="TOP_LEFT" nodeOrientation="LEFT_TO_RIGHT" />
                       <Button mnemonicParsing="false" text="поиск" />
                   </children>

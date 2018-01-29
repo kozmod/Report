@@ -64,7 +64,7 @@ public class AddContractController implements Initializable  {
     }
     
     void init_ContComco(){
-        contComboBox.setItems( new ContractorDAO().getDistinctOfColumn(SQL.Contractors.CONTRACTOR));
+        contComboBox.setItems( new ContractorDAO().getDistinct(SQL.Contractors.CONTRACTOR));
 //        contComboBox.setItems( new CommonQuery().getObsDISTINCT("Site", "Contractor", this));
 
     }

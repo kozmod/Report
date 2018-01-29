@@ -57,7 +57,7 @@ public abstract class AbstractTableWrapper<E> implements BindBase {
             throw  new NullPointerException(TableWrapper.class.getCanonicalName());
         return DAO;
     }
-    public void setDAO(@NotNull final CommonDAO<E> dao) {
+    public void setDAO(final CommonDAO<E> dao) {
         this.DAO = dao;
     }
     /**

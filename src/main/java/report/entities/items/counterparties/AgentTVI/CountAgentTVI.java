@@ -7,9 +7,11 @@ import javafx.util.Callback;
 import report.entities.items.Clone;
 
 public class CountAgentTVI implements Clone {
-    private long id;
+    private int idName;
     private StringProperty name;
+    private int idForm;
     private StringProperty form;
+    private int idType;
     private StringProperty type;
 
     /***************************************************************************
@@ -18,12 +20,16 @@ public class CountAgentTVI implements Clone {
      *                                                                         *
      **************************************************************************/
     public CountAgentTVI(
-            long id,
+            int idName,
             String name,
+            int idForm,
             String form,
+            int idType,
             String type
     ) {
-        this.id = id;
+        this.idName = idName;
+        this.idForm = idForm;
+        this.idType = idType;
         this.name = new SimpleStringProperty(name);
         this.form = new SimpleStringProperty(form);
         this.type = new SimpleStringProperty(type);
@@ -34,7 +40,9 @@ public class CountAgentTVI implements Clone {
      *                                                                         *
      **************************************************************************/
     public CountAgentTVI(CountAgentTVI source) {
-        this.id = source.id;
+        this.idName = source.idName;
+        this.idForm = source.idForm;
+        this.idType = source.idType;
         this.name = new SimpleStringProperty(source.name.getValue());
         this.form = new SimpleStringProperty(source.form.getValue());
         this.type = new SimpleStringProperty(source.type.getValue());
@@ -51,11 +59,36 @@ public class CountAgentTVI implements Clone {
     }
     @Override
     public long getId() {
-        return id;
+        //TODO - thinking about ID-interface
+        return 0;
     }
     @Override
     public void setId(long id) {
-        this.id = id;
+        //TODO - thinking about ID-interface
+    }
+
+    public int getIdName() {
+        return idName;
+    }
+
+    public void setIdName(int idName) {
+        this.idName = idName;
+    }
+
+    public int getIdForm() {
+        return idForm;
+    }
+
+    public void setIdForm(int idForm) {
+        this.idForm = idForm;
+    }
+
+    public int getIdType() {
+        return idType;
+    }
+
+    public void setIdType(int idType) {
+        this.idType = idType;
     }
 
     public String getName() {

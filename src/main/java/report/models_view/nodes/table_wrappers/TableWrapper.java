@@ -51,13 +51,8 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
      */
     @Override
     public void undoChangeItems(){
-//        ((TableMemento)memento).toDelete();
-//        ((TableMemento)memento).toInsert();
         tableView.getItems().setAll( memento.getSavedState());
         memento.clearChanges();
-//        ((TableMemento)memento).toDelete();
-//        ((TableMemento)memento).toInsert();
-
     }
     /***************************************************************************
      *                                                                         *
@@ -114,24 +109,6 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
      * @return tableView TableView<E>
      */
     public  TableView<E> tableView(){ return tableView; }
-    /*!******************************************************************************************************************
-    *                                                                                                             TEST
-    ********************************************************************************************************************/
-    /**
-     * Lazy init Set of Cell witch have to be commit and return one.
-     */
-//    public Set<CommittableRow> getSetAddingCells() {
-//        if(setAddingCells == null )setAddingCells = new HashSet<>();
-//        return setAddingCells;
-//    }
-//    /**
-//     * Commit all cells in "SetAddingCells" Collection.
-//     */
-//    public void  commitData() {
-//        if(setAddingCells == null )
-//            throw new NullPointerException("setAddingCells does not exist");
-//        setAddingCells.forEach(item -> item.commitData());
-//    }
 
     /***************************************************************************
      *                                                                         *

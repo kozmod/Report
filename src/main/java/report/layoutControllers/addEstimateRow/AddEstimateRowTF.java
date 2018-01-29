@@ -44,7 +44,7 @@ public class AddEstimateRowTF {
         checkBoxColumn.setCellFactory(param -> TableCellFactory.getCheckValueCell());
         JM_nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         BJobColumn.setCellFactory(ComboBoxTableCell.forTableColumn(
-                dao.getDistinctOfColumn(SQL.Estimate.BINDED_JOB,"-")
+                dao.getDistinct(SQL.Estimate.BINDED_JOB,"-")
         ));
         //TODO: !!!! Check this new issue to add items in table. !!!
         table.setRowFactory(new Callback<TableView<AddEstTIV>, TableRow<AddEstTIV>>() {
@@ -81,7 +81,7 @@ public class AddEstimateRowTF {
 
         });
         unitColumn.setCellFactory(ComboBoxTableCell.forTableColumn(
-                dao.getDistinctOfColumn(SQL.Estimate.UNIT)
+                dao.getDistinct(SQL.Estimate.UNIT)
         ));
         priseOneColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         priseOneColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, Double> t) ->{

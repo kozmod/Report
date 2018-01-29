@@ -31,13 +31,10 @@ public class AllPropertiesController implements Initializable {
     /*!******************************************************************************************************************
     *                                                                                                         Tab 3 FXML
     ********************************************************************************************************************/
+    @FXML private TableView<CountAgentTVI> countAgentTable;
+    @FXML private ScrollPane reqBankScrollPane;
+    @FXML private CheckBox  countAgentСheckBox;
 
-
-    @FXML
-    private TableView<CountAgentTVI> countAgentTable;
-
-    @FXML
-    private ScrollPane reqBankScrollPane;
     private PropertySheetWrapper counterPropSheet;
 
     /*!******************************************************************************************************************
@@ -80,7 +77,7 @@ public class AllPropertiesController implements Initializable {
     public void initData(){
         variableTableWrapper.setFromBase();
         contractorTableWrapper.setFromBase();
-//        countAgentTableWrapper.setFromBase();
+        countAgentTableWrapper.setFromBase();
     }
     /***************************************************************************
      *                                                                         *
@@ -158,11 +155,26 @@ public class AllPropertiesController implements Initializable {
     private void init_CounterpatiesTab(){
         countAgentTableWrapper = AllPropertiesControllerTF.decorCountAgent(countAgentTable);
         ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapper);
+        countAgentTableWrapper.tableView()
+                .editableProperty()
+                .bind(countAgentСheckBox.selectedProperty());
+        //bing ContextMenu
+        countAgentTableWrapper.tableView()
+                .contextMenuProperty()
+                .bind(Bindings.when(countAgentСheckBox.selectedProperty() )
+                                .then( ContextMenuFactory.getCommonDSU(countAgentTableWrapper) )
+                                .otherwise( (ContextMenu) null)
+                );
         countAgentTableWrapper.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 
         });
+
+
+
+
         counterPropSheet = AllPropertiesControllerTF.getCountPropertySheet();
         reqBankScrollPane.setContent(counterPropSheet.getSheet());
+
 
     }
 

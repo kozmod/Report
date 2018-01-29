@@ -106,8 +106,6 @@ public class AddEstimateRowController implements Initializable {
             result =   FXCollections.observableArrayList(diflist.exElements());
         else result  =   FXCollections.observableArrayList();
         check = baseObsList.size() - editObsList.size();
-
-//        System.err.println("result size "+result.size());
         System.err.println("baseObsList  size "+baseObsList.size());
         System.err.println("editObsList  size "+editObsList.size());
 
@@ -226,11 +224,6 @@ public class AddEstimateRowController implements Initializable {
         System.out.println("TestCommit");
 
     }
-//
-//    @FXML
-//    private void testCHECK_LIST(ActionEvent event) {
-//        elemTableWrapperView.getItems().forEach(i -> System.out.println(i.toString()));
-//    }
     @FXML
     private void handle_addMarkedRow(ActionEvent event) {
         ObservableList<EstimateTVI> selectedItems = getSelectedCheckObs(elemTableWrapperView.getItems())

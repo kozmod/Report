@@ -49,9 +49,9 @@ public class AddSiteController implements Initializable {
     {
         listPlan  = new PlanDAO().getData();
         listFact  = new PlanDAO().getListFact();
-        listQueue = new SiteDAO().getDistinctOfColumn(SQL.Site.QUEUE_BUILDING);
-        listContractors = new SiteDAO().getDistinctOfColumn(SQL.Site.CONTRACTOR,ServiceStrings.Line);
-        listTypes       = new SiteDAO().getDistinctOfColumn(SQL.Site.TYPE_HOME, ServiceStrings.Line);
+        listQueue = new SiteDAO().getDistinct(SQL.Site.QUEUE_BUILDING);
+        listContractors = new SiteDAO().getDistinct(SQL.Site.CONTRACTOR,ServiceStrings.Line);
+        listTypes       = new SiteDAO().getDistinct(SQL.Site.TYPE_HOME, ServiceStrings.Line);
 
 
     }
