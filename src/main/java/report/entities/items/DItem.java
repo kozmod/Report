@@ -14,20 +14,20 @@ import java.util.Objects;
 //Preview Tabble Items to ObsList
 public class DItem implements Clone {
 
-        private Long id;
-        private final String sqlColumn;
-        private final StringProperty firstValue;
-        private final DoubleProperty secondValue;
+    private Long id;
+    private final String sqlColumn;
+    private final StringProperty firstValue;
+    private final DoubleProperty secondValue;
 
 
 
 
     public DItem(long id, String sqlColumnName, String fValue, double sValue) {
-            this.id        = id;
-            this.sqlColumn = sqlColumnName;
-            this.firstValue  = new SimpleStringProperty(fValue);
-            this.secondValue = new SimpleDoubleProperty(sValue);
-        }
+        this.id        = id;
+        this.sqlColumn = sqlColumnName;
+        this.firstValue  = new SimpleStringProperty(fValue);
+        this.secondValue = new SimpleDoubleProperty(sValue);
+    }
 
     public DItem(long id, String sqlColumn, String fValue, DoubleProperty secondValue) {
         this.id = id;
@@ -37,23 +37,23 @@ public class DItem implements Clone {
     }
 
     //Clone CONSTRUCTOR implementation
-        @Override
-        public DItem getClone() {
-            DItem clone = new DItem(
-                                this.id,
-                                this.sqlColumn,
-                                this.getFirstValue(),
-                                this.getSecondValue()
-                                );
-            return clone;  
-        }
+    @Override
+    public DItem getClone() {
+        DItem clone = new DItem(
+                this.id,
+                this.sqlColumn,
+                this.getFirstValue(),
+                this.getSecondValue()
+        );
+        return clone;
+    }
 
 
 
     //Getter / Setter
 //    @Override
     public long getId() {return id;}
-//    @Override
+    //    @Override
     public void setId(long id) {this.id = id;}
 
 
@@ -118,7 +118,7 @@ public class DItem implements Clone {
         if ((this.secondValue.get() == 0) ? (other.secondValue.getValue() != null) : this.secondValue.get() != other.secondValue.get()) {
             return false;
         }
-   
+
         return true;
     }
 
@@ -128,14 +128,14 @@ public class DItem implements Clone {
     }
 
     /**
-    *Extractor to observe changes in "Property" fields.
-    * 
-    * @return Callback<VariableTIV, Observable[]>
-    */
+     *Extractor to observe changes in "Property" fields.
+     *
+     * @return Callback<VariableTIV, Observable[]>
+     */
     public static Callback<DItem, Observable[]> extractor() {
         return (DItem p) -> new Observable[]{p.secondValueProperty()};
     }
 
-   
-    }
+
+}
     
