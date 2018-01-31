@@ -253,3 +253,134 @@ public class Report extends Application {
 				}
 			}
 		};
+
+import org.springframework.batch.core.Job;
+import org.springframework.batch.core.Step;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
+import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.FlatFileItemWriter;
+import org.springframework.batch.item.file.LineMapper;
+
+import org.springframework.batch.item.file.transform.LineAggregator;
+
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.FileSystemResource;
+
+
+import java.io.IOException;
+import java.util.List;
+
+@Configuration
+@EnableBatchProcessing
+@PropertySource("classpath:my.properties")
+public class BatchConfiguration {
+    @Value("${application.cycle_period.fixed-rate}")
+    private String PERIOD;
+     /**
+     * Reader
+     * @return ItemReader<Student>
+     */
+    @Bean
+    public ItemReader<String> reader() {
+        FlatFileItemReader<String> reader = new FlatFileItemReader<String>();
+        reader.setResource(new ClassPathResource("student-data.csv"));
+        reader.setLineMapper(new LineMapper<String>() {
+            @Override
+            public String mapLine(String line, int lineNumber) throws Exception {
+                System.err.println(lineNumber+ " line number");
+                return line;
+            }
+        });
+        return reader;
+    }
+    /**
+     * Processor
+     * @return ItemProcessor<Student, Marksheet>
+     */
+    @Bean
+    public ItemProcessor<String, String> processor() {
+        return student -> {
+            System.err.println("student id:"+student);
+            return student + PERIOD;
+        };
+    }
+    /**
+     * Writer
+     * @return ItemWriter<Marksheet>
+     */
+    @Bean
+    public ItemWriter<String> writer() throws IOException {
+        //writer
+    	FlatFileItemWriter<String> writer = new FlatFileItemWriter<String>(){
+            @Override
+            public void write(List<? extends String> items) throws Exception {
+                System.out.println("--------------> "+ items);
+                super.write(items);
+            }
+        };
+//    	writer.setResource(new ClassPathResource("student-marksheet.csv"));
+    	writer.setResource(new FileSystemResource("student-marksheet.csv"));
+        writer.setShouldDeleteIfEmpty(true);
+    	writer.setLineAggregator(new LineAggregator<String>() {
+            @Override
+            public String aggregate(String item) {
+                return item;
+            }
+
+        });
+        writer.setAppendAllowed(true);
+        return writer;
+    }
+    /**
+     * Job
+     * @return Job
+     */
+    @Bean
+    public Job createMarkSheet(JobBuilderFactory jobs, @Qualifier("step") Step step) {
+        return jobs.get("createMarkSheet")
+                .flow(step)
+                .end()
+                .build();
+    }
+    /**
+     * Step
+     * @return Step
+     */
+    @Bean
+    public Step step(StepBuilderFactory stepBuilderFactory, ItemReader<String> reader,
+            ItemWriter<String> writer, ItemProcessor<String, String> processor) {
+        return stepBuilderFactory.get("step")
+                .<String, String> chunk(1)
+                .reader(reader)
+                .processor(processor)
+                .writer(writer)
+                .build();
+    }
+ 
+}
+@SpringBootApplication
+@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
+public class Application {
+
+    public static void main(String[] args) throws Exception {
+        new SpringApplicationBuilder(Application.class)
+                .web(false)
+                .run();
+
+
+    }
+}
+		   
+		compile("org.springframework.boot:spring-boot-starter-batch")
+//    compile group: 'org.springframework.integration', name: 'spring-integration-core', version: '5.0.1.RELEASE'
+//    compile group: 'org.springframework.integration', name: 'spring-integration-file', version: '5.0.1.RELEASE'
