@@ -16,7 +16,7 @@ public class DaoTests {
 //    @Disabled
     public void firstTest(){
         ObservableList<CommonDItem<String,String>> list
-                = (ObservableList<CommonDItem<String, String>>) new CommonItemDAO("Contractors","Director","Comments")
+                = new CommonItemDAO<>("Contractors","Director","Comments")
                 .getData();
         System.out.println(list);
 
