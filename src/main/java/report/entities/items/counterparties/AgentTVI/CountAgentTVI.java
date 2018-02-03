@@ -7,6 +7,7 @@ import javafx.util.Callback;
 import report.entities.items.Clone;
 
 public class CountAgentTVI implements Clone {
+    private boolean newAdded = false;
     private int idName;
     private StringProperty name;
     private int idForm;
@@ -56,15 +57,6 @@ public class CountAgentTVI implements Clone {
     @Override
     public CountAgentTVI getClone() {
         return new CountAgentTVI(this);
-    }
-
-    public long getId() {
-        //TODO - thinking about ID-interface
-        return 0;
-    }
-
-    public void setId(long id) {
-        //TODO - thinking about ID-interface
     }
 
     public int getIdName() {
@@ -127,11 +119,31 @@ public class CountAgentTVI implements Clone {
         this.type.set(type);
     }
 
-    /**
-     *Extractor to observe changes in "Property" fields.
-     *
-     * @return Callback<CountAgentTVI, Observable[]>
-     */
+    public CountAgentTVI  setNewStatus(boolean value){
+        this.newAdded = value;
+        return this;
+    }
+    /***************************************************************************
+     *                                                                         *
+     * Equals / HashCode / toString                                            *
+     *                                                                         *
+     **************************************************************************/
+    @Override
+    public String toString() {
+        return "CountAgentTVI: " +
+                "id-name [" + this.getIdName() +"],"+
+                "name ["    + this.getName()   +"],"+
+                "id-type [" + this.getIdForm() +"],"+
+                "type ["    + this.getForm()   +"],"+
+                "id-form [" + this.getIdType()   +"],"+
+                "form ["    + this.getType()   +"]";
+    }
+
+    /***************************************************************************
+     *                                                                         *
+     * Extractor                                                               *
+     *                                                                         *
+     **************************************************************************/
     public static Callback<CountAgentTVI, Observable[]> extractor() {
         return (CountAgentTVI p) -> new Observable[]{p.formProperty(), p.nameProperty(),p.typeProperty()};
     }

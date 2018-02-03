@@ -6,6 +6,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.util.Callback;
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.property.editor.AbstractPropertyEditor;
 import org.controlsfx.property.editor.Editors;
@@ -13,6 +14,7 @@ import org.controlsfx.property.editor.PropertyEditor;
 import report.entities.abstraction.CommonDAO;
 import report.entities.abstraction.DaoUtil;
 import report.entities.items.DItem;
+import report.entities.items.cb.AddEstTIV;
 import report.entities.items.contractor.ContractorDAO;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.counterparties.AgentTVI.CountAgentDAO;
@@ -33,51 +35,6 @@ class AllPropertiesControllerTF implements TableFactory {
 
     private AllPropertiesControllerTF() {
     }
-
-    /**
-     * Create TableWrapper "OSR"(AllPropertiesController).
-     * <br>
-     * Show SQL table Items where dell = 0
-     * <br>
-     *
-     * @return TableWrapper
-     */
-//    static TableWrapper decorOSR(TableView table){
-//        TableWrapper tableWrapper = new TableWrapper(table,new OSR_DAO());
-//
-////        tableWrapper.setEditable(true);
-//        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-//
-//        TableColumn textColumn     = tableWrapper.addColumn("Наименование","text");
-//        TableColumn<OSR_TIV,Double> valueAllColumn
-//                = tableWrapper.addColumn("Значение (общее)","expenses");
-//        TableColumn valueColumn    = tableWrapper.addColumn("Значение (за дом)","expensesPerHouse");
-//
-//        valueAllColumn.setEditable(true);
-////        valueColumn.setCellFactory(p -> TableCellFactory.getDecimalCell());
-////        TableFactory.setTextFieldCell_NumberStringConverter(valueAllColumn);
-//        TableFactory.setTextFieldTableCell(
-//                new DoubleStringConverter(),
-//                valueAllColumn
-//        );
-//
-//        textColumn.setCellFactory(param -> TableCellFactory.getTestIdOSR());
-//
-////        ContextMenu cm = ContextMenuFactory.getOSR(tableWrapper);
-////        tableWrapper.setContextMenu(cm);
-//
-//        valueAllColumn.setOnEditCommit((TableColumn.CellEditEvent<OSR_TIV, Double> t) -> {
-//            OSR_TIV editingItem = (OSR_TIV) t.getTableView().getItems().get(t.getTablePosition().getRow());
-//
-//            editingItem.setExpenses(t.getNewValue());
-//            editingItem.setExpensesPerHouse(t.getNewValue() / Quantity.quantity());
-//
-//            t.getTableView().refresh();
-//            //Diseble Save & Cancel Context menu Item
-//        });
-//
-//        return tableWrapper;
-//    }
     /**
      * Create TableWrapper "Variable"(AllPropertiesController).
      * <br>
@@ -156,9 +113,30 @@ class AllPropertiesControllerTF implements TableFactory {
         Map<String,Integer> typeMap = CounterpatiesDaoUtil.getType();
 
         TableWrapper<CountAgentTVI> tableWrapper = new TableWrapper(table,dao);
-
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-
+//        table.setRowFactory(new Callback<TableView<CountAgentTVI>, TableRow<CountAgentTVI>>() {
+//            @Override
+//            public TableRow<CountAgentTVI> call(TableView<CountAgentTVI> tableView) {
+//                final TableRow<CountAgentTVI> row = new TableRow<CountAgentTVI>() {
+//                    @Override
+//                    protected void updateItem(CountAgentTVI newRow, boolean empty) {
+//                        super.updateItem(newRow, empty);
+//                        if(super.getTableView().isEditable()) {
+//                            super.setDisable(true);
+//                            if (newRow != null)
+//                                if (newRow.getForm().equals("-")
+//                                        || newRow.getType().equals("-")
+//                                        || newRow.getName().equals("-")) {
+//                                    super.setDisable(false);
+//                                }
+//                        }else if(!super.getTableView().isEditable()){
+//                            super.setDisable(false);
+//                        }
+//                    }
+//                };
+//                return row;
+//            }
+//        });
         TableColumn<CountAgentTVI,String> formColumn
                 = tableWrapper.addColumn("Организационно прововая Форма",
                 cellData ->cellData.getValue().formProperty()
@@ -176,6 +154,7 @@ class AllPropertiesControllerTF implements TableFactory {
                 ComboBoxTableCell.forTableColumn(typeMap.keySet().toArray(new String[0]))
         );
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+
         formColumn.setOnEditCommit((TableColumn.CellEditEvent<CountAgentTVI, String> e) ->{
             CountAgentTVI editedItem = e.getRowValue();
             editedItem.setForm(e.getNewValue());
@@ -183,13 +162,14 @@ class AllPropertiesControllerTF implements TableFactory {
         });
         typerColumn.setOnEditCommit((TableColumn.CellEditEvent<CountAgentTVI, String> e) ->{
             CountAgentTVI editedItem = e.getRowValue();
-            editedItem.setForm(e.getNewValue());
-            editedItem.setIdForm(typeMap.get(e.getNewValue()));
+            editedItem.setType(e.getNewValue());
+            editedItem.setIdType(typeMap.get(e.getNewValue()));
         });
         nameColumn.setOnEditCommit((TableColumn.CellEditEvent<CountAgentTVI, String> e) -> {
             CountAgentTVI editedItem = e.getRowValue();
             editedItem.setName(e.getNewValue());
             editedItem.setIdName(-1);
+            System.out.println("\033[35m "+ e.getNewValue() + " old " + editedItem.getName());
         });
 
 

@@ -34,6 +34,7 @@ public class AllPropertiesController implements Initializable {
     @FXML private TableView<CountAgentTVI> countAgentTable;
     @FXML private ScrollPane reqBankScrollPane;
     @FXML private CheckBox  countAgentСheckBox;
+    @FXML private Button addCoutButton;
 
     private PropertySheetWrapper counterPropSheet;
 
@@ -157,6 +158,8 @@ public class AllPropertiesController implements Initializable {
         countAgentTableWrapper.tableView()
                 .editableProperty()
                 .bind(countAgentСheckBox.selectedProperty());
+        addCoutButton.visibleProperty()
+                .bind(countAgentСheckBox.selectedProperty());
         //bing ContextMenu
         countAgentTableWrapper.tableView()
                 .contextMenuProperty()
@@ -234,9 +237,47 @@ public class AllPropertiesController implements Initializable {
         contractorCencelItemButton  .setVisible(value);
         contractorEditСheckBox      .setDisable(value);
         contractorTableWrapper      .setDisable(value);
-        
     }
 
+    /***************************************************************************
+     *                                                                         *
+     * Handlers                                                                *
+     *                                                                         *
+     **************************************************************************/
+    @FXML
+    private void handle_addCoutButton(ActionEvent event) {
+        boolean addResult = false;
+        switch (addCoutButton.getText()) {
+            case "+":
+                if (countAgentTableWrapper.tableView().isEditable()) {
+                    addResult = countAgentTableWrapper.getItems().add(
+                            new CountAgentTVI(-1, "-", 0, "-", 0, "-")
+                                    .setNewStatus(true)
+                    );
+                }
+                if (addResult) {
+                    addCoutButton.setText("OK");
+                    countAgentСheckBox.setDisable(true);
+                }
+                break;
+            case "OK":
+                CountAgentTVI lastItem = countAgentTableWrapper.getItems().get(countAgentTableWrapper.getItems().size() - 1);
+                if (lastItem.getForm().equals("-")
+                        || lastItem.getType().equals("-")
+                        || lastItem.getName().equals("-")) {
+                    System.out.println("\033[34m ---> wrong edit in last added item");
+                    System.out.println(lastItem.toString());
+
+                }else {
+                    addCoutButton.setText("+");
+                    countAgentTableWrapper.refresh();
+                    countAgentСheckBox.setDisable(false);
+//                    countAgentTableWrapper.setEditable(false);
+                }
+                break;
+
+        }
+    }
     
 
 }
