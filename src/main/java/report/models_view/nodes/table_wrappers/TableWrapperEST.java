@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
-import report.entities.CommonDAO;
+import report.entities.abstraction.CommonDAO;
 import report.entities.items.Item;
 
 

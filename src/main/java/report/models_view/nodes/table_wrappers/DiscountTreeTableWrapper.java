@@ -2,7 +2,7 @@ package report.models_view.nodes.table_wrappers;
 
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TreeTableView;
-import report.entities.CommonDAO;
+import report.entities.abstraction.CommonDAO;
 import report.entities.items.DItem;
 import report.entities.items.discount_coef.DiscountCoef;
 import report.models.mementos.EntityMemento;

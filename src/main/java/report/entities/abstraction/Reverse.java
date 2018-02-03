@@ -1,4 +1,4 @@
-package report.entities;
+package report.entities.abstraction;
 
 import javafx.collections.ObservableList;
 import report.entities.items.DItem;

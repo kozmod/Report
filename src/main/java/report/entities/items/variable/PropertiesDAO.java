@@ -1,6 +1,6 @@
 package report.entities.items.variable;
 
-import report.entities.CommonDAO;
+import report.entities.abstraction.CommonDAO;
 import report.models.sql.SQLconnector;
 
 import java.sql.Connection;

@@ -2,7 +2,7 @@
 package report.entities.items.contractor;
 
 
-import report.entities.CommonDAO;
+import report.entities.abstraction.CommonDAO;
 import report.entities.items.osr.OSR_DAO;
 import report.layoutControllers.LogController;
 import report.usage_strings.SQL;

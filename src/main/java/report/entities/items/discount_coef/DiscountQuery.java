@@ -1,6 +1,6 @@
 package report.entities.items.discount_coef;
 
-import report.entities.CommonDAO;
+import report.entities.abstraction.CommonDAO;
 import report.entities.items.estimate.EstimateDAO;
 import report.entities.items.expenses.ExpensesDAO;
 import report.entities.items.period.PeriodDAO;

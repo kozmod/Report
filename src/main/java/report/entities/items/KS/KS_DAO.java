@@ -2,7 +2,7 @@
 package report.entities.items.KS;
 
 
-import report.entities.CommonDAO;
+import report.entities.abstraction.CommonDAO;
 import report.entities.items.Item;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
@@ -46,7 +46,6 @@ public class KS_DAO implements CommonDAO<Collection<KS_TIV>> {
     */
     @Override
     public ObservableList<KS_TIV> getData(){
-        
         ObservableList<KS_TIV> list = FXCollections.observableArrayList();
         
         String psmtmtString = "SELECT  "

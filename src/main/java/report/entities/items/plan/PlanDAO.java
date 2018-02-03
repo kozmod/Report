@@ -2,7 +2,7 @@
 package report.entities.items.plan;
 
 
-import report.entities.CommonDAO;
+import report.entities.abstraction.CommonDAO;
 import report.entities.items.KS.KS_DAO;
 import report.models.coefficient.Quantity;
 import report.models.mementos.Memento;

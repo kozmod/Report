@@ -4,7 +4,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.entities.Reverse;
+import report.entities.abstraction.Reverse;
 import report.entities.items.Clone;
 import report.entities.items.DItem;
 

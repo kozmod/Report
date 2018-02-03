@@ -2,9 +2,7 @@ package report.models_view.nodes.propertySheet_wrappers;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ContextMenu;
 import org.controlsfx.control.PropertySheet;
-import report.entities.CommonDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.models.mementos.SheetMemento;
 import report.models_view.nodes.table_wrappers.BindBase;

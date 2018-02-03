@@ -1,26 +1,22 @@
 package report.layoutControllers.allProperties;
 
 import javafx.application.Platform;
-import javafx.beans.property.StringProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TextFieldTableCell;
-import javafx.scene.effect.BlendMode;
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.property.editor.AbstractPropertyEditor;
 import org.controlsfx.property.editor.Editors;
 import org.controlsfx.property.editor.PropertyEditor;
-import report.entities.CommonDAO;
+import report.entities.abstraction.CommonDAO;
+import report.entities.abstraction.DaoUtil;
 import report.entities.items.DItem;
 import report.entities.items.contractor.ContractorDAO;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.counterparties.AgentTVI.CountAgentDAO;
-import report.entities.items.propertySheet__TEST.ObjectPSI;
+import report.entities.items.counterparties.CounterpatiesDaoUtil;
 import report.entities.items.variable.PropertiesDAO;
 import report.entities.items.variable.VariableTIV_new;
 import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
@@ -28,11 +24,10 @@ import report.models_view.nodes.propertySheet_wrappers.PropertySheetWrapper;
 import report.models_view.nodes.table_wrappers.ReverseTableWrapper;
 import report.models_view.nodes.table_wrappers.TableWrapper;
 import report.models_view.nodes.nodes_factories.TableFactory;
-import report.usage_strings.SQL;
 
 import java.math.BigInteger;
 import java.time.LocalDate;
-import java.util.List;
+import java.util.Map;
 
 class AllPropertiesControllerTF implements TableFactory {
 
@@ -157,18 +152,46 @@ class AllPropertiesControllerTF implements TableFactory {
      */
     static TableWrapper<CountAgentTVI> decorCountAgent(TableView<CountAgentTVI> table){
         CommonDAO dao = new CountAgentDAO();
+        Map<String,Integer> formMap = CounterpatiesDaoUtil.getForm();
+        Map<String,Integer> typeMap = CounterpatiesDaoUtil.getType();
+
         TableWrapper<CountAgentTVI> tableWrapper = new TableWrapper(table,dao);
+
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn<CountAgentTVI,String> formColumn
-                = tableWrapper.addColumn("Организационно прововая Форма", cellData -> cellData.getValue().formProperty());
+                = tableWrapper.addColumn("Организационно прововая Форма",
+                cellData ->cellData.getValue().formProperty()
+        );
         TableColumn<CountAgentTVI,String> typerColumn
-                = tableWrapper.addColumn("Тип",cellData -> cellData.getValue().typeProperty());
+                = tableWrapper.addColumn("Тип",
+                cellData -> cellData.getValue().typeProperty());
         TableColumn<CountAgentTVI,String> nameColumn
-                = tableWrapper.addColumn("Наименование",cellData -> cellData.getValue().nameProperty());
-        formColumn.setCellFactory(ComboBoxTableCell.forTableColumn());
-        typerColumn.setCellFactory(ComboBoxTableCell.forTableColumn());
+                = tableWrapper.addColumn("Наименование",
+                cellData -> cellData.getValue().nameProperty());
+        formColumn.setCellFactory(
+                ComboBoxTableCell.forTableColumn(formMap.keySet().toArray(new String[0]))
+        );
+        typerColumn.setCellFactory(
+                ComboBoxTableCell.forTableColumn(typeMap.keySet().toArray(new String[0]))
+        );
         nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        formColumn.setOnEditCommit((TableColumn.CellEditEvent<CountAgentTVI, String> e) ->{
+            CountAgentTVI editedItem = e.getRowValue();
+            editedItem.setForm(e.getNewValue());
+            editedItem.setIdForm(formMap.get(e.getNewValue()));
+        });
+        typerColumn.setOnEditCommit((TableColumn.CellEditEvent<CountAgentTVI, String> e) ->{
+            CountAgentTVI editedItem = e.getRowValue();
+            editedItem.setForm(e.getNewValue());
+            editedItem.setIdForm(typeMap.get(e.getNewValue()));
+        });
+        nameColumn.setOnEditCommit((TableColumn.CellEditEvent<CountAgentTVI, String> e) -> {
+            CountAgentTVI editedItem = e.getRowValue();
+            editedItem.setName(e.getNewValue());
+            editedItem.setIdName(-1);
+        });
+
 
         return tableWrapper;
     }
@@ -221,23 +244,6 @@ class AllPropertiesControllerTF implements TableFactory {
                 }
             };
             return editor;
-
-//            switch(param.getName()){
-//                case "ОГРН":
-//                case "ИНН":
-//                    editor = Editors.createNumericEditor(param);
-//                    return editor;
-//                case "Дата присвоения ОГРН":
-//                    editor = Editors.createDateEditor(param);
-//                    return editor;
-//                case "Юридический Адрес":
-//                case "Фактический Адрес":
-//                case "Адрес (Post)":
-//                    editor = Editors.createTextEditor(param);
-//                    return editor;
-//                default:
-//                    return Editors.createTextEditor(param);
-//            }
         });
         return wrapper;
     }

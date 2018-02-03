@@ -1,8 +1,7 @@
 package report.models_view.nodes.table_wrappers;
 
-import com.sun.istack.internal.NotNull;
 import javafx.scene.control.ContextMenu;
-import report.entities.CommonDAO;
+import report.entities.abstraction.CommonDAO;
 import report.models.mementos.Memento;
 
 public abstract class AbstractTableWrapper<E> implements BindBase {

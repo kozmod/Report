@@ -5,7 +5,7 @@
  */
 package report.entities.items.period;
 
-import report.entities.CommonDAO;
+import report.entities.abstraction.CommonDAO;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

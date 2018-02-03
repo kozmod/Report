@@ -2,8 +2,8 @@ package report.models_view.nodes.table_wrappers;
 
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableView;
-import report.entities.CommonDAO;
-import report.entities.Reverse;
+import report.entities.abstraction.CommonDAO;
+import report.entities.abstraction.Reverse;
 import report.entities.items.Clone;
 import report.entities.items.DItem;
 import report.models.mementos.EntityMemento;

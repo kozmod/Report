@@ -1,7 +1,7 @@
 
 package report.entities.items.estimate;
 
-import report.entities.CommonDAO;
+import report.entities.abstraction.CommonDAO;
 import report.entities.items.Item;
 import report.layoutControllers.LogController;
 import report.models.mementos.Memento;

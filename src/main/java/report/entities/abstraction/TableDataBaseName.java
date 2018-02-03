@@ -1,5 +1,5 @@
 
-package report.entities;
+package report.entities.abstraction;
 
 
 public interface TableDataBaseName {

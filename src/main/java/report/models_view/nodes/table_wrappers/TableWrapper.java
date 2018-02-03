@@ -9,9 +9,10 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
-import report.entities.CommonDAO;
+import report.entities.abstraction.CommonDAO;
 import report.entities.items.Clone;
 import report.models.mementos.TableMemento;
+import report.models_view.nodes.ContextMenuOptional;
 
 import java.util.*;
 
@@ -83,6 +84,7 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
         tableView.setItems(DAO.getData());
         this.saveTableItems();
 //        treeTableView.refresh();
+        ContextMenuOptional.setTableItemContextMenuListener(this);
     }
 
     /***************************************************************************

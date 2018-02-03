@@ -27,7 +27,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import report.entities.CommonDAO;
+import report.entities.abstraction.CommonDAO;
 import report.entities.items.Item;
 import report.entities.items.KS.KS_TIV;
 import report.entities.items.estimate.EstimateDAO;

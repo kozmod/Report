@@ -154,7 +154,6 @@ public class AllPropertiesController implements Initializable {
      **************************************************************************/
     private void init_CounterpatiesTab(){
         countAgentTableWrapper = AllPropertiesControllerTF.decorCountAgent(countAgentTable);
-        ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapper);
         countAgentTableWrapper.tableView()
                 .editableProperty()
                 .bind(countAgentСheckBox.selectedProperty());
@@ -168,14 +167,8 @@ public class AllPropertiesController implements Initializable {
         countAgentTableWrapper.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 
         });
-
-
-
-
         counterPropSheet = AllPropertiesControllerTF.getCountPropertySheet();
         reqBankScrollPane.setContent(counterPropSheet.getSheet());
-
-
     }
 
 

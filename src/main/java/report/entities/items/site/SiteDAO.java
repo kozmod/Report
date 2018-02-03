@@ -1,7 +1,7 @@
 
 package report.entities.items.site;
 
-import report.entities.CommonDAO;
+import report.entities.abstraction.CommonDAO;
 import report.entities.items.estimate.EstimateDAO;
 import report.layoutControllers.LogController;
 import report.usage_strings.SQL;
