@@ -1,101 +1,286 @@
+package springBatch;
+
+
+import org.springframework.batch.core.*;
+import org.springframework.batch.core.configuration.annotation.EnableBatchProcessing;
+import org.springframework.batch.core.configuration.annotation.JobBuilderFactory;
+import org.springframework.batch.core.configuration.annotation.StepBuilderFactory;
+import org.springframework.batch.core.job.builder.FlowBuilder;
+import org.springframework.batch.core.job.flow.Flow;
+import org.springframework.batch.core.job.flow.FlowExecutionStatus;
+import org.springframework.batch.core.job.flow.JobExecutionDecider;
+import org.springframework.batch.core.scope.context.ChunkContext;
+import org.springframework.batch.core.step.tasklet.Tasklet;
+import org.springframework.batch.item.ExecutionContext;
+import org.springframework.batch.item.ItemProcessor;
+import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.LineMapper;
+import org.springframework.batch.item.file.mapping.DefaultLineMapper;
+import org.springframework.batch.item.file.mapping.FieldSetMapper;
+import org.springframework.batch.item.file.transform.DefaultFieldSetFactory;
+import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
+import org.springframework.batch.item.file.transform.FieldSet;
+import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.integration.annotation.InboundChannelAdapter;
+import org.springframework.integration.annotation.Poller;
+import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.validation.BindException;
+import springBatch.pojos.ReceiptTransaction;
+import java.math.BigInteger;
+import java.text.*;
+
+
+@Configuration
+@EnableBatchProcessing
+@EnableAsync
+@EnableScheduling
+//@PropertySource("classpath:my.properties")
+public class BatchConfiguration {
+//    @Value("${application.cycle_period.fixed-rate}")
+//    private String PERIOD;
+
+    public static final DateFormat ORDER_DATE_INPUT_FORMAT = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+    public static final DecimalFormat AMOUNT_INPUT_FORMAT = new DecimalFormat(){{
+        setDecimalFormatSymbols(new DecimalFormatSymbols(){{
+            setDecimalSeparator('.');
+        }});
+    }};
+//    public static final String AMOUNT_REGEX = "[0-9]+.{0,1}[0-9]{0,2}";
+
+    private BigInteger ammountSum;
+    private BigInteger amountPaySum = new BigInteger("0");
+    /***************************************************************************
+     *                                                                         *
+     *Schedule                                                                 *
+     *                                                                         *
+     **************************************************************************/
+//    @Scheduled(fixedDelay = 1000)
+//    public void scheduleFixedDelayTask() {
+////        scheduledJob.execute(new J);
+////        System.out.println(scheduledJob.getName());
+//    }
+
+    /***************************************************************************
+     *                                                                         *
+     * READERS                                                                 *
+     *                                                                         *
+     **************************************************************************/
+//    @Bean
+//    public ItemReader<String> reader() {
+//        FlatFileItemReader<String> reader = new FlatFileItemReader<String>();
+//        reader.setResource(new ClassPathResource("201709181OUEK.CSV"));
+//        reader.setLineMapper(new LineMapper<String>() {
+//            @Override
+//            public String mapLine(String line, int lineNumber) throws Exception {
+//                System.err.println(lineNumber+ " line number");
+//                return line;
+//            }
+//        });
+//        reader.setLinesToSkip(1);
+//        return reader;
+//    }
+    @Bean
+    public ItemReader<ReceiptTransaction> reader() {
+        FlatFileItemReader<ReceiptTransaction> reader = new FlatFileItemReader<ReceiptTransaction>();
+        reader.setResource(new ClassPathResource("201709181OUEK.CSV"));
+        reader.setLineMapper(new DefaultLineMapper<ReceiptTransaction>() {{
+            setLineTokenizer(new DelimitedLineTokenizer() {{
+                setDelimiter(";");
+                setQuoteCharacter('"');
+//                setNames(new String[] { "service","orderNumber","transactionId"});
+//                setNames(new String[] { "service","order_date","transactionId", "amount"});
+                setIncludedFields(new int[]{0,1,2,3});
+                setFieldSetFactory(new DefaultFieldSetFactory(){{
+                    setDateFormat(ORDER_DATE_INPUT_FORMAT);
+                    setNumberFormat(AMOUNT_INPUT_FORMAT);
+                }});
+            }});
+            setFieldSetMapper(new FieldSetMapper<ReceiptTransaction>(){
+                @Override
+                public ReceiptTransaction mapFieldSet(FieldSet fieldSet) throws BindException {
+                    ReceiptTransaction rt  = new ReceiptTransaction();
+                    try {
+                        rt.setService(fieldSet.readString(0));
+                        rt.setOrderDate(ORDER_DATE_INPUT_FORMAT.parse(fieldSet.readString(1)));
+                        rt.setTransactionId(fieldSet.readString(2));
+                        Double amountValue = Double.parseDouble(fieldSet.readString(3))*100;
+                        rt.setAmount(amountValue.longValue());
+
+//                   rt.setService(fieldSet.readString(0));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    return rt;
+                }
+            });
+        }});
+        reader.setLinesToSkip(1);
+
+        return reader;
+    }
+    /***************************************************************************
+     *                                                                         *
+     * Processors                                                              *
+     *                                                                         *
+     **************************************************************************/
+    @Bean
+    public ItemProcessor<ReceiptTransaction, ReceiptTransaction> processor() {
+        return new ItemProcessor<ReceiptTransaction, ReceiptTransaction>(){
+            @Override
+            public ReceiptTransaction process(ReceiptTransaction item) throws Exception {
+                amountPaySum = amountPaySum.add(BigInteger.valueOf(item.getAmount()));
+                System.out.println(
+                        item.getService() + " " +
+                        item.getOrderDate() + " " +
+                        item.getTransactionId() + " A" +
+                        item.getAmount() + " "
+                );
+                return item;
+            }
+        };
+    }
+    /***************************************************************************
+     *                                                                         *
+     * WRITERS                                                                 *
+     *                                                                         *
+     **************************************************************************/
+//    @Bean
+//    public ItemWriter<String> writer(
+//            @Value("#{systemProperties['user.dir'].concat('\\fileOut')}")String path)
+//            throws IOException {
+//        //writer
+//    	FlatFileItemWriter<String> writer = new FlatFileItemWriter<String>(){
+//            @Override
+//            public void write(List<? extends String> items) throws Exception {
+////                System.out.println("--------------> "+ path + " header : " + headerString);
+//                super.write(items);
+//            }
+//        };
+////    	writer.setResource(new ClassPathResource("student-marksheet.csv"));
+//    	writer.setResource(
+//    	        new FileSystemResource(
+//    	                path.concat("\\").concat("student-marksheet.csv")
+//                )
+//        );
+//        writer.setShouldDeleteIfEmpty(true);
+//    	writer.setLineAggregator(new LineAggregator<String>() {
+//            @Override
+//            public String aggregate(String item) {
+//                return item;
+//            }
 //
-//	@Bean("reportTransactionItemReaderSoyuztelecom")
-//	@StepScope
-//	public FlatFileItemReader<ReceiptTransaction> transactionReader(@Value("#{jobParameters['input.file.name']}")
-//																			String reportFileName) {
-//		LOGGER.info("Обрабатываем транзакции из файла отчета: " + reportFileName + " Читаем отчет...");
-//		FlatFileItemReader<ReceiptTransaction> reader = new FlatFileItemReader<>();
-//		DefaultLineMapper<ReceiptTransaction> lineMapper = new DefaultLineMapper<>();
-//		DelimitedLineTokenizer tokenizer = new DelimitedLineTokenizer();
-//		tokenizer.setDelimiter(";");
-//		tokenizer.setQuoteCharacter('"');
-//		tokenizer.setNames(new String[]{"transactionId", "orderId", "order_date", "amount", "phone", "order_number", "operator", "service"}); //TODO проверить как правильно: orderId и order_id
-//		DefaultFieldSetFactory fieldSetFactory = new DefaultFieldSetFactory();
-//		fieldSetFactory.setDateFormat(ORDER_DATE_INPUT_FORMAT);
-//		fieldSetFactory.setNumberFormat(AMOUNT_INPUT_FORMAT);
-//		tokenizer.setFieldSetFactory(fieldSetFactory);
-//		lineMapper.setLineTokenizer(tokenizer);
-//		BeanWrapperFieldSetMapper<ReceiptTransaction> fieldSetMapper = new BeanWrapperFieldSetMapper<ReceiptTransaction>() {
-//			@Override
-//			protected void initBinder(DataBinder binder) {
-//				binder.registerCustomEditor(Date.class, new PropertyEditorSupport() {
-//					@Override
-//					public void setAsText(String text) {
-//						if (StringUtils.isNotEmpty(text)) {
-//							try {
-//								setValue(ORDER_DATE_INPUT_FORMAT.parse(text));
-//							} catch (ParseException e) {
-//								LOGGER.error(e.toString(), e);
-//							}
-//						} else {
-//							setValue(null);
-//						}
-//					}
-//
-//					@Override
-//					public String getAsText() {
-//						Date date = (Date) getValue();
-//						if (date != null) {
-//							return ORDER_DATE_INPUT_FORMAT.format(date);
-//						} else {
-//							return "";
-//						}
-//					}
-//				});
-//				binder.registerCustomEditor(Long.class, new PropertyEditorSupport() {
-//					@Override
-//					public void setAsText(String text) throws IllegalArgumentException {
-//						if (StringUtils.isNotEmpty(text)) {
-//							try {
-//								if (!text.matches(AMOUNT_REGEX)) {
-//									throw new IllegalArgumentException("'" + text + "' not match regexp '" + AMOUNT_REGEX + "'");
-//								}
-//								double value = AMOUNT_INPUT_FORMAT.parse(text).doubleValue();
-//								setValue(value * 100); //рубли в копейки
-//							} catch (ParseException e) {
-//								LOGGER.error(e.toString(), e);
-//							}
-//						} else {
-//							setValue(null);
-//						}
-//					}
-//
-//					@Override
-//					public String getAsText() {
-//						Long value = (Long) getValue();
-//						if (value != null) {
-//							return AMOUNT_INPUT_FORMAT.format((double) value / 100.); //копейки в рубли
-//						} else {
-//							return "";
-//						}
-//					}
-//				});
-//			}
-//
-//			@Override
-//			public ReceiptTransaction mapFieldSet(final FieldSet fs) throws BindException {
-//				String msg = "reportFile=[" + reportFileName + "] fs=[" + fs + "] ";
-//				String duplicateErrorMessage = msg + "receiptTransactionRepository.isExistByTransactionId: constraint uc_reports_transactions_receipt unique (trn_id, channel_id)";
-//				try {
-//					ReceiptTransaction transaction = super.mapFieldSet(fs);
-//					transaction.setChannel(channel);
-//
-//					if (receiptTransactionRepository.isExistByTransactionIdAndChannel(transaction.getTransactionId(), channel)) {
-//						LOGGER.warn(duplicateErrorMessage);
-//						//return null; //reader завершается весь!!! org.springframework.batch.item.ItemReader
-//						throw duplicateKeyExceptionClass.getConstructor(String.class).newInstance(duplicateErrorMessage);
-//					} else {
-//						LOGGER.info(msg + " Распарсили: " + transaction);
-//						return transaction;
-//					}
-//				} catch (IllegalAccessException | InstantiationException | NoSuchMethodException | InvocationTargetException e) {
-//					LOGGER.error(duplicateErrorMessage + " " + e.toString(), e);
-//					throw new RuntimeException(duplicateErrorMessage, e); //попробуем просто упасть
-//				} catch (Throwable e) {
-//					if (!(duplicateKeyExceptionClass.isInstance(e))) { //duplicateKeyExceptionClass пропускаем, ибо уже залогировали строчку, а дальше тихо пропустит элемент
-//						LOGGER.error(msg + e.toString(), e);
-//					}
-//					throw e;
-//				}
-//			}
-//		};
+//        });
+////        writer.setAppendAllowed(true);
+//        return writer;
+//    }
+    /***************************************************************************
+     *                                                                         *
+     * Jobs                                                                    *
+     *                                                                         *
+     **************************************************************************/
+    @Bean
+    public Job parsingJob(JobBuilderFactory jobs,
+                               @Qualifier("sumPaymentStep") Step step1,
+                               @Qualifier("checkPaymentSumStep") Step step2
+    ) {
+        Flow flow = new FlowBuilder<Flow>("flow1")
+                .start(step1)
+                .next(new JobExecutionDecider() {
+                    @Override
+                    public FlowExecutionStatus decide(JobExecution jobExecution, StepExecution stepExecution) {
+                        FlowExecutionStatus flowExecutionStatus = FlowExecutionStatus.COMPLETED;
+                        if(!stepExecution.getStatus().equals(BatchStatus.COMPLETED))
+                            flowExecutionStatus = FlowExecutionStatus.FAILED;
+                        return flowExecutionStatus;
+                    }
+                })
+                .on("COMPLETED")
+                .to(step2)
+                .next(new JobExecutionDecider() {
+                    @Override
+                    public FlowExecutionStatus decide(JobExecution jobExecution, StepExecution stepExecution) {
+                        FlowExecutionStatus flowExecutionStatus = FlowExecutionStatus.COMPLETED;
+                        if(!ammountSum.equals(amountPaySum))
+                            flowExecutionStatus = FlowExecutionStatus.FAILED;
+                        return flowExecutionStatus;
+                    }
+                })
+                .on("COMPLETED")
+                .end()
+                .build();
+
+        return jobs.get("parsingJob")
+                .start(flow)
+                .end()
+                .build();
+    }
+    /***************************************************************************
+     *                                                                         *
+     * Steps                                                                   *
+     *                                                                         *
+     **************************************************************************/
+    @Bean
+    public Step sumPaymentStep(StepBuilderFactory stepBuilderFactory) {
+        return stepBuilderFactory.get("sumPaymentStep")
+                .tasklet(new TaskletStep())
+                .build();
+    }
+    @Bean
+    public Step checkPaymentSumStep(StepBuilderFactory stepBuilderFactory,
+                      ItemReader<ReceiptTransaction> reader,
+                      ItemProcessor<ReceiptTransaction, ReceiptTransaction> processor
+    ) {
+        return stepBuilderFactory.get("checkPaymentSumStep")
+                .<ReceiptTransaction, ReceiptTransaction> chunk(1)
+                .reader(reader)
+                .processor(processor)
+                .build();
+    }
+    /***************************************************************************
+     *                                                                         *
+     * Tasklet                                                                 *
+     *                                                                         *
+     **************************************************************************/
+    public class TaskletStep implements Tasklet {
+        @Override
+        public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+            RepeatStatus repeatStatus = RepeatStatus.FINISHED;
+            FlatFileItemReader<String> reader = new FlatFileItemReader<String>();
+            reader.setResource(new ClassPathResource("201709181OUEK.CSV"));
+            reader.setLineMapper(new LineMapper<String>() {
+                @Override
+                public String mapLine(String line, int lineNumber) throws Exception {
+                    final String[] values = line.split(";");
+                    if(values.length > 0 & values[0].equals("sum")){
+                        String s = values[7].replace(".","");
+                        ammountSum = new BigInteger(s);
+                    }
+                    return line;
+                }
+            });
+            reader.open(new ExecutionContext());
+            reader.read();
+            reader.close();
+            return repeatStatus;
+        }
+    }
+
+}
+
+
+sum;6003;20170918;2017-09-18 00:00:00;2017-09-18 23:59:59;2;250.00;250.00
+pay;2017-09-18 02:12:13;129;150.00;;40834510200974320054;1
+pay;2017-09-18 06:00:53;130;100.00;;40817810532374329001;1
+
+
+
+sum;6003;201709181;1;100.00
+back;130;100.00;;40817810532374329001;1
