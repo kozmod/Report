@@ -62,12 +62,29 @@ public class BatchConfiguration {
      *Schedule                                                                 *
      *                                                                         *
      **************************************************************************/
-//    @Scheduled(fixedDelay = 1000)
-//    public void scheduleFixedDelayTask() {
-////        scheduledJob.execute(new J);
-////        System.out.println(scheduledJob.getName());
-//    }
-
+    /**
+     * if you want ot repeat the job -> change "JobParameters".
+     */
+    @Scheduled(cron = "*/10 * * * * *")
+    @Autowired
+    public void launch() {
+        JobParameters jobParameters =
+                new JobParametersBuilder()
+                        .addLong(
+                                "time",
+                                System.currentTimeMillis()
+                        )
+                        .toJobParameters();
+        try {
+            jobLauncher.run(parsingJob,jobParameters);
+        } catch (JobExecutionAlreadyRunningException
+                | JobRestartException
+                | JobInstanceAlreadyCompleteException
+                | JobParametersInvalidException e
+                ) {
+            e.printStackTrace();
+        }
+    }
     /***************************************************************************
      *                                                                         *
      * READERS                                                                 *
