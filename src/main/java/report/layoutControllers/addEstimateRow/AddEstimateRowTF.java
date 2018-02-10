@@ -9,9 +9,9 @@ import javafx.util.Callback;
 import report.entities.abstraction.CommonDAO;
 import report.entities.items.cb.AddEstTIV;
 import report.entities.items.estimate.EstimateDAO;
-import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
-import report.models_view.nodes.table_wrappers.TableWrapperEST;
-import report.models_view.nodes.nodes_factories.TableCellFactory;
+import report.models.converters.numberStringConverters.DoubleStringConverter;
+import report.models.view.wrappers.tableWrappers.TableWrapperEST;
+import report.models.view.nodesFactories.TableCellFactory;
 import report.usage_strings.SQL;
 
 public class AddEstimateRowTF {

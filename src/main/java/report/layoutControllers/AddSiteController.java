@@ -26,7 +26,7 @@ import report.layoutControllers.root.RootLayoutController;
 import report.usage_strings.SQL;
 import report.entities.items.site.SiteCommonDAO;
 import report.usage_strings.ServiceStrings;
-import report.models_view.nodes.node_helpers.InputValidator;
+import report.models.view.nodesHelpers.InputValidator;
 
 
 

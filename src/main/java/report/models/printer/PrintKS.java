@@ -9,7 +9,7 @@ import org.w3c.dom.Element;
 import report.entities.items.Item;
 import report.entities.items.KS.KS_TIV;
 import report.entities.items.contractor.ContractorTIV;
-import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
+import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.usage_strings.SQL;
 import report.layoutControllers.estimate.EstimateController.Est;
 

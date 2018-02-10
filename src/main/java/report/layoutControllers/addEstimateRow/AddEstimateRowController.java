@@ -23,7 +23,7 @@ import report.usage_strings.SQL;
 import report.models.DiffList;
 
 import report.entities.items.estimate.EstimateTVI;
-import report.models_view.nodes.table_wrappers.TableWrapper;
+import report.models.view.wrappers.tableWrappers.TableWrapper;
 
 
 public class AddEstimateRowController implements Initializable {

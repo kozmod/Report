@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import javafx.util.Pair;
 import report.entities.abstraction.CommonDAO;
 import report.entities.items.expenses.ExpensesDAO;
-import report.models.sql.SQLconnector;
+import report.models.beck.sql.SQLconnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -24,7 +24,7 @@ public class CommonItemDAO<F,S>  implements CommonDAO<Collection<CommonDItem<F,S
 
     /***************************************************************************
      *                                                                         *
-     * Clone CONSTRUCTOR                                                       *
+     * CONSTRUCTOR                                                             *
      *                                                                         *
      **************************************************************************/
     public CommonItemDAO(String sqlTable, String sqlFirstValueColumn, String sqlSecondValueColumn) {

@@ -3,10 +3,10 @@ package report.layoutControllers.addKS;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import report.entities.items.account.AccountTVI;
-import report.models.numberStringConverters.dateStringConverters.EpochDayStringConverter;
-import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
-import report.models_view.nodes.table_wrappers.TableWrapper;
-import report.models_view.nodes.nodes_factories.TableFactory;
+import report.models.converters.dateStringConverters.EpochDayStringConverter;
+import report.models.converters.numberStringConverters.DoubleStringConverter;
+import report.models.view.wrappers.tableWrappers.TableWrapper;
+import report.models.view.nodesFactories.TableFactory;
 
 import java.util.Objects;
 

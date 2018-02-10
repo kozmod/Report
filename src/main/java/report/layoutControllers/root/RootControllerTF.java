@@ -4,8 +4,8 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import report.models_view.nodes.nodes_factories.TableCellFactory;
-import report.models_view.nodes.nodes_factories.TableFactory;
+import report.models.view.nodesFactories.TableCellFactory;
+import report.models.view.nodesFactories.TableFactory;
 
 class RootControllerTF implements TableFactory {
 

@@ -3,16 +3,6 @@ import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
-import report.entities.abstraction.DaoUtil;
-import report.entities.items.expenses.ExpensesDAO;
-import report.models.sql.SQLconnector;
-
-import java.sql.CallableStatement;
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class DaoTests {

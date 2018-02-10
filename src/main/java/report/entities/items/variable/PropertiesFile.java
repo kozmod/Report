@@ -1,7 +1,7 @@
 package report.entities.items.variable;
 
 
-import report.models.VFS.VFSImpl;
+import report.models.beck.vfs.VFSImpl;
 
 import java.io.BufferedOutputStream;
 import java.io.FileInputStream;

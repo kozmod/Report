@@ -10,12 +10,12 @@ import report.entities.items.KS.KS_DAO;
 import report.entities.items.KS.KS_TIV;
 import report.entities.items.estimate.EstimateDAO;
 import report.entities.items.estimate.EstimateTVI;
-import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
-import report.models_view.nodes.table_wrappers.TableWrapper;
-import report.models_view.nodes.table_wrappers.TableWrapperEST;
-import report.models_view.nodes.nodes_factories.ContextMenuFactory;
-import report.models_view.nodes.nodes_factories.TableCellFactory;
-import report.models_view.nodes.nodes_factories.TableFactory;
+import report.models.converters.numberStringConverters.DoubleStringConverter;
+import report.models.view.wrappers.tableWrappers.TableWrapper;
+import report.models.view.wrappers.tableWrappers.TableWrapperEST;
+import report.models.view.nodesFactories.ContextMenuFactory;
+import report.models.view.nodesFactories.TableCellFactory;
+import report.models.view.nodesFactories.TableFactory;
 
 import java.util.List;
 

@@ -6,6 +6,9 @@ import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
 import report.entities.items.Clone;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class CountAgentTVI implements Clone {
     private boolean newAdded = false;
     private int idName;
@@ -14,6 +17,9 @@ public class CountAgentTVI implements Clone {
     private StringProperty form;
     private int idType;
     private StringProperty type;
+
+    private Map<String,Integer> linkedNames;
+
 
     /***************************************************************************
      *                                                                         *
@@ -117,6 +123,14 @@ public class CountAgentTVI implements Clone {
 
     public void setType(String type) {
         this.type.set(type);
+    }
+
+    public Map<String, Integer> getLinkedNames() {
+        return linkedNames;
+    }
+
+    public void setLinkedNames(Map<String, Integer> linkedNames) {
+        this.linkedNames = linkedNames;
     }
 
     public CountAgentTVI  setNewStatus(boolean value){

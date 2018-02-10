@@ -10,10 +10,10 @@ import report.entities.items.expenses.ExpensesDAO;
 import report.entities.items.period.PeriodDAO;
 import report.entities.items.period.PeriodTIV;
 import report.entities.items.site.PreviewTIV;
-import report.models.numberStringConverters.dateStringConverters.EpochDayStringConverter;
-import report.models_view.nodes.table_wrappers.TableWrapper;
-import report.models_view.nodes.nodes_factories.TableCellFactory;
-import report.models_view.nodes.nodes_factories.TableFactory;
+import report.models.converters.dateStringConverters.EpochDayStringConverter;
+import report.models.view.wrappers.tableWrappers.TableWrapper;
+import report.models.view.nodesFactories.TableCellFactory;
+import report.models.view.nodesFactories.TableFactory;
 
 public class ExpensesControllerTF {
 

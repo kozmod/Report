@@ -19,7 +19,7 @@ import report.layoutControllers.estimate.EstimateController;
 import report.usage_strings.SQL;
 
 import report.layoutControllers.estimate.EstimateController.Est;
-import report.models_view.nodes.node_helpers.InputValidator;
+import report.models.view.nodesHelpers.InputValidator;
 import report.entities.items.KS.KS_DAO;
 
 

@@ -4,7 +4,7 @@ package report.entities.items.plan;
 
 import report.entities.abstraction.CommonDAO;
 import report.entities.items.KS.KS_DAO;
-import report.models.coefficient.Quantity;
+import report.models.beck.coefficient.Quantity;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
 import java.sql.Connection;
@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layoutControllers.LogController;
-import report.models.sql.SQLconnector;
+import report.models.beck.sql.SQLconnector;
 
 
 public class PlanDAO implements CommonDAO<Collection<PlanTIV>> {

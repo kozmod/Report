@@ -8,7 +8,6 @@ import javafx.util.Pair;
 import javafx.util.StringConverter;
 import report.entities.items.Clone;
 import report.models.mementos.EntityMemento;
-import report.models.numberStringConverters.numberStringConverters.BigIntegerStringConverter;
 
 import java.util.HashMap;
 import java.util.Map;

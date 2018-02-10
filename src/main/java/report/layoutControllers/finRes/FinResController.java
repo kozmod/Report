@@ -16,9 +16,9 @@ import javafx.scene.control.TextField;
 import javafx.util.Duration;
 
 import report.entities.items.fin_res.FinResDAO;
-import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
+import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.entities.items.fin_res.FinResTVI;
-import report.models.numberStringConverters.dateStringConverters.LocalDayStringConverter;
+import report.models.converters.dateStringConverters.LocalDayStringConverter;
 
 
 public class FinResController implements Initializable {

@@ -14,12 +14,12 @@ import report.entities.items.osr.OSR_TIV;
 import report.entities.items.plan.PlanTIV;
 import report.entities.items.plan.PlanDAO;
 import report.entities.items.plan.FactTIV;
-import report.models.coefficient.Quantity;
-import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
-import report.models_view.nodes.ContextMenuOptional;
-import report.models_view.nodes.table_wrappers.DiscountTreeTableWrapper;
-import report.models_view.nodes.table_wrappers.TableWrapper;
-import report.models_view.nodes.nodes_factories.ContextMenuFactory;
+import report.models.beck.coefficient.Quantity;
+import report.models.converters.numberStringConverters.DoubleStringConverter;
+import report.models.view.customNodes.ContextMenuOptional;
+import report.models.view.wrappers.tableWrappers.DiscountTreeTableWrapper;
+import report.models.view.wrappers.tableWrappers.TableWrapper;
+import report.models.view.nodesFactories.ContextMenuFactory;
 
 import java.net.URL;
 import java.sql.Timestamp;

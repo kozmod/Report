@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layoutControllers.estimate.EstimateController.Est;
-import report.models.sql.SQLconnector;
+import report.models.beck.sql.SQLconnector;
 
 
 public class SiteDAO implements CommonDAO<Collection<PreviewTIV>> {

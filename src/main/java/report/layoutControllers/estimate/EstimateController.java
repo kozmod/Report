@@ -37,21 +37,21 @@ import report.entities.items.site.SiteDAO;
 import report.layoutControllers.addKS.AddKSController;
 import report.layoutControllers.root.RootLayoutController;
 import report.entities.items.contractor.ContractorDAO;
-import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
-import report.models.numberStringConverters.dateStringConverters.LocalDayStringConverter;
+import report.models.converters.numberStringConverters.DoubleStringConverter;
+import report.models.converters.dateStringConverters.LocalDayStringConverter;
 import report.usage_strings.PathStrings;
 import report.usage_strings.SQL;
-import report.models_view.nodes.table_wrappers.TableWrapper;
-import report.models_view.nodes.nodes_factories.FileChooserFactory;
+import report.models.view.wrappers.tableWrappers.TableWrapper;
+import report.models.view.nodesFactories.FileChooserFactory;
 
 
-import report.models_view.nodes.node_helpers.StageCreator;
+import report.models.view.nodesHelpers.StageCreator;
 
 import report.models.printer.PrintKS;
-import report.models_view.nodes.TabModel;
-import report.models_view.nodes.table_wrappers.TableWrapperEST;
+import report.models.view.customNodes.TabModel;
+import report.models.view.wrappers.tableWrappers.TableWrapperEST;
 import report.entities.items.KS.KS_DAO;
-import report.models_view.nodes.ContextMenuOptional;
+import report.models.view.customNodes.ContextMenuOptional;
 
 
 public class EstimateController implements Initializable {

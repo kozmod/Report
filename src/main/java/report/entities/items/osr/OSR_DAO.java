@@ -3,7 +3,7 @@ package report.entities.items.osr;
 
 import report.entities.abstraction.CommonDAO;
 import report.layoutControllers.LogController;
-import report.models.coefficient.Quantity;
+import report.models.beck.coefficient.Quantity;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +16,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 //import report.models.Formula_test;
-import report.models.sql.SQLconnector;
+import report.models.beck.sql.SQLconnector;
 
 
 public class OSR_DAO implements CommonDAO<Collection<OSR_TIV>> {

@@ -28,19 +28,19 @@ import report.entities.items.period.PeriodDAO;
 import report.entities.items.site.PreviewTIV;
 import report.entities.items.site.SiteDAO;
 import report.layoutControllers.root.RootLayoutController;
-import report.models.coefficient.Formula;
-import report.models.coefficient.FormulaQuery;
-import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
-import report.models.numberStringConverters.dateStringConverters.LocalDayStringConverter;
+import report.models.beck.coefficient.Formula;
+import report.models.beck.coefficient.FormulaQuery;
+import report.models.converters.numberStringConverters.DoubleStringConverter;
+import report.models.converters.dateStringConverters.LocalDayStringConverter;
 import report.usage_strings.SQL;
 
 import report.layoutControllers.estimate.EstimateController.Est;
 
 import report.entities.items.period.PeriodTIV;
 //import report.models.Formula_test;
-import report.models_view.nodes.table_wrappers.TableWrapper;
-import report.models_view.nodes.nodes_factories.ContextMenuFactory;
-import report.models_view.nodes.ContextMenuOptional;
+import report.models.view.wrappers.tableWrappers.TableWrapper;
+import report.models.view.nodesFactories.ContextMenuFactory;
+import report.models.view.customNodes.ContextMenuOptional;
 
 public class ExpensesController implements Initializable {
     

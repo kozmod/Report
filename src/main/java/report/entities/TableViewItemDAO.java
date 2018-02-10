@@ -15,12 +15,12 @@
 //import javafx.collections.ObservableList;
 //import javafx.collections.ObservableSet;
 //import report.models.mementos.Memento;
-//import report.models.sql.SQLconnector;
-//import report.models_view.nodes.table_wrappers.AbstractTableWrapper;
+//import report.models.beck.sql.SQLconnector;
+//import report.models.view.wrappers.table_wrappers.AbstractTableWrapper;
 //import report.usage_strings.ServiceStrings;
 //import report.models.DiffList;
 //
-//import report.models_view.nodes.table_wrappers.TableWrapper;
+//import report.models.view.wrappers.table_wrappers.TableWrapper;
 //
 //
 //public interface TableViewItemDAO<E> extends CommonDAO<Collection<E>> {

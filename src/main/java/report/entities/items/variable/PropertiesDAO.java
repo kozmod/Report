@@ -1,7 +1,7 @@
 package report.entities.items.variable;
 
 import report.entities.abstraction.CommonDAO;
-import report.models.sql.SQLconnector;
+import report.models.beck.sql.SQLconnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

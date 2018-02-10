@@ -12,7 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.models.sql.SQLconnector;
+import report.models.beck.sql.SQLconnector;
 import report.models.DiffList;
 
 

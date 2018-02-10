@@ -16,8 +16,8 @@ import javafx.util.Duration;
 
 import report.entities.items.account.AccountDAO;
 import report.layoutControllers.addKS.AddKSControllerTF;
-import report.models.sql.sqlQuery.InsertFileXLSQuery;
-import report.models.numberStringConverters.dateStringConverters.LocalDayStringConverter;
+import report.models.beck.sql.sqlQuery.InsertFileXLSQuery;
+import report.models.converters.dateStringConverters.LocalDayStringConverter;
 
 
 public class CorAccountController implements Initializable {

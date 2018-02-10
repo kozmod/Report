@@ -3,7 +3,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
 import report.entities.items.osr.OSR_DAO;
-import report.models.sql.SQLconnector;
+import report.models.beck.sql.SQLconnector;
 
 import java.sql.*;
 import java.util.logging.Level;

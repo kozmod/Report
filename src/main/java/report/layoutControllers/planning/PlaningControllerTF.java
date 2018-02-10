@@ -9,13 +9,13 @@ import report.entities.items.osr.OSR_DAO;
 import report.entities.items.plan.PlanTIV;
 import report.entities.items.plan.PlanDAO;
 import report.layoutControllers.planning.temp.*;
-import report.models.coefficient.Quantity;
-import report.models.numberStringConverters.numberStringConverters.DoubleStringConverter;
-import report.models.numberStringConverters.numberStringConverters.IntegerStringConverter;
-import report.models_view.nodes.table_wrappers.DiscountTreeTableWrapper;
-import report.models_view.nodes.table_wrappers.TableWrapper;
-import report.models_view.nodes.nodes_factories.TableCellFactory;
-import report.models_view.nodes.nodes_factories.TableFactory;
+import report.models.beck.coefficient.Quantity;
+import report.models.converters.numberStringConverters.DoubleStringConverter;
+import report.models.converters.numberStringConverters.IntegerStringConverter;
+import report.models.view.wrappers.tableWrappers.DiscountTreeTableWrapper;
+import report.models.view.wrappers.tableWrappers.TableWrapper;
+import report.models.view.nodesFactories.TableCellFactory;
+import report.models.view.nodesFactories.TableFactory;
 
 public class PlaningControllerTF implements TableFactory {
 

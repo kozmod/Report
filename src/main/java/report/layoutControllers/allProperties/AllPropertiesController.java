@@ -1,30 +1,25 @@
 
 package report.layoutControllers.allProperties;
 
-import java.math.BigInteger;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import org.controlsfx.control.PropertySheet;
+import javafx.scene.layout.GridPane;
 import report.entities.items.contractor.ContractorTIV;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
-import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.entities.items.variable.VariableTIV_new;
-import report.models_view.nodes.propertySheet_wrappers.PropertySheetWrapper;
-import report.models_view.nodes.table_wrappers.ReverseTableWrapper;
-import report.models_view.nodes.table_wrappers.TableWrapper;
-import report.models_view.nodes.nodes_factories.ContextMenuFactory;
-import report.models_view.nodes.ContextMenuOptional;
+import report.models.view.wrappers.propertySheetWrappers.PropertySheetWrapper;
+import report.models.view.wrappers.tableWrappers.ReverseTableWrapper;
+import report.models.view.wrappers.tableWrappers.TableWrapper;
+import report.models.view.nodesFactories.ContextMenuFactory;
+import report.models.view.customNodes.ContextMenuOptional;
 
 
 public class AllPropertiesController implements Initializable {
@@ -35,6 +30,7 @@ public class AllPropertiesController implements Initializable {
     @FXML private ScrollPane reqBankScrollPane;
     @FXML private CheckBox  countAgentСheckBox;
     @FXML private Button addCoutButton;
+    @FXML private GridPane linkedNamesGP;
 
     private PropertySheetWrapper counterPropSheet;
 
@@ -90,7 +86,7 @@ public class AllPropertiesController implements Initializable {
      */
     private void init_VariableTab(){
         //add OSR TableView
-        variableTableWrapper = AllPropertiesControllerTF.decorVariable(variableTable);
+        variableTableWrapper = AllPropertiesControllerND.decorVariable(variableTable);
         //table Context menu property
         variableTableWrapper.tableView().contextMenuProperty().bind(
             Bindings.when(variableEditСheckBox.selectedProperty() )
@@ -111,7 +107,7 @@ public class AllPropertiesController implements Initializable {
      */
     private void init_ContractorTab(){
         //add Contractors TableView
-        contractorTableWrapper = AllPropertiesControllerTF.decorContractor(contractorTable);
+        contractorTableWrapper = AllPropertiesControllerND.decorContractor(contractorTable);
         ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapper);
 
         //bing ContextMenu
@@ -154,7 +150,7 @@ public class AllPropertiesController implements Initializable {
      *                                                                         *
      **************************************************************************/
     private void init_CounterpatiesTab(){
-        countAgentTableWrapper = AllPropertiesControllerTF.decorCountAgent(countAgentTable);
+        countAgentTableWrapper = AllPropertiesControllerND.decorCountAgent(countAgentTable);
         countAgentTableWrapper.tableView()
                 .editableProperty()
                 .bind(countAgentСheckBox.selectedProperty());
@@ -170,8 +166,9 @@ public class AllPropertiesController implements Initializable {
         countAgentTableWrapper.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
 
         });
-        counterPropSheet = AllPropertiesControllerTF.getCountPropertySheet();
+        counterPropSheet = AllPropertiesControllerND.getCountPropertySheet();
         reqBankScrollPane.setContent(counterPropSheet.getSheet());
+        AllPropertiesControllerND.decorLinkedNamesGP(linkedNamesGP);
     }
 
 

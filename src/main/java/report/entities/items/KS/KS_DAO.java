@@ -19,7 +19,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layoutControllers.LogController;
 import report.layoutControllers.estimate.EstimateController.Est;
-import report.models.sql.SQLconnector;
+import report.models.beck.sql.SQLconnector;
 
 
 public class KS_DAO implements CommonDAO<Collection<KS_TIV>> {
