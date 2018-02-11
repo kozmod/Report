@@ -11,7 +11,6 @@ import org.mockito.Mockito;
 import report.entities.items.counterparties.AgentTVI.CountAgentDAO;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.counterparties.ObservablWrapper;
-import report.entities.items.counterparties.commonReq.CountAgentCommonReq;
 import report.layoutControllers.allProperties.AllPropertiesController;
 import report.models.view.wrappers.tableWrappers.AbstractTableWrapper;
 import report.usage_strings.PathStrings;
@@ -55,69 +54,6 @@ public class ViewTests {
         TimeUnit.SECONDS.sleep(3);
     }
 
-    @Test
-    @DisplayName("Общие параметры")
-//    @Disabled
-    public void allPropLayoutTest() throws InterruptedException, NoSuchFieldException, IllegalAccessException {
-
-        FxTestStage fx = FxTestStage.applicationInstance();
-        AllPropertiesController controller = getField("controller",fx);
-        AbstractTableWrapper wrapper = getField("countAgentTableWrapper",controller);
-        CountAgentDAO dao =  Mockito.mock(CountAgentDAO.class);
-        ObservableList<CountAgentTVI> list = FXCollections.observableArrayList(CountAgentTVI.extractor());
-//        list.addAll(
-//                new CountAgentTVI(1,"GREM", "OOO"," Клиент"),
-//                new CountAgentTVI(2,"УЮТ", "OфO"," Подрядчик"),
-//                new CountAgentTVI(3,"САРАЙ", "ААO","Клиент")
-//        );
-        Mockito.when(dao.getData()).thenReturn(list);
-        wrapper.setDAO(dao);
-        controller.initData();
-
-        appThread.join();
-
-    }
-
-    @Test
-    @DisplayName("reflection test")
-    @Disabled
-    public void refTest() throws InterruptedException, NoSuchFieldException, IllegalAccessException {
-        CountAgentCommonReq commonReq = new CountAgentCommonReq(
-                1,
-                false,
-                new BigInteger("12345678901234567890"),
-                100000,
-                new BigInteger("12345678901234567890"),
-                new BigInteger("12345678901234567890"),
-                "adress",
-                "factAdress",
-                "postAdress"
-        );
-        System.out.println(
-        commonReq.getDateOGRN()
-        );
-    }
-    @Test
-    @DisplayName("reflection test")
-    @Disabled
-    public void mementoTest() throws InterruptedException, NoSuchFieldException, IllegalAccessException {
-
-        ObservablWrapper o = new  ObservablWrapper();
-        CountAgentCommonReq commonReq = new CountAgentCommonReq(
-                1,
-                false,
-                new BigInteger("12345678901234567890"),
-                100000,
-                new BigInteger("12345678901234567890"),
-                new BigInteger("12345678901234567890"),
-                "lowadress",
-                "factAdress",
-                "postAdress"
-        );
-        o.put(commonReq);
-
-//        System.out.println(o.undoChanges(CountAgentCommonReq.class));
-    }
 
 
 

@@ -77,7 +77,7 @@ public class CountAgentDAO implements CommonDAO<Collection<CountAgentTVI>> {
                                 newElementId = rs.getInt("ID");
                                 if(newElementId != -1){
                                     item.setIdName(newElementId);
-                                    System.out.println(" new element ID "+ newElementId + " see -> CountAgentDAO ");
+                                    System.out.println(" new element ID "+ newElementId + " see ->CountAgentDAO ");
                                 }
                             }
                         }

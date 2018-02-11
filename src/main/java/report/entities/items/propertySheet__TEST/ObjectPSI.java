@@ -19,8 +19,8 @@ public class ObjectPSI<T> implements  Clone,PropertySheet.Item{
     private final ObjectProperty<T> sheetObject;
     private final String category;
     private final String description;
-    private String sqlName;
-    private String sqlTableName;
+    private final String sqlName;
+    private final String sqlTableName;
     /***************************************************************************
      *                                                                         *
      * CONSTRUCTORS                                                            *
@@ -34,12 +34,14 @@ public class ObjectPSI<T> implements  Clone,PropertySheet.Item{
        this(name,"-",value);
     }
     public ObjectPSI(String name,String category,T value) {
-        this(name,category,"",value);
+        this(name,category,"",value,"","");
     }
-    public ObjectPSI(String name,String category,String description,T value) {
+    public ObjectPSI(String name,String category,String description,T value,String sqlName, String sqlTableName) {
         this.sheetObject = new SimpleObjectProperty<>(this, this.chaheNames(name),value);
         this.category = category;
         this.description = description;
+        this.sqlName = sqlName;
+        this.sqlTableName = sqlTableName;
     }
 
     /***************************************************************************
@@ -47,19 +49,12 @@ public class ObjectPSI<T> implements  Clone,PropertySheet.Item{
      * Getters/Setters                                                         *
      *                                                                         *
      **************************************************************************/
-    public ObjectPSI<T> setSqlName(String sqlName){
-        this.sqlName = sqlName;
-        return this;
 
-    }
+    //TODO: think about abstraction and SQL-interface
     public  String getSqlName(){
         return this.sqlName;
     }
-    public ObjectPSI<T> setSqlTableName(String sqlTableNameName){
-        this.sqlTableName = sqlName;
-        return this;
 
-    }
     public String getSqlTableName(){
         return this.sqlTableName;
     }
@@ -110,7 +105,9 @@ public class ObjectPSI<T> implements  Clone,PropertySheet.Item{
         return (E) new  ObjectPSI(this.getName(),
                 this.getCategory(),
                 this.getDescription(),
-                this.getValue()
+                this.getValue(),
+                this.getSqlName(),
+                this.getSqlTableName()
         );
     }
     public long getId() {

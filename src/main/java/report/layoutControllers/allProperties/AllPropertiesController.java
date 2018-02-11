@@ -3,6 +3,7 @@ package report.layoutControllers.allProperties;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.concurrent.TimeUnit;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
@@ -66,15 +67,17 @@ public class AllPropertiesController implements Initializable {
         this.init_CounterpatiesTab();
 
 
-//        this.initData();
+        //TODO: Exception in thread "JavaFX Application Thread" java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+        this.initData();
     }
     /**
      * Init Data from Base
      */
     public void initData(){
-        variableTableWrapper.setFromBase();
-        contractorTableWrapper.setFromBase();
-        countAgentTableWrapper.setFromBase();
+
+            variableTableWrapper.setFromBase();
+            contractorTableWrapper.setFromBase();
+            countAgentTableWrapper.setFromBase();
     }
     /***************************************************************************
      *                                                                         *

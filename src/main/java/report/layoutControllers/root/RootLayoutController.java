@@ -234,7 +234,7 @@ public class RootLayoutController implements Initializable {
     private void handle_CommonProperties(ActionEvent event) {
         StageCreator allPropLayout
                         = new StageCreator(PathStrings.Layout.ALL_PROPERTIES, "Общие параметры").loadNewWindow();
-        allPropLayout.<AllPropertiesController>getController().initData();
+//        allPropLayout.<AllPropertiesController>getController().initData();
     }
 
     @FXML
