@@ -168,7 +168,7 @@ public class AllPropertiesController implements Initializable {
         });
         counterPropSheet = AllPropertiesControllerND.getCountPropertySheet();
         reqBankScrollPane.setContent(counterPropSheet.getSheet());
-        AllPropertiesControllerND.decorLinkedNamesGP(linkedNamesGP);
+        AllPropertiesControllerND.decorLinkedNamesGP(linkedNamesGP, countAgentTableWrapper);
     }
 
 

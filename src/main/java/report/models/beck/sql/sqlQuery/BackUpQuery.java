@@ -29,7 +29,7 @@ public class BackUpQuery {
         
         String smtmtString ="use [master]; ALTER DATABASE [Test] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;"
                 + "use [master]; RESTORE DATABASE [Test] FROM DISK = ? "
-                            + " WITH REPLACE, RECOVERY, STATS = 10 "
+                            + " WITH file=2,nounload,REPLACE, RECOVERY, STATS = 5 "
                 + " ALTER DATABASE [Test] SET MULTI_USER ";
 //                + "USE master; RESTORE DATABASE [Test] FROM DISK = ? "
 //                            + " WITH REPLACE, RECOVERY, STATS = 10";

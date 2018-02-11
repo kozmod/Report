@@ -1,6 +1,7 @@
 package report.layoutControllers.allProperties;
 
 import javafx.application.Platform;
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableValue;
 import javafx.scene.control.*;
 import javafx.scene.control.TextArea;
@@ -170,7 +171,7 @@ class AllPropertiesControllerND implements TableFactory {
             CountAgentTVI editedItem = e.getRowValue();
             editedItem.setName(e.getNewValue());
             editedItem.setIdName(-1);
-            System.out.println("\033[35m "+ e.getNewValue() + " old " + editedItem.getName());
+            System.out.println("\033[35m "+ e.getNewValue() + " old " + editedItem.getName() + "\033[0m");
         });
 
 
@@ -229,7 +230,7 @@ class AllPropertiesControllerND implements TableFactory {
         return wrapper;
     }
 
-    static void decorLinkedNamesGP(GridPane gridPane){
+    static void decorLinkedNamesGP(GridPane gridPane,TableWrapper<CountAgentTVI> tableWrapper){
         //Nodes
         ListView<String> listView = new ListView<>();
         ListSelectionView<String> listSelectionView= new ListSelectionView<>();
@@ -246,12 +247,13 @@ class AllPropertiesControllerND implements TableFactory {
         editButton.setOnAction(e ->{
             popOver.show(editButton);
             editButton.setDisable(true);
-            listView.setDisable(true);
+
         });
         popOver.setOnHidden(e->{
             editButton.setDisable(false);
-            listView.setDisable(false);
         });
+        Bindings.bindBidirectional(editButton.disableProperty(),listView.disableProperty());
+        Bindings.bindBidirectional(editButton.disableProperty(),tableWrapper.tableView().disableProperty());
         //GridPane
         gridPane.add(editButton, 0,0);
         gridPane.add(listView, 0,1,1,4);

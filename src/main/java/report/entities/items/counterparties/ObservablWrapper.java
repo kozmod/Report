@@ -12,7 +12,7 @@ import report.models.mementos.EntityMemento;
 import java.util.HashMap;
 import java.util.Map;
 
-
+@Deprecated
 public class ObservablWrapper<E extends Observable & Clone> {
 
 private  final Map<Class<?>,Pair<E, EntityMemento<E>>> mementoMap;
@@ -62,9 +62,5 @@ private  final Map<Class<?>,Pair<Property, Property>> propertyMap;
         Class<?> clazz = otherProperty.getBean().getClass();
         propertyMap.put(clazz,pair);
         BidirectionalBinding.bind(viewProperty, otherProperty);
-
     }
-
-
-
 }
