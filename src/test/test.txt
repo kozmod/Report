@@ -62,12 +62,29 @@ public class BatchConfiguration {
      *Schedule                                                                 *
      *                                                                         *
      **************************************************************************/
-//    @Scheduled(fixedDelay = 1000)
-//    public void scheduleFixedDelayTask() {
-////        scheduledJob.execute(new J);
-////        System.out.println(scheduledJob.getName());
-//    }
-
+    /**
+     * if you want ot repeat the job -> change "JobParameters".
+     */
+    @Scheduled(cron = "*/10 * * * * *")
+    @Autowired
+    public void launch() {
+        JobParameters jobParameters =
+                new JobParametersBuilder()
+                        .addLong(
+                                "time",
+                                System.currentTimeMillis()
+                        )
+                        .toJobParameters();
+        try {
+            jobLauncher.run(parsingJob,jobParameters);
+        } catch (JobExecutionAlreadyRunningException
+                | JobRestartException
+                | JobInstanceAlreadyCompleteException
+                | JobParametersInvalidException e
+                ) {
+            e.printStackTrace();
+        }
+    }
     /***************************************************************************
      *                                                                         *
      * READERS                                                                 *
@@ -284,3 +301,82 @@ pay;2017-09-18 06:00:53;130;100.00;;40817810532374329001;1
 
 sum;6003;201709181;1;100.00
 back;130;100.00;;40817810532374329001;1
+
+
+
+@Configuration
+@PropertySource("classpath:ftp.properties")
+public class FtpInProcessUek extends FtpInProcess {
+	private static final Logger LOGGER = LoggerFactory.getLogger(FtpInProcessUek.class);
+
+	protected static FileListFilter<File> localFileFilter;
+
+	@Value("${application.in.uek.ftp.remotedir}")
+	protected String ftpRemotedir;
+	@Value("${application.in.uek.ftp.filenamepattern}")
+	protected String ftpFilenamePattern;
+	@Value("${application.in.uek.local.filenameregexp}")
+	protected String localFilenameRegexp;
+	@Value("${application.in.uek.channel}")
+	protected String channelName;
+
+	@Autowired
+	protected ReportReaderBatchConfigurationUek readerBatchConfiguration;
+
+	@Bean
+	public FtpInboundFileSynchronizer ftpInboundFileSynchronizerUek(){
+		FtpInboundFileSynchronizer fileSynchronizer = new FtpInboundFileSynchronizer(ftpSessionFactory());
+		fileSynchronizer.setDeleteRemoteFiles(true);
+		fileSynchronizer.setRemoteDirectory(ftpRemotedir);
+		fileSynchronizer.setFilter(new FtpSimplePatternFileListFilter(ftpFilenamePattern));
+		return fileSynchronizer;
+	}
+	@Bean
+	@InboundChannelAdapter(channel = "ftpInChannelUek", poller = @Poller(fixedDelay = "${application.ftp.fixed-rate}"))
+	public MessageSource<File> ftpMessageUek(){
+		if(localFileFilter == null){
+			localFileFilter = new AcceptOnceAndRegexFilter(localFilenameRegexp);
+		}
+		FtpInboundFileSynchronizingMessageSource source = new FtpInboundFileSynchronizingMessageSource(
+				ftpInboundFileSynchronizerUek()
+		);
+		source.setLocalDirectory(new File(localdir));
+		source.setAutoCreateLocalDirectory(true);
+		source.setLocalFilter(localFileFilter);
+		return source;
+	}
+	@ServiceActivator(inputChannel = "ftpInChannelUek", outputChannel = "channel-job-uek")
+	public JobLaunchRequest getJobLaunchRequest(final File file) throws IOException{
+		final JobParameters jobParameters = new JobParametersBuilder()
+			.addString("input.file.name", file.getAbsolutePath())
+			.addString("input.file.time", String.valueOf(Files.getAttribute(file.toPath(), //todo
+				//"unix:ctime"
+				"unix:ctime"
+				//"unix:atime"
+				/*
+				atime is the time of the last access
+				mtime is the time of the last content modification
+				ctime is the time of the last metadata modification
+				creation time does not exist (by default)*/
+			)))
+			//.addLong("time.start", System.currentTimeMillis())
+			.toJobParameters();
+		BasicFileAttributes attributes = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
+		LOGGER.debug("52345356654646 1 " + jobParameters //TODO
+			+ " " + new Date(attributes.lastModifiedTime().toMillis())
+			+ " " + new Date(attributes.lastAccessTime().toMillis())
+			+ " " + new Date(attributes.creationTime().toMillis())
+			+ " " + Files.getAttribute(file.toPath(), "unix:ctime").toString()
+		);
+		Channel channel = channelRepository.findByName(channelName);
+		return new JobLaunchRequest(readerBatchConfiguration.getJob(channel), jobParameters);
+	}
+
+	@Bean
+	@ServiceActivator(inputChannel = "channel-job-uek")
+	public JobLaunchingGateway jobHandlerUek(){
+		JobLaunchingGateway jobLaunchingGateway = new JobLaunchingGateway(jobLauncher);
+		jobLaunchingGateway.setOutputChannelName("finish");
+		return jobLaunchingGateway;
+	}
+}
