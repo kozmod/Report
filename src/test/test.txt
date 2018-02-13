@@ -1,3 +1,7 @@
+http://code-flow-hjbello.blogspot.ru/2017/03/taking-decissions-inside-spring-batch.html
+
+
+
 package springBatch;
 
 
@@ -9,12 +13,22 @@ import org.springframework.batch.core.job.builder.FlowBuilder;
 import org.springframework.batch.core.job.flow.Flow;
 import org.springframework.batch.core.job.flow.FlowExecutionStatus;
 import org.springframework.batch.core.job.flow.JobExecutionDecider;
+import org.springframework.batch.core.launch.JobLauncher;
+import org.springframework.batch.core.repository.JobExecutionAlreadyRunningException;
+import org.springframework.batch.core.repository.JobInstanceAlreadyCompleteException;
+import org.springframework.batch.core.repository.JobRestartException;
 import org.springframework.batch.core.scope.context.ChunkContext;
+import org.springframework.batch.core.step.skip.ExceptionClassifierSkipPolicy;
+import org.springframework.batch.core.step.skip.NeverSkipItemSkipPolicy;
+import org.springframework.batch.core.step.skip.SkipLimitExceededException;
+import org.springframework.batch.core.step.skip.SkipPolicy;
 import org.springframework.batch.core.step.tasklet.Tasklet;
 import org.springframework.batch.item.ExecutionContext;
 import org.springframework.batch.item.ItemProcessor;
 import org.springframework.batch.item.ItemReader;
+import org.springframework.batch.item.ItemWriter;
 import org.springframework.batch.item.file.FlatFileItemReader;
+import org.springframework.batch.item.file.FlatFileParseException;
 import org.springframework.batch.item.file.LineMapper;
 import org.springframework.batch.item.file.mapping.DefaultLineMapper;
 import org.springframework.batch.item.file.mapping.FieldSetMapper;
@@ -22,20 +36,26 @@ import org.springframework.batch.item.file.transform.DefaultFieldSetFactory;
 import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
 import org.springframework.batch.item.file.transform.FieldSet;
 import org.springframework.batch.repeat.RepeatStatus;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.classify.SubclassClassifier;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.integration.annotation.InboundChannelAdapter;
-import org.springframework.integration.annotation.Poller;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.validation.BindException;
 import springBatch.pojos.ReceiptTransaction;
+
 import java.math.BigInteger;
 import java.text.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Random;
 
 
 @Configuration
@@ -57,6 +77,24 @@ public class BatchConfiguration {
 
     private BigInteger ammountSum;
     private BigInteger amountPaySum = new BigInteger("0");
+    private int headerQ = 0;
+    private int quantity = 0;
+    private boolean containHeader = false;
+
+    @Autowired
+    protected StepBuilderFactory stepBuilderFactory;
+
+    private final ApplicationContext appContext;
+    private final JobLauncher jobLauncher;
+
+    @Autowired
+    public BatchConfiguration( ApplicationContext appContext
+                              ,JobLauncher jobLauncher
+    ) {
+        this.jobLauncher = jobLauncher;
+        this.appContext = appContext;
+    }
+
     /***************************************************************************
      *                                                                         *
      *Schedule                                                                 *
@@ -66,17 +104,22 @@ public class BatchConfiguration {
      * if you want ot repeat the job -> change "JobParameters".
      */
     @Scheduled(cron = "*/10 * * * * *")
-    @Autowired
     public void launch() {
-        JobParameters jobParameters =
+        final JobParameters jobParameters =
                 new JobParametersBuilder()
-                        .addLong(
-                                "time",
+                        .addString("input.file.name",
+                                "20170918OUEK.CSV"
+                        )
+                        .addLong("time",
                                 System.currentTimeMillis()
                         )
                         .toJobParameters();
         try {
-            jobLauncher.run(parsingJob,jobParameters);
+            JobExecution jex = jobLauncher.run((Job) appContext.getBean("parsingJob")
+                    , jobParameters);
+            if(jex.getStatus().equals(BatchStatus.COMPLETED)){
+                System.out.println("\033[32m AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA \033[0m");
+            }
         } catch (JobExecutionAlreadyRunningException
                 | JobRestartException
                 | JobInstanceAlreadyCompleteException
@@ -85,6 +128,7 @@ public class BatchConfiguration {
             e.printStackTrace();
         }
     }
+
     /***************************************************************************
      *                                                                         *
      * READERS                                                                 *
@@ -104,10 +148,56 @@ public class BatchConfiguration {
 //        reader.setLinesToSkip(1);
 //        return reader;
 //    }
-    @Bean
-    public ItemReader<ReceiptTransaction> reader() {
-        FlatFileItemReader<ReceiptTransaction> reader = new FlatFileItemReader<ReceiptTransaction>();
-        reader.setResource(new ClassPathResource("201709181OUEK.CSV"));
+    @Bean("checkSumTasklet")
+    public Tasklet checkSumTasklet(
+            @Value("20170918OUEK.CSV") String reportFileName
+    ){
+        return new Tasklet() {
+            @Override
+            public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+                RepeatStatus repeatStatus = RepeatStatus.FINISHED;
+                FlatFileItemReader<String> reader = new FlatFileItemReader<String>();
+                reader.setResource(new ClassPathResource(reportFileName));
+                reader.setLineMapper(new LineMapper<String>() {
+                    @Override
+                    public String mapLine(String line, int lineNumber) throws Exception {
+                        final String[] values = line.split(";");
+                        if(values.length > 0 && values[0].equals("sum")){
+                            String s = values[7].replace(".","");
+                            ammountSum = new BigInteger(s);
+                            headerQ = Integer.valueOf(values[5]);
+                            containHeader = true;
+                        }else{
+                            containHeader = false;
+                        }
+                        return line;
+                    }
+                });
+                reader.open(new ExecutionContext());
+                reader.read();
+                reader.close();
+                return repeatStatus;
+            }
+        };
+    }
+    @Bean("payReader")
+    public ItemReader<ReceiptTransaction> reader(
+            @Value("20170918OUEK.CSV") String reportFileName
+    ) {
+        FlatFileItemReader<ReceiptTransaction> reader = new FlatFileItemReader<ReceiptTransaction>(){
+            @Override
+            protected ReceiptTransaction doRead() throws Exception {
+                ReceiptTransaction s = super.doRead();
+                System.out.println(s);
+//                if(s == null && headerQ != quantity) {
+                    System.err.println(" s == null && headerQ != quantity " + (s == null) + "  " + (headerQ != quantity) + " "+headerQ+ " "+quantity  );
+//                    throw new  Exception();
+//                }
+
+                return s ;
+            }
+        };
+        reader.setResource(new ClassPathResource(reportFileName));
         reader.setLineMapper(new DefaultLineMapper<ReceiptTransaction>() {{
             setLineTokenizer(new DelimitedLineTokenizer() {{
                 setDelimiter(";");
@@ -140,30 +230,34 @@ public class BatchConfiguration {
             });
         }});
         reader.setLinesToSkip(1);
-
         return reader;
     }
+
     /***************************************************************************
      *                                                                         *
      * Processors                                                              *
      *                                                                         *
      **************************************************************************/
-    @Bean
+    @Bean("payProcessor")
     public ItemProcessor<ReceiptTransaction, ReceiptTransaction> processor() {
         return new ItemProcessor<ReceiptTransaction, ReceiptTransaction>(){
             @Override
             public ReceiptTransaction process(ReceiptTransaction item) throws Exception {
                 amountPaySum = amountPaySum.add(BigInteger.valueOf(item.getAmount()));
-                System.out.println(
-                        item.getService() + " " +
-                        item.getOrderDate() + " " +
-                        item.getTransactionId() + " A" +
-                        item.getAmount() + " "
+                System.err.println(
+                        "\033[34;43m" +
+                                item.getService() + " " +
+                                item.getOrderDate() + " TA->" +
+                                item.getTransactionId() + " A->" +
+                                item.getAmount() + " "
+                                +  "\033[0m"
                 );
+                quantity++;
                 return item;
             }
         };
     }
+
     /***************************************************************************
      *                                                                         *
      * WRITERS                                                                 *
@@ -203,41 +297,74 @@ public class BatchConfiguration {
      * Jobs                                                                    *
      *                                                                         *
      **************************************************************************/
-    @Bean
-    public Job parsingJob(JobBuilderFactory jobs,
-                               @Qualifier("sumPaymentStep") Step step1,
-                               @Qualifier("checkPaymentSumStep") Step step2
+    @Bean("parsingJob")
+    public Job parsingJob(JobBuilderFactory jobs
+//                               @Qualifier("sumPaymentStep") Step step1,
+//                               @Qualifier("checkPaymentSumStep") Step step2
     ) {
-        Flow flow = new FlowBuilder<Flow>("flow1")
-                .start(step1)
-                .next(new JobExecutionDecider() {
-                    @Override
-                    public FlowExecutionStatus decide(JobExecution jobExecution, StepExecution stepExecution) {
-                        FlowExecutionStatus flowExecutionStatus = FlowExecutionStatus.COMPLETED;
-                        if(!stepExecution.getStatus().equals(BatchStatus.COMPLETED))
-                            flowExecutionStatus = FlowExecutionStatus.FAILED;
-                        return flowExecutionStatus;
-                    }
-                })
-                .on("COMPLETED")
-                .to(step2)
-                .next(new JobExecutionDecider() {
-                    @Override
-                    public FlowExecutionStatus decide(JobExecution jobExecution, StepExecution stepExecution) {
-                        FlowExecutionStatus flowExecutionStatus = FlowExecutionStatus.COMPLETED;
-                        if(!ammountSum.equals(amountPaySum))
-                            flowExecutionStatus = FlowExecutionStatus.FAILED;
-                        return flowExecutionStatus;
-                    }
-                })
-                .on("COMPLETED")
-                .end()
-                .build();
+//        Flow flow = new FlowBuilder<Flow>("flow1")
+//                .start( sumPaymentStep())
+//                .next(new JobExecutionDecider() {
+//                    @Override
+//                    public FlowExecutionStatus decide(JobExecution jobExecution, StepExecution stepExecution) {
+//                        FlowExecutionStatus flowExecutionStatus = FlowExecutionStatus.COMPLETED;
+//                        if(!stepExecution.getStatus().equals(BatchStatus.COMPLETED) || !containHeader)
+//                            flowExecutionStatus = FlowExecutionStatus.FAILED;
+//                        return flowExecutionStatus;
+//                    }
+//                })
+//                .on("COMPLETED")
+//                .to((Step) appContext.getBean("checkPaymentSumStep"))
+//                .on("COMPLETED").to(soutStep())
+//                .from(getHUI())
+//                .on("FAILED" ).to(soutStep2())
+//                .end();//
 
+        Flow flow2 = new FlowBuilder<Flow>("flow2")
+                .start(soutStep3())
+                .end();
+
+
+ Flow flow = new FlowBuilder<Flow>("flow1")
+                .start(soutStep())
+                .next(getHUI())
+         .on("COMPLETED")
+         .to(soutStep2())
+//         .from(getHUI())
+//         .on("FAILED")
+//         .to(soutStep3())
+         .next(soutStep3())
+         .end();
         return jobs.get("parsingJob")
                 .start(flow)
+                .next(flow2)
                 .end()
                 .build();
+    }
+
+    @Bean
+    public JobExecutionDecider getHUI(){
+        return  new JobExecutionDecider() {
+
+            @Override
+            public FlowExecutionStatus decide(JobExecution jobExecution, StepExecution stepExecution) {
+                Random generator = new Random();
+                int randomInt = generator.nextInt();
+
+                System.err.println("Executing Decision with randomInt = " + randomInt);
+
+                if(randomInt % 2 == 0){
+                    System.err.println("------------------------------------------");
+                    System.err.println("Completed -> go to step 2");
+                    System.err.println("------------------------------------------");
+                    return FlowExecutionStatus.COMPLETED;
+                }
+                System.err.println("------------------------------------------");
+                System.err.println("Failed -> go to step 3");
+                System.err.println("------------------------------------------");
+                return FlowExecutionStatus.FAILED;
+            }
+        };
     }
     /***************************************************************************
      *                                                                         *
@@ -245,20 +372,74 @@ public class BatchConfiguration {
      *                                                                         *
      **************************************************************************/
     @Bean
-    public Step sumPaymentStep(StepBuilderFactory stepBuilderFactory) {
+    public Step sumPaymentStep() {
         return stepBuilderFactory.get("sumPaymentStep")
-                .tasklet(new TaskletStep())
+                .tasklet((Tasklet) appContext.getBean("checkSumTasklet"))
+//                .tasklet(new TaskletStep())
                 .build();
     }
     @Bean
-    public Step checkPaymentSumStep(StepBuilderFactory stepBuilderFactory,
-                      ItemReader<ReceiptTransaction> reader,
-                      ItemProcessor<ReceiptTransaction, ReceiptTransaction> processor
-    ) {
+    public Step checkPaymentSumStep() {
+        ItemReader<ReceiptTransaction> reader
+                = (ItemReader)appContext.getBean("payReader");
+//        ItemProcessor<ReceiptTransaction, ReceiptTransaction>  processor
+//                =(ItemProcessor) appContext.getBean("payProcessor");
+
         return stepBuilderFactory.get("checkPaymentSumStep")
-                .<ReceiptTransaction, ReceiptTransaction> chunk(1)
+                .<ReceiptTransaction, ReceiptTransaction> chunk(500)
                 .reader(reader)
-                .processor(processor)
+                .processor(this.processor())
+                .writer(new ItemWriter<ReceiptTransaction>() {
+                    @Override
+                    public void write(List<? extends ReceiptTransaction> items) throws Exception {
+                        if(quantity <= headerQ)
+                        System.err.println(System.currentTimeMillis() +"------------------------------ write ---------------------------------- " + items.size());
+                        else
+                            System.out.println("------------------------------ no ---------------------------------- ");
+                    }
+                })
+                .build();
+    }
+    @Bean
+    public Step soutStep() {
+        return stepBuilderFactory
+                .get("soutStep")
+                .tasklet(new Tasklet() {
+                    @Override
+                    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+                        System.err.println("\033[33;1m -------------------------------------------------------------->  soutStep\033[0m");
+                        RepeatStatus repeatStatus = RepeatStatus.FINISHED;
+                        return repeatStatus;
+                    }
+                })
+                .build();
+    }
+    @Bean
+    public Step soutStep2() {
+        return stepBuilderFactory
+                .get("soutStep2")
+                .tasklet(new Tasklet() {
+                    @Override
+                    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+                        System.err.println("\033[35;1m  -------------------------------------------------------------->  soutStep2\033[0m");
+                        RepeatStatus repeatStatus = RepeatStatus.FINISHED;
+                        return repeatStatus;
+                    }
+                })
+                .build();
+    }
+    @Bean
+    public Step soutStep3() {
+        return stepBuilderFactory
+                .get("soutStep3")
+                .tasklet(new Tasklet() {
+                    @Override
+                    public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+                        System.out.println("\033[32;1m  -------------------------------------------------------------->  soutStep3 \033[0m");
+                        RepeatStatus repeatStatus = RepeatStatus.FINISHED;
+                        return repeatStatus;
+                    }
+                })
                 .build();
     }
     /***************************************************************************
@@ -266,117 +447,29 @@ public class BatchConfiguration {
      * Tasklet                                                                 *
      *                                                                         *
      **************************************************************************/
-    public class TaskletStep implements Tasklet {
-        @Override
-        public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
-            RepeatStatus repeatStatus = RepeatStatus.FINISHED;
-            FlatFileItemReader<String> reader = new FlatFileItemReader<String>();
-            reader.setResource(new ClassPathResource("201709181OUEK.CSV"));
-            reader.setLineMapper(new LineMapper<String>() {
-                @Override
-                public String mapLine(String line, int lineNumber) throws Exception {
-                    final String[] values = line.split(";");
-                    if(values.length > 0 & values[0].equals("sum")){
-                        String s = values[7].replace(".","");
-                        ammountSum = new BigInteger(s);
-                    }
-                    return line;
-                }
-            });
-            reader.open(new ExecutionContext());
-            reader.read();
-            reader.close();
-            return repeatStatus;
-        }
-    }
 
-}
+//    public class TaskletStep implements Tasklet {
+//        @Override
+//        public RepeatStatus execute(StepContribution contribution, ChunkContext chunkContext) throws Exception {
+//            RepeatStatus repeatStatus = RepeatStatus.FINISHED;
+//            FlatFileItemReader<String> reader = new FlatFileItemReader<String>();
+//            reader.setResource(new ClassPathResource("201709181OUEK.CSV"));
+//            reader.setLineMapper(new LineMapper<String>() {
+//                @Override
+//                public String mapLine(String line, int lineNumber) throws Exception {
+//                    final String[] values = line.split(";");
+//                    if(values.length > 0 & values[0].equals("sum")){
+//                        String s = values[7].replace(".","");
+//                        ammountSum = new BigInteger(s);
+//                    }
+//                    return line;
+//                }
+//            });
+//            reader.open(new ExecutionContext());
+//            reader.read();
+//            reader.close();
+//            return repeatStatus;
+//        }
+//    }
 
-
-sum;6003;20170918;2017-09-18 00:00:00;2017-09-18 23:59:59;2;250.00;250.00
-pay;2017-09-18 02:12:13;129;150.00;;40834510200974320054;1
-pay;2017-09-18 06:00:53;130;100.00;;40817810532374329001;1
-
-
-
-sum;6003;201709181;1;100.00
-back;130;100.00;;40817810532374329001;1
-
-
-
-@Configuration
-@PropertySource("classpath:ftp.properties")
-public class FtpInProcessUek extends FtpInProcess {
-	private static final Logger LOGGER = LoggerFactory.getLogger(FtpInProcessUek.class);
-
-	protected static FileListFilter<File> localFileFilter;
-
-	@Value("${application.in.uek.ftp.remotedir}")
-	protected String ftpRemotedir;
-	@Value("${application.in.uek.ftp.filenamepattern}")
-	protected String ftpFilenamePattern;
-	@Value("${application.in.uek.local.filenameregexp}")
-	protected String localFilenameRegexp;
-	@Value("${application.in.uek.channel}")
-	protected String channelName;
-
-	@Autowired
-	protected ReportReaderBatchConfigurationUek readerBatchConfiguration;
-
-	@Bean
-	public FtpInboundFileSynchronizer ftpInboundFileSynchronizerUek(){
-		FtpInboundFileSynchronizer fileSynchronizer = new FtpInboundFileSynchronizer(ftpSessionFactory());
-		fileSynchronizer.setDeleteRemoteFiles(true);
-		fileSynchronizer.setRemoteDirectory(ftpRemotedir);
-		fileSynchronizer.setFilter(new FtpSimplePatternFileListFilter(ftpFilenamePattern));
-		return fileSynchronizer;
-	}
-	@Bean
-	@InboundChannelAdapter(channel = "ftpInChannelUek", poller = @Poller(fixedDelay = "${application.ftp.fixed-rate}"))
-	public MessageSource<File> ftpMessageUek(){
-		if(localFileFilter == null){
-			localFileFilter = new AcceptOnceAndRegexFilter(localFilenameRegexp);
-		}
-		FtpInboundFileSynchronizingMessageSource source = new FtpInboundFileSynchronizingMessageSource(
-				ftpInboundFileSynchronizerUek()
-		);
-		source.setLocalDirectory(new File(localdir));
-		source.setAutoCreateLocalDirectory(true);
-		source.setLocalFilter(localFileFilter);
-		return source;
-	}
-	@ServiceActivator(inputChannel = "ftpInChannelUek", outputChannel = "channel-job-uek")
-	public JobLaunchRequest getJobLaunchRequest(final File file) throws IOException{
-		final JobParameters jobParameters = new JobParametersBuilder()
-			.addString("input.file.name", file.getAbsolutePath())
-			.addString("input.file.time", String.valueOf(Files.getAttribute(file.toPath(), //todo
-				//"unix:ctime"
-				"unix:ctime"
-				//"unix:atime"
-				/*
-				atime is the time of the last access
-				mtime is the time of the last content modification
-				ctime is the time of the last metadata modification
-				creation time does not exist (by default)*/
-			)))
-			//.addLong("time.start", System.currentTimeMillis())
-			.toJobParameters();
-		BasicFileAttributes attributes = Files.readAttributes(file.toPath(), BasicFileAttributes.class);
-		LOGGER.debug("52345356654646 1 " + jobParameters //TODO
-			+ " " + new Date(attributes.lastModifiedTime().toMillis())
-			+ " " + new Date(attributes.lastAccessTime().toMillis())
-			+ " " + new Date(attributes.creationTime().toMillis())
-			+ " " + Files.getAttribute(file.toPath(), "unix:ctime").toString()
-		);
-		Channel channel = channelRepository.findByName(channelName);
-		return new JobLaunchRequest(readerBatchConfiguration.getJob(channel), jobParameters);
-	}
-
-	@Bean
-	@ServiceActivator(inputChannel = "channel-job-uek")
-	public JobLaunchingGateway jobHandlerUek(){
-		JobLaunchingGateway jobLaunchingGateway = new JobLaunchingGateway(jobLauncher);
-		jobLaunchingGateway.setOutputChannelName("finish");
-		return jobLaunchingGateway;
-	}
 }
