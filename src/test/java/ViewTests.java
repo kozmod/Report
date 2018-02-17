@@ -1,5 +1,6 @@
 import helperClasses.FxTestStage;
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.BeforeAll;
@@ -11,12 +12,16 @@ import org.mockito.Mockito;
 import report.entities.items.counterparties.AgentTVI.CountAgentDAO;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.counterparties.ObservablWrapper;
+import report.entities.items.counterparties.ReqBankDAO;
+import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.layoutControllers.allProperties.AllPropertiesController;
 import report.models.view.wrappers.tableWrappers.AbstractTableWrapper;
 import report.usage_strings.PathStrings;
 
 import java.lang.reflect.Field;
 import java.math.BigInteger;
+import java.time.LocalDate;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 @FixMethodOrder(MethodSorters.JVM)
@@ -41,20 +46,30 @@ public class ViewTests {
      * TESTS                                                                   *
      *                                                                         *
      **************************************************************************/
-    static Thread appThread;
-    @BeforeAll
-    @DisplayName("Общие параметры")
+//    @BeforeAll
+    @DisplayName("Запускаем FXML")
     public static void startApp() throws InterruptedException {
-        appThread = new Thread(() -> {
-            FxTestStage.launchApp(
-                    PathStrings.Layout.ALL_PROPERTIES
-            );
-        });
-        appThread.start();
-        TimeUnit.SECONDS.sleep(3);
+            FxTestStage.launch(PathStrings.Layout.ALL_PROPERTIES);
+
     }
-
-
-
-
+    @Test
+//    @Disabled
+    @DisplayName("Держатель Приложения")
+    public void firstTest(){
+        FxTestStage.launch(PathStrings.Layout.ALL_PROPERTIES);
+        try {
+            TimeUnit.SECONDS.sleep(55);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    @Test
+    @Disabled
+    public void checkToString(){
+     ObservableList<ObjectPSI> list = (ObservableList<ObjectPSI>) new ReqBankDAO().getBank(55);
+        list.addListener((ListChangeListener<? super ObjectPSI>) e -> {
+            System.out.println("AAAAAAAAAA");
+        });
+        list.get(1).setValue("12344");
+    }
 }

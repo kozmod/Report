@@ -4,8 +4,12 @@ import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.control.Control;
 import javafx.util.Callback;
 import org.controlsfx.control.PropertySheet;
+import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationResult;
+import org.controlsfx.validation.Validator;
 import report.entities.items.Clone;
 import report.entities.items.Item;
 
@@ -21,6 +25,7 @@ public class ObjectPSI<T> implements  Clone,PropertySheet.Item{
     private final String description;
     private final String sqlName;
     private final String sqlTableName;
+    private final String regExValidation;
     /***************************************************************************
      *                                                                         *
      * CONSTRUCTORS                                                            *
@@ -30,18 +35,36 @@ public class ObjectPSI<T> implements  Clone,PropertySheet.Item{
         this("",value);
     }
 
-    public ObjectPSI(String name,T value) {
+    public ObjectPSI(String name
+            ,T value) {
        this(name,"-",value);
     }
-    public ObjectPSI(String name,String category,T value) {
+    public ObjectPSI(String name
+            ,String category
+            ,T value) {
         this(name,category,"",value,"","");
     }
-    public ObjectPSI(String name,String category,String description,T value,String sqlName, String sqlTableName) {
+    public ObjectPSI(String name
+            ,String category
+            ,String description
+            ,T value
+            ,String sqlName
+            ,String sqlTableName) {
+        this(name,category,description,value,sqlName,sqlTableName, ".+");
+    }
+    public ObjectPSI(String name
+            ,String category
+            ,String description
+            ,T value
+            ,String sqlName
+            ,String sqlTableName
+            ,String regExValidation) {
         this.sheetObject = new SimpleObjectProperty<>(this, this.chaheNames(name),value);
         this.category = category;
         this.description = description;
         this.sqlName = sqlName;
         this.sqlTableName = sqlTableName;
+        this.regExValidation = regExValidation;
     }
 
     /***************************************************************************
@@ -116,6 +139,23 @@ public class ObjectPSI<T> implements  Clone,PropertySheet.Item{
 
     public void setId(long id) {
 
+    }
+
+    public  Validator<T> getValidator(){
+       return new Validator<T>() {
+            @Override
+            public ValidationResult apply(Control control, T value) {
+                boolean condition = value != null
+                                    ? !value.toString().matches(ObjectPSI.this.regExValidation)
+                                    : value == null;
+                return ValidationResult.fromMessageIf(
+                        control,
+                        ObjectPSI.this.getDescription(),
+                        Severity.ERROR,
+                        condition
+                );
+            }
+        };
     }
     /***************************************************************************
      *                                                                         *

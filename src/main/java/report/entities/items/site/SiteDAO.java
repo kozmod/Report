@@ -235,9 +235,9 @@ public class SiteDAO implements CommonDAO<Collection<PreviewTIV>> {
 
 //    @Override
 //    public void dellAndInsert(AbstractTableWrapper<Collection<PreviewTIV>> tableWrapper) {
-//        if(tableWrapper.getItems() != null) {
-//                    delete(tableWrapper.getItems());
-//                    insert(tableWrapper.getItems());  }
+//        if(tableWrapper.getObservableItems() != null) {
+//                    delete(tableWrapper.getObservableItems());
+//                    insert(tableWrapper.getObservableItems());  }
 //    }
     
     public void dellAndInsert(Collection<PreviewTIV> collection) {

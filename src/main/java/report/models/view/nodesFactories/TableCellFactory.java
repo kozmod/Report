@@ -384,7 +384,7 @@ public class TableCellFactory{
             checkBox = new CheckBox();
             checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
                 getTableView().getItems().get(getIndex()).setCheck(newValue);
-//                ((AddEstTIV)treeTableView().getItems().saveEst(getIndex())).setCheck(newValue);
+//                ((AddEstTIV)treeTableView().getObservableItems().saveEst(getIndex())).setCheck(newValue);
             });
         }
     }
@@ -482,7 +482,7 @@ public class TableCellFactory{
                 setOnMouseClicked(mouseEvent ->{
                     if(mouseEvent.getButton().equals(MouseButton.PRIMARY) & mouseEvent.getClickCount() == 2){
                             String text = this.getText();
-//                            Item itemW = this.treeTableView().getItems()
+//                            Item itemW = this.treeTableView().getObservableItems()
 //                                    .stream()
 //                                    .filter(i -> i.getJM_name().equals(text))
 //                                    .findFirst()
@@ -549,7 +549,7 @@ public class TableCellFactory{
 //                setOnMouseEntered(quantity ->{
 ////                     
 //                   
-//                     RootLayoutController.update_changeTable((ObservableList) Est.Base.findItemsList_DL(this.treeTableView().getItems().saveEst(this.getIndex())));
+//                     RootLayoutController.update_changeTable((ObservableList) Est.Base.findItemsList_DL(this.treeTableView().getObservableItems().saveEst(this.getIndex())));
 //                    
 //                 });
 //                 

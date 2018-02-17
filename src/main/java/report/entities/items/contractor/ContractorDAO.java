@@ -181,7 +181,7 @@ public class ContractorDAO implements CommonDAO<Collection<ContractorTIV>> {
 //    @Override
 //    public void dellAndInsert(TableWrapper table) {
 //        Collection tableMemento = table.getMemento().getSavedState(),
-//                   current = table.getItems();
+//                   current = table.getObservableItems();
 //        
 //        
 ////        System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>");

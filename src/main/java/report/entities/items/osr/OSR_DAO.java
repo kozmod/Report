@@ -170,7 +170,7 @@ public class OSR_DAO implements CommonDAO<Collection<OSR_TIV>> {
 //    @Override
 //    public void dellAndInsert(TableWrapper table) {
 //        Collection tableMemento = table.getMemento().getSavedState(),
-//                   current = table.getItems();
+//                   current = table.getObservableItems();
 //        
 ////        DataUtils.DiffList diffList = new DataUtils.DiffList(tableMemento,current);
 ////        if(diffList.exElements() != null 

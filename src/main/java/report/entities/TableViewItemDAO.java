@@ -34,7 +34,7 @@
 ////    @Override
 ////    default void  dellAndInsert(Memento<Collection<E>> memento) {
 //////        Collection<E>  memento =  table.getMemento().getSavedState(),
-//////                current = table.getItems();
+//////                current = table.getObservableItems();
 ////        Collection<E> deleteCollection = memento.toDelete();
 ////        Collection<E> insertCollection = memento.toInsert();
 ////        if(deleteCollection != null | !deleteCollection.isEmpty()){
@@ -60,7 +60,7 @@
 ////    @Override
 ////    default void  dellAndInsert(AbstractTableWrapper<Collection<E>> table) {
 //////        Collection<E>  memento =  table.getMemento().getSavedState(),
-//////                current = table.getItems();
+//////                current = table.getObservableItems();
 ////
 ////        Collection<E> deleteCollection = table.getMemento().toDelete();
 ////        Collection<E> insertCollection = table.getMemento().toInsert();

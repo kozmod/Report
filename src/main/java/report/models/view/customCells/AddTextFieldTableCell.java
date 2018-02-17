@@ -87,7 +87,7 @@
 //                    setGraphic(null);
 //        } else {
 //            final long personID = this.getTableView()
-//                    .getItems()
+//                    .getObservableItems()
 //                    .get(this.getIndex())
 //                    .getId();
 //            if(setOfNewCells != null & personID  == -1 &  CHANGED == 0) {
@@ -167,7 +167,7 @@
 //        final TextField textField = new TextField(getItemText(cell, converter));
 //        // Use onAction here rather than onKeyReleased (with check for Enter),
 //        // as otherwise we encounter RT-34685
-////        if( cell.getTableView().getItems().get(cell.getIndex()).getId() != 0)
+////        if( cell.getTableView().getObservableItems().get(cell.getIndex()).getId() != 0)
 ////        if( cell.changesCounter != 0)
 //        textField.setOnAction(event -> {
 //            if (converter == null) {

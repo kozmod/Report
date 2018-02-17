@@ -557,7 +557,7 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
     @Override
     public void dellAndInsert(Memento<Collection<EstimateTVI>> memento){
 //        Collection tableMemento = table.getMemento().getSavedState(),
-//                   current = table.getItems();     
+//                   current = table.getObservableItems();
 //        
 //        DataUtils.DiffList diffList = new DataUtils.DiffList(tableMemento,current);
 //        if(diffList.exElements() != null 
@@ -572,7 +572,7 @@ public class EstimateDAO implements CommonDAO<Collection<EstimateTVI>> {
 //       @Override
 //    public void dellAndInsert(AbstractTableWrapper<Collection<EstimateTVI>> table){
 ////        Collection tableMemento = table.getMemento().getSavedState(),
-////                   current = table.getItems();
+////                   current = table.getObservableItems();
 ////
 ////        DataUtils.DiffList diffList = new DataUtils.DiffList(tableMemento,current);
 ////        if(diffList.exElements() != null

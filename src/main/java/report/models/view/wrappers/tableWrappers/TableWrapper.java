@@ -133,7 +133,7 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
     }
     /**
      * Update TableView Items, use <b>method</b>:
-     * <br><b>this.</b>getItems().setAll(newItems);
+     * <br><b>this.</b>getObservableItems().setAll(newItems);
      */
     public void updateTableFromBASE(List newItems){tableView.getItems().setAll(newItems);}
 

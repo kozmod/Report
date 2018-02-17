@@ -88,7 +88,7 @@ public class FinResController implements Initializable {
                             .filter(item -> item.getDateContract()>=(int) dateFinResFrom.getValue().toEpochDay()
                                     && item.getDateContract()<=(int) dateFinResTo.getValue().toEpochDay())
                             .collect(toCollection(FXCollections::observableArrayList)));
-//            System.err.println(finResTable.getItems());
+//            System.err.println(finResTable.getObservableItems());
             setTextFieldValue(sumSmetCostTF);
             setTextFieldValue(sumCostHouseTF);
             setTextFieldValue(profitTF);

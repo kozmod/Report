@@ -537,7 +537,7 @@ public class EstimateController implements Initializable {
 
 
 //            new PrintKS.Builder()
-//                    .setObsKS(tableKSWrapper.getItems())
+//                    .setObsKS(tableKSWrapper.getObservableItems())
 ////                 .setObsPreTab(previewTableObs)
 //                    .setKSnumber(listKS.getSelectionModel().getSelectedItem().formatNumber())
 //                    .setKSDate(ksDateLabel.getText())

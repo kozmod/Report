@@ -126,7 +126,7 @@
 //    */
 //    @Override
 //    public  void dellAndInsert(AbstractTableWrapper<Collection<VariableTIV>> tableWrapper) {
-//        insert(tableWrapper.getItems());
+//        insert(tableWrapper.getObservableItems());
 //    }
 //
 //

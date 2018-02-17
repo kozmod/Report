@@ -5,14 +5,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import report.usage_strings.PathStrings;
 
 import java.awt.*;
+import java.util.concurrent.TimeUnit;
 
 public class FxTestStage extends Application {
-    static  FxTestStage thisApplication;
-    private  static String fxmlFile;
-    private  static int width;
-    private  static  int height;
+    static   FxTestStage thisApplication;
+    private static String fxmlFile;
+    private static int width ;
+    private static int height;
+    private static String[] args;
+
     private  Stage primaryStage;
     private  Object controller;
 
@@ -22,16 +26,21 @@ public class FxTestStage extends Application {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = loader.load();
         primaryStage.setTitle("TEST Scene");
-        primaryStage.setScene(new Scene(root, width, height));
+        if(width == 0 || height == 0)
+            primaryStage.setScene(new Scene(root));
+        else
+         primaryStage.setScene(new Scene(root, width, height));
         this.controller = loader.getController();
         this.primaryStage = primaryStage;
         primaryStage.show();
 
     }
 
+
     public FxTestStage() {
         thisApplication = this;
     }
+
 
     /***************************************************************************
      *                                                                         *
@@ -49,47 +58,29 @@ public class FxTestStage extends Application {
      * Factory Methods                                                         *
      *                                                                         *
      **************************************************************************/
-    /**
-     * <b>**Factory Method**</b>
-     * <br>
-     * Launch the application with default size.
-     */
-    public  static  void launchApp(String... args) {
-        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-        if(args.length > 0)
-        FxTestStage.launchApp(
-                screenSize.width-200,
-                screenSize.height-200,
-                args[0],
-                args
-        );
-    }
-    /**
-     * <b>**Factory Method**</b>
-     * <br>
-     * Launch the application with  "SQUARE" size.
-     * @param squareSize int (squareSize size)
-     * @param fxmlPath String (Path of FXML File)
-     * @param args String[] (args)
-     */
-    public static void launchApp(int squareSize, String fxmlPath, String ... args) {
-        FxTestStage.launchApp(squareSize, squareSize,fxmlPath, args);
+
+    public static void launch(String fxmlFile) {
+        FxTestStage.launch(fxmlFile, 0);
 
     }
-    /**
-     * <b>**Factory Method**</b>
-     * <br>
-     * Launch the application with  set width & height of window.
-     * @param width int (width of window)
-     * @param height int (height of window)
-     * @param fxmlPath String (Path of FXML File)
-     * @param args String[] (args)
-     */
-    public static void launchApp(int width,int height, String fxmlPath, String ... args) {
+    public static void launch(String fxmlFile, int sleep) {
+        FxTestStage.fxmlFile = fxmlFile;
+        new Thread(() -> {
+            Application.launch();
+        }).start();
+        try {
+            TimeUnit.SECONDS.sleep(sleep);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+    /***************************************************************************
+     *                                                                         *
+     * Setters                                                                 *
+     *                                                                         *
+     **************************************************************************/
+    public static void setSize(int width,int height) {
         FxTestStage.width = width;
         FxTestStage.height = height;
-        FxTestStage.fxmlFile = fxmlPath;
-        if(args.length > 0)
-            Application.launch(args);
     }
 }

@@ -3,16 +3,17 @@ package report.layoutControllers.allProperties;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.concurrent.TimeUnit;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import org.controlsfx.control.PropertySheet;
 import report.entities.items.contractor.ContractorTIV;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.variable.VariableTIV_new;
@@ -24,9 +25,11 @@ import report.models.view.customNodes.ContextMenuOptional;
 
 
 public class AllPropertiesController implements Initializable {
-    /*!******************************************************************************************************************
-    *                                                                                                         Tab 3 FXML
-    ********************************************************************************************************************/
+    /***************************************************************************
+     *                                                                         *
+     *Tab 3 FXML                                                               *
+     *                                                                         *
+     **************************************************************************/
     @FXML private TableView<CountAgentTVI> countAgentTable;
     @FXML private ScrollPane reqBankScrollPane;
     @FXML private CheckBox  countAgentСheckBox;
@@ -34,16 +37,18 @@ public class AllPropertiesController implements Initializable {
     @FXML private GridPane linkedNamesGP;
 
     private PropertySheetWrapper counterPropSheet;
-
-    /*!******************************************************************************************************************
-    *                                                                                                 Tab Variable FXML
-    ********************************************************************************************************************/
+    /***************************************************************************
+     *                                                                         *
+     *Tab Variable FXML                                                        *
+     *                                                                         *
+     **************************************************************************/
     @FXML private TableView variableTable;
     @FXML private CheckBox  variableEditСheckBox;
-
-    /*!******************************************************************************************************************
-     *                                                                                                 Tab Contractor FXML
-     ********************************************************************************************************************/
+    /***************************************************************************
+     *                                                                         *
+     *Tab Contractor FXML                                                      *
+     *                                                                         *
+     **************************************************************************/
     @FXML private TableView contractorTable;
     @FXML private TextField contractorNameTF,contractorDirectorTF;
     @FXML private TextArea  contractorAdressTA,contractorCommentsTA;
@@ -74,7 +79,6 @@ public class AllPropertiesController implements Initializable {
      * Init Data from Base
      */
     public void initData(){
-
             variableTableWrapper.setFromBase();
             contractorTableWrapper.setFromBase();
             countAgentTableWrapper.setFromBase();
@@ -159,6 +163,10 @@ public class AllPropertiesController implements Initializable {
                 .bind(countAgentСheckBox.selectedProperty());
         addCoutButton.visibleProperty()
                 .bind(countAgentСheckBox.selectedProperty());
+        counterPropSheet = AllPropertiesControllerND.getCountPropertySheet();
+
+
+        reqBankScrollPane.setContent(counterPropSheet.getSheet());
         //bing ContextMenu
         countAgentTableWrapper.tableView()
                 .contextMenuProperty()
@@ -166,11 +174,19 @@ public class AllPropertiesController implements Initializable {
                                 .then( ContextMenuFactory.getCommonDSU(countAgentTableWrapper) )
                                 .otherwise( (ContextMenu) null)
                 );
-        countAgentTableWrapper.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+        countAgentTableWrapper.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+            counterPropSheet.setFromBase(newValue.getIdName());
+            counterPropSheet.getObservableItems().addListener((ListChangeListener<? super PropertySheet.Item>) listener ->{
+                        if(listener.next()) {
+                            System.out.println(counterPropSheet.getSheet().getItems().get(listener.getFrom()).getValue());
+//                            if(!counterPropSheet.getValidationSupport().isInvalid())
 
+                        }
+                    });
         });
-        counterPropSheet = AllPropertiesControllerND.getCountPropertySheet();
-        reqBankScrollPane.setContent(counterPropSheet.getSheet());
+
         AllPropertiesControllerND.decorLinkedNamesGP(linkedNamesGP, countAgentTableWrapper);
     }
 

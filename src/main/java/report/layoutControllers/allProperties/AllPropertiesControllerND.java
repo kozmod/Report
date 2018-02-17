@@ -16,12 +16,17 @@ import org.controlsfx.control.PropertySheet;
 import org.controlsfx.property.editor.AbstractPropertyEditor;
 import org.controlsfx.property.editor.Editors;
 import org.controlsfx.property.editor.PropertyEditor;
+import org.controlsfx.validation.Severity;
+import org.controlsfx.validation.ValidationResult;
+import org.controlsfx.validation.ValidationSupport;
+import org.controlsfx.validation.Validator;
 import report.entities.abstraction.CommonDAO;
 import report.entities.items.DItem;
 import report.entities.items.contractor.ContractorDAO;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.counterparties.AgentTVI.CountAgentDAO;
 import report.entities.items.counterparties.CounterpatiesDaoUtil;
+import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.entities.items.variable.PropertiesDAO;
 import report.entities.items.variable.VariableTIV_new;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
@@ -59,8 +64,6 @@ class AllPropertiesControllerND implements TableFactory {
         titleCol.setCellFactory(TextFieldTableCell.forTableColumn());
         valueCol.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter("###,##0.000")));
         tableWrapper.tableView().getColumns().addAll(titleCol,valueCol);
-
-
 
 //        TableColumn textColumn     = tableWrapper.addColumn("Наименование","text");
 //        TableColumn<VariableTIV,Double> valueAllColumn
@@ -181,26 +184,31 @@ class AllPropertiesControllerND implements TableFactory {
     static PropertySheetWrapper getCountPropertySheet(){
         PropertySheet countSheet = new PropertySheet();
         PropertySheetWrapper wrapper = new PropertySheetWrapper(countSheet);
+        ValidationSupport support = new ValidationSupport();
+        wrapper.setValidationSupport(support);
         //add Items
-        wrapper.setFromBase();
-
-        //countSheet.getItems().addAll(list);
-
+//        wrapper.setFromBase();
         countSheet.setMode(PropertySheet.Mode.CATEGORY);
         countSheet.setModeSwitcherVisible(true);
         countSheet.setSearchBoxVisible(true);
-        countSheet.setPropertyEditorFactory(param -> {
+        countSheet.setPropertyEditorFactory( param -> {
             PropertyEditor<?> editor = null;
             if(param.getValue().getClass().equals(BigInteger.class)){
                 editor = Editors.createNumericEditor(param);
             }else if(param.getValue().getClass().equals(String.class)){
                 editor = Editors.createTextEditor(param);
+                support.registerValidator(
+                        (Control) editor.getEditor(),
+                        ((ObjectPSI)param).getValidator()
+                );
+
             }else if(param.getValue().getClass().equals(LocalDate.class)){
                 editor = Editors.createDateEditor(param);
             }else{
                 editor = Editors.createTextEditor(param);
 
             }
+            //add castom Text Area Editor
             if(param.getName().equals("Паспорт:Кем\nвыдан"))
             editor = new AbstractPropertyEditor<String, TextArea>(param, new TextArea()) {
                 @Override
@@ -212,7 +220,6 @@ class AllPropertiesControllerND implements TableFactory {
                 protected ObservableValue<String> getObservableValue() {
                     return (this.getEditor()).textProperty();
                 }
-
                 {
                     TextInputControl control = (TextInputControl)this.getEditor();
                     control.focusedProperty().addListener((o, oldValue, newValue) -> {
@@ -230,6 +237,11 @@ class AllPropertiesControllerND implements TableFactory {
         return wrapper;
     }
 
+    /**
+     *
+     * @param gridPane
+     * @param tableWrapper
+     */
     static void decorLinkedNamesGP(GridPane gridPane,TableWrapper<CountAgentTVI> tableWrapper){
         //Nodes
         ListView<String> listView = new ListView<>();
@@ -258,4 +270,5 @@ class AllPropertiesControllerND implements TableFactory {
         gridPane.add(editButton, 0,0);
         gridPane.add(listView, 0,1,1,4);
     }
+
 }

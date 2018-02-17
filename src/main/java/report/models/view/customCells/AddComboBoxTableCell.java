@@ -98,7 +98,7 @@
 //         this.setGraphic(null);
 //      } else {
 //         final long personID = this.getTableView()
-//                 .getItems()
+//                 .getObservableItems()
 //                 .get(this.getIndex())
 //                 .getId();
 //         if(this.comboBox == null) {
