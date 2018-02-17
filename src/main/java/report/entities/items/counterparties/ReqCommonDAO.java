@@ -12,7 +12,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -33,145 +35,89 @@ public class ReqCommonDAO {
 
     public List<ObjectPSI> getBank(int countId){
         List<ObjectPSI> list = FXCollections.observableArrayList(ObjectPSI.extractor());
+        Map<String, ObjectPSI> map = this.getEmptyItems();
         try(Connection connection = SQLconnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(SQL)) {
             pstmt.setInt(1,countId);
             if(pstmt.execute()){
                 try(ResultSet rs = pstmt.getResultSet()){
                     if (rs.next()){
-                        list.add(new ObjectPSI<>("ОГРН",
-                                        CATEGORY,
-                                        "ОГРН",
-                                        rs.getString(OGRN),
-                                        OGRN,
-                                        SQL_TABLE,
-                                "\\d{13}"
-
-                                )
-                        );
-                        list.add(new ObjectPSI<>("Дата присвоения ОГРН",
-                                        CATEGORY,
-                                        "Дата присвоения ОГРН",
-                                        LocalDate.ofEpochDay(rs.getInt(DATE_OGRN)),
-                                        DATE_OGRN,
-                                        SQL_TABLE
-                                )
-                        );
-                        list.add(new ObjectPSI<>("ИНН",
-                                        CATEGORY,
-                                        "ИНН",
-                                        rs.getString(INN),
-                                        INN,
-                                        SQL_TABLE,
-                                "\\d{9}"
-                                )
-                        );
-                        list.add(new ObjectPSI<>("КПП",
-                                        CATEGORY,
-                                        "КПП",
-                                        rs.getString(KPP),
-                                        KPP,
-                                        SQL_TABLE,
-                                "\\d{9}"
-                                )
-                        );
-                        list.add(new ObjectPSI<>("Юридический Адрес",
-                                        CATEGORY,
-                                        "Юридический Адрес",
-                                        rs.getString(ADRESS_L),
-                                        ADRESS_L,
-                                        SQL_TABLE,
-                                ".{1,100}"
-                                )
-                        );
-                        list.add(new ObjectPSI<>("Фактический Адрес",
-                                        CATEGORY,
-                                        "Фактический Адрес",
-                                        rs.getString(ADRESS_F),
-                                        ADRESS_F,
-                                        SQL_TABLE,
-                                ".{1,100}"
-                                )
-                        );
-                        list.add(new ObjectPSI<>("Почтовый Адрес",
-                                        CATEGORY,
-                                        "Почтовый Адрес",
-                                        rs.getString(ADRESS_P),
-                                        ADRESS_P,
-                                        SQL_TABLE,
-                                ".{1,100}"
-                                )
-                        );
-                    }else{
-                        list.add(new ObjectPSI<>("ОГРН",
-                                        CATEGORY,
-                                        "ОГРН",
-                                       "0",
-                                        OGRN,
-                                        SQL_TABLE,
-                                "\\d{13}"
-                                )
-                        );
-                        list.add(new ObjectPSI<>("Дата присвоения ОГРН",
-                                        CATEGORY,
-                                        "Дата присвоения ОГРН",
-                                        LocalDate.ofEpochDay(LocalDate.now().toEpochDay()),
-                                        DATE_OGRN,
-                                        SQL_TABLE
-                                )
-                        );
-                        list.add(new ObjectPSI<>("ИНН",
-                                        CATEGORY,
-                                        "ИНН",
-                                        "0",
-                                        INN,
-                                        SQL_TABLE,
-                                "\\d{9}"
-                                )
-                        );
-                        list.add(new ObjectPSI<>("КПП",
-                                        CATEGORY,
-                                        "КПП",
-                                        "0",
-                                        KPP,
-                                        SQL_TABLE,
-                                "\\d{9}"
-                                )
-                        );
-                        list.add(new ObjectPSI<>("Юридический Адрес",
-                                        CATEGORY,
-                                        "Юридический Адрес",
-                                        "",
-                                        ADRESS_L,
-                                        SQL_TABLE,
-                                ".{1,100}"
-                                )
-                        );
-                        list.add(new ObjectPSI<>("Фактический Адрес",
-                                        CATEGORY,
-                                        "Фактический Адрес",
-                                        "",
-                                        ADRESS_F,
-                                        SQL_TABLE,
-                                ".{1,100}"
-                                )
-                        );
-                        list.add(new ObjectPSI<>("Почтовый Адрес",
-                                        CATEGORY,
-                                        "Почтовый Адрес",
-                                        "",
-                                        ADRESS_P,
-                                        SQL_TABLE,
-                                ".{1,100}"
-                                )
-                        );
+                        map.get(OGRN).setValue(rs.getString(OGRN));
+                        map.get(DATE_OGRN).setValue(LocalDate.ofEpochDay(rs.getInt(DATE_OGRN)));
+                        map.get(INN).setValue(rs.getString(INN));
+                        map.get(KPP).setValue(rs.getString(KPP));
+                        map.get(ADRESS_L).setValue(rs.getString(ADRESS_L));
+                        map.get(ADRESS_F).setValue(rs.getString(ADRESS_F));
+                        map.get(ADRESS_P).setValue(rs.getString(ADRESS_P));
                     }
                 }
             }
+            list.addAll(map.values());
         } catch (SQLException ex) {
             Logger.getLogger(ExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
 
+
+    public Map<String, ObjectPSI> getEmptyItems() {
+        return ReqDaoUtils
+                .getEmptyItems(
+                        new ObjectPSI<>("ОГРН",
+                                CATEGORY,
+                                "ОГРН",
+                                "0",
+                                OGRN,
+                                SQL_TABLE,
+                                "\\d{13}"
+                        ),
+                        new ObjectPSI<>("Дата присвоения ОГРН",
+                                CATEGORY,
+                                "Дата присвоения ОГРН",
+                                LocalDate.ofEpochDay(LocalDate.now().toEpochDay()),
+                                DATE_OGRN,
+                                SQL_TABLE
+                        ),
+                        new ObjectPSI<>("ИНН",
+                                CATEGORY,
+                                "ИНН",
+                                "0",
+                                INN,
+                                SQL_TABLE,
+                                "\\d{9}"
+                        ),
+                        new ObjectPSI<>("КПП",
+                                CATEGORY,
+                                "КПП",
+                                "0",
+                                KPP,
+                                SQL_TABLE,
+                                "\\d{9}"
+                        ),
+                        new ObjectPSI<>("Юридический Адрес",
+                                CATEGORY,
+                                "Юридический Адрес",
+                                "",
+                                ADRESS_L,
+                                SQL_TABLE,
+                                ".{1,100}"
+                        ),
+                        new ObjectPSI<>("Фактический Адрес",
+                                CATEGORY,
+                                "Фактический Адрес",
+                                "",
+                                ADRESS_F,
+                                SQL_TABLE,
+                                ".{1,100}"
+                        ),
+                        new ObjectPSI<>("Почтовый Адрес",
+                                CATEGORY,
+                                "Почтовый Адрес",
+                                "",
+                                ADRESS_P,
+                                SQL_TABLE,
+                                ".{1,100}"
+                        )
+                );
+    }
 }

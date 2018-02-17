@@ -1,22 +1,15 @@
 package report.models.view.wrappers.propertySheetWrappers;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import org.controlsfx.control.ListSelectionView;
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.validation.ValidationSupport;
 import report.entities.items.counterparties.ReqBankDAO;
 import report.entities.items.counterparties.ReqCommonDAO;
-import report.entities.items.counterparties.RexExBodyDAO;
+import report.entities.items.counterparties.ReqExBodyDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
-import report.models.mementos.SheetMemento;
-import report.models.view.wrappers.tableWrappers.BindBase;
 
-import java.math.BigInteger;
-import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class PropertySheetWrapper {
     private PropertySheet sheet;
@@ -49,7 +42,7 @@ public class PropertySheetWrapper {
 //        List<ObjectPSI> list = new ArrayList<>();
 //        list.addAll(new ReqCommonDAO().getBank(55));
 //        list.addAll(new ReqBankDAO().getBank(55));
-//        list.addAll(new RexExBodyDAO().getBank(55));
+//        list.addAll(new ReqExBodyDAO().getBank(55));
 //
 //
 //        this.setItems(list);
@@ -59,7 +52,7 @@ public class PropertySheetWrapper {
         items = FXCollections.observableArrayList(ObjectPSI.extractor());
         items.addAll(new ReqCommonDAO().getBank(value));
         items.addAll(new ReqBankDAO().getBank(value));
-        items.addAll(new RexExBodyDAO().getBank(value));
+        items.addAll(new ReqExBodyDAO().getBank(value));
         this.setItems(items);
 
     }
