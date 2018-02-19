@@ -156,34 +156,6 @@
                       <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                   </GridPane.margin>
               </ComboBox>
-              <ListView prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="3" GridPane.rowSpan="2">
-                  <GridPane.margin>
-                      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                  </GridPane.margin>
-              </ListView>
-              <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="3" GridPane.rowIndex="5" GridPane.rowSpan="3">
-                  <children>
-                      <TableView prefHeight="200.0" prefWidth="200.0">
-                          <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                          </VBox.margin>
-                      </TableView>
-                      <Accordion />
-                      <TitledPane animated="false" expanded="false" text="все">
-                          <VBox.margin>
-                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-                          </VBox.margin>
-                          <content>
-                              <TableView prefHeight="200.0" prefWidth="200.0">
-                                  <columns>
-                                      <TableColumn prefWidth="75.0" text="C1" />
-                                      <TableColumn prefWidth="75.0" text="C2" />
-                                  </columns>
-                              </TableView>
-                          </content>
-                      </TitledPane>
-                  </children>
-              </VBox>
               <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" GridPane.columnIndex="1">
                   <children>
                         <CheckBox fx:id="countAgentСheckBox" mnemonicParsing="false" text="Редактировать">
@@ -202,13 +174,6 @@
                   </opaqueInsets>
               </HBox>
                   <ScrollPane fx:id="reqBankScrollPane" fitToWidth="true" hbarPolicy="NEVER" GridPane.rowIndex="3" GridPane.rowSpan="4">
-                     <content>
-                        <VBox>
-                           <children>
-                              <StackPane />
-                           </children>
-                        </VBox>
-                     </content>
                      <GridPane.margin>
                         <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                      </GridPane.margin>

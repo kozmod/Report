@@ -193,14 +193,14 @@ class AllPropertiesControllerND implements TableFactory {
         countSheet.setSearchBoxVisible(true);
         countSheet.setPropertyEditorFactory( param -> {
             PropertyEditor<?> editor = null;
-            if(param.getValue().getClass().equals(BigInteger.class)){
+            if(param.getValue().getClass().equals(Integer.class)) {
                 editor = Editors.createNumericEditor(param);
+            }else  if(param.getValue().getClass().equals(BigInteger.class)){
+                editor = Editors.createNumericEditor(param);
+
             }else if(param.getValue().getClass().equals(String.class)){
                 editor = Editors.createTextEditor(param);
-                support.registerValidator(
-                        (Control) editor.getEditor(),
-                        ((ObjectPSI)param).getValidator()
-                );
+
 
             }else if(param.getValue().getClass().equals(LocalDate.class)){
                 editor = Editors.createDateEditor(param);
@@ -232,6 +232,10 @@ class AllPropertiesControllerND implements TableFactory {
                     });
                 }
             };
+            support.registerValidator(
+                    (Control) editor.getEditor(),
+                    ((ObjectPSI)param).getValidator()
+            );
             return editor;
         });
         return wrapper;

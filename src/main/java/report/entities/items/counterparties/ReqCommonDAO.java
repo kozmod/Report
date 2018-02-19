@@ -4,15 +4,11 @@ import javafx.collections.FXCollections;
 import report.entities.items.expenses.ExpensesDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.models.beck.sql.SQLconnector;
-
-import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -44,8 +40,8 @@ public class ReqCommonDAO {
                     if (rs.next()){
                         map.get(OGRN).setValue(rs.getString(OGRN));
                         map.get(DATE_OGRN).setValue(LocalDate.ofEpochDay(rs.getInt(DATE_OGRN)));
-                        map.get(INN).setValue(rs.getString(INN));
-                        map.get(KPP).setValue(rs.getString(KPP));
+                        map.get(INN).setValue(rs.getInt(INN));
+                        map.get(KPP).setValue(rs.getInt(KPP));
                         map.get(ADRESS_L).setValue(rs.getString(ADRESS_L));
                         map.get(ADRESS_F).setValue(rs.getString(ADRESS_F));
                         map.get(ADRESS_P).setValue(rs.getString(ADRESS_P));

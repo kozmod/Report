@@ -154,7 +154,7 @@
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>2.13.0</version>
-            <!--<scope>test</scope>-->
+            <scope>test</scope>
         </dependency>
         <!-- +++++++++++++++++++++++++++++++++++++++ HIBERNATE++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->

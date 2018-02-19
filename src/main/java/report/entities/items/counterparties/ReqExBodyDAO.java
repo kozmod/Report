@@ -4,8 +4,6 @@ import javafx.collections.FXCollections;
 import report.entities.items.expenses.ExpensesDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.models.beck.sql.SQLconnector;
-
-import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -54,7 +52,7 @@ public class ReqExBodyDAO {
                         map.get(BOOKKEEPER_NAME).setValue(rs.getString(BOOKKEEPER_NAME));
                         map.get(BOOKKEEPER_SURNAME).setValue(rs.getString(BOOKKEEPER_SURNAME));
                         map.get(BOOKKEEPER_F_NAME).setValue(rs.getString(BOOKKEEPER_F_NAME));
-                        map.get(ID_SERIES).setValue(rs.getString(ID_SERIES));
+                        map.get(ID_SERIES).setValue(rs.getInt(ID_SERIES));
                         map.get(ID_NUMBER).setValue(rs.getString(ID_NUMBER));
                         map.get(ID_DATE).setValue(LocalDate.ofEpochDay(rs.getInt(ID_DATE)));
                         map.get(ID_TEXT).setValue(rs.getString(ID_TEXT));
@@ -159,11 +157,12 @@ public class ReqExBodyDAO {
                         ),
                         new ObjectPSI<>("Паспорт:Код падразделения",
                                 CATEGORY,
-                                "Паспорт:Код падразделени",
+                                "Паспорт:Код падразделени (6 символов)",
                                 "",
                                 ID_CODE,
                                 SQL_TABLE
                         )
+
                 );
     }
 

@@ -3,6 +3,7 @@ package report.models.view.wrappers.tableWrappers;
 import javafx.scene.control.ContextMenu;
 import report.entities.abstraction.CommonDAO;
 import report.models.mementos.Memento;
+import report.models.view.wrappers.BindBase;
 
 public abstract class AbstractTableWrapper<E> implements BindBase {
 

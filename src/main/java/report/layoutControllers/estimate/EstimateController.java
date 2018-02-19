@@ -202,7 +202,6 @@ public class EstimateController implements Initializable {
                                             ObservableList::add,
                                             (l1, l2) -> { l1.addAll(l2); return l1; })
                             ));
-
                     break;
             }
 

@@ -1,4 +1,4 @@
-package report.models.view.wrappers.tableWrappers;
+package report.models.view.wrappers;
 
 public interface BindBase {
     /**

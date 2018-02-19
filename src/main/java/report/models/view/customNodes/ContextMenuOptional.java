@@ -25,7 +25,6 @@ import report.models.view.wrappers.tableWrappers.TableWrapper;
 public class ContextMenuOptional extends ContextMenu{
 
     private AbstractTableWrapper<?> tableWrapper;
-//    private CommonDAO commonDao;
     MenuItem saveMenuItem;
     MenuItem undoMenuItem;
     MenuItem printSmeta;

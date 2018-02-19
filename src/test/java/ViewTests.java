@@ -18,10 +18,15 @@ import report.layoutControllers.allProperties.AllPropertiesController;
 import report.models.view.wrappers.tableWrappers.AbstractTableWrapper;
 import report.usage_strings.PathStrings;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 @FixMethodOrder(MethodSorters.JVM)
@@ -71,5 +76,8 @@ public class ViewTests {
             System.out.println("AAAAAAAAAA");
         });
         list.get(1).setValue("12344");
+
+        "dsdsd".matches("\\d+");
     }
+
 }

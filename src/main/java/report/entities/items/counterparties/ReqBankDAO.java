@@ -41,7 +41,7 @@ public class ReqBankDAO {
                 try(ResultSet rs = pstmt.getResultSet()){
                     if(rs.next()){
                         map.get(BANK_NAME).setValue(rs.getString(BANK_NAME));
-                        map.get(BIC).setValue(rs.getString(BIC));
+                        map.get(BIC).setValue(rs.getInt(BIC));
                         map.get(ACC_NUMBER).setValue(rs.getString(ACC_NUMBER));
                         map.get(COR_ACC).setValue(rs.getString(COR_ACC));
                     }
@@ -68,7 +68,7 @@ public class ReqBankDAO {
                         new ObjectPSI<>("БИК",
                                 CATEGORY,
                                 "БИК банка",
-                                new BigInteger("0"),
+                                0,
                                 BIC,
                                 SQL_TABLE,
                                 "\\d{9}"
@@ -76,7 +76,7 @@ public class ReqBankDAO {
                         new ObjectPSI<>("Номер Счета",
                                 CATEGORY,
                                 "Номер Счета",
-                                new BigInteger("0"),
+                                "",
                                 ACC_NUMBER,
                                 SQL_TABLE,
                                 "\\d{20}"
@@ -84,7 +84,7 @@ public class ReqBankDAO {
                         new ObjectPSI<>("Креспондентский счет",
                                 CATEGORY,
                                 "Креспондентский счет",
-                                new BigInteger("0"),
+                                "",
                                 COR_ACC,
                                 SQL_TABLE,
                                 "\\d{20}"

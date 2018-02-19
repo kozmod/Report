@@ -186,7 +186,6 @@ public class AllPropertiesController implements Initializable {
                         }
                     });
         });
-
         AllPropertiesControllerND.decorLinkedNamesGP(linkedNamesGP, countAgentTableWrapper);
     }
 
