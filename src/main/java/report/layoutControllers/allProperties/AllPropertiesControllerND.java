@@ -30,6 +30,7 @@ import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.entities.items.variable.PropertiesDAO;
 import report.entities.items.variable.VariableTIV_new;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
+import report.models.view.nodesFactories.ContextMenuFactory;
 import report.models.view.wrappers.propertySheetWrappers.PropertySheetWrapper;
 import report.models.view.wrappers.tableWrappers.ReverseTableWrapper;
 import report.models.view.wrappers.tableWrappers.TableWrapper;
@@ -185,6 +186,7 @@ class AllPropertiesControllerND implements TableFactory {
         PropertySheet countSheet = new PropertySheet();
         PropertySheetWrapper wrapper = new PropertySheetWrapper(countSheet);
         ValidationSupport support = new ValidationSupport();
+        countSheet.setContextMenu(ContextMenuFactory.getCommonSU(wrapper));//TODO
         wrapper.setValidationSupport(support);
         //add Items
 //        wrapper.setFromBase();

@@ -16,16 +16,21 @@ import report.entities.abstraction.Reverse;
 import report.entities.items.Clone;
 import report.entities.items.DItem;
 import report.models.printer.PrintEstimate;
+import report.models.view.wrappers.Reverting;
+import report.models.view.wrappers.propertySheetWrappers.PropertySheetWrapper;
 import report.models.view.wrappers.tableWrappers.AbstractTableWrapper;
 import report.models.view.wrappers.tableWrappers.DiscountTreeTableWrapper;
 import report.models.view.wrappers.tableWrappers.ReverseTableWrapper;
 import report.models.view.wrappers.tableWrappers.TableWrapper;
 
 
-public class ContextMenuOptional extends ContextMenuBase{
+public class ContextMenuOptional extends ContextMenu{
 
-    private AbstractTableWrapper<?> tableWrapper;
+    private Reverting node;
+
     MenuItem printSmeta;
+    MenuItem saveMenuItem;
+    MenuItem undoMenuItem;
     /***************************************************************************
      *                                                                         *
      * Methods                                                                 *
@@ -61,12 +66,11 @@ public class ContextMenuOptional extends ContextMenuBase{
             ((ContextMenuOptional) tableWrapper.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
         });
     }
-
     /**
      * Builder Factory Method.
      * @return
      */
-    public static ContextMenuOptional.Builder newBuilder(){
+    public static Builder newBuilder(){
         return new ContextMenuOptional().new Builder();
     }
 
@@ -83,7 +87,7 @@ public class ContextMenuOptional extends ContextMenuBase{
      * Builder                                                                 *
      *                                                                         *
      **************************************************************************/
-    public class Builder extends ContextMenuBase.Builder{
+    public class Builder {
         private MenuItem CURRENT_MENU_ITEM;
 
         private Builder(){}
@@ -121,24 +125,19 @@ public class ContextMenuOptional extends ContextMenuBase{
         }
 
 
-        public Builder setTable(AbstractTableWrapper tableWrapper) {
-            ContextMenuOptional.this.tableWrapper = tableWrapper;
+        public Builder setTable(Reverting node) {
+            ContextMenuOptional.this.node = node;
 //            ContextMenuOptional.this.commonDao = tableWrapper.getDAO();
 
             return this;
         }
-
-//        public Builder setDAO (TableViewItemDAO dao) {
-//            ContextMenuOptional.this.commonDao = dao;
-//            return this;
-//        }
 
 
         @SuppressWarnings("unchecked")
         public Builder addRemoveMenuItem() {
             MenuItem removeMenuItem = new MenuItem("Удалить");
             this.CURRENT_MENU_ITEM = removeMenuItem;
-            final TableWrapper wrapper = (TableWrapper)tableWrapper;
+            final TableWrapper wrapper = (TableWrapper)node;
             removeMenuItem.addEventHandler(ActionEvent.ACTION, (ActionEvent event) ->
                     wrapper.tableView().getSelectionModel()
                             .getSelectedItems()
@@ -152,15 +151,14 @@ public class ContextMenuOptional extends ContextMenuBase{
         }
 
         public Builder addSaveMenuItem() {
-             saveMenuItem   = new MenuItem("Сохранить изменения");
+            saveMenuItem   = new MenuItem("Сохранить изменения");
             this.CURRENT_MENU_ITEM = saveMenuItem;
             saveMenuItem.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
                 System.out.println("saveMenuItem");
 //                commonDao.dellAndInsert(tableWrapper.getMemento());
-                tableWrapper.toBase();
-                tableWrapper.saveTableItems();
+                node.toBase();
+                node.saveTableItems();
                 setDisable_SaveUndoPrint_groupe(true);
-                tableWrapper.refresh();
             });
 
             getItems().add(saveMenuItem);
@@ -168,9 +166,9 @@ public class ContextMenuOptional extends ContextMenuBase{
         }
 
         public Builder addUndoMenuItem() {
-             undoMenuItem   = new MenuItem("Отменить изменения");
+            undoMenuItem  = new MenuItem("Отменить изменения");
             undoMenuItem.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
-                tableWrapper.undoChangeItems();
+                node.undoChangeItems();
 
                 setDisable_SaveUndoPrint_groupe(true);
             });
@@ -179,7 +177,7 @@ public class ContextMenuOptional extends ContextMenuBase{
         }
 
         public Builder addPrintSmeta(CommonDAO dao) {
-             printSmeta     = new MenuItem("Выгрузить смету");
+            printSmeta = new MenuItem("Выгрузить смету");
             printSmeta.setOnAction(event -> {
                 new PrintEstimate(dao);
                 System.out.println("printSmeta");
@@ -195,7 +193,6 @@ public class ContextMenuOptional extends ContextMenuBase{
 
         public ContextMenuOptional build(){
             setDisable_SaveUndoPrint_groupe(true);
-//            setAction();
             return ContextMenuOptional.this;
         }
 

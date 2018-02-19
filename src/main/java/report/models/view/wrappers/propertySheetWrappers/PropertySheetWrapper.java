@@ -1,19 +1,23 @@
 package report.models.view.wrappers.propertySheetWrappers;
 
 import javafx.collections.FXCollections;
+import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.scene.control.ContextMenu;
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.validation.ValidationSupport;
 import report.entities.items.counterparties.ReqBankDAO;
 import report.entities.items.counterparties.ReqCommonDAO;
 import report.entities.items.counterparties.ReqExBodyDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
+import report.models.view.customNodes.ContextMenuOptional;
+import report.models.view.wrappers.Reverting;
 
 import java.util.*;
 
-public class PropertySheetWrapper {
+public class PropertySheetWrapper implements Reverting {
     private PropertySheet sheet;
-    private  ObservableList<ObjectPSI> items;
+    private ObservableList<ObjectPSI> items;
     private ValidationSupport  validationSupport;
     /***************************************************************************
      *                                                                         *
@@ -55,6 +59,7 @@ public class PropertySheetWrapper {
         items.addAll(new ReqExBodyDAO().getBank(value));
         this.setItems(items);
 
+
     }
     /***************************************************************************
      *                                                                         *
@@ -74,19 +79,12 @@ public class PropertySheetWrapper {
      *                                                                         *
      **************************************************************************/
     public void setItems(List<ObjectPSI> items){
-//        this.itemMap = items
-//                .stream()
-//                .collect(Collectors.groupingBy(
-//                        ObjectPSI::getSqlName,
-//                        Collectors.mapping(
-//                                i ->i,
-//                                Collectors.toList()
-//                        )
-//                )
-//        );
-//        this.mementoMap = new HashMap<>();
-//        this.saveChanges();
         sheet.getItems().setAll(items);
+        this.items.addListener((ListChangeListener<ObjectPSI>) c -> {
+            ((ContextMenuOptional) sheet.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
+        });
+
+
     }
 
     public PropertySheet getSheet() {
@@ -104,5 +102,29 @@ public class PropertySheetWrapper {
 
     public ValidationSupport getValidationSupport() {
         return validationSupport;
+    }
+    /***************************************************************************
+     *                                                                         *
+     * Override                                                                *
+     *                                                                         *
+     **************************************************************************/
+    @Override
+    public void saveTableItems() {
+
+    }
+
+    @Override
+    public void undoChangeItems() {
+
+    }
+
+    @Override
+    public void toBase() {
+
+    }
+
+    @Override
+    public void setFromBase() {
+
     }
 }

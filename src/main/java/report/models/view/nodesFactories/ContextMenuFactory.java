@@ -6,6 +6,7 @@ import report.entities.items.estimate.EstimateDAO;
 import report.layoutControllers.addEstimateRow.AddEstimateRowController;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.view.nodesHelpers.StageCreator;
+import report.models.view.wrappers.Reverting;
 import report.models.view.wrappers.tableWrappers.AbstractTableWrapper;
 import report.usage_strings.PathStrings;
 import report.models.view.customNodes.ContextMenuOptional;
@@ -103,7 +104,7 @@ public class ContextMenuFactory {
      * @param tableWrapperView (TableWrapper extends TableView)
      * @return ContextMenu
      */    
-    public static ContextMenu getCommonSU(AbstractTableWrapper tableWrapperView){
+    public static ContextMenu getCommonSU(Reverting tableWrapperView){
         return ContextMenuOptional.newBuilder()
                 .setTable(tableWrapperView)
                 .addSaveMenuItem()
