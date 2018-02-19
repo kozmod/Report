@@ -22,11 +22,9 @@ import report.models.view.wrappers.tableWrappers.ReverseTableWrapper;
 import report.models.view.wrappers.tableWrappers.TableWrapper;
 
 
-public class ContextMenuOptional extends ContextMenu{
+public class ContextMenuOptional extends ContextMenuBase{
 
     private AbstractTableWrapper<?> tableWrapper;
-    MenuItem saveMenuItem;
-    MenuItem undoMenuItem;
     MenuItem printSmeta;
     /***************************************************************************
      *                                                                         *
@@ -68,7 +66,7 @@ public class ContextMenuOptional extends ContextMenu{
      * Builder Factory Method.
      * @return
      */
-    public static Builder newBuilder(){
+    public static ContextMenuOptional.Builder newBuilder(){
         return new ContextMenuOptional().new Builder();
     }
 
@@ -85,7 +83,7 @@ public class ContextMenuOptional extends ContextMenu{
      * Builder                                                                 *
      *                                                                         *
      **************************************************************************/
-    public class Builder{
+    public class Builder extends ContextMenuBase.Builder{
         private MenuItem CURRENT_MENU_ITEM;
 
         private Builder(){}

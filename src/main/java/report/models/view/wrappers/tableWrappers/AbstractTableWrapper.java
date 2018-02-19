@@ -4,8 +4,9 @@ import javafx.scene.control.ContextMenu;
 import report.entities.abstraction.CommonDAO;
 import report.models.mementos.Memento;
 import report.models.view.wrappers.BindBase;
+import report.models.view.wrappers.Reverting;
 
-public abstract class AbstractTableWrapper<E> implements BindBase {
+public abstract class AbstractTableWrapper<E> implements Reverting {
 
     Memento<E> memento;
     final String title;

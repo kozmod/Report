@@ -5,12 +5,12 @@ import javafx.event.EventHandler;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
-import report.models.view.wrappers.BindBase;
 import report.models.view.wrappers.Reverting;
 
-public class ContextMenuBase<E extends BindBase & Reverting> extends ContextMenu{
 
-    E bindBaseNode;
+public class ContextMenuBase extends ContextMenu{
+
+    Reverting bindBaseNode;
 
     MenuItem saveMenuItem;
     MenuItem undoMenuItem;
@@ -24,6 +24,14 @@ public class ContextMenuBase<E extends BindBase & Reverting> extends ContextMenu
         if(saveMenuItem != null)saveMenuItem.setDisable(value);
         if(undoMenuItem != null)undoMenuItem.setDisable(value);
     }
+
+    /**
+     * Builder Factory Method.
+     * @return
+     */
+    public static Builder newBuilder(){
+        return new ContextMenuBase().new Builder();
+    }
     /***************************************************************************
      *                                                                         *
      * Builder                                                                 *
@@ -32,7 +40,7 @@ public class ContextMenuBase<E extends BindBase & Reverting> extends ContextMenu
     public class Builder {
         private MenuItem CURRENT_MENU_ITEM;
 
-        private Builder() {        }
+        Builder() {        }
         /**
          * Add SPECIAL MenuItem
          *
@@ -68,7 +76,20 @@ public class ContextMenuBase<E extends BindBase & Reverting> extends ContextMenu
             return this;
         }
 
+        /**
+         * Set node  to action.
+         * @param node Reverting
+         * @return Builder
+         */
+        public Builder setNode(Reverting node) {
+            ContextMenuBase.this.bindBaseNode = node;
+            return this;
+        }
 
+        /**
+         * add 'SAVE' menu item into base
+         * @return Builder
+         */
         public Builder addSaveMenuItem() {
             saveMenuItem = new MenuItem("Сохранить изменения");
             this.CURRENT_MENU_ITEM = saveMenuItem;
@@ -78,11 +99,13 @@ public class ContextMenuBase<E extends BindBase & Reverting> extends ContextMenu
                 bindBaseNode.saveTableItems();
                 setDisable_SaveUndoPrint_groupe(true);
             });
-
             getItems().add(saveMenuItem);
             return this;
         }
-
+        /**
+         * add 'UNDO' menu item into base
+         * @return Builder
+         */
         public Builder addUndoMenuItem() {
             undoMenuItem = new MenuItem("Отменить изменения");
             undoMenuItem.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
@@ -94,12 +117,18 @@ public class ContextMenuBase<E extends BindBase & Reverting> extends ContextMenu
             return this;
         }
 
-
+        /**
+         * add 'Separator' menu item into base
+         * @return Builder
+         */
         public Builder addSeparator() {
             getItems().add(new SeparatorMenuItem());
             return this;
         }
-
+        /**
+         * Build context menu
+         * @return Builder
+         */
         public ContextMenuBase build() {
             setDisable_SaveUndoPrint_groupe(true);
             return ContextMenuBase.this;
