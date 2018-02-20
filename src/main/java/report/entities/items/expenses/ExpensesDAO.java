@@ -2,6 +2,7 @@
 package report.entities.items.expenses;
 
 import report.entities.abstraction.CommonDAO;
+import report.entities.abstraction.TableDataBaseName;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -18,7 +19,7 @@ import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.beck.sql.SQLconnector;
 
 
-public class ExpensesDAO implements CommonDAO<Collection<ExpensesTVI>> {
+public class ExpensesDAO implements TableDataBaseName<Collection<ExpensesTVI>> {
 
     
     /**

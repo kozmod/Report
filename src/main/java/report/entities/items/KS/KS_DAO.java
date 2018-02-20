@@ -3,6 +3,7 @@ package report.entities.items.KS;
 
 
 import report.entities.abstraction.CommonDAO;
+import report.entities.abstraction.TableDataBaseName;
 import report.entities.items.Item;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
@@ -22,7 +23,7 @@ import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.beck.sql.SQLconnector;
 
 
-public class KS_DAO implements CommonDAO<Collection<KS_TIV>> {
+public class KS_DAO implements TableDataBaseName<Collection<KS_TIV>> {
     
     private Est enumEst;
     
@@ -393,7 +394,7 @@ public class KS_DAO implements CommonDAO<Collection<KS_TIV>> {
 //    public void dellAndInsert(Collection<KS_TIV> dellItem, Collection<KS_TIV> newItem){
     @Override
     public void dellAndInsert(Memento<Collection<KS_TIV>> memento){
-        CommonDAO.super.dellAndInsert(memento);
+        TableDataBaseName.super.dellAndInsert(memento);
         //??????????
 //        table.updateTableFromSQL(this.getOneKSList(Est.KS, ksNumber ));
         Est.KS.updateList_DL(this);

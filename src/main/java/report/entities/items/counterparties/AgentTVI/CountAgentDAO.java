@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import report.entities.abstraction.CommonDAO;
+import report.entities.abstraction.TableDataBaseName;
 import report.entities.items.expenses.ExpensesDAO;
 import report.models.beck.sql.SQLconnector;
 import report.usage_strings.SQL;
@@ -13,7 +14,7 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CountAgentDAO implements CommonDAO<Collection<CountAgentTVI>> {
+public class CountAgentDAO implements TableDataBaseName<Collection<CountAgentTVI>> {
 
 
     @Override

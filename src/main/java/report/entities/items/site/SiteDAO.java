@@ -2,6 +2,7 @@
 package report.entities.items.site;
 
 import report.entities.abstraction.CommonDAO;
+import report.entities.abstraction.TableDataBaseName;
 import report.entities.items.estimate.EstimateDAO;
 import report.layoutControllers.LogController;
 import report.usage_strings.SQL;
@@ -19,7 +20,7 @@ import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.beck.sql.SQLconnector;
 
 
-public class SiteDAO implements CommonDAO<Collection<PreviewTIV>> {
+public class SiteDAO implements TableDataBaseName<Collection<PreviewTIV>> {
     
     private String siteNumber, contractor;
     

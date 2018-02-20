@@ -3,6 +3,7 @@ package report.entities.items.plan;
 
 
 import report.entities.abstraction.CommonDAO;
+import report.entities.abstraction.TableDataBaseName;
 import report.entities.items.KS.KS_DAO;
 import report.models.beck.coefficient.Quantity;
 import report.models.mementos.Memento;
@@ -23,7 +24,7 @@ import report.layoutControllers.LogController;
 import report.models.beck.sql.SQLconnector;
 
 
-public class PlanDAO implements CommonDAO<Collection<PlanTIV>> {
+public class PlanDAO implements TableDataBaseName<Collection<PlanTIV>> {
 
    /**
     * 
@@ -237,7 +238,7 @@ public class PlanDAO implements CommonDAO<Collection<PlanTIV>> {
 
     @Override
     public void dellAndInsert(Memento<Collection<PlanTIV>> memento) {
-        CommonDAO.super.dellAndInsert(memento);
+        TableDataBaseName.super.dellAndInsert(memento);
         //????????????????????????????????????????????
         Quantity.updateFromBase();
 //        table. setFromBase();
