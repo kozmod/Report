@@ -234,7 +234,7 @@ public class ExpensesController implements Initializable {
 
             new SiteDAO().dellAndInsert(siteTWrapper.getItems());
        
-            siteTWrapper.saveTableItems();
+            siteTWrapper.saveMemento();
             rootController.update_previewTable(Est.Common.getPreviewObservableList());
             
 //            COEFFICIENT.setQuantity(new FormulaQuery().getFormula().getQuantity());
@@ -315,7 +315,7 @@ public class ExpensesController implements Initializable {
         }
 
         new SiteDAO().dellAndInsert((Collection<PreviewTIV>) siteTWrapper);
-        siteTWrapper.saveTableItems();
+        siteTWrapper.saveMemento();
         siteTWrapper.refresh();
 
 //        System.out.println(COEFFICIENT.getQuantity());

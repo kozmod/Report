@@ -44,7 +44,7 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
      * Save Items of TableView.
      */
     @Override
-    public void saveTableItems() {
+    public void saveMemento() {
         super.memento = new TableMemento(tableView.getItems());
     }
     /**
@@ -76,13 +76,12 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
      * <br>
      * 1. setItems() from <b>SQL</b> if <u>CommonDAO</u> != <b>NULL</b>
      * <br>
-     * 2. saveTableItems() - save table items to TableMemento.
+     * 2. saveMemento() - save table items to TableMemento.
      * <br>
      */
-    @Override
     public void setFromBase(){
         tableView.setItems(DAO.getData());
-        this.saveTableItems();
+        this.saveMemento();
 //        treeTableView.refresh();
         ContextMenuOptional.setTableItemContextMenuListener(this);
     }
@@ -122,14 +121,14 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
      * <br>
      * 1. setItems()
      * <br>
-     * 2. saveTableItems() - save table items to TableMemento.
+     * 2. saveMemento() - save table items to TableMemento.
      * <br>
      * @param items - Observable List of table item (inherited TableItems)
      */
     @Override
     public void setTableData(ObservableList<E> items){
         tableView.setItems(items);
-        this.saveTableItems();
+        this.saveMemento();
     }
     /**
      * Update TableView Items, use <b>method</b>:

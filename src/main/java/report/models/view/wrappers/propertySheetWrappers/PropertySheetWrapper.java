@@ -109,7 +109,7 @@ public class PropertySheetWrapper implements Reverting {
      *                                                                         *
      **************************************************************************/
     @Override
-    public void saveTableItems() {
+    public void saveMemento() {
 
     }
 
@@ -123,8 +123,5 @@ public class PropertySheetWrapper implements Reverting {
 
     }
 
-    @Override
-    public void setFromBase() {
 
-    }
 }

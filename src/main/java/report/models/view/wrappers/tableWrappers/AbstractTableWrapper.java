@@ -47,17 +47,19 @@ public abstract class AbstractTableWrapper<E> implements Reverting {
      * Abstract Methods                                                        *
      *                                                                         *
      **************************************************************************/
-    /**
-     * Save Items to MEMENTO.
-     */
-    public abstract void saveTableItems() ;
-    /**
-     * UNDO changes from MEMENTO.
-     */
-    public abstract void undoChangeItems();
-    /**
-     * Get DAO.
-     */
+//    /**
+//     * Save Items to MEMENTO.
+//     */
+//    @Override
+//    public abstract void saveMemento() ;
+//    /**
+//     * UNDO changes from MEMENTO.
+//     */
+//    @Override
+//    public abstract void undoChangeItems();
+//    /**
+//     * Get DAO.
+//     */
     public CommonDAO<E> getDAO() {
         if(this.DAO == null)
             throw  new NullPointerException(TableWrapper.class.getCanonicalName());

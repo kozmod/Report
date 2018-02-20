@@ -37,7 +37,7 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef>
      *                                                                         *
      **************************************************************************/
     @Override
-    public void saveTableItems() {
+    public void saveMemento() {
         super.memento = new EntityMemento<>(discountCoef);
         ContextMenuOptional.setTableItemContextMenuListener(this);
     }
@@ -90,14 +90,13 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef>
     public void setTableData(DiscountCoef items) {
         this.discountCoef = discountCoef;
         treeTableView.setRoot(discountCoef.tree());
-        this.saveTableItems();
+        this.saveMemento();
     }
 
-    @Override
     public void setFromBase() {
         this.discountCoef = commonDAO.getData();
         treeTableView.setRoot(discountCoef.tree());
-        this.saveTableItems();
+        this.saveMemento();
     }
 
     @Override

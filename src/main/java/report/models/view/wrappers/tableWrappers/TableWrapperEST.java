@@ -41,7 +41,7 @@ public  class TableWrapperEST<E extends Item> extends TableWrapper<E> {
      * <br>
      * 1. setItems()
      * <br>
-     * 2. saveTableItems() - save table items to TableMemento.
+     * 2. saveMemento() - save table items to TableMemento.
      * <br>
      * 3. computeSum() - saveEst sum of all "Price_sum" elements.
      * <br>

@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public interface CommonDAO<C> extends TableDataBaseName {
-    <E> E getData();
+    <E extends C> E getData();
     void delete(C entry);
     void insert(C  entry);
     /**

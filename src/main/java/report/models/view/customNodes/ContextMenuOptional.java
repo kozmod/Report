@@ -17,8 +17,6 @@ import report.entities.items.Clone;
 import report.entities.items.DItem;
 import report.models.printer.PrintEstimate;
 import report.models.view.wrappers.Reverting;
-import report.models.view.wrappers.propertySheetWrappers.PropertySheetWrapper;
-import report.models.view.wrappers.tableWrappers.AbstractTableWrapper;
 import report.models.view.wrappers.tableWrappers.DiscountTreeTableWrapper;
 import report.models.view.wrappers.tableWrappers.ReverseTableWrapper;
 import report.models.view.wrappers.tableWrappers.TableWrapper;
@@ -157,7 +155,7 @@ public class ContextMenuOptional extends ContextMenu{
                 System.out.println("saveMenuItem");
 //                commonDao.dellAndInsert(tableWrapper.getMemento());
                 node.toBase();
-                node.saveTableItems();
+                node.saveMemento();
                 setDisable_SaveUndoPrint_groupe(true);
             });
 

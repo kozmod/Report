@@ -21,9 +21,9 @@ import java.util.stream.Stream;
 
 public class ReqBankDAO {
     //common data
-    private static final String SQL      = "SELECT * FROM [dbo].[Count_Req_Bank]  WHERE  id_Count = ? AND dell =0";
-    private static final String SQL_TABLE= "[dbo].[Count_Req_Bank]";
-    private static final String CATEGORY = "Банковские реквизиты";
+    private static final String SQL       = "SELECT * FROM [dbo].[Count_Req_Bank]  WHERE  id_Count = ? AND dell =0";
+    private static final String SQL_TABLE = "[dbo].[Count_Req_Bank]";
+    private static final String CATEGORY  = "Банковские реквизиты";
     //columns
     private static String BANK_NAME  = "BankName";
     private static String BIC        = "BIC";
