@@ -32,7 +32,6 @@ public interface CommonNamedDAO<E> extends CommonDAO<E> {
         ){
             pstmt.setString(1, column);
             pstmt.setString(2, this.sqlTableName());
-//            pstmt.setString(2, this.sqlTableName());
             pstmt.execute();
             try ( ResultSet resSet = pstmt.getResultSet()){
                 while(resSet.next()){

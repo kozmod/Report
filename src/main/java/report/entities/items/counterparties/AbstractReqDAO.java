@@ -61,42 +61,43 @@ public  abstract class AbstractReqDAO implements CommonNamedDAO<List<ObjectPSI>>
         }
         sqlStringBuilder.append(") VALUES(");
         for (; i >=0 ; i--) {
-            if (i == 0) {
+            if (i != 0) {
                 sqlStringBuilder.append("?,");
             } else {
                 sqlStringBuilder.append("? )");
             }
         }
-            try(Connection connection = SQLconnector.getInstance();
-                PreparedStatement pstmt  = connection.prepareStatement(sqlStringBuilder.toString(),
-                        Statement.RETURN_GENERATED_KEYS);) {
-                //set false SQL Autocommit
-                connection.setAutoCommit(false);
-                i = 1;
-                for (ObjectPSI item : items) {
-                    pstmt.setObject(i,  item.getValue());
-                    i++;
-                }
-                    int affectedRows = pstmt.executeUpdate();
-                    try(ResultSet generategKeys = pstmt.getGeneratedKeys()){
-                        if(generategKeys.next())
-                            for (ObjectPSI item : items) {
-                                item.setId(generategKeys.getLong(1));
-                            }
-                    }
-                //SQL commit
-                connection.commit();
-                //add info to LogTextArea / LogController
-//           items.forEach(item -> {
-////                LogController.appendLogViewText("inserted item: "+ ((Item)item).getJM_name()
-////                                                         +" [JM/ "+((Item)item).getJobOrMat()      + "]"
-////                                                         +" [BP/ "+((Item)item).getBindedJob()     + "]"
-////                                                         +" [S#/ " + ((Item)item).getSiteNumber()  + "]"
-////                                                         +" [C/ " + ((Item)item).getContractor()   + "]");
-//                });
-                LogController.appendLogViewText(items.size() + " inserted");
-            } catch (SQLException ex) {
-                Logger.getLogger(AbstractReqDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
+        System.out.println(sqlStringBuilder.toString());
+//            try(Connection connection = SQLconnector.getInstance();
+//                PreparedStatement pstmt  = connection.prepareStatement(sqlStringBuilder.toString(),
+//                        Statement.RETURN_GENERATED_KEYS);) {
+//                //set false SQL Autocommit
+//                connection.setAutoCommit(false);
+//                i = 1;
+//                for (ObjectPSI item : items) {
+//                    pstmt.setObject(i,  item.getValue());
+//                    i++;
+//                }
+//                    int affectedRows = pstmt.executeUpdate();
+//                    try(ResultSet generategKeys = pstmt.getGeneratedKeys()){
+//                        if(generategKeys.next())
+//                            for (ObjectPSI item : items) {
+//                                item.setId(generategKeys.getLong(1));
+//                            }
+//                    }
+//                //SQL commit
+//                connection.commit();
+//                //add info to LogTextArea / LogController
+////           items.forEach(item -> {
+//////                LogController.appendLogViewText("inserted item: "+ ((Item)item).getJM_name()
+//////                                                         +" [JM/ "+((Item)item).getJobOrMat()      + "]"
+//////                                                         +" [BP/ "+((Item)item).getBindedJob()     + "]"
+//////                                                         +" [S#/ " + ((Item)item).getSiteNumber()  + "]"
+//////                                                         +" [C/ " + ((Item)item).getContractor()   + "]");
+////                });
+//                LogController.appendLogViewText(items.size() + " inserted");
+//            } catch (SQLException ex) {
+//                Logger.getLogger(AbstractReqDAO.class.getName()).log(Level.SEVERE, null, ex);
+//            }
         }
     }

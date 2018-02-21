@@ -3,15 +3,11 @@ package report.models.view.wrappers.propertySheetWrappers;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
-import javafx.scene.control.ContextMenu;
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.validation.ValidationSupport;
 import report.entities.items.counterparties.AbstractReqDAO;
-import report.entities.items.counterparties.ReqBankDAO;
-import report.entities.items.counterparties.ReqCommonDAO;
-import report.entities.items.counterparties.ReqExBodyDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
-import report.models.mementos.SheetMemento;
+import report.models.mementos.ChangedMemento;
 import report.models.view.customNodes.ContextMenuOptional;
 import report.models.view.wrappers.Reverting;
 
@@ -21,7 +17,8 @@ import java.util.stream.Stream;
 public class PropertySheetWrapper implements Reverting {
     private PropertySheet sheet;
     private ObservableList<ObjectPSI> items;
-    private AbstractReqDAO[] DAOs;
+    private AbstractReqDAO[] daos;
+    private Map<String,ChangedMemento> mementos;
     private ValidationSupport  validationSupport;
     /***************************************************************************
      *                                                                         *
@@ -34,7 +31,7 @@ public class PropertySheetWrapper implements Reverting {
     private PropertySheetWrapper() {
     }
     public PropertySheetWrapper(PropertySheet sheet,AbstractReqDAO ... daos) {
-        this.DAOs  = daos;
+        this.daos  = daos;
         this.sheet = sheet;
     }
     /***************************************************************************
@@ -42,50 +39,21 @@ public class PropertySheetWrapper implements Reverting {
      * Base                                                                    *
      *                                                                         *
      **************************************************************************/
-//    public void toBase() {
-//        System.out.println(this.mementoMap.values());
-//
-//    }
-//    public void setFromBase() {
-//        //TODO: write DAO and add this one here
-//        List<ObjectPSI> list = new ArrayList<>();
-//        list.addAll(new ReqCommonDAO().getBank(55));
-//        list.addAll(new ReqBankDAO().getBank(55));
-//        list.addAll(new ReqExBodyDAO().getBank(55));
-//
-//
-//        this.setItems(list);
-//    }
 
     public void setFromBase(int value) {
         items = FXCollections.observableArrayList(ObjectPSI.extractor());
-        for (AbstractReqDAO dao : DAOs) {
-            items.addAll(dao.getByID(value));
-
-        }
-//        Stream.of(DAOs)
-//                .forEach(dao -> {
-//                    items.addAll(dao.getByID(value));
-//                });
-//        items.addAll(new ReqCommonDAO().getByID(value));
-//        items.addAll(new ReqBankDAO().getByID(value));
-//        items.addAll(new ReqExBodyDAO().getByID(value));
+        mementos = new HashMap<>(daos.length,2);
+        Stream.of(daos)
+                .forEach(dao -> {
+                    List<ObjectPSI>  list= dao.getByID(value);
+                    items.addAll(list);
+                    mementos.put(dao.sqlTableName(),new ChangedMemento(list));
+                });
         this.setItems(items);
 
 
     }
-    /***************************************************************************
-     *                                                                         *
-     * Memento                                                                 *
-     *                                                                         *
-     **************************************************************************/
-//    public void undoChangeItems() {
-//        this.mementoMap.values().forEach(SheetMemento::clearChanges);
-//    }
-//    public  void saveChanges(){
-//        this.itemMap.keySet()
-//                .forEach(key -> mementoMap.put(key,new SheetMemento(itemMap.get(key))));
-//    }
+
     /***************************************************************************
      *                                                                         *
      * Methods                                                                 *
@@ -93,8 +61,12 @@ public class PropertySheetWrapper implements Reverting {
      **************************************************************************/
     public void setItems(List<ObjectPSI> items){
         sheet.getItems().setAll(items);
-        this.items.addListener((ListChangeListener<ObjectPSI>) c -> {
-            ((ContextMenuOptional) sheet.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
+        this.items.addListener((ListChangeListener<ObjectPSI>) item -> {
+            if(item.next() && item.wasUpdated()) {
+                ((ContextMenuOptional) sheet.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
+                mementos.get(items.get(item.getFrom()).getSqlTableName()).setChanged(true);
+            }
+
         });
 
 
@@ -133,6 +105,12 @@ public class PropertySheetWrapper implements Reverting {
 
     @Override
     public void toBase() {
+        Stream.of(daos).forEach( dao ->{
+            ChangedMemento memento = mementos.get(dao.sqlTableName());
+            if(memento.isChanged()){
+                dao.insert(memento.toInsert());
+            }
+        });
 
     }
 

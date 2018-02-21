@@ -9,15 +9,17 @@ import java.util.List;
 /**
  * Memento to PropertySheet.
  */
-public class SheetMemento implements Memento<List<ObjectPSI>> {
+public class ChangedMemento implements Memento<List<ObjectPSI>> {
+
     private List<ObjectPSI> listClone;
     private List<ObjectPSI> listMain;
+    private boolean changed = false;
     /***************************************************************************
      *                                                                         *
      * Constructors                                                            *
      *                                                                         *
      **************************************************************************/
-    public SheetMemento(final List<ObjectPSI>  items) {
+    public ChangedMemento(final List<ObjectPSI>  items) {
         this.listClone = this.getNewObs(items);
         this.listMain  = items;
     }
@@ -47,12 +49,32 @@ public class SheetMemento implements Memento<List<ObjectPSI>> {
     }
     /***************************************************************************
      *                                                                         *
+     * Getters/Setters                                                         *
+     *                                                                         *
+     **************************************************************************/
+    public boolean isChanged() {
+        return changed;
+    }
+
+    public void setChanged(boolean changed) {
+        this.changed = changed;
+    }
+    /***************************************************************************
+     *                                                                         *
      * Private Methods                                                         *
      *                                                                         *
      **************************************************************************/
+    /**
+     *
+     * @param items
+     * @return
+     */
     private List<ObjectPSI> getNewObs(List<ObjectPSI> items){
         List<ObjectPSI> newObsList = new ArrayList<>(items.size());
         items.forEach((Clone obsItem) -> newObsList.add(obsItem.getClone()));
         return newObsList;
     }
+
+
+
 }
