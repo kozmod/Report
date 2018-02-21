@@ -6,18 +6,22 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.ContextMenu;
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.validation.ValidationSupport;
+import report.entities.items.counterparties.AbstractReqDAO;
 import report.entities.items.counterparties.ReqBankDAO;
 import report.entities.items.counterparties.ReqCommonDAO;
 import report.entities.items.counterparties.ReqExBodyDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
+import report.models.mementos.SheetMemento;
 import report.models.view.customNodes.ContextMenuOptional;
 import report.models.view.wrappers.Reverting;
 
 import java.util.*;
+import java.util.stream.Stream;
 
 public class PropertySheetWrapper implements Reverting {
     private PropertySheet sheet;
     private ObservableList<ObjectPSI> items;
+    private AbstractReqDAO[] DAOs;
     private ValidationSupport  validationSupport;
     /***************************************************************************
      *                                                                         *
@@ -29,7 +33,8 @@ public class PropertySheetWrapper implements Reverting {
      */
     private PropertySheetWrapper() {
     }
-    public PropertySheetWrapper(PropertySheet sheet) {
+    public PropertySheetWrapper(PropertySheet sheet,AbstractReqDAO ... daos) {
+        this.DAOs  = daos;
         this.sheet = sheet;
     }
     /***************************************************************************
@@ -54,9 +59,17 @@ public class PropertySheetWrapper implements Reverting {
 
     public void setFromBase(int value) {
         items = FXCollections.observableArrayList(ObjectPSI.extractor());
-        items.addAll(new ReqCommonDAO().getBank(value));
-        items.addAll(new ReqBankDAO().getBank(value));
-        items.addAll(new ReqExBodyDAO().getBank(value));
+        for (AbstractReqDAO dao : DAOs) {
+            items.addAll(dao.getByID(value));
+
+        }
+//        Stream.of(DAOs)
+//                .forEach(dao -> {
+//                    items.addAll(dao.getByID(value));
+//                });
+//        items.addAll(new ReqCommonDAO().getByID(value));
+//        items.addAll(new ReqBankDAO().getByID(value));
+//        items.addAll(new ReqExBodyDAO().getByID(value));
         this.setItems(items);
 
 

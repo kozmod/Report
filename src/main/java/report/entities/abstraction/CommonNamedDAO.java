@@ -17,7 +17,7 @@ import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public interface TableDataBaseName<E> extends CommonDAO<E> {
+public interface CommonNamedDAO<E> extends CommonDAO<E> {
     String sqlTableName();
     /**
      * Get <b>Unique</b> distinct value of column.

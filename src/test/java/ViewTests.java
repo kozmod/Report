@@ -8,14 +8,10 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
-import org.mockito.Mockito;
-import report.entities.items.counterparties.AgentTVI.CountAgentDAO;
-import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
-import report.entities.items.counterparties.ObservablWrapper;
+
 import report.entities.items.counterparties.ReqBankDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
-import report.layoutControllers.allProperties.AllPropertiesController;
-import report.models.view.wrappers.tableWrappers.AbstractTableWrapper;
+
 import report.usage_strings.PathStrings;
 
 import java.io.File;
@@ -71,7 +67,7 @@ public class ViewTests {
     @Test
     @Disabled
     public void checkToString(){
-     ObservableList<ObjectPSI> list = (ObservableList<ObjectPSI>) new ReqBankDAO().getBank(55);
+     ObservableList<ObjectPSI> list = (ObservableList<ObjectPSI>) new ReqBankDAO().getByID(55);
         list.addListener((ListChangeListener<? super ObjectPSI>) e -> {
             System.out.println("AAAAAAAAAA");
         });

@@ -13,7 +13,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ReqExBodyDAO {
+public class ReqExBodyDAO  extends AbstractReqDAO{
     //common data
     private static final String SQL       = "SELECT * FROM [dbo].[Count_Req_ExBody]  WHERE  id_Count = ? AND dell =0";
     private static final String SQL_TABLE = "[dbo].[Count_Req_ExBody]";
@@ -33,9 +33,17 @@ public class ReqExBodyDAO {
     private static String ID_TEXT             = "ID_Text";
     private static String ID_CODE             = "ID_Code";
 
+    @Override
+    public String sqlTableName() {
+        return ReqExBodyDAO.SQL_TABLE;
+    }
 
-
-    public List<ObjectPSI> getBank(int countId){
+    @Override
+    public <HEIR extends List<ObjectPSI>> HEIR getData() {
+        return null;
+    }
+    @Override
+    public List<ObjectPSI> getByID(int countId){
         List<ObjectPSI> list = FXCollections.observableArrayList(ObjectPSI.extractor());
         Map<String, ObjectPSI> map = this.getEmptyItems();
         try(Connection connection = SQLconnector.getInstance();
@@ -165,6 +173,7 @@ public class ReqExBodyDAO {
 
                 );
     }
+
 
 
 }

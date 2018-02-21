@@ -1,8 +1,7 @@
 
 package report.entities.items.estimate;
 
-import report.entities.abstraction.CommonDAO;
-import report.entities.abstraction.TableDataBaseName;
+import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.Item;
 import report.layoutControllers.LogController;
 import report.models.mementos.Memento;
@@ -25,7 +24,7 @@ import report.models.beck.sql.SQLconnector;
 import report.entities.items.cb.AddEstTIV;
 
 
-public class EstimateDAO implements TableDataBaseName<Collection<EstimateTVI>> {
+public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
 
     private Est enumEst;
     private String tableName = SQL.Tables.ESTIMATE;
@@ -565,7 +564,7 @@ public class EstimateDAO implements TableDataBaseName<Collection<EstimateTVI>> {
 //           || diffList.exElements().size() > 0) delete(diffList.exElements());
 //        if(diffList.newElements()  != null 
 //           || diffList.newElements().size()  > 0) insert(diffList.newElements());     
-        TableDataBaseName.super.dellAndInsert(memento);
+        CommonNamedDAO.super.dellAndInsert(memento);
        //?????????????
 //        table.updateTableFromSQL(this.getOneBildingPartList(Est.Base, table.getTitle()));
         Est.Base.updateList_DL(this);

@@ -5,8 +5,7 @@
  */
 package report.entities.items.period;
 
-import report.entities.abstraction.CommonDAO;
-import report.entities.abstraction.TableDataBaseName;
+import report.entities.abstraction.CommonNamedDAO;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -22,7 +21,7 @@ import report.layoutControllers.LogController;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.beck.sql.SQLconnector;
 
-public class PeriodDAO implements TableDataBaseName<Collection<PeriodTIV>> {
+public class PeriodDAO implements CommonNamedDAO<Collection<PeriodTIV>> {
 
     /**
     * Get String of a Mirror (SQL.Tables).

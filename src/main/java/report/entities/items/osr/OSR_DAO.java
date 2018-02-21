@@ -1,8 +1,7 @@
 
 package report.entities.items.osr;
 
-import report.entities.abstraction.CommonDAO;
-import report.entities.abstraction.TableDataBaseName;
+import report.entities.abstraction.CommonNamedDAO;
 import report.layoutControllers.LogController;
 import report.models.beck.coefficient.Quantity;
 import report.usage_strings.SQL;
@@ -20,7 +19,7 @@ import javafx.collections.ObservableList;
 import report.models.beck.sql.SQLconnector;
 
 
-public class OSR_DAO implements TableDataBaseName<Collection<OSR_TIV>> {
+public class OSR_DAO implements CommonNamedDAO<Collection<OSR_TIV>> {
 
     /**
     * Get String of a Mirror (SQL.Tables).

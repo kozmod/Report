@@ -26,6 +26,9 @@ import report.entities.items.contractor.ContractorDAO;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.counterparties.AgentTVI.CountAgentDAO;
 import report.entities.items.counterparties.CounterpatiesDaoUtil;
+import report.entities.items.counterparties.ReqBankDAO;
+import report.entities.items.counterparties.ReqCommonDAO;
+import report.entities.items.counterparties.ReqExBodyDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.entities.items.variable.PropertiesDAO;
 import report.entities.items.variable.VariableTIV_new;
@@ -184,7 +187,12 @@ class AllPropertiesControllerND implements TableFactory {
 
     static PropertySheetWrapper getCountPropertySheet(){
         PropertySheet countSheet = new PropertySheet();
-        PropertySheetWrapper wrapper = new PropertySheetWrapper(countSheet);
+        PropertySheetWrapper wrapper = new PropertySheetWrapper(
+                countSheet,
+                new ReqCommonDAO(),
+                new ReqBankDAO(),
+                new ReqExBodyDAO()
+        );
         ValidationSupport support = new ValidationSupport();
         countSheet.setContextMenu(ContextMenuFactory.getCommonSU(wrapper));//TODO
         wrapper.setValidationSupport(support);

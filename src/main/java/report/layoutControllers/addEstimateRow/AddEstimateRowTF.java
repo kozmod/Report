@@ -6,8 +6,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
-import report.entities.abstraction.CommonDAO;
-import report.entities.abstraction.TableDataBaseName;
+import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.cb.AddEstTIV;
 import report.entities.items.estimate.EstimateDAO;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
@@ -25,7 +24,7 @@ public class AddEstimateRowTF {
      */
     @SuppressWarnings("unchecked")
     public static TableWrapperEST<AddEstTIV> decorEst_add(TableView table){
-        TableDataBaseName dao = new EstimateDAO();
+        CommonNamedDAO dao = new EstimateDAO();
         TableWrapperEST<AddEstTIV> tableWrapper = new TableWrapperEST<>(table, dao);
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

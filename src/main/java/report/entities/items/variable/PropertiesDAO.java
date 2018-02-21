@@ -1,7 +1,6 @@
 package report.entities.items.variable;
 
-import report.entities.abstraction.CommonDAO;
-import report.entities.abstraction.TableDataBaseName;
+import report.entities.abstraction.CommonNamedDAO;
 import report.models.beck.sql.SQLconnector;
 
 import java.sql.Connection;
@@ -11,7 +10,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PropertiesDAO implements TableDataBaseName<VariableTIV_new> {
+public class PropertiesDAO implements CommonNamedDAO<VariableTIV_new> {
 
 
     @Override

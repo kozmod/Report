@@ -14,7 +14,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ReqCommonDAO {
+public class ReqCommonDAO extends AbstractReqDAO{
     //common data
     private static final String SQL       = "SELECT * FROM [dbo].[Count_Req_Common] WHERE  id_Count = ? AND dell = 0";
     private static final String SQL_TABLE = "[dbo].[Count_Req_Common]";
@@ -29,7 +29,19 @@ public class ReqCommonDAO {
     private static String ADRESS_P   = "Adress_P";
     //name
 
-    public List<ObjectPSI> getBank(int countId){
+
+    @Override
+    public String sqlTableName() {
+        return ReqCommonDAO.SQL_TABLE;
+    }
+
+    @Override
+    public <HEIR extends List<ObjectPSI>> HEIR getData() {
+        return null;
+    }
+
+    @Override
+    public List<ObjectPSI> getByID(int countId){
         List<ObjectPSI> list = FXCollections.observableArrayList(ObjectPSI.extractor());
         Map<String, ObjectPSI> map = this.getEmptyItems();
         try(Connection connection = SQLconnector.getInstance();
@@ -116,4 +128,5 @@ public class ReqCommonDAO {
                         )
                 );
     }
+
 }

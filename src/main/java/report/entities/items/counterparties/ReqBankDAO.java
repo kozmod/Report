@@ -1,25 +1,20 @@
 package report.entities.items.counterparties;
 
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import report.entities.items.expenses.ExpensesDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.models.beck.sql.SQLconnector;
-
-import java.math.BigInteger;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
 
-public class ReqBankDAO {
+public class ReqBankDAO extends AbstractReqDAO{
+
     //common data
     private static final String SQL       = "SELECT * FROM [dbo].[Count_Req_Bank]  WHERE  id_Count = ? AND dell =0";
     private static final String SQL_TABLE = "[dbo].[Count_Req_Bank]";
@@ -30,8 +25,15 @@ public class ReqBankDAO {
     private static String ACC_NUMBER = "AccNumber";
     private static String COR_ACC    = "CorAcc";
 
-
-    public List<ObjectPSI> getBank(int countId){
+    @Override
+    public String sqlTableName() {
+        return ReqBankDAO.SQL_TABLE;
+    }
+    @Override
+    public <HEIR extends List<ObjectPSI>> HEIR getData() {
+        return null;
+    }
+    public List<ObjectPSI> getByID(int countId){
         List<ObjectPSI> list =  FXCollections.observableArrayList(ObjectPSI.extractor());
         Map<String, ObjectPSI> map = this.getEmtyItems();
         try(Connection connection = SQLconnector.getInstance();
@@ -91,6 +93,5 @@ public class ReqBankDAO {
                         )
                 );
     }
-
 
 }

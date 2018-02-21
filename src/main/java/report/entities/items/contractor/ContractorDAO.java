@@ -2,8 +2,7 @@
 package report.entities.items.contractor;
 
 
-import report.entities.abstraction.CommonDAO;
-import report.entities.abstraction.TableDataBaseName;
+import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.osr.OSR_DAO;
 import report.layoutControllers.LogController;
 import report.usage_strings.SQL;
@@ -20,7 +19,7 @@ import javafx.collections.ObservableList;
 import report.models.beck.sql.SQLconnector;
 
 
-public class ContractorDAO implements TableDataBaseName<Collection<ContractorTIV>> {
+public class ContractorDAO implements CommonNamedDAO<Collection<ContractorTIV>> {
 
     @Override
     public String sqlTableName() {

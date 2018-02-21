@@ -1,7 +1,6 @@
 package report.entities.items.discount_coef;
 
-import report.entities.abstraction.CommonDAO;
-import report.entities.abstraction.TableDataBaseName;
+import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.estimate.EstimateDAO;
 import report.entities.items.expenses.ExpensesDAO;
 import report.entities.items.period.PeriodDAO;
@@ -11,7 +10,7 @@ import java.sql.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class DiscountQuery implements TableDataBaseName<DiscountCoef> {
+public class DiscountQuery implements CommonNamedDAO<DiscountCoef> {
 
     @Override
     public DiscountCoef getData() {
