@@ -218,7 +218,7 @@ public class DiscountQuery implements CommonNamedDAO<DiscountCoef> {
     }
 
     @Override
-    public String sqlTableName() {
+    public String getSqlTableName() {
         return null;
     }
 }

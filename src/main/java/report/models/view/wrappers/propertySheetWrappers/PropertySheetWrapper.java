@@ -67,7 +67,7 @@ public class PropertySheetWrapper implements Reverting {
             this.listChangeListener = item -> {
                 if (item.next() && item.wasUpdated()) {
                     ((ContextMenuOptional) sheet.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
-                    System.out.println("AA " + Math.random());
+
                 }
             };
             this.items.addListener(listChangeListener);
@@ -110,15 +110,15 @@ public class PropertySheetWrapper implements Reverting {
 
     @Override
     public void toBase() {
-        //TODO: separate memento to base-list
-//        Map<String,  List>
-//        Stream.of(daos).forEach( dao ->{
-//            ChangedMemento memento = mementos.get(dao.sqlTableName());
-//            if(memento.isChanged()){
-//                dao.insert(memento.toInsert());
-//            }
-//        });
-
+       Map<String, List<ObjectPSI>> deleteMap = memento.toDelete().stream()
+               .collect(Collectors.groupingBy(item -> item.getSqlTableName()));
+       Map<String, List<ObjectPSI>> insertMap = memento.toInsert().stream()
+                .collect(Collectors.groupingBy(item -> item.getSqlTableName()));
+       Stream.of(daos).forEach(dao -> {
+           dao.delete(deleteMap.get(dao.getSqlTableName()));
+           dao.insert(insertMap.get(dao.getSqlTableName()));
+       });
+//        deleteMap.values().forEach(i -> i.stream().forEach(ii -> System.out.println(ii.getId())));
     }
 
 

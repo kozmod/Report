@@ -3,12 +3,12 @@ package report.entities.items;
 
 
 
-public interface Clone  {
+public interface Clone<E>  {
     /**
      * Get clone Constructor
      * @return Clone
      */
-      <E> E getClone();
+      E getClone();
 
 
 

@@ -52,7 +52,7 @@ public class PropertiesDAO implements CommonNamedDAO<VariableTIV_new> {
     }
 
     @Override
-    public String sqlTableName() {
+    public String getSqlTableName() {
         return null;
     }
 }

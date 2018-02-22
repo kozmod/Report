@@ -36,7 +36,7 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
     * @return  List of Item
     */
     @Override
-    public String sqlTableName() {return SQL.Tables.KS;}
+    public String getSqlTableName() {return SQL.Tables.KS;}
     
     
     

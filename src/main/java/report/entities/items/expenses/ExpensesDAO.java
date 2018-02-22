@@ -26,7 +26,7 @@ public class ExpensesDAO implements CommonNamedDAO<Collection<ExpensesTVI>> {
      * @return  List of Item
      */
     @Override
-    public String sqlTableName() {return SQL.Tables.SITE_EXPENSES;}
+    public String getSqlTableName() {return SQL.Tables.SITE_EXPENSES;}
     /**
      * Get List of expenses Items from SQL (SiteExpenses)
      * @return  ObservableList of ExpensesTVI

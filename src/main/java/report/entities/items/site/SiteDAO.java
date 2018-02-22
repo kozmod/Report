@@ -35,7 +35,7 @@ public class SiteDAO implements CommonNamedDAO<Collection<PreviewTIV>> {
     }
 
     @Override
-    public String sqlTableName() {return SQL.Tables.SITE;}
+    public String getSqlTableName() {return SQL.Tables.SITE;}
     
     @Override
     public ObservableList<PreviewTIV> getData(){

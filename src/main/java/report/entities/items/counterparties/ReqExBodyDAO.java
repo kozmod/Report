@@ -34,7 +34,7 @@ public class ReqExBodyDAO  extends AbstractReqDAO{
     private static String ID_CODE             = "ID_Code";
 
     @Override
-    public String sqlTableName() {
+    public String getSqlTableName() {
         return ReqExBodyDAO.SQL_TABLE;
     }
 
@@ -52,6 +52,7 @@ public class ReqExBodyDAO  extends AbstractReqDAO{
             if(pstmt.execute()){
                 try(ResultSet rs = pstmt.getResultSet()){
                     if(rs.next()){
+                        ReqDaoUtils.setID(rs.getLong("id"),map);
                         map.get(EX_BODY).setValue(rs.getString(EX_BODY));
                         map.get(EX_BODY_NAME).setValue(rs.getString(EX_BODY_NAME));
                         map.get(EX_BODY_SURNAME).setValue(rs.getString(EX_BODY_SURNAME));
@@ -66,6 +67,7 @@ public class ReqExBodyDAO  extends AbstractReqDAO{
                         map.get(ID_TEXT).setValue(rs.getString(ID_TEXT));
                         map.get(ID_CODE).setValue(rs.getString(ID_CODE));
                     }
+
                 }
             }
             list.addAll(map.values());
@@ -84,7 +86,7 @@ public class ReqExBodyDAO  extends AbstractReqDAO{
                                 "",
                                 EX_BODY,
                                 SQL_TABLE,
-                                ""
+                                ".+"
                         ),
                         new ObjectPSI<>("ИО Фамилия",
                                 CATEGORY,

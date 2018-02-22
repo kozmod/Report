@@ -1,7 +1,7 @@
 package report.models.mementos;
 import report.entities.items.Clone;
 
-public class EntityMemento<E extends Clone> implements Memento<E>  {
+public class EntityMemento<E extends Clone<E>> implements Memento<E>  {
     private E entityClone;
     private E entityMain;
 

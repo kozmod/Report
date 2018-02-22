@@ -30,7 +30,7 @@ public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
     * @return  List of Item
     */
     @Override
-    public String sqlTableName() {return SQL.Tables.FIN_PLAN;}
+    public String getSqlTableName() {return SQL.Tables.FIN_PLAN;}
     
     /**
     * Get String of a Mirror (SQL.Tables).

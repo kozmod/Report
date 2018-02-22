@@ -37,7 +37,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
     * @return  List of Item
     */
     @Override
-    public String sqlTableName() {return this.tableName;}
+    public String getSqlTableName() {return this.tableName;}
     
     /**
     * Get List of TableWrapper Items (EstimateTVI) from SQL

@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
@@ -31,7 +32,7 @@ public class ReqCommonDAO extends AbstractReqDAO{
 
 
     @Override
-    public String sqlTableName() {
+    public String getSqlTableName() {
         return ReqCommonDAO.SQL_TABLE;
     }
 
@@ -50,6 +51,7 @@ public class ReqCommonDAO extends AbstractReqDAO{
             if(pstmt.execute()){
                 try(ResultSet rs = pstmt.getResultSet()){
                     if (rs.next()){
+                        ReqDaoUtils.setID(rs.getLong("id"),map);
                         map.get(OGRN).setValue(rs.getString(OGRN));
                         map.get(DATE_OGRN).setValue(LocalDate.ofEpochDay(rs.getInt(DATE_OGRN)));
                         map.get(INN).setValue(rs.getInt(INN));
@@ -58,6 +60,7 @@ public class ReqCommonDAO extends AbstractReqDAO{
                         map.get(ADRESS_F).setValue(rs.getString(ADRESS_F));
                         map.get(ADRESS_P).setValue(rs.getString(ADRESS_P));
                     }
+
                 }
             }
             list.addAll(map.values());

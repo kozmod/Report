@@ -26,7 +26,7 @@ public class ReqBankDAO extends AbstractReqDAO{
     private static String COR_ACC    = "CorAcc";
 
     @Override
-    public String sqlTableName() {
+    public String getSqlTableName() {
         return ReqBankDAO.SQL_TABLE;
     }
     @Override
@@ -42,6 +42,7 @@ public class ReqBankDAO extends AbstractReqDAO{
             if(pstmt.execute()){
                 try(ResultSet rs = pstmt.getResultSet()){
                     if(rs.next()){
+                        ReqDaoUtils.setID(rs.getLong("id"),map);
                         map.get(BANK_NAME).setValue(rs.getString(BANK_NAME));
                         map.get(BIC).setValue(rs.getInt(BIC));
                         map.get(ACC_NUMBER).setValue(rs.getString(ACC_NUMBER));

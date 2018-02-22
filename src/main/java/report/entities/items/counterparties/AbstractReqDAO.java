@@ -1,11 +1,7 @@
 package report.entities.items.counterparties;
 
 import report.entities.abstraction.CommonNamedDAO;
-import report.entities.items.contractor.ContractorDAO;
-import report.entities.items.contractor.ContractorTIV;
-import report.entities.items.osr.OSR_DAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
-import report.layoutControllers.LogController;
 import report.models.beck.sql.SQLconnector;
 
 import java.sql.*;
@@ -18,7 +14,7 @@ public  abstract class AbstractReqDAO implements CommonNamedDAO<List<ObjectPSI>>
 
     @Override
     public void delete(List<ObjectPSI> items) {
-        String sql = "UPDATE "+ this.sqlTableName() +" SET dell = 1 WHERE [id] = ? AND [dell] = 0;";
+        String sql = "UPDATE "+ this.getSqlTableName() +" SET dell = 1 WHERE [id] = ? AND [dell] = 0;";
         try(Connection connection   = SQLconnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sql);) {
             connection.setAutoCommit(false);
@@ -29,7 +25,7 @@ public  abstract class AbstractReqDAO implements CommonNamedDAO<List<ObjectPSI>>
                                 .get()
                                 .getId()
                 );
-            pstmt.executeBatch();
+            pstmt.executeUpdate();
             //SQL commit
             connection.commit();
             //add info to LogTextArea / LogController
@@ -47,57 +43,39 @@ public  abstract class AbstractReqDAO implements CommonNamedDAO<List<ObjectPSI>>
 
     @Override
     public void insert(List<ObjectPSI> items) {
-        int i = 0;
-        StringBuilder sqlStringBuilder =  new StringBuilder("INSERT INTO " )
-                .append(this.sqlTableName())
-                .append("(");
-        for (ObjectPSI item : items) {
-            if(i == 0){
-                sqlStringBuilder.append(item.getSqlName());
-            }else{
-                sqlStringBuilder.append(",").append(item.getSqlName());
-            }
-            i++;
-        }
-        sqlStringBuilder.append(") VALUES(");
-        for (; i >=0 ; i--) {
-            if (i != 0) {
-                sqlStringBuilder.append("?,");
-            } else {
-                sqlStringBuilder.append("? )");
-            }
-        }
-        System.out.println(sqlStringBuilder.toString());
-//            try(Connection connection = SQLconnector.getInstance();
-//                PreparedStatement pstmt  = connection.prepareStatement(sqlStringBuilder.toString(),
-//                        Statement.RETURN_GENERATED_KEYS);) {
-//                //set false SQL Autocommit
-//                connection.setAutoCommit(false);
-//                i = 1;
-//                for (ObjectPSI item : items) {
-//                    pstmt.setObject(i,  item.getValue());
-//                    i++;
-//                }
-//                    int affectedRows = pstmt.executeUpdate();
-//                    try(ResultSet generategKeys = pstmt.getGeneratedKeys()){
-//                        if(generategKeys.next())
-//                            for (ObjectPSI item : items) {
-//                                item.setId(generategKeys.getLong(1));
-//                            }
-//                    }
-//                //SQL commit
-//                connection.commit();
-//                //add info to LogTextArea / LogController
-////           items.forEach(item -> {
-//////                LogController.appendLogViewText("inserted item: "+ ((Item)item).getJM_name()
-//////                                                         +" [JM/ "+((Item)item).getJobOrMat()      + "]"
-//////                                                         +" [BP/ "+((Item)item).getBindedJob()     + "]"
-//////                                                         +" [S#/ " + ((Item)item).getSiteNumber()  + "]"
-//////                                                         +" [C/ " + ((Item)item).getContractor()   + "]");
-////                });
+        String string;
+            try(Connection connection = SQLconnector.getInstance();
+                PreparedStatement pstmt  = connection.prepareStatement(string = ReqDaoUtils.buildSqlString(items),
+                        Statement.RETURN_GENERATED_KEYS)) {
+                //set false SQL Autocommit
+                System.out.println(string);
+                connection.setAutoCommit(false);
+                int i = 1;
+                for (ObjectPSI item : items) {
+                    pstmt.setObject(i,  item.getValue());
+                    i++;
+                }
+                    int affectedRows = pstmt.executeUpdate();
+                    try(ResultSet generategKeys = pstmt.getGeneratedKeys()){
+                        if(generategKeys.next())
+                            for (ObjectPSI item : items) {
+                                item.setId(generategKeys.getLong(1));
+                            }
+                    }
+                //SQL commit
+                connection.commit();
+                //add info to LogTextArea / LogController
+//           items.forEach(item -> {
+////                LogController.appendLogViewText("inserted item: "+ ((Item)item).getJM_name()
+////                                                         +" [JM/ "+((Item)item).getJobOrMat()      + "]"
+////                                                         +" [BP/ "+((Item)item).getBindedJob()     + "]"
+////                                                         +" [S#/ " + ((Item)item).getSiteNumber()  + "]"
+////                                                         +" [C/ " + ((Item)item).getContractor()   + "]");
+//                });
 //                LogController.appendLogViewText(items.size() + " inserted");
-//            } catch (SQLException ex) {
-//                Logger.getLogger(AbstractReqDAO.class.getName()).log(Level.SEVERE, null, ex);
-//            }
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                Logger.getLogger(AbstractReqDAO.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }

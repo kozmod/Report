@@ -17,7 +17,7 @@ public class CountAgentDAO implements CommonNamedDAO<Collection<CountAgentTVI>> 
 
 
     @Override
-    public String sqlTableName() {
+    public String getSqlTableName() {
         return SQL.Tables.COUNTERPARTIES;
     }
 

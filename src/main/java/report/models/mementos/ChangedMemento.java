@@ -59,7 +59,7 @@ public class ChangedMemento implements Memento<List<ObjectPSI>> {
      */
     private List<ObjectPSI> getNewObs(List<ObjectPSI> items){
         List<ObjectPSI> newObsList = new ArrayList<>(items.size());
-        items.forEach((Clone obsItem) -> newObsList.add(obsItem.getClone()));
+        items.forEach((Clone obsItem) -> newObsList.add((ObjectPSI) obsItem.getClone()));
         return newObsList;
     }
 

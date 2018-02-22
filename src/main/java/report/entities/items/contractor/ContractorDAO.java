@@ -22,7 +22,7 @@ import report.models.beck.sql.SQLconnector;
 public class ContractorDAO implements CommonNamedDAO<Collection<ContractorTIV>> {
 
     @Override
-    public String sqlTableName() {
+    public String getSqlTableName() {
         return SQL.Tables.CONTRACTORS;
     }
     /**

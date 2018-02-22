@@ -26,7 +26,7 @@ public class OSR_DAO implements CommonNamedDAO<Collection<OSR_TIV>> {
     * @return  List of Item
     */
     @Override
-    public String sqlTableName() {return SQL.Tables.SITE_OSR;}
+    public String getSqlTableName() {return SQL.Tables.SITE_OSR;}
     
     
     /**

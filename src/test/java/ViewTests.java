@@ -59,7 +59,7 @@ public class ViewTests {
     public void firstTest(){
         FxTestStage.launch(PathStrings.Layout.ALL_PROPERTIES);
         try {
-            TimeUnit.SECONDS.sleep(55);
+            TimeUnit.SECONDS.sleep(200);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }

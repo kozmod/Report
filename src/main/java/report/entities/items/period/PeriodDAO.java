@@ -28,7 +28,7 @@ public class PeriodDAO implements CommonNamedDAO<Collection<PeriodTIV>> {
     * @return  List of Item
     */
     @Override
-    public String sqlTableName() {return SQL.Tables.SITE_JOB_PERIOD;}
+    public String getSqlTableName() {return SQL.Tables.SITE_JOB_PERIOD;}
     
     @Override
     public ObservableList<PeriodTIV> getData() {

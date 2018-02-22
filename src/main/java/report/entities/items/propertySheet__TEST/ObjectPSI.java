@@ -19,7 +19,8 @@ import java.util.Optional;
  * Universal object to PropertySheet(<b>controlsfx</b>).
  * @param <T>
  */
-public class ObjectPSI<T> implements  Clone,PropertySheet.Item{
+public class ObjectPSI<T> implements  Clone<ObjectPSI<T>>,PropertySheet.Item{
+    private long id;
     private final ObjectProperty<T> sheetObject;
     private final String category;
     private final String description;
@@ -124,21 +125,23 @@ public class ObjectPSI<T> implements  Clone,PropertySheet.Item{
         return Optional.of(sheetObject);
     }
     @Override
-    public <E> E getClone() {
-        return (E) new  ObjectPSI(this.getName(),
+    public ObjectPSI<T>  getClone() {
+        ObjectPSI<T>  item =  new  ObjectPSI<>(this.getName(),
                 this.getCategory(),
                 this.getDescription(),
                 this.getValue(),
                 this.getSqlName(),
                 this.getSqlTableName()
         );
+        item.setId(this.getId());
+        return item;
     }
     public long getId() {
-        return 0;
+        return this.id;
     }
 
     public void setId(long id) {
-
+        this.id = id;
     }
 
     public  Validator<T> getValidator(){

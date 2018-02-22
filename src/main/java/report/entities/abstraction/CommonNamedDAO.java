@@ -18,7 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public interface CommonNamedDAO<E> extends CommonDAO<E> {
-    String sqlTableName();
+    String getSqlTableName();
     /**
      * Get <b>Unique</b> distinct value of column.
      * @return ObservableList
@@ -31,7 +31,7 @@ public interface CommonNamedDAO<E> extends CommonDAO<E> {
              PreparedStatement pstmt = connection.prepareStatement("execute getListDIST ?,?")
         ){
             pstmt.setString(1, column);
-            pstmt.setString(2, this.sqlTableName());
+            pstmt.setString(2, this.getSqlTableName());
             pstmt.execute();
             try ( ResultSet resSet = pstmt.getResultSet()){
                 while(resSet.next()){
