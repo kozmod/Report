@@ -13,7 +13,6 @@ public class ChangedMemento implements Memento<List<ObjectPSI>> {
 
     private List<ObjectPSI> listClone;
     private List<ObjectPSI> listMain;
-    private boolean changed = false;
     /***************************************************************************
      *                                                                         *
      * Constructors                                                            *
@@ -47,18 +46,7 @@ public class ChangedMemento implements Memento<List<ObjectPSI>> {
     public void clearChanges() {
         this.listClone = this.getNewObs(listMain);
     }
-    /***************************************************************************
-     *                                                                         *
-     * Getters/Setters                                                         *
-     *                                                                         *
-     **************************************************************************/
-    public boolean isChanged() {
-        return changed;
-    }
 
-    public void setChanged(boolean changed) {
-        this.changed = changed;
-    }
     /***************************************************************************
      *                                                                         *
      * Private Methods                                                         *

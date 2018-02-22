@@ -12,13 +12,15 @@ import report.models.view.customNodes.ContextMenuOptional;
 import report.models.view.wrappers.Reverting;
 
 import java.util.*;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class PropertySheetWrapper implements Reverting {
     private PropertySheet sheet;
     private ObservableList<ObjectPSI> items;
+    private ListChangeListener<ObjectPSI> listChangeListener;
     private AbstractReqDAO[] daos;
-    private Map<String,ChangedMemento> mementos;
+    private ChangedMemento memento;
     private ValidationSupport  validationSupport;
     /***************************************************************************
      *                                                                         *
@@ -33,6 +35,7 @@ public class PropertySheetWrapper implements Reverting {
     public PropertySheetWrapper(PropertySheet sheet,AbstractReqDAO ... daos) {
         this.daos  = daos;
         this.sheet = sheet;
+        items = FXCollections.observableArrayList(ObjectPSI.extractor());
     }
     /***************************************************************************
      *                                                                         *
@@ -41,17 +44,15 @@ public class PropertySheetWrapper implements Reverting {
      **************************************************************************/
 
     public void setFromBase(int value) {
-        items = FXCollections.observableArrayList(ObjectPSI.extractor());
-        mementos = new HashMap<>(daos.length,2);
-        Stream.of(daos)
-                .forEach(dao -> {
-                    List<ObjectPSI>  list= dao.getByID(value);
-                    items.addAll(list);
-                    mementos.put(dao.sqlTableName(),new ChangedMemento(list));
-                });
-        this.setItems(items);
-
-
+        List<ObjectPSI> list = Stream.of(daos)
+                .flatMap(dao -> dao.getByID(value).stream())
+                .collect(Collectors.toList());
+//    Stream.of(daos)
+//                .forEach(dao -> {
+//                    List<ObjectPSI>  list = dao.getByID(value);
+//                    items.addAll(list);
+//                });
+        this.setItems(list);
     }
 
     /***************************************************************************
@@ -61,15 +62,17 @@ public class PropertySheetWrapper implements Reverting {
      **************************************************************************/
     public void setItems(List<ObjectPSI> items){
         sheet.getItems().setAll(items);
-        this.items.addListener((ListChangeListener<ObjectPSI>) item -> {
-            if(item.next() && item.wasUpdated()) {
-                ((ContextMenuOptional) sheet.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
-                mementos.get(items.get(item.getFrom()).getSqlTableName()).setChanged(true);
-            }
-
-        });
-
-
+        this.items.setAll(items);
+        if(listChangeListener == null) {
+            this.listChangeListener = item -> {
+                if (item.next() && item.wasUpdated()) {
+                    ((ContextMenuOptional) sheet.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
+                    System.out.println("AA " + Math.random());
+                }
+            };
+            this.items.addListener(listChangeListener);
+        }
+        this.saveMemento();
     }
 
     public PropertySheet getSheet() {
@@ -95,22 +98,26 @@ public class PropertySheetWrapper implements Reverting {
      **************************************************************************/
     @Override
     public void saveMemento() {
-
+        memento = new ChangedMemento(this.items);
     }
 
     @Override
     public void undoChangeItems() {
+        this.setItems(memento.getSavedState());
+        this.saveMemento();
 
     }
 
     @Override
     public void toBase() {
-        Stream.of(daos).forEach( dao ->{
-            ChangedMemento memento = mementos.get(dao.sqlTableName());
-            if(memento.isChanged()){
-                dao.insert(memento.toInsert());
-            }
-        });
+        //TODO: separate memento to base-list
+//        Map<String,  List>
+//        Stream.of(daos).forEach( dao ->{
+//            ChangedMemento memento = mementos.get(dao.sqlTableName());
+//            if(memento.isChanged()){
+//                dao.insert(memento.toInsert());
+//            }
+//        });
 
     }
 
