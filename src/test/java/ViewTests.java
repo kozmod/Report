@@ -2,6 +2,7 @@ import helperClasses.FxTestStage;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import org.controlsfx.control.PropertySheet;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
@@ -10,8 +11,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
 
 import report.entities.items.counterparties.ReqBankDAO;
+import report.entities.items.counterparties.ReqCommonDAO;
+import report.entities.items.counterparties.ReqExBodyDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 
+import report.models.view.wrappers.propertySheetWrappers.PropertySheetWrapper;
 import report.usage_strings.PathStrings;
 
 import java.io.File;
@@ -74,6 +78,33 @@ public class ViewTests {
         list.get(1).setValue("12344");
 
         "dsdsd".matches("\\d+");
+    }
+
+    @Test
+    @Disabled
+    @DisplayName("Stream test")
+    public void streamTest(){
+        FxTestStage.launch(PathStrings.Layout.ALL_PROPERTIES);
+        PropertySheet countSheet = new PropertySheet();
+        PropertySheetWrapper wrapper = new PropertySheetWrapper(
+                countSheet,
+                new ReqCommonDAO(),
+                new ReqBankDAO(),
+                new ReqExBodyDAO()
+        );
+
+        for (int i = 0; i < 300; i++) {
+            wrapper.setFromBase(i);
+            System.out.println(wrapper.getSheet().getItems().get(13).getValue());
+
+        }
+
+        try {
+            TimeUnit.SECONDS.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+
     }
 
 }

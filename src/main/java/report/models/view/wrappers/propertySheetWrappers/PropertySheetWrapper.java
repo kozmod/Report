@@ -3,7 +3,9 @@ package report.models.view.wrappers.propertySheetWrappers;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Control;
 import org.controlsfx.control.PropertySheet;
+import org.controlsfx.property.editor.PropertyEditor;
 import org.controlsfx.validation.ValidationSupport;
 import report.entities.items.counterparties.AbstractReqDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
@@ -46,19 +48,22 @@ public class PropertySheetWrapper implements Reverting {
      **************************************************************************/
 
     public void setFromBase(int value) {
-        List<ObjectPSI> list = cashedItemsMap.get(value);
-        if(list == null) {
-            list = Stream.of(daos)
-                    .flatMap(dao -> dao.getByID(value).stream())
-                    .collect(Collectors.toList());
-//    Stream.of(daos)
-//                .forEach(dao -> {
-//                    List<ObjectPSI>  list = dao.getByID(value);
-//                    items.addAll(list);
-//                });
-            cashedItemsMap.put(value,list);
-        }
-        this.setItems(list);
+//        List<ObjectPSI> list = cashedItemsMap.get(value);
+//        if(list == null) {
+//            list = Stream.of(daos)
+//                    .flatMap(dao -> dao.getByID(value).stream())
+//                    .collect(Collectors.toList());
+            List<ObjectPSI>  list2 = new ArrayList<>();
+            Stream.of(daos)
+                .forEach(dao -> {
+                    list2.addAll(dao.getByID(value));
+
+                });
+//            cashedItemsMap.put(value,list);
+//            this.setItems(list2);
+//        }else {
+            this.setItems(list2);
+//        }
 
     }
 
@@ -74,7 +79,6 @@ public class PropertySheetWrapper implements Reverting {
             this.listChangeListener = item -> {
                 if (item.next() && item.wasUpdated()) {
                     ((ContextMenuOptional) sheet.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
-
                 }
             };
             this.items.addListener(listChangeListener);

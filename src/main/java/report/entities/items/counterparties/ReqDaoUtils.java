@@ -19,34 +19,27 @@ public class ReqDaoUtils {
             item.setId(id);
         }
     }
-    public static String buildSqlString(List<ObjectPSI> items) throws SQLException {
-        String sql = null;
-        if(items != null && !items.isEmpty()) {
-            int i = 0;
-            StringBuilder sqlStringBuilder = new StringBuilder("INSERT INTO ")
-                    .append(items.get(0).getSqlTableName())
-                    .append("(");
-            for (ObjectPSI item : items) {
-                if (i == 0) {
-                    sqlStringBuilder.append(item.getSqlName());
-                } else {
-                    sqlStringBuilder.append(",").append(item.getSqlName());
-                }
-                i++;
+    public static String buildSqlString(String idColumnName, List<ObjectPSI> items) throws SQLException {
+        StringBuilder insertPart = new StringBuilder("INSERT INTO ");
+        insertPart.append(items.get(0).getSqlTableName()).append('(');
+        insertPart.append(idColumnName).append(',');
+        StringBuilder valuesPart = new StringBuilder(" VALUES( ");
+        valuesPart.append("?,");
+        int i = 0;
+        for (ObjectPSI item : items) {
+            if (i != items.size() - 1) {
+                insertPart.append(item.getSqlName()).append(',');
+                valuesPart.append("?,");
+            }else{
+                insertPart.append(item.getSqlName());
+                valuesPart.append("? ");
             }
-            sqlStringBuilder.append(") VALUES(");
-            for (; i > 0; i--) {
-                if (i != 1) {
-                    sqlStringBuilder.append("?,");
-                } else {
-                    sqlStringBuilder.append("? )");
-                }
-            }
-            sql = sqlStringBuilder.toString();
-        }else{
-            throw new SQLException(ReqDaoUtils.class + " строка SQL запроса не создана");
+            i++;
         }
-        return sql;
+        insertPart.append(')');
+        valuesPart.append(')');
+        return insertPart.append(valuesPart).toString();
     }
+
 
 }

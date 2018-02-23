@@ -16,10 +16,7 @@ import org.controlsfx.control.PropertySheet;
 import org.controlsfx.property.editor.AbstractPropertyEditor;
 import org.controlsfx.property.editor.Editors;
 import org.controlsfx.property.editor.PropertyEditor;
-import org.controlsfx.validation.Severity;
-import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.ValidationSupport;
-import org.controlsfx.validation.Validator;
 import report.entities.abstraction.CommonDAO;
 import report.entities.items.DItem;
 import report.entities.items.contractor.ContractorDAO;
@@ -33,6 +30,7 @@ import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.entities.items.variable.PropertiesDAO;
 import report.entities.items.variable.VariableTIV_new;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
+import report.models.view.CustomPair;
 import report.models.view.nodesFactories.ContextMenuFactory;
 import report.models.view.wrappers.propertySheetWrappers.PropertySheetWrapper;
 import report.models.view.wrappers.tableWrappers.ReverseTableWrapper;
@@ -180,8 +178,6 @@ class AllPropertiesControllerND implements TableFactory {
             editedItem.setIdName(-1);
             System.out.println("\033[35m "+ e.getNewValue() + " old " + editedItem.getName() + "\033[0m");
         });
-
-
         return tableWrapper;
     }
 
@@ -242,10 +238,11 @@ class AllPropertiesControllerND implements TableFactory {
                     });
                 }
             };
-            support.registerValidator(
-                    (Control) editor.getEditor(),
-                    ((ObjectPSI)param).getValidator()
-            );
+            //TODO: think about validation support
+//            support.registerValidator(
+//                    (Control) editor.getEditor(),
+//                    ((ObjectPSI)param).getValidator()
+//            );
             return editor;
         });
         return wrapper;
@@ -258,7 +255,7 @@ class AllPropertiesControllerND implements TableFactory {
      */
     static void decorLinkedNamesGP(GridPane gridPane,TableWrapper<CountAgentTVI> tableWrapper){
         //Nodes
-        ListView<String> listView = new ListView<>();
+        ListView<CustomPair<Integer,String>> listView = new ListView<>();
         ListSelectionView<String> listSelectionView= new ListSelectionView<>();
         HBox hBox = new HBox();
         Button editButton = new Button("Редактировать");
@@ -283,6 +280,16 @@ class AllPropertiesControllerND implements TableFactory {
         //GridPane
         gridPane.add(editButton, 0,0);
         gridPane.add(listView, 0,1,1,4);
+
+        //TODO: eject Listener to  AllPropertiesController
+        tableWrapper.getSelectionModel()
+                .selectedItemProperty()
+                .addListener((observable, oldValue, newValue) -> {
+                    listView.setItems(CountAgentDAO.getMapOfLinkedNames(newValue.getName()));
+                });
+
     }
+
+
 
 }

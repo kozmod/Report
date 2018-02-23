@@ -4,9 +4,11 @@ import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
+import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.util.Callback;
 import org.controlsfx.control.PropertySheet;
+import org.controlsfx.property.editor.Editors;
 import org.controlsfx.validation.Severity;
 import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.Validator;
@@ -27,6 +29,7 @@ public class ObjectPSI<T> implements  Clone<ObjectPSI<T>>,PropertySheet.Item{
     private final String sqlName;
     private final String sqlTableName;
     private final String regExValidation;
+
     /***************************************************************************
      *                                                                         *
      * CONSTRUCTORS                                                            *
@@ -136,6 +139,11 @@ public class ObjectPSI<T> implements  Clone<ObjectPSI<T>>,PropertySheet.Item{
         item.setId(this.getId());
         return item;
     }
+    /***************************************************************************
+     *                                                                         *
+     * Getters/Setters                                                         *
+     *                                                                         *
+     **************************************************************************/
     public long getId() {
         return this.id;
     }

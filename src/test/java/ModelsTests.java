@@ -1,16 +1,24 @@
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.controlsfx.control.PropertySheet;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
+import report.entities.items.counterparties.*;
+import report.entities.items.propertySheet__TEST.ObjectPSI;
+import report.models.view.wrappers.propertySheetWrappers.PropertySheetWrapper;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.math.BigInteger;
+import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Stream;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class ModelsTests {
@@ -41,13 +49,25 @@ public class ModelsTests {
             e.printStackTrace();
         }
     }
-
     @Test
-//    @Disabled
+    @Disabled
+    @DisplayName("BigInteger test")
     public void sizeVariableTest(){
         BigInteger big = new BigInteger("9999999999999");
         System.out.println(big);
+    }
+    @Test
+//    @Disabled
+    @DisplayName("ReqDaoUtils sql string build")
+    public void reqDaoUtilsTest() throws SQLException {
+        List<ObjectPSI> list = new ReqCommonDAO().getByID(55);
+        String str = ReqDaoUtils.buildSqlString("id_Count",list);
+//        String str2 = ReqDaoUtils.buildSqlString(list);
+        System.out.println(str + "\n"
+//                + str2
+        );
 
 
     }
+
 }

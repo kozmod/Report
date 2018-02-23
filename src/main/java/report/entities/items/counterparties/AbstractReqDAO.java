@@ -38,6 +38,7 @@ public  abstract class AbstractReqDAO implements CommonNamedDAO<List<ObjectPSI>>
 ////                                                         +" [C/ " + ((Item)item).getContractor()   + "]");
 //            });
         } catch (SQLException ex) {
+            ex.printStackTrace();
             Logger.getLogger(AbstractReqDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -46,22 +47,23 @@ public  abstract class AbstractReqDAO implements CommonNamedDAO<List<ObjectPSI>>
     public void insert(List<ObjectPSI> items) {
         String string;
             try(Connection connection = SQLconnector.getInstance();
-                PreparedStatement pstmt  = connection.prepareStatement(string = ReqDaoUtils.buildSqlString(items),
+                PreparedStatement pstmt  = connection.prepareStatement(string = ReqDaoUtils.buildSqlString("id_Count",items),
                         Statement.RETURN_GENERATED_KEYS)) {
                 //set false SQL Autocommit
                 System.out.println(string);
                 connection.setAutoCommit(false);
-                int i = 1;
+                pstmt.setObject(1, items.get(0).getId());
+                int i = 2;
                 for (ObjectPSI item : items) {
-                    Object value = item.getValue();
-                    if(value.getClass().equals(LocalDate.class)){
-                        pstmt.setObject(i, ((LocalDate) value).toEpochDay());
-                    }else {
-                        pstmt.setObject(i, item.getValue());
-                    }
+                        Object value = item.getValue();
+                        if (value.getClass().equals(LocalDate.class)) {
+                            pstmt.setObject(i, ((LocalDate) value).toEpochDay());
+                        } else {
+                            pstmt.setObject(i, item.getValue());
+                        }
                     i++;
                 }
-//                    int affectedRows = pstmt.executeUpdate();
+                    int affectedRows = pstmt.executeUpdate();
 //                    try(ResultSet generategKeys = pstmt.getGeneratedKeys()){
 //                        if(generategKeys.next())
 //                            for (ObjectPSI item : items) {

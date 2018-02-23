@@ -178,11 +178,11 @@ public class AllPropertiesController implements Initializable {
                 .selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
             counterPropSheet.setFromBase(newValue.getIdName());
-//            counterPropSheet.getObservableItems().addListener((ListChangeListener<? super PropertySheet.Item>) listener ->{
-//                        if(listener.next()) {
-//                            System.out.println(counterPropSheet.getSheet().getItems().get(listener.getFrom()).getValue());
-//                        }
-//                    });
+        });
+        counterPropSheet.getObservableItems().addListener((ListChangeListener<? super PropertySheet.Item>) listener ->{
+            if(listener.next()) {
+                System.out.println(counterPropSheet.getSheet().getItems().get(listener.getFrom()).getValue());
+            }
         });
         AllPropertiesControllerND.decorLinkedNamesGP(linkedNamesGP, countAgentTableWrapper);
     }
