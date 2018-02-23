@@ -42,7 +42,7 @@ public class ReqBankDAO extends AbstractReqDAO{
             if(pstmt.execute()){
                 try(ResultSet rs = pstmt.getResultSet()){
                     if(rs.next()){
-                        ReqDaoUtils.setID(rs.getLong("id"),map);
+                        ReqDaoUtils.setID(rs.getLong("id_Count"),map);
                         map.get(BANK_NAME).setValue(rs.getString(BANK_NAME));
                         map.get(BIC).setValue(rs.getInt(BIC));
                         map.get(ACC_NUMBER).setValue(rs.getString(ACC_NUMBER));

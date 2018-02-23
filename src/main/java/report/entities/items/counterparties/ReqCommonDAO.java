@@ -51,7 +51,7 @@ public class ReqCommonDAO extends AbstractReqDAO{
             if(pstmt.execute()){
                 try(ResultSet rs = pstmt.getResultSet()){
                     if (rs.next()){
-                        ReqDaoUtils.setID(rs.getLong("id"),map);
+                        ReqDaoUtils.setID(rs.getLong("id_Count"),map);
                         map.get(OGRN).setValue(rs.getString(OGRN));
                         map.get(DATE_OGRN).setValue(LocalDate.ofEpochDay(rs.getInt(DATE_OGRN)));
                         map.get(INN).setValue(rs.getInt(INN));
@@ -76,7 +76,7 @@ public class ReqCommonDAO extends AbstractReqDAO{
                 .getEmptyItems(
                         new ObjectPSI<>("ОГРН",
                                 CATEGORY,
-                                "ОГРН",
+                                "ОГРН (13 символов 0-9)",
                                 "0",
                                 OGRN,
                                 SQL_TABLE,

@@ -18,6 +18,7 @@ import java.util.stream.Stream;
 public class PropertySheetWrapper implements Reverting {
     private PropertySheet sheet;
     private ObservableList<ObjectPSI> items;
+    private Map<Integer,List<ObjectPSI> > cashedItemsMap ;
     private ListChangeListener<ObjectPSI> listChangeListener;
     private AbstractReqDAO[] daos;
     private ChangedMemento memento;
@@ -36,6 +37,7 @@ public class PropertySheetWrapper implements Reverting {
         this.daos  = daos;
         this.sheet = sheet;
         items = FXCollections.observableArrayList(ObjectPSI.extractor());
+        this.cashedItemsMap = new HashMap<>();
     }
     /***************************************************************************
      *                                                                         *
@@ -44,15 +46,20 @@ public class PropertySheetWrapper implements Reverting {
      **************************************************************************/
 
     public void setFromBase(int value) {
-        List<ObjectPSI> list = Stream.of(daos)
-                .flatMap(dao -> dao.getByID(value).stream())
-                .collect(Collectors.toList());
+        List<ObjectPSI> list = cashedItemsMap.get(value);
+        if(list == null) {
+            list = Stream.of(daos)
+                    .flatMap(dao -> dao.getByID(value).stream())
+                    .collect(Collectors.toList());
 //    Stream.of(daos)
 //                .forEach(dao -> {
 //                    List<ObjectPSI>  list = dao.getByID(value);
 //                    items.addAll(list);
 //                });
+            cashedItemsMap.put(value,list);
+        }
         this.setItems(list);
+
     }
 
     /***************************************************************************

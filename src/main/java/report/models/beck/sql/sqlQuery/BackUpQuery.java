@@ -27,12 +27,15 @@ public class BackUpQuery {
     
     public static void restore(String filePath){
         
+//        String smtmtString ="use [master]; ALTER DATABASE [Test] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;"
+//                + "use [master]; RESTORE DATABASE [Test] FROM DISK = ? "
+//                + " WITH file=2,nounload,REPLACE, RECOVERY, STATS = 5 "
+//                + " ALTER DATABASE [Test] SET MULTI_USER ";
         String smtmtString ="use [master]; ALTER DATABASE [Test] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;"
                 + "use [master]; RESTORE DATABASE [Test] FROM DISK = ? "
-                            + " WITH file=2,nounload,REPLACE, RECOVERY, STATS = 5 "
+                + " WITH REPLACE, RECOVERY, STATS = 10 "
                 + " ALTER DATABASE [Test] SET MULTI_USER ";
-//                + "USE master; RESTORE DATABASE [Test] FROM DISK = ? "
-//                            + " WITH REPLACE, RECOVERY, STATS = 10";
+
        
         try(Connection connection = SQLconnector.getInstance_master();
             PreparedStatement pstmt = connection.prepareStatement(smtmtString);) {

@@ -178,13 +178,11 @@ public class AllPropertiesController implements Initializable {
                 .selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
             counterPropSheet.setFromBase(newValue.getIdName());
-            counterPropSheet.getObservableItems().addListener((ListChangeListener<? super PropertySheet.Item>) listener ->{
-                        if(listener.next()) {
-                            System.out.println(counterPropSheet.getSheet().getItems().get(listener.getFrom()).getValue());
-//                            if(!counterPropSheet.getValidationSupport().isInvalid())
-
-                        }
-                    });
+//            counterPropSheet.getObservableItems().addListener((ListChangeListener<? super PropertySheet.Item>) listener ->{
+//                        if(listener.next()) {
+//                            System.out.println(counterPropSheet.getSheet().getItems().get(listener.getFrom()).getValue());
+//                        }
+//                    });
         });
         AllPropertiesControllerND.decorLinkedNamesGP(linkedNamesGP, countAgentTableWrapper);
     }
@@ -210,15 +208,13 @@ public class AllPropertiesController implements Initializable {
         clearGroupOfTextInputControl(contractorNameTF,contractorDirectorTF,contractorAdressTA,contractorCommentsTA);
       }else if(event.getSource() == contractorSaveItemButton){
           setVisibleDisableContractorNodes(false);
-          if(
-                  contractorTableWrapper.getItems().add(new ContractorTIV(
+          if(contractorTableWrapper.getItems().add(new ContractorTIV(
                                   0,
                                   contractorNameTF.getText(),
                                   contractorDirectorTF.getText(),
                                   contractorAdressTA.getText(),
                                   contractorCommentsTA.getText()
-                          )
-                  )
+                          ))
                   )clearGroupOfTextInputControl(contractorNameTF,contractorDirectorTF,contractorAdressTA,contractorCommentsTA);
       }
       if(event.getSource() == contractorCencelItemButton){

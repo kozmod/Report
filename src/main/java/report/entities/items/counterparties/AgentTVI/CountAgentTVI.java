@@ -5,8 +5,10 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
 import report.entities.items.Clone;
+import report.entities.items.propertySheet__TEST.ObjectPSI;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CountAgentTVI implements Clone {
@@ -19,6 +21,7 @@ public class CountAgentTVI implements Clone {
     private StringProperty type;
 
     private Map<String,Integer> linkedNames;
+    private List<ObjectPSI> reqList;
 
 
     /***************************************************************************
@@ -131,6 +134,14 @@ public class CountAgentTVI implements Clone {
 
     public void setLinkedNames(Map<String, Integer> linkedNames) {
         this.linkedNames = linkedNames;
+    }
+
+    public List<ObjectPSI> getReqList() {
+        return reqList;
+    }
+
+    public void setReqList(List<ObjectPSI> reqList) {
+        this.reqList = reqList;
     }
 
     public CountAgentTVI  setNewStatus(boolean value){

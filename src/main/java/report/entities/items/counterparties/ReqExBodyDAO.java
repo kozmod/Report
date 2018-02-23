@@ -52,7 +52,7 @@ public class ReqExBodyDAO  extends AbstractReqDAO{
             if(pstmt.execute()){
                 try(ResultSet rs = pstmt.getResultSet()){
                     if(rs.next()){
-                        ReqDaoUtils.setID(rs.getLong("id"),map);
+                        ReqDaoUtils.setID(rs.getLong("id_Count"),map);
                         map.get(EX_BODY).setValue(rs.getString(EX_BODY));
                         map.get(EX_BODY_NAME).setValue(rs.getString(EX_BODY_NAME));
                         map.get(EX_BODY_SURNAME).setValue(rs.getString(EX_BODY_SURNAME));

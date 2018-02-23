@@ -5,6 +5,7 @@ import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.models.beck.sql.SQLconnector;
 
 import java.sql.*;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,7 +15,7 @@ public  abstract class AbstractReqDAO implements CommonNamedDAO<List<ObjectPSI>>
 
     @Override
     public void delete(List<ObjectPSI> items) {
-        String sql = "UPDATE "+ this.getSqlTableName() +" SET dell = 1 WHERE [id] = ? AND [dell] = 0;";
+        String sql = "UPDATE "+ this.getSqlTableName() +" SET dell = 1 WHERE [id_Count] = ? AND [dell] = 0;";
         try(Connection connection   = SQLconnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sql);) {
             connection.setAutoCommit(false);
@@ -52,16 +53,21 @@ public  abstract class AbstractReqDAO implements CommonNamedDAO<List<ObjectPSI>>
                 connection.setAutoCommit(false);
                 int i = 1;
                 for (ObjectPSI item : items) {
-                    pstmt.setObject(i,  item.getValue());
+                    Object value = item.getValue();
+                    if(value.getClass().equals(LocalDate.class)){
+                        pstmt.setObject(i, ((LocalDate) value).toEpochDay());
+                    }else {
+                        pstmt.setObject(i, item.getValue());
+                    }
                     i++;
                 }
-                    int affectedRows = pstmt.executeUpdate();
-                    try(ResultSet generategKeys = pstmt.getGeneratedKeys()){
-                        if(generategKeys.next())
-                            for (ObjectPSI item : items) {
-                                item.setId(generategKeys.getLong(1));
-                            }
-                    }
+//                    int affectedRows = pstmt.executeUpdate();
+//                    try(ResultSet generategKeys = pstmt.getGeneratedKeys()){
+//                        if(generategKeys.next())
+//                            for (ObjectPSI item : items) {
+//                                item.setId(generategKeys.getLong(1));
+//                            }
+//                    }
                 //SQL commit
                 connection.commit();
                 //add info to LogTextArea / LogController
