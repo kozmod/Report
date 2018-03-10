@@ -20,11 +20,11 @@ import java.util.stream.Stream;
 public class PropertySheetWrapper implements Reverting {
     private PropertySheet sheet;
     private ObservableList<ObjectPSI> items;
-    private Map<Integer,List<ObjectPSI> > cashedItemsMap ;
+    private Map<Integer, List<ObjectPSI>> cashedItemsMap;
     private ListChangeListener<ObjectPSI> listChangeListener;
     private AbstractReqDAO[] daos;
     private ChangedMemento memento;
-    private ValidationSupport  validationSupport;
+    private ValidationSupport validationSupport;
     /***************************************************************************
      *                                                                         *
      * Constructors                                                            *
@@ -35,12 +35,14 @@ public class PropertySheetWrapper implements Reverting {
      */
     private PropertySheetWrapper() {
     }
-    public PropertySheetWrapper(PropertySheet sheet,AbstractReqDAO ... daos) {
-        this.daos  = daos;
+
+    public PropertySheetWrapper(PropertySheet sheet, AbstractReqDAO... daos) {
+        this.daos = daos;
         this.sheet = sheet;
         items = FXCollections.observableArrayList(ObjectPSI.extractor());
         this.cashedItemsMap = new HashMap<>();
     }
+
     /***************************************************************************
      *                                                                         *
      * Base                                                                    *
@@ -53,8 +55,8 @@ public class PropertySheetWrapper implements Reverting {
 //            list = Stream.of(daos)
 //                    .flatMap(dao -> dao.getByID(value).stream())
 //                    .collect(Collectors.toList());
-            List<ObjectPSI>  list2 = new ArrayList<>();
-            Stream.of(daos)
+        List<ObjectPSI> list2 = new ArrayList<>();
+        Stream.of(daos)
                 .forEach(dao -> {
                     list2.addAll(dao.getByID(value));
 
@@ -62,7 +64,7 @@ public class PropertySheetWrapper implements Reverting {
 //            cashedItemsMap.put(value,list);
 //            this.setItems(list2);
 //        }else {
-            this.setItems(list2);
+        this.setItems(list2);
 //        }
 
     }
@@ -72,16 +74,19 @@ public class PropertySheetWrapper implements Reverting {
      * Methods                                                                 *
      *                                                                         *
      **************************************************************************/
-    public void setItems(List<ObjectPSI> items){
-        sheet.getItems().setAll(items);
+    public void setItems(List<ObjectPSI> items) {
         this.items.setAll(items);
-        if(listChangeListener == null) {
-            this.listChangeListener = item -> {
-                if (item.next() && item.wasUpdated()) {
-                    ((ContextMenuOptional) sheet.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
-                }
-            };
-            this.items.addListener(listChangeListener);
+        sheet.getItems().setAll(this.items);
+        ContextMenuOptional contextMenuOptional = ((ContextMenuOptional) sheet.getContextMenu());
+        if (contextMenuOptional != null) {
+            if (listChangeListener == null) {
+                this.listChangeListener = item -> {
+                    if (item.next() && item.wasUpdated()) {
+                        contextMenuOptional.setDisable_SaveUndoPrint_groupe(false);
+                    }
+                };
+                this.items.addListener(listChangeListener);
+            }
         }
         this.saveMemento();
     }
@@ -90,18 +95,19 @@ public class PropertySheetWrapper implements Reverting {
         return sheet;
     }
 
-    public  ObservableList<ObjectPSI> getObservableItems(){
+    public ObservableList<ObjectPSI> getObservableItems() {
         return this.items;
     }
 
 
-    public void setValidationSupport(ValidationSupport vs){
+    public void setValidationSupport(ValidationSupport vs) {
         this.validationSupport = vs;
     }
 
     public ValidationSupport getValidationSupport() {
         return validationSupport;
     }
+
     /***************************************************************************
      *                                                                         *
      * Override                                                                *
@@ -121,14 +127,14 @@ public class PropertySheetWrapper implements Reverting {
 
     @Override
     public void toBase() {
-       Map<String, List<ObjectPSI>> deleteMap = memento.toDelete().stream()
-               .collect(Collectors.groupingBy(item -> item.getSqlTableName()));
-       Map<String, List<ObjectPSI>> insertMap = memento.toInsert().stream()
+        Map<String, List<ObjectPSI>> deleteMap = memento.toDelete().stream()
                 .collect(Collectors.groupingBy(item -> item.getSqlTableName()));
-       Stream.of(daos).forEach(dao -> {
-           dao.delete(deleteMap.get(dao.getSqlTableName()));
-           dao.insert(insertMap.get(dao.getSqlTableName()));
-       });
+        Map<String, List<ObjectPSI>> insertMap = memento.toInsert().stream()
+                .collect(Collectors.groupingBy(item -> item.getSqlTableName()));
+        Stream.of(daos).forEach(dao -> {
+            dao.delete(deleteMap.get(dao.getSqlTableName()));
+            dao.insert(insertMap.get(dao.getSqlTableName()));
+        });
 //        deleteMap.values().forEach(i -> i.stream().forEach(ii -> System.out.println(ii.getId())));
     }
 

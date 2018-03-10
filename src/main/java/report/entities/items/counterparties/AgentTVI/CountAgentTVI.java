@@ -3,13 +3,11 @@ package report.entities.items.counterparties.AgentTVI;
 import javafx.beans.Observable;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.collections.ObservableList;
 import javafx.util.Callback;
 import report.entities.items.Clone;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import report.models.view.LinkedNamePair;
 
 public class CountAgentTVI implements Clone {
     private boolean newAdded = false;
@@ -20,8 +18,8 @@ public class CountAgentTVI implements Clone {
     private int idType;
     private StringProperty type;
 
-    private Map<String,Integer> linkedNames;
-    private List<ObjectPSI> reqList;
+    private ObservableList<LinkedNamePair> linkedNames;
+    private ObservableList<ObjectPSI> requisites;
 
 
     /***************************************************************************
@@ -128,20 +126,20 @@ public class CountAgentTVI implements Clone {
         this.type.set(type);
     }
 
-    public Map<String, Integer> getLinkedNames() {
+    public ObservableList<LinkedNamePair> getLinkedNames() {
         return linkedNames;
     }
 
-    public void setLinkedNames(Map<String, Integer> linkedNames) {
+    public void setLinkedNames(ObservableList<LinkedNamePair> linkedNames) {
         this.linkedNames = linkedNames;
     }
 
-    public List<ObjectPSI> getReqList() {
-        return reqList;
+    public ObservableList<ObjectPSI> getRequisites() {
+        return requisites;
     }
 
-    public void setReqList(List<ObjectPSI> reqList) {
-        this.reqList = reqList;
+    public void setRequisites(ObservableList<ObjectPSI> requisites) {
+        this.requisites = requisites;
     }
 
     public CountAgentTVI  setNewStatus(boolean value){

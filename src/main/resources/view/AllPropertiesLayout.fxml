@@ -197,6 +197,53 @@
       </GridPane>
   </content>
 </Tab>
+      <Tab text="MONTH_TEST">
+         <content>
+            <GridPane>
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TableView fx:id="reportingMonthTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="4" GridPane.rowIndex="1">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </TableView>
+                  <HBox prefHeight="100.0" prefWidth="200.0" spacing="5.0" GridPane.columnSpan="2">
+                     <children>
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="с ">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <DatePicker fx:id="monthFromDP" />
+                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="по">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Text>
+                        <DatePicker fx:id="monthToDP" />
+                        <Button mnemonicParsing="false" onAction="#handle_SetMonthTableItem" text="Поиск" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </HBox>
+               </children>
+               <padding>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </padding>
+            </GridPane>
+         </content>
+      </Tab>
       <!--<Tab text="Планирование">-->
          <!--<content>-->
             <!--<GridPane fx:id="planGP">-->

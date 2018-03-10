@@ -16,7 +16,9 @@ import javafx.scene.layout.GridPane;
 import org.controlsfx.control.PropertySheet;
 import report.entities.items.contractor.ContractorTIV;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
+import report.entities.items.site.month.ReportingMonth;
 import report.entities.items.variable.VariableTIV_new;
+import report.models.converters.dateStringConverters.LocalDayStringConverter;
 import report.models.view.wrappers.propertySheetWrappers.PropertySheetWrapper;
 import report.models.view.wrappers.tableWrappers.ReverseTableWrapper;
 import report.models.view.wrappers.tableWrappers.TableWrapper;
@@ -25,6 +27,14 @@ import report.models.view.customNodes.ContextMenuOptional;
 
 
 public class AllPropertiesController implements Initializable {
+    /***************************************************************************
+     *                                                                         *
+     *Tab 4 FXML                                                               *
+     *                                                                         *
+     **************************************************************************/
+    @FXML private TableView<ReportingMonth>  reportingMonthTable;
+    @FXML private DatePicker  monthFromDP;
+    @FXML private DatePicker monthToDP;
     /***************************************************************************
      *                                                                         *
      *Tab 3 FXML                                                               *
@@ -56,9 +66,10 @@ public class AllPropertiesController implements Initializable {
     @FXML private Button    contractorAddItemButton, contractorSaveItemButton, contractorCencelItemButton;
 
 
-    public ReverseTableWrapper<VariableTIV_new> variableTableWrapper ;
+    private ReverseTableWrapper<VariableTIV_new> variableTableWrapper ;
     private TableWrapper<ContractorTIV> contractorTableWrapper;
     private TableWrapper<CountAgentTVI> countAgentTableWrapper;
+    private TableWrapper<ReportingMonth> reportingMonthTableWrapper;
 
     /***************************************************************************
      *                                                                         *
@@ -69,7 +80,7 @@ public class AllPropertiesController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         this.init_VariableTab();
         this.init_ContractorTab();
-        this.init_CounterpatiesTab();
+        this.init_CounterPatiesTab();
 
 
         //TODO: Exception in thread "JavaFX Application Thread" java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
@@ -82,7 +93,9 @@ public class AllPropertiesController implements Initializable {
             variableTableWrapper.setFromBase();
             contractorTableWrapper.setFromBase();
             countAgentTableWrapper.setFromBase();
+        reportingMonthTableWrapper = AllPropertiesControllerND.decorMonthTable(reportingMonthTable);
     }
+
     /***************************************************************************
      *                                                                         *
      * Init Variable                                                           *
@@ -156,14 +169,14 @@ public class AllPropertiesController implements Initializable {
      * Init 3                                                                  *
      *                                                                         *
      **************************************************************************/
-    private void init_CounterpatiesTab(){
+    private void init_CounterPatiesTab(){
         countAgentTableWrapper = AllPropertiesControllerND.decorCountAgent(countAgentTable);
         countAgentTableWrapper.tableView()
                 .editableProperty()
                 .bind(countAgentСheckBox.selectedProperty());
         addCoutButton.visibleProperty()
                 .bind(countAgentСheckBox.selectedProperty());
-        counterPropSheet = AllPropertiesControllerND.getCountPropertySheet();
+        counterPropSheet = AllPropertiesControllerND.getCountPropertySheet(countAgentTableWrapper);
 
 
         reqBankScrollPane.setContent(counterPropSheet.getSheet());
@@ -174,14 +187,10 @@ public class AllPropertiesController implements Initializable {
                                 .then( ContextMenuFactory.getCommonDSU(countAgentTableWrapper) )
                                 .otherwise( (ContextMenu) null)
                 );
-        countAgentTableWrapper.getSelectionModel()
-                .selectedItemProperty()
-                .addListener((observable, oldValue, newValue) -> {
-            counterPropSheet.setFromBase(newValue.getIdName());
-        });
+
         counterPropSheet.getObservableItems().addListener((ListChangeListener<? super PropertySheet.Item>) listener ->{
             if(listener.next()) {
-                System.out.println(counterPropSheet.getSheet().getItems().get(listener.getFrom()).getValue());
+//                System.out.println(counterPropSheet.getSheet().getItems().get(listener.getFrom()).getValue());
             }
         });
         AllPropertiesControllerND.decorLinkedNamesGP(linkedNamesGP, countAgentTableWrapper);
@@ -288,6 +297,13 @@ public class AllPropertiesController implements Initializable {
                 break;
 
         }
+    }
+
+    @FXML
+    private void handle_SetMonthTableItem(ActionEvent event) {
+        monthFromDP.setConverter(new LocalDayStringConverter());
+        monthToDP.setConverter(new LocalDayStringConverter());
+
     }
     
 
