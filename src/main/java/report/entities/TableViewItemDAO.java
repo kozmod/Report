@@ -15,7 +15,7 @@
 //import javafx.collections.ObservableList;
 //import javafx.collections.ObservableSet;
 //import report.models.mementos.Memento;
-//import report.models.beck.sql.SQLconnector;
+//import report.models.beck.sql.SqlConnector;
 //import report.models.view.wrappers.table_wrappers.AbstractTableWrapper;
 //import report.usage_strings.ServiceStrings;
 //import report.models.DiffList;

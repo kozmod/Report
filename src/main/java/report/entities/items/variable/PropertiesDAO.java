@@ -1,7 +1,7 @@
 package report.entities.items.variable;
 
 import report.entities.abstraction.CommonNamedDAO;
-import report.models.beck.sql.SQLconnector;
+import report.models.beck.sql.SqlConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -20,7 +20,7 @@ public class PropertiesDAO implements CommonNamedDAO<VariableTIV_new> {
                 + " * "
                 + "from dbo.[TBL_COMMAND_PROPERTY] "
                 + "WHERE  [dell] = 0 ";
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sqlQuery)) {
             pstmt.execute();
 

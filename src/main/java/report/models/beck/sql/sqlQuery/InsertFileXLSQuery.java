@@ -29,7 +29,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import report.entities.items.account.AccountDAO;
 import report.entities.items.account.AccountTVI;
 import report.models.DiffList;
-import report.models.beck.sql.SQLconnector;
+import report.models.beck.sql.SqlConnector;
 
 
 public class InsertFileXLSQuery {
@@ -44,7 +44,7 @@ public class InsertFileXLSQuery {
                Sheet sheet = null;                                              //Sheet
                Row row = null;
 
-               Connection connection = SQLconnector.getInstance();
+               Connection connection = SqlConnector.getInstance();
                 
         try{
                switch (FilenameUtils.getExtension(FilePath)){                    // chooose file tipe
@@ -342,7 +342,7 @@ public class InsertFileXLSQuery {
                             + ",[OutgoingRest]"
                             + ")"
                             + "values (?,?,?,?,?,?,?,?,?,?,?,?,?)";
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement  pstmt_acc = connection.prepareStatement(psmtmtString);){  
                 for(AccountTVI row : AccObs){
                     pstmt_acc.setInt    (1, row.getDate());
@@ -466,7 +466,7 @@ public class InsertFileXLSQuery {
 //               Sheet sheet = null;                                              //Sheet
 //              
 //               
-//                connection = SQLconnector.getInstance();
+//                connection = SqlConnector.getInstance();
 //                PreparedStatement  pstmt
 //                       = connection.prepareStatement("INSERT into dbo.[Site]  ("
 //                                            + "[SiteNumber]"

@@ -4,6 +4,7 @@ package report.entities.items.KS;
 
 import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.Item;
+import report.models.beck.sql.SqlConnector;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
 import java.sql.Connection;
@@ -19,7 +20,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layoutControllers.LogController;
 import report.layoutControllers.estimate.EstimateController.Est;
-import report.models.beck.sql.SQLconnector;
 
 
 public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
@@ -70,7 +70,7 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
                 + "And [Contractor] = ? ";
 //                + "And [dell] = 0 ";
         
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {
             
                 pstmt.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
@@ -129,7 +129,7 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
                 + "AND   [KS_Number] = ? "
                 + "AND   [dell] = 0 ";
         
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {
             
                 pstmt.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER).toString());
@@ -175,7 +175,7 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
     @Override
     public void delete(Collection<KS_TIV> items) {
         String sql = "update [dbo].[KS] SET dell = 1 WHERE [id] = ? AND [dell] = 0;";
-        try(Connection connection   = SQLconnector.getInstance();
+        try(Connection connection   = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sql);) {
             connection.setAutoCommit(false);
                 for (KS_TIV obsItem : items) {
@@ -199,7 +199,7 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
     }
 //    @Override
 //    public void delete(Collection<KS_TIV> items) {
-//        try(Connection connection   = SQLconnector.getInstance();
+//        try(Connection connection   = SqlConnector.getInstance();
 //            PreparedStatement pstmt = connection.prepareStatement("execute dellRowKS ?,?,?,?,?,?");) {
 //            connection.setAutoCommit(false);
 //                for (KS_TIV obsItem : items) {
@@ -228,7 +228,7 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
         
         String psmtmtString ="DELETE FROM dbo.[KS]  WHERE [KS_Number]= ? and [SiteNumber] = ? and [Contractor] = ?";
        
-        try(Connection connection = SQLconnector.getInstance(); 
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {
             pstmt.setString(1, ksNumber);
             pstmt.setString(2, Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER));
@@ -259,7 +259,7 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
                                     + ",[BuildingPart]"  
                                     + " ) " 
                                     + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
-        try(Connection connection   = SQLconnector.getInstance();
+        try(Connection connection   = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sql,
                                                                   Statement.RETURN_GENERATED_KEYS);) {
             //set false SQL Autocommit
@@ -291,7 +291,7 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
             Logger.getLogger(KS_DAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 //    public void insert(Collection<KS_TIV> items) {
-//        try(Connection connection   = SQLconnector.getInstance();
+//        try(Connection connection   = SqlConnector.getInstance();
 //            PreparedStatement pstmt = connection.prepareStatement("execute addRowKS ?,?,?,?,?,?,?,?,?,?,?,?");) {
 //            //set false SQL Autocommit
 //            connection.setAutoCommit(false);
@@ -369,7 +369,7 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
                                         + "And   E.[TableType]  = 2 "
                                         + "And   E.[dell]       = 0 ";
         
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt  = connection.prepareStatement(pstString);) {
                 for (Item item : listKS) {
             

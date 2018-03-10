@@ -4,6 +4,7 @@ package report.entities.items.estimate;
 import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.Item;
 import report.layoutControllers.LogController;
+import report.models.beck.sql.SqlConnector;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
 import java.sql.Connection;
@@ -20,7 +21,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layoutControllers.estimate.EstimateController.Est;
 //import report.models.Formula_test;
-import report.models.beck.sql.SQLconnector;
 import report.entities.items.cb.AddEstTIV;
 
 
@@ -84,8 +84,8 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                                             + "AND E.[TableType] = ? ";
 //                                            + "AND E.[dell] = 0 ";
 
-        try(Connection connection = SQLconnector.getInstance();
-                PreparedStatement prst = connection.prepareStatement(sql)) {
+        try(Connection connection = SqlConnector.getInstance();
+            PreparedStatement prst = connection.prepareStatement(sql)) {
                 prst.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
                 prst.setString(2, enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR));
                 prst.setInt   (3, enumEst.getTaleType());
@@ -148,7 +148,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                                         + "AND   E.[TableType]   = 0 "
                                         + "And   E.[TypeHome]    = ? "
                                         + "And   E.[BuildingPart] = ? ";
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(psmtmtString); ) {
            
             pstmt.setString(1, Est.Base.getSiteSecondValue(SQL.Common.TYPE_HOME));
@@ -220,8 +220,8 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                                             + "AND E.[TableType] = ? "
                                             + "AND E.[dell] = 0 ";
                 
-        try(Connection connection = SQLconnector.getInstance();
-                PreparedStatement prst = connection.prepareStatement(ResultSetString)) {
+        try(Connection connection = SqlConnector.getInstance();
+            PreparedStatement prst = connection.prepareStatement(ResultSetString)) {
                 prst.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
                 prst.setString(2, enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR));
                 prst.setString(3, title);
@@ -279,7 +279,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
     @Override
     public void delete(Collection<EstimateTVI> items) {
                 
-        try(Connection connection   = SQLconnector.getInstance();
+        try(Connection connection   = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement("update [dbo].[Estimate] SET dell = 1 WHERE [id] = ? AND [dell] = 0;");) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
@@ -307,7 +307,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
 //    @Override
 //    public void delete(Collection<Item> items) {
 //                
-//        try(Connection connection   = SQLconnector.getInstance();
+//        try(Connection connection   = SqlConnector.getInstance();
 //            PreparedStatement pstmt = connection.prepareStatement("execute dellRowEst ?,?,?,?,?,?");) {
 //            //set false SQL Autocommit
 //            connection.setAutoCommit(false);
@@ -362,7 +362,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                                 + ",[dell]"
                                 + ")"
                                 +"VALUES(?,?,?,?,?,?,?,?,?,?,?,0)";
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt  = connection.prepareStatement(sql, 
                                                                    Statement.RETURN_GENERATED_KEYS);) {
             //set false SQL Autocommit
@@ -467,8 +467,8 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                                             + "And   E.[dell] = 0 ";
         
         
-        try (Connection connection = SQLconnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(pstString);){
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(pstString);){
              //1: coefficient / 5: from - SiteNumber / 6: from - Contractor / 7: from - TableType
 //            if(enumEst == Est.Base){
 //                pstmt.setFloat  (1,  1);
@@ -511,7 +511,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
     }
 //    @Override
 //    public void insert(Collection<Item> items) {
-//        try(Connection connection = SQLconnector.getInstance();
+//        try(Connection connection = SqlConnector.getInstance();
 //            PreparedStatement pstmt  = connection.prepareStatement("execute addRowEst ?,?,?,?,?,?,?,?,?,?,?");) {
 //            //set false SQL Autocommit
 //            connection.setAutoCommit(false);

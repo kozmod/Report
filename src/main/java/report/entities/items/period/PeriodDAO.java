@@ -19,7 +19,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layoutControllers.LogController;
 import report.layoutControllers.estimate.EstimateController.Est;
-import report.models.beck.sql.SQLconnector;
+import report.models.beck.sql.SqlConnector;
 
 public class PeriodDAO implements CommonNamedDAO<Collection<PeriodTIV>> {
 
@@ -41,8 +41,8 @@ public class PeriodDAO implements CommonNamedDAO<Collection<PeriodTIV>> {
                        + "AND   [Contractor] = ? "
                        + "AND   [dell] = 0";
         
-          try(Connection connection = SQLconnector.getInstance();
-                PreparedStatement pstmt = connection.prepareStatement(sqlQuery);) {
+          try(Connection connection = SqlConnector.getInstance();
+              PreparedStatement pstmt = connection.prepareStatement(sqlQuery);) {
             //set false SQL Autocommit
                 pstmt.setString(1, Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER));
                 pstmt.setString(2, Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
@@ -72,7 +72,7 @@ public class PeriodDAO implements CommonNamedDAO<Collection<PeriodTIV>> {
     @Override
     public void delete(Collection<PeriodTIV> items) {
        String sql = "update [dbo].[SiteJobPeriod] SET dell = 1 WHERE [id] = ? AND [dell] = 0;";
-        try(Connection connection   = SQLconnector.getInstance();
+        try(Connection connection   = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sql);) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
@@ -109,7 +109,7 @@ public class PeriodDAO implements CommonNamedDAO<Collection<PeriodTIV>> {
                     + ",[DateTo]"
                     + " ) " 
                     + "VALUES(?,?,?,?,?)";
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt  = connection.prepareStatement(sql,
                                                                    Statement.RETURN_GENERATED_KEYS);) {
             //set false SQL Autocommit

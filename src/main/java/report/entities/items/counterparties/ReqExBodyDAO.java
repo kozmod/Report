@@ -3,7 +3,8 @@ package report.entities.items.counterparties;
 import javafx.collections.FXCollections;
 import report.entities.items.expenses.ExpensesDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
-import report.models.beck.sql.SQLconnector;
+import report.models.beck.sql.SqlConnector;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -46,7 +47,7 @@ public class ReqExBodyDAO  extends AbstractReqDAO{
     public List<ObjectPSI> getByID(int countId){
         List<ObjectPSI> list = FXCollections.observableArrayList(ObjectPSI.extractor());
         Map<String, ObjectPSI> map = this.getEmptyItems();
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(SQL)) {
             pstmt.setInt(1,countId);
             if(pstmt.execute()){

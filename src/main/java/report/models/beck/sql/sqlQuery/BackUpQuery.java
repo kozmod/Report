@@ -16,7 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import report.layoutControllers.LogController;
-import report.models.beck.sql.SQLconnector;
+import report.models.beck.sql.SqlConnector;
 import report.usage_strings.PathStrings;
 
 /**
@@ -37,7 +37,7 @@ public class BackUpQuery {
                 + " ALTER DATABASE [Test] SET MULTI_USER ";
 
        
-        try(Connection connection = SQLconnector.getInstance_master();
+        try(Connection connection = SqlConnector.getInstance_master();
             PreparedStatement pstmt = connection.prepareStatement(smtmtString);) {
             pstmt.setString(1, filePath);
             pstmt.execute();
@@ -66,7 +66,7 @@ public class BackUpQuery {
             "USE [master]; BACKUP DATABASE Test TO DISK = ? "
                + "WITH FORMAT, MEDIANAME = 'Test_beckup', NAME = 'Full Backup of Test';";
        
-        try(Connection connection = SQLconnector.getInstance(); 
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(psmtmtString)) {
             pstmt.setString(1,
                     new StringBuffer()
@@ -103,7 +103,7 @@ public class BackUpQuery {
         String smtString ="USE [master]; DROP DATABASE [Test]";
                
        
-        try(Connection connection = SQLconnector.getInstance_master(); 
+        try(Connection connection = SqlConnector.getInstance_master();
             Statement stmt = connection.createStatement();) {
             stmt.execute(smtString);
             SQLWarning warning = stmt.getWarnings();

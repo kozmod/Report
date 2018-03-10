@@ -4,6 +4,7 @@ package report.entities.items.osr;
 import report.entities.abstraction.CommonNamedDAO;
 import report.layoutControllers.LogController;
 import report.models.beck.coefficient.Quantity;
+import report.models.beck.sql.SqlConnector;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +17,6 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 //import report.models.Formula_test;
-import report.models.beck.sql.SQLconnector;
 
 
 public class OSR_DAO implements CommonNamedDAO<Collection<OSR_TIV>> {
@@ -35,8 +35,8 @@ public class OSR_DAO implements CommonNamedDAO<Collection<OSR_TIV>> {
     */
     public int getSiteQuantity(){
         int siteQuantity = 0;
-        try(Connection connection = SQLconnector.getInstance();
-                Statement st = connection.createStatement();) {
+        try(Connection connection = SqlConnector.getInstance();
+            Statement st = connection.createStatement();) {
                
                ResultSet rs = st.executeQuery("SELECT count(*) from dbo.[Site] WHERE [dell] = 0");
 
@@ -62,8 +62,8 @@ public class OSR_DAO implements CommonNamedDAO<Collection<OSR_TIV>> {
                        + "WHERE  [dell] = 0 "
                        + "ORDER BY [Text]";
         
-          try(Connection connection = SQLconnector.getInstance();
-                Statement st = connection.createStatement();) {
+          try(Connection connection = SqlConnector.getInstance();
+              Statement st = connection.createStatement();) {
                
                ResultSet rs = st.executeQuery(sqlQuery);
 //               int q =  850;
@@ -93,7 +93,7 @@ public class OSR_DAO implements CommonNamedDAO<Collection<OSR_TIV>> {
     @Override
     public void delete(Collection<OSR_TIV> items) {
         String sql = "update [dbo].[SiteOSR] SET dell = 1 WHERE [id] = ? AND [dell] = 0;";
-        try(Connection connection   = SQLconnector.getInstance();
+        try(Connection connection   = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sql);) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
@@ -131,7 +131,7 @@ public class OSR_DAO implements CommonNamedDAO<Collection<OSR_TIV>> {
                     + ",[Value]"  
                     + " ) " 
                     + "VALUES(?,?)";
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt  = connection.prepareStatement(sql,
                                                                    Statement.RETURN_GENERATED_KEYS);) {
             //set false SQL Autocommit

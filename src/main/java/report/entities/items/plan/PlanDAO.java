@@ -5,6 +5,7 @@ package report.entities.items.plan;
 import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.KS.KS_DAO;
 import report.models.beck.coefficient.Quantity;
+import report.models.beck.sql.SqlConnector;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
 import java.sql.Connection;
@@ -20,7 +21,6 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layoutControllers.LogController;
-import report.models.beck.sql.SQLconnector;
 
 
 public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
@@ -56,8 +56,8 @@ public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
                 +",F.[DateCreate]"
                 +" FROM dbo.[FinPlan] F"
                 +" WHERE dell = 0";
-        try(Connection connection = SQLconnector.getInstance();
-                PreparedStatement pstmt = connection.prepareStatement(sqlString)) {
+        try(Connection connection = SqlConnector.getInstance();
+            PreparedStatement pstmt = connection.prepareStatement(sqlString)) {
             pstmt.execute();
 //            System.out.println(b);
             ResultSet rs = pstmt.getResultSet();
@@ -137,7 +137,7 @@ public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
                 +" FROM  dbo.[FinPlan] F "
                 +" WHERE  dell = 0 ";
 
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sqlString);) {
             pstmt.execute();
             ResultSet rs = pstmt.getResultSet();
@@ -176,7 +176,7 @@ public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
     @Override
     public void delete(Collection<PlanTIV> entry) {
         System.out.println("PLAN DELET SIZE " + entry.size());
-        try(Connection connection   = SQLconnector.getInstance();
+        try(Connection connection   = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement("update [dbo].[FinPlan] SET dell = 1 WHERE [id] = ? AND [dell] = 0;");) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
@@ -209,7 +209,7 @@ public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
                                     + ",[SaleCost]" 
                                     + " ) " 
                                     + "VALUES(?,?,?,?,?)";
-        try(Connection connection   = SQLconnector.getInstance();
+        try(Connection connection   = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sql,
                                                                   Statement.RETURN_GENERATED_KEYS);) {
             //set false SQL Autocommit

@@ -3,7 +3,7 @@ package report.entities.items.intro;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.entities.items.KS.KS_DAO;
-import report.models.beck.sql.SQLconnector;
+import report.models.beck.sql.SqlConnector;
 import report.usage_strings.SQL;
 
 import java.sql.Connection;
@@ -31,7 +31,7 @@ public class FinishedSiteDAO {
                            + "WHERE S.[StatusPayment] ='не оплачено' "
                            + "AND S.[dell] = 0 ";
 
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {
             pstmt.execute();
 

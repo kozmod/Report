@@ -7,20 +7,20 @@ import java.sql.SQLException;
 
 
 
-public class SQLconnector {
+public class SqlConnector {
     
-    private static SQLconnector instance;
+    private static SqlConnector instance;
     
-    private SQLconnector(){ };
+    private SqlConnector(){ };
     
     
     public static Connection getInstance(){
-        if(instance == null)instance = new SQLconnector();
+        if(instance == null)instance = new SqlConnector();
         return instance.connectToSQL();
     }
     
     public static Connection getInstance_master(){
-        if(instance == null)instance = new SQLconnector();
+        if(instance == null)instance = new SqlConnector();
         return instance.connectToSQL_master();
     }
  
@@ -38,10 +38,10 @@ public class SQLconnector {
         } catch (ClassNotFoundException ex) {
             System.out.println(ex);
            
-//            Logger.getLogger(SQLconnector.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(SqlConnector.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             System.out.println(ex);
-//            Logger.getLogger(SQLconnector.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(SqlConnector.class.getName()).log(Level.SEVERE, null, ex);
         }
         return connection;
     }
@@ -59,10 +59,10 @@ public class SQLconnector {
         } catch (ClassNotFoundException ex) {
             System.out.println(ex);
            
-//            Logger.getLogger(SQLconnector.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(SqlConnector.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             System.out.println(ex);
-//            Logger.getLogger(SQLconnector.class.getName()).log(Level.SEVERE, null, ex);
+//            Logger.getLogger(SqlConnector.class.getName()).log(Level.SEVERE, null, ex);
         }
         return connection;
     }

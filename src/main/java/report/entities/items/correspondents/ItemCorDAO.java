@@ -1,6 +1,7 @@
 
 package report.entities.items.correspondents;
 
+import report.models.beck.sql.SqlConnector;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,7 +13,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.models.beck.sql.SQLconnector;
 import report.models.DiffList;
 
 
@@ -21,7 +21,7 @@ public class ItemCorDAO {
 
     public ObservableList getListCor() {
         List<Object> listAll =  FXCollections.observableArrayList();
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement prst = connection.prepareStatement("Select DISTINCT [Name_Cor] from dbo.[Cor] Order by [Name_Cor]" );) {
             prst.execute();
 
@@ -39,7 +39,7 @@ public class ItemCorDAO {
 
     public ObservableList getListAccount() {
         List<Object> listAll =  FXCollections.observableArrayList();
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement prst = connection.prepareStatement("Select DISTINCT [Name_Cor] from dbo.[Account] "
                                                 + "WHERE [Name_Cor] NOT IN (SELECT [Name_Cor] from dbo.[Cor] ) "
                                                 + "Order by [Name_Cor]" );) {
@@ -59,7 +59,7 @@ public class ItemCorDAO {
 
     
     public void delete(Collection entry) {
-        try(Connection connection = SQLconnector.getInstance(); 
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement("DELETE FROM dbo.[Cor]  WHERE [Name_Cor]= ? ");) {
             connection.setAutoCommit(false);
                  for(Object item : entry){
@@ -76,7 +76,7 @@ public class ItemCorDAO {
 
     
     public void insert(Collection entry) {
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement("INSERT into dbo.[Cor] ([Name_Cor]) values ( ? )");) {
             connection.setAutoCommit(false);
                 for(Object item : entry){

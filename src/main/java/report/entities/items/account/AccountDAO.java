@@ -2,7 +2,7 @@ package report.entities.items.account;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.models.beck.sql.SQLconnector;
+import report.models.beck.sql.SqlConnector;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -39,7 +39,7 @@ public class AccountDAO {
                     .append(" and ")
                     .append(DateTo);
 
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             Statement st = connection.createStatement()) {
             ResultSet rs = st.executeQuery(ResultSetString.toString());
             while(rs.next()){

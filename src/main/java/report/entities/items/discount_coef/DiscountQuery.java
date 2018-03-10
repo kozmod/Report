@@ -4,7 +4,7 @@ import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.estimate.EstimateDAO;
 import report.entities.items.expenses.ExpensesDAO;
 import report.entities.items.period.PeriodDAO;
-import report.models.beck.sql.SQLconnector;
+import report.models.beck.sql.SqlConnector;
 import report.usage_strings.SQL;
 import java.sql.*;
 import java.util.logging.Level;
@@ -46,7 +46,7 @@ public class DiscountQuery implements CommonNamedDAO<DiscountCoef> {
                 "FROM [dbo].[KD_Discount] " +
                 " WHERE [dell] = 0";
 
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             Statement stm = connection.createStatement()) {
             //set false SQL Autocommit
             MarketRisk mr = null;
@@ -101,7 +101,7 @@ public class DiscountQuery implements CommonNamedDAO<DiscountCoef> {
         String sqlSpecificRisk = "UPDATE [dbo].[KD_SpecificRisk] SET dell = 1 WHERE [id] = ? AND [dell] = 0;";
         String sqlDiscountCoef = "UPDATE [dbo].[KD_Discount]     SET dell = 1 WHERE [id] = ? AND [dell] = 0;";
 
-        try(Connection connection   = SQLconnector.getInstance();
+        try(Connection connection   = SqlConnector.getInstance();
             PreparedStatement psMarketRisk = connection.prepareStatement(sqlMarketRisk);
             PreparedStatement psSpecificRisk= connection.prepareStatement(sqlSpecificRisk);
             PreparedStatement psDiscount = connection.prepareStatement(sqlDiscountCoef);
@@ -157,7 +157,7 @@ public class DiscountQuery implements CommonNamedDAO<DiscountCoef> {
                 "  VALUES (?,?,?,?,?,0)";
 
 
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement psMarketRisk   = connection.prepareStatement(sqlMarketRisk,Statement.RETURN_GENERATED_KEYS);
             PreparedStatement psSpecificRisk = connection.prepareStatement(sqlSpecificRisk,Statement.RETURN_GENERATED_KEYS);
             PreparedStatement psDiscount     = connection.prepareStatement(sqlDiscountCoef,Statement.RETURN_GENERATED_KEYS)) {

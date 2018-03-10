@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 
 import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.expenses.ExpensesDAO;
-import report.models.beck.sql.SQLconnector;
+import report.models.beck.sql.SqlConnector;
 import report.models.view.LinkedNamePair;
 import report.usage_strings.SQL;
 
@@ -29,7 +29,7 @@ public class CounterAgentDAO implements CommonNamedDAO<Collection<CountAgentTVI>
 
         String sqlQuery = "SELECT *  FROM [Test].[dbo].[vCOMPANY_IDEAL_COR]";
 
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sqlQuery)) {
             if(pstmt.execute()) {
                 try (ResultSet rs = pstmt.getResultSet()) {
@@ -64,7 +64,7 @@ public class CounterAgentDAO implements CommonNamedDAO<Collection<CountAgentTVI>
                 " ID_COUNT = ? " +
                 " AND ID_FORM = ? " +
                 " AND ID_TYPE = ? ";
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sqlQuery)) {
             for (CountAgentTVI countAgent : entry) {
                 pstmt.setInt(1,countAgent.getIdName());
@@ -86,7 +86,7 @@ public class CounterAgentDAO implements CommonNamedDAO<Collection<CountAgentTVI>
         final String sqlAddFRK = "INSERT INTO [dbo].[FRK_ACCOUNT_COUNT_TYPE_FORM] ([ID_IDEAL_CORR],[ID_FORM],[ID_COUNT],[ID_TYPE]) VALUES(?,?,?,?) ";
         list.forEach(item -> {
             int newElementId = -1;
-            try (Connection connection = SQLconnector.getInstance();
+            try (Connection connection = SqlConnector.getInstance();
                  CallableStatement cstmt = connection.prepareCall(sqlAddCount)) {
                 cstmt.setString(1, Integer.toString(newElementId));
                 cstmt.setString(2, item.getName());
@@ -108,7 +108,7 @@ public class CounterAgentDAO implements CommonNamedDAO<Collection<CountAgentTVI>
             } catch (SQLException ex) {
                 Logger.getLogger(ExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
             }
-            try (Connection connection = SQLconnector.getInstance();
+            try (Connection connection = SqlConnector.getInstance();
                  CallableStatement cstmt = connection.prepareCall(sqlAddFRK)) {
                 if(Objects.isNull(item.getLinkedNames()) || item.getLinkedNames().isEmpty()) {
                     cstmt.setString(1, "-1");

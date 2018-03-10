@@ -2,7 +2,7 @@ package report.entities.items.counterparties;
 
 import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
-import report.models.beck.sql.SQLconnector;
+import report.models.beck.sql.SqlConnector;
 
 import java.sql.*;
 import java.time.LocalDate;
@@ -16,7 +16,7 @@ public  abstract class AbstractReqDAO implements CommonNamedDAO<List<ObjectPSI>>
     @Override
     public void delete(List<ObjectPSI> items) {
         String sql = "UPDATE "+ this.getSqlTableName() +" SET dell = 1 WHERE [id_Count] = ? AND [dell] = 0;";
-        try(Connection connection   = SQLconnector.getInstance();
+        try(Connection connection   = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sql);) {
             connection.setAutoCommit(false);
             if(items != null && !items.isEmpty())
@@ -46,7 +46,7 @@ public  abstract class AbstractReqDAO implements CommonNamedDAO<List<ObjectPSI>>
     @Override
     public void insert(List<ObjectPSI> items) {
         String string;
-            try(Connection connection = SQLconnector.getInstance();
+            try(Connection connection = SqlConnector.getInstance();
                 PreparedStatement pstmt  = connection.prepareStatement(string = ReqDaoUtils.buildSqlString("id_Count",items),
                         Statement.RETURN_GENERATED_KEYS)) {
                 //set false SQL Autocommit

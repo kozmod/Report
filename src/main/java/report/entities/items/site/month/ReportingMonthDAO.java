@@ -3,7 +3,7 @@ package report.entities.items.site.month;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.entities.items.expenses.ExpensesDAO;
-import report.models.beck.sql.SQLconnector;
+import report.models.beck.sql.SqlConnector;
 import report.models.converters.dateStringConverters.LocalDayStringConverter;
 
 import java.sql.Connection;
@@ -11,8 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -30,7 +28,7 @@ public class ReportingMonthDAO {
 
         String sqlQuery = "exec dbo.MONTH_GRAPHIK @DateTO = '2012-01-01',@DateFrom = '20180601'";
 //        String sqlQuery = "exec dbo.MONTH_GRAPHIK ?,?";
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sqlQuery)) {
             if(pstmt.execute()) {
                 try (ResultSet rs = pstmt.getResultSet()) {

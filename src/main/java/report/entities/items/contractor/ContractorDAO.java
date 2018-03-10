@@ -5,6 +5,7 @@ package report.entities.items.contractor;
 import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.osr.OSR_DAO;
 import report.layoutControllers.LogController;
+import report.models.beck.sql.SqlConnector;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +17,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.models.beck.sql.SQLconnector;
 
 
 public class ContractorDAO implements CommonNamedDAO<Collection<ContractorTIV>> {
@@ -39,7 +39,7 @@ public class ContractorDAO implements CommonNamedDAO<Collection<ContractorTIV>> 
                        + "FROM dbo.[Contractors] "
                        + "WHERE [dell] = 0";
         
-          try(Connection connection = SQLconnector.getInstance();
+          try(Connection connection = SqlConnector.getInstance();
               Statement st = connection.createStatement();
               ResultSet rs = st.executeQuery(sqlQuery);) {
                while(rs.next()){
@@ -70,7 +70,7 @@ public class ContractorDAO implements CommonNamedDAO<Collection<ContractorTIV>> 
                        + "WHERE [dell] = 0 "
                        + "AND [Contractor] = ? ";
 
-          try(Connection connection = SQLconnector.getInstance();
+          try(Connection connection = SqlConnector.getInstance();
               PreparedStatement pstmt = connection.prepareStatement(sqlQuery)) {
               pstmt.setString(1,contractorName);
 
@@ -100,7 +100,7 @@ public class ContractorDAO implements CommonNamedDAO<Collection<ContractorTIV>> 
     @Override
     public void delete(Collection<ContractorTIV> items) {
         String sql = "update [dbo].[Contractors] SET dell = 1 WHERE [id] = ? AND [dell] = 0;";
-        try(Connection connection   = SQLconnector.getInstance();
+        try(Connection connection   = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sql);) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
@@ -141,7 +141,7 @@ public class ContractorDAO implements CommonNamedDAO<Collection<ContractorTIV>> 
                     + ",[Comments]" 
                     + " ) " 
                     + "VALUES(?,?,?,?)";
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt  = connection.prepareStatement(sql,
                                                                    Statement.RETURN_GENERATED_KEYS);) {
             //set false SQL Autocommit

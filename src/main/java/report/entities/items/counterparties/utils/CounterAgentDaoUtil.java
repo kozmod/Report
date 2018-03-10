@@ -4,7 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.entities.abstraction.DaoUtil;
 import report.entities.items.expenses.ExpensesDAO;
-import report.models.beck.sql.SQLconnector;
+import report.models.beck.sql.SqlConnector;
 import report.models.view.LinkedNamePair;
 
 import java.sql.Connection;
@@ -40,7 +40,7 @@ public class CounterAgentDaoUtil implements DaoUtil<String,Integer> {
     public  static  ObservableList<LinkedNamePair> getMatchLinkedNames(String name){
         ObservableList<LinkedNamePair> list = FXCollections.observableArrayList();
 
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(matchSql)) {
             pstmt.setString(1,name);
             if(pstmt.execute()) {
@@ -63,7 +63,7 @@ public class CounterAgentDaoUtil implements DaoUtil<String,Integer> {
     public  static  ObservableList<LinkedNamePair> getNotMatchLinkedNames(){
         ObservableList<LinkedNamePair> list = FXCollections.observableArrayList();
 
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(notMatchSql)) {
             if(pstmt.execute()) {
                 try (ResultSet rs = pstmt.getResultSet()) {

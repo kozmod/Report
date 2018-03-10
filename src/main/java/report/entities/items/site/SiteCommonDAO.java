@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.TreeItem;
-import report.models.beck.sql.SQLconnector;
+import report.models.beck.sql.SqlConnector;
 
 
 public class SiteCommonDAO {
@@ -41,7 +41,7 @@ public class SiteCommonDAO {
                                    + "AND [SiteNumber] LIKE ? "
                                    + "AND [dell] = 0 "                                           //dell 0 - false / 1 - true
                                    + "ORDER BY [SiteNumber]";
-            try (Connection connection = SQLconnector.getInstance();
+            try (Connection connection = SqlConnector.getInstance();
                  PreparedStatement pstmt = connection.prepareStatement(psmtmtString)){
                 pstmt.setString(1,payment);
                 pstmt.setString(2,queueValue);
@@ -125,7 +125,7 @@ public class SiteCommonDAO {
                                             //StatusJobs/SaleHouse/incom/overheads/taxes
                                             + "'не начат',0.0,(SELECT P.[TypeID] from [FinPlan] P WHERE P.[TypeName] = ? ))";
 //                               .
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {
             pstmt.setString(1, siteNumb);
             pstmt.setString(2, queueNumb);
@@ -164,7 +164,7 @@ public class SiteCommonDAO {
                 + "DELETE FROM dbo.[SiteJobPeriod] WHERE [SiteNumber]= @siteNumber  and [Contractor] = @contractor  "
                 + "DELETE FROM dbo.[Estimate]      WHERE [SiteNumber]= @siteNumber  and [Contractor] = @contractor  ";
        
-        try(Connection connection = SQLconnector.getInstance(); 
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {
             pstmt.setString(1, siteNumb);
             pstmt.setString(2, contName);
@@ -200,7 +200,7 @@ public class SiteCommonDAO {
                 +" COMMIT TRAN; ";
 
 
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement prst = connection.prepareStatement(ResultSetString)) {
 
             ResultSet rs = prst.executeQuery();

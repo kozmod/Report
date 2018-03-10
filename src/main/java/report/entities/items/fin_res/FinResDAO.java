@@ -2,7 +2,7 @@ package report.entities.items.fin_res;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.models.beck.sql.SQLconnector;
+import report.models.beck.sql.SqlConnector;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -21,7 +21,7 @@ public class FinResDAO {
         //Procedure
         StringBuilder ResultSetString = new StringBuilder("execute dbo.[FinResFormula]");
 
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             Statement st = connection.createStatement();) {
 
             ResultSet rs = st.executeQuery(ResultSetString.toString());

@@ -4,7 +4,7 @@ package report.entities.abstraction;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.models.beck.sql.SQLconnector;
+import report.models.beck.sql.SqlConnector;
 import report.usage_strings.ServiceStrings;
 
 import java.sql.Connection;
@@ -27,7 +27,7 @@ public interface CommonNamedDAO<E> extends CommonDAO<E> {
         Set<X> disSet = new TreeSet<>(
                 Arrays.asList(fistNodes)
         );
-        try (Connection connection = SQLconnector.getInstance();
+        try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement("execute getListDIST ?,?")
         ){
             pstmt.setString(1, column);

@@ -1,7 +1,7 @@
 package report.entities.abstraction;
 
 import report.entities.items.expenses.ExpensesDAO;
-import report.models.beck.sql.SQLconnector;
+import report.models.beck.sql.SqlConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +16,7 @@ public interface DaoUtil<K,V> {
 
     default   Map<K,V> getPairValue( String firstColumn, String secondColumn,String sql){
         Map<K,V> map =  new HashMap<>();
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement(sql)) {
             if(pstmt.execute()){
                 try(ResultSet rs = pstmt.getResultSet()){

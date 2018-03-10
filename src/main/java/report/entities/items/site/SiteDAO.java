@@ -4,6 +4,7 @@ package report.entities.items.site;
 import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.estimate.EstimateDAO;
 import report.layoutControllers.LogController;
+import report.models.beck.sql.SqlConnector;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -16,7 +17,6 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layoutControllers.estimate.EstimateController.Est;
-import report.models.beck.sql.SQLconnector;
 
 
 public class SiteDAO implements CommonNamedDAO<Collection<PreviewTIV>> {
@@ -69,8 +69,8 @@ public class SiteDAO implements CommonNamedDAO<Collection<PreviewTIV>> {
                        + "AND   S.[Contractor] = ? "
                        + "AND   S.[dell] = 0";
                 
-        try(Connection connection = SQLconnector.getInstance();
-                PreparedStatement prst = connection.prepareStatement(ResultSetString)) {
+        try(Connection connection = SqlConnector.getInstance();
+            PreparedStatement prst = connection.prepareStatement(ResultSetString)) {
                 prst.setString(1, siteNumber);
                 prst.setString(2, contractor);
 
@@ -142,7 +142,7 @@ public class SiteDAO implements CommonNamedDAO<Collection<PreviewTIV>> {
 
     @Override
     public void delete(Collection<PreviewTIV> items) {
-        try(Connection connection   = SQLconnector.getInstance();
+        try(Connection connection   = SqlConnector.getInstance();
             PreparedStatement pstmt = connection.prepareStatement("update [dbo].[Site] SET dell = 1 WHERE [id] = ? AND [dell] = 0;");) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
@@ -192,8 +192,8 @@ public class SiteDAO implements CommonNamedDAO<Collection<PreviewTIV>> {
             
         System.err.println(stringInsert.toString());
         
-       try(Connection connection = SQLconnector.getInstance();
-            PreparedStatement pstmt  = connection.prepareStatement(stringInsert.toString(), 
+       try(Connection connection = SqlConnector.getInstance();
+           PreparedStatement pstmt  = connection.prepareStatement(stringInsert.toString(),
                                                                    Statement.RETURN_GENERATED_KEYS);) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);

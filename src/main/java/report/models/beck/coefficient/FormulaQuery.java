@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import report.entities.items.variable.VariableTIV_new;
 import report.layoutControllers.estimate.EstimateController.Est;
-import report.models.beck.sql.SQLconnector;
+import report.models.beck.sql.SqlConnector;
 import report.usage_strings.SQL;
 
 
@@ -37,7 +37,7 @@ public class FormulaQuery {
 //                ).toString()
 //        );
 
-          try(Connection connection = SQLconnector.getInstance();
+          try(Connection connection = SqlConnector.getInstance();
               PreparedStatement pstmt = connection.prepareStatement( "execute Coeff_TEST_2 ?,? ");) {
                     pstmt.setString   (1, siteNumber);
                     pstmt.setString   (2, contractor);
@@ -73,8 +73,8 @@ public class FormulaQuery {
      */
     public Integer getSiteQuantity() {
         int q = 0 ;
-          try(Connection connection = SQLconnector.getInstance();
-                PreparedStatement pstmt = connection
+          try(Connection connection = SqlConnector.getInstance();
+              PreparedStatement pstmt = connection
                         .prepareStatement( "SELECT sum(F.[Quantity]) FROM [dbo].[FinPlan] F WHERE F.[dell] = 0; ");) {
                 ResultSet rs = pstmt.executeQuery();
                 while(rs.next()){
@@ -88,7 +88,7 @@ public class FormulaQuery {
 
     public  void applyCoefficient(String siteNumber, String contractor, double coefficient){
 
-        try(Connection connection = SQLconnector.getInstance();
+        try(Connection connection = SqlConnector.getInstance();
             PreparedStatement pstmt
                     = connection.prepareStatement("execute ComputeK ?,?,? ");) {
                     pstmt.setString   (1, siteNumber);
