@@ -124,7 +124,7 @@ public class BinarySqlFileTest {
                 List<XWPFParagraph> paragraphs = document.getParagraphs();
                 paragraphs.stream().forEach(para -> {
                     para.getRuns().stream().forEach(run -> {
-
+                        //todo
                     });
                 });
 //                paragraphs.stream().forEach(
