@@ -11,8 +11,8 @@ public class PadegTest {
     @DisplayName("PADEG")
     public void padegTest() throws SQLException {
         String text = Padeg.getFIOPadegFS("ЖОПА", true, 2);
-        ////
         System.out.println(text);
+
     }
 
 }
