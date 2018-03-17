@@ -72,19 +72,19 @@
         </plugins>
     </build>
     <!--<repositories>-->
-        <!--<repository>-->
-            <!--<id>my_repo</id>-->
-            <!--<url>file://${basedir}/lib/dependencies</url>-->
-        <!--</repository>-->
+    <!--<repository>-->
+    <!--<id>my_repo</id>-->
+    <!--<url>file://${basedir}/lib/dependencies</url>-->
+    <!--</repository>-->
     <!--</repositories>-->
     <dependencies>
         <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/sqljdbc4 -->
         <!--<dependency>-->
-            <!--<groupId>com.microsoft.sqlserver</groupId>-->
-            <!--<artifactId>sqljdbc4</artifactId>-->
-            <!--<version>4.0</version>-->
-            <!--<scope>system</scope>-->
-            <!--<systemPath>${project.basedir}/lib/dependencies/sqljdbc4.jar</systemPath>-->
+        <!--<groupId>com.microsoft.sqlserver</groupId>-->
+        <!--<artifactId>sqljdbc4</artifactId>-->
+        <!--<version>4.0</version>-->
+        <!--<scope>system</scope>-->
+        <!--<systemPath>${project.basedir}/lib/dependencies/sqljdbc4.jar</systemPath>-->
         <!--</dependency>-->
         <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
         <!-- ++++++++++++++++++++++++++++++++++++++++ Project ++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
@@ -94,6 +94,14 @@
             <version>3.3.0.24</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/dependencies/padeg-3.3.0.24.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>padeg</groupId>
+            <artifactId>padeg</artifactId>
+            <version>3.3.0.24</version>
+            <classifier>javadoc</classifier>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/dependencies/padeg-3.3.0.24-javadoc.jar</systemPath>
         </dependency>
         <!-- ++++++++++++++++++++++++++++++++++++++++ Project ++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
         <dependency>
@@ -191,19 +199,19 @@
         <!-- +++++++++++++++++++++++++++++++++++++++ HIBERNATE++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
         <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-core -->
         <!--<dependency>-->
-            <!--<groupId>org.hibernate</groupId>-->
-            <!--<artifactId>hibernate-core</artifactId>-->
-            <!--<version>5.2.12.Final</version>-->
-            <!--&lt;!&ndash;<scope>system</scope>&ndash;&gt;-->
-            <!--&lt;!&ndash;<systemPath>${project.basedir}/lib/dependencies/hibernate-core-5.2.12.Final.jar</systemPath>&ndash;&gt;-->
+        <!--<groupId>org.hibernate</groupId>-->
+        <!--<artifactId>hibernate-core</artifactId>-->
+        <!--<version>5.2.12.Final</version>-->
+        <!--&lt;!&ndash;<scope>system</scope>&ndash;&gt;-->
+        <!--&lt;!&ndash;<systemPath>${project.basedir}/lib/dependencies/hibernate-core-5.2.12.Final.jar</systemPath>&ndash;&gt;-->
         <!--</dependency>-->
         <!--&lt;!&ndash; https://mvnrepository.com/artifact/org.hibernate/hibernate-annotations &ndash;&gt;-->
         <!--<dependency>-->
-            <!--<groupId>org.hibernate</groupId>-->
-            <!--<artifactId>hibernate-annotations</artifactId>-->
-            <!--<version>3.5.6-Final</version>-->
-            <!--&lt;!&ndash;<scope>system</scope>&ndash;&gt;-->
-            <!--&lt;!&ndash;<systemPath>${project.basedir}/lib/dependencies/hibernate-annotations-3.5.6-Final.jar</systemPath>&ndash;&gt;-->
+        <!--<groupId>org.hibernate</groupId>-->
+        <!--<artifactId>hibernate-annotations</artifactId>-->
+        <!--<version>3.5.6-Final</version>-->
+        <!--&lt;!&ndash;<scope>system</scope>&ndash;&gt;-->
+        <!--&lt;!&ndash;<systemPath>${project.basedir}/lib/dependencies/hibernate-annotations-3.5.6-Final.jar</systemPath>&ndash;&gt;-->
         <!--</dependency>-->
     </dependencies>
 </project>

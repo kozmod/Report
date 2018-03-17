@@ -22,6 +22,15 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
+      <library name="Maven: padeg:padeg:javadoc:3.3.0.24">
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/lib/dependencies/padeg-3.3.0.24-javadoc.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
       <library name="Maven: com.microsoft.sqlserver:mssql-jdbc:6.2.2.jre8">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/dependencies/mssql-jdbc-6.2.2.jre8.jar!/" />
