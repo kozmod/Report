@@ -10,9 +10,8 @@ public class PadegTest {
 //    @Disabled
     @DisplayName("PADEG")
     public void padegTest() throws SQLException {
-        String s = Padeg.getFIOPadegFS("ЖОПА", true, 2);
-
-        System.out.println(s);
+        String text = Padeg.getFIOPadegFS("ЖОПА", true, 2);
+        System.out.println(text);
     }
 
 }
