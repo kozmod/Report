@@ -8,6 +8,19 @@
     <artifactId>Report</artifactId>
     <version>1.0-R</version>
     <name>projectReport</name>
+
+    <repositories>
+        <repository>
+            <id>local-maven-repository</id>
+            <url>file://${project.basedir}/lib/dependencies</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
     <!-- PROPERTIES -->
     <properties>
         <jdk.version>1.8</jdk.version>
@@ -76,6 +89,14 @@
         <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
         <!-- ++++++++++++++++++++++++++++++++++++++++ Project ++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
         <dependency>
+            <groupId>padeg</groupId>
+            <artifactId>padeg</artifactId>
+            <version>3.3.0.24</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/dependencies/padeg-3.3.0.24.jar</systemPath>
+        </dependency>
+        <!-- ++++++++++++++++++++++++++++++++++++++++ Project ++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+        <dependency>
             <groupId>com.microsoft.sqlserver</groupId>
             <artifactId>mssql-jdbc</artifactId>
             <version>6.2.2.jre8</version>
@@ -89,6 +110,17 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/dependencies/poi-3.15.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-scratchpad</artifactId>
+            <version>3.17</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.17</version>
+        </dependency>
+
         <dependency>
             <groupId>org.apache.poi</groupId>
             <artifactId>poi-ooxml</artifactId>

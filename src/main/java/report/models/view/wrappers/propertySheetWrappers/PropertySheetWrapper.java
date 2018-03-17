@@ -78,15 +78,14 @@ public class PropertySheetWrapper implements Reverting {
         this.items.setAll(items);
         sheet.getItems().setAll(this.items);
         ContextMenuOptional contextMenuOptional = ((ContextMenuOptional) sheet.getContextMenu());
-        if (contextMenuOptional != null) {
-            if (listChangeListener == null) {
-                this.listChangeListener = item -> {
-                    if (item.next() && item.wasUpdated()) {
-                        contextMenuOptional.setDisable_SaveUndoPrint_groupe(false);
-                    }
-                };
-                this.items.addListener(listChangeListener);
-            }
+        if (contextMenuOptional != null
+                && listChangeListener == null) {
+            this.listChangeListener = item -> {
+                if (item.next() && item.wasUpdated()) {
+                    contextMenuOptional.setDisable_SaveUndoPrint_groupe(false);
+                }
+            };
+            this.items.addListener(listChangeListener);
         }
         this.saveMemento();
     }

@@ -18,8 +18,7 @@ import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Stream;
+import padeg.lib.Padeg;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class ModelsTest {
@@ -73,11 +72,9 @@ public class ModelsTest {
 //    @Disabled
     @DisplayName("LocalDateConverter")
     public void localDateConverterTest() throws SQLException {
-
         System.out.println(
         new LocalDayStringConverter().fromString("2012-01-01").toString()
         );
     }
-
 
 }

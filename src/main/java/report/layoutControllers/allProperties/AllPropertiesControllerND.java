@@ -2,6 +2,7 @@ package report.layoutControllers.allProperties;
 
 import javafx.application.Platform;
 import javafx.beans.binding.Bindings;
+import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -28,6 +29,7 @@ import report.entities.items.counterparties.utils.CounterAgentDaoUtil;
 import report.entities.items.counterparties.ReqBankDAO;
 import report.entities.items.counterparties.ReqCommonDAO;
 import report.entities.items.counterparties.ReqExBodyDAO;
+import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.entities.items.site.month.ReportingMonth;
 import report.entities.items.site.month.ReportingMonthDAO;
 import report.entities.items.variable.PropertiesDAO;
@@ -188,6 +190,8 @@ class AllPropertiesControllerND implements TableFactory {
         return tableWrapper;
     }
 
+    /**
+     */
     static PropertySheetWrapper getCountPropertySheet(TableWrapper<CountAgentTVI> tableWrapper) {
         PropertySheet countSheet = new PropertySheet();
         PropertySheetWrapper propertySheetWrapper = new PropertySheetWrapper(
@@ -196,9 +200,9 @@ class AllPropertiesControllerND implements TableFactory {
                 new ReqBankDAO(),
                 new ReqExBodyDAO()
         );
-        ValidationSupport support = new ValidationSupport();
+
         countSheet.setContextMenu(ContextMenuFactory.getCommonSU(propertySheetWrapper));//TODO
-        propertySheetWrapper.setValidationSupport(support);
+
         //add Items
 //        propertySheetWrapper.setFromBase();
         countSheet.setMode(PropertySheet.Mode.CATEGORY);
@@ -210,47 +214,43 @@ class AllPropertiesControllerND implements TableFactory {
                 editor = Editors.createNumericEditor(param);
             } else if (param.getValue().getClass().equals(BigInteger.class)) {
                 editor = Editors.createNumericEditor(param);
-
             } else if (param.getValue().getClass().equals(String.class)) {
-                editor = Editors.createTextEditor(param);
+                if (param.getName().equals("Паспорт:Кем\nвыдан")) {
+                    editor = new AbstractPropertyEditor<String, TextArea>(param, new TextArea()) {
+                        @Override
+                        public void setValue(String value) {
+                            ((TextArea) this.getEditor()).setText(value);
+                        }
 
+                        @Override
+                        protected ObservableValue<String> getObservableValue() {
+                            return (this.getEditor()).textProperty();
+                        }
 
+                        {
+                            TextInputControl control = this.getEditor();
+                            control.focusedProperty().addListener((o, oldValue, newValue) -> {
+                                if (newValue) {
+                                    Platform.runLater(() -> control.selectAll());
+                                }
+                            });
+                        }
+                    };
+                } else {
+                    editor = Editors.createTextEditor(param);
+                }
             } else if (param.getValue().getClass().equals(LocalDate.class)) {
                 editor = Editors.createDateEditor(param);
             } else {
                 editor = Editors.createTextEditor(param);
 
             }
-            //add castom Text Area Editor
-            if (param.getName().equals("Паспорт:Кем\nвыдан"))
-                editor = new AbstractPropertyEditor<String, TextArea>(param, new TextArea()) {
-                    @Override
-                    public void setValue(String value) {
-                        ((TextArea) this.getEditor()).setText(value);
-                    }
-
-                    @Override
-                    protected ObservableValue<String> getObservableValue() {
-                        return (this.getEditor()).textProperty();
-                    }
-
-                    {
-                        TextInputControl control = (TextInputControl) this.getEditor();
-                        control.focusedProperty().addListener((o, oldValue, newValue) -> {
-                            if (newValue) {
-                                Platform.runLater(() -> {
-                                    control.selectAll();
-                                });
-                            }
-
-                        });
-                    }
-                };
-            //TODO: think about validation support
-//            support.registerValidator(
-//                    (Control) editor.getEditor(),
-//                    ((ObjectPSI)param).getValidator()
-//            );
+            ValidationSupport validationSupport = new ValidationSupport();
+            validationSupport.registerValidator(
+                    (Control) editor.getEditor(),
+                    ((ObjectPSI) param).getValidator()
+            );
+            propertySheetWrapper.setValidationSupport(validationSupport);
             return editor;
         });
         tableWrapper.getSelectionModel()
@@ -270,8 +270,6 @@ class AllPropertiesControllerND implements TableFactory {
     }
 
     /**
-     * @param gridPane
-     * @param tableWrapper
      */
     static void decorLinkedNamesGP(GridPane gridPane, TableWrapper<CountAgentTVI> tableWrapper) {
         //Nodes
@@ -281,7 +279,7 @@ class AllPropertiesControllerND implements TableFactory {
         Button editButton = new Button("Редактировать");
         editButton.setDisable(true);
         Button saveListButton = new Button("Сохранить");
-        saveListButton.setOnAction(event ->{
+        saveListButton.setOnAction(event -> {
             CounterAgentDAO counterAgentDAO = new CounterAgentDAO();
             counterAgentDAO.delete(
                     FXCollections.observableArrayList(tableWrapper.getSelectionModel().getSelectedItem())
@@ -333,28 +331,28 @@ class AllPropertiesControllerND implements TableFactory {
                 .addListener((observable, oldValue, newValue) -> {
                     CountAgentTVI item = tableWrapper.getSelectionModel().getSelectedItem();
                     if (item.getLinkedNames() == null) {
-                        ObservableList linkedName =  CounterAgentDaoUtil.getMatchLinkedNames(newValue.getName());
+                        ObservableList linkedName = CounterAgentDaoUtil.getMatchLinkedNames(newValue.getName());
 //                                if(!linkedName.isEmpty()){
-                                    item.setLinkedNames(linkedName);
+                        item.setLinkedNames(linkedName);
 //                                }
                     }
                     listView.setItems(item.getLinkedNames());
                 });
     }
 
-    static  TableWrapper<ReportingMonth> decorMonthTable( TableView<ReportingMonth> table) {
+    static TableWrapper<ReportingMonth> decorMonthTable(TableView<ReportingMonth> table) {
         TableWrapper<ReportingMonth> tableWrapper = new TableWrapper<>(table, null);
         tableWrapper.tableView().setItems(new ReportingMonthDAO().getData());
 
-        TableColumn<ReportingMonth,Date>   monthColumn      = tableWrapper.addColumn("Month", column -> column.getValue().monthProperty());
-        TableColumn<ReportingMonth,String> finishColumn     = tableWrapper.addColumn("2",  column -> column.getValue().countFinishProperty());
-        TableColumn<ReportingMonth,String> payColumn        = tableWrapper.addColumn("3",  column -> column.getValue().countPartyProperty());
-        TableColumn<ReportingMonth,String> priseSumColumn   = tableWrapper.addColumn("4", column -> column.getValue().priceSumProperty());
-        TableColumn<ReportingMonth,String> sCredColumn      = tableWrapper.addColumn("5", column -> column.getValue().sCredProperty());
-        TableColumn<ReportingMonth,String> operProfitColumn = tableWrapper.addColumn("6", column -> column.getValue().operProfitProperty());
-        TableColumn<ReportingMonth,String> addCostColumn    = tableWrapper.addColumn("7", column -> column.getValue().addCostProperty());
-        TableColumn<ReportingMonth,String> allTaxesColumn   = tableWrapper.addColumn("8", column -> column.getValue().allTaxesProperty());
-        TableColumn<ReportingMonth,String> sumOsrColumn     = tableWrapper.addColumn("9", column -> column.getValue().sumOsrProperty());
+        TableColumn<ReportingMonth, Date> monthColumn = tableWrapper.addColumn("Month", column -> column.getValue().monthProperty());
+        TableColumn<ReportingMonth, String> finishColumn = tableWrapper.addColumn("2", column -> column.getValue().countFinishProperty());
+        TableColumn<ReportingMonth, String> payColumn = tableWrapper.addColumn("3", column -> column.getValue().countPartyProperty());
+        TableColumn<ReportingMonth, String> priseSumColumn = tableWrapper.addColumn("4", column -> column.getValue().priceSumProperty());
+        TableColumn<ReportingMonth, String> sCredColumn = tableWrapper.addColumn("5", column -> column.getValue().sCredProperty());
+        TableColumn<ReportingMonth, String> operProfitColumn = tableWrapper.addColumn("6", column -> column.getValue().operProfitProperty());
+        TableColumn<ReportingMonth, String> addCostColumn = tableWrapper.addColumn("7", column -> column.getValue().addCostProperty());
+        TableColumn<ReportingMonth, String> allTaxesColumn = tableWrapper.addColumn("8", column -> column.getValue().allTaxesProperty());
+        TableColumn<ReportingMonth, String> sumOsrColumn = tableWrapper.addColumn("9", column -> column.getValue().sumOsrProperty());
 
         return tableWrapper;
     }
