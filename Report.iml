@@ -22,7 +22,7 @@
       </library>
     </orderEntry>
     <orderEntry type="module-library">
-      <library name="Maven: padeg:padeg:javadoc:3.3.0.24">
+      <library name="Maven: padeg:padeg:sources:3.3.0.24">
         <CLASSES>
           <root url="jar://$MODULE_DIR$/lib/dependencies/padeg-3.3.0.24-javadoc.jar!/" />
         </CLASSES>

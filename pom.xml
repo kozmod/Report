@@ -99,7 +99,7 @@
             <groupId>padeg</groupId>
             <artifactId>padeg</artifactId>
             <version>3.3.0.24</version>
-            <classifier>javadoc</classifier>
+            <classifier>sources</classifier>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/dependencies/padeg-3.3.0.24-javadoc.jar</systemPath>
         </dependency>
