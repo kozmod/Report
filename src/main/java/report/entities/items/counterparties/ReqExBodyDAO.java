@@ -3,7 +3,7 @@ package report.entities.items.counterparties;
 import javafx.collections.FXCollections;
 import report.entities.items.expenses.ExpensesDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
-import report.models.beck.sql.SqlConnector;
+import report.models.sql.SqlConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

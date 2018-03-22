@@ -1,7 +1,7 @@
 package report.entities.abstraction;
 
 import report.entities.items.expenses.ExpensesDAO;
-import report.models.beck.sql.SqlConnector;
+import report.models.sql.SqlConnector;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

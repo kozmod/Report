@@ -2,7 +2,7 @@ package report.entities.items.fin_res;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.models.beck.sql.SqlConnector;
+import report.models.sql.SqlConnector;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

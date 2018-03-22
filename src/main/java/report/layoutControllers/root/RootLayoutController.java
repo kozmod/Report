@@ -18,7 +18,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
 import report.layoutControllers.*;
-import report.layoutControllers.allProperties.AllPropertiesController;
 import report.layoutControllers.estimate.EstimateController;
 import report.layoutControllers.expences.ExpensesController;
 import report.layoutControllers.expences.ExpensesControllerTF;
@@ -26,13 +25,13 @@ import report.layoutControllers.intro.IntroLayoutController;
 import report.models.beck.coefficient.FormulaQuery;
 import report.models.beck.coefficient.Formula;
 import report.models.view.nodesHelpers.InputValidator;
-import report.models.view.nodesFactories.FileChooserFactory;
+import report.models.view.nodesFactories.FileChooserService;
 import report.usage_strings.PathStrings;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.view.nodesHelpers.StageCreator;
-import report.models.beck.sql.sqlQuery.BackUpQuery;
+import report.models.sql.sqlQuery.BackUpQuery;
 import report.entities.items.site.PreviewTIV;
-import report.models.beck.sql.sqlQuery.InsertFileXLSQuery;
+import report.models.sql.sqlQuery.InsertFileXLSQuery;
 import report.entities.items.site.SiteDAO;
 import report.usage_strings.SQL;
 
@@ -166,7 +165,7 @@ public class RootLayoutController implements Initializable {
     @FXML
     private void handle_menuFileAccLoad(ActionEvent event) {
 
-        File selectedFile = FileChooserFactory.Open.getExcel();
+        File selectedFile = FileChooserService.Open.openExcelFolder();
 
         if(selectedFile != null){
             new InsertFileXLSQuery()
@@ -182,10 +181,9 @@ public class RootLayoutController implements Initializable {
 
     @FXML
     private void handle_menuFileLoad(ActionEvent event) {
-        File selectedFile = FileChooserFactory.Open.getExcel();
+        File selectedFile = FileChooserService.Open.openExcelFolder();
         if(selectedFile != null){
             new InsertFileXLSQuery().insertRowsFromXls_Site_Numeric(selectedFile.getPath());
-//            System.out.println(selectedFile.getPath());
         }else{
             System.out.println("Отмена FILE CH00SER xls/xlsx");
         }
@@ -197,11 +195,7 @@ public class RootLayoutController implements Initializable {
 
     @FXML
     private void handle_menuFileRestore(ActionEvent event) {
-//        FileChooser fileChooser = new FileChooser();
-//        fileChooser.setInitialDirectory(
-//                new File( PathStrings.Files.BACK_UP_SQL));
-//        fileChooser.setTitle("Open  File");
-        File selectedFile = FileChooserFactory.Open.getSqlBackUp();
+        File selectedFile = FileChooserService.Open.openSqlBackUpFolder();
 
         if(selectedFile != null){
             BackUpQuery.restore(selectedFile.getPath());
@@ -238,13 +232,8 @@ public class RootLayoutController implements Initializable {
     }
 
     @FXML
-    private void handle_AddSite(ActionEvent event) {
-        StageCreator siteAddLayout
-                = new StageCreator(PathStrings.Layout.SITE_ADD, "Добавить Участок").loadNewWindow();
-        siteAddController = siteAddLayout.getController();
-        siteAddController.setRootController(getRootController());
-
-
+    private void handle_menuFileTemplate(ActionEvent event) {
+        FileChooserService.Open.openDesktop();
     }
 
     @FXML
@@ -253,7 +242,7 @@ public class RootLayoutController implements Initializable {
         File selectedFile;
         if(Est.Base.isExist()
                 && showEstController.getBaseTab().isSelected()) {
-            selectedFile = FileChooserFactory.Save.saveEst(Est.Base);
+            selectedFile = FileChooserService.Save.saveEst(Est.Base);
             if (selectedFile != null) {
                 rootService.printEstBase(selectedFile);
 //                new PrintEstimate(Est.Base.getAllItemsList_Live(), selectedFile.toPath());
@@ -261,7 +250,7 @@ public class RootLayoutController implements Initializable {
             }
         }else if((Est.Changed.isExist()
                 && showEstController.getChangeTab().isSelected())) {
-            selectedFile = FileChooserFactory.Save.saveEst(Est.Changed);
+            selectedFile = FileChooserService.Save.saveEst(Est.Changed);
             if (selectedFile != null) {
                 rootService.printEstChange(selectedFile);
 //                new PrintEstimate(Est.Changed.getAllItemsList_Live(), selectedFile.toPath());
@@ -273,7 +262,15 @@ public class RootLayoutController implements Initializable {
 
     }
 
+    @FXML
+    private void handle_AddSite(ActionEvent event) {
+        StageCreator siteAddLayout
+                = new StageCreator(PathStrings.Layout.SITE_ADD, "Добавить Участок").loadNewWindow();
+        siteAddController = siteAddLayout.getController();
+        siteAddController.setRootController(getRootController());
 
+
+    }
 
 //Rite Border  BUTTONS -->
     @FXML

@@ -1,6 +1,4 @@
 
-import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
-import org.apache.commons.io.IOUtils;
 import org.apache.poi.hwpf.HWPFDocument;
 import org.apache.poi.hwpf.extractor.WordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -9,20 +7,11 @@ import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
-import report.entities.abstraction.CommonDAO;
-import report.entities.items.site.month.ReportingMonthDAO;
-import report.models.beck.sql.SqlConnector;
-import report.usage_strings.ServiceStrings;
+import report.models.sql.SqlConnector;
 
 import java.io.*;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.sql.*;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * https://docs.microsoft.com/ru-ru/sql/relational-databases/blob/enable-and-configure-filestream

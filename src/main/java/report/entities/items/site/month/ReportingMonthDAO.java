@@ -3,7 +3,7 @@ package report.entities.items.site.month;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.entities.items.expenses.ExpensesDAO;
-import report.models.beck.sql.SqlConnector;
+import report.models.sql.SqlConnector;
 import report.models.converters.dateStringConverters.LocalDayStringConverter;
 
 import java.sql.Connection;

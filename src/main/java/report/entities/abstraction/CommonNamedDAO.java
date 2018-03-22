@@ -4,7 +4,7 @@ package report.entities.abstraction;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.models.beck.sql.SqlConnector;
+import report.models.sql.SqlConnector;
 import report.usage_strings.ServiceStrings;
 
 import java.sql.Connection;

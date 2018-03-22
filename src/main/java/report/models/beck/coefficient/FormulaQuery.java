@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import report.entities.items.variable.VariableTIV_new;
 import report.layoutControllers.estimate.EstimateController.Est;
-import report.models.beck.sql.SqlConnector;
+import report.models.sql.SqlConnector;
 import report.usage_strings.SQL;
 
 

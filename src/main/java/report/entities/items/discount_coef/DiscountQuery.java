@@ -4,7 +4,7 @@ import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.estimate.EstimateDAO;
 import report.entities.items.expenses.ExpensesDAO;
 import report.entities.items.period.PeriodDAO;
-import report.models.beck.sql.SqlConnector;
+import report.models.sql.SqlConnector;
 import report.usage_strings.SQL;
 import java.sql.*;
 import java.util.logging.Level;

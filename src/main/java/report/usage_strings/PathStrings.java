@@ -33,10 +33,13 @@ public  interface PathStrings {
                 String BACK_UP_SQL         =  "lib/BackUp_SQL";
                 String VARIABLE_PROPERTIES =  "lib/MyProperties/formula.properties";
         }
+
         interface FilesPaths{
                 Path EXCEL               = Paths.get("lib/excel_files");
                 Path BACK_UP_SQL         = Paths.get("lib/BackUp_SQL");
                 Path VARIABLE_PROPERTIES = Paths.get( "lib/MyProperties/formula.properties");
+                Path DESCTOP = Paths.get( System.getProperty("user.home"),"/Desktop");
+
         }
 
 }
