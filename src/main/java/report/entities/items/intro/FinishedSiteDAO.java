@@ -3,7 +3,7 @@ package report.entities.items.intro;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.entities.items.KS.KS_DAO;
-import report.models.beck.sql.SqlConnector;
+import report.models.sql.SqlConnector;
 import report.usage_strings.SQL;
 
 import java.sql.Connection;

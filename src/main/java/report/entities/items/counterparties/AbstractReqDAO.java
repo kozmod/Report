@@ -2,7 +2,7 @@ package report.entities.items.counterparties;
 
 import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
-import report.models.beck.sql.SqlConnector;
+import report.models.sql.SqlConnector;
 
 import java.sql.*;
 import java.time.LocalDate;

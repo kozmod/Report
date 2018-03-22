@@ -19,7 +19,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layoutControllers.LogController;
 import report.layoutControllers.estimate.EstimateController.Est;
-import report.models.beck.sql.SqlConnector;
+import report.models.sql.SqlConnector;
 
 public class PeriodDAO implements CommonNamedDAO<Collection<PeriodTIV>> {
 

@@ -42,7 +42,7 @@ import report.models.converters.dateStringConverters.LocalDayStringConverter;
 import report.usage_strings.PathStrings;
 import report.usage_strings.SQL;
 import report.models.view.wrappers.tableWrappers.TableWrapper;
-import report.models.view.nodesFactories.FileChooserFactory;
+import report.models.view.nodesFactories.FileChooserService;
 
 
 import report.models.view.nodesHelpers.StageCreator;
@@ -523,7 +523,7 @@ public class EstimateController implements Initializable {
 
     @FXML
     private void hanle_PrintKS(ActionEvent event) {
-        File selectedFile = FileChooserFactory.Save.saveKS(listKS.getSelectionModel().getSelectedItem().toString());
+        File selectedFile = FileChooserService.Save.saveKS(listKS.getSelectionModel().getSelectedItem().toString());
         ObservableList<KS_TIV> i = tableKSWrapper.getItems();
         if(!listKS.getSelectionModel().isEmpty()
                 && selectedFile != null

@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.control.TreeItem;
-import report.models.beck.sql.SqlConnector;
+import report.models.sql.SqlConnector;
 
 
 public class SiteCommonDAO {

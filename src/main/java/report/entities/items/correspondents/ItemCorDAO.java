@@ -1,7 +1,7 @@
 
 package report.entities.items.correspondents;
 
-import report.models.beck.sql.SqlConnector;
+import report.models.sql.SqlConnector;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;

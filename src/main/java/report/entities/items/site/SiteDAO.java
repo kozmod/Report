@@ -4,7 +4,7 @@ package report.entities.items.site;
 import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.estimate.EstimateDAO;
 import report.layoutControllers.LogController;
-import report.models.beck.sql.SqlConnector;
+import report.models.sql.SqlConnector;
 import report.usage_strings.SQL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
