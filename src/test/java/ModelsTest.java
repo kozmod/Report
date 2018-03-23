@@ -1,3 +1,5 @@
+import org.apache.poi.hwpf.HWPFDocument;
+import org.apache.poi.hwpf.extractor.WordExtractor;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.junit.FixMethodOrder;
@@ -10,9 +12,7 @@ import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.models.converters.dateStringConverters.LocalDayStringConverter;
 import report.models.services.TemplateFactory;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.Collections;
@@ -79,11 +79,30 @@ public class ModelsTest {
 
     @Test
 //    @Disabled
-    @DisplayName("Template Factory Test")
-    public void tmplateFactoryTest() throws SQLException {
+    @DisplayName("Template Factory Test - Docx")
+    public void tmplateFactoryDocxTest() throws SQLException {
         File file = new File("xxxx.docx");
 
-        TemplateFactory.writeTemplate(file,
+        TemplateFactory.writeDocxTemplate(file,
+                Collections.singletonList(
+                        new ObjectPSI<>("Наименование банка",
+                                "",
+                                "Организация",
+                                "CHANGED",
+                                "Contractor_Name",
+                                "",
+                                ".{1,50}"
+                        )
+                )
+        );
+    }
+    @Test
+//    @Disabled
+    @DisplayName("Template Factory Test - Doc")
+    public void tmplateFactoryTest() throws SQLException {
+        File file = new File("xxxx-2.doc");
+
+        TemplateFactory.writeDocTemplate(file,
                 Collections.singletonList(
                         new ObjectPSI<>("Наименование банка",
                                 "",
