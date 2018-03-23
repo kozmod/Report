@@ -3,7 +3,7 @@ package report.entities.items.osr;
 
 import report.entities.abstraction.CommonNamedDAO;
 import report.layoutControllers.LogController;
-import report.models.beck.coefficient.Quantity;
+import report.models.coefficient.Quantity;
 import report.models.sql.SqlConnector;
 import report.usage_strings.SQL;
 import java.sql.Connection;

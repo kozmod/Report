@@ -1,5 +1,5 @@
 
-package report.models.beck.coefficient;
+package report.models.coefficient;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

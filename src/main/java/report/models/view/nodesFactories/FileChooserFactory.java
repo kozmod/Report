@@ -11,8 +11,8 @@ import report.usage_strings.SQL;
 import java.io.File;
 import java.util.List;
 
-public class FileChooserService {
-    private FileChooserService() {
+public class FileChooserFactory {
+    private FileChooserFactory() {
     }
 
     private static FileChooser newFCh(String title, String initDirectory) {
@@ -21,9 +21,6 @@ public class FileChooserService {
         fileChooser.setTitle(title);
         return fileChooser;
     }
-
-
-    public static class Open {
 
         public static File openExcelFolder() {
             return newFCh("Open Resource File", PathStrings.Files.EXCEL)
@@ -34,25 +31,21 @@ public class FileChooserService {
             return newFCh("Open \".Bak\" File", PathStrings.Files.BACK_UP_SQL)
                     .showOpenDialog(null);
         }
-        public static List<File> openDesktop() {
-            FileChooser fileChooser = newFCh("Save Templates", PathStrings.FilesPaths.DESCTOP.toString());
-            FileChooser.ExtensionFilter docFilter = new FileChooser.ExtensionFilter("DOC (*.doc)", "*.doc");
-            FileChooser.ExtensionFilter docxFilter = new FileChooser.ExtensionFilter("DOCX (*.docx)", "*.docx");
-            FileChooser.ExtensionFilter allFilter = new FileChooser.ExtensionFilter("ALL",  "*.doc","*.docx");
-            fileChooser.getExtensionFilters().addAll(allFilter,docFilter,docxFilter);
+//        public static List<File> openDesktop() {
+//            FileChooser fileChooser = newFCh("Save Templates", PathStrings.FilesPaths.DESCTOP.toString());
+//            FileChooser.ExtensionFilter docFilter = new FileChooser.ExtensionFilter("DOC (*.doc)", "*.doc");
+//            FileChooser.ExtensionFilter docxFilter = new FileChooser.ExtensionFilter("DOCX (*.docx)", "*.docx");
+//            FileChooser.ExtensionFilter allFilter = new FileChooser.ExtensionFilter("ALL",  "*.doc","*.docx");
+//            fileChooser.getExtensionFilters().addAll(allFilter,docFilter,docxFilter);
+//
+//            List<File> files = fileChooser.showOpenMultipleDialog(null);
+//            new BinaryStreamQuery().insert(files);
+//
+//            return files;
+//        }
 
-            List<File> files = fileChooser.showOpenMultipleDialog(null);
-            new BinaryStreamQuery().insert(files);
-
-            return files;
-        }
-    }
 
 
-    public static class Save {
-
-        private Save() {
-        }
 
         public static File saveEst(Est enumEst) {
             FileChooser fileChooser = newFCh("Save Estimation", "\\");
@@ -81,6 +74,6 @@ public class FileChooserService {
 
             return fileChooser.showSaveDialog(null);
         }
-    }
+
 
 }
