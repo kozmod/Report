@@ -22,10 +22,10 @@ import report.layoutControllers.estimate.EstimateController;
 import report.layoutControllers.expences.ExpensesController;
 import report.layoutControllers.expences.ExpensesControllerTF;
 import report.layoutControllers.intro.IntroLayoutController;
-import report.models.beck.coefficient.FormulaQuery;
-import report.models.beck.coefficient.Formula;
+import report.models.coefficient.FormulaQuery;
+import report.models.coefficient.Formula;
 import report.models.view.nodesHelpers.InputValidator;
-import report.models.view.nodesFactories.FileChooserService;
+import report.models.view.nodesFactories.FileChooserFactory;
 import report.usage_strings.PathStrings;
 import report.layoutControllers.estimate.EstimateController.Est;
 import report.models.view.nodesHelpers.StageCreator;
@@ -165,7 +165,7 @@ public class RootLayoutController implements Initializable {
     @FXML
     private void handle_menuFileAccLoad(ActionEvent event) {
 
-        File selectedFile = FileChooserService.Open.openExcelFolder();
+        File selectedFile = FileChooserFactory.openExcelFolder();
 
         if(selectedFile != null){
             new InsertFileXLSQuery()
@@ -181,7 +181,7 @@ public class RootLayoutController implements Initializable {
 
     @FXML
     private void handle_menuFileLoad(ActionEvent event) {
-        File selectedFile = FileChooserService.Open.openExcelFolder();
+        File selectedFile = FileChooserFactory.openExcelFolder();
         if(selectedFile != null){
             new InsertFileXLSQuery().insertRowsFromXls_Site_Numeric(selectedFile.getPath());
         }else{
@@ -195,7 +195,7 @@ public class RootLayoutController implements Initializable {
 
     @FXML
     private void handle_menuFileRestore(ActionEvent event) {
-        File selectedFile = FileChooserService.Open.openSqlBackUpFolder();
+        File selectedFile = FileChooserFactory.openSqlBackUpFolder();
 
         if(selectedFile != null){
             BackUpQuery.restore(selectedFile.getPath());
@@ -232,17 +232,12 @@ public class RootLayoutController implements Initializable {
     }
 
     @FXML
-    private void handle_menuFileTemplate(ActionEvent event) {
-        FileChooserService.Open.openDesktop();
-    }
-
-    @FXML
     private void handle_PrintToXML(ActionEvent event) {
 
         File selectedFile;
         if(Est.Base.isExist()
                 && showEstController.getBaseTab().isSelected()) {
-            selectedFile = FileChooserService.Save.saveEst(Est.Base);
+            selectedFile = FileChooserFactory.saveEst(Est.Base);
             if (selectedFile != null) {
                 rootService.printEstBase(selectedFile);
 //                new PrintEstimate(Est.Base.getAllItemsList_Live(), selectedFile.toPath());
@@ -250,7 +245,7 @@ public class RootLayoutController implements Initializable {
             }
         }else if((Est.Changed.isExist()
                 && showEstController.getChangeTab().isSelected())) {
-            selectedFile = FileChooserService.Save.saveEst(Est.Changed);
+            selectedFile = FileChooserFactory.saveEst(Est.Changed);
             if (selectedFile != null) {
                 rootService.printEstChange(selectedFile);
 //                new PrintEstimate(Est.Changed.getAllItemsList_Live(), selectedFile.toPath());

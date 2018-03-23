@@ -1,4 +1,4 @@
-package report.models.beck.coefficient;
+package report.models.coefficient;
 
 public class Formula {
 

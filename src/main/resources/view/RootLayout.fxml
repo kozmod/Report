@@ -35,8 +35,6 @@
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#handle_AddSite" text="Добавить участок" />
                         <MenuItem fx:id="printEstToXmlMenuItem" mnemonicParsing="false" onAction="#handle_PrintToXML" text="Выгрузить смету в xml-файл" />
-                        <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction="#handle_menuFileTemplate" text="Загрузить шаблоны документов" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="SQL">

@@ -14,7 +14,7 @@ import report.entities.items.osr.OSR_TIV;
 import report.entities.items.plan.PlanTIV;
 import report.entities.items.plan.PlanDAO;
 import report.entities.items.plan.FactTIV;
-import report.models.beck.coefficient.Quantity;
+import report.models.coefficient.Quantity;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.models.view.customNodes.ContextMenuOptional;
 import report.models.view.wrappers.tableWrappers.DiscountTreeTableWrapper;

@@ -1,6 +1,5 @@
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.controlsfx.control.PropertySheet;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -9,16 +8,15 @@ import org.junit.runners.MethodSorters;
 import report.entities.items.counterparties.*;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.models.converters.dateStringConverters.LocalDayStringConverter;
-import report.models.view.wrappers.propertySheetWrappers.PropertySheetWrapper;
+import report.models.services.TemplateFactory;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.math.BigInteger;
 import java.sql.SQLException;
-import java.util.HashMap;
+import java.util.Collections;
 import java.util.List;
-import padeg.lib.Padeg;
 
 @FixMethodOrder(MethodSorters.JVM)
 public class ModelsTest {
@@ -49,19 +47,21 @@ public class ModelsTest {
             e.printStackTrace();
         }
     }
+
     @Test
     @Disabled
     @DisplayName("BigInteger test")
-    public void sizeVariableTest(){
+    public void sizeVariableTest() {
         BigInteger big = new BigInteger("9999999999999");
         System.out.println(big);
     }
+
     @Test
 //    @Disabled
     @DisplayName("ReqDaoUtils sql string build")
     public void reqDaoUtilsTest() throws SQLException {
         List<ObjectPSI> list = new ReqCommonDAO().getByID(55);
-        String str = ReqDaoUtils.buildSqlString("id_Count",list);
+        String str = ReqDaoUtils.buildSqlString("id_Count", list);
 //        String str2 = ReqDaoUtils.buildSqlString(list);
         System.out.println(str + "\n"
 //                + str2
@@ -73,7 +73,27 @@ public class ModelsTest {
     @DisplayName("LocalDateConverter")
     public void localDateConverterTest() throws SQLException {
         System.out.println(
-        new LocalDayStringConverter().fromString("2012-01-01").toString()
+                new LocalDayStringConverter().fromString("2012-01-01").toString()
+        );
+    }
+
+    @Test
+//    @Disabled
+    @DisplayName("Template Factory Test")
+    public void tmplateFactoryTest() throws SQLException {
+        File file = new File("xxxx.docx");
+
+        TemplateFactory.writeTemplate(file,
+                Collections.singletonList(
+                        new ObjectPSI<>("Наименование банка",
+                                "",
+                                "Организация",
+                                "CHANGED",
+                                "Contractor_Name",
+                                "",
+                                ".{1,50}"
+                        )
+                )
         );
     }
 

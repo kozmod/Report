@@ -4,7 +4,7 @@ package report.entities.items.plan;
 
 import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.KS.KS_DAO;
-import report.models.beck.coefficient.Quantity;
+import report.models.coefficient.Quantity;
 import report.models.sql.SqlConnector;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
