@@ -8,7 +8,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
-import java.util.function.BiFunction;
 import java.util.function.UnaryOperator;
 
 public class TemplateDocx {
