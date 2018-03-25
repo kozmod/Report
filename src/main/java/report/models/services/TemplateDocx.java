@@ -39,6 +39,7 @@ public class TemplateDocx {
         paragraphs.stream().forEach(para -> {
             para.getRuns().stream().forEach(run -> {
                 String text = run.getText(0);
+                System.out.println(text);
                 if (text != null ) {
                     run.setText(operator.apply(text), 0);
                 }

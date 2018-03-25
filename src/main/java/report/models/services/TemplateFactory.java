@@ -9,12 +9,12 @@ public class TemplateFactory {
 
     public static void writeDocxTemplate(File outputFile, List<ObjectPSI> psiList){
         TemplateDocx docx = new TemplateDocx("D:\\IdeaProjects\\Report\\lib\\docs_templates\\шаблон.docx");
-        docx.process(new ChangetemplateTask(psiList));
+        docx.process(new ChangeTemplateTask(psiList));
         docx.save(outputFile);
     }
     public static void writeDocTemplate(File outputFile, List<ObjectPSI> psiList){
         TemplateDoc doc = new TemplateDoc("D:\\IdeaProjects\\Report\\lib\\docs_templates\\шаблон-2.doc");
-        doc.process(new ChangetemplateTask(psiList));
+        doc.process(new ChangeTemplateTask(psiList));
         doc.save(outputFile);
     }
 }

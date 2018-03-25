@@ -1,11 +1,13 @@
 
 package report.layoutControllers.allProperties;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import javafx.beans.binding.Bindings;
 import javafx.beans.property.BooleanProperty;
+import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,9 +16,13 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import org.controlsfx.control.PropertySheet;
+import report.entities.contract.ContractService;
+import report.entities.contract.ContractTIV;
 import report.entities.items.contractor.ContractorTIV;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.site.month.ReportingMonth;
+import report.entities.items.site.name.SiteNameDAO;
+import report.entities.items.site.name.SiteNameTIV;
 import report.entities.items.variable.VariableTIV_new;
 import report.models.converters.dateStringConverters.LocalDayStringConverter;
 import report.models.view.wrappers.propertySheetWrappers.PropertySheetWrapper;
@@ -32,19 +38,31 @@ public class AllPropertiesController implements Initializable {
      *Tab 4 FXML                                                               *
      *                                                                         *
      **************************************************************************/
-    @FXML private TableView<ReportingMonth>  reportingMonthTable;
-    @FXML private DatePicker  monthFromDP;
-    @FXML private DatePicker monthToDP;
+    @FXML
+    private TableView<ReportingMonth> reportingMonthTable;
+    @FXML
+    private DatePicker monthFromDP;
+    @FXML
+    private DatePicker monthToDP;
     /***************************************************************************
      *                                                                         *
      *Tab 3 FXML                                                               *
      *                                                                         *
      **************************************************************************/
-    @FXML private TableView<CountAgentTVI> countAgentTable;
-    @FXML private ScrollPane reqBankScrollPane;
-    @FXML private CheckBox  countAgentСheckBox;
-    @FXML private Button addCoutButton;
-    @FXML private GridPane linkedNamesGP;
+    @FXML
+    private TableView<ContractTIV> contractTable;
+    @FXML
+    private TableView<SiteNameTIV> siteTable;
+    @FXML
+    private TableView<CountAgentTVI> countAgentTable;
+    @FXML
+    private ScrollPane reqBankScrollPane;
+    @FXML
+    private CheckBox countAgentСheckBox;
+    @FXML
+    private Button addCoutButton;
+    @FXML
+    private GridPane linkedNamesGP;
 
     private PropertySheetWrapper counterPropSheet;
     /***************************************************************************
@@ -52,24 +70,33 @@ public class AllPropertiesController implements Initializable {
      *Tab Variable FXML                                                        *
      *                                                                         *
      **************************************************************************/
-    @FXML private TableView variableTable;
-    @FXML private CheckBox  variableEditСheckBox;
+    @FXML
+    private TableView variableTable;
+    @FXML
+    private CheckBox variableEditСheckBox;
     /***************************************************************************
      *                                                                         *
      *Tab Contractor FXML                                                      *
      *                                                                         *
      **************************************************************************/
-    @FXML private TableView contractorTable;
-    @FXML private TextField contractorNameTF,contractorDirectorTF;
-    @FXML private TextArea  contractorAdressTA,contractorCommentsTA;
-    @FXML private CheckBox  contractorEditСheckBox, planEditСheckBox;
-    @FXML private Button    contractorAddItemButton, contractorSaveItemButton, contractorCencelItemButton;
+    @FXML
+    private TableView contractorTable;
+    @FXML
+    private TextField contractorNameTF, contractorDirectorTF;
+    @FXML
+    private TextArea contractorAdressTA, contractorCommentsTA;
+    @FXML
+    private CheckBox contractorEditСheckBox, planEditСheckBox;
+    @FXML
+    private Button contractorAddItemButton, contractorSaveItemButton, contractorCencelItemButton;
 
 
-    private ReverseTableWrapper<VariableTIV_new> variableTableWrapper ;
+    private ReverseTableWrapper<VariableTIV_new> variableTableWrapper;
     private TableWrapper<ContractorTIV> contractorTableWrapper;
     private TableWrapper<CountAgentTVI> countAgentTableWrapper;
     private TableWrapper<ReportingMonth> reportingMonthTableWrapper;
+    private TableWrapper<ContractTIV> contractTableWrapper;
+    private TableWrapper<SiteNameTIV> siteNameTableWrapper;
 
     /***************************************************************************
      *                                                                         *
@@ -78,6 +105,9 @@ public class AllPropertiesController implements Initializable {
      **************************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        reportingMonthTableWrapper = AllPropertiesControllerND.decorMonthTable(reportingMonthTable);
+        contractTableWrapper = AllPropertiesControllerND.decorContractTable(contractTable);
+        siteNameTableWrapper = AllPropertiesControllerND.decorSiteNameTable(siteTable);
         this.init_VariableTab();
         this.init_ContractorTab();
         this.init_CounterPatiesTab();
@@ -86,14 +116,15 @@ public class AllPropertiesController implements Initializable {
         //TODO: Exception in thread "JavaFX Application Thread" java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
         this.initData();
     }
+
     /**
      * Init Data from Base
      */
-    public void initData(){
-            variableTableWrapper.setFromBase();
-            contractorTableWrapper.setFromBase();
-            countAgentTableWrapper.setFromBase();
-        reportingMonthTableWrapper = AllPropertiesControllerND.decorMonthTable(reportingMonthTable);
+    public void initData() {
+        variableTableWrapper.setFromBase();
+        contractorTableWrapper.setFromBase();
+        countAgentTableWrapper.setFromBase();
+
     }
 
     /***************************************************************************
@@ -101,20 +132,21 @@ public class AllPropertiesController implements Initializable {
      * Init Variable                                                           *
      *                                                                         *
      **************************************************************************/
-     /**
-     * Initialization of Variable Tab. 
+
+    /**
+     * Initialization of Variable Tab.
      */
-    private void init_VariableTab(){
+    private void init_VariableTab() {
         //add OSR TableView
         variableTableWrapper = AllPropertiesControllerND.decorVariable(variableTable);
         //table Context menu property
         variableTableWrapper.tableView().contextMenuProperty().bind(
-            Bindings.when(variableEditСheckBox.selectedProperty() )
-                .then( ContextMenuFactory.getCommonSU(variableTableWrapper))
-                .otherwise( (ContextMenu) null));
+                Bindings.when(variableEditСheckBox.selectedProperty())
+                        .then(ContextMenuFactory.getCommonSU(variableTableWrapper))
+                        .otherwise((ContextMenu) null));
         //TableWrapper Editable property
         variableTableWrapper.tableView().editableProperty()
-                         .bind(variableEditСheckBox.selectedProperty());
+                .bind(variableEditСheckBox.selectedProperty());
 
     }
     /***************************************************************************
@@ -122,24 +154,24 @@ public class AllPropertiesController implements Initializable {
      * Init Contractor                                                         *
      *                                                                         *
      **************************************************************************/
-     /**
-     * Initialization of Contractor Tab. 
+    /**
+     * Initialization of Contractor Tab.
      */
-    private void init_ContractorTab(){
+    private void init_ContractorTab() {
         //add Contractors TableView
         contractorTableWrapper = AllPropertiesControllerND.decorContractor(contractorTable);
         ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapper);
 
         //bing ContextMenu
         contractorTableWrapper.tableView().contextMenuProperty().bind(
-                Bindings.when(contractorEditСheckBox.selectedProperty() )
-                        .then( ContextMenuFactory.getCommonDSU(contractorTableWrapper))
-                        .otherwise( (ContextMenu) null));
+                Bindings.when(contractorEditСheckBox.selectedProperty())
+                        .then(ContextMenuFactory.getCommonDSU(contractorTableWrapper))
+                        .otherwise((ContextMenu) null));
 
         //bind editableProperty to contractorEditСheckBox
-        contractorNameTF    .editableProperty().bind(contractorEditСheckBox.selectedProperty());
+        contractorNameTF.editableProperty().bind(contractorEditСheckBox.selectedProperty());
         contractorDirectorTF.editableProperty().bind(contractorEditСheckBox.selectedProperty());
-        contractorAdressTA  .editableProperty().bind(contractorEditСheckBox.selectedProperty());
+        contractorAdressTA.editableProperty().bind(contractorEditСheckBox.selectedProperty());
         contractorCommentsTA.editableProperty().bind(contractorEditСheckBox.selectedProperty());
 
         //bind disableProperty to contractorEditСheckBox
@@ -147,29 +179,30 @@ public class AllPropertiesController implements Initializable {
 
         contractorTableWrapper.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             ContractorTIV item = (newValue != null) ? newValue : oldValue;
-            if(newValue != null && oldValue != null){
-                Bindings.unbindBidirectional(contractorNameTF    .textProperty(), oldValue.getContractorProperty());
+            if (newValue != null && oldValue != null) {
+                Bindings.unbindBidirectional(contractorNameTF.textProperty(), oldValue.getContractorProperty());
                 Bindings.unbindBidirectional(contractorDirectorTF.textProperty(), oldValue.getDirectorProperty());
-                Bindings.unbindBidirectional(contractorAdressTA  .textProperty(), oldValue.getAdressProperty());
+                Bindings.unbindBidirectional(contractorAdressTA.textProperty(), oldValue.getAdressProperty());
                 Bindings.unbindBidirectional(contractorCommentsTA.textProperty(), oldValue.getCommentsProperty());
             }
 
-            clearGroupOfTextInputControl(contractorNameTF,contractorDirectorTF,contractorAdressTA,contractorCommentsTA);
+            clearGroupOfTextInputControl(contractorNameTF, contractorDirectorTF, contractorAdressTA, contractorCommentsTA);
 
-            if(contractorTableWrapper.getItems().size() > 0 && !contractorTableWrapper.getSelectionModel().isEmpty()){
-                Bindings.bindBidirectional(contractorNameTF    .textProperty(), item.getContractorProperty());
+            if (contractorTableWrapper.getItems().size() > 0 && !contractorTableWrapper.getSelectionModel().isEmpty()) {
+                Bindings.bindBidirectional(contractorNameTF.textProperty(), item.getContractorProperty());
                 Bindings.bindBidirectional(contractorDirectorTF.textProperty(), item.getDirectorProperty());
-                Bindings.bindBidirectional(contractorAdressTA  .textProperty(), item.getAdressProperty());
+                Bindings.bindBidirectional(contractorAdressTA.textProperty(), item.getAdressProperty());
                 Bindings.bindBidirectional(contractorCommentsTA.textProperty(), item.getCommentsProperty());
             }
         });
     }
+
     /***************************************************************************
      *                                                                         *
      * Init 3                                                                  *
      *                                                                         *
      **************************************************************************/
-    private void init_CounterPatiesTab(){
+    private void init_CounterPatiesTab() {
         countAgentTableWrapper = AllPropertiesControllerND.decorCountAgent(countAgentTable);
         countAgentTableWrapper.tableView()
                 .editableProperty()
@@ -183,17 +216,38 @@ public class AllPropertiesController implements Initializable {
         //bing ContextMenu
         countAgentTableWrapper.tableView()
                 .contextMenuProperty()
-                .bind(Bindings.when(countAgentСheckBox.selectedProperty() )
-                                .then( ContextMenuFactory.getCommonDSU(countAgentTableWrapper) )
-                                .otherwise( (ContextMenu) null)
+                .bind(Bindings.when(countAgentСheckBox.selectedProperty())
+                        .then(ContextMenuFactory.getCommonDSU(countAgentTableWrapper))
+                        .otherwise((ContextMenu) null)
                 );
+        countAgentTableWrapper.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                siteNameTableWrapper.tableView().setItems(new SiteNameDAO().getData(newSelection.getName()));
+            }
+        });
 
-        counterPropSheet.getObservableItems().addListener((ListChangeListener<? super PropertySheet.Item>) listener ->{
-            if(listener.next()) {
+        siteNameTableWrapper.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            if (newSelection != null) {
+                try {
+                    contractTableWrapper.tableView()
+                            .setItems(
+                                    FXCollections.observableArrayList(
+                                            new ContractService().listBySiteName(newSelection.getSiteName())
+                                    )
+                            );
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        counterPropSheet.getObservableItems().addListener((ListChangeListener<? super PropertySheet.Item>) listener -> {
+            if (listener.next()) {
 //                System.out.println(counterPropSheet.getSheet().getItems().get(listener.getFrom()).getValue());
             }
         });
         AllPropertiesControllerND.decorLinkedNamesGP(linkedNamesGP, countAgentTableWrapper);
+
     }
 
 
@@ -203,60 +257,62 @@ public class AllPropertiesController implements Initializable {
      *                                                                         *
      **************************************************************************/
     @FXML
-    private void handle_contractorItemButton(ActionEvent event) {  
-      if(event.getSource() == contractorAddItemButton){
-        setVisibleDisableContractorNodes(true);
-        
+    private void handle_contractorItemButton(ActionEvent event) {
+        if (event.getSource() == contractorAddItemButton) {
+            setVisibleDisableContractorNodes(true);
+
             ContractorTIV item = contractorTableWrapper.getSelectionModel().getSelectedItem();
-                if((item  != null)&& !contractorTableWrapper.getSelectionModel().isEmpty()){
-                    Bindings.unbindBidirectional(contractorNameTF    .textProperty(), item.getContractorProperty());
-                    Bindings.unbindBidirectional(contractorDirectorTF.textProperty(), item.getDirectorProperty());
-                    Bindings.unbindBidirectional(contractorAdressTA  .textProperty(), item.getAdressProperty());
-                    Bindings.unbindBidirectional(contractorCommentsTA.textProperty(), item.getCommentsProperty());
-                }
-        clearGroupOfTextInputControl(contractorNameTF,contractorDirectorTF,contractorAdressTA,contractorCommentsTA);
-      }else if(event.getSource() == contractorSaveItemButton){
-          setVisibleDisableContractorNodes(false);
-          if(contractorTableWrapper.getItems().add(new ContractorTIV(
-                                  0,
-                                  contractorNameTF.getText(),
-                                  contractorDirectorTF.getText(),
-                                  contractorAdressTA.getText(),
-                                  contractorCommentsTA.getText()
-                          ))
-                  )clearGroupOfTextInputControl(contractorNameTF,contractorDirectorTF,contractorAdressTA,contractorCommentsTA);
-      }
-      if(event.getSource() == contractorCencelItemButton){
-        setVisibleDisableContractorNodes(false);
-        clearGroupOfTextInputControl(
-                contractorNameTF,
-                contractorDirectorTF,
-                contractorAdressTA,
-                contractorCommentsTA
-        );
-      }
+            if ((item != null) && !contractorTableWrapper.getSelectionModel().isEmpty()) {
+                Bindings.unbindBidirectional(contractorNameTF.textProperty(), item.getContractorProperty());
+                Bindings.unbindBidirectional(contractorDirectorTF.textProperty(), item.getDirectorProperty());
+                Bindings.unbindBidirectional(contractorAdressTA.textProperty(), item.getAdressProperty());
+                Bindings.unbindBidirectional(contractorCommentsTA.textProperty(), item.getCommentsProperty());
+            }
+            clearGroupOfTextInputControl(contractorNameTF, contractorDirectorTF, contractorAdressTA, contractorCommentsTA);
+        } else if (event.getSource() == contractorSaveItemButton) {
+            setVisibleDisableContractorNodes(false);
+            if (contractorTableWrapper.getItems().add(new ContractorTIV(
+                    0,
+                    contractorNameTF.getText(),
+                    contractorDirectorTF.getText(),
+                    contractorAdressTA.getText(),
+                    contractorCommentsTA.getText()
+            ))
+                    )
+                clearGroupOfTextInputControl(contractorNameTF, contractorDirectorTF, contractorAdressTA, contractorCommentsTA);
+        }
+        if (event.getSource() == contractorCencelItemButton) {
+            setVisibleDisableContractorNodes(false);
+            clearGroupOfTextInputControl(
+                    contractorNameTF,
+                    contractorDirectorTF,
+                    contractorAdressTA,
+                    contractorCommentsTA
+            );
+        }
     }
-     /**
-     * Bind disable property to group of 
+
+    /**
+     * Bind disable property to group of
      */
-    private void setGroupNodeDisableProperty( BooleanProperty booleanProperty, Node ... nodes){
-        for(Node node : nodes)node.disableProperty().bind(Bindings.when(booleanProperty).then(false).otherwise(true));   
+    private void setGroupNodeDisableProperty(BooleanProperty booleanProperty, Node... nodes) {
+        for (Node node : nodes) node.disableProperty().bind(Bindings.when(booleanProperty).then(false).otherwise(true));
     }
-    
+
     /**
      * Clear for of TextInputControl like TextField, TextArea, etc.
      */
-    private void clearGroupOfTextInputControl(TextInputControl ... nodes){
-        for(TextInputControl node : nodes)node.clear();
+    private void clearGroupOfTextInputControl(TextInputControl... nodes) {
+        for (TextInputControl node : nodes) node.clear();
     }
-    
 
-    private void setVisibleDisableContractorNodes(boolean value){
-        contractorAddItemButton     .setVisible(!value);
-        contractorSaveItemButton    .setVisible(value);
-        contractorCencelItemButton  .setVisible(value);
-        contractorEditСheckBox      .setDisable(value);
-        contractorTableWrapper      .setDisable(value);
+
+    private void setVisibleDisableContractorNodes(boolean value) {
+        contractorAddItemButton.setVisible(!value);
+        contractorSaveItemButton.setVisible(value);
+        contractorCencelItemButton.setVisible(value);
+        contractorEditСheckBox.setDisable(value);
+        contractorTableWrapper.setDisable(value);
     }
 
     /***************************************************************************
@@ -288,7 +344,7 @@ public class AllPropertiesController implements Initializable {
                     System.out.println("\033[34m ---> wrong edit in last added item");
                     System.out.println(lastItem.toString());
 
-                }else {
+                } else {
                     addCoutButton.setText("+");
                     countAgentTableWrapper.refresh();
                     countAgentСheckBox.setDisable(false);
