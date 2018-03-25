@@ -15,6 +15,7 @@ import report.models.services.TemplateFactory;
 import java.io.*;
 import java.math.BigInteger;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -79,41 +80,72 @@ public class ModelsTest {
 
     @Test
 //    @Disabled
+    @SuppressWarnings("unchecked")
     @DisplayName("Template Factory Test - Docx")
     public void tmplateFactoryDocxTest() throws SQLException {
         File file = new File("xxxx.docx");
-
-        TemplateFactory.writeDocxTemplate(file,
-                Collections.singletonList(
-                        new ObjectPSI<>("Наименование банка",
-                                "",
-                                "Организация",
-                                "CHANGED",
-                                "Contractor_Name",
-                                "",
-                                ".{1,50}"
-                        )
-                )
-        );
+        List<ObjectPSI> list = new ArrayList<>();
+        list.add(new ObjectPSI("Наименование банка",
+                "",
+                "Организация",
+                "CHANGED",
+                "Contractor_Name",
+                "",
+                ".{1,50}"
+        ));
+        list.add(new ObjectPSI("Наименование банка",
+                "",
+                "Организация",
+                "ОГРН",
+                "OGRN",
+                "",
+                ".{1,50}"
+        ));
+        list.add(new ObjectPSI("Наименование банка",
+                "",
+                "Организация",
+                "XXXXXXXXXXXXXXXXXXXXXX",
+                "ExBody_Surname_roditelnij",
+                "",
+                ".{1,50}"
+        ));
+        TemplateFactory.writeDocxTemplate(file, list);
     }
+
     @Test
 //    @Disabled
+    @SuppressWarnings("unchecked")
     @DisplayName("Template Factory Test - Doc")
     public void tmplateFactoryTest() throws SQLException {
         File file = new File("xxxx-2.doc");
 
-        TemplateFactory.writeDocTemplate(file,
-                Collections.singletonList(
-                        new ObjectPSI<>("Наименование банка",
-                                "",
-                                "Организация",
-                                "CHANGED",
-                                "Contractor_Name",
-                                "",
-                                ".{1,50}"
-                        )
-                )
-        );
+        List<ObjectPSI> list = new ArrayList<>();
+        list.add(new ObjectPSI("Наименование банка",
+                "",
+                "Организация",
+                "CHANGED",
+                "Contractor_Name",
+                "",
+                ".{1,50}"
+        ));
+//        list.add(new ObjectPSI("Наименование банка",
+//                "",
+//                "Организация",
+//                "ОГРН",
+//                "OGRN",
+//                "",
+//                ".{1,50}"
+//        ));
+
+        TemplateFactory.writeDocTemplate(file, list);
+    }
+    @Test
+//    @Disabled
+    @SuppressWarnings("unchecked")
+    @DisplayName("Template Factory Test - Doc")
+    public void copyTest() throws SQLException {
+        File file = new File("xxxx-2.doc");
+
     }
 
 }

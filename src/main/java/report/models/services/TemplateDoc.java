@@ -16,7 +16,6 @@ import java.util.function.UnaryOperator;
 public class TemplateDoc {
     private final File templateFile;
     private HWPFDocument document;
-    private String outputString;
 
     public TemplateDoc(File templateFile) {
         this.templateFile = templateFile;
@@ -51,7 +50,6 @@ public class TemplateDoc {
                 }
 
             }
-
         }
     }
 

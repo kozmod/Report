@@ -21,6 +21,8 @@ import org.controlsfx.property.editor.Editors;
 import org.controlsfx.property.editor.PropertyEditor;
 import org.controlsfx.validation.ValidationSupport;
 import report.entities.abstraction.CommonDAO;
+import report.entities.contract.ContractService;
+import report.entities.contract.ContractTIV;
 import report.entities.items.DItem;
 import report.entities.items.contractor.ContractorDAO;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
@@ -32,6 +34,8 @@ import report.entities.items.counterparties.ReqExBodyDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.entities.items.site.month.ReportingMonth;
 import report.entities.items.site.month.ReportingMonthDAO;
+import report.entities.items.site.name.SiteNameDAO;
+import report.entities.items.site.name.SiteNameTIV;
 import report.entities.items.variable.PropertiesDAO;
 import report.entities.items.variable.VariableTIV_new;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
@@ -42,6 +46,7 @@ import report.models.view.wrappers.tableWrappers.ReverseTableWrapper;
 import report.models.view.wrappers.tableWrappers.TableWrapper;
 import report.models.view.nodesFactories.TableFactory;
 
+import java.io.IOException;
 import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.Date;
@@ -357,4 +362,31 @@ class AllPropertiesControllerND implements TableFactory {
         return tableWrapper;
     }
 
+
+    static TableWrapper<ContractTIV> decorContractTable(TableView<ContractTIV> table) {
+        TableWrapper<ContractTIV> tableWrapper = new TableWrapper<>(table, null);
+        tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+//        try {
+//            tableWrapper.tableView().setItems(
+//                    FXCollections.observableArrayList(
+//                            new ContractService().list()
+//                    )
+//            );
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+
+        TableColumn<ContractTIV, String> contractName = tableWrapper.addColumn("ContractName", column -> column.getValue().contractNameProperty());
+
+        return tableWrapper;
+    }
+
+    static TableWrapper<SiteNameTIV> decorSiteNameTable(TableView<SiteNameTIV> table) {
+        TableWrapper<SiteNameTIV> tableWrapper = new TableWrapper<>(table, null);
+        tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+
+        TableColumn<SiteNameTIV, String> siteName = tableWrapper.addColumn("siteName", column -> column.getValue().siteNameProperty());
+
+        return tableWrapper;
+    }
 }

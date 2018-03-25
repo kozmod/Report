@@ -92,12 +92,6 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
      *                                                                         *
      **************************************************************************/
 
-//    @Override
-//    public void setDAO(CommonDAO dao) {
-//        this.DAO = dao;
-//
-//    }
-
     @Override
     public ContextMenu getContextMenu(){ return tableView.getContextMenu();}
     @Override
@@ -160,7 +154,6 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
      */
     public  <K> TableColumn<E,K> addColumn(String name, Callback<TableColumn.CellDataFeatures<E,K>, ObservableValue<K>> callback){
         TableColumn<E,K> column = new TableColumn<>(name);
-//        column.setCellValueFactory(new PropertyValueFactory<>(fieldName));
         column.setCellValueFactory(callback);
         tableView.getColumns().add(column);
         return column;

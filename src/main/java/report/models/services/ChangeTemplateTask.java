@@ -5,11 +5,11 @@ import report.entities.items.propertySheet__TEST.ObjectPSI;
 import java.util.List;
 import java.util.function.UnaryOperator;
 
-public class ChangetemplateTask implements UnaryOperator<String>{
+public class ChangeTemplateTask implements UnaryOperator<String>{
 
     private final List<ObjectPSI> psiList;
 
-    public ChangetemplateTask(List<ObjectPSI> psiList) {
+    public ChangeTemplateTask(List<ObjectPSI> psiList) {
         this.psiList = psiList;
     }
 
