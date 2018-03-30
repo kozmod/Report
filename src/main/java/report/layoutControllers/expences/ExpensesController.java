@@ -5,6 +5,7 @@ import java.net.URL;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.ResourceBundle;
+
 import javafx.beans.InvalidationListener;
 import javafx.beans.Observable;
 
@@ -43,42 +44,46 @@ import report.models.view.nodesFactories.ContextMenuFactory;
 import report.models.view.customNodes.ContextMenuOptional;
 
 public class ExpensesController implements Initializable {
-    
+
     private RootLayoutController rootController;
     private Stage controllerStage;
 
-    @FXML  private TextField  textExpTF, valueTF, textPeriodTF, contract_FinishTF, coeffTF;
-    @FXML  private GridPane   siteTableGridPane, expensesTableGridPane, periodTableGridPane;
-    @FXML  private TableView  siteTV,expensesTV, periodTV;
+    @FXML
+    private TextField textExpTF, valueTF, textPeriodTF, contract_FinishTF, coeffTF;
+    @FXML
+    private GridPane siteTableGridPane, expensesTableGridPane, periodTableGridPane;
+    @FXML
+    private TableView siteTV, expensesTV, periodTV;
 
 
+    private TableWrapper<PreviewTIV> siteTWrapper;
+    private TableWrapper<ExpensesTVI> expensesTWrapper;
+    private TableWrapper<PeriodTIV> periodTWrapper;
 
+    @FXML
+    private ComboBox typeCB;
+    @FXML
+    private DatePicker dateFromDP, dateToDP;
+    @FXML
+    private Button applyCoefButton, siteUndoButton, siteSaveButton, addExpensesButton, addPeriodButton;
 
-    private  TableWrapper<PreviewTIV> siteTWrapper ;
-    private  TableWrapper<ExpensesTVI> expensesTWrapper ;
-    private  TableWrapper<PeriodTIV> periodTWrapper ;
-
-    @FXML  private ComboBox typeCB;
-    @FXML  private DatePicker dateFromDP, dateToDP;
-    @FXML  private Button applyCoefButton,siteUndoButton, siteSaveButton,addExpensesButton,addPeriodButton;
-    
     private final StringProperty SITE_NUMBER = new SimpleStringProperty(Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER));
-    private final StringProperty CONTRACTOR  = new SimpleStringProperty(Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
-    private final StringProperty TYPE_HOME   = new SimpleStringProperty(Est.Common.getSiteSecondValue(SQL.Common.TYPE_HOME));
-    
-//    private final  DoubleProperty COEFFICIENT = new SimpleDoubleProperty(new FormulaQuery().getFormula().getQuantity());
-    private final  DoubleProperty COEFFICIENT = new SimpleDoubleProperty(Formula.formulaFromBase().computeCoefficient());
+    private final StringProperty CONTRACTOR = new SimpleStringProperty(Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
+    private final StringProperty TYPE_HOME = new SimpleStringProperty(Est.Common.getSiteSecondValue(SQL.Common.TYPE_HOME));
+
+    //    private final  DoubleProperty COEFFICIENT = new SimpleDoubleProperty(new FormulaQuery().getFormula().getQuantity());
+    private final DoubleProperty COEFFICIENT = new SimpleDoubleProperty(Formula.formulaFromBase().computeCoefficient());
+
     /*!*******************************************************************************************************************
      *                                                                                                     PreConstructor
-     ********************************************************************************************************************/ 
-    {
+     ********************************************************************************************************************/ {
 //        siteTWrapper.setTableData(FXCollections.observableArrayList(new PreviewTIV(Long.MIN_VALUE, "sss", "SSS", "s")));
 
         InvalidationListener l = (Observable observable) -> {
-            if(CONTRACTOR.getValue().equals(SQL.Line) && TYPE_HOME.getValue().equals(SQL.Line) ){
+            if (CONTRACTOR.getValue().equals(SQL.Line) && TYPE_HOME.getValue().equals(SQL.Line)) {
                 addExpensesButton.setDisable(true);
                 addPeriodButton.setDisable(true);
-            }else{
+            } else {
                 addExpensesButton.setDisable(false);
                 addPeriodButton.setDisable(false);
             }
@@ -86,16 +91,15 @@ public class ExpensesController implements Initializable {
         CONTRACTOR.addListener(l);
         TYPE_HOME.addListener(l);
     }
-     /*!******************************************************************************************************************
+    /*!******************************************************************************************************************
      *                                                                                                     Getter/Setter
-     ********************************************************************************************************************/   
+     ********************************************************************************************************************/
 
     public void setRootController(RootLayoutController rootController) {
         this.rootController = rootController;
         rootController.setTreeViewDisable(true);
-        
-        
-        
+
+
     }
 
     public void setControllerStage(Stage stage) {
@@ -107,11 +111,11 @@ public class ExpensesController implements Initializable {
 
         });
     }
-    
-    
+
+
     /*!*******************************************************************************************************************
      *                                                                                                              INIT
-     ********************************************************************************************************************/ 
+     ********************************************************************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         siteTWrapper = ExpensesControllerTF.decorProperty_Site(siteTV);
@@ -122,14 +126,14 @@ public class ExpensesController implements Initializable {
         expensesTWrapper.setTableData(new ExpensesDAO().getData());
         periodTWrapper.setTableData(new PeriodDAO().getData());
 
-      init_expensesTab();
-      init_periodTab();
-      siteButtonAccess();
+        init_expensesTab();
+        init_periodTab();
+        siteButtonAccess();
 
-      
-    }    
-    
-    private void init_expensesTab(){
+
+    }
+
+    private void init_expensesTab() {
 
         //Set Context Menu
         expensesTWrapper.setContextMenu(ContextMenuFactory.getCommonDSU(expensesTWrapper));
@@ -139,85 +143,87 @@ public class ExpensesController implements Initializable {
                     System.out.println("SAVEITEM ->>  report.layoutControllers.expences.ExpensesController.init_expensesTab()");
 //                    COEFFICIENT.setQuantity(new FormulaQuery().getFormula().getQuantity());
                     COEFFICIENT.setValue(Formula.formulaFromBase().computeCoefficient());
-                    System.out.println("COEF - >"  + COEFFICIENT.getValue());
+                    System.out.println("COEF - >" + COEFFICIENT.getValue());
                 });
 
         typeCB.getItems().addAll(" % ", " Руб. ");
         typeCB.setValue(" % ");
-        
-        
-    }
-    
-    private void init_periodTab(){
 
-    //Set Context Menu
-    periodTWrapper.setContextMenu(ContextMenuFactory.getCommonDSU(periodTWrapper));
-    ContextMenuOptional.setTableItemContextMenuListener(periodTWrapper);
-    
+
+    }
+
+    private void init_periodTab() {
+
+        //Set Context Menu
+        periodTWrapper.setContextMenu(ContextMenuFactory.getCommonDSU(periodTWrapper));
+        ContextMenuOptional.setTableItemContextMenuListener(periodTWrapper);
+
 //    //Set Date Pickers Converter
 //    dateFromDP.setConverter(new EpochDatePickerConverter());
 //    dateToDP.setConverter(new EpochDatePickerConverter());
-    dateFromDP.setConverter(
-                        new LocalDayStringConverter()
+        dateFromDP.setConverter(
+                new LocalDayStringConverter()
         );
-    dateToDP.setConverter(
-                        new LocalDayStringConverter()
+        dateToDP.setConverter(
+                new LocalDayStringConverter()
         );
 
-    //Set DateContract / FinishBuildin TextField
-    contract_FinishTF.textProperty().bind(new StringBinding(){
-            ObjectProperty dateComtract   = Est.Changed.getSiteItem(SQL.Site.DATE_CONTRACT).getSecondProperty();
+        //Set DateContract / FinishBuildin TextField
+        contract_FinishTF.textProperty().bind(new StringBinding() {
+            ObjectProperty dateComtract = Est.Changed.getSiteItem(SQL.Site.DATE_CONTRACT).getSecondProperty();
             ObjectProperty FinishBuilding = Est.Changed.getSiteItem(SQL.Site.FINISH_BUILDING).getSecondProperty();
+
             {
                 super.bind(
                         dateComtract,
                         FinishBuilding
-                        );
+                );
             }
-                            @Override
+
+            @Override
             protected String computeValue() {
                 return LocalDate.ofEpochDay((long) dateComtract.getValue()).toString()
-                       +" / "+
-                       LocalDate.ofEpochDay((long) FinishBuilding.getValue()).toString();
+                        + " / " +
+                        LocalDate.ofEpochDay((long) FinishBuilding.getValue()).toString();
             }
         });
-   
-    }
-    
 
-    private void siteButtonAccess(){
+    }
+
+
+    private void siteButtonAccess() {
         siteTWrapper.getItems().addListener((ListChangeListener<? super PreviewTIV>) c -> {
-            System.out.println("Changed on " + c + " ExpensesController" );
+            System.out.println("Changed on " + c + " ExpensesController");
             siteUndoButton.setDisable(false);
             siteSaveButton.setDisable(false);
         });
 
         //Bind Formula to Textfield
-        coeffTF.textProperty().bindBidirectional(COEFFICIENT,  new DoubleStringConverter().format());
+        coeffTF.textProperty().bindBidirectional(COEFFICIENT, new DoubleStringConverter().format());
 
         //add Formula TF Listener
-        coeffTF.textProperty().addListener(event ->{
-            if(Est.Changed.isExist() ) {
-                if(!COEFFICIENT.getValue().equals(Est.Common.getSiteItem(SQL.Site.COEFFICIENT).getSecondValue()))
+        coeffTF.textProperty().addListener(event -> {
+            if (Est.Changed.isExist()) {
+                if (!COEFFICIENT.getValue().equals(Est.Common.getSiteItem(SQL.Site.COEFFICIENT).getSecondValue()))
                     applyCoefButton.setDisable(false);
                 else
                     applyCoefButton.setDisable(true);
             }
         });
-        
-        siteUndoButton .setDisable(true);
-        siteSaveButton .setDisable(true);
-        if(!Est.Common.getSiteSecondValue(SQL.Site.COEFFICIENT).equals(COEFFICIENT.get()))
+
+        siteUndoButton.setDisable(true);
+        siteSaveButton.setDisable(true);
+        if (!Est.Common.getSiteSecondValue(SQL.Site.COEFFICIENT).equals(COEFFICIENT.get()))
             applyCoefButton.setDisable(false);
         else applyCoefButton.setDisable(true);
-        
-    }
-    
-    /*!*******************************************************************************************************************
-    *                                                                                              INIT  Button handlers
-    ********************************************************************************************************************/
 
-    
+    }
+
+    /*!*******************************************************************************************************************
+     *                                                                                              INIT  Button handlers
+     ********************************************************************************************************************/
+
+
 //    private void init_coeffListener(){
 //        coeffTF.textProperty().bindBidirectional(Formula_test.coefficient.getValueProperty(), new NumberStringConverter());
 //        Formula_test.coefficient.getValueProperty().addListener(event ->{
@@ -225,90 +231,88 @@ public class ExpensesController implements Initializable {
 //                computeCoefButton.setDisable(false);
 //        });
 //    }
-    
+
     /*!*******************************************************************************************************************
      *                                                                                                            HANDLERS
      ********************************************************************************************************************/
-    @FXML   
+    @FXML
     private void hendler_applySiteChanges(ActionEvent event) {
 
-            new SiteDAO().dellAndInsert(siteTWrapper.getItems());
-       
-            siteTWrapper.saveMemento();
-            rootController.update_previewTable(Est.Common.getPreviewObservableList());
-            
-//            COEFFICIENT.setQuantity(new FormulaQuery().getFormula().getQuantity());
-            COEFFICIENT.setValue(Formula.formulaFromBase().computeCoefficient());
+        new SiteDAO().dellAndInsert(siteTWrapper.getItems());
 
-            CONTRACTOR.setValue(Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
-            siteUndoButton .setDisable(true);
-            siteSaveButton.setDisable(true);
-            rootController.update_SelctedTreeViewItem(
-                    Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR)
-            );
-            
-            
+        siteTWrapper.saveMemento();
+        rootController.update_previewTable(Est.Common.getPreviewObservableList());
+
+//            COEFFICIENT.setQuantity(new FormulaQuery().getFormula().getQuantity());
+        COEFFICIENT.setValue(Formula.formulaFromBase().computeCoefficient());
+
+        CONTRACTOR.setValue(Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
+        siteUndoButton.setDisable(true);
+        siteSaveButton.setDisable(true);
+        rootController.update_SelctedTreeViewItem(
+                Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR)
+        );
+
+
     }
-    
-    @FXML   
+
+    @FXML
     private void hendler_cencelSiteChanges(ActionEvent event) {
         siteTWrapper.undoChangeItems();
-        
-        siteUndoButton .setDisable(true);
-        siteSaveButton .setDisable(true);
+
+        siteUndoButton.setDisable(true);
+        siteSaveButton.setDisable(true);
         applyCoefButton.setDisable(true);
     }
-    
-    
+
+
     @FXML
     private void hendler_addExpenses(ActionEvent event) {                   //<===SQL connect
         int type = 0;
-        if(typeCB.getSelectionModel().getSelectedItem().equals(" % ")){
+        if (typeCB.getSelectionModel().getSelectedItem().equals(" % ")) {
             type = 0;
-        }else if(typeCB.getSelectionModel().getSelectedItem().equals(" Руб. ")){
+        } else if (typeCB.getSelectionModel().getSelectedItem().equals(" Руб. ")) {
             type = 1;
-        }       
-             expensesTWrapper.getItems().add(new ExpensesTVI
-                                        .Builder()
-                                        .setId(new Long(0))
-                                        .setsiteNumber(SITE_NUMBER.getValue())
-                                        .setContractor(CONTRACTOR.getValue())
-                                        .setText(textExpTF.getText())
-                                        .setType(type)
-                                        .setValue(Double.parseDouble(valueTF.getText()))
-                                        .build()
-             );
+        }
+        expensesTWrapper.getItems().add(new ExpensesTVI
+                .Builder()
+                .setId(new Long(0))
+                .setsiteNumber(SITE_NUMBER.getValue())
+                .setContractor(CONTRACTOR.getValue())
+                .setText(textExpTF.getText())
+                .setType(type)
+                .setValue(Double.parseDouble(valueTF.getText()))
+                .build()
+        );
         expensesTWrapper.refresh();
-    } 
- 
+    }
+
     @FXML
     private void hendler_addJobPeriod(ActionEvent event) {                   //<===SQL connect
         periodTWrapper.getItems().add(new PeriodTIV
-                                        .Builder()
-                                        .setsiteNumber(SITE_NUMBER.getValue())
-                                        .setContractor(CONTRACTOR.getValue())
-                                        .setText(textPeriodTF.getText())
-                                        .setDateFrom((int) dateFromDP.getValue().toEpochDay())
-                                        .setDateTo((int) dateToDP.getValue().toEpochDay())
-                                        .build()
-             );
+                .Builder()
+                .setsiteNumber(SITE_NUMBER.getValue())
+                .setContractor(CONTRACTOR.getValue())
+                .setText(textPeriodTF.getText())
+                .setDateFrom((int) dateFromDP.getValue().toEpochDay())
+                .setDateTo((int) dateToDP.getValue().toEpochDay())
+                .build()
+        );
         periodTWrapper.refresh();
-    }   
-    
+    }
+
     @FXML
     private void handler_applyCoeffToChanged(ActionEvent event) {
         Est.Common.getSiteItem(SQL.Site.COEFFICIENT).setSecondValue(COEFFICIENT.get());
 
 
-
-        
-        if(Est.Changed.isExist()){
+        if (Est.Changed.isExist()) {
             new FormulaQuery().applyCoefficient(
-                Est.Changed.getSiteSecondValue(SQL.Common.SITE_NUMBER),
-                Est.Changed.getSiteSecondValue(SQL.Common.CONTRACTOR),
-                COEFFICIENT.getValue());
+                    Est.Changed.getSiteSecondValue(SQL.Common.SITE_NUMBER),
+                    Est.Changed.getSiteSecondValue(SQL.Common.CONTRACTOR),
+                    COEFFICIENT.getValue());
         }
-        if(Est.Changed.isExist()){
+        if (Est.Changed.isExist()) {
             Est.Changed.updateTabData();
             Est.Changed.printALLSum();
 
@@ -323,9 +327,9 @@ public class ExpensesController implements Initializable {
         applyCoefButton.setDisable(true);
         siteUndoButton.setDisable(true);
         siteSaveButton.setDisable(true);
-        
+
     }
-    
+
     //inner clsses +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 //    class StringConverterTF extends StringConverter{
 //
@@ -354,11 +358,6 @@ public class ExpensesController implements Initializable {
 //        
 //
 //    }
-    
 
-            
-    
-    
-  
-    
+
 }

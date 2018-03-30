@@ -30,9 +30,10 @@ import report.entities.items.cb.AddEstTIV;
 import report.usage_strings.ServiceStrings;
 
 
-public class TableCellFactory{
-    
-    private TableCellFactory(){}
+public class TableCellFactory {
+
+    private TableCellFactory() {
+    }
 
     /**
      * Cell to Estimate, Account Tables
@@ -41,7 +42,7 @@ public class TableCellFactory{
 //    public static TableCell getDecimalCell(){
 //        return new TableCellFactory().new DecimalTableCell();
 //    }
-    
+
     /**
      * Cell to Estimate, Account Tables
      * <br>[cell set date from Epoch]
@@ -51,48 +52,54 @@ public class TableCellFactory{
 //        return new TableCellFactory().new EpochDateCell();
 //    }
 //
+
     /**
      * Cell to expenses
      * <br>[set type of currency]
+     *
      * @return ExpensesCell
      */
-    public static TableCell getExpenseesCell(){
+    public static TableCell getExpenseesCell() {
         return new TableCellFactory().new ExpensesCell();
     }
-    
+
     /**
      * Cell to "Add Row Estimate" TableWrapper (AddEstimateRowController)
+     *
      * @return CheckValueCell
      */
-    public static TableCell getCheckValueCell(){
+    public static TableCell getCheckValueCell() {
         return new TableCellFactory().new CheckValueCell();
     }
-    
+
     /**
      * Cell to EDIT Site TableWrapper
      * <br>[set type of currency]
+     *
      * @return EditCell
      */
-    public static TableCell getEditSiteCell(){
+    public static TableCell getEditSiteCell() {
         return new TableCellFactory().new EditSiteCell(Est.Common);
     }
-    
+
     /**
      * Cell to inKS (EST)
-     * <br>(true - RED / false - GREEN).  
+     * <br>(true - RED / false - GREEN).
      * <br>[set text quantity color]
+     *
      * @return inKsColoredCell
      */
-    public static TableCell getInKsColoredCell(){
+    public static TableCell getInKsColoredCell() {
         return new TableCellFactory().new inKsColoredCell();
     }
-    
+
     /**
      * This Cell Listen Mouse Entering to this one and set "DelTable" Items.
      * <br>
+     *
      * @return OnMouseEnteredTableCell
      */
-    public static TableCell getOnMouseEnteredTableCell(Est enumEst){
+    public static TableCell getOnMouseEnteredTableCell(Est enumEst) {
         return new TableCellFactory().new OnMouseEnteredTableCell(enumEst);
     }
 
@@ -100,86 +107,91 @@ public class TableCellFactory{
      * This Cell Listen Double Mouse click.
      * Get text of this cell and find same in JM_Mane(Est), then
      * <br>
+     *
      * @return OnMouseEnteredTableCell
      */
-    public static TableCell getOnDoubleMouseClickMoveToTextCell(){
+    public static TableCell getOnDoubleMouseClickMoveToTextCell() {
         return new TableCellFactory().new OnDoubleMouseClickMoveToCell();
     }
-    
-      /**
+
+    /**
      * Cell to show list of deleted elements of table.
      * <br>
+     *
      * @return ChageTableCell
      */
-    public static TableCell getEqualsToAboveCell(){
+    public static TableCell getEqualsToAboveCell() {
         return new TableCellFactory().new EqualToAboveTableCell();
     }
-      /**
+
+    /**
      * Cell which change Object data to String.
      * <br>
+     *
      * @return ObjectCell
      */
-    public static TableCell getPreviewCell(){
+    public static TableCell getPreviewCell() {
         return new TableCellFactory().new ObjectCell();
     }
-    
-      /**
+
+    /**
      * TEST ID OSR
      * <br>
+     *
      * @return ObjectCell
      */
-    public static TableCell getTestIdOSR(){
+    public static TableCell getTestIdOSR() {
         return new TableCellFactory().new TestID();
     }
-    
 
-    
+
 //   
 //inner cell class --------------------------------------------------------------------------
 //    
+
     /**
      * Cell to Estimate, Account Tables
      */
-    private  class DecimalTableCell extends TableCell<TableView, Number>{
+    private class DecimalTableCell extends TableCell<TableView, Number> {
         @Override
         protected void updateItem(Number item, boolean empty) {
-         super.updateItem(item, empty);
-             if (empty) {
-                 setText(null);
-                 setGraphic(null);
-             } else {
-                 setText(new DoubleStringConverter().toString(item));
-             }
-         }
+            super.updateItem(item, empty);
+            if (empty) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                setText(new DoubleStringConverter().toString(item));
+            }
+        }
 
     }
-        
+
     /**
      * Cell to Estimate, Account Tables
      * <br>[cell set date from Epoch]
      */
-    private  class EpochDateCell extends  TableCell{
+    private class EpochDateCell extends TableCell {
         @Override
         protected void updateItem(Object item, boolean empty) {
             super.updateItem(item, empty);
-             if (empty) {
-                 setText(null);
-                 setGraphic(null);
-             } else {
-                 if(item instanceof Integer)
-                     setText(LocalDate.ofEpochDay((int)item).toString());
-                 if(item instanceof String)
-                     setText(item.toString());
-             }
-        } 
-    
+            if (empty) {
+                setText(null);
+                setGraphic(null);
+            } else {
+                if (item instanceof Integer)
+                    setText(LocalDate.ofEpochDay((int) item).toString());
+                if (item instanceof String)
+                    setText(item.toString());
+            }
+        }
+
     }
-    
+
     /**
      * Cell to expenses
      * <br>[set type of currency]
      */
-    public class ExpensesCell extends TableCell{
+    public class ExpensesCell extends TableCell {
         @Override
         protected void updateItem(Object item, boolean empty) {
             super.updateItem(item, empty);
@@ -187,7 +199,8 @@ public class TableCellFactory{
                 if (item.equals(0)) {
                     setText(" % ");
                 } else if (item.equals(1)) {
-                    setText(" Руб. ");;
+                    setText(" Руб. ");
+                    ;
                 } else {
                     setText("N/A");
                     setGraphic(null);
@@ -196,63 +209,65 @@ public class TableCellFactory{
                 setText(null);
                 setGraphic(null);
             }
-        };
+        }
+
+        ;
     }
-    
+
     /**
      * Cell to EDIT TableWrapper
      * <br>[set type of currency]
      */
-    private class EditSiteCell extends TableCell<PreviewTIV, Object>{
-           
+    private class EditSiteCell extends TableCell<PreviewTIV, Object> {
+
         private Est enumPreTable;
-        
-        public EditSiteCell(Est enumEst){
-            super(); 
+
+        public EditSiteCell(Est enumEst) {
+            super();
             this.enumPreTable = enumEst;
         }
 
-      
+
         @Override
         protected void updateItem(Object item, boolean empty) {
             super.updateItem(item, empty);
-                int rowIndex = this.getIndex();
-                PreviewTIV t = null ;
-            if(this.getItem() != null) t = this.getTableView().getItems().get(rowIndex);
-           
+            int rowIndex = this.getIndex();
+            PreviewTIV t = null;
+            if (this.getItem() != null) t = this.getTableView().getItems().get(rowIndex);
+
             if (!isEmpty()) {
-                switch(t.getSqlColumn()){
-                    case SQL.Site.DATE_CONTRACT  :
-                    case SQL.Site.FINISH_BUILDING :
+                switch (t.getSqlColumn()) {
+                    case SQL.Site.DATE_CONTRACT:
+                    case SQL.Site.FINISH_BUILDING:
                         setGraphic(createDatePicker(t));
                         break;
-                    case SQL.Site.SITE_TYPE_ID :
-                    case SQL.Site.STATUS_JOBS :
-                    case SQL.Site.STATUS_PAYMENT :
+                    case SQL.Site.SITE_TYPE_ID:
+                    case SQL.Site.STATUS_JOBS:
+                    case SQL.Site.STATUS_PAYMENT:
                         setGraphic(createComboBox(t));
                         break;
-                    case SQL.Site.SALE_CLIENTS :
-                    case SQL.Site.DEBT_CLIENTS :
+                    case SQL.Site.SALE_CLIENTS:
+                    case SQL.Site.DEBT_CLIENTS:
                     case SQL.Site.SALE_HOUSE:
                     case SQL.Site.N_CONTRACT:
                         setGraphic(createTextField(t));
                         break;
-                    case SQL.Site.CONTRACTOR :
-                    case SQL.Site.TYPE_HOME  :
-                            if(!t.getSecondValue().equals(ServiceStrings.Line)){
-                                setText(t.getSecondValue().toString());
-                                setGraphic(null);}
-                            else setGraphic(createComboBox(t));
+                    case SQL.Site.CONTRACTOR:
+                    case SQL.Site.TYPE_HOME:
+                        if (!t.getSecondValue().equals(ServiceStrings.Line)) {
+                            setText(t.getSecondValue().toString());
+                            setGraphic(null);
+                        } else setGraphic(createComboBox(t));
                         break;
                     default:
                         if (item instanceof String) {
-                            setText( item.toString());
+                            setText(item.toString());
                         } else if (item instanceof Long) {
                             setText(LocalDate.ofEpochDay((long) item).toString());
                         } else if (item instanceof Float) {
-                            setText(new DoubleStringConverter().toString((Float)item));
+                            setText(new DoubleStringConverter().toString((Float) item));
                         } else if (item instanceof Double) {
-                            setText(new DoubleStringConverter().toString((Double)item));
+                            setText(new DoubleStringConverter().toString((Double) item));
                         } else {
                             setText("N/A");
                             setGraphic(null);
@@ -260,13 +275,15 @@ public class TableCellFactory{
 //                        setText(t.getSiteSecondValue().formatNumber());
                         setGraphic(null);
                         break;
-                }   
-                } else {
-                    setText(null);
-                    setGraphic(null);
                 }
-            };
-                            
+            } else {
+                setText(null);
+                setGraphic(null);
+            }
+        }
+
+        ;
+
         private DatePicker createDatePicker(PreviewTIV item) {
             DatePicker datePicker = new DatePicker();
             datePicker.setPrefWidth(150);
@@ -275,9 +292,10 @@ public class TableCellFactory{
             datePicker.setOnAction(e -> {
                 item.setSecondValue(datePicker.getValue().toEpochDay());
             });
-            
-            datePicker.setConverter( new StringConverter<LocalDate>() {
+
+            datePicker.setConverter(new StringConverter<LocalDate>() {
                 final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
                 @Override
                 public String toString(LocalDate date) {
                     if (date != null) {
@@ -286,7 +304,7 @@ public class TableCellFactory{
                         return "";
                     }
                 }
-                    
+
                 @Override
                 public LocalDate fromString(String string) {
                     if (string != null && !string.isEmpty()) {
@@ -296,72 +314,73 @@ public class TableCellFactory{
                     }
                 }
             });
-            return datePicker;   
+            return datePicker;
         }
-        
-        private ComboBox createComboBox(PreviewTIV item){
-                   ComboBox comboBox = new ComboBox();
-                   comboBox.setPrefWidth(150);
-                        switch(item.getSqlColumn()){
-                            case SQL.Site.CONTRACTOR :
-                                comboBox.setItems(new SiteDAO().getDistinct(SQL.Common.CONTRACTOR));
+
+        private ComboBox createComboBox(PreviewTIV item) {
+            ComboBox comboBox = new ComboBox();
+            comboBox.setPrefWidth(150);
+            switch (item.getSqlColumn()) {
+                case SQL.Site.CONTRACTOR:
+                    comboBox.setItems(new SiteDAO().getDistinct(SQL.Common.CONTRACTOR));
 //                                comboBox.setItems(new CommonQuery().getObsDISTINCT(SQL.Tables.C, SQL.Plan.TYPE_NAME, this));
-                                break;
-                            case SQL.Site.TYPE_HOME  :
-                                comboBox.setItems(new EstimateDAO().getDistinct(SQL.Common.TYPE_HOME));
-                                
-                                break;
-                            case SQL.Site.SITE_TYPE_ID : 
-                                comboBox.setItems(new PlanDAO().getDistinct(SQL.Plan.TYPE_NAME));
-                                break;
-                            case SQL.Site.STATUS_JOBS : 
-                                comboBox.setItems(FXCollections.observableArrayList("закончен","не начат","в работе"));
-                                break;
-                            case SQL.Site.STATUS_PAYMENT  : 
-                                comboBox.setItems(FXCollections.observableArrayList("оплачен", "не оплачен"));
-                                break;
-                        }
-                   comboBox.setValue(item.getSecondValue());
-                   comboBox.valueProperty().addListener(e -> {
-                       System.out.println("CB");
-                       item.setSecondValue(comboBox.getValue());
-                   });
-                   
-                   return comboBox;
-                }
-       
+                    break;
+                case SQL.Site.TYPE_HOME:
+                    comboBox.setItems(new EstimateDAO().getDistinct(SQL.Common.TYPE_HOME));
+
+                    break;
+                case SQL.Site.SITE_TYPE_ID:
+                    comboBox.setItems(new PlanDAO().getDistinct(SQL.Plan.TYPE_NAME));
+                    break;
+                case SQL.Site.STATUS_JOBS:
+                    comboBox.setItems(FXCollections.observableArrayList("закончен", "не начат", "в работе"));
+                    break;
+                case SQL.Site.STATUS_PAYMENT:
+                    comboBox.setItems(FXCollections.observableArrayList("оплачен", "не оплачен"));
+                    break;
+            }
+            comboBox.setValue(item.getSecondValue());
+            comboBox.valueProperty().addListener(e -> {
+                System.out.println("CB");
+                item.setSecondValue(comboBox.getValue());
+            });
+
+            return comboBox;
+        }
+
         private TextField createTextField(PreviewTIV item) {
             TextField textField = new TextField(item.getSecondValue().toString());
             textField.setMaxWidth(150);
             textField.textProperty().addListener(e -> {
                 System.out.println("TF");
-                switch(item.getSqlColumn()){
-                    case SQL.Site.N_CONTRACT: 
+                switch (item.getSqlColumn()) {
+                    case SQL.Site.N_CONTRACT:
                         item.setSecondValue(textField.getText());
                         break;
-                    case SQL.Site.SALE_CLIENTS :
-                    case SQL.Site.DEBT_CLIENTS :
+                    case SQL.Site.SALE_CLIENTS:
+                    case SQL.Site.DEBT_CLIENTS:
                     case SQL.Site.SALE_HOUSE:
                         item.setSecondValue(new DoubleStringConverter().fromString(textField.getText()));
                         break;
                 }
-                        
+
             });
 
             return textField;
         }
-    
-    }
-    
-  /**
-   * Cell to "Add Row Estimate" TableWrapper (addSiteRowlayoutController)
-   */
-   private class CheckValueCell extends TableCell<AddEstTIV, Boolean> {
-        private CheckBox checkBox;
-    
-        public CheckValueCell() { }
 
-        
+    }
+
+    /**
+     * Cell to "Add Row Estimate" TableWrapper (addSiteRowlayoutController)
+     */
+    private class CheckValueCell extends TableCell<AddEstTIV, Boolean> {
+        private CheckBox checkBox;
+
+        public CheckValueCell() {
+        }
+
+
         @Override
         protected void updateItem(Boolean item, boolean empty) {
             super.updateItem(item, empty);
@@ -379,8 +398,8 @@ public class TableCellFactory{
             }
             setAlignment(Pos.CENTER);
         }
-         
-        void createCheckBoxCell(){
+
+        void createCheckBoxCell() {
             checkBox = new CheckBox();
             checkBox.selectedProperty().addListener((ObservableValue<? extends Boolean> observable, Boolean oldValue, Boolean newValue) -> {
                 getTableView().getItems().get(getIndex()).setCheck(newValue);
@@ -388,143 +407,149 @@ public class TableCellFactory{
             });
         }
     }
-   
-   private class inKsColoredCell extends TableCell<EstimateTVI, Boolean> {
-        
-                @Override
-                public void updateItem(Boolean item, boolean empty) {
-                    super.updateItem(item, empty);
-                    if (!isEmpty()) {
+
+    private class inKsColoredCell extends TableCell<EstimateTVI, Boolean> {
+
+        @Override
+        public void updateItem(Boolean item, boolean empty) {
+            super.updateItem(item, empty);
+            if (!isEmpty()) {
 //                        this.setTextFill(Color.BLACK);
-                        if(item.equals(true))this.setTextFill(Color.RED);
-                        if(item.equals(false))this.setTextFill(Color.GREEN);
-                        setText(Boolean.toString(item));
-                    }
+                if (item.equals(true)) this.setTextFill(Color.RED);
+                if (item.equals(false)) this.setTextFill(Color.GREEN);
+                setText(Boolean.toString(item));
+            }
+        }
+
     }
-   
-   }
-   
-    class EqualToAboveTableCell<T extends Number & Comparable> extends TableCell<Clone, T >{
-        
+
+    class EqualToAboveTableCell<T extends Number & Comparable> extends TableCell<Clone, T> {
+
         @Override
         public void updateItem(T item, boolean empty) {
-          
+
             super.updateItem(item, empty);
             if (empty) {
                 setText(null);
                 setGraphic(null);
 
-            }else{
+            } else {
 
                 setText(new DoubleStringConverter().toString(item));
 
                 Comparable aboveCellValue
                         = super.getTableColumn().getCellData(this.getIndex() - 1);
-                if(aboveCellValue != null)
-                    switch(item.compareTo(aboveCellValue)){
-                       case  1 : this.setTextFill(Color.RED);;
-                       break;
-                       case  0 : this.setTextFill(Color.BLACK);
-                       break;
-                       case -1 : this.setTextFill(Color.GREEN);;
-                       break;
-                   }
+                if (aboveCellValue != null)
+                    switch (item.compareTo(aboveCellValue)) {
+                        case 1:
+                            this.setTextFill(Color.RED);
+                            ;
+                            break;
+                        case 0:
+                            this.setTextFill(Color.BLACK);
+                            break;
+                        case -1:
+                            this.setTextFill(Color.GREEN);
+                            ;
+                            break;
+                    }
 
             }
         }
- 
-   }
-    
-    
-   
+
+    }
+
+
     private class OnMouseEnteredTableCell extends TableCell<Item, Object> {
         private Est enumEst;
-        
-        private OnMouseEnteredTableCell(Est enumEst){
+
+        private OnMouseEnteredTableCell(Est enumEst) {
             super();
             this.enumEst = enumEst;
         }
-        
+
         @Override
         public void updateItem(Object item, boolean empty) {
             super.updateItem(item, empty);
-             if (empty) {
+            if (empty) {
                 setText(null);
                 setGraphic(null);
                 this.setOnMouseEntered(null);
-             } else {
+            } else {
                 setText(item.toString());
-                setOnMouseEntered(value ->{
-                     RootLayoutController.update_changeTable(
+                setOnMouseEntered(value -> {
+                    RootLayoutController.update_changeTable(
                             enumEst.findItemsList_DL(
-                                     this.getTableView().getItems().get(this.getIndex())
+                                    this.getTableView().getItems().get(this.getIndex())
                             )
-                     );
-                     System.out.println("ID EST =" + this.getTableView().getItems().get(this.getIndex()).getId());
-            
-                 });
+                    );
+                    System.out.println("ID EST =" + this.getTableView().getItems().get(this.getIndex()).getId());
+
+                });
             }
-        } 
+        }
     }
 
-    private  class OnDoubleMouseClickMoveToCell extends TableCell<Item, Object> {
+    private class OnDoubleMouseClickMoveToCell extends TableCell<Item, Object> {
 
         @Override
         public void updateItem(Object item, boolean empty) {
             super.updateItem(item, empty);
-             if (empty) {
+            if (empty) {
                 setText(null);
                 setGraphic(null);
                 this.setOnMouseEntered(null);
-             } else {
+            } else {
                 setText(item.toString());
 
-                setOnMouseClicked(mouseEvent ->{
-                    if(mouseEvent.getButton().equals(MouseButton.PRIMARY) & mouseEvent.getClickCount() == 2){
-                            String text = this.getText();
+                setOnMouseClicked(mouseEvent -> {
+                    if (mouseEvent.getButton().equals(MouseButton.PRIMARY) & mouseEvent.getClickCount() == 2) {
+                        String text = this.getText();
 //                            Item itemW = this.treeTableView().getObservableItems()
 //                                    .stream()
 //                                    .filter(i -> i.getJM_name().equals(text))
 //                                    .findFirst()
 //                                    .get();
-                            List items = this.getTableView().getItems().filtered(i -> i.getJM_name().equals(text));
-                            if(!items.isEmpty()) {
-                                int index = this.getTableView().getItems().indexOf(items.get(0));
-                                this.getTableView().getSelectionModel().select(index);
-                                this.getTableView().scrollTo(index);
-                            }
+                        List items = this.getTableView().getItems().filtered(i -> i.getJM_name().equals(text));
+                        if (!items.isEmpty()) {
+                            int index = this.getTableView().getItems().indexOf(items.get(0));
+                            this.getTableView().getSelectionModel().select(index);
+                            this.getTableView().scrollTo(index);
+                        }
                     }
                 });
             }
         }
     }
-    
-    
-    private class ObjectCell extends TableCell{
-            @Override
-                protected void updateItem(Object item, boolean empty) {
-                    super.updateItem(item, empty);
-                    
-                    if (!isEmpty()) {
-                        if (item instanceof String) {
-                            setText( item.toString());
-                        } else if (item instanceof Long) {
-                            setText(LocalDate.ofEpochDay((long) item).toString());}
-                            else if (item instanceof Integer) {
-                            setText( item.toString());
-                        } else if (item instanceof Float) {
-                            setText(new DoubleStringConverter().toString((Float)item));
-                        } else if (item instanceof Double) {
-                            setText(new DoubleStringConverter().toString((Double)item));
-                        } else {
-                            setText("N/A");
-                            setGraphic(null);
-                        }
-                    } else {
-                        setText(null);
-                        setGraphic(null);
-                    }
-                };
+
+
+    private class ObjectCell extends TableCell {
+        @Override
+        protected void updateItem(Object item, boolean empty) {
+            super.updateItem(item, empty);
+
+            if (!isEmpty()) {
+                if (item instanceof String) {
+                    setText(item.toString());
+                } else if (item instanceof Long) {
+                    setText(LocalDate.ofEpochDay((long) item).toString());
+                } else if (item instanceof Integer) {
+                    setText(item.toString());
+                } else if (item instanceof Float) {
+                    setText(new DoubleStringConverter().toString((Float) item));
+                } else if (item instanceof Double) {
+                    setText(new DoubleStringConverter().toString((Double) item));
+                } else {
+                    setText("N/A");
+                    setGraphic(null);
+                }
+            } else {
+                setText(null);
+                setGraphic(null);
+            }
+        }
+
+        ;
     }
 //   private class TooltipTableCell extends TableCell<Item, Object> {
 //       TableWrapper table = new TableWrapper();
@@ -592,22 +617,22 @@ public class TableCellFactory{
 //        }
 //   
 //    }
-    
+
     private class TestID extends TableCell<OSR_TIV, Object> {
         @Override
         public void updateItem(Object item, boolean empty) {
             super.updateItem(item, empty);
-             if (empty) {
+            if (empty) {
                 setText(null);
                 setGraphic(null);
                 this.setOnMouseEntered(null);
-             } else {
+            } else {
                 setText(item.toString());
-                setOnMouseEntered(value ->{
-                     System.err.println("ID = " +this.getTableView().getItems().get(this.getIndex()).getId());
-            
-                 });
+                setOnMouseEntered(value -> {
+                    System.err.println("ID = " + this.getTableView().getItems().get(this.getIndex()).getId());
+
+                });
             }
-        } 
+        }
     }
 }

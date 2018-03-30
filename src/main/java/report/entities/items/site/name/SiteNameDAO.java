@@ -36,7 +36,7 @@ public class SiteNameDAO implements CommonDAO<Collection<SiteNameTIV>> {
 
             while (rs.next()) {
                 SiteNameTIV item = new SiteNameTIV(
-                         rs.getString("SiteNumber")
+                        rs.getString("SiteNumber")
                 );
                 listSiteNameTIV.add(item);
             }

@@ -12,9 +12,11 @@ public class SiteNameTIV implements Clone<SiteNameTIV> {
 
         this.siteName = new SimpleStringProperty(siteName);
     }
+
     public SiteNameTIV(SiteNameTIV siteNameTIV) {
         this.siteName = new SimpleStringProperty(siteNameTIV.getSiteName());
     }
+
     public String getSiteName() {
         return siteName.get();
     }
@@ -29,6 +31,6 @@ public class SiteNameTIV implements Clone<SiteNameTIV> {
 
     @Override
     public SiteNameTIV getClone() {
-        return new SiteNameTIV(this) ;
+        return new SiteNameTIV(this);
     }
 }

@@ -11,25 +11,25 @@ import java.awt.*;
 import java.util.concurrent.TimeUnit;
 
 public class FxTestStage extends Application {
-    static   FxTestStage thisApplication;
+    static FxTestStage thisApplication;
     private static String fxmlFile;
-    private static int width ;
+    private static int width;
     private static int height;
     private static String[] args;
 
-    private  Stage primaryStage;
-    private  Object controller;
+    private Stage primaryStage;
+    private Object controller;
 
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
         Parent root = loader.load();
         primaryStage.setTitle("TEST Scene");
-        if(width == 0 || height == 0)
+        if (width == 0 || height == 0)
             primaryStage.setScene(new Scene(root));
         else
-         primaryStage.setScene(new Scene(root, width, height));
+            primaryStage.setScene(new Scene(root, width, height));
         this.controller = loader.getController();
         this.primaryStage = primaryStage;
         primaryStage.show();
@@ -63,6 +63,7 @@ public class FxTestStage extends Application {
         FxTestStage.launch(fxmlFile, 0);
 
     }
+
     public static void launch(String fxmlFile, int sleep) {
         FxTestStage.fxmlFile = fxmlFile;
         new Thread(() -> {
@@ -74,12 +75,13 @@ public class FxTestStage extends Application {
             e.printStackTrace();
         }
     }
+
     /***************************************************************************
      *                                                                         *
      * Setters                                                                 *
      *                                                                         *
      **************************************************************************/
-    public static void setSize(int width,int height) {
+    public static void setSize(int width, int height) {
         FxTestStage.width = width;
         FxTestStage.height = height;
     }

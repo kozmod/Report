@@ -10,7 +10,7 @@ import report.entities.items.DItem;
 
 public class VariableTIV_new implements Clone, Reverse {
 
-    public interface SQL{
+    public interface SQL {
         String SQL_TABLE = "TBL_COMMAND_PROPERTY";
         String INCOME_TAX = "INCOMTAX";
         String SALE_EXP = "sale_Exp";
@@ -29,15 +29,16 @@ public class VariableTIV_new implements Clone, Reverse {
     public VariableTIV_new(long id, double incomeTax, double saleExp) {
         this.id = id;
         this.incomeTax = new SimpleDoubleProperty(incomeTax);
-        this.saleExp  = new SimpleDoubleProperty(saleExp);
+        this.saleExp = new SimpleDoubleProperty(saleExp);
     }
+
     /**
      * Clone CONSTRUCTOR implementation
      */
     public VariableTIV_new(VariableTIV_new variable) {
         this.id = variable.id;
         this.incomeTax = new SimpleDoubleProperty(variable.incomeTax.getValue());
-        this.saleExp  = new SimpleDoubleProperty(variable.saleExp.getValue());
+        this.saleExp = new SimpleDoubleProperty(variable.saleExp.getValue());
     }
 
     /***************************************************************************
@@ -48,11 +49,12 @@ public class VariableTIV_new implements Clone, Reverse {
 
     /**
      * ObservableList from Object
+     *
      * @return
      */
     @Override
-    public ObservableList<DItem> reverse(){
-        ObservableList<DItem>  reverseList = FXCollections.observableArrayList(DItem.extractor());
+    public ObservableList<DItem> reverse() {
+        ObservableList<DItem> reverseList = FXCollections.observableArrayList(DItem.extractor());
         reverseList.add(new DItem(
                         this.id,
                         SQL.SQL_TABLE,
@@ -69,6 +71,7 @@ public class VariableTIV_new implements Clone, Reverse {
         );
         return reverseList;
     }
+
     /***************************************************************************
      *                                                                         *
      * GETTER                                                                  *
@@ -117,7 +120,6 @@ public class VariableTIV_new implements Clone, Reverse {
     public VariableTIV_new getClone() {
         return new VariableTIV_new(this);
     }
-
 
 
 }

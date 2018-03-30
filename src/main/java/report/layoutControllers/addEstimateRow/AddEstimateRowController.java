@@ -45,11 +45,14 @@ public class AddEstimateRowController implements Initializable {
      * FXML Var                                                                *
      *                                                                         *
      **************************************************************************/
-    @FXML private TableView<AddEstTIV>  elemTableView;
-    @FXML private Label    siteNumLabel,
+    @FXML
+    private TableView<AddEstTIV> elemTableView;
+    @FXML
+    private Label siteNumLabel,
             contHomeLabel,
             buildingPartLabel;
-    @FXML private Button addButton;
+    @FXML
+    private Button addButton;
 
 
     /***************************************************************************
@@ -61,11 +64,11 @@ public class AddEstimateRowController implements Initializable {
 
     public void setRootTableView(TableWrapper t) {
         this.rootTableWrapper = t;
-        this.editObsList  = getCheckObs(t.getItems());
+        this.editObsList = getCheckObs(t.getItems());
         this.buildingPart = t.getTitle();
-        this.siteNumber   = Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER);
-        this.contName     = Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR);
-        this.typeHome     = Est.Common.getSiteSecondValue(SQL.Common.TYPE_HOME);
+        this.siteNumber = Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER);
+        this.contName = Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR);
+        this.typeHome = Est.Common.getSiteSecondValue(SQL.Common.TYPE_HOME);
 //        this.tableType   = enumEst.getTaleType();
 
         init_Labels();
@@ -73,7 +76,10 @@ public class AddEstimateRowController implements Initializable {
 
     }
 
-    public void setAditionalTableView(ObservableList t) {this.additionalTable = t; }
+    public void setAditionalTableView(ObservableList t) {
+        this.additionalTable = t;
+    }
+
     /***************************************************************************
      *                                                                         *
      * Init                                                                    *
@@ -86,7 +92,7 @@ public class AddEstimateRowController implements Initializable {
 
     }
 
-    private void init_Labels(){
+    private void init_Labels() {
         siteNumLabel.setText(siteNumber);
         contHomeLabel.setText(contName);
         buildingPartLabel.setText(buildingPart);
@@ -94,24 +100,24 @@ public class AddEstimateRowController implements Initializable {
 
 
     // ATTENTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    private void init_diffObsList(){
+    private void init_diffObsList() {
 
-        int check ;
+        int check;
 //       baseObsList = getCheckObs(commonSQL_SELECT.getEstObs_base(siteNumber, contName,typeHome, buildingPart));
         baseObsList = new EstimateDAO().getBaseList(buildingPart);
         DiffList diflist = new DiffList(baseObsList, editObsList);
 
         ObservableList<AddEstTIV> result;
-        if(diflist.exElements().size() > 0)
-            result =   FXCollections.observableArrayList(diflist.exElements());
-        else result  =   FXCollections.observableArrayList();
+        if (diflist.exElements().size() > 0)
+            result = FXCollections.observableArrayList(diflist.exElements());
+        else result = FXCollections.observableArrayList();
         check = baseObsList.size() - editObsList.size();
-        System.err.println("baseObsList  size "+baseObsList.size());
-        System.err.println("editObsList  size "+editObsList.size());
+        System.err.println("baseObsList  size " + baseObsList.size());
+        System.err.println("editObsList  size " + editObsList.size());
 
 
-        if(check >= 0) elemTableWrapperView.tableView().setItems(result);
-        if(check < 0)System.out.println("Базовая меньше -> " + check);
+        if (check >= 0) elemTableWrapperView.tableView().setItems(result);
+        if (check < 0) System.out.println("Базовая меньше -> " + check);
 
 
     }
@@ -121,10 +127,10 @@ public class AddEstimateRowController implements Initializable {
      * Methods                                                                 *
      *                                                                         *
      **************************************************************************/
-    private ObservableList<AddEstTIV>  getCheckObs(ObservableList<Item> items){
-        ObservableList<AddEstTIV>  checkedObsList = FXCollections.observableArrayList();
-        if(items != null)
-            for (Item obsItem : items){
+    private ObservableList<AddEstTIV> getCheckObs(ObservableList<Item> items) {
+        ObservableList<AddEstTIV> checkedObsList = FXCollections.observableArrayList();
+        if (items != null)
+            for (Item obsItem : items) {
                 checkedObsList.add(new AddEstTIV(
                         0,
                         false,
@@ -146,33 +152,34 @@ public class AddEstimateRowController implements Initializable {
         return checkedObsList;
     }
 
-    public ObservableList<EstimateTVI>  getSelectedCheckObs(ObservableList<AddEstTIV> items){
-        ObservableList<EstimateTVI>  checkedObsList = FXCollections.observableArrayList();
+    public ObservableList<EstimateTVI> getSelectedCheckObs(ObservableList<AddEstTIV> items) {
+        ObservableList<EstimateTVI> checkedObsList = FXCollections.observableArrayList();
 
-        for (AddEstTIV obsItem : items){
-            if(obsItem.getCheck() == true){
+        for (AddEstTIV obsItem : items) {
+            if (obsItem.getCheck() == true) {
                 checkedObsList.add(new EstimateTVI
-                                .Builder()
-                                .setSiteNumber(obsItem.getSiteNumber())
-                                .setTypeHome(obsItem.getTypeHome())
-                                .setContractor(obsItem.getContractor())
-                                .setJM_name(obsItem.getJM_name())
-                                .setJobOrMat(obsItem.getJobOrMat())
-                                .setBindedJob(obsItem.getBindJob())
-                                .setValue(obsItem.getQuantity())
-                                .setUnit(obsItem.getUnit())
-                                .setPrice_one(obsItem.getPriceOne())
-                                .setPrice_sum(obsItem.getPriceSum())
-                                .setBildingPart(obsItem.getBuildingPart())
-                                .setDate(todayDate)
-                                .setTableType(1)
-                                .setInKS(false)
-                                .build()
+                        .Builder()
+                        .setSiteNumber(obsItem.getSiteNumber())
+                        .setTypeHome(obsItem.getTypeHome())
+                        .setContractor(obsItem.getContractor())
+                        .setJM_name(obsItem.getJM_name())
+                        .setJobOrMat(obsItem.getJobOrMat())
+                        .setBindedJob(obsItem.getBindJob())
+                        .setValue(obsItem.getQuantity())
+                        .setUnit(obsItem.getUnit())
+                        .setPrice_one(obsItem.getPriceOne())
+                        .setPrice_sum(obsItem.getPriceSum())
+                        .setBildingPart(obsItem.getBuildingPart())
+                        .setDate(todayDate)
+                        .setTableType(1)
+                        .setInKS(false)
+                        .build()
                 );
             }
         }
         return checkedObsList;
     }
+
     /***************************************************************************
      *                                                                         *
      * Handlers                                                                *
@@ -180,7 +187,7 @@ public class AddEstimateRowController implements Initializable {
      **************************************************************************/
     @FXML
     private void testADD(ActionEvent event) {
-        if(!elemTableView.isEditable()) {
+        if (!elemTableView.isEditable()) {
             addButton.setText("Ok");
             elemTableWrapperView.getItems().add(new AddEstTIV(
                     -1L,
@@ -199,7 +206,7 @@ public class AddEstimateRowController implements Initializable {
                     buildingPart
             ));
             elemTableView.setEditable(true);
-        }else{
+        } else {
             AddEstTIV lastItem = elemTableView.getItems().get(elemTableView.getItems().size() - 1);
             if (lastItem.getJM_name().equals("-")
                     || lastItem.getUnit().equals("-")
@@ -207,7 +214,7 @@ public class AddEstimateRowController implements Initializable {
                 System.out.println("\033[34m ---> wrong edit in last added item");
                 System.out.println(lastItem.toString());
 
-            }else {
+            } else {
                 addButton.setText("+");
                 elemTableView.refresh();
                 elemTableView.setEditable(false);
@@ -215,6 +222,7 @@ public class AddEstimateRowController implements Initializable {
         }
 
     }
+
     @FXML
     private void testCOMIT(ActionEvent event) {
 //////        elemTableWrapperView.commitData();
@@ -224,20 +232,21 @@ public class AddEstimateRowController implements Initializable {
         System.out.println("TestCommit");
 
     }
+
     @FXML
     private void handle_addMarkedRow(ActionEvent event) {
         ObservableList<EstimateTVI> selectedItems = getSelectedCheckObs(elemTableWrapperView.getItems())
                 .stream()
-                .filter(item ->!"-".equals(item.getUnit()))
+                .filter(item -> !"-".equals(item.getUnit()))
                 .collect(Collectors.toCollection(FXCollections::observableArrayList));
         rootTableWrapper.getItems().addAll(selectedItems);
-        Stage appStage =(Stage) ((Node)(event.getSource())).getScene().getWindow();
+        Stage appStage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
         appStage.close();
     }
 
     @FXML
     private void handle_cencelButton(ActionEvent event) {
-        Stage appStage =(Stage) ((Node)(event.getSource())).getScene().getWindow();
+        Stage appStage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
         appStage.close();
     }
 }

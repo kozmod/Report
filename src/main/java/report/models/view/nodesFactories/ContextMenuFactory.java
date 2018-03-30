@@ -14,15 +14,15 @@ import report.models.view.wrappers.tableWrappers.TableWrapper;
 
 
 public class ContextMenuFactory {
-    
+
     /**
-     * Create ContextMenu to "Estimation" TableViews (TableEst). 
+     * Create ContextMenu to "Estimation" TableViews (TableEst).
      *
      * @param tableWrapperView (TableWrapper extends TableView)
      * @return ContextMenu
      */
-    public static ContextMenu getEst(TableWrapper tableWrapperView){
-        if(!Est.Changed.isExist()){
+    public static ContextMenu getEst(TableWrapper tableWrapperView) {
+        if (!Est.Changed.isExist()) {
             return ContextMenuOptional
                     .newBuilder()
                     .setTable(tableWrapperView)
@@ -63,14 +63,15 @@ public class ContextMenuFactory {
                 .build();
 
     }
-    
+
     /**
-     * Create ContextMenu to "Estimation" TableViews (TableEst). 
-     *<br><b>Contain ONLY Print MenuItem</b>
-     * @param enumEst   (enumeration)
+     * Create ContextMenu to "Estimation" TableViews (TableEst).
+     * <br><b>Contain ONLY Print MenuItem</b>
+     *
+     * @param enumEst (enumeration)
      * @return ContextMenu
      */
-    public static ContextMenu getEstPrint(Est enumEst){
+    public static ContextMenu getEstPrint(Est enumEst) {
         return ContextMenuOptional.newBuilder()
 //                .setDAO(new EstimateDAO(enumEst))
 //                    .setEnum(enumEst)
@@ -78,7 +79,7 @@ public class ContextMenuFactory {
                 .build();
 
     }
-    
+
     /**
      * Create Common ContextMenu with
      * <b >DELETE, SAVE, UNDO </b> - options.
@@ -86,7 +87,7 @@ public class ContextMenuFactory {
      * @param tableWrapperView (TableWrapper extends TableView)
      * @return ContextMenu
      */
-    public static ContextMenu getCommonDSU(TableWrapper tableWrapperView){
+    public static ContextMenu getCommonDSU(TableWrapper tableWrapperView) {
         return ContextMenuOptional.newBuilder()
 //                    .setDAO(commonDao)
                 .setTable(tableWrapperView)
@@ -96,25 +97,21 @@ public class ContextMenuFactory {
                 .addUndoMenuItem()
                 .build();
     }
-    
+
     /**
      * Create Common ContextMenu with
      * <b > SAVE, UNDO </b> - options.
      *
      * @param tableWrapperView (TableWrapper extends TableView)
      * @return ContextMenu
-     */    
-    public static ContextMenu getCommonSU(Reverting tableWrapperView){
+     */
+    public static ContextMenu getCommonSU(Reverting tableWrapperView) {
         return ContextMenuOptional.newBuilder()
                 .setTable(tableWrapperView)
                 .addSaveMenuItem()
                 .addUndoMenuItem()
                 .build();
     }
-    
-    
-    
-    
-    
+
 
 }

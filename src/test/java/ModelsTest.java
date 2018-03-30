@@ -139,6 +139,7 @@ public class ModelsTest {
 
         TemplateFactory.writeDocTemplate(file, list);
     }
+
     @Test
 //    @Disabled
     @SuppressWarnings("unchecked")

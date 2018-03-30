@@ -14,15 +14,15 @@ public class Formula {
     /*!******************************************************************************************************************
     *                                                                                                         CONSTRUCTOR
     /********************************************************************************************************************/
-    private Formula(){
+    private Formula() {
         this.quantity = 0;
         this.siteExpenses = 0d;
-        this.OSR =  0d;
-        this.smetCost =  0d;
-        this.smetCostSum =  0d;
-        this.saleHouseSum =  0d;
-        this.perSaleExpenses =  0d;
-        this.incomeTax =  0d;
+        this.OSR = 0d;
+        this.smetCost = 0d;
+        this.smetCostSum = 0d;
+        this.saleHouseSum = 0d;
+        this.perSaleExpenses = 0d;
+        this.incomeTax = 0d;
     }
 
     public Formula(
@@ -56,17 +56,18 @@ public class Formula {
      * Double NonRoundCoefficient = (siteExpenses- OSR/QUANTITY- (PROFIT/quantity.doubleValue())*incomeTax)/smetCost;
      * <br> </br>
      * <br>PROFIT =((perSaleExpenses*saleHouseSum) - OSR)</br>
+     *
      * @return Double Coefficient Value
      */
-    public Double computeCoefficient(){
+    public Double computeCoefficient() {
 
-        double nonRoundCoefficient = (siteExpenses - (OSR/quantity.doubleValue()) - this.allTaxes())/smetCost;
+        double nonRoundCoefficient = (siteExpenses - (OSR / quantity.doubleValue()) - this.allTaxes()) / smetCost;
         //Round COEFFICIENT to #.00
         Double COEFFICIENT = Math.floor(nonRoundCoefficient * 100) / 100;
-        if(COEFFICIENT ==  0
-                | COEFFICIENT ==  Double.NEGATIVE_INFINITY
-                | COEFFICIENT ==  Double.POSITIVE_INFINITY
-                | COEFFICIENT ==  Double.NaN
+        if (COEFFICIENT == 0
+                | COEFFICIENT == Double.NEGATIVE_INFINITY
+                | COEFFICIENT == Double.POSITIVE_INFINITY
+                | COEFFICIENT == Double.NaN
                 )
             COEFFICIENT = 1.0;
 //        else {
@@ -94,27 +95,30 @@ public class Formula {
 
     /**
      * profit =((perSaleExpenses*saleHouseSum) - OSR );
+     *
      * @return
      */
-    public Double profit(){
-        return (perSaleExpenses*saleHouseSum) - OSR;
+    public Double profit() {
+        return (perSaleExpenses * saleHouseSum) - OSR;
     }
 
     /**
      * (this.profit()/quantity.doubleValue())*incomeTax
      * )*incomeTax;
+     *
      * @return
      */
-    public Double allTaxes(){
-        return (this.profit()/quantity.doubleValue())*incomeTax;
+    public Double allTaxes() {
+        return (this.profit() / quantity.doubleValue()) * incomeTax;
     }
 
     /**
      * (this.profit()/quantity.doubleValue()
      * )*incomeTax;
+     *
      * @return
      */
-    public Integer quantity(){
+    public Integer quantity() {
         return quantity.intValue();
     }
 
@@ -123,14 +127,13 @@ public class Formula {
     /********************************************************************************************************************/
 
 
-    public static Formula formulaFromBase(){
+    public static Formula formulaFromBase() {
         return new FormulaQuery().getFormula();
     }
 
-    public static Integer quantityFromBase(){
+    public static Integer quantityFromBase() {
         return new FormulaQuery().getSiteQuantity();
     }
-
 
 
 }

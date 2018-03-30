@@ -16,26 +16,28 @@ import report.usage_strings.SQL;
 
 public class AddEstimateRowTF {
 
-    private AddEstimateRowTF(){}
+    private AddEstimateRowTF() {
+    }
 
     /**
      * Create TableWrapper to AddEstimateRowController.Contain columns and their options.
+     *
      * @return TableWrapper(child of TableView)
      */
     @SuppressWarnings("unchecked")
-    public static TableWrapperEST<AddEstTIV> decorEst_add(TableView table){
+    public static TableWrapperEST<AddEstTIV> decorEst_add(TableView table) {
         CommonNamedDAO dao = new EstimateDAO();
         TableWrapperEST<AddEstTIV> tableWrapper = new TableWrapperEST<>(table, dao);
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        TableColumn checkBoxColumn = tableWrapper.addColumn(" * ","check");
-        TableColumn<AddEstTIV, String>  JM_nameColumn  = tableWrapper.addColumn("Наименование работ/затрат", cellData -> cellData.getValue().JM_nameProperty());
-        TableColumn<AddEstTIV, String>  BJobColumn     = tableWrapper.addColumn("Связанная работа", cellData -> cellData.getValue().bindJobProperty());
-        TableColumn<AddEstTIV, Double>  valueColumn    = tableWrapper.addColumn("Кол-во",                    "quantity");
-        TableColumn<AddEstTIV, String>  unitColumn     = tableWrapper.addColumn("Eд. изм.",                  "unit");
-        TableColumn<AddEstTIV, Double>  priseOneColumn = tableWrapper.addColumn("Стоимость (за единицу)",    "priceOne");
-        TableColumn<AddEstTIV, Double>  priseSumColumn = tableWrapper.addColumn("Стоимость (общая)",         "priceSum");
+        TableColumn checkBoxColumn = tableWrapper.addColumn(" * ", "check");
+        TableColumn<AddEstTIV, String> JM_nameColumn = tableWrapper.addColumn("Наименование работ/затрат", cellData -> cellData.getValue().JM_nameProperty());
+        TableColumn<AddEstTIV, String> BJobColumn = tableWrapper.addColumn("Связанная работа", cellData -> cellData.getValue().bindJobProperty());
+        TableColumn<AddEstTIV, Double> valueColumn = tableWrapper.addColumn("Кол-во", "quantity");
+        TableColumn<AddEstTIV, String> unitColumn = tableWrapper.addColumn("Eд. изм.", "unit");
+        TableColumn<AddEstTIV, Double> priseOneColumn = tableWrapper.addColumn("Стоимость (за единицу)", "priceOne");
+        TableColumn<AddEstTIV, Double> priseSumColumn = tableWrapper.addColumn("Стоимость (общая)", "priceSum");
 //
 
         checkBoxColumn.setMaxWidth(60);
@@ -44,7 +46,7 @@ public class AddEstimateRowTF {
         checkBoxColumn.setCellFactory(param -> TableCellFactory.getCheckValueCell());
         JM_nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         BJobColumn.setCellFactory(ComboBoxTableCell.forTableColumn(
-                dao.getDistinct(SQL.Estimate.BINDED_JOB,"-")
+                dao.getDistinct(SQL.Estimate.BINDED_JOB, "-")
         ));
         //TODO: !!!! Check this new issue to add items in table. !!!
         table.setRowFactory(new Callback<TableView<AddEstTIV>, TableRow<AddEstTIV>>() {
@@ -54,7 +56,7 @@ public class AddEstimateRowTF {
                     @Override
                     protected void updateItem(AddEstTIV newRow, boolean empty) {
                         super.updateItem(newRow, empty);
-                        if(super.getTableView().isEditable()) {
+                        if (super.getTableView().isEditable()) {
                             super.setDisable(true);
                             if (newRow != null)
                                 if (newRow.getJM_name().equals("-")
@@ -62,7 +64,7 @@ public class AddEstimateRowTF {
                                         || newRow.getPriceSum().equals(0)) {
                                     super.setDisable(false);
                                 }
-                        }else if(!super.getTableView().isEditable()){
+                        } else if (!super.getTableView().isEditable()) {
                             super.setDisable(false);
                         }
                     }
@@ -72,26 +74,26 @@ public class AddEstimateRowTF {
             }
         });
         valueColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
-        valueColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, Double> t) ->{
+        valueColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, Double> t) -> {
             AddEstTIV element = t.getRowValue();
             double newValue = t.getNewValue();
             element.setQuantity(newValue);
             double priceOne = element.getPriceOne();
-            element.setPriceSum(newValue* priceOne);
+            element.setPriceSum(newValue * priceOne);
 
         });
         unitColumn.setCellFactory(ComboBoxTableCell.forTableColumn(
                 dao.getDistinct(SQL.Estimate.UNIT)
         ));
         priseOneColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
-        priseOneColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, Double> t) ->{
+        priseOneColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, Double> t) -> {
             AddEstTIV element = t.getRowValue();
             double newValue = t.getNewValue();
             element.setPriceOne(newValue);
             double quantity = element.getQuantity();
-            element.setPriceSum(newValue* quantity);
+            element.setPriceSum(newValue * quantity);
         });
-        return  tableWrapper;
+        return tableWrapper;
     }
 
 }

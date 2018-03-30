@@ -27,24 +27,38 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 import java.util.stream.Stream;
 
-public class PlanningController implements Initializable{
+public class PlanningController implements Initializable {
 
-    @FXML private TextField planTypeTF,planSmetTF,planSaleTF, planQuantityTF ;
-    @FXML private TextField planSmetSumTF,planSaleSumTF, planProfitSumTF;
-    @FXML private TextField factSmetSumTF,factSaleSumTF, factProfitSumTF;
-    @FXML private TextField osrAddTextTF, osrAddValueTF, siteQuantityTF, sumExpTF,  sumExpPerSiteTF;
+    @FXML
+    private TextField planTypeTF, planSmetTF, planSaleTF, planQuantityTF;
+    @FXML
+    private TextField planSmetSumTF, planSaleSumTF, planProfitSumTF;
+    @FXML
+    private TextField factSmetSumTF, factSaleSumTF, factProfitSumTF;
+    @FXML
+    private TextField osrAddTextTF, osrAddValueTF, siteQuantityTF, sumExpTF, sumExpPerSiteTF;
 
-    @FXML private CheckBox  planEditСheckBox;
-    @FXML private CheckBox  osrEditСheckBox;
-    @FXML private CheckBox  kdEditСheckBox;
-    @FXML private HBox      planAddRowHB;
-    @FXML private HBox      osrAddRowHB;
-    @FXML private GridPane planGP,osrGP;
-    @FXML private Button   planAddItemButton;
-    @FXML private Button   osrAddItemButton;
+    @FXML
+    private CheckBox planEditСheckBox;
+    @FXML
+    private CheckBox osrEditСheckBox;
+    @FXML
+    private CheckBox kdEditСheckBox;
+    @FXML
+    private HBox planAddRowHB;
+    @FXML
+    private HBox osrAddRowHB;
+    @FXML
+    private GridPane planGP, osrGP;
+    @FXML
+    private Button planAddItemButton;
+    @FXML
+    private Button osrAddItemButton;
 
-    @FXML private TableView planTable,factTable,osrTable;
-    @FXML private TreeTableView<DItem> kdTreeTable;
+    @FXML
+    private TableView planTable, factTable, osrTable;
+    @FXML
+    private TreeTableView<DItem> kdTreeTable;
 
     private TableWrapper<PlanTIV> planTableWrapper;
     private TableWrapper<FactTIV> factTableWrapper;
@@ -52,15 +66,15 @@ public class PlanningController implements Initializable{
     private DiscountTreeTableWrapper kdTreeTableWrapper;
 
     /*!******************************************************************************************************************
-    *                                                                                                               INIT
-    ********************************************************************************************************************/
+     *                                                                                                               INIT
+     ********************************************************************************************************************/
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         init_PlanTab();
         init_OSRTab();
         init_KDTab();
 
-        Quantity.getQuantityProperty().addListener(e ->{
+        Quantity.getQuantityProperty().addListener(e -> {
             Quantity.updateFromBase();
             //plan table
             planTableWrapper.setFromBase();
@@ -75,7 +89,7 @@ public class PlanningController implements Initializable{
 
     }
 
-    private void init_PlanTab(){
+    private void init_PlanTab() {
         //add Plan TableView
         planTableWrapper = PlaningControllerTF.decorPlan(planTable);
         planTableWrapper.setFromBase();
@@ -87,9 +101,9 @@ public class PlanningController implements Initializable{
 
         //table Context menu property
         planTableWrapper.tableView().contextMenuProperty().bind(
-                Bindings.when(planEditСheckBox.selectedProperty() )
-                        .then( ContextMenuFactory.getCommonDSU(planTableWrapper))
-                        .otherwise( (ContextMenu) null));
+                Bindings.when(planEditСheckBox.selectedProperty())
+                        .then(ContextMenuFactory.getCommonDSU(planTableWrapper))
+                        .otherwise((ContextMenu) null));
         //TableWrapper Editable property
         planTableWrapper.tableView().editableProperty()
                 .bind(planEditСheckBox.selectedProperty());
@@ -108,8 +122,8 @@ public class PlanningController implements Initializable{
 
         planTableWrapper.getItems().addListener((ListChangeListener.Change<? extends PlanTIV> c) -> {
             System.out.println("Changed on " + c + " - allProperty /// init_PlanTab");
-            if(c.next() &&
-                    (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
+            if (c.next() &&
+                    (c.wasUpdated() || c.wasAdded() || c.wasRemoved())) {
                 this.computeSumPlanTextFields();
             }
         });
@@ -118,7 +132,7 @@ public class PlanningController implements Initializable{
     /**
      * Initialization of OSR Tab.
      */
-    private void init_OSRTab(){
+    private void init_OSRTab() {
         //add OSR TableView
         osrTableWrapper = PlaningControllerTF.decorOSR(osrTable);
         osrTableWrapper.setFromBase();
@@ -126,17 +140,17 @@ public class PlanningController implements Initializable{
 
         computeSumExpTextFields();
         osrTableWrapper.getItems().addListener((ListChangeListener.Change<? extends OSR_TIV> c) -> {
-            System.out.println("Changed on " + c + " report.layoutControllers.allProperties.AllPropertiesController.init_OSRTab()" );
-            if(c.next() &&
-                    (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
+            System.out.println("Changed on " + c + " report.layoutControllers.allProperties.AllPropertiesController.init_OSRTab()");
+            if (c.next() &&
+                    (c.wasUpdated() || c.wasAdded() || c.wasRemoved())) {
                 computeSumExpTextFields();
             }
         });
         //table Context menu property
         osrTableWrapper.tableView().contextMenuProperty().bind(
-                Bindings.when(osrEditСheckBox.selectedProperty() )
+                Bindings.when(osrEditСheckBox.selectedProperty())
                         .then(ContextMenuFactory.getCommonDSU(osrTableWrapper))
-                        .otherwise( (ContextMenu) null  ));
+                        .otherwise((ContextMenu) null));
         //TableWrapper Editable property
         osrTableWrapper.tableView().editableProperty()
                 .bind(osrEditСheckBox.selectedProperty());
@@ -162,10 +176,11 @@ public class PlanningController implements Initializable{
                 .then(true)
                 .otherwise(false));
     }
+
     /**
      * Initialization of KD Tab.
      */
-    private void init_KDTab(){
+    private void init_KDTab() {
         kdTreeTableWrapper = PlaningControllerTF.decorKD(kdTreeTable);
 //        PlaningControllerTF.decorKD(kdTreeTable);
 //        kdTreeTableWrapper.tableView().setRoot(new DiscountQuery().getData().tree());
@@ -175,21 +190,21 @@ public class PlanningController implements Initializable{
                 .then(true)
                 .otherwise(false));
         kdTreeTableWrapper.tableView().contextMenuProperty().bind(
-                Bindings.when(kdEditСheckBox.selectedProperty() )
-                        .then( ContextMenuFactory.getCommonSU(kdTreeTableWrapper))
-                        .otherwise( (ContextMenu) null));
+                Bindings.when(kdEditСheckBox.selectedProperty())
+                        .then(ContextMenuFactory.getCommonSU(kdTreeTableWrapper))
+                        .otherwise((ContextMenu) null));
     }
 
     /*!******************************************************************************************************************
-    *                                                                                                     	    HANDLERS
-    ********************************************************************************************************************/
+     *                                                                                                     	    HANDLERS
+     ********************************************************************************************************************/
 
 
     @FXML
     private void handle_planAddItemButton(ActionEvent event) {
         double SmetCost = new DoubleStringConverter().fromString(planSmetTF.getText());
         double SaleCost = new DoubleStringConverter().fromString(planSaleTF.getText());
-        if(planTableWrapper.getItems()
+        if (planTableWrapper.getItems()
                 .add(new PlanTIV(
                                 0,
                                 new Timestamp(System.currentTimeMillis()),
@@ -200,30 +215,31 @@ public class PlanningController implements Initializable{
                                 Integer.parseInt(planQuantityTF.getText()),
                                 0,
                                 SmetCost,
-                                (double)0,
+                                (double) 0,
                                 SaleCost,
-                                (double)0,
-                                (double)0
+                                (double) 0,
+                                (double) 0
                         )
                 )
                 )
-            clearGroupOfTextInputControl(planTypeTF,planQuantityTF,planSmetTF,planSaleTF);
+            clearGroupOfTextInputControl(planTypeTF, planQuantityTF, planSmetTF, planSaleTF);
     }
 
     @FXML
     private void planEditСheckBox_handler(ActionEvent event) {
-        if(planEditСheckBox.isSelected()){
+        if (planEditСheckBox.isSelected()) {
             planGP.getRowConstraints().get(2).setPrefHeight(30);
-        }else {
+        } else {
             planGP.getRowConstraints().get(2).setPrefHeight(0);
         }
 
     }
+
     @FXML
     private void osrEditСheckBox_handler(ActionEvent event) {
-        if(osrEditСheckBox.isSelected()){
+        if (osrEditСheckBox.isSelected()) {
             osrGP.getRowConstraints().get(1).setPrefHeight(30);
-        }else {
+        } else {
             osrGP.getRowConstraints().get(1).setPrefHeight(0);
         }
 
@@ -232,61 +248,61 @@ public class PlanningController implements Initializable{
     @FXML
     private void handle_osrAddItemButton(ActionEvent event) {
         Double expenses = new DoubleStringConverter().fromString(osrAddValueTF.getText());
-        Double expensesPerHouse = expenses/ Quantity.value();
+        Double expensesPerHouse = expenses / Quantity.value();
         osrTableWrapper.getItems()
-                .add(new OSR_TIV(0,osrAddTextTF.getText(),expenses,expensesPerHouse ));
+                .add(new OSR_TIV(0, osrAddTextTF.getText(), expenses, expensesPerHouse));
 
 
     }
 
     /*!******************************************************************************************************************
-    *                                                                                                             METHODS
-    ********************************************************************************************************************/
+     *                                                                                                             METHODS
+     ********************************************************************************************************************/
 
-    private void computeSumPlanTextFields(){
+    private void computeSumPlanTextFields() {
         planSmetSumTF.setText(
                 new DoubleStringConverter().toString(
-                    planTableWrapper.getItems().stream()
-                            .mapToDouble(PlanTIV::getSmetCostSum)
-                            .sum()
+                        planTableWrapper.getItems().stream()
+                                .mapToDouble(PlanTIV::getSmetCostSum)
+                                .sum()
                 )
         );
         planSaleSumTF.setText(
                 new DoubleStringConverter().toString(
-                    planTableWrapper.getItems().stream()
-                            .mapToDouble(PlanTIV::getSaleCostSum)
-                            .sum()
+                        planTableWrapper.getItems().stream()
+                                .mapToDouble(PlanTIV::getSaleCostSum)
+                                .sum()
                 )
         );
         planProfitSumTF.setText(
                 new DoubleStringConverter().toString(
-                    planTableWrapper.getItems().stream()
-                            .mapToDouble(PlanTIV::getProfit)
-                            .sum()
+                        planTableWrapper.getItems().stream()
+                                .mapToDouble(PlanTIV::getProfit)
+                                .sum()
                 )
         );
     }
 
-    private void computeSumFactTextFields(){
+    private void computeSumFactTextFields() {
         factSmetSumTF.setText(
                 new DoubleStringConverter().toString(
-                    factTableWrapper.getItems().stream()
-                        .mapToDouble(FactTIV::getSmetCostSum)
-                        .sum()
+                        factTableWrapper.getItems().stream()
+                                .mapToDouble(FactTIV::getSmetCostSum)
+                                .sum()
                 )
         );
         factSaleSumTF.setText(
                 new DoubleStringConverter().toString(
-                    factTableWrapper.getItems().stream()
-                        .mapToDouble(FactTIV::getSaleCostSum)
-                        .sum()
-            )
+                        factTableWrapper.getItems().stream()
+                                .mapToDouble(FactTIV::getSaleCostSum)
+                                .sum()
+                )
         );
         factProfitSumTF.setText(
                 new DoubleStringConverter().toString(
-                    factTableWrapper.getItems().stream()
-                        .mapToDouble(FactTIV::getProfit)
-                        .sum()
+                        factTableWrapper.getItems().stream()
+                                .mapToDouble(FactTIV::getProfit)
+                                .sum()
                 )
         );
     }
@@ -309,7 +325,7 @@ public class PlanningController implements Initializable{
     /**
      * Clear for of TextInputControl like TextField, TextArea, etc.
      */
-    private void clearGroupOfTextInputControl(TextInputControl ... nodes){
+    private void clearGroupOfTextInputControl(TextInputControl... nodes) {
 //        for(TextInputControl node : nodes)node.clear();
         Stream.of(nodes).forEach(TextInputControl::clear);
     }
@@ -322,9 +338,9 @@ public class PlanningController implements Initializable{
 //    }
 
     /*!******************************************************************************************************************
-    *                                                                                                             METHODS
-    ********************************************************************************************************************/
-    private void computeSumExpTextFields(){
+     *                                                                                                             METHODS
+     ********************************************************************************************************************/
+    private void computeSumExpTextFields() {
         sumExpTF.setText(new DoubleStringConverter().toString(
                 osrTableWrapper.getItems().stream().mapToDouble(OSR_TIV::getExpenses).sum()));
         sumExpPerSiteTF.setText(new DoubleStringConverter().toString(

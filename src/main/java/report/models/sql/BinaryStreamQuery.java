@@ -16,11 +16,11 @@ public class BinaryStreamQuery {
              Statement stm = connection.createStatement()) {
             for (File file : files) {
                 String sqlQuery = "INSERT INTO TBL_Documents_Templates(Template_Name,Template_Format,Template_Desc, fileDATA, fileGUID)\n" +
-                        " VALUES ( '"+file.getName() +"'"
-                        +", '"+ FilenameUtils.getExtension(file.getAbsolutePath())+"'"
-                        +",'"+file.getName()+"'"
-                        +" ,(SELECT * FROM OPENROWSET(BULK N'" + file.getAbsolutePath()+"'"
-                        +", SINGLE_BLOB) AS text1) " +
+                        " VALUES ( '" + file.getName() + "'"
+                        + ", '" + FilenameUtils.getExtension(file.getAbsolutePath()) + "'"
+                        + ",'" + file.getName() + "'"
+                        + " ,(SELECT * FROM OPENROWSET(BULK N'" + file.getAbsolutePath() + "'"
+                        + ", SINGLE_BLOB) AS text1) " +
                         " ,NEWID());";
                 stm.addBatch(sqlQuery);
             }

@@ -22,15 +22,17 @@ public class ReverseTableWrapper<E extends Reverse & Clone> extends AbstractTabl
      *                                                                         *
      **************************************************************************/
     public ReverseTableWrapper(String title, TableView<DItem> table, CommonDAO<E> commonDao) {
-        this(title,table,null,commonDao);
+        this(title, table, null, commonDao);
     }
-    public ReverseTableWrapper(String title, TableView<DItem> table , E reverseObj, CommonDAO<E> commonDao) {
+
+    public ReverseTableWrapper(String title, TableView<DItem> table, E reverseObj, CommonDAO<E> commonDao) {
         super(title);
         this.commonDAO = commonDao;
         this.reverseObj = reverseObj;
         this.tableView = table;
 
     }
+
     /***************************************************************************
      *                                                                         *
      * MEMENTO                                                                 *
@@ -45,13 +47,14 @@ public class ReverseTableWrapper<E extends Reverse & Clone> extends AbstractTabl
     public void undoChangeItems() {
         this.reverseObj = this.memento.getSavedState();
         tableView.setItems(reverseObj.reverse());
-        ContextMenuOptional.setTableItemContextMenuListener(this,this.tableView.getItems());
+        ContextMenuOptional.setTableItemContextMenuListener(this, this.tableView.getItems());
     }
 
     @Override
     public Memento<E> getMemento() {
         return super.memento;
     }
+
     /***************************************************************************
      *                                                                         *
      * Getter/Setter                                                           *
@@ -72,11 +75,11 @@ public class ReverseTableWrapper<E extends Reverse & Clone> extends AbstractTabl
         this.reverseObj = items;
         tableView.setItems(reverseObj.reverse());
         this.saveMemento();
-        ContextMenuOptional.setTableItemContextMenuListener(this,this.tableView.getItems());
+        ContextMenuOptional.setTableItemContextMenuListener(this, this.tableView.getItems());
     }
 
     public void setFromBase() {
-        this.setTableData( commonDAO.getData());
+        this.setTableData(commonDAO.getData());
 
     }
 
@@ -100,11 +103,9 @@ public class ReverseTableWrapper<E extends Reverse & Clone> extends AbstractTabl
         tableView.refresh();
     }
 
-    public  TableView<DItem> tableView(){
+    public TableView<DItem> tableView() {
         return this.tableView;
     }
-
-
 
 
 }

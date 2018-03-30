@@ -3,6 +3,7 @@ package report.models.mementos;
 
 import report.entities.items.Clone;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,15 +14,17 @@ public class ChangedMemento implements Memento<List<ObjectPSI>> {
 
     private List<ObjectPSI> listClone;
     private List<ObjectPSI> listMain;
+
     /***************************************************************************
      *                                                                         *
      * Constructors                                                            *
      *                                                                         *
      **************************************************************************/
-    public ChangedMemento(final List<ObjectPSI>  items) {
+    public ChangedMemento(final List<ObjectPSI> items) {
         this.listClone = this.getNewObs(items);
-        this.listMain  = items;
+        this.listMain = items;
     }
+
     /***************************************************************************
      *                                                                         *
      * Override                                                                *
@@ -53,16 +56,14 @@ public class ChangedMemento implements Memento<List<ObjectPSI>> {
      *                                                                         *
      **************************************************************************/
     /**
-     *
      * @param items
      * @return
      */
-    private List<ObjectPSI> getNewObs(List<ObjectPSI> items){
+    private List<ObjectPSI> getNewObs(List<ObjectPSI> items) {
         List<ObjectPSI> newObsList = new ArrayList<>(items.size());
         items.forEach((Clone obsItem) -> newObsList.add((ObjectPSI) obsItem.getClone()));
         return newObsList;
     }
-
 
 
 }

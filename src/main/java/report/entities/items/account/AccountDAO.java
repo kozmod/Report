@@ -15,7 +15,7 @@ public class AccountDAO {
 
     public ObservableList<AccountTVI> getList(int DateFrom, int DateTo) { //DATA for InfoTable
 
-        ObservableList<AccountTVI> AccTable =  FXCollections.observableArrayList();
+        ObservableList<AccountTVI> AccTable = FXCollections.observableArrayList();
 
         StringBuilder ResultSetString = new StringBuilder("SELECT "
                 + "[Date]"
@@ -33,38 +33,38 @@ public class AccountDAO {
                 + ",[OutgoingRest]"
                 + "FROM dbo.[Account]"
                 + "WHERE [dell] = 0 ");
-        if(DateFrom != 0 && DateTo != 0)
+        if (DateFrom != 0 && DateTo != 0)
             ResultSetString.append("AND [Date] BETWEEN ")
                     .append(DateFrom)
                     .append(" and ")
                     .append(DateTo);
 
-        try(Connection connection = SqlConnector.getInstance();
-            Statement st = connection.createStatement()) {
+        try (Connection connection = SqlConnector.getInstance();
+             Statement st = connection.createStatement()) {
             ResultSet rs = st.executeQuery(ResultSetString.toString());
-            while(rs.next()){
+            while (rs.next()) {
 //                            System.out.println(rs.getObject("ITN_Client").formatNumber());
                 AccTable.add(new AccountTVI(
-                                rs.getInt   ("Date"),
-                                rs.getInt   ("Num"),
+                                rs.getInt("Date"),
+                                rs.getInt("Num"),
                                 rs.getString("ITN_Client"),
                                 rs.getObject("Name_Client").toString(),
                                 rs.getObject("AccNum_Client").toString(),
                                 rs.getObject("BIC_Cor").toString(),
                                 rs.getObject("AccNum_Cor").toString(),
                                 rs.getObject("Name_Cor").toString(),
-                                rs.getInt   ("VO"),
+                                rs.getInt("VO"),
                                 rs.getObject("Description").toString(),
-                                rs.getDouble ("Deb"),
-                                rs.getDouble ("Cred"),
-                                rs.getDouble ("OutgoingRest")
+                                rs.getDouble("Deb"),
+                                rs.getDouble("Cred"),
+                                rs.getDouble("OutgoingRest")
                         )
                 );
             }
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return AccTable ;
+        return AccTable;
     }
 
 

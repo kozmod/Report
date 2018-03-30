@@ -10,32 +10,36 @@ import report.entities.abstraction.CommonDAO;
 import report.entities.items.Item;
 
 
-public  class TableWrapperEST<E extends Item> extends TableWrapper<E> {
+public class TableWrapperEST<E extends Item> extends TableWrapper<E> {
 
     private DoubleProperty sum = new SimpleDoubleProperty();
 
     /*!******************************************************************************************************************
-    *                                                                                                      Getter/Setter
-    ********************************************************************************************************************/
+     *                                                                                                      Getter/Setter
+     ********************************************************************************************************************/
 
-    public DoubleProperty getSumProperty() {return sum;}
+    public DoubleProperty getSumProperty() {
+        return sum;
+    }
 
 
 
     /*!******************************************************************************************************************
-    *                                                                                                       CONSTRUCTORS
-    ********************************************************************************************************************/
+     *                                                                                                       CONSTRUCTORS
+     ********************************************************************************************************************/
 
-    public TableWrapperEST(TableView<E> table,CommonDAO<ObservableList<E>> dao) {
-        super("TEST EST TITLE",table,dao);
+    public TableWrapperEST(TableView<E> table, CommonDAO<ObservableList<E>> dao) {
+        super("TEST EST TITLE", table, dao);
     }
-    public TableWrapperEST(String title, TableView<E> table, CommonDAO<ObservableList<E>>  dao) {
-        super(title,table,dao);
+
+    public TableWrapperEST(String title, TableView<E> table, CommonDAO<ObservableList<E>> dao) {
+        super(title, table, dao);
     }
 
     /*!******************************************************************************************************************
-    *                                                                                                             METHODS
-    ********************************************************************************************************************/
+     *                                                                                                             METHODS
+     ********************************************************************************************************************/
+
     /**
      * Contain :
      * <br>
@@ -45,15 +49,16 @@ public  class TableWrapperEST<E extends Item> extends TableWrapper<E> {
      * <br>
      * 3. computeSum() - saveEst sum of all "Price_sum" elements.
      * <br>
+     *
      * @param items - Observable List of table item (inherited TableItems)
      */
     @Override
-    public void setTableData(ObservableList items){
+    public void setTableData(ObservableList items) {
         super.setTableData(items);
         computeSum();
         super.tableView().getItems().addListener((ListChangeListener.Change<? extends Item> c) -> {
-            if(c.next() &&
-                    (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
+            if (c.next() &&
+                    (c.wasUpdated() || c.wasAdded() || c.wasRemoved())) {
                 this.computeSum();
                 System.out.println("report.report.models.view.wrappers.table_wrappers.TableWrapperEST.setTableData() == sum -> " + sum.getValue());
             }
@@ -66,7 +71,7 @@ public  class TableWrapperEST<E extends Item> extends TableWrapper<E> {
     /**
      * Get sum of all "Price_sum" elements.
      */
-    public void computeSum(){
+    public void computeSum() {
         Double summ = new Double(0);
         for (Item obsItem : super.tableView().getItems())
             summ = summ + obsItem.getPriceSum();

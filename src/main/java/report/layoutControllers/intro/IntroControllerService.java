@@ -10,23 +10,23 @@ public class IntroControllerService {
 
     private IntroLayoutController introController;
 
-/*!******************************************************************************************************************
- *                                                                                                       CONSTRUCTORS
-********************************************************************************************************************/
+    /*!******************************************************************************************************************
+     *                                                                                                       CONSTRUCTORS
+     ********************************************************************************************************************/
     public IntroControllerService(IntroLayoutController intro) {
         this.introController = intro;
     }
 
-/*!******************************************************************************************************************
-*                                                                                                             METHODS
-********************************************************************************************************************/
+    /*!******************************************************************************************************************
+     *                                                                                                             METHODS
+     ********************************************************************************************************************/
 
-    public ObservableList<PreviewTIV> getListIntro(){
-        return  new SiteCommonDAO().getListIntro();
+    public ObservableList<PreviewTIV> getListIntro() {
+        return new SiteCommonDAO().getListIntro();
     }
 
-    public ObservableList<FinishedSiteTIV> getFinishedSiteList(){
-        return  new FinishedSiteDAO().getList();
+    public ObservableList<FinishedSiteTIV> getFinishedSiteList() {
+        return new FinishedSiteDAO().getList();
     }
 
 }

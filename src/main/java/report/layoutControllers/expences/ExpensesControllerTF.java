@@ -28,7 +28,7 @@ public class ExpensesControllerTF {
      *
      * @return TableView
      */
-    public static TableView getChangeView(){
+    public static TableView getChangeView() {
         TableView table = new TableView();
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -47,11 +47,11 @@ public class ExpensesControllerTF {
         columnDate.setCellValueFactory(new PropertyValueFactory("dateCreate"));
         columnDate.setMinWidth(80);
 
-        columnV .setCellFactory(param ->  TableCellFactory.getEqualsToAboveCell());
-        columnPO.setCellFactory(param ->  TableCellFactory.getEqualsToAboveCell());
-        columnPS.setCellFactory(param ->  TableCellFactory.getEqualsToAboveCell());
+        columnV.setCellFactory(param -> TableCellFactory.getEqualsToAboveCell());
+        columnPO.setCellFactory(param -> TableCellFactory.getEqualsToAboveCell());
+        columnPS.setCellFactory(param -> TableCellFactory.getEqualsToAboveCell());
 
-        table.getColumns().addAll(columnV, columnPO, columnPS, columnDate );
+        table.getColumns().addAll(columnV, columnPO, columnPS, columnDate);
 
         return table;
 
@@ -60,10 +60,11 @@ public class ExpensesControllerTF {
     /**
      * Create TableWrapper(ExpensesAddLayoutController).
      * <br>
+     *
      * @return TableWrapper(child of TableView)
      */
-    public  static TableWrapper<PreviewTIV> decorProperty_Site(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table,null);
+    public static TableWrapper<PreviewTIV> decorProperty_Site(TableView table) {
+        TableWrapper tableWrapper = new TableWrapper(table, null);
 
         tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
@@ -72,7 +73,7 @@ public class ExpensesControllerTF {
             public void changed(ObservableValue<? extends Number> ov, Number t, Number t1) {
                 // Get the tableWrapper header
                 Pane header = (Pane) tableWrapper.tableView().lookup("TableHeaderRow");
-                if(header!=null && header.isVisible()) {
+                if (header != null && header.isVisible()) {
                     header.setMaxHeight(0);
                     header.setMinHeight(0);
                     header.setPrefHeight(0);
@@ -82,11 +83,11 @@ public class ExpensesControllerTF {
             }
         });
 
-        TableColumn titleColumn  = tableWrapper.addColumn("Параметр", "firstValue");
-        TableColumn valueColumn  = tableWrapper.addColumn("Значение", "secondValue");
+        TableColumn titleColumn = tableWrapper.addColumn("Параметр", "firstValue");
+        TableColumn valueColumn = tableWrapper.addColumn("Значение", "secondValue");
 
 
-        valueColumn.setCellFactory(param ->  TableCellFactory.getEditSiteCell());
+        valueColumn.setCellFactory(param -> TableCellFactory.getEditSiteCell());
 
 
         return tableWrapper;
@@ -95,19 +96,20 @@ public class ExpensesControllerTF {
     /**
      * Create TableWrapper "expenses"(expensesesLayoutController).
      * <br>
+     *
      * @return TableWrapper(child of TableView)
      */
-    public static TableWrapper decorProperty_Expenses(TableView table){
+    public static TableWrapper decorProperty_Expenses(TableView table) {
         TableWrapper tableWrapper = new TableWrapper(table, new ExpensesDAO());
 
         tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 
-        TableColumn textColumn   = tableWrapper.addColumn("Наименование", "text");
-        TableColumn typeColumn   = tableWrapper.addColumn("Тип",          "type");
-        TableColumn valueColumn  = tableWrapper.addColumn("Значение",     "quantity");
+        TableColumn textColumn = tableWrapper.addColumn("Наименование", "text");
+        TableColumn typeColumn = tableWrapper.addColumn("Тип", "type");
+        TableColumn valueColumn = tableWrapper.addColumn("Значение", "quantity");
 
-        typeColumn.setCellFactory(param ->  TableCellFactory.getExpenseesCell());
+        typeColumn.setCellFactory(param -> TableCellFactory.getExpenseesCell());
 
         return tableWrapper;
     }
@@ -115,15 +117,16 @@ public class ExpensesControllerTF {
     /**
      * Create TableWrapper "Job & Period"(expensesesLayoutController).
      * <br>
+     *
      * @return TableWrapper(child of TableView)
      */
-    public static TableWrapper<PeriodTIV> decorProperty_JobPeriod(TableView table){
+    public static TableWrapper<PeriodTIV> decorProperty_JobPeriod(TableView table) {
         TableWrapper tableWrapper = new TableWrapper(table, new PeriodDAO());
         tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        TableColumn dateFromColumn = tableWrapper.addColumn("Датаначала",     "dateFrom");
-        TableColumn dateToColumn   = tableWrapper.addColumn("Дата Окончания", "dateTo");
-        TableColumn textColumns    = tableWrapper.addColumn("Коментарии",     "text");
+        TableColumn dateFromColumn = tableWrapper.addColumn("Датаначала", "dateFrom");
+        TableColumn dateToColumn = tableWrapper.addColumn("Дата Окончания", "dateTo");
+        TableColumn textColumns = tableWrapper.addColumn("Коментарии", "text");
 //
 //        dateFromColumn.setCellFactory(param -> TableCellFactory.getEpochDateCell());
 //        dateToColumn.setCellFactory(param -> TableCellFactory.getEpochDateCell());

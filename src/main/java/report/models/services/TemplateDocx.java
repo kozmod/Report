@@ -15,7 +15,7 @@ public class TemplateDocx {
     private final File templateFile;
     private XWPFDocument document;
 
-    public TemplateDocx(File templateFile ) {
+    public TemplateDocx(File templateFile) {
         this.templateFile = templateFile;
     }
 
@@ -23,16 +23,17 @@ public class TemplateDocx {
         this.templateFile = new File(templateFilePath);
     }
 
-    private XWPFDocument load(){
+    private XWPFDocument load() {
         try {
             FileInputStream fis = new FileInputStream(templateFile);
             document = new XWPFDocument(fis);
-            if(document == null) throw new IOException();
+            if (document == null) throw new IOException();
         } catch (Exception e) {
             e.printStackTrace();
         }
         return document;
     }
+
     public void process(final UnaryOperator<String> operator) {
         XWPFDocument document = this.load();
         List<XWPFParagraph> paragraphs = document.getParagraphs();
@@ -40,14 +41,15 @@ public class TemplateDocx {
             para.getRuns().stream().forEach(run -> {
                 String text = run.getText(0);
                 System.out.println(text);
-                if (text != null ) {
+                if (text != null) {
                     run.setText(operator.apply(text), 0);
                 }
             });
         });
     }
-    public void save(File saveFile){
-        try(FileOutputStream fos = new FileOutputStream(saveFile)) {
+
+    public void save(File saveFile) {
+        try (FileOutputStream fos = new FileOutputStream(saveFile)) {
             document.write(fos);
         } catch (Exception e) {
             e.printStackTrace();

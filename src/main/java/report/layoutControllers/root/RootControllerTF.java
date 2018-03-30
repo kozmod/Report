@@ -17,7 +17,7 @@ class RootControllerTF implements TableFactory {
      *
      * @return TableWrapper(Preview TableWrapper)
      */
-    static TableView getSite(){
+    static TableView getSite() {
         TableView table = new TableView();
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -32,13 +32,10 @@ class RootControllerTF implements TableFactory {
         valueCol.setCellFactory(param -> TableCellFactory.getPreviewCell());
 
 
-        table.getColumns().addAll(titleCol, valueCol );
+        table.getColumns().addAll(titleCol, valueCol);
 
         return table;
     }
-
-
-
 
 
 }

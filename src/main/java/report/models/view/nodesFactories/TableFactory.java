@@ -9,21 +9,23 @@ import javafx.util.StringConverter;
 
 public interface TableFactory {
     /**
-     *Set Text Field cell with string converter to column array.
-     *@param converter StringConverter(DecimalFormatSymbols & DecimalFormat)
-     *@param columns TableColumn[]
+     * Set Text Field cell with string converter to column array.
+     *
+     * @param converter StringConverter(DecimalFormatSymbols & DecimalFormat)
+     * @param columns   TableColumn[]
      */
-    static void setTextFieldTableCell(StringConverter converter, TableColumn ... columns){
-        for(TableColumn column  : columns)
+    static void setTextFieldTableCell(StringConverter converter, TableColumn... columns) {
+        for (TableColumn column : columns)
             column.setCellFactory(
                     TextFieldTableCell.forTableColumn(converter)
             );
     }
 
     /**
-     *Set Cell with string formatter to column array.
-     *@param converter StringConverter(DecimalFormatSymbols & DecimalFormat)
-     *@param columns TableColumn[]
+     * Set Cell with string formatter to column array.
+     *
+     * @param converter StringConverter(DecimalFormatSymbols & DecimalFormat)
+     * @param columns   TableColumn[]
      */
     static <T> void setCellFactory(StringConverter<T> converter, TableColumn... columns) {
         for (TableColumn column : columns) {

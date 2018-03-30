@@ -11,7 +11,7 @@ import org.controlsfx.property.editor.AbstractPropertyEditor;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 
 
-public class ValidStringPropertyEditor<T extends TextInputControl> extends AbstractPropertyEditor<String,T> {
+public class ValidStringPropertyEditor<T extends TextInputControl> extends AbstractPropertyEditor<String, T> {
     /***************************************************************************
      *                                                                         *
      * Constructors                                                            *
@@ -24,6 +24,7 @@ public class ValidStringPropertyEditor<T extends TextInputControl> extends Abstr
     public ValidStringPropertyEditor(ObjectPSI property, T control, boolean readonly) {
         super(property, control, readonly);
     }
+
     /***************************************************************************
      *                                                                         *
      * Override                                                                *
@@ -46,19 +47,21 @@ public class ValidStringPropertyEditor<T extends TextInputControl> extends Abstr
      **************************************************************************/
     /**
      * Get ValidStringPropertyEditor with TextField.
+     *
      * @param property ObjectPSI
-     * @return AbstractPropertyEditor<String,TextField>
+     * @return AbstractPropertyEditor<String   ,   TextField>
      */
-    public static AbstractPropertyEditor<String,TextField>  textField(ObjectPSI property){
+    public static AbstractPropertyEditor<String, TextField> textField(ObjectPSI property) {
         return new ValidStringPropertyEditor<>(property, new TextField());
     }
 
     /**
      * Get ValidStringPropertyEditor with TextArea.
+     *
      * @param property ObjectPSI
-     * @return AbstractPropertyEditor<String,TextArea>
+     * @return AbstractPropertyEditor<String   ,   TextArea>
      */
-    public static AbstractPropertyEditor<String,TextArea>  textArea(ObjectPSI property){
+    public static AbstractPropertyEditor<String, TextArea> textArea(ObjectPSI property) {
         return new ValidStringPropertyEditor<>(property, new TextArea());
     }
 }

@@ -18,13 +18,13 @@ import report.layoutControllers.estimate.EstimateController.Est;
 import report.entities.items.site.PreviewTIV;
 
 
-public class PrintEstimate extends AbstractPrinterXML{
-    
+public class PrintEstimate extends AbstractPrinterXML {
+
     private Document doc;
     private ObservableList<Item> obsKS;
-    private ObservableList<PreviewTIV>  obsPreTab;
+    private ObservableList<PreviewTIV> obsPreTab;
     private ContractorTIV contractorObject;
-    
+
     //Constructor =====================================================================================================================    
     public PrintEstimate(CommonDAO dao) {
         this.obsKS = FXCollections.observableArrayList((Collection<? extends Item>) dao.getData());
@@ -32,9 +32,8 @@ public class PrintEstimate extends AbstractPrinterXML{
 
         doc = buildDocument("\\lib\\XML_Models\\Смета.xml");
         addJMrows();
-        saveDocument("\\lib\\XML_Models\\Смета-"+ Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER) +"_"+ Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR) +".xml");
+        saveDocument("\\lib\\XML_Models\\Смета-" + Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER) + "_" + Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR) + ".xml");
     }
-
 
 
     public PrintEstimate(List list, Path path) {
@@ -46,187 +45,187 @@ public class PrintEstimate extends AbstractPrinterXML{
         saveDocument(path.toString());
     }
 
-    
-    
-//Methots ==========================================================================================================================      
+
+    //Methots ==========================================================================================================================
     //Add Name of OBJECT
-    private void setObjectName(){
-        
+    private void setObjectName() {
+
         String text = "Объект: ДКП 'Мечта пятницы', ж/дом '',  уч. № ";
-        
+
         StringBuilder objString = new StringBuilder(text);
         objString.insert(36, obsKS.get(0).getTypeHome());
-        objString.append( obsKS.get(0).getSiteNumber());
-        
+        objString.append(obsKS.get(0).getSiteNumber());
+
         getTargetElement("Home").setTextContent(objString.toString());
-        
+
     }
 
 
-       
-    private void  setNumber_Date(){
+    private void setNumber_Date() {
 
         getTargetElement("number-date").setTextContent("№ " + obsPreTab.get(0).getSecondValue());
-         
+
     }
-    private void  setCont_NContract(){
+
+    private void setCont_NContract() {
 
         getTargetElement("contractor").setTextContent("№ " + obsPreTab.get(0).getSecondValue());
         getTargetElement("Ncontract").setTextContent("№ " + obsPreTab.get(0).getSecondValue());
-         
+
     }
-       
-    
+
+
     //Add Job - Material rows
-    private void addJMrows(){
+    private void addJMrows() {
 
         int rowsQuantity = 1;
         String buildingPart = null;
-        
-        for(Item item : obsKS){
-            
-            
+
+        for (Item item : obsKS) {
+
+
             Element targetRow = getTargetElement("SumRow");
 
             //CHECK -> Binded Job
-            if(!item.getBuildingPart().equals(buildingPart)){
+            if (!item.getBuildingPart().equals(buildingPart)) {
                 buildingPart = item.getBuildingPart();
-                 
+
                 Element row = doc.createElement("Row");
 //                row.setAttribute("ss:StyleID", "s46");
-                
+
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s139")
-                                 .setCellValue("Number", Integer.toString(rowsQuantity))
-                                 .build());
+                        .setCellStyle("s139")
+                        .setCellValue("Number", Integer.toString(rowsQuantity))
+                        .build());
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s109")
-                                 .setCellValue("String", buildingPart)
-                                 .build());
+                        .setCellStyle("s109")
+                        .setCellValue("String", buildingPart)
+                        .build());
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s141")
-                                 .setCellValue("String", "" )
-                                 .build());
+                        .setCellStyle("s141")
+                        .setCellValue("String", "")
+                        .build());
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s142")
-                                 .setCellValue("String", "" )
-                                 .build());
+                        .setCellStyle("s142")
+                        .setCellValue("String", "")
+                        .build());
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s142")
-                                 .setCellValue("String", "" )
-                                 .build());
+                        .setCellStyle("s142")
+                        .setCellValue("String", "")
+                        .build());
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s142")
-                                 .setCellValue("String", "" )
-                                 .build());
+                        .setCellStyle("s142")
+                        .setCellValue("String", "")
+                        .build());
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s142")
-                                 .setCellValue("String", "" )
-                                 .build());
+                        .setCellStyle("s142")
+                        .setCellValue("String", "")
+                        .build());
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s142")
-                                 .setCellValue("String", "" )
-                                 .build());
+                        .setCellStyle("s142")
+                        .setCellValue("String", "")
+                        .build());
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s141")
-                                 .setCellValue("String", "" )
-                                 .build());
-                
+                        .setCellStyle("s141")
+                        .setCellValue("String", "")
+                        .build());
+
                 targetRow.getParentNode().insertBefore(row, targetRow);
                 rowsQuantity++;
-            };
-            
+            }
+            ;
+
 
             Element row = doc.createElement("Row");
 //            row.setAttribute("ss:StyleID", "s143");
-            
+
             //Posittion
             row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s139")
-                                 .setCellValue("Number", Integer.toString(rowsQuantity))
-                                 .build());
+                    .setCellStyle("s139")
+                    .setCellValue("Number", Integer.toString(rowsQuantity))
+                    .build());
             //JM name
             row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s147")
-                                 .setCellValue("String", item.getJM_name())
-                                 .build());
+                    .setCellStyle("s147")
+                    .setCellValue("String", item.getJM_name())
+                    .build());
             //Unit
-            row.appendChild( new CellBuilder(doc)
-                                 .setCellStyle("s141")
-                                 .setCellValue("String", item.getUnit() )
-                                 .build());
+            row.appendChild(new CellBuilder(doc)
+                    .setCellStyle("s141")
+                    .setCellValue("String", item.getUnit())
+                    .build());
             //Value
             row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s148")
-                                 .setCellValue("Number", Double.toString(item.getQuantity()) )
-                                 .build());
-            if(item.getBindJob().endsWith("-")){
+                    .setCellStyle("s148")
+                    .setCellValue("Number", Double.toString(item.getQuantity()))
+                    .build());
+            if (item.getBindJob().endsWith("-")) {
                 //Price one - JOB
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s148")
-                                 .setCellValue("Number", Double.toString(item.getPriceOne()) )
-                                 .build());
+                        .setCellStyle("s148")
+                        .setCellValue("Number", Double.toString(item.getPriceOne()))
+                        .build());
                 //Price Sum - JOB
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s143")
-                                 .setCellValue("Number", "" )
-                                 .setMultFormula("-1","-2")
-                                 .build());
+                        .setCellStyle("s143")
+                        .setCellValue("Number", "")
+                        .setMultFormula("-1", "-2")
+                        .build());
                 //Price one - Material
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s148")
-                                 .setCellValue("Number", "" )
-                                 .build());
+                        .setCellStyle("s148")
+                        .setCellValue("Number", "")
+                        .build());
                 //Price one - Material
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s143")
-                                 .setCellValue("Number", "" )
-                                 .setMultFormula("-1","-4")
-                                 .build());
-               
-            }else{
-                                //Price one - JOB
+                        .setCellStyle("s143")
+                        .setCellValue("Number", "")
+                        .setMultFormula("-1", "-4")
+                        .build());
+
+            } else {
+                //Price one - JOB
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s148")
-                                 .setCellValue("Number", "")
-                                 .build());
+                        .setCellStyle("s148")
+                        .setCellValue("Number", "")
+                        .build());
                 //Price Sum - JOB
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s143")
-                                 .setCellValue("Number", "" )
-                                 .setMultFormula("-1","-2")
-                                 .build());
+                        .setCellStyle("s143")
+                        .setCellValue("Number", "")
+                        .setMultFormula("-1", "-2")
+                        .build());
                 //Price one - Material
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s148")
-                                 .setCellValue("Number",  Double.toString(item.getPriceOne()) )
-                                 .build());
+                        .setCellStyle("s148")
+                        .setCellValue("Number", Double.toString(item.getPriceOne()))
+                        .build());
                 //Price one - Material
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s143")
-                                 .setCellValue("Number", "" )
-                                 .setMultFormula("-1","-4")
-                                 .build());   
+                        .setCellStyle("s143")
+                        .setCellValue("Number", "")
+                        .setMultFormula("-1", "-4")
+                        .build());
             }
             row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s143")
-                                 .setCellValue("Number", "" )
-                                 .setSumFormula("-1","-3")
-                                 .build());
-               
+                    .setCellStyle("s143")
+                    .setCellValue("Number", "")
+                    .setSumFormula("-1", "-3")
+                    .build());
+
             targetRow.getParentNode().insertBefore(row, targetRow);
             rowsQuantity++;
 //                
         }
 
         super.getTargetElement("SumAmountValue")
-                .setAttribute("ss:Formula", "=SUM(R[-"+ Integer.toString(rowsQuantity - 1) +"]C:R[-1]C)");
+                .setAttribute("ss:Formula", "=SUM(R[-" + Integer.toString(rowsQuantity - 1) + "]C:R[-1]C)");
         super.getTargetElement("HeadSumAmountValue")
-                .setAttribute("ss:Formula", "=R["+Integer.toString(rowsQuantity + 7) +"]C[2]");
+                .setAttribute("ss:Formula", "=R[" + Integer.toString(rowsQuantity + 7) + "]C[2]");
 
-      
+
     }
-    
+
 //Builder ==========================================================================================================================  
 //    public static class Builder{
 //        private ObservableList<Item> obsKS;
@@ -259,6 +258,6 @@ public class PrintEstimate extends AbstractPrinterXML{
 //    
 //    
 //    }
-    
-    
+
+
 }

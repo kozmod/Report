@@ -3,7 +3,9 @@ package report.layoutControllers.finRes;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import static java.util.stream.Collectors.toCollection;
+
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -23,16 +25,19 @@ import report.models.converters.dateStringConverters.LocalDayStringConverter;
 
 public class FinResController implements Initializable {
 
-    @FXML private DatePicker dateFinResFrom, dateFinResTo;
-    @FXML private TableView<FinResTVI>  finResTable;
-    @FXML private TextField sumSmetCostTF, sumCostHouseTF, profitTF;
+    @FXML
+    private DatePicker dateFinResFrom, dateFinResTo;
+    @FXML
+    private TableView<FinResTVI> finResTable;
+    @FXML
+    private TextField sumSmetCostTF, sumCostHouseTF, profitTF;
 
     private ObservableList<FinResTVI> finResObs = new FinResDAO().getList();
 
 
-/*!******************************************************************************************************************
-*                                                                                                               INIT
-********************************************************************************************************************/
+    /*!******************************************************************************************************************
+     *                                                                                                               INIT
+     ********************************************************************************************************************/
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
@@ -43,10 +48,10 @@ public class FinResController implements Initializable {
 
 //        //Init DatePickers
         dateFinResFrom.setConverter(
-                        new LocalDayStringConverter()
+                new LocalDayStringConverter()
         );
         dateFinResTo.setConverter(
-                        new LocalDayStringConverter()
+                new LocalDayStringConverter()
         );
 
         //set TF quantity
@@ -56,37 +61,35 @@ public class FinResController implements Initializable {
     }
 
 
-
-
-    private void setTextFieldValue(TextField textfield){
+    private void setTextFieldValue(TextField textfield) {
         float sumFloat = 0;
-        for(FinResTVI item : finResTable.getItems()){
-            if(textfield.equals(sumSmetCostTF)){
+        for (FinResTVI item : finResTable.getItems()) {
+            if (textfield.equals(sumSmetCostTF)) {
                 sumFloat += item.getSmetCost();
-            }else if (textfield.equals(sumCostHouseTF)){
+            } else if (textfield.equals(sumCostHouseTF)) {
                 sumFloat += item.getCostHouse();
 
-            }else if (textfield.equals(profitTF)){
-                if(item.getProfit() != Float.NaN)
+            } else if (textfield.equals(profitTF)) {
+                if (item.getProfit() != Float.NaN)
                     sumFloat += item.getProfit();
             }
         }
         textfield.setText(new DoubleStringConverter().toString(sumFloat));
 
     }
-    
 
-/*!******************************************************************************************************************
-*                                                                                                     	    HANDLERT
-********************************************************************************************************************/
+
+    /*!******************************************************************************************************************
+     *                                                                                                     	    HANDLERT
+     ********************************************************************************************************************/
 
     @FXML
     private void handle_FilterSite(ActionEvent event) {
-        if (isInputValid()){
+        if (isInputValid()) {
             finResTable.setItems(
                     finResObs.stream()
-                            .filter(item -> item.getDateContract()>=(int) dateFinResFrom.getValue().toEpochDay()
-                                    && item.getDateContract()<=(int) dateFinResTo.getValue().toEpochDay())
+                            .filter(item -> item.getDateContract() >= (int) dateFinResFrom.getValue().toEpochDay()
+                                    && item.getDateContract() <= (int) dateFinResTo.getValue().toEpochDay())
                             .collect(toCollection(FXCollections::observableArrayList)));
 //            System.err.println(finResTable.getObservableItems());
             setTextFieldValue(sumSmetCostTF);
@@ -105,29 +108,29 @@ public class FinResController implements Initializable {
 
     }
 
-/*!******************************************************************************************************************
-*                                                                                                     InputValidator
-********************************************************************************************************************/
+    /*!******************************************************************************************************************
+     *                                                                                                     InputValidator
+     ********************************************************************************************************************/
     private boolean isInputValid() {
         StringBuilder errorMessage = new StringBuilder();
 
-            if (dateFinResFrom.getValue() == null ){
-                errorMessage.append("'Дата поиска: с' ");
-                dateFinResFrom.setEditable(true);
-                dateFinResFrom.setStyle("-fx-border-color: red;");
+        if (dateFinResFrom.getValue() == null) {
+            errorMessage.append("'Дата поиска: с' ");
+            dateFinResFrom.setEditable(true);
+            dateFinResFrom.setStyle("-fx-border-color: red;");
 
-            }
-            if (dateFinResTo.getValue() == null){
-                errorMessage.append("'Дата поиска: по' ");
+        }
+        if (dateFinResTo.getValue() == null) {
+            errorMessage.append("'Дата поиска: по' ");
 
-                dateFinResTo.setStyle("-fx-border-color: red;");
-            }
-            if(dateFinResFrom.getValue() != null && dateFinResTo.getValue() != null
-                    && dateFinResFrom.getValue().toEpochDay() > dateFinResTo.getValue().toEpochDay()){
-                errorMessage.append("'Неверный период' ");
-                dateFinResFrom.setStyle("-fx-border-color: red;");
+            dateFinResTo.setStyle("-fx-border-color: red;");
+        }
+        if (dateFinResFrom.getValue() != null && dateFinResTo.getValue() != null
+                && dateFinResFrom.getValue().toEpochDay() > dateFinResTo.getValue().toEpochDay()) {
+            errorMessage.append("'Неверный период' ");
+            dateFinResFrom.setStyle("-fx-border-color: red;");
 
-            }
+        }
 
 
 //        if(errorMessage.length() >0){
@@ -136,20 +139,20 @@ public class FinResController implements Initializable {
 //        }
 
         PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
-        visiblePause.setOnFinished( e -> {
-                        dateFinResFrom.setStyle(null);
-                        dateFinResTo.setStyle(null);
-                    });
+        visiblePause.setOnFinished(e -> {
+            dateFinResFrom.setStyle(null);
+            dateFinResTo.setStyle(null);
+        });
         visiblePause.play();
 
         return errorMessage.length() == 0;
-        }
+    }
 
-  }
+}
 
 /*!******************************************************************************************************************
-*                                                                                                     Inner Classes
-********************************************************************************************************************/
+ *                                                                                                     Inner Classes
+ ********************************************************************************************************************/
 
 
     

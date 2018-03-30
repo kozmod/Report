@@ -4,6 +4,7 @@ package report.entities.items.expenses;
 import report.entities.abstraction.CommonNamedDAO;
 import report.models.sql.SqlConnector;
 import report.usage_strings.SQL;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -12,6 +13,7 @@ import java.sql.Statement;
 import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layoutControllers.LogController;
@@ -23,17 +25,22 @@ public class ExpensesDAO implements CommonNamedDAO<Collection<ExpensesTVI>> {
 
     /**
      * Get String of a Mirror (SQL.Tables).
-     * @return  List of Item
+     *
+     * @return List of Item
      */
     @Override
-    public String getSqlTableName() {return SQL.Tables.SITE_EXPENSES;}
+    public String getSqlTableName() {
+        return SQL.Tables.SITE_EXPENSES;
+    }
+
     /**
      * Get List of expenses Items from SQL (SiteExpenses)
-     * @return  ObservableList of ExpensesTVI
+     *
+     * @return ObservableList of ExpensesTVI
      */
     @Override
     public ObservableList<ExpensesTVI> getData() {
-        ObservableList<ExpensesTVI> list =  FXCollections.observableArrayList(ExpensesTVI.extractor());
+        ObservableList<ExpensesTVI> list = FXCollections.observableArrayList(ExpensesTVI.extractor());
 
         String sqlQuery = "SELECT "       //[id] [SiteNumber] [Contractor][Text][Type][Value]
                 + " * "
@@ -42,20 +49,20 @@ public class ExpensesDAO implements CommonNamedDAO<Collection<ExpensesTVI>> {
                 + "AND   [Contractor] = ? "
                 + "AND   [dell] = 0";
 
-        try(Connection connection = SqlConnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(sqlQuery);) {
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(sqlQuery);) {
             //set false SQL Autocommit
             pstmt.setString(1, Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER));
             pstmt.setString(2, Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
             pstmt.execute();
-            try(ResultSet rs = pstmt.getResultSet();){
-                while(rs.next())
+            try (ResultSet rs = pstmt.getResultSet();) {
+                while (rs.next())
                     list.add(new ExpensesTVI(
-                                    rs.getLong  (SQL.Common.ID),
+                                    rs.getLong(SQL.Common.ID),
                                     rs.getString(SQL.Common.SITE_NUMBER),
                                     rs.getString(SQL.Common.CONTRACTOR),
                                     rs.getString(SQL.Common.TEXT),
-                                    rs.getByte  (SQL.Common.TYPE),
+                                    rs.getByte(SQL.Common.TYPE),
                                     rs.getDouble(SQL.Common.VALUE)
                             )
                     );
@@ -63,23 +70,24 @@ public class ExpensesDAO implements CommonNamedDAO<Collection<ExpensesTVI>> {
         } catch (SQLException ex) {
             Logger.getLogger(ExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return  list;
+        return list;
     }
 
 
     /**
      * Delete ExpensesTVI Entities from SQL (SiteExpenses)
+     *
      * @param items (Collection of TableExpenses)
      */
     @Override
     public void delete(Collection<ExpensesTVI> items) {
         String sql = "update [dbo].[SiteExpenses] SET dell = 1 WHERE [id] = ? AND [dell] = 0;";
-        try(Connection connection   = SqlConnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(sql);) {
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
             for (ExpensesTVI obsItem : items) {
-                pstmt.setLong   (1, obsItem.getId());
+                pstmt.setLong(1, obsItem.getId());
                 pstmt.addBatch();
             }
             pstmt.executeBatch();
@@ -102,6 +110,7 @@ public class ExpensesDAO implements CommonNamedDAO<Collection<ExpensesTVI>> {
 
     /**
      * Insert ExpensesTVI Entities to SQL (SiteExpenses)
+     *
      * @param items (Collection of ExpensesTVI)
      */
     @Override
@@ -116,24 +125,24 @@ public class ExpensesDAO implements CommonNamedDAO<Collection<ExpensesTVI>> {
                 + " ) "
                 + "VALUES(?,?,?,?,?)";
 //                    + "VALUES('10а','УЮТСТРОЙ','ssss',0,11111)";
-        try(Connection connection = SqlConnector.getInstance();
-            PreparedStatement pstmt  = connection.prepareStatement(sql,
-                    Statement.RETURN_GENERATED_KEYS);) {
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(sql,
+                     Statement.RETURN_GENERATED_KEYS);) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
 
             for (ExpensesTVI obsItem : items) {
-                pstmt.setString   (1, obsItem.getSiteNumber());
-                pstmt.setString   (2, obsItem.getContractor());
-                pstmt.setString   (3, obsItem.getText());
-                pstmt.setInt      (4, obsItem.getType());
-                pstmt.setDouble   (5, obsItem.getValue());
+                pstmt.setString(1, obsItem.getSiteNumber());
+                pstmt.setString(2, obsItem.getContractor());
+                pstmt.setString(3, obsItem.getText());
+                pstmt.setInt(4, obsItem.getType());
+                pstmt.setDouble(5, obsItem.getValue());
 
                 int affectedRows = pstmt.executeUpdate();
 
                 System.out.println(affectedRows);
-                try( ResultSet generategKeys = pstmt.getGeneratedKeys();){
-                    if(generategKeys.next())
+                try (ResultSet generategKeys = pstmt.getGeneratedKeys();) {
+                    if (generategKeys.next())
                         obsItem.setId(generategKeys.getLong(1));
                 }
             }
@@ -155,8 +164,6 @@ public class ExpensesDAO implements CommonNamedDAO<Collection<ExpensesTVI>> {
             Logger.getLogger(ExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-
 
 
 }

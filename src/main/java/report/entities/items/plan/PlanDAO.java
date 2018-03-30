@@ -8,6 +8,7 @@ import report.models.coefficient.Quantity;
 import report.models.sql.SqlConnector;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,60 +26,62 @@ import report.layoutControllers.LogController;
 
 public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
 
-   /**
-    * 
-    * @return  List of Item
-    */
-    @Override
-    public String getSqlTableName() {return SQL.Tables.FIN_PLAN;}
-    
     /**
-    * Get String of a Mirror (SQL.Tables).
-    * @return  List of Item
-    */
+     * @return List of Item
+     */
+    @Override
+    public String getSqlTableName() {
+        return SQL.Tables.FIN_PLAN;
+    }
+
+    /**
+     * Get String of a Mirror (SQL.Tables).
+     *
+     * @return List of Item
+     */
     @Override
     public ObservableList<PlanTIV> getData() {
         ObservableList<PlanTIV> list = FXCollections.observableArrayList(PlanTIV.extractor());
-        
+
 //        String psmtmtString = " execute dbo.[getListPlan] ";
 
         String sqlString = "SELECT"
-                +" F.[id]"
-                +",F.[TypeName]"
-                +",F.[TypeID]"
-                +",F.[Quantity]"
-                +",(F.[Quantity] - (SELECT COUNT(1) FROM  dbo.[Site] S where F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0)) AS [Rest]"
-                +",F.[SmetCost]"
-                +",F.[SmetCost]*F.[Quantity] AS [SmetCostSUM]"
-                +",F.[SaleCost]"
-                +",F.[SaleCost]*F.[Quantity]  AS [SaleCostSUM]"
-                +",F.[NumberSession]"
-                +",F.[DateCreate]"
-                +" FROM dbo.[FinPlan] F"
-                +" WHERE dell = 0";
-        try(Connection connection = SqlConnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(sqlString)) {
+                + " F.[id]"
+                + ",F.[TypeName]"
+                + ",F.[TypeID]"
+                + ",F.[Quantity]"
+                + ",(F.[Quantity] - (SELECT COUNT(1) FROM  dbo.[Site] S where F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0)) AS [Rest]"
+                + ",F.[SmetCost]"
+                + ",F.[SmetCost]*F.[Quantity] AS [SmetCostSUM]"
+                + ",F.[SaleCost]"
+                + ",F.[SaleCost]*F.[Quantity]  AS [SaleCostSUM]"
+                + ",F.[NumberSession]"
+                + ",F.[DateCreate]"
+                + " FROM dbo.[FinPlan] F"
+                + " WHERE dell = 0";
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(sqlString)) {
             pstmt.execute();
 //            System.out.println(b);
             ResultSet rs = pstmt.getResultSet();
-                while(rs.next()){
-                    PlanTIV item = new PlanTIV(
-                                    rs.getLong      (SQL.Common.ID),
-                                    rs.getTimestamp (SQL.Common.DATE_CREATE),
-                                    rs.getInt       (SQL.Plan.TYPE_ID),
-                                    rs.getString    (SQL.Plan.TYPE_NAME),
-                                    rs.getInt       (SQL.Plan.QUANTITY),
-                                    rs.getInt       (SQL.Plan.REST),
-                                    rs.getDouble    (SQL.Plan.SMET_COST),
-                                    rs.getDouble    (SQL.Plan.SMET_COST_SUM),
-                                    rs.getDouble    (SQL.Plan.SALE_COST),
-                                    rs.getDouble    (SQL.Plan.SALE_COST_SUM),
-                                    (rs.getDouble   (SQL.Plan.SALE_COST_SUM) - rs.getDouble (SQL.Plan.SMET_COST_SUM))
-                                );
-                    list.add(item);     
-                }
+            while (rs.next()) {
+                PlanTIV item = new PlanTIV(
+                        rs.getLong(SQL.Common.ID),
+                        rs.getTimestamp(SQL.Common.DATE_CREATE),
+                        rs.getInt(SQL.Plan.TYPE_ID),
+                        rs.getString(SQL.Plan.TYPE_NAME),
+                        rs.getInt(SQL.Plan.QUANTITY),
+                        rs.getInt(SQL.Plan.REST),
+                        rs.getDouble(SQL.Plan.SMET_COST),
+                        rs.getDouble(SQL.Plan.SMET_COST_SUM),
+                        rs.getDouble(SQL.Plan.SALE_COST),
+                        rs.getDouble(SQL.Plan.SALE_COST_SUM),
+                        (rs.getDouble(SQL.Plan.SALE_COST_SUM) - rs.getDouble(SQL.Plan.SMET_COST_SUM))
+                );
+                list.add(item);
+            }
 
-        }  catch (SQLException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(PlanDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
 
@@ -87,10 +90,9 @@ public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
     }
 
 
-    
     public ObservableList<FactTIV> getListFact() {
         ObservableList<FactTIV> list = FXCollections.observableArrayList();
-        
+
 //        String sqlString =
 //                " SELECT "
 //                + " F.[TypeID]      "
@@ -127,45 +129,45 @@ public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
 
         String sqlString = " SELECT "
                 + "F.[TypeID]"
-                +",F.[TypeName]"
-                +",ISNULL((SELECT COUNT(1)                            FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [Quantity]"
-                +",ISNULL((SELECT round(SUM(S.[SmetCost])/COUNT(1),2) FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [SmetCost]"
-                +",ISNULL((SELECT round(SUM(S.[SmetCost]),2)          FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [SmetCostSum]"
-                +",ISNULL((SELECT round(SUM(S.[SaleHouse])/COUNT(1),2)FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [SaleCost]"
-                +",ISNULL((SELECT round(SUM(S.[SaleHouse]),2)         FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [SaleCostSum]"
-                +",ISNULL((SELECT round(SUM(S.[CostHouse]),2)         FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [CostHouseSum]"
-                +" FROM  dbo.[FinPlan] F "
-                +" WHERE  dell = 0 ";
+                + ",F.[TypeName]"
+                + ",ISNULL((SELECT COUNT(1)                            FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [Quantity]"
+                + ",ISNULL((SELECT round(SUM(S.[SmetCost])/COUNT(1),2) FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [SmetCost]"
+                + ",ISNULL((SELECT round(SUM(S.[SmetCost]),2)          FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [SmetCostSum]"
+                + ",ISNULL((SELECT round(SUM(S.[SaleHouse])/COUNT(1),2)FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [SaleCost]"
+                + ",ISNULL((SELECT round(SUM(S.[SaleHouse]),2)         FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [SaleCostSum]"
+                + ",ISNULL((SELECT round(SUM(S.[CostHouse]),2)         FROM  dbo.[Site] S WHERE F.[TypeID] = S.[SiteTypeID] AND S.[dell] = 0),0) AS [CostHouseSum]"
+                + " FROM  dbo.[FinPlan] F "
+                + " WHERE  dell = 0 ";
 
-        try(Connection connection = SqlConnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(sqlString);) {
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(sqlString);) {
             pstmt.execute();
             ResultSet rs = pstmt.getResultSet();
-            
-                while(rs.next()){
-                    FactTIV item = new FactTIV(
-                                    0, //id
-                                    new Timestamp(0),
-                                    rs.getInt       (SQL.Plan.TYPE_ID),
-                                    rs.getString    (SQL.Plan.TYPE_NAME),
-                                    rs.getInt       (SQL.Plan.QUANTITY),
-                                    rs.getDouble     (SQL.Plan.SMET_COST),
-                                    rs.getDouble     (SQL.Plan.SMET_COST_SUM),
-                                    rs.getDouble     (SQL.Plan.COST_HOUSE_SUM),
-                                    rs.getDouble     (SQL.Plan.SALE_COST),
-                                    rs.getDouble     (SQL.Plan.SALE_COST_SUM),
-                                    (rs.getDouble    (SQL.Plan.COST_HOUSE_SUM) - rs.getDouble   (SQL.Plan.SMET_COST_SUM))
+
+            while (rs.next()) {
+                FactTIV item = new FactTIV(
+                        0, //id
+                        new Timestamp(0),
+                        rs.getInt(SQL.Plan.TYPE_ID),
+                        rs.getString(SQL.Plan.TYPE_NAME),
+                        rs.getInt(SQL.Plan.QUANTITY),
+                        rs.getDouble(SQL.Plan.SMET_COST),
+                        rs.getDouble(SQL.Plan.SMET_COST_SUM),
+                        rs.getDouble(SQL.Plan.COST_HOUSE_SUM),
+                        rs.getDouble(SQL.Plan.SALE_COST),
+                        rs.getDouble(SQL.Plan.SALE_COST_SUM),
+                        (rs.getDouble(SQL.Plan.COST_HOUSE_SUM) - rs.getDouble(SQL.Plan.SMET_COST_SUM))
 //                                    (rs.getDouble    (SQL.Plan.SALE_COST_SUM) - rs.getDouble   (SQL.Plan.SMET_COST_SUM))
-                                );
-                    list.add(item);     
-                }
-   
+                );
+                list.add(item);
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(PlanDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
-    
+
 //    public Map<String,List<PlanTIV>> getMap(String s){
 //        int i =  getListFact().stream().filter(o -> o.getQuantity().equals(s)).findFirst().get().getQuantity();
 //
@@ -176,60 +178,59 @@ public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
     @Override
     public void delete(Collection<PlanTIV> entry) {
         System.out.println("PLAN DELET SIZE " + entry.size());
-        try(Connection connection   = SqlConnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement("update [dbo].[FinPlan] SET dell = 1 WHERE [id] = ? AND [dell] = 0;");) {
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement("update [dbo].[FinPlan] SET dell = 1 WHERE [id] = ? AND [dell] = 0;");) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
-                for (PlanTIV obsItem : entry) {
-                    pstmt.setLong   (1, obsItem.getId());
-                    pstmt.addBatch();  
-                }
-           pstmt.executeBatch();
-           //SQL commit
-           connection.commit();
-           //add info to LogTextArea / LogController
-           LogController.appendLogViewText(entry.size() + " deleted");
-            
+            for (PlanTIV obsItem : entry) {
+                pstmt.setLong(1, obsItem.getId());
+                pstmt.addBatch();
+            }
+            pstmt.executeBatch();
+            //SQL commit
+            connection.commit();
+            //add info to LogTextArea / LogController
+            LogController.appendLogViewText(entry.size() + " deleted");
+
         } catch (SQLException ex) {
             Logger.getLogger(PlanDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
-    
-    
+
     @Override
     public void insert(Collection<PlanTIV> entry) {
         System.out.println("PLAN INS SIZE " + entry.size());
-         String sql = "INSERT into [dbo].[FinPlan] "
-                                    + "( " 
-                                    + " [TypeID]" 
-                                    + ",[TypeName]" 
-                                    + ",[Quantity]" 
-                                    + ",[SmetCost]" 
-                                    + ",[SaleCost]" 
-                                    + " ) " 
-                                    + "VALUES(?,?,?,?,?)";
-        try(Connection connection   = SqlConnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(sql,
-                                                                  Statement.RETURN_GENERATED_KEYS);) {
+        String sql = "INSERT into [dbo].[FinPlan] "
+                + "( "
+                + " [TypeID]"
+                + ",[TypeName]"
+                + ",[Quantity]"
+                + ",[SmetCost]"
+                + ",[SaleCost]"
+                + " ) "
+                + "VALUES(?,?,?,?,?)";
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(sql,
+                     Statement.RETURN_GENERATED_KEYS);) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
-                for (PlanTIV obsItem : entry) {
-                    pstmt.setInt   (1,  obsItem.getTypeID());
-                    pstmt.setString(2,  obsItem.getType());
-                    pstmt.setInt   (3,  obsItem.getQuantity());
-                    pstmt.setDouble(4,  obsItem.getSmetCost());
-                    pstmt.setDouble(5,  obsItem.getSaleCost());
-                    
-                    int affectedRows = pstmt.executeUpdate();
-                    
-                    try( ResultSet generategKeys = pstmt.getGeneratedKeys()){
-                        if(generategKeys.next())
-                            obsItem.setId(generategKeys.getLong(1));
-                    }   
+            for (PlanTIV obsItem : entry) {
+                pstmt.setInt(1, obsItem.getTypeID());
+                pstmt.setString(2, obsItem.getType());
+                pstmt.setInt(3, obsItem.getQuantity());
+                pstmt.setDouble(4, obsItem.getSmetCost());
+                pstmt.setDouble(5, obsItem.getSaleCost());
+
+                int affectedRows = pstmt.executeUpdate();
+
+                try (ResultSet generategKeys = pstmt.getGeneratedKeys()) {
+                    if (generategKeys.next())
+                        obsItem.setId(generategKeys.getLong(1));
                 }
-           //SQL commit
-           connection.commit();
+            }
+            //SQL commit
+            connection.commit();
 
         } catch (SQLException ex) {
             Logger.getLogger(KS_DAO.class.getName()).log(Level.SEVERE, null, ex);

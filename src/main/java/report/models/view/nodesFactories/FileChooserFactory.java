@@ -22,15 +22,15 @@ public class FileChooserFactory {
         return fileChooser;
     }
 
-        public static File openExcelFolder() {
-            return newFCh("Open Resource File", PathStrings.Files.EXCEL)
-                    .showOpenDialog(null);
-        }
+    public static File openExcelFolder() {
+        return newFCh("Open Resource File", PathStrings.Files.EXCEL)
+                .showOpenDialog(null);
+    }
 
-        public static File openSqlBackUpFolder() {
-            return newFCh("Open \".Bak\" File", PathStrings.Files.BACK_UP_SQL)
-                    .showOpenDialog(null);
-        }
+    public static File openSqlBackUpFolder() {
+        return newFCh("Open \".Bak\" File", PathStrings.Files.BACK_UP_SQL)
+                .showOpenDialog(null);
+    }
 //        public static List<File> openDesktop() {
 //            FileChooser fileChooser = newFCh("Save Templates", PathStrings.FilesPaths.DESCTOP.toString());
 //            FileChooser.ExtensionFilter docFilter = new FileChooser.ExtensionFilter("DOC (*.doc)", "*.doc");
@@ -45,35 +45,33 @@ public class FileChooserFactory {
 //        }
 
 
+    public static File saveEst(Est enumEst) {
+        FileChooser fileChooser = newFCh("Save Estimation", "\\");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
 
+        fileChooser.getExtensionFilters().add(extFilter);
+        fileChooser.setInitialFileName(enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER)
+                + "_"
+                + enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR));
 
-        public static File saveEst(Est enumEst) {
-            FileChooser fileChooser = newFCh("Save Estimation", "\\");
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
+        return fileChooser.showSaveDialog(null);
+    }
 
-            fileChooser.getExtensionFilters().add(extFilter);
-            fileChooser.setInitialFileName(enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER)
-                    + "_"
-                    + enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR));
+    public static File saveKS(String ksNumber) {
+        FileChooser fileChooser = newFCh("Save KS", "\\");
+        FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
 
-            return fileChooser.showSaveDialog(null);
-        }
+        fileChooser.getExtensionFilters().add(extFilter);
+        fileChooser.setInitialFileName("КС-2_№_" + ksNumber
+                + "("
+                + Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER)
+                + ","
+                + Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR)
+                + ")"
+        );
 
-        public static File saveKS(String ksNumber) {
-            FileChooser fileChooser = newFCh("Save KS", "\\");
-            FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML files (*.xml)", "*.xml");
-
-            fileChooser.getExtensionFilters().add(extFilter);
-            fileChooser.setInitialFileName("КС-2_№_" + ksNumber
-                    + "("
-                    + Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER)
-                    + ","
-                    + Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR)
-                    + ")"
-            );
-
-            return fileChooser.showSaveDialog(null);
-        }
+        return fileChooser.showSaveDialog(null);
+    }
 
 
 }

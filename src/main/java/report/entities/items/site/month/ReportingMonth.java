@@ -31,6 +31,7 @@ public class ReportingMonth implements Clone<ReportingMonth> {
         this.allTaxes = new SimpleStringProperty(allTaxes);
         this.sumOsr = new SimpleStringProperty(sumOsr);
     }
+
     public ReportingMonth(ReportingMonth reportingMonth) {
         this.month = new SimpleObjectProperty<>(reportingMonth.getMonth());
         this.countFinish = new SimpleStringProperty(reportingMonth.getCountFinish());
@@ -42,7 +43,7 @@ public class ReportingMonth implements Clone<ReportingMonth> {
         this.allTaxes = new SimpleStringProperty(reportingMonth.getAllTaxes());
         this.sumOsr = new SimpleStringProperty(reportingMonth.getSumOsr());
     }
-    
+
     @Override
     public ReportingMonth getClone() {
         return new ReportingMonth(this);
