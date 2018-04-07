@@ -7,8 +7,8 @@ public class DoubleStringConverter extends DefaultNumberStringConverter<Double> 
 //    private final NFormat<Number> decimalFormatter;
 
     /*!******************************************************************************************************************
-    *                                                                                                        Constructor
-    ********************************************************************************************************************/
+     *                                                                                                        Constructor
+     ********************************************************************************************************************/
     /**
      * Ctor.
      *<br>Patter            : ?<br/>
@@ -22,10 +22,10 @@ public class DoubleStringConverter extends DefaultNumberStringConverter<Double> 
 
     /**
      * Ctor.
-     *<br>Patter            : "###,##0.00"<br/>
-     *<br>GroupingSeparator : ' '<br/>
-     *<br>DecimalSeparator  : '.'<br/>
-     *<br>RoundingMode      : DOWN (1)<br/>
+     * <br>Patter            : "###,##0.00"<br/>
+     * <br>GroupingSeparator : ' '<br/>
+     * <br>DecimalSeparator  : '.'<br/>
+     * <br>RoundingMode      : DOWN (1)<br/>
      */
     public DoubleStringConverter() {
         super("###,##0.00");
@@ -33,10 +33,10 @@ public class DoubleStringConverter extends DefaultNumberStringConverter<Double> 
 
     /**
      * Ctor.
-     *<p>Patter            : ?<p/>
-     *<p>GroupingSeparator : ' '<p/>
-     *<p>DecimalSeparator  : '.'<p/>
-     *<p>RoundingMode      : DOWN (1)<p/>
+     * <p>Patter            : ?<p/>
+     * <p>GroupingSeparator : ' '<p/>
+     * <p>DecimalSeparator  : '.'<p/>
+     * <p>RoundingMode      : DOWN (1)<p/>
      */
     public DoubleStringConverter(final String pattern) {
         super(pattern);
@@ -47,14 +47,15 @@ public class DoubleStringConverter extends DefaultNumberStringConverter<Double> 
 
 
     /*!******************************************************************************************************************
-    *                                                                                                        Methods
-    ********************************************************************************************************************/
+     *                                                                                                        Methods
+     ********************************************************************************************************************/
 
     /**
      * Parse Number to String.
      * <br>
      * Output format format use pattern (default - "0.00")
      * <br>
+     *
      * @param number String
      * @return String
      */
@@ -77,8 +78,8 @@ public class DoubleStringConverter extends DefaultNumberStringConverter<Double> 
     @Override
     public Double fromString(String numberString) {
         Double parserDouble = 0.0;
-            Number nn  = super.fromString(numberString);
-            parserDouble = nn.doubleValue();
+        Number nn = super.fromString(numberString);
+        parserDouble = nn.doubleValue();
 
         return parserDouble;
     }
@@ -86,6 +87,7 @@ public class DoubleStringConverter extends DefaultNumberStringConverter<Double> 
     /**
      * Return DecimalFormat with current settings.
      * <br>
+     *
      * @return DecimalFormat
      */
     @Override

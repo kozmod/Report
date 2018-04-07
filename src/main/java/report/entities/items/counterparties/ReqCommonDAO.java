@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import report.entities.items.expenses.ExpensesDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.models.sql.SqlConnector;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -14,19 +15,19 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ReqCommonDAO extends AbstractReqDAO{
+public class ReqCommonDAO extends AbstractReqDAO {
     //common data
-    private static final String SQL       = "SELECT * FROM [dbo].[Count_Req_Common] WHERE  id_Count = ? AND dell = 0";
+    private static final String SQL = "SELECT * FROM [dbo].[Count_Req_Common] WHERE  id_Count = ? AND dell = 0";
     private static final String SQL_TABLE = "[dbo].[Count_Req_Common]";
-    private static final String CATEGORY  = "Общие реквизиты";
+    private static final String CATEGORY = "Общие реквизиты";
     //columns
-    private static String OGRN       = "OGRN";
-    private static String DATE_OGRN  = "DateOGRN";
-    private static String INN        = "INN";
-    private static String KPP        = "KPP";
-    private static String ADRESS_L   = "Adress_L";
-    private static String ADRESS_F   = "Adress_F";
-    private static String ADRESS_P   = "Adress_P";
+    private static String OGRN = "OGRN";
+    private static String DATE_OGRN = "DateOGRN";
+    private static String INN = "INN";
+    private static String KPP = "KPP";
+    private static String ADRESS_L = "Adress_L";
+    private static String ADRESS_F = "Adress_F";
+    private static String ADRESS_P = "Adress_P";
     //name
 
 
@@ -41,16 +42,16 @@ public class ReqCommonDAO extends AbstractReqDAO{
     }
 
     @Override
-    public List<ObjectPSI> getByID(int countId){
+    public List<ObjectPSI> getByID(int countId) {
         List<ObjectPSI> list = FXCollections.observableArrayList(ObjectPSI.extractor());
         Map<String, ObjectPSI> map = this.getEmptyItems();
-        try(Connection connection = SqlConnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(SQL)) {
-            pstmt.setInt(1,countId);
-            if(pstmt.execute()){
-                try(ResultSet rs = pstmt.getResultSet()){
-                    if (rs.next()){
-                        ReqDaoUtils.setID(rs.getLong("id_Count"),map);
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(SQL)) {
+            pstmt.setInt(1, countId);
+            if (pstmt.execute()) {
+                try (ResultSet rs = pstmt.getResultSet()) {
+                    if (rs.next()) {
+                        ReqDaoUtils.setID(rs.getLong("id_Count"), map);
                         map.get(OGRN).setValue(rs.getString(OGRN));
                         map.get(DATE_OGRN).setValue(LocalDate.ofEpochDay(rs.getInt(DATE_OGRN)));
                         map.get(INN).setValue(rs.getInt(INN));

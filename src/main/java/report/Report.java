@@ -5,15 +5,14 @@ Author  : AORA-K
 --------------------------------------------------------------------------------------------------------------------- */
 
 
-
 package report;
-
 
 
 import java.awt.*;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -27,31 +26,38 @@ import report.usage_strings.PathStrings;
 
 public class Report extends Application {
 
-/*!******************************************************************************************************************
-*                                                                                                               ENUMS
-********************************************************************************************************************/
-    public  enum ScreenSize {
-         width , height; 
-         
-        private ScreenSize() {  }
-        
+    /*!******************************************************************************************************************
+     *                                                                                                               ENUMS
+     ********************************************************************************************************************/
+    public enum ScreenSize {
+        width, height;
+
+        private ScreenSize() {
+        }
+
         public void setValue() {
             Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-            switch(this){
-                case width:  value = screenSize.getWidth(); break;
-                case height: value = screenSize.getHeight(); break;
+            switch (this) {
+                case width:
+                    value = screenSize.getWidth();
+                    break;
+                case height:
+                    value = screenSize.getHeight();
+                    break;
             }
-            
+
         }
-        
-        public double getValue(){return value;}
-        
+
+        public double getValue() {
+            return value;
+        }
+
         private double value;
     }
 
-/*!******************************************************************************************************************
-*                                                                                                              FIELDS
-********************************************************************************************************************/
+    /*!******************************************************************************************************************
+     *                                                                                                              FIELDS
+     ********************************************************************************************************************/
 
     private Stage primaryStage;
     private BorderPane rootLayout;
@@ -60,9 +66,9 @@ public class Report extends Application {
     private Object centerController;
     private StageCreator stageCreator;
 
-/*!******************************************************************************************************************
-*                                                                                                      Getter/Setter
-********************************************************************************************************************/
+    /*!******************************************************************************************************************
+     *                                                                                                      Getter/Setter
+     ********************************************************************************************************************/
     public Stage getPrimaryStage() {
         return primaryStage;
     }
@@ -76,56 +82,55 @@ public class Report extends Application {
     }
 
     public <T> T getCenterController() {
-        return (T)centerController;
+        return (T) centerController;
     }
 
-    public <T> void  setCenterController(T controller) {
+    public <T> void setCenterController(T controller) {
         centerController = controller;
     }
 
 
-/*!******************************************************************************************************************
-*                                                                                                               INIT
-********************************************************************************************************************/
+    /*!******************************************************************************************************************
+     *                                                                                                               INIT
+     ********************************************************************************************************************/
 
-//Init ROOT Layout
-    private void initRootLayout(){
+    //Init ROOT Layout
+    private void initRootLayout() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Report.class.getResource(PathStrings.Layout.ROOT));
-            rootLayout = (BorderPane)loader.load();
-            
-            scene = new Scene(rootLayout,ScreenSize.width.getValue() - 100,ScreenSize.height.getValue() - 100);
+            rootLayout = (BorderPane) loader.load();
+
+            scene = new Scene(rootLayout, ScreenSize.width.getValue() - 100, ScreenSize.height.getValue() - 100);
 //            scene = new Scene(rootlayout,1800,900);
             primaryStage.setScene(scene);
             rootController = loader.getController(); //set controller
             rootController.setReportApp(this);
 
 
-
         } catch (IOException ex) {
             Logger.getLogger(Report.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }
 
     //init Intro Layout
-    public StageCreator initIntroLayout(){
+    public StageCreator initIntroLayout() {
         StageCreator.setReportMain(this);
-        StageCreator center = new StageCreator(PathStrings.Layout.INTRO,"").loadIntoRootBorderPaneCenter();
+        StageCreator center = new StageCreator(PathStrings.Layout.INTRO, "").loadIntoRootBorderPaneCenter();
         Object centerController = center.getController();
         return center;
     }
 
 
-/*!******************************************************************************************************************
-*                                                                                                              START
-********************************************************************************************************************/
+    /*!******************************************************************************************************************
+     *                                                                                                              START
+     ********************************************************************************************************************/
     @Override
-    public void start(Stage stage){
+    public void start(Stage stage) {
         ScreenSize.width.setValue();
         ScreenSize.height.setValue();
-        
+
         this.primaryStage = stage;
         this.primaryStage.setTitle("App");
 
@@ -136,16 +141,16 @@ public class Report extends Application {
 
         //Init Intro
         this.initIntroLayout();
-        
+
     }
 
-/*!******************************************************************************************************************
-*                                                                              public static void main(String[] args)
-********************************************************************************************************************/
+    /*!******************************************************************************************************************
+     *                                                                              public static void main(String[] args)
+     ********************************************************************************************************************/
     public static void main(String[] args) {
         System.out.println(System.getProperty("user.dir"));
         launch(args);
     }
-    
+
 }
 

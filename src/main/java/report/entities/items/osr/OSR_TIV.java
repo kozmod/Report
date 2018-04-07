@@ -14,7 +14,7 @@ import report.entities.items.Clone;
 
 /**
  *
- * 
+ *
  */
 
 //@Entity
@@ -22,58 +22,83 @@ import report.entities.items.Clone;
 //@Access(quantity = AccessType.PROPERTY)
 public class OSR_TIV implements Clone {
 
-    private Long  id;
-    private final StringProperty  text;    
-    private final DoubleProperty   expenses;                                                   
-    private final DoubleProperty   expensesPerHouse;
+    private Long id;
+    private final StringProperty text;
+    private final DoubleProperty expenses;
+    private final DoubleProperty expensesPerHouse;
 
     public OSR_TIV(long id, String text, Double expenses, Double expensesPerHouse) {
-        this.id               = id;
-        this.text             = new SimpleStringProperty(text);
-        this.expenses         = new SimpleDoubleProperty(expenses);
+        this.id = id;
+        this.text = new SimpleStringProperty(text);
+        this.expenses = new SimpleDoubleProperty(expenses);
         this.expensesPerHouse = new SimpleDoubleProperty(expensesPerHouse);
     }
 
 
-
-
     /**
-    * Clone CONSTRUCTOR implementation
-    */
+     * Clone CONSTRUCTOR implementation
+     */
 //    @Transient
     @Override
     public Clone getClone() {
         Clone clone = new OSR_TIV(
-                                    this.getId(),
-                                    this.getText(),
-                                    this.getExpenses(),
-                                    this.getExpensesPerHouse()
-                                    );
-            return clone;
+                this.getId(),
+                this.getText(),
+                this.getExpenses(),
+                this.getExpensesPerHouse()
+        );
+        return clone;
     }
-    
+
     //Getters AND Setters --------------------------------------------------------------------------
 //    @Override
-    public long getId() {return id;}
-//    @Override
-    public void setId(long id) {this.id = id;}
+    public long getId() {
+        return id;
+    }
+
+    //    @Override
+    public void setId(long id) {
+        this.id = id;
+    }
 
 
-    public String getText() {return text.getValue();}
-    public void   setText(String value_inp) {text.set(value_inp);}
-    public StringProperty textProperty() { return text; }
+    public String getText() {
+        return text.getValue();
+    }
+
+    public void setText(String value_inp) {
+        text.set(value_inp);
+    }
+
+    public StringProperty textProperty() {
+        return text;
+    }
 
 
-    public Double getExpenses() {return expenses.getValue();}
-    public void  setExpenses(double value_inp) {expenses.set(value_inp);}
-    public DoubleProperty expensesProperty(){return expenses;}
+    public Double getExpenses() {
+        return expenses.getValue();
+    }
+
+    public void setExpenses(double value_inp) {
+        expenses.set(value_inp);
+    }
+
+    public DoubleProperty expensesProperty() {
+        return expenses;
+    }
 
 
+    public Double getExpensesPerHouse() {
+        return expensesPerHouse.getValue();
+    }
 
-    public Double getExpensesPerHouse() {return expensesPerHouse.getValue();}
-    public void  setExpensesPerHouse(double value_inp) {expensesPerHouse.set(value_inp);}
-    public DoubleProperty  expensesPerHouseProperty (){return expensesPerHouse;}
+    public void setExpensesPerHouse(double value_inp) {
+        expensesPerHouse.set(value_inp);
+    }
 
+    public DoubleProperty expensesPerHouseProperty() {
+        return expensesPerHouse;
+    }
 
 
     //Equakls AND hashCode ==========================================================================
@@ -81,15 +106,15 @@ public class OSR_TIV implements Clone {
     public int hashCode() {
         int hash = 2;
         hash = 1 * hash + this.text.get().hashCode();
-        hash = 2 * hash + (this.expenses         != null ? Double.hashCode(this.expenses.get())         : 0);
+        hash = 2 * hash + (this.expenses != null ? Double.hashCode(this.expenses.get()) : 0);
         hash = 3 * hash + (this.expensesPerHouse != null ? Double.hashCode(this.expensesPerHouse.get()) : 0);
-        
+
         return hash;
     }
 
     @Override
     public boolean equals(Object obj) {
-   
+
         if (obj == null) {
             return false;
         }
@@ -106,16 +131,15 @@ public class OSR_TIV implements Clone {
         if (this.expensesPerHouse.get() != other.expensesPerHouse.get()) {
             return false;
         }
-    return true;
+        return true;
     }
-    
+
     /**
-    *Extractor to observe changes in "Property" fields.
-    */
+     * Extractor to observe changes in "Property" fields.
+     */
     public static Callback<OSR_TIV, Observable[]> extractor() {
         return (OSR_TIV p) -> new Observable[]{p.expensesProperty()};
     }
 
 
-    
 }

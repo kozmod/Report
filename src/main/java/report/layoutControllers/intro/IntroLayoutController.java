@@ -11,7 +11,8 @@ import java.util.ResourceBundle;
 public class IntroLayoutController implements Initializable {
 
 
-    @FXML TableView infoTV, finishedSiteTV;
+    @FXML
+    TableView infoTV, finishedSiteTV;
 
     //Service
     private IntroControllerService introService = new IntroControllerService(this);
@@ -26,7 +27,7 @@ public class IntroLayoutController implements Initializable {
     }
 
 
-    public void updateTables(){
+    public void updateTables() {
         infoTV.setItems(introService.getListIntro());
         finishedSiteTV.setItems(introService.getFinishedSiteList());
     }

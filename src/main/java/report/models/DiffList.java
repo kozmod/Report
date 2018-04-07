@@ -16,22 +16,23 @@ import java.util.stream.Collectors;
  * <br>exElements
  * <br>newElements
  * </b>
+ *
  * @param <T>
  */
-public class DiffList<T>{
+public class DiffList<T> {
     private final Collection<T> baseList;
     private final Collection<T> editedList;
 
     /*!******************************************************************************************************************
-    *                                                                                                       CONSTRUCTORS
-    ********************************************************************************************************************/
-    private  DiffList() {
+     *                                                                                                       CONSTRUCTORS
+     ********************************************************************************************************************/
+    private DiffList() {
         baseList = null;
         editedList = null;
     }
 
     public DiffList(Collection<T> baseList, Collection<T> editList) {
-        this.baseList   = baseList;
+        this.baseList = baseList;
         this.editedList = editList;
 
 //        intersection =  (List<T>) baseList.stream()
@@ -45,15 +46,15 @@ public class DiffList<T>{
     }
 
     /*!******************************************************************************************************************
-    *                                                                                                             METHODS
-    ********************************************************************************************************************/
-    public  Collection<T> intersection(){
+     *                                                                                                             METHODS
+     ********************************************************************************************************************/
+    public Collection<T> intersection() {
         return this.baseList.stream()
-            .filter((T item) -> !editedList.contains(item))
-            .collect(Collectors.toList());
+                .filter((T item) -> !editedList.contains(item))
+                .collect(Collectors.toList());
     }
 
-    public  Collection<T>   exElements(){
+    public Collection<T> exElements() {
         return this.intersection().stream()
                 .filter(item -> !editedList.contains(item))
                 .collect(Collectors.toList());
@@ -64,8 +65,8 @@ public class DiffList<T>{
 //                return rr;
     }
 
-    public  Collection<T>  newElements(){
-        return  editedList.stream()
+    public Collection<T> newElements() {
+        return editedList.stream()
                 .filter(item -> !baseList.contains(item))
                 .collect(Collectors.toList());
 //                result.forEach(item -> {

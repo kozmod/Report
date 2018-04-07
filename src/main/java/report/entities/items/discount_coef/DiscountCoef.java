@@ -10,18 +10,18 @@ import report.entities.items.DItem;
 public class DiscountCoef implements Clone {
 
 
-    interface SQL{
+    interface SQL {
         String RATE_OF_RETURN = "RateOfReturn";
-        String KD             = "KD";
-        String KD_PER_MONTH   = "KDperMonth";
-        String MARKET_RISKS   = "MarketRisks";
+        String KD = "KD";
+        String KD_PER_MONTH = "KDperMonth";
+        String MARKET_RISKS = "MarketRisks";
         String SPECIFIC_RISKS = "SpecificRisk";
     }
 
     public static final String RATE_OF_RETURN = "Ставка доходности по ОФЗ РФ 26214 (с погашением в мае 2020 г.)";
-    public static final String KD             = "Итого ставка доходности на собственный капитал (КД), %";
-    public static final String KD_PER_MONTH   = "Месячный коэффициент дисконтирования (КД/12)";
-    public static final String MARKET_RISKS   = "Рыночные риски";
+    public static final String KD = "Итого ставка доходности на собственный капитал (КД), %";
+    public static final String KD_PER_MONTH = "Месячный коэффициент дисконтирования (КД/12)";
+    public static final String MARKET_RISKS = "Рыночные риски";
     public static final String SPECIFIC_RISKS = "Специфические риски";
     public static final String ROOT_ELEMENT = "ROOT";
 
@@ -31,14 +31,15 @@ public class DiscountCoef implements Clone {
     private final DoubleProperty kd;
     private final DoubleProperty kdPerMonth;
     private final SpecificRisk specificRisk;
-    private final MarketRisk  marketRisk;
+    private final MarketRisk marketRisk;
+
     /***************************************************************************
      *                                                                         *
      * Constructor                                                             *
      *                                                                         *
      **************************************************************************/
 
-    public DiscountCoef(long id,double rateOfReturn, SpecificRisk specificRisk, MarketRisk marketRisk) {
+    public DiscountCoef(long id, double rateOfReturn, SpecificRisk specificRisk, MarketRisk marketRisk) {
         this.id = id;
         this.rateOfReturn = new SimpleDoubleProperty(rateOfReturn);
         this.specificRisk = specificRisk;
@@ -72,10 +73,12 @@ public class DiscountCoef implements Clone {
     public long getId() {
         return id;
     }
-//    @Override
+
+    //    @Override
     public void setId(long id) {
         this.id = id;
     }
+
     public DoubleProperty kdProperty() {
         return kd;
     }
@@ -101,7 +104,7 @@ public class DiscountCoef implements Clone {
     }
 
     @Override
-    public  DiscountCoef getClone() {
+    public DiscountCoef getClone() {
         return new DiscountCoef(this);
     }
 
@@ -112,22 +115,23 @@ public class DiscountCoef implements Clone {
      *                                                                         *
      **************************************************************************/
 
-    private void computeKD(){
+    private void computeKD() {
         double var = this.rateOfReturn.get()
                 + this.specificRisk.valueProperty().get()
                 + this.marketRisk.valueProperty().get();
         this.kd.setValue(var);
-        this.kdPerMonth.setValue(var/12);
+        this.kdPerMonth.setValue(var / 12);
     }
 
 
     /**
      * TreeItem from Object
+     *
      * @return
      */
-    public TreeItem<DItem> tree(){
+    public TreeItem<DItem> tree() {
         final TreeItem<DItem> specificRoot = new TreeItem<>(
-                new DItem(id,"",SPECIFIC_RISKS,specificRisk.valueProperty())
+                new DItem(id, "", SPECIFIC_RISKS, specificRisk.valueProperty())
         );
         specificRoot.getChildren().addAll(
                 new TreeItem<>(
@@ -169,7 +173,7 @@ public class DiscountCoef implements Clone {
         );
 
         final TreeItem<DItem> marketRoot = new TreeItem<>(
-                new DItem(id,"",MARKET_RISKS,marketRisk.valueProperty())
+                new DItem(id, "", MARKET_RISKS, marketRisk.valueProperty())
         );
         marketRoot.getChildren().addAll(
                 new TreeItem<>(
@@ -231,13 +235,13 @@ public class DiscountCoef implements Clone {
                 )
         );
 
-        final TreeItem<DItem> RORLeaf = new TreeItem<>( new DItem(id,"",RATE_OF_RETURN,this.rateOfReturn));
-        final TreeItem<DItem> KD = new TreeItem<>( new DItem(id,"", this.KD,this.kd));
-        final TreeItem<DItem> KDperMonth = new TreeItem<>( new DItem(id,"", this.KD,this.kdPerMonth));
-        final TreeItem<DItem> root = new TreeItem<>( new DItem(id,"",ROOT_ELEMENT,0d));
-        root.getChildren().addAll(RORLeaf,specificRoot,marketRoot,KD,KDperMonth);
+        final TreeItem<DItem> RORLeaf = new TreeItem<>(new DItem(id, "", RATE_OF_RETURN, this.rateOfReturn));
+        final TreeItem<DItem> KD = new TreeItem<>(new DItem(id, "", this.KD, this.kd));
+        final TreeItem<DItem> KDperMonth = new TreeItem<>(new DItem(id, "", this.KD, this.kdPerMonth));
+        final TreeItem<DItem> root = new TreeItem<>(new DItem(id, "", ROOT_ELEMENT, 0d));
+        root.getChildren().addAll(RORLeaf, specificRoot, marketRoot, KD, KDperMonth);
 
-        root.getValue().secondValueProperty().addListener((ChangeListener) (observable, oldValue, newValue) ->{
+        root.getValue().secondValueProperty().addListener((ChangeListener) (observable, oldValue, newValue) -> {
             this.specificRisk.compute();
             this.marketRisk.compute();
             this.computeKD();
@@ -247,6 +251,7 @@ public class DiscountCoef implements Clone {
         this.computeKD();
         return root;
     }
+
     /***************************************************************************
      *                                                                         *
      * Override                                                                *

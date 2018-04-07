@@ -24,26 +24,26 @@ public class ReportingMonthDAO {
     }
 
     public ObservableList<ReportingMonth> getData(LocalDate dateFrom, LocalDate dateTo) {
-        ObservableList<ReportingMonth> list =  FXCollections.observableArrayList();
+        ObservableList<ReportingMonth> list = FXCollections.observableArrayList();
 
         String sqlQuery = "exec dbo.MONTH_GRAPHIK @DateTO = '2012-01-01',@DateFrom = '20180601'";
 //        String sqlQuery = "exec dbo.MONTH_GRAPHIK ?,?";
-        try(Connection connection = SqlConnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(sqlQuery)) {
-            if(pstmt.execute()) {
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(sqlQuery)) {
+            if (pstmt.execute()) {
                 try (ResultSet rs = pstmt.getResultSet()) {
-                    while(rs.next()) {
+                    while (rs.next()) {
                         list.add(
                                 new ReportingMonth(
                                         rs.getDate("month")
-                                        ,rs.getString("count_finish")
-                                        ,rs.getString("count_pay")
-                                        ,rs.getString("Price_sum")
-                                        ,rs.getString("S_CRED")
-                                        ,rs.getString("Oper_profit")
-                                        ,rs.getString("Add_Cost")
-                                        ,rs.getString("all_Taxes")
-                                        ,rs.getString("SUm_OSR")
+                                        , rs.getString("count_finish")
+                                        , rs.getString("count_pay")
+                                        , rs.getString("Price_sum")
+                                        , rs.getString("S_CRED")
+                                        , rs.getString("Oper_profit")
+                                        , rs.getString("Add_Cost")
+                                        , rs.getString("all_Taxes")
+                                        , rs.getString("SUm_OSR")
 
                                 )
                         );
@@ -54,6 +54,6 @@ public class ReportingMonthDAO {
             ex.printStackTrace();
             Logger.getLogger(ExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return  list;
+        return list;
     }
 }

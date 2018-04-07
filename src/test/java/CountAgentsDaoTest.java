@@ -46,23 +46,24 @@ public class CountAgentsDaoTest {
         // prepare list of Counter Agent to insert
         ObservableList<CountAgentTVI> listToInsert =
                 countAgentList.stream()
-                .filter(countAgent -> countAgent.getName().equals("ГРЭМ"))
-                .peek(countAgent ->
-                        countAgent.getLinkedNames().addAll(selectedNamesUsePattern)
-                )
-                .collect(Collector.of(
-                () -> FXCollections.observableArrayList(),
-                ObservableList::add,
-                (l1, l2) -> {
-                    l1.addAll(l2);
-                    return l1;
-                }));
+                        .filter(countAgent -> countAgent.getName().equals("ГРЭМ"))
+                        .peek(countAgent ->
+                                countAgent.getLinkedNames().addAll(selectedNamesUsePattern)
+                        )
+                        .collect(Collector.of(
+                                () -> FXCollections.observableArrayList(),
+                                ObservableList::add,
+                                (l1, l2) -> {
+                                    l1.addAll(l2);
+                                    return l1;
+                                }));
 //                .forEach(countAgent -> System.out.println(countAgent.getLinkedNames()));
 
         new CounterAgentDAO().insert(listToInsert);
 
 
     }
+
     @Test
     @DisplayName("Counter Agents")
     public void shoulDeleteElement_WhenUseDELETE_FRK_ACCOUNT_COUNT_TYPE_FORM_Test() {
@@ -78,16 +79,16 @@ public class CountAgentsDaoTest {
                                     l1.addAll(l2);
                                     return l1;
                                 }));
-        listToDelete.forEach(e -> System.out.println(e.getIdForm() + " "+ e.getIdName()+ " "+ e.getIdType()));
+        listToDelete.forEach(e -> System.out.println(e.getIdForm() + " " + e.getIdName() + " " + e.getIdType()));
         new CounterAgentDAO().delete(listToDelete);
     }
 
     @Test
     @DisplayName("Counter Agents")
     public void shouldMatchRegExTest() {
-        String text   = "Привет я Мксим, готов бросить якорь в бухте %harbor_name% , и поехать на поезде";
+        String text = "Привет я Мксим, готов бросить якорь в бухте %harbor_name% , и поехать на поезде";
         text = Pattern.compile("%harbor_name%")
-                        .matcher(text).replaceAll("Жемчужная");
+                .matcher(text).replaceAll("Жемчужная");
         System.out.println(text);
 //        System.out.println(
 //                Pattern.compile(".*[гГрРэЭмМ]{4}.*")

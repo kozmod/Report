@@ -6,47 +6,46 @@ import javafx.util.StringConverter;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class LocalDayStringConverter extends StringConverter<LocalDate>  {
+public class LocalDayStringConverter extends StringConverter<LocalDate> {
 
     private final DateTimeFormatter dateFormatter;
 
 
     /*!******************************************************************************************************************
-    *                                                                                                        Constructor
-    ********************************************************************************************************************/
+     *                                                                                                        Constructor
+     ********************************************************************************************************************/
 
     public LocalDayStringConverter(DateTimeFormatter dateFormatter) {
         this.dateFormatter = dateFormatter;
     }
 
     public LocalDayStringConverter() {
-        this.dateFormatter  = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        this.dateFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
     }
 
     public LocalDayStringConverter(String patter) {
-        this.dateFormatter  = DateTimeFormatter.ofPattern(patter);
+        this.dateFormatter = DateTimeFormatter.ofPattern(patter);
     }
 
 
     /*!******************************************************************************************************************
-    *                                                                                                        Methods
-    ********************************************************************************************************************/
+     *                                                                                                        Methods
+     ********************************************************************************************************************/
 
     @Override
     public String toString(LocalDate localDate) {
         String string = "";
         if (localDate != null) {
-            string =  dateFormatter.format(localDate);
+            string = dateFormatter.format(localDate);
         }
         return string;
 
     }
 
     @Override
-    public LocalDate fromString(String doubleString)  {
+    public LocalDate fromString(String doubleString) {
         return LocalDate.parse(doubleString, dateFormatter);
     }
-
 
 
 }

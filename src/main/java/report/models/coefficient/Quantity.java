@@ -10,26 +10,21 @@ import javafx.beans.property.SimpleIntegerProperty;
 
 
 public class Quantity {
-     private final static IntegerProperty  quantity = new SimpleIntegerProperty();
+    private final static IntegerProperty quantity = new SimpleIntegerProperty();
 
     public synchronized static IntegerProperty getQuantityProperty() {
         Quantity.updateFromBase();
-       return quantity;
+        return quantity;
     }
+
     public synchronized static int value() {
-       return getQuantityProperty().intValue();
+        return getQuantityProperty().intValue();
     }
 
     public synchronized static IntegerProperty updateFromBase() {
         quantity.setValue(new FormulaQuery().getSiteQuantity());
-       return quantity;
+        return quantity;
     }
-
-
-
-
-
-
 
 
 }

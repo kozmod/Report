@@ -4,6 +4,7 @@ package report.layoutControllers;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -25,33 +26,33 @@ public class CorAccountController implements Initializable {
 
     @FXML
     private TableView accTable;
-   
+
     @FXML
     private DatePicker dateAccFrom, dateAccTo;
-    
-//INIT==============================================================================================================      
+
+    //INIT==============================================================================================================
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //decore Acc table
         AddKSControllerTF.decorAcc(accTable);
-        accTable.setItems(new AccountDAO().getList(0,0));
+        accTable.setItems(new AccountDAO().getList(0, 0));
 
         init_DatePickers();
 //        init_AccTable();
     }
-    
-    void init_DatePickers(){
+
+    void init_DatePickers() {
 //        dateAccFrom.setConverter(new EpochDatePickerConverter());
 //        dateAccTo.setConverter  (new EpochDatePickerConverter());
         dateAccFrom.setConverter(
-                        new LocalDayStringConverter()
+                new LocalDayStringConverter()
         );
         dateAccTo.setConverter(
-                        new LocalDayStringConverter()
+                new LocalDayStringConverter()
         );
     }
- 
-    
+
+
 //    void init_AccTable(){
 //        TableColumn dateCol = new TableColumn("Дата");
 //        dateCol.setCellValueFactory(new PropertyValueFactory("date"));
@@ -125,56 +126,55 @@ public class CorAccountController implements Initializable {
 //
 //    }
 
-    
-// HANDLERT=========================================================================================================== 
+
+    // HANDLERT===========================================================================================================
     @FXML
-    private void handle_buttonAccLoad(ActionEvent event) {                   
+    private void handle_buttonAccLoad(ActionEvent event) {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Resource File");
         File selectedFile = fileChooser.showOpenDialog(null);
-        
-        if(selectedFile != null){
+
+        if (selectedFile != null) {
             new InsertFileXLSQuery().insertRowsFromXls_Account(selectedFile.getPath());
-            accTable.setItems(new AccountDAO().getList(0,0));
-        }else{
+            accTable.setItems(new AccountDAO().getList(0, 0));
+        } else {
             System.out.println("Отмена FILE CHUSER xls/xlsx");
         }
     }
-    
+
     @FXML
-    private void handle_OKButton(ActionEvent event) {  
-        if (isInputValid()){
+    private void handle_OKButton(ActionEvent event) {
+        if (isInputValid()) {
             accTable.setItems(new AccountDAO().getList(
-                                    (int) dateAccFrom.getValue().toEpochDay(),
-                                    (int) dateAccTo.getValue().toEpochDay())
-                                                        );
+                    (int) dateAccFrom.getValue().toEpochDay(),
+                    (int) dateAccTo.getValue().toEpochDay())
+            );
         }
     }
-    
-    
-    
-//InputValidator========================================================================================================        
+
+
+    //InputValidator========================================================================================================
     private boolean isInputValid() {
         String errorMessage = "";
 
-            if (dateAccFrom.getValue() == null ){
-                errorMessage += "'Дата поиска: с' ";
-                dateAccFrom.setEditable(true);
-                dateAccFrom.setStyle("-fx-border-color: red;");
-                
-            } 
-            if (dateAccTo.getValue() == null){
-                errorMessage += "'Дата поиска: по' ";
-                
-                dateAccTo.setStyle("-fx-border-color: red;");
-            }
-            if(dateAccFrom.getValue() != null && dateAccTo.getValue() != null
-                    && dateAccFrom.getValue().toEpochDay() > dateAccTo.getValue().toEpochDay()){
-                errorMessage += "'Неверный период' ";
-                dateAccFrom.setStyle("-fx-border-color: red;");
-                
-            }
-            
+        if (dateAccFrom.getValue() == null) {
+            errorMessage += "'Дата поиска: с' ";
+            dateAccFrom.setEditable(true);
+            dateAccFrom.setStyle("-fx-border-color: red;");
+
+        }
+        if (dateAccTo.getValue() == null) {
+            errorMessage += "'Дата поиска: по' ";
+
+            dateAccTo.setStyle("-fx-border-color: red;");
+        }
+        if (dateAccFrom.getValue() != null && dateAccTo.getValue() != null
+                && dateAccFrom.getValue().toEpochDay() > dateAccTo.getValue().toEpochDay()) {
+            errorMessage += "'Неверный период' ";
+            dateAccFrom.setStyle("-fx-border-color: red;");
+
+        }
+
 
 //        if(errorMessage.length() >0){
 //            errorLabel.setText("Ошибки в полях: " +errorMessage);
@@ -182,27 +182,24 @@ public class CorAccountController implements Initializable {
 //        }
 
         PauseTransition visiblePause = new PauseTransition(Duration.seconds(3));
-                    visiblePause.setOnFinished(new EventHandler<ActionEvent>() {
+        visiblePause.setOnFinished(new EventHandler<ActionEvent>() {
 
-                        @Override
-                        public void handle(ActionEvent event) {
-                            dateAccFrom.setStyle(null);
-                            dateAccTo.setStyle(null);
-                        }
-                    });
-             visiblePause.play();
+            @Override
+            public void handle(ActionEvent event) {
+                dateAccFrom.setStyle(null);
+                dateAccTo.setStyle(null);
+            }
+        });
+        visiblePause.play();
 
-         if (errorMessage.length() == 0) {
+        if (errorMessage.length() == 0) {
             return true;
-            } else { 
-             
-             // Показываем сообщение об ошибке.
+        } else {
+
+            // Показываем сообщение об ошибке.
             return false;
         }
-  }    
-    
-    
-    
-    
-    
+    }
+
+
 }

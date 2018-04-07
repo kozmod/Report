@@ -7,6 +7,7 @@ import report.entities.items.Item;
 import report.models.sql.SqlConnector;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -16,6 +17,7 @@ import java.util.Collection;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layoutControllers.LogController;
@@ -23,145 +25,154 @@ import report.layoutControllers.estimate.EstimateController.Est;
 
 
 public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
-    
-    private Est enumEst;
-    
-    public Est getEnumEst(){return enumEst;}
 
-    public KS_DAO() {}
-    public KS_DAO(Est enumEst){this.enumEst = enumEst;}
-    
+    private Est enumEst;
+
+    public Est getEnumEst() {
+        return enumEst;
+    }
+
+    public KS_DAO() {
+    }
+
+    public KS_DAO(Est enumEst) {
+        this.enumEst = enumEst;
+    }
+
     /**
-    * Get String of a Mirror (SQL.Tables).
-    * @return  List of Item
-    */
+     * Get String of a Mirror (SQL.Tables).
+     *
+     * @return List of Item
+     */
     @Override
-    public String getSqlTableName() {return SQL.Tables.KS;}
-    
-    
-    
+    public String getSqlTableName() {
+        return SQL.Tables.KS;
+    }
+
+
     /**
-    * Get List of TableWrapper Items (KS_TIV) from SQL
-    * @return  List of KS_TIV
-    */
+     * Get List of TableWrapper Items (KS_TIV) from SQL
+     *
+     * @return List of KS_TIV
+     */
     @Override
-    public ObservableList<KS_TIV> getData(){
+    public ObservableList<KS_TIV> getData() {
         ObservableList<KS_TIV> list = FXCollections.observableArrayList();
-        
+
         String psmtmtString = "SELECT  "
-                       + " [id]"
-                       + ",[KS_Number]"
-                       + ",[KS_Date]"
-                       + ",[SiteNumber]"
-                       + ",[TypeHome]"
-                       + ",[Contractor]"
-                       + ",[JM_name]"
-                       + ",[JobsOrMaterials]"
-                       + ",[BindedJob]"
-                       + ",[Value]"
-                       + ",[Unit]"
-                       + ",[Price_one]"
-                       + ",[Price_sum]"
-                       + ",[BuildingPart]"
-                       + ",[DateCreate]"
-                       + ",[dell]"
+                + " [id]"
+                + ",[KS_Number]"
+                + ",[KS_Date]"
+                + ",[SiteNumber]"
+                + ",[TypeHome]"
+                + ",[Contractor]"
+                + ",[JM_name]"
+                + ",[JobsOrMaterials]"
+                + ",[BindedJob]"
+                + ",[Value]"
+                + ",[Unit]"
+                + ",[Price_one]"
+                + ",[Price_sum]"
+                + ",[BuildingPart]"
+                + ",[DateCreate]"
+                + ",[dell]"
                 + "From dbo.[KS]"
                 + "Where [SiteNumber] = ? "
                 + "And [Contractor] = ? ";
 //                + "And [dell] = 0 ";
-        
-        try(Connection connection = SqlConnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {
-            
-                pstmt.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
-                pstmt.setString(2, enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR));
-                pstmt.execute();
-            
+
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {
+
+            pstmt.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
+            pstmt.setString(2, enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR));
+            pstmt.execute();
+
             ResultSet rs = pstmt.getResultSet();
-            
-                while(rs.next()){
-                    
-                    KS_TIV item = new KS_TIV(
-                                    rs.getLong     (SQL.Common.ID),
-                                    rs.getTimestamp(SQL.Common.DATE_CREATE),
-                                    rs.getInt      (SQL.KS.NUMBER),
-                                    rs.getInt      (SQL.KS.DATE),
-                                    rs.getObject   (SQL.Common.SITE_NUMBER).toString(),
-                                    rs.getObject   (SQL.Common.TYPE_HOME).toString(),
-                                    rs.getObject   (SQL.Common.CONTRACTOR).toString(),
-                                    rs.getObject   (SQL.Estimate.JM_NAME).toString(),
-                                    rs.getObject   (SQL.Estimate.JOB_MATERIAL).toString(),
-                                    rs.getObject   (SQL.Estimate.BINDED_JOB).toString(),
-                                    rs.getDouble    (SQL.Estimate.VALUE),
-                                    rs.getObject   (SQL.Estimate.UNIT).toString(),
-                                    rs.getDouble    (SQL.Estimate.PRICE_ONE),
-                                    rs.getDouble    (SQL.Estimate.PRICE_SUM),
-                                    rs.getObject   (SQL.Estimate.BUILDING_PART).toString()
-                            );
-                            item.setDel(rs.getInt(SQL.Common.DEL));
-                    list.add(item);     
-                }
-   
+
+            while (rs.next()) {
+
+                KS_TIV item = new KS_TIV(
+                        rs.getLong(SQL.Common.ID),
+                        rs.getTimestamp(SQL.Common.DATE_CREATE),
+                        rs.getInt(SQL.KS.NUMBER),
+                        rs.getInt(SQL.KS.DATE),
+                        rs.getObject(SQL.Common.SITE_NUMBER).toString(),
+                        rs.getObject(SQL.Common.TYPE_HOME).toString(),
+                        rs.getObject(SQL.Common.CONTRACTOR).toString(),
+                        rs.getObject(SQL.Estimate.JM_NAME).toString(),
+                        rs.getObject(SQL.Estimate.JOB_MATERIAL).toString(),
+                        rs.getObject(SQL.Estimate.BINDED_JOB).toString(),
+                        rs.getDouble(SQL.Estimate.VALUE),
+                        rs.getObject(SQL.Estimate.UNIT).toString(),
+                        rs.getDouble(SQL.Estimate.PRICE_ONE),
+                        rs.getDouble(SQL.Estimate.PRICE_SUM),
+                        rs.getObject(SQL.Estimate.BUILDING_PART).toString()
+                );
+                item.setDel(rs.getInt(SQL.Common.DEL));
+                list.add(item);
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(KS_DAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
-    
+
     /**
-    * Get List of TableWrapper Items (KS_TIV) from SQL
-    * <b>(only ONE List use KS number)</b>
-     * 
+     * Get List of TableWrapper Items (KS_TIV) from SQL
+     * <b>(only ONE List use KS number)</b>
+     *
      * @param enumEst  (enumeration)
      * @param ksNumber (integer)
      * @return List of KS_TIV
-    */
-    
-    public List<KS_TIV> getOneKSList(Est enumEst, int ksNumber){
-        
+     */
+
+    public List<KS_TIV> getOneKSList(Est enumEst, int ksNumber) {
+
         List<KS_TIV> list = FXCollections.observableArrayList();
-        
+
         String psmtmtString = "SELECT  "
-                       + " * "
+                + " * "
                 + "FROM  dbo.[KS]"
                 + "WHERE [SiteNumber] = ? "
                 + "AND   [Contractor] = ? "
                 + "AND   [KS_Number] = ? "
                 + "AND   [dell] = 0 ";
-        
-        try(Connection connection = SqlConnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {
-            
-                pstmt.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER).toString());
-                pstmt.setString(2, enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR).toString());
-                pstmt.setInt   (3, ksNumber);
-                pstmt.execute();
-            
+
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {
+
+            pstmt.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER).toString());
+            pstmt.setString(2, enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR).toString());
+            pstmt.setInt(3, ksNumber);
+            pstmt.execute();
+
             ResultSet rs = pstmt.getResultSet();
-            
-                while(rs.next()){
-                    
-                    KS_TIV item = new KS_TIV(
-                                    rs.getLong     (SQL.Common.ID),
-                                    rs.getTimestamp(SQL.Common.CONTRACTOR),
-                                    rs.getInt      (SQL.KS.NUMBER),
-                                    rs.getInt      (SQL.KS.DATE),
-                                    rs.getObject   (SQL.Common.SITE_NUMBER).toString(),
-                                    rs.getObject   (SQL.Common.TYPE_HOME).toString(),
-                                    rs.getObject   (SQL.Common.CONTRACTOR).toString(),
-                                    rs.getObject   (SQL.Estimate.JM_NAME).toString(),
-                                    rs.getObject   (SQL.Estimate.JOB_MATERIAL).toString(),
-                                    rs.getObject   (SQL.Estimate.BINDED_JOB).toString(),
-                                    rs.getDouble    (SQL.Estimate.VALUE),
-                                    rs.getObject   (SQL.Estimate.UNIT).toString(),
-                                    rs.getDouble    (SQL.Estimate.PRICE_ONE),
-                                    rs.getDouble    (SQL.Estimate.PRICE_SUM),
-                                    rs.getObject   (SQL.Estimate.BUILDING_PART).toString()
-                            );
-                            item.setDel(rs.getInt(SQL.Common.DEL));
-                    list.add(item);     
-                }
-   
+
+            while (rs.next()) {
+
+                KS_TIV item = new KS_TIV(
+                        rs.getLong(SQL.Common.ID),
+                        rs.getTimestamp(SQL.Common.CONTRACTOR),
+                        rs.getInt(SQL.KS.NUMBER),
+                        rs.getInt(SQL.KS.DATE),
+                        rs.getObject(SQL.Common.SITE_NUMBER).toString(),
+                        rs.getObject(SQL.Common.TYPE_HOME).toString(),
+                        rs.getObject(SQL.Common.CONTRACTOR).toString(),
+                        rs.getObject(SQL.Estimate.JM_NAME).toString(),
+                        rs.getObject(SQL.Estimate.JOB_MATERIAL).toString(),
+                        rs.getObject(SQL.Estimate.BINDED_JOB).toString(),
+                        rs.getDouble(SQL.Estimate.VALUE),
+                        rs.getObject(SQL.Estimate.UNIT).toString(),
+                        rs.getDouble(SQL.Estimate.PRICE_ONE),
+                        rs.getDouble(SQL.Estimate.PRICE_SUM),
+                        rs.getObject(SQL.Estimate.BUILDING_PART).toString()
+                );
+                item.setDel(rs.getInt(SQL.Common.DEL));
+                list.add(item);
+            }
+
         } catch (SQLException ex) {
             Logger.getLogger(KS_DAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -169,30 +180,31 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
     }
 
     /**
-    * Delete KS_TIV  Entities from SQL
-    * @param items (Collection of KS_TIV)
-    */
+     * Delete KS_TIV  Entities from SQL
+     *
+     * @param items (Collection of KS_TIV)
+     */
     @Override
     public void delete(Collection<KS_TIV> items) {
         String sql = "update [dbo].[KS] SET dell = 1 WHERE [id] = ? AND [dell] = 0;";
-        try(Connection connection   = SqlConnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(sql);) {
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(sql);) {
             connection.setAutoCommit(false);
-                for (KS_TIV obsItem : items) {
-                    pstmt.setLong   (1, obsItem.getId());
-                    pstmt.addBatch();  
-                }
-           pstmt.executeBatch();
-           connection.commit();
-           items.forEach(item -> {
+            for (KS_TIV obsItem : items) {
+                pstmt.setLong(1, obsItem.getId());
+                pstmt.addBatch();
+            }
+            pstmt.executeBatch();
+            connection.commit();
+            items.forEach(item -> {
                 LogController.appendLogViewText("deleted KS item: "
-                                                         + item.getJM_name() 
-                                                         +" [KS# "+item.getKSNumber()   + "]"
-                                                         +" [JM/ "+item.getJobOrMat()   + "]"
-                                                         +" [BP/ "+item.getBindJob()  + "]"
-                                                         +" [S#/ "+item.getSiteNumber() + "]"
-                                                         +" [C/ " +item.getContractor() + "]");
-                });
+                        + item.getJM_name()
+                        + " [KS# " + item.getKSNumber() + "]"
+                        + " [JM/ " + item.getJobOrMat() + "]"
+                        + " [BP/ " + item.getBindJob() + "]"
+                        + " [S#/ " + item.getSiteNumber() + "]"
+                        + " [C/ " + item.getContractor() + "]");
+            });
         } catch (SQLException ex) {
             Logger.getLogger(KS_DAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -219,74 +231,76 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
 //            Logger.getLogger(commonSQL_INSERT.class.getName()).log(Level.SEVERE, null, ex);
 //        }
 //    }
-    
+
     /**
-    * Delete All Entities in One KS from SQL
-     * @param ksNumber  (String)
-    */
-    public static void deleteKS(String ksNumber){
-        
-        String psmtmtString ="DELETE FROM dbo.[KS]  WHERE [KS_Number]= ? and [SiteNumber] = ? and [Contractor] = ?";
-       
-        try(Connection connection = SqlConnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {
+     * Delete All Entities in One KS from SQL
+     *
+     * @param ksNumber (String)
+     */
+    public static void deleteKS(String ksNumber) {
+
+        String psmtmtString = "DELETE FROM dbo.[KS]  WHERE [KS_Number]= ? and [SiteNumber] = ? and [Contractor] = ?";
+
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {
             pstmt.setString(1, ksNumber);
             pstmt.setString(2, Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER));
             pstmt.setString(3, Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
             pstmt.execute();
-            
+
         } catch (SQLException ex) {
             Logger.getLogger(KS_DAO.class.getName()).log(Level.SEVERE, null, ex);
-            
-        } 
+
+        }
     }
 
     @Override
     public void insert(Collection<KS_TIV> items) {
         String sql = "INSERT into [dbo].[KS] "
-                                    + "( " 
-                                    + " [KS_Number]" 
-                                    + ",[KS_Date]" 
-                                    + ",[SiteNumber]" 
-                                    + ",[TypeHome]" 
-                                    + ",[Contractor]" 
-                                    + ",[JM_name]" 
-                                    + ",[JobsOrMaterials]" 
-                                    + ",[BindedJob]" 
-                                    + ",[Unit]" 
-                                    + ",[Value]" 
-                                    + ",[Price_one]" 
-                                    + ",[BuildingPart]"  
-                                    + " ) " 
-                                    + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
-        try(Connection connection   = SqlConnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(sql,
-                                                                  Statement.RETURN_GENERATED_KEYS);) {
+                + "( "
+                + " [KS_Number]"
+                + ",[KS_Date]"
+                + ",[SiteNumber]"
+                + ",[TypeHome]"
+                + ",[Contractor]"
+                + ",[JM_name]"
+                + ",[JobsOrMaterials]"
+                + ",[BindedJob]"
+                + ",[Unit]"
+                + ",[Value]"
+                + ",[Price_one]"
+                + ",[BuildingPart]"
+                + " ) "
+                + "VALUES(?,?,?,?,?,?,?,?,?,?,?,?)";
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(sql,
+                     Statement.RETURN_GENERATED_KEYS);) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
-                for (KS_TIV obsItem : items) {
-                    pstmt.setInt      (1,  obsItem.getKSNumber());
-                    pstmt.setInt      (2,  obsItem.getKSDate());
-                    pstmt.setString   (3,  obsItem.getSiteNumber());
-                    pstmt.setString   (4,  obsItem.getTypeHome());
-                    pstmt.setString   (5,  obsItem.getContractor());
-                    pstmt.setString   (6,  obsItem.getJM_name());
-                    pstmt.setString   (7,  obsItem.getJobOrMat());
-                    pstmt.setString   (8,  obsItem.getBindJob());
-                    pstmt.setString   (9,  obsItem.getUnit());
-                    pstmt.setDouble    (10, obsItem.getQuantity());
-                    pstmt.setDouble    (11, obsItem.getPriceOne());
-                    pstmt.setString   (12, obsItem.getBuildingPart());
-                    
-                    int affectedRows = pstmt.executeUpdate();
-                    
-                    try( ResultSet generategKeys = pstmt.getGeneratedKeys();){
-                        if(generategKeys.next())
-                            obsItem.setId(generategKeys.getLong(1));
-                    }   
-                }; 
-           //SQL commit
-           connection.commit();
+            for (KS_TIV obsItem : items) {
+                pstmt.setInt(1, obsItem.getKSNumber());
+                pstmt.setInt(2, obsItem.getKSDate());
+                pstmt.setString(3, obsItem.getSiteNumber());
+                pstmt.setString(4, obsItem.getTypeHome());
+                pstmt.setString(5, obsItem.getContractor());
+                pstmt.setString(6, obsItem.getJM_name());
+                pstmt.setString(7, obsItem.getJobOrMat());
+                pstmt.setString(8, obsItem.getBindJob());
+                pstmt.setString(9, obsItem.getUnit());
+                pstmt.setDouble(10, obsItem.getQuantity());
+                pstmt.setDouble(11, obsItem.getPriceOne());
+                pstmt.setString(12, obsItem.getBuildingPart());
+
+                int affectedRows = pstmt.executeUpdate();
+
+                try (ResultSet generategKeys = pstmt.getGeneratedKeys();) {
+                    if (generategKeys.next())
+                        obsItem.setId(generategKeys.getLong(1));
+                }
+            }
+            ;
+            //SQL commit
+            connection.commit();
         } catch (SQLException ex) {
             Logger.getLogger(KS_DAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -318,86 +332,86 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
 //            Logger.getLogger(commonSQL_INSERT.class.getName()).log(Level.SEVERE, null, ex);
 //        }
     }
-    
+
     /**
      * Insert NEW KS into List of KS (KS Tab).
-     * 
+     *
      * @param ks_Number
      * @param ks_Date
-     * @param listKS (List<Item> listKS)
+     * @param listKS    (List<Item> listKS)
      */
-    public void insertNewKS(int ks_Number,int ks_Date, List<Item> listKS){
-                     
-        String pstString ="INSERT into dbo.[KS] ("
-                                            + " [KS_Number]"
-                                            + ",[KS_Date]"
-                                            + ",[SiteNumber]"
-                                            + ",[TypeHome]"
-                                            + ",[Contractor]"
-                                            + ",[JM_name]"
-                                            + ",[JobsOrMaterials]"
-                                            + ",[BindedJob]"
-                                            + ",[Unit]"
-                                            + ",[Value]"
-                                            + ",[Price_one]"
-                                            + ",[BuildingPart]"
-                                            + ",[NumberSession]"
-                                            + ",[dell]"
-                                            + ",[DateCreate]"
-                                            + ")"
-                                        + " select "
-                                            + "?"
-                                            + ",?"
-                                            + ",E.[SiteNumber]"
-                                            + ",E.[TypeHome]"
-                                            + ",E.[Contractor]"
-                                            + ",E.[JM_name]"
-                                            + ",E.[JobsOrMaterials]"
-                                            + ",E.[BindedJob]"
-                                            + ",E.[Unit]"
-                                            + ",E.[Value]"
-                                            + ",E.[Price_one]"
-                                            + ",E.[BuildingPart]"
-                                            + ",E.[NumberSession]"
-                                            + ",E.[dell]"
-                                            + ",E.[DateCreate] "
-                                        + "FROM  [Estimate] E "
-                                        + "WHERE E.[SiteNumber] = ? "
-                                        + "And   E.[Contractor] = ? "
-                                        + "And   E.[JM_name]    = ? "
-                                        + "And   E.[BindedJob]  = ? "
-                                        + "And   E.[TableType]  = 2 "
-                                        + "And   E.[dell]       = 0 ";
-        
-        try(Connection connection = SqlConnector.getInstance();
-            PreparedStatement pstmt  = connection.prepareStatement(pstString);) {
-                for (Item item : listKS) {
-            
-                    pstmt.setInt   (1, ks_Number);
-                    pstmt.setInt   (2, (int)(Math.round(ks_Date*100)/100));
-                    pstmt.setString(3, item.getSiteNumber());
-                    pstmt.setString(4, item.getContractor());
-                    pstmt.setString(5, item.getJM_name());    //JM_Name
-                    pstmt.setString(6, item.getBindJob()); //bindJob
-                
-                    pstmt.addBatch();
-                }
-           pstmt.executeBatch();
-           
+    public void insertNewKS(int ks_Number, int ks_Date, List<Item> listKS) {
+
+        String pstString = "INSERT into dbo.[KS] ("
+                + " [KS_Number]"
+                + ",[KS_Date]"
+                + ",[SiteNumber]"
+                + ",[TypeHome]"
+                + ",[Contractor]"
+                + ",[JM_name]"
+                + ",[JobsOrMaterials]"
+                + ",[BindedJob]"
+                + ",[Unit]"
+                + ",[Value]"
+                + ",[Price_one]"
+                + ",[BuildingPart]"
+                + ",[NumberSession]"
+                + ",[dell]"
+                + ",[DateCreate]"
+                + ")"
+                + " select "
+                + "?"
+                + ",?"
+                + ",E.[SiteNumber]"
+                + ",E.[TypeHome]"
+                + ",E.[Contractor]"
+                + ",E.[JM_name]"
+                + ",E.[JobsOrMaterials]"
+                + ",E.[BindedJob]"
+                + ",E.[Unit]"
+                + ",E.[Value]"
+                + ",E.[Price_one]"
+                + ",E.[BuildingPart]"
+                + ",E.[NumberSession]"
+                + ",E.[dell]"
+                + ",E.[DateCreate] "
+                + "FROM  [Estimate] E "
+                + "WHERE E.[SiteNumber] = ? "
+                + "And   E.[Contractor] = ? "
+                + "And   E.[JM_name]    = ? "
+                + "And   E.[BindedJob]  = ? "
+                + "And   E.[TableType]  = 2 "
+                + "And   E.[dell]       = 0 ";
+
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(pstString);) {
+            for (Item item : listKS) {
+
+                pstmt.setInt(1, ks_Number);
+                pstmt.setInt(2, (int) (Math.round(ks_Date * 100) / 100));
+                pstmt.setString(3, item.getSiteNumber());
+                pstmt.setString(4, item.getContractor());
+                pstmt.setString(5, item.getJM_name());    //JM_Name
+                pstmt.setString(6, item.getBindJob()); //bindJob
+
+                pstmt.addBatch();
+            }
+            pstmt.executeBatch();
+
         } catch (SQLException ex) {
             Logger.getLogger(KS_DAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
-//    public void dellAndInsert(Collection<KS_TIV> dellItem, Collection<KS_TIV> newItem){
+
+
+    //    public void dellAndInsert(Collection<KS_TIV> dellItem, Collection<KS_TIV> newItem){
     @Override
-    public void dellAndInsert(Memento<Collection<KS_TIV>> memento){
+    public void dellAndInsert(Memento<Collection<KS_TIV>> memento) {
         CommonNamedDAO.super.dellAndInsert(memento);
         //??????????
 //        table.updateTableFromSQL(this.getOneKSList(Est.KS, ksNumber ));
         Est.KS.updateList_DL(this);
-        
-       }  
-    
+
+    }
+
 }

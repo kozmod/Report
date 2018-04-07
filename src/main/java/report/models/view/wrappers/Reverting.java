@@ -4,7 +4,8 @@ public interface Reverting extends BindBase {
     /**
      * Save Items to MEMENTO.
      */
-    void saveMemento() ;
+    void saveMemento();
+
     /**
      * UNDO changes from MEMENTO.
      */

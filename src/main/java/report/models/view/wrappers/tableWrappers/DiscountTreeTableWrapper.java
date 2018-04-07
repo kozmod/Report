@@ -21,9 +21,10 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef>
      *                                                                         *
      **************************************************************************/
     public DiscountTreeTableWrapper(String title, TreeTableView treeView, CommonDAO<DiscountCoef> commonDao) {
-        this(title,treeView,commonDao.getData(),commonDao);
+        this(title, treeView, commonDao.getData(), commonDao);
     }
-    public DiscountTreeTableWrapper(String title, TreeTableView treeView,DiscountCoef discountCoef,  CommonDAO<DiscountCoef> commonDao) {
+
+    public DiscountTreeTableWrapper(String title, TreeTableView treeView, DiscountCoef discountCoef, CommonDAO<DiscountCoef> commonDao) {
         super(title);
         this.commonDAO = commonDao;
         this.discountCoef = discountCoef;
@@ -31,6 +32,7 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef>
         treeTableView.setRoot(discountCoef.tree());
 
     }
+
     /***************************************************************************
      *                                                                         *
      * MEMENTO                                                                 *
@@ -54,14 +56,13 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef>
         return super.memento;
     }
 
-    public  TreeTableView<DItem> tableView() {
-        return  treeTableView;
+    public TreeTableView<DItem> tableView() {
+        return treeTableView;
     }
 
-    public void selectionModel(){
+    public void selectionModel() {
         treeTableView.getSelectionModel();
     }
-
 
 
     /***************************************************************************

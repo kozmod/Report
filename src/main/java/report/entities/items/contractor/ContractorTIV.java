@@ -9,59 +9,96 @@ import report.entities.items.Clone;
 
 
 public class ContractorTIV implements Clone {
-    
+
     private Long id;
-    private final StringProperty  contractor;  
-    private final StringProperty  director;  
-    private final StringProperty  adress;
-    private final StringProperty  comments;
+    private final StringProperty contractor;
+    private final StringProperty director;
+    private final StringProperty adress;
+    private final StringProperty comments;
 
     public ContractorTIV(long id, String contractor, String director, String adress, String comments) {
         this.id = id;
         this.contractor = new SimpleStringProperty(contractor);
-        this.director   = new SimpleStringProperty(director);
-        this.adress     = new SimpleStringProperty(adress);
-        this.comments   = new SimpleStringProperty(comments);
+        this.director = new SimpleStringProperty(director);
+        this.adress = new SimpleStringProperty(adress);
+        this.comments = new SimpleStringProperty(comments);
     }
 
     /**
-    * Clone CONSTRUCTOR implementation
-    */
+     * Clone CONSTRUCTOR implementation
+     */
     @Override
     public ContractorTIV getClone() {
         ContractorTIV clone = new ContractorTIV(
-                                            this.getId(),
-                                            this.getContractor(),
-                                            this.getDirector(),
-                                            this.getComments(),
-                                            this.getAdress()
-                                            );
-            return clone;
+                this.getId(),
+                this.getContractor(),
+                this.getDirector(),
+                this.getComments(),
+                this.getAdress()
+        );
+        return clone;
     }
-    
-    
-//    @Override
-    public long getId()        {return id;}
-//    @Override
-    public void setId(long id) {this.id = id;}
 
-    public String          getContractor()                 {return contractor.get();}
-    public StringProperty  getContractorProperty()         {return contractor;}
-    public void            setContractor(String value_inp) {contractor.set(value_inp);}
 
-    public String         getDirector()                 {return director.get();}
-    public StringProperty getDirectorProperty()         {return director;}
-    public void           setDirector(String value_inp) {director.set(value_inp);}
+    //    @Override
+    public long getId() {
+        return id;
+    }
 
-    public String         getAdress()                 {return adress.get();}
-    public StringProperty getAdressProperty()         {return adress;}
-    public void           setAdress(String value_inp) {adress.set(value_inp);}
+    //    @Override
+    public void setId(long id) {
+        this.id = id;
+    }
 
-    public String         getComments()                 {return comments.get();}
-    public StringProperty getCommentsProperty()         {return comments;}
-    public void           setComments(String value_inp) {comments.set(value_inp);}
+    public String getContractor() {
+        return contractor.get();
+    }
 
-//Equakls AND hashCode ==========================================================================
+    public StringProperty getContractorProperty() {
+        return contractor;
+    }
+
+    public void setContractor(String value_inp) {
+        contractor.set(value_inp);
+    }
+
+    public String getDirector() {
+        return director.get();
+    }
+
+    public StringProperty getDirectorProperty() {
+        return director;
+    }
+
+    public void setDirector(String value_inp) {
+        director.set(value_inp);
+    }
+
+    public String getAdress() {
+        return adress.get();
+    }
+
+    public StringProperty getAdressProperty() {
+        return adress;
+    }
+
+    public void setAdress(String value_inp) {
+        adress.set(value_inp);
+    }
+
+    public String getComments() {
+        return comments.get();
+    }
+
+    public StringProperty getCommentsProperty() {
+        return comments;
+    }
+
+    public void setComments(String value_inp) {
+        comments.set(value_inp);
+    }
+
+    //Equakls AND hashCode ==========================================================================
     @Override
     public int hashCode() {
         int hash = 7;
@@ -97,14 +134,13 @@ public class ContractorTIV implements Clone {
     }
 
     /**
-    *Extractor to observe changes in "Property" fields.
-    * @return Callback<ContractorTIV, Observable[]>
-    */
+     * Extractor to observe changes in "Property" fields.
+     *
+     * @return Callback<ContractorTIV   ,       Observable   [   ]>
+     */
     public static Callback<ContractorTIV, Observable[]> extractor() {
-        return (ContractorTIV p) -> new Observable[]{p.getContractorProperty(),p.getDirectorProperty(),p.getAdressProperty(),p.getCommentsProperty()};
-    }  
-    
-    
-    
-    
+        return (ContractorTIV p) -> new Observable[]{p.getContractorProperty(), p.getDirectorProperty(), p.getAdressProperty(), p.getCommentsProperty()};
+    }
+
+
 }

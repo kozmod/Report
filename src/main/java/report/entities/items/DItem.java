@@ -20,19 +20,17 @@ public class DItem implements Clone {
     private final DoubleProperty secondValue;
 
 
-
-
     public DItem(long id, String sqlColumnName, String fValue, double sValue) {
-        this.id        = id;
+        this.id = id;
         this.sqlColumn = sqlColumnName;
-        this.firstValue  = new SimpleStringProperty(fValue);
+        this.firstValue = new SimpleStringProperty(fValue);
         this.secondValue = new SimpleDoubleProperty(sValue);
     }
 
     public DItem(long id, String sqlColumn, String fValue, DoubleProperty secondValue) {
         this.id = id;
         this.sqlColumn = sqlColumn;
-        this.firstValue  = new SimpleStringProperty(fValue);
+        this.firstValue = new SimpleStringProperty(fValue);
         this.secondValue = secondValue;
     }
 
@@ -49,15 +47,21 @@ public class DItem implements Clone {
     }
 
 
-
     //Getter / Setter
 //    @Override
-    public long getId() {return id;}
+    public long getId() {
+        return id;
+    }
+
     //    @Override
-    public void setId(long id) {this.id = id;}
+    public void setId(long id) {
+        this.id = id;
+    }
 
 
-    public String getSqlColumn() {return sqlColumn;}
+    public String getSqlColumn() {
+        return sqlColumn;
+    }
 
     public String getFirstValue() {
         return firstValue.get();
@@ -86,10 +90,10 @@ public class DItem implements Clone {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 3 * hash + Objects.hashCode(this.id)                    >>>3;
-        hash = 3 * hash + Objects.hashCode(this.sqlColumn)             >>>3;
-        hash = 3 * hash + Objects.hashCode(this.firstValue.getValue()) >>>3;
-        hash = 3 * hash + Objects.hashCode(this.secondValue.getValue())>>>3;
+        hash = 3 * hash + Objects.hashCode(this.id) >>> 3;
+        hash = 3 * hash + Objects.hashCode(this.sqlColumn) >>> 3;
+        hash = 3 * hash + Objects.hashCode(this.firstValue.getValue()) >>> 3;
+        hash = 3 * hash + Objects.hashCode(this.secondValue.getValue()) >>> 3;
         return hash;
     }
 
@@ -124,13 +128,13 @@ public class DItem implements Clone {
 
     @Override
     public String toString() {
-        return "ID ->"+ getId()+" FV ->"+getFirstValue() + " SV ->"+ getSecondValue();
+        return "ID ->" + getId() + " FV ->" + getFirstValue() + " SV ->" + getSecondValue();
     }
 
     /**
-     *Extractor to observe changes in "Property" fields.
+     * Extractor to observe changes in "Property" fields.
      *
-     * @return Callback<VariableTIV, Observable[]>
+     * @return Callback<VariableTIV   ,       Observable   [   ]>
      */
     public static Callback<DItem, Observable[]> extractor() {
         return (DItem p) -> new Observable[]{p.secondValueProperty()};

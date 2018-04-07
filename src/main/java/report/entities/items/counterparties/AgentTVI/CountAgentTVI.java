@@ -42,6 +42,7 @@ public class CountAgentTVI implements Clone {
         this.form = new SimpleStringProperty(form);
         this.type = new SimpleStringProperty(type);
     }
+
     /***************************************************************************
      *                                                                         *
      * Clone Constructors                                                      *
@@ -142,10 +143,11 @@ public class CountAgentTVI implements Clone {
         this.requisites = requisites;
     }
 
-    public CountAgentTVI  setNewStatus(boolean value){
+    public CountAgentTVI setNewStatus(boolean value) {
         this.newAdded = value;
         return this;
     }
+
     /***************************************************************************
      *                                                                         *
      * Equals / HashCode / toString                                            *
@@ -154,12 +156,12 @@ public class CountAgentTVI implements Clone {
     @Override
     public String toString() {
         return "CountAgentTVI: " +
-                "id-name [" + this.getIdName() +"],"+
-                "name ["    + this.getName()   +"],"+
-                "id-type [" + this.getIdForm() +"],"+
-                "type ["    + this.getForm()   +"],"+
-                "id-form [" + this.getIdType()   +"],"+
-                "form ["    + this.getType()   +"]";
+                "id-name [" + this.getIdName() + "]," +
+                "name [" + this.getName() + "]," +
+                "id-type [" + this.getIdForm() + "]," +
+                "type [" + this.getForm() + "]," +
+                "id-form [" + this.getIdType() + "]," +
+                "form [" + this.getType() + "]";
     }
 
     /***************************************************************************
@@ -168,7 +170,7 @@ public class CountAgentTVI implements Clone {
      *                                                                         *
      **************************************************************************/
     public static Callback<CountAgentTVI, Observable[]> extractor() {
-        return (CountAgentTVI p) -> new Observable[]{p.formProperty(), p.nameProperty(),p.typeProperty()};
+        return (CountAgentTVI p) -> new Observable[]{p.formProperty(), p.nameProperty(), p.typeProperty()};
     }
 
 }

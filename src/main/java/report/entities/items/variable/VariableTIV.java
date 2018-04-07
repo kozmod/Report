@@ -15,51 +15,69 @@ import report.entities.items.Clone;
 
 
 public class VariableTIV implements Clone {
-    private Long  id;
-    private final StringProperty  text;    
-    private final DoubleProperty  value;
-    
+    private Long id;
+    private final StringProperty text;
+    private final DoubleProperty value;
+
     public VariableTIV(long id, String text, double value) {
-        this.id     = id;
-        this.text   = new SimpleStringProperty(text);
-        this.value  = new SimpleDoubleProperty(value);
+        this.id = id;
+        this.text = new SimpleStringProperty(text);
+        this.value = new SimpleDoubleProperty(value);
     }
 
     /**
-    * Clone CONSTRUCTOR implementation
-    */
+     * Clone CONSTRUCTOR implementation
+     */
     @Override
     public Clone getClone() {
         Clone clone = new VariableTIV(
-                                            this.getId(),
-                                            this.getText(),
-                                            this.getValue()
-                                            );
-            return clone;
+                this.getId(),
+                this.getText(),
+                this.getValue()
+        );
+        return clone;
     }
-    
+
     //Getters AND Setters --------------------------------------------------------------------------    
 //    @Override
-    public long getId() {return id;}
-//    @Override
-    public void setId(long id) {this.id = id;}
-    
-    public String getText() {return text.getValue();}
-    public void   setText(String value_inp) {text.set(value_inp);}
-    
-    public Double getValue() {return value.getValue();}
-    public void  setValue(double value_inp) {value.set(value_inp);}
-    public DoubleProperty  getValueProprty (){return value;}
-    
+    public long getId() {
+        return id;
+    }
+
+    //    @Override
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getText() {
+        return text.getValue();
+    }
+
+    public void setText(String value_inp) {
+        text.set(value_inp);
+    }
+
+    public Double getValue() {
+        return value.getValue();
+    }
+
+    public void setValue(double value_inp) {
+        value.set(value_inp);
+    }
+
+    public DoubleProperty getValueProprty() {
+        return value;
+    }
+
     //Equakls AND hashCode ==========================================================================
     @Override
     public int hashCode() {
         int hash = 10;
-        hash = 10 * hash + (this.text   != null ? this.text.hashCode()          : 0);
-        hash = 10 * hash + (this.value  != null ? this.value.hashCode()         : 0);
+        hash = 10 * hash + (this.text != null ? this.text.hashCode() : 0);
+        hash = 10 * hash + (this.value != null ? this.value.hashCode() : 0);
         return hash;
     }
-    
+
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {
@@ -75,14 +93,14 @@ public class VariableTIV implements Clone {
         if (this.value.get() != other.value.get()) {
             return false;
         }
-    return true;
+        return true;
     }
-    
+
     /**
-    *Extractor to observe changes in "Property" fields.
-    * 
-     * @return Callback<VariableTIV, Observable[]>
-    */
+     * Extractor to observe changes in "Property" fields.
+     *
+     * @return Callback<VariableTIV   ,       Observable   [   ]>
+     */
     public static Callback<VariableTIV, Observable[]> extractor() {
         return (VariableTIV p) -> new Observable[]{p.getValueProprty()};
     }

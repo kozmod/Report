@@ -1,12 +1,14 @@
 package report.models.view;
 
 import javafx.util.Pair;
+
 /**
  * <p>A convenience class to represent name-value pairs.</p>
  * <br>Method toString return <b>String.valueOf(super.getValue());</b>
+ *
  * @since JavaFX 2.0
  */
-public  class LinkedNamePair extends Pair<Integer,String> {
+public class LinkedNamePair extends Pair<Integer, String> {
     /**
      * Creates a new pair
      *
@@ -16,6 +18,7 @@ public  class LinkedNamePair extends Pair<Integer,String> {
     public LinkedNamePair(Integer key, String value) {
         super(key, value);
     }
+
     @Override
     public String toString() {
         return String.valueOf(super.getValue());

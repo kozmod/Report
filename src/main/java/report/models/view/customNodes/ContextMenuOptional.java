@@ -22,53 +22,59 @@ import report.models.view.wrappers.tableWrappers.ReverseTableWrapper;
 import report.models.view.wrappers.tableWrappers.TableWrapper;
 
 
-public class ContextMenuOptional extends ContextMenu{
+public class ContextMenuOptional extends ContextMenu {
 
     private Reverting node;
 
     MenuItem printSmeta;
     MenuItem saveMenuItem;
     MenuItem undoMenuItem;
+
     /***************************************************************************
      *                                                                         *
      * Methods                                                                 *
      *                                                                         *
      **************************************************************************/
-    public void setDisable_SaveUndoPrint_groupe(final boolean value){
-        if(saveMenuItem != null)saveMenuItem.setDisable(value);
-        if(undoMenuItem != null)undoMenuItem.setDisable(value);
-        if(printSmeta != null)  printSmeta.setDisable(!value);
+    public void setDisable_SaveUndoPrint_groupe(final boolean value) {
+        if (saveMenuItem != null) saveMenuItem.setDisable(value);
+        if (undoMenuItem != null) undoMenuItem.setDisable(value);
+        if (printSmeta != null) printSmeta.setDisable(!value);
 
     }
+
     /***************************************************************************
      *                                                                         *
      * Static Methods                                                            *
      *                                                                         *
      **************************************************************************/
-    public static <S extends Clone> void setTableItemContextMenuListener(TableWrapper<S> tableWrapper){
+    public static <S extends Clone> void setTableItemContextMenuListener(TableWrapper<S> tableWrapper) {
         tableWrapper.getItems().addListener((ListChangeListener.Change<? extends S> c) -> {
             System.out.println("Changed on " + c + " - ContextMenuOptional");
-            if(c.next() && (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
+            if (c.next() && (c.wasUpdated() || c.wasAdded() || c.wasRemoved())) {
                 ((ContextMenuOptional) tableWrapper.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
                 tableWrapper.refresh();
             }
         });
     }
-    public static  void setTableItemContextMenuListener(DiscountTreeTableWrapper tableWrapper){
+
+    public static void setTableItemContextMenuListener(DiscountTreeTableWrapper tableWrapper) {
         tableWrapper.tableView().getRoot().getValue().secondValueProperty().addListener((observable, oldValue, newValue) -> {
             ((ContextMenuOptional) tableWrapper.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
         });
     }
-    public static <S extends Clone & Reverse> void setTableItemContextMenuListener(ReverseTableWrapper<S> tableWrapper, ObservableList<DItem> list){
+
+    public static <S extends Clone & Reverse> void setTableItemContextMenuListener(ReverseTableWrapper<S> tableWrapper, ObservableList<DItem> list) {
         list.addListener((ListChangeListener.Change<? extends DItem> c) -> {
             ((ContextMenuOptional) tableWrapper.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
         });
     }
+
     /**
      * Builder Factory Method.
+     *
      * @return
      */
-    public static Builder newBuilder(){
+    public static Builder newBuilder() {
         return new ContextMenuOptional().new Builder();
     }
 
@@ -78,7 +84,8 @@ public class ContextMenuOptional extends ContextMenu{
      *                                                                         *
      **************************************************************************/
 
-    private ContextMenuOptional(){}
+    private ContextMenuOptional() {
+    }
 
     /***************************************************************************
      *                                                                         *
@@ -88,15 +95,17 @@ public class ContextMenuOptional extends ContextMenu{
     public class Builder {
         private MenuItem CURRENT_MENU_ITEM;
 
-        private Builder(){}
+        private Builder() {
+        }
 
         /**
          * Add SPECIAL MenuItem
+         *
          * @param text
          * @return Builder
          */
-        public Builder addSpecialMenuItem(String text){
-            MenuItem specialMenuItem    = new MenuItem(text);
+        public Builder addSpecialMenuItem(String text) {
+            MenuItem specialMenuItem = new MenuItem(text);
             getItems().add(specialMenuItem);
             CURRENT_MENU_ITEM = specialMenuItem;
             return this;
@@ -104,6 +113,7 @@ public class ContextMenuOptional extends ContextMenu{
 
         /**
          * <b>"SetOnAction"</b> to last MenuItem (CURRENT_MENU_ITEM)
+         *
          * @param eventHendler
          * @return Builder
          */
@@ -114,11 +124,12 @@ public class ContextMenuOptional extends ContextMenu{
 
         /**
          * Add <b>ActionEventHandler</b> to last MenuItem (CURRENT_MENU_ITEM)
+         *
          * @param eventHendler
          * @return Builder
          */
         public Builder addActionEventHandler(EventHandler eventHendler) {
-            CURRENT_MENU_ITEM.addEventHandler(ActionEvent.ACTION,eventHendler);
+            CURRENT_MENU_ITEM.addEventHandler(ActionEvent.ACTION, eventHendler);
             return this;
         }
 
@@ -135,7 +146,7 @@ public class ContextMenuOptional extends ContextMenu{
         public Builder addRemoveMenuItem() {
             MenuItem removeMenuItem = new MenuItem("Удалить");
             this.CURRENT_MENU_ITEM = removeMenuItem;
-            final TableWrapper wrapper = (TableWrapper)node;
+            final TableWrapper wrapper = (TableWrapper) node;
             removeMenuItem.addEventHandler(ActionEvent.ACTION, (ActionEvent event) ->
                     wrapper.tableView().getSelectionModel()
                             .getSelectedItems()
@@ -149,7 +160,7 @@ public class ContextMenuOptional extends ContextMenu{
         }
 
         public Builder addSaveMenuItem() {
-            saveMenuItem   = new MenuItem("Сохранить изменения");
+            saveMenuItem = new MenuItem("Сохранить изменения");
             this.CURRENT_MENU_ITEM = saveMenuItem;
             saveMenuItem.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
                 System.out.println("saveMenuItem");
@@ -164,7 +175,7 @@ public class ContextMenuOptional extends ContextMenu{
         }
 
         public Builder addUndoMenuItem() {
-            undoMenuItem  = new MenuItem("Отменить изменения");
+            undoMenuItem = new MenuItem("Отменить изменения");
             undoMenuItem.addEventHandler(ActionEvent.ACTION, (ActionEvent event) -> {
                 node.undoChangeItems();
 
@@ -189,7 +200,7 @@ public class ContextMenuOptional extends ContextMenu{
             return this;
         }
 
-        public ContextMenuOptional build(){
+        public ContextMenuOptional build() {
             setDisable_SaveUndoPrint_groupe(true);
             return ContextMenuOptional.this;
         }

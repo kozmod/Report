@@ -29,6 +29,7 @@ public abstract class AbstractTableWrapper<E> implements Reverting {
 
     /**
      * Abstract Constructor.
+     *
      * @param title
      */
     public AbstractTableWrapper(String title) {
@@ -40,8 +41,16 @@ public abstract class AbstractTableWrapper<E> implements Reverting {
      * Getter/Setter                                                           *
      *                                                                         *
      **************************************************************************/
-    public String getTitle()   {return title;}
-    public Memento<E> getMemento(){return this.memento;};
+    public String getTitle() {
+        return title;
+    }
+
+    public Memento<E> getMemento() {
+        return this.memento;
+    }
+
+    ;
+
     /***************************************************************************
      *                                                                         *
      * Abstract Methods                                                        *
@@ -61,25 +70,30 @@ public abstract class AbstractTableWrapper<E> implements Reverting {
 //     * Get DAO.
 //     */
     public CommonDAO<E> getDAO() {
-        if(this.DAO == null)
-            throw  new NullPointerException(TableWrapper.class.getCanonicalName());
+        if (this.DAO == null)
+            throw new NullPointerException(TableWrapper.class.getCanonicalName());
         return DAO;
     }
+
     public void setDAO(final CommonDAO<E> dao) {
         this.DAO = dao;
     }
+
     /**
      * Get ContextMenu of TableView.
      */
     public abstract ContextMenu getContextMenu();
+
     /**
      * Set ContextMenu to TableView.
      */
     public abstract void setContextMenu(ContextMenu contextMenu);
+
     /**
      * Get TableView's Items.
      */
     public abstract E getItems();
+
     /**
      * Refresh TableView.
      */
@@ -87,6 +101,7 @@ public abstract class AbstractTableWrapper<E> implements Reverting {
 
     /**
      * Set TableData and SAVE one to MEMENTO.
+     *
      * @param items E
      */
     public abstract void setTableData(E items);

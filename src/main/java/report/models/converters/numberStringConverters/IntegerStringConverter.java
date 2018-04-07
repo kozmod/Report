@@ -7,8 +7,8 @@ public class IntegerStringConverter extends DefaultNumberStringConverter<Integer
 //    private final NFormat<Number> decimalFormatter;
 
     /*!******************************************************************************************************************
-    *                                                                                                        Constructor
-    ********************************************************************************************************************/
+     *                                                                                                        Constructor
+     ********************************************************************************************************************/
     /**
      * Ctor.
      */
@@ -18,10 +18,10 @@ public class IntegerStringConverter extends DefaultNumberStringConverter<Integer
 
     /**
      * Ctor.
-     *<br>Patter            : "###,##0"<br/>
-     *<br>GroupingSeparator : ' '<br/>
-     *<br>DecimalSeparator  : '.'<br/>
-     *<br>RoundingMode      : DOWN (1)<br/>
+     * <br>Patter            : "###,##0"<br/>
+     * <br>GroupingSeparator : ' '<br/>
+     * <br>DecimalSeparator  : '.'<br/>
+     * <br>RoundingMode      : DOWN (1)<br/>
      */
     public IntegerStringConverter() {
         super("###,##0");
@@ -29,10 +29,10 @@ public class IntegerStringConverter extends DefaultNumberStringConverter<Integer
 
     /**
      * Ctor.
-     *<br>Patter            : <b>?</b><br/>
-     *<br>GroupingSeparator : ' '<br/>
-     *<br>DecimalSeparator  : '.'<br/>
-     *<br>RoundingMode      : DOWN (1)<br/>
+     * <br>Patter            : <b>?</b><br/>
+     * <br>GroupingSeparator : ' '<br/>
+     * <br>DecimalSeparator  : '.'<br/>
+     * <br>RoundingMode      : DOWN (1)<br/>
      */
     public IntegerStringConverter(final String pattern) {
         super(pattern);
@@ -41,13 +41,15 @@ public class IntegerStringConverter extends DefaultNumberStringConverter<Integer
 
 
     /*!******************************************************************************************************************
-    *                                                                                                        Methods
-    ********************************************************************************************************************/
+     *                                                                                                        Methods
+     ********************************************************************************************************************/
+
     /**
      * Parse Number to String.
      * <br>
      * Output format format use pattern (default - "0.00")
      * <br>
+     *
      * @param number Number
      * @return String
      */
@@ -68,10 +70,10 @@ public class IntegerStringConverter extends DefaultNumberStringConverter<Integer
      * @return Number
      */
     @Override
-    public Integer fromString(String numberString)  {
+    public Integer fromString(String numberString) {
         Integer integer = 0;
-            Number nn = super.fromString(numberString);
-            integer = nn.intValue();
+        Number nn = super.fromString(numberString);
+        integer = nn.intValue();
 
         return integer;
     }
@@ -79,6 +81,7 @@ public class IntegerStringConverter extends DefaultNumberStringConverter<Integer
     /**
      * Return DecimalFormat with current settings.
      * <br>
+     *
      * @return DecimalFormat
      */
     @Override

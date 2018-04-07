@@ -17,7 +17,7 @@ import report.entities.items.DItem;
 import report.entities.items.discount_coef.DiscountCoef;
 
 
-public class EditingTreeTableCell extends TreeTableCell<DItem,Double> {
+public class EditingTreeTableCell extends TreeTableCell<DItem, Double> {
     private static byte TYPE = 0;
     private TextField textField;
     private ComboBox comboBox;
@@ -69,11 +69,14 @@ public class EditingTreeTableCell extends TreeTableCell<DItem,Double> {
      *                                                                         *
      **************************************************************************/
 
-    /** {@inheritDoc} */
-    @Override public void startEdit() {
-        if (! isEditable()
-                || ! this.getTreeTableView().isEditable()
-                || ! this.getTableColumn().isEditable()) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void startEdit() {
+        if (!isEditable()
+                || !this.getTreeTableView().isEditable()
+                || !this.getTableColumn().isEditable()) {
             return;
         }
         String itemString = this.getTreeTableView().getTreeItem(this.getIndex()).getValue().getFirstValue();
@@ -86,12 +89,12 @@ public class EditingTreeTableCell extends TreeTableCell<DItem,Double> {
                 }
                 Util.startEdit(this, getConverter(), null, null, textField);
             }
-        } else if(itemString.equals(DiscountCoef.MARKET_RISKS)
-                ||itemString.equals(DiscountCoef.SPECIFIC_RISKS)) {
+        } else if (itemString.equals(DiscountCoef.MARKET_RISKS)
+                || itemString.equals(DiscountCoef.SPECIFIC_RISKS)) {
 
-        } else if(itemString.equals(DiscountCoef.KD)) {
+        } else if (itemString.equals(DiscountCoef.KD)) {
 //            this.setStyle("-fx-text-fill: red; -fx-font-weight:bold;");
-        } else if(itemString.equals(DiscountCoef.KD_PER_MONTH)) {
+        } else if (itemString.equals(DiscountCoef.KD_PER_MONTH)) {
         } else {
             EditingTreeTableCell.TYPE = 1;
             if (comboBox == null) {
@@ -107,19 +110,25 @@ public class EditingTreeTableCell extends TreeTableCell<DItem,Double> {
 
     }
 
-    /** {@inheritDoc} */
-    @Override public void cancelEdit() {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void cancelEdit() {
         super.cancelEdit();
         setText(getConverter().toString(getItem()));
         setGraphic(null);
     }
 
-    /** {@inheritDoc} */
-    @Override public void updateItem(Double item, boolean empty) {
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public void updateItem(Double item, boolean empty) {
         super.updateItem(item, empty);
-        if(EditingTreeTableCell.TYPE == 0)
+        if (EditingTreeTableCell.TYPE == 0)
             Util.updateTextFieldItem(this, getConverter(), null, null, textField);
-        if(EditingTreeTableCell.TYPE == 1)
+        if (EditingTreeTableCell.TYPE == 1)
             Util.updateComboItem(this, getConverter(), null, null, comboBox);
     }
 
@@ -128,7 +137,7 @@ public class EditingTreeTableCell extends TreeTableCell<DItem,Double> {
      * UTIL CLASS                                                              *
      *                                                                         *
      **************************************************************************/
-    private static final class Util extends Cell<Double>{
+    private static final class Util extends Cell<Double> {
         static <T> void startEdit(final Cell<T> cell,
                                   final StringConverter<T> converter,
                                   final HBox hbox,
@@ -198,11 +207,11 @@ public class EditingTreeTableCell extends TreeTableCell<DItem,Double> {
         }
 
 
-        static  void updateComboItem(final Cell<Double> cell,
-                                   final StringConverter<Double> converter,
-                                   final HBox hbox,
-                                   final Node graphic,
-                                   final ComboBox<Double> comboBox) {
+        static void updateComboItem(final Cell<Double> cell,
+                                    final StringConverter<Double> converter,
+                                    final HBox hbox,
+                                    final Node graphic,
+                                    final ComboBox<Double> comboBox) {
             if (cell.isEmpty()) {
                 cell.setText(null);
                 cell.setGraphic(null);
@@ -225,11 +234,12 @@ public class EditingTreeTableCell extends TreeTableCell<DItem,Double> {
                 }
             }
         }
+
         static <T> void updateTextFieldItem(final Cell<T> cell,
-                                   final StringConverter<T> converter,
-                                   final HBox hbox,
-                                   final Node graphic,
-                                   final TextField textField) {
+                                            final StringConverter<T> converter,
+                                            final HBox hbox,
+                                            final Node graphic,
+                                            final TextField textField) {
             if (cell.isEmpty()) {
                 cell.setText(null);
                 cell.setGraphic(null);
@@ -252,8 +262,6 @@ public class EditingTreeTableCell extends TreeTableCell<DItem,Double> {
                 }
             }
         }
-
-
 
 
     }

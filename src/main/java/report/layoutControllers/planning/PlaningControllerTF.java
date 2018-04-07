@@ -20,7 +20,8 @@ import report.models.view.nodesFactories.TableFactory;
 public class PlaningControllerTF implements TableFactory {
 
 
-    private PlaningControllerTF() { }
+    private PlaningControllerTF() {
+    }
 
     /**
      * Create TableWrapper "Plan"(AllPropertiesController).
@@ -31,42 +32,42 @@ public class PlaningControllerTF implements TableFactory {
      * @return TableWrapper
      */
 
-    public static TableWrapper<PlanTIV> decorPlan(TableView<PlanTIV> table){
-        TableWrapper<PlanTIV> tableWrapper = new TableWrapper(table,new PlanDAO());
+    public static TableWrapper<PlanTIV> decorPlan(TableView<PlanTIV> table) {
+        TableWrapper<PlanTIV> tableWrapper = new TableWrapper(table, new PlanDAO());
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 //
-        TableColumn<PlanTIV,Integer> typeIdColumn
-                = tableWrapper.addColumn("ID","typeID");
-        TableColumn typeColumn     = tableWrapper.addColumn("Тип","type");
-        TableColumn<PlanTIV,Integer> quantityColumn
-                = tableWrapper.addColumn("Кол-во","quantity");
-        TableColumn<PlanTIV,Integer>  restColumn    = tableWrapper.addColumn("Остаток","rest");
-        TableColumn<PlanTIV,Double> smetColumn
-                = tableWrapper.addColumn("Стоимоть","SmetCost");
-        TableColumn smetSumColumn  = tableWrapper.addColumn("Себестоимость", "SmetCostSum");
-        TableColumn<PlanTIV,Double> saleColumn
-                = tableWrapper.addColumn("Цена","SaleCost");
-        TableColumn saleSumColumn  = tableWrapper.addColumn("Выручка","SaleCostSum");
-        TableColumn profitColumn   = tableWrapper.addColumn("Прибыль","profit");
+        TableColumn<PlanTIV, Integer> typeIdColumn
+                = tableWrapper.addColumn("ID", "typeID");
+        TableColumn typeColumn = tableWrapper.addColumn("Тип", "type");
+        TableColumn<PlanTIV, Integer> quantityColumn
+                = tableWrapper.addColumn("Кол-во", "quantity");
+        TableColumn<PlanTIV, Integer> restColumn = tableWrapper.addColumn("Остаток", "rest");
+        TableColumn<PlanTIV, Double> smetColumn
+                = tableWrapper.addColumn("Стоимоть", "SmetCost");
+        TableColumn smetSumColumn = tableWrapper.addColumn("Себестоимость", "SmetCostSum");
+        TableColumn<PlanTIV, Double> saleColumn
+                = tableWrapper.addColumn("Цена", "SaleCost");
+        TableColumn saleSumColumn = tableWrapper.addColumn("Выручка", "SaleCostSum");
+        TableColumn profitColumn = tableWrapper.addColumn("Прибыль", "profit");
 
-        typeIdColumn    .setMaxWidth(50);
-        typeIdColumn    .setMinWidth(35);
-        typeColumn      .setMaxWidth(80);
-        typeColumn      .setMinWidth(50);
-        quantityColumn  .setMaxWidth(70);
-        quantityColumn  .setMinWidth(50);
-        restColumn      .setMaxWidth(80);
-        restColumn      .setMinWidth(50);
+        typeIdColumn.setMaxWidth(50);
+        typeIdColumn.setMinWidth(35);
+        typeColumn.setMaxWidth(80);
+        typeColumn.setMinWidth(50);
+        quantityColumn.setMaxWidth(70);
+        quantityColumn.setMinWidth(50);
+        restColumn.setMaxWidth(80);
+        restColumn.setMinWidth(50);
 
         typeIdColumn.setOnEditCommit(
                 (TableColumn.CellEditEvent<PlanTIV, Integer> t) -> t.getRowValue().setTypeID(t.getNewValue())
         );
 
         quantityColumn.setOnEditCommit((TableColumn.CellEditEvent<PlanTIV, Integer> t) -> {
-            PlanTIV editingItem =  t.getRowValue();
+            PlanTIV editingItem = t.getRowValue();
 
-            if(t.getNewValue() != null){
+            if (t.getNewValue() != null) {
                 editingItem.setQuantity(t.getNewValue());
                 editingItem.setSaleCostSum((double) (t.getNewValue() * editingItem.getQuantity()));
                 editingItem.setSmetCostSum((double) (t.getNewValue() * editingItem.getQuantity()));
@@ -74,18 +75,18 @@ public class PlaningControllerTF implements TableFactory {
 
         });
         smetColumn.setOnEditCommit((TableColumn.CellEditEvent<PlanTIV, Double> t) -> {
-            PlanTIV editingItem =  t.getRowValue();
+            PlanTIV editingItem = t.getRowValue();
 
-            if(t.getNewValue() != null){
+            if (t.getNewValue() != null) {
                 editingItem.setSmetCost(t.getNewValue());
                 editingItem.setSmetCostSum(t.getNewValue() * editingItem.getQuantity());
                 editingItem.setProfit(editingItem.getSaleCost() - editingItem.getSmetCost());
             }
         });
         saleColumn.setOnEditCommit((TableColumn.CellEditEvent<PlanTIV, Double> t) -> {
-            PlanTIV editingItem =  t.getRowValue();
+            PlanTIV editingItem = t.getRowValue();
 
-            if(t.getNewValue() != null){
+            if (t.getNewValue() != null) {
                 editingItem.setSaleCost(t.getNewValue());
                 editingItem.setSaleCostSum(t.getNewValue() * editingItem.getQuantity());
                 editingItem.setProfit(editingItem.getSaleCost() - editingItem.getSmetCost());
@@ -119,27 +120,27 @@ public class PlaningControllerTF implements TableFactory {
      *
      * @return TableWrapper
      */
-    public static TableWrapper decorFact(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table,null);
+    public static TableWrapper decorFact(TableView table) {
+        TableWrapper tableWrapper = new TableWrapper(table, null);
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 //
-        TableColumn typeIdColumn   = tableWrapper.addColumn("ID",             "typeID");
-        TableColumn typeColumn     = tableWrapper.addColumn("Тип",            "type");
-        TableColumn quantityColumn = tableWrapper.addColumn("Кол-во",         "quantity");
-        TableColumn smetColumn     = tableWrapper.addColumn("Стоимоть",       "SmetCost");
-        TableColumn smetSumColumn  = tableWrapper.addColumn("Себестоимость",  "SmetCostSum");
-        TableColumn costHouseSumColumn  = tableWrapper.addColumn("Стоимость дома",  "costHouseSum");
-        TableColumn saleColumn     = tableWrapper.addColumn("Цена",           "SaleCost");
-        TableColumn saleSumColumn  = tableWrapper.addColumn("Выручка",        "SaleCostSum");
-        TableColumn profitColumn   = tableWrapper.addColumn("Прибыль",        "profit");
+        TableColumn typeIdColumn = tableWrapper.addColumn("ID", "typeID");
+        TableColumn typeColumn = tableWrapper.addColumn("Тип", "type");
+        TableColumn quantityColumn = tableWrapper.addColumn("Кол-во", "quantity");
+        TableColumn smetColumn = tableWrapper.addColumn("Стоимоть", "SmetCost");
+        TableColumn smetSumColumn = tableWrapper.addColumn("Себестоимость", "SmetCostSum");
+        TableColumn costHouseSumColumn = tableWrapper.addColumn("Стоимость дома", "costHouseSum");
+        TableColumn saleColumn = tableWrapper.addColumn("Цена", "SaleCost");
+        TableColumn saleSumColumn = tableWrapper.addColumn("Выручка", "SaleCostSum");
+        TableColumn profitColumn = tableWrapper.addColumn("Прибыль", "profit");
 
-        typeIdColumn    .setMaxWidth(50);
-        typeIdColumn    .setMinWidth(35);
-        typeColumn      .setMaxWidth(80);
-        typeColumn      .setMinWidth(50);
-        quantityColumn  .setMaxWidth(70);
-        quantityColumn  .setMinWidth(50);
+        typeIdColumn.setMaxWidth(50);
+        typeIdColumn.setMinWidth(35);
+        typeColumn.setMaxWidth(80);
+        typeColumn.setMinWidth(50);
+        quantityColumn.setMaxWidth(70);
+        quantityColumn.setMinWidth(50);
 
         TableFactory.setCellFactory(
                 new DoubleStringConverter(),
@@ -163,16 +164,16 @@ public class PlaningControllerTF implements TableFactory {
      * @return TableWrapper
      */
     @SuppressWarnings("Duplicates")
-    static TableWrapper decorOSR(TableView table){
-        TableWrapper tableWrapper = new TableWrapper(table,new OSR_DAO());
+    static TableWrapper decorOSR(TableView table) {
+        TableWrapper tableWrapper = new TableWrapper(table, new OSR_DAO());
 
 //        tableWrapper.setEditable(true);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        TableColumn textColumn     = tableWrapper.addColumn("Наименование","text");
-        TableColumn<OSR_TIV,Double> valueAllColumn
-                = tableWrapper.addColumn("Значение (общее)","expenses");
-        TableColumn valueColumn    = tableWrapper.addColumn("Значение (за дом)","expensesPerHouse");
+        TableColumn textColumn = tableWrapper.addColumn("Наименование", "text");
+        TableColumn<OSR_TIV, Double> valueAllColumn
+                = tableWrapper.addColumn("Значение (общее)", "expenses");
+        TableColumn valueColumn = tableWrapper.addColumn("Значение (за дом)", "expensesPerHouse");
 
         valueAllColumn.setEditable(true);
 //        valueColumn.setCellFactory(p -> TableCellFactory.getDecimalCell());
@@ -199,13 +200,14 @@ public class PlaningControllerTF implements TableFactory {
 
     /**
      * TreeTable
+     *
      * @param treeTable
      * @return
      */
-    public static DiscountTreeTableWrapper decorKD(TreeTableView<DItem> treeTable){
-        DiscountTreeTableWrapper treeTableWrapper = new DiscountTreeTableWrapper("Коэффициент Дисконтирования",treeTable, new DiscountQuery());
+    public static DiscountTreeTableWrapper decorKD(TreeTableView<DItem> treeTable) {
+        DiscountTreeTableWrapper treeTableWrapper = new DiscountTreeTableWrapper("Коэффициент Дисконтирования", treeTable, new DiscountQuery());
 
-        TreeTableColumn<DItem, String> nameColumn =  new TreeTableColumn<>("Наименование");
+        TreeTableColumn<DItem, String> nameColumn = new TreeTableColumn<>("Наименование");
         nameColumn.setSortable(false);
         nameColumn.setCellValueFactory((param) ->
                 param.getValue().getValue().firstValueProperty()
@@ -217,8 +219,8 @@ public class PlaningControllerTF implements TableFactory {
                 param.getValue().getValue().secondValueProperty().asObject()
         );
         valueColumn.setCellFactory(p -> new EditingTreeTableCell(new DoubleStringConverter()));
-        valueColumn.setOnEditCommit(event ->{
-            final TreeItem<DItem> current =  event.getTreeTablePosition().getTreeItem();
+        valueColumn.setOnEditCommit(event -> {
+            final TreeItem<DItem> current = event.getTreeTablePosition().getTreeItem();
             current.getValue().setSecondValue(event.getNewValue());
             event.getTreeTableView().getRoot().getValue().setSecondValue(Math.random());
             event.getTreeTableView().refresh();

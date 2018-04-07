@@ -10,8 +10,10 @@ import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
+
 import javafx.animation.PauseTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -59,8 +61,8 @@ public class EstimateController implements Initializable {
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //                                                                                                  ENUM
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+
     /**
-     *
      * Enumeration of "Estimate Tables".
      * <br>
      * All contain PreviewObs(parameters of Site).
@@ -72,59 +74,76 @@ public class EstimateController implements Initializable {
      * Common - contain only parameters.
      */
     public enum Est {
-        Base(1), Changed(2),Additional(3),KS, Common;
+        Base(1), Changed(2), Additional(3), KS, Common;
 
         //Constructors ---------------------------------------------------------------------
-        Est(){     }
-        Est(int val){ taleType = val; }
+        Est() {
+        }
 
-        public void printALLSum(){
+        Est(int val) {
+            taleType = val;
+        }
+
+        public void printALLSum() {
             this.tab.getSumLabelValue();
         }
 
         //Setter ---------------------------------------------------------------------------
-        public void setSiteObs(ObservableList<PreviewTIV> siteObsList){
-            Common.previewTableObs  = siteObsList;
-            Base.previewTableObs    = siteObsList;
+        public void setSiteObs(ObservableList<PreviewTIV> siteObsList) {
+            Common.previewTableObs = siteObsList;
+            Base.previewTableObs = siteObsList;
             Changed.previewTableObs = siteObsList;
-            KS.previewTableObs      = siteObsList;
+            KS.previewTableObs = siteObsList;
 
         }
 
-        private void setTab(TabModel tab){this.tab = tab;}
+        private void setTab(TabModel tab) {
+            this.tab = tab;
+        }
 
         //Getter ---------------------------------------------------------------------------
-        public int getTaleType()   {return taleType;}
-        public Map getTabMap()     {return  tabMap;}
+        public int getTaleType() {
+            return taleType;
+        }
 
-        public <T> T getSiteSecondValue(String sqlField){
+        public Map getTabMap() {
+            return tabMap;
+        }
+
+        public <T> T getSiteSecondValue(String sqlField) {
             return (T) previewTableObs.stream()
                     .filter(o -> o.getSqlColumn().equals(sqlField))
                     .findFirst()
                     .get()
                     .getSecondValue();
         }
-        public PreviewTIV getSiteItem(String sqlField){
+
+        public PreviewTIV getSiteItem(String sqlField) {
             return previewTableObs.stream()
                     .filter(o -> o.getSqlColumn().equals(sqlField))
                     .findFirst()
                     .get();
         }
 
-        public ObservableList<PreviewTIV> getPreviewObservableList(){return previewTableObs;}
+        public ObservableList<PreviewTIV> getPreviewObservableList() {
+            return previewTableObs;
+        }
 
-        public   ObservableList getAllItemsList_Live(){
+        public ObservableList getAllItemsList_Live() {
             Collection<List> tempCollection = this.getTabMap().values();
 //            return (List) tempCollection.stream().flatMap(p -> p.stream()).collect(Collectors.toList());
-            return  tempCollection.stream().flatMap(Collection::stream).collect(Collector.of(
+            return tempCollection.stream().flatMap(Collection::stream).collect(Collector.of(
                     FXCollections::observableArrayList,
                     ObservableList::add,
-                    (l1, l2) -> { l1.addAll(l2); return l1; })
+                    (l1, l2) -> {
+                        l1.addAll(l2);
+                        return l1;
+                    })
             );
         }
 
-        public ObservableList<?  extends Item> findItemsList_DL(Item selectedItem){
-            if(selectedItem != null)
+        public ObservableList<? extends Item> findItemsList_DL(Item selectedItem) {
+            if (selectedItem != null)
                 return allItems.stream()
                         .filter((Item i) -> i.equalsSuperClass(selectedItem))
                         .sorted(Comparator.comparingLong(item -> item.getDateCreate().getTime()))
@@ -134,33 +153,41 @@ public class EstimateController implements Initializable {
                 return FXCollections.observableArrayList();
         }
 
-        public void updateList_DL(CommonDAO dao){ allItems = (ObservableList<? extends Item>) dao.getData();}
+        public void updateList_DL(CommonDAO dao) {
+            allItems = (ObservableList<? extends Item>) dao.getData();
+        }
 //        public void updateList_DL(){ createTab();}
 
 
-
         //Update ---------------------------------------------------------------------------
-        public void updatePreviewTable(){new SiteDAO().dellAndInsert(previewTableObs);}
+        public void updatePreviewTable() {
+            new SiteDAO().dellAndInsert(previewTableObs);
+        }
 
-        public void updateTabData(){this.createTabMap(); this.tab.updateTablesItems(); }
+        public void updateTabData() {
+            this.createTabMap();
+            this.tab.updateTablesItems();
+        }
 
         //Methots --------------------------------------------------------------------------
 //        public boolean isExist(){return tabMap != null ?!(tabMap.isEmpty());}
-        public boolean isExist(){return tabMap != null ? !(tabMap.isEmpty()): false;}
+        public boolean isExist() {
+            return tabMap != null ? !(tabMap.isEmpty()) : false;
+        }
 
-        public void setTabsEditable(){
-            if(Changed.tabMap.isEmpty())
+        public void setTabsEditable() {
+            if (Changed.tabMap.isEmpty())
                 Base.tab.setEditable(true);
             else Base.tab.setEditable(false);
         }
 
-        protected void createTabMap(){
-            switch(this){
+        protected void createTabMap() {
+            switch (this) {
                 case Base:
                 case Changed:
                     allItems = new EstimateDAO(this).getData();
-                    tabMap   = allItems.stream()
-                            .filter(item  -> item.getDel() != 1 )
+                    tabMap = allItems.stream()
+                            .filter(item -> item.getDel() != 1)
                             .sorted(Comparator.comparing(Item::getJM_name))
 //                                .collect(Collectors.groupingBy(Item::getBuildingPart));
                             .collect(Collectors.groupingBy(Item::getBuildingPart,
@@ -168,64 +195,76 @@ public class EstimateController implements Initializable {
                                     Collector.of(
                                             () -> FXCollections.observableArrayList(EstimateTVI.extractor()),
                                             ObservableList::add,
-                                            (l1, l2) -> { l1.addAll(l2); return l1; })
+                                            (l1, l2) -> {
+                                                l1.addAll(l2);
+                                                return l1;
+                                            })
                             ));
                     break;
                 case KS:
                     allItems = new KS_DAO(this).getData();
-                    tabMap   = allItems.stream()
-                            .filter(item  -> item.getDel() != 1 )
+                    tabMap = allItems.stream()
+                            .filter(item -> item.getDel() != 1)
                             .sorted(Comparator.comparing(Item::getJM_name))
-                            .collect(Collectors.groupingBy(item -> ((KS_TIV)item).getKSNumber(),
+                            .collect(Collectors.groupingBy(item -> ((KS_TIV) item).getKSNumber(),
                                     Collector.of(
                                             () -> FXCollections.observableArrayList(KS_TIV.extractor()),
                                             ObservableList::add,
-                                            (l1, l2) -> { l1.addAll(l2); return l1; })
+                                            (l1, l2) -> {
+                                                l1.addAll(l2);
+                                                return l1;
+                                            })
                             ));
 
 //                                .collect(Collectors.groupingBy((Item item) -> ((KS_TIV)item).getKSNumber()));
                     break;
-                case Additional :
+                case Additional:
                     allItems = Base.allItems.stream()
-                            .filter( item -> !Changed.allItems.contains(item))
+                            .filter(item -> !Changed.allItems.contains(item))
                             .collect(Collector.of(
                                     () -> FXCollections.observableArrayList(EstimateTVI.extractor()),
                                     ObservableList::add,
-                                    (l1, l2) -> { l1.addAll(l2); return l1; })
+                                    (l1, l2) -> {
+                                        l1.addAll(l2);
+                                        return l1;
+                                    })
                             );
-                    tabMap   = allItems.stream()
-                            .filter(item  -> item.getDel() != 1 )
-                            .collect(Collectors.groupingBy(item -> ((EstimateTVI)item).getBuildingPart(),
+                    tabMap = allItems.stream()
+                            .filter(item -> item.getDel() != 1)
+                            .collect(Collectors.groupingBy(item -> ((EstimateTVI) item).getBuildingPart(),
 //                                        Item::getBuildingPart,
                                     Collector.of(
                                             () -> FXCollections.observableArrayList(),
                                             ObservableList::add,
-                                            (l1, l2) -> { l1.addAll(l2); return l1; })
+                                            (l1, l2) -> {
+                                                l1.addAll(l2);
+                                                return l1;
+                                            })
                             ));
                     break;
             }
 
         }
 
-        public Item findEqualsElevent(Item inpItem){
+        public Item findEqualsElevent(Item inpItem) {
             return (Item) tabMap.values().stream()
                     .flatMap(mapItem -> ((List) mapItem).stream())
-                    .filter(item -> ((Item)item).equalsSuperClass(inpItem))
+                    .filter(item -> ((Item) item).equalsSuperClass(inpItem))
                     .findFirst().orElse(null);
 //                   .get();
         }
 
         //enum VAR ---------------------------------------------------------------------------
 
-        private int      taleType;
+        private int taleType;
         private Map<Object, ObservableList<Item>> tabMap;
         private TabModel tab;
         private ObservableList<? extends Item> allItems;
-        private ObservableList<PreviewTIV>    previewTableObs;
+        private ObservableList<PreviewTIV> previewTableObs;
     }
-/*!******************************************************************************************************************
-*                                                                                                       Fields
-********************************************************************************************************************/
+    /*!******************************************************************************************************************
+     *                                                                                                       Fields
+     ********************************************************************************************************************/
 
 
     private RootLayoutController rootController;
@@ -233,35 +272,51 @@ public class EstimateController implements Initializable {
 
     //preview table
     private Map<Integer, List<KS_TIV>> ksMap;
-    private Map<String, List<Item>>    mapBase,mapChange;
+    private Map<String, List<Item>> mapBase, mapChange;
 
-    @FXML private Label            ksSumLabel, ksDateLabel, erroeLable;
-    @FXML private VBox             baseVBox, changedVBox;
-    @FXML private ListView<Object> listKS;
-    @FXML private DatePicker       dateKSfrom, dateKSto;
-    @FXML private GridPane         gridPaneAdditional;
-    @FXML private ScrollPane       scrollPaneBase,scrollPaneChanged;
-    @FXML private ComboBox         comboAdditional;
-    @FXML private Tab              baseTab, changeTab, dopTab;
-    @FXML private TableView        tableKS, tableAdditional;
+    @FXML
+    private Label ksSumLabel, ksDateLabel, erroeLable;
+    @FXML
+    private VBox baseVBox, changedVBox;
+    @FXML
+    private ListView<Object> listKS;
+    @FXML
+    private DatePicker dateKSfrom, dateKSto;
+    @FXML
+    private GridPane gridPaneAdditional;
+    @FXML
+    private ScrollPane scrollPaneBase, scrollPaneChanged;
+    @FXML
+    private ComboBox comboAdditional;
+    @FXML
+    private Tab baseTab, changeTab, dopTab;
+    @FXML
+    private TableView tableKS, tableAdditional;
 
     private Label labelSumBase, labelSumChanged;
-    private TableWrapperEST<KS_TIV> tableKSWrapper ;
+    private TableWrapperEST<KS_TIV> tableKSWrapper;
     private TableWrapper tableAdditionalWrapper;
 
 
-/*!******************************************************************************************************************
-*                                                                                                     Getter/Setter
-********************************************************************************************************************/
+    /*!******************************************************************************************************************
+     *                                                                                                     Getter/Setter
+     ********************************************************************************************************************/
 
-    public void setRootController(RootLayoutController rootController) {this.rootController = rootController;}
+    public void setRootController(RootLayoutController rootController) {
+        this.rootController = rootController;
+    }
 
-    public Tab getBaseTab()  {return baseTab;}
-    public Tab getChangeTab(){return changeTab;}
+    public Tab getBaseTab() {
+        return baseTab;
+    }
+
+    public Tab getChangeTab() {
+        return changeTab;
+    }
 
     /*!******************************************************************************************************************
-    *                                                                                                               INIT
-    ********************************************************************************************************************/
+     *                                                                                                               INIT
+     ********************************************************************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 //        scrollPaneBase.setPrefHeight(ScreenSize.height.getQuantity() - 200);
@@ -287,23 +342,23 @@ public class EstimateController implements Initializable {
 
 
     }
-/*!******************************************************************************************************************
-*                                                                                                            Methods
-********************************************************************************************************************/
+    /*!******************************************************************************************************************
+     *                                                                                                            Methods
+     ********************************************************************************************************************/
 
-    public void init_EstLayoutTabs(/*ObservableList<PreviewTableItem> obs?/*String SiteNumber, String contName*/){
+    public void init_EstLayoutTabs(/*ObservableList<PreviewTableItem> obs?/*String SiteNumber, String contName*/) {
         //add site number and Contractor
-        Est.Base     .createTabMap();
-        Est.Changed  .createTabMap();
-        Est.KS       .createTabMap();
-        Est.Additional       .createTabMap();
+        Est.Base.createTabMap();
+        Est.Changed.createTabMap();
+        Est.KS.createTabMap();
+        Est.Additional.createTabMap();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         tableAdditionalWrapper.tableView().setItems(Est.Additional.getAllItemsList_Live());
 
 
-        if(Est.Base    .isExist())init_Est(Est.Base);
+        if (Est.Base.isExist()) init_Est(Est.Base);
         else init_Est_Null(Est.Base);
-        if(Est.Changed .isExist())init_Est(Est.Changed);
+        if (Est.Changed.isExist()) init_Est(Est.Changed);
         else init_Est_Null(Est.Changed);
 
         init_Additional();
@@ -311,19 +366,18 @@ public class EstimateController implements Initializable {
     }
 
 
-
-    private void init_Est_Null(Est enumEst){
+    private void init_Est_Null(Est enumEst) {
         Text nullExtText = new Text();
         nullExtText.setId("nullExtText");                                   //CSS ID
         Button addFromModelButton = new Button();
-        VBox vBox = new VBox(nullExtText,addFromModelButton);
+        VBox vBox = new VBox(nullExtText, addFromModelButton);
         vBox.setAlignment(Pos.CENTER);
 
-        switch(enumEst){
+        switch (enumEst) {
             case Base:
                 nullExtText.setText("Для данного подрядчика отсутствует 'Базовая Cмета'");
                 addFromModelButton.setText("Добавить из SQL-Базы");
-                ((ScrollPane)baseVBox.getChildren().get(0)).setContent(vBox);
+                ((ScrollPane) baseVBox.getChildren().get(0)).setContent(vBox);
                 break;
             case Changed:
                 nullExtText.setText("Для данного подрядчика отсутствует 'Изменённая Cмета'");
@@ -333,8 +387,8 @@ public class EstimateController implements Initializable {
         }
 
         addFromModelButton.setOnAction(event -> {
-            if(!enumEst.getSiteSecondValue(SQL.Site.CONTRACTOR ).equals("-")
-                    || !enumEst.getSiteSecondValue(SQL.Site.TYPE_HOME).equals("-")){
+            if (!enumEst.getSiteSecondValue(SQL.Site.CONTRACTOR).equals("-")
+                    || !enumEst.getSiteSecondValue(SQL.Site.TYPE_HOME).equals("-")) {
                 new EstimateDAO().insertEstNewTables(enumEst);
                 //            init_Lists();
                 //            if(enumEst == Est.Base)    init_EstBase();
@@ -342,11 +396,11 @@ public class EstimateController implements Initializable {
                 enumEst.createTabMap();
                 init_Est(enumEst);
 
-                switch(enumEst){
+                switch (enumEst) {
                     case Base:
                         enumEst.getSiteItem(SQL.Site.SMET_COST)
                                 .setSecondValue(
-                                       new DoubleStringConverter().fromString(labelSumBase.getText()));
+                                        new DoubleStringConverter().fromString(labelSumBase.getText()));
                         //                    enumEst.getPrewiewItem(9).setSecondValue(labelSumBase.getText());
                         break;
                     case Changed:
@@ -357,19 +411,19 @@ public class EstimateController implements Initializable {
                 }
                 enumEst.updatePreviewTable();
                 rootController.getPreviewTable().refresh();
-            }else{
+            } else {
                 System.out.println("init_Est_Null - Button - addFromModelButton - if");
             }
         });
 
     }
 
-    private void init_Est(Est enumEst){
+    private void init_Est(Est enumEst) {
 
         TabModel tm = new TabModel(enumEst);
         enumEst.setTab(tm);
 //        tm1 = new TabModel(enumEst.getTabMap());
-        switch(enumEst){
+        switch (enumEst) {
             case Base:
                 labelSumBase = tm.getSumLabel();
                 labelSumBase.textProperty().addListener(change -> {
@@ -379,7 +433,7 @@ public class EstimateController implements Initializable {
                     rootController.getPreviewTable().refresh();
                 });
 
-                ((ScrollPane)baseVBox.getChildren().get(0)).setContent(tm.getBaseVBox());
+                ((ScrollPane) baseVBox.getChildren().get(0)).setContent(tm.getBaseVBox());
                 baseVBox.getChildren().add(labelSumBase);
 
                 break;
@@ -400,30 +454,30 @@ public class EstimateController implements Initializable {
 
     }
 
-    private void init_Additional(){
+    private void init_Additional() {
 //        tableWrapperAdditional.setItems((ObservableList)Est.Base.getTabMap(). saveEst("ФУНДАМЕНТ"));
     }
 
 
-    private void init_ksList(){
+    private void init_ksList() {
 
         ksMap = Est.KS.getTabMap();
 
-        if(!ksMap.isEmpty())
+        if (!ksMap.isEmpty())
             listKS.getItems().setAll(ksMap.keySet());
         else listKS.getItems().setAll("-КС отсутствуют-");
 
         //listener
         listKS.getSelectionModel().selectedItemProperty().addListener((Obs, oldValue, newValue) -> {
             Object KS_Number;
-            if(newValue != null )
+            if (newValue != null)
                 KS_Number = oldValue;
             else KS_Number = newValue;
 
-            if(!"-КС отсутствуют-".equals(newValue) && newValue != null){
+            if (!"-КС отсутствуют-".equals(newValue) && newValue != null) {
                 //Undo Changes if changed items weren't SAVE
-                if(tableKSWrapper.getMemento()!= null
-                        && !tableKSWrapper.getMemento().getSavedState().equals(tableKSWrapper.getItems())){
+                if (tableKSWrapper.getMemento() != null
+                        && !tableKSWrapper.getMemento().getSavedState().equals(tableKSWrapper.getItems())) {
                     tableKSWrapper.undoChangeItems();
                 }
 
@@ -435,19 +489,19 @@ public class EstimateController implements Initializable {
                 ((ContextMenuOptional) tableKSWrapper.getContextMenu()).setDisable_SaveUndoPrint_groupe(true);
 
                 //count values
-                tableKSWrapper.getItems().stream().forEach(item ->{
+                tableKSWrapper.getItems().stream().forEach(item -> {
 
                     Item equalsItem = Est.Changed.findEqualsElevent(item);
-                    double sum =0;
-                    if(item != null && equalsItem != null)
-                        sum =  equalsItem.getQuantity() -
+                    double sum = 0;
+                    if (item != null && equalsItem != null)
+                        sum = equalsItem.getQuantity() -
                                 ksMap.values().stream()
-                                        .flatMap(mapItem ->mapItem.stream())
+                                        .flatMap(mapItem -> mapItem.stream())
                                         .filter(item::equalsSuperClass)
                                         .mapToDouble(filtered -> filtered.getQuantity())
                                         .sum();
 
-                    ((KS_TIV)item).setRestOfValue(sum);
+                    ((KS_TIV) item).setRestOfValue(sum);
 
 //                                Est.Changed.findEqualsElevent(item).getQuantity() -
 //                                        ksMap.values().stream()
@@ -460,28 +514,29 @@ public class EstimateController implements Initializable {
 
                 //Set date Lable of selected KS
                 ksDateLabel.setText(LocalDate.ofEpochDay(
-                        ((KS_TIV)ksMap.get(newValue).get(0)).getKSDate()).toString());
+                        ((KS_TIV) ksMap.get(newValue).get(0)).getKSDate()).toString());
                 ksSumLabel.setVisible(true);
                 ksDateLabel.setVisible(true);
             }
         });
 
     }
+
     /*!******************************************************************************************************************
-    *                                                                                                     Update
-    ********************************************************************************************************************/
-    public void update_TapKS(){
+     *                                                                                                     Update
+     ********************************************************************************************************************/
+    public void update_TapKS() {
         Est.KS.createTabMap();
         init_ksList();
     }
 
-/*!******************************************************************************************************************
-*                                                                                                     HANDLERS
-********************************************************************************************************************/
+    /*!******************************************************************************************************************
+     *                                                                                                     HANDLERS
+     ********************************************************************************************************************/
 
     @FXML //Add new KS
     private void handle_addKS(ActionEvent event) {
-        if(Est.Changed.isExist()){
+        if (Est.Changed.isExist()) {
             StageCreator siteAddLayout = new StageCreator(PathStrings.Layout.ADD_KS, "Добавить KC").loadNewWindow();
             ksAddController = siteAddLayout.getController();
             ksAddController.setShowEstController(this);
@@ -492,15 +547,13 @@ public class EstimateController implements Initializable {
     }
 
 
-
-
     @FXML
     private void handle_FilterKS(ActionEvent event) {
 
-        ObservableMap<Integer, List<KS_TIV>> tempKsMap = FXCollections.observableHashMap() ;
-        if (isInputValid()){
-            int dateFrom  =(int) dateKSfrom.getValue().toEpochDay();
-            int dateTo    =(int) dateKSto.getValue().toEpochDay();
+        ObservableMap<Integer, List<KS_TIV>> tempKsMap = FXCollections.observableHashMap();
+        if (isInputValid()) {
+            int dateFrom = (int) dateKSfrom.getValue().toEpochDay();
+            int dateTo = (int) dateKSto.getValue().toEpochDay();
             ksMap.entrySet().stream()
                     .filter(list -> list.getValue().get(0).getKSDate() >= dateFrom
                             && list.getValue().get(0).getKSDate() <= dateTo)
@@ -525,14 +578,13 @@ public class EstimateController implements Initializable {
     private void hanle_PrintKS(ActionEvent event) {
         File selectedFile = FileChooserFactory.saveKS(listKS.getSelectionModel().getSelectedItem().toString());
         ObservableList<KS_TIV> i = tableKSWrapper.getItems();
-        if(!listKS.getSelectionModel().isEmpty()
+        if (!listKS.getSelectionModel().isEmpty()
                 && selectedFile != null
                 ) {
             new PrintKS(tableKSWrapper.getItems(),
                     new ContractorDAO().getOne(Est.KS.getSiteSecondValue(SQL.KS.CONTRACTOR)),
                     selectedFile.toPath()
             );
-
 
 
 //            new PrintKS.Builder()
@@ -547,7 +599,7 @@ public class EstimateController implements Initializable {
 
     @FXML //delete new KS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!NEED TO CHAGE
     private void handle_deleteKS(ActionEvent event) {
-        if(!listKS.getSelectionModel().isEmpty() && listKS.getSelectionModel().getSelectedItem() != null){
+        if (!listKS.getSelectionModel().isEmpty() && listKS.getSelectionModel().getSelectedItem() != null) {
             String selectedItemKS = listKS.getSelectionModel().getSelectedItem().toString();
             new KS_DAO().deleteKS(selectedItemKS);
             ksMap.remove(Integer.parseInt(selectedItemKS));
@@ -557,33 +609,33 @@ public class EstimateController implements Initializable {
     }
 
 
-/*!******************************************************************************************************************
-*                                                                                                     InputValidator
-********************************************************************************************************************/
+    /*!******************************************************************************************************************
+     *                                                                                                     InputValidator
+     ********************************************************************************************************************/
 
     private boolean isInputValid() {
         String errorMessage = "";
 
-        if (dateKSfrom.getValue() == null ){
+        if (dateKSfrom.getValue() == null) {
             errorMessage += "'Дата поиска: с' ";
             dateKSfrom.setStyle("-fx-border-color: red;");
 
         }
-        if (dateKSto.getValue() == null){
+        if (dateKSto.getValue() == null) {
             errorMessage += "'Дата поиска: по' ";
 
             dateKSto.setStyle("-fx-border-color: red;");
         }
-        if(dateKSfrom.getValue() != null && dateKSto.getValue() != null
-                && dateKSfrom.getValue().toEpochDay() > dateKSto.getValue().toEpochDay()){
+        if (dateKSfrom.getValue() != null && dateKSto.getValue() != null
+                && dateKSfrom.getValue().toEpochDay() > dateKSto.getValue().toEpochDay()) {
             errorMessage += "'Неверный период' ";
             dateKSfrom.setStyle("-fx-border-color: red;");
 
         }
 
 
-        if(errorMessage.length() >0){
-            erroeLable.setText("Ошибки в полях: " +errorMessage);
+        if (errorMessage.length() > 0) {
+            erroeLable.setText("Ошибки в полях: " + errorMessage);
             erroeLable.setVisible(true);
         }
 

@@ -19,9 +19,10 @@ import java.util.Optional;
 
 /**
  * Universal object to PropertySheet(<b>controlsfx</b>).
+ *
  * @param <T>
  */
-public class ObjectPSI<T> implements  Clone<ObjectPSI<T>>,PropertySheet.Item{
+public class ObjectPSI<T> implements Clone<ObjectPSI<T>>, PropertySheet.Item {
     private long id;
     private final ObjectProperty<T> sheetObject;
     private final String category;
@@ -36,34 +37,37 @@ public class ObjectPSI<T> implements  Clone<ObjectPSI<T>>,PropertySheet.Item{
      *                                                                         *
      **************************************************************************/
     public ObjectPSI(T value) {
-        this("",value);
+        this("", value);
     }
 
     public ObjectPSI(String name
-            ,T value) {
-       this(name,"-",value);
+            , T value) {
+        this(name, "-", value);
     }
+
     public ObjectPSI(String name
-            ,String category
-            ,T value) {
-        this(name,category,"",value,"","");
+            , String category
+            , T value) {
+        this(name, category, "", value, "", "");
     }
+
     public ObjectPSI(String name
-            ,String category
-            ,String description
-            ,T value
-            ,String sqlName
-            ,String sqlTableName) {
-        this(name,category,description,value,sqlName,sqlTableName, ".+");
+            , String category
+            , String description
+            , T value
+            , String sqlName
+            , String sqlTableName) {
+        this(name, category, description, value, sqlName, sqlTableName, ".+");
     }
+
     public ObjectPSI(String name
-            ,String category
-            ,String description
-            ,T value
-            ,String sqlName
-            ,String sqlTableName
-            ,String regExValidation) {
-        this.sheetObject = new SimpleObjectProperty<>(this, this.chaheNames(name),value);
+            , String category
+            , String description
+            , T value
+            , String sqlName
+            , String sqlTableName
+            , String regExValidation) {
+        this.sheetObject = new SimpleObjectProperty<>(this, this.chaheNames(name), value);
         this.category = category;
         this.description = description;
         this.sqlName = sqlName;
@@ -78,21 +82,23 @@ public class ObjectPSI<T> implements  Clone<ObjectPSI<T>>,PropertySheet.Item{
      **************************************************************************/
 
     //TODO: think about abstraction and SQL-interface
-    public  String getSqlName(){
+    public String getSqlName() {
         return this.sqlName;
     }
 
-    public String getSqlTableName(){
+    public String getSqlTableName() {
         return this.sqlTableName;
     }
+
     /***************************************************************************
      *                                                                         *
      * Methods                                                                 *
      *                                                                         *
      **************************************************************************/
-    private String chaheNames(String name){
-        return name.replace(' ','\n');
+    private String chaheNames(String name) {
+        return name.replace(' ', '\n');
     }
+
     /***************************************************************************
      *                                                                         *
      * Override                                                                *
@@ -102,34 +108,41 @@ public class ObjectPSI<T> implements  Clone<ObjectPSI<T>>,PropertySheet.Item{
     public Class<?> getType() {
         return sheetObject.getValue().getClass();
     }
+
     @Override
     public String getCategory() {
         return this.category;
     }
+
     @Override
     public String getName() {
         return sheetObject.getName();
     }
+
     @Override
     public String getDescription() {
         return this.description;
     }
+
     @Override
     public T getValue() {
         return sheetObject.getValue();
     }
+
     @Override
     public void setValue(Object o) {
         sheetObject.setValue((T) o);
 
     }
+
     @Override
     public Optional<ObservableValue<? extends Object>> getObservableValue() {
         return Optional.of(sheetObject);
     }
+
     @Override
-    public ObjectPSI<T>  getClone() {
-        ObjectPSI<T>  item =  new  ObjectPSI<>(this.getName(),
+    public ObjectPSI<T> getClone() {
+        ObjectPSI<T> item = new ObjectPSI<>(this.getName(),
                 this.getCategory(),
                 this.getDescription(),
                 this.getValue(),
@@ -139,6 +152,7 @@ public class ObjectPSI<T> implements  Clone<ObjectPSI<T>>,PropertySheet.Item{
         item.setId(this.getId());
         return item;
     }
+
     /***************************************************************************
      *                                                                         *
      * Getters/Setters                                                         *
@@ -152,13 +166,13 @@ public class ObjectPSI<T> implements  Clone<ObjectPSI<T>>,PropertySheet.Item{
         this.id = id;
     }
 
-    public  Validator<T> getValidator(){
-       return new Validator<T>() {
+    public Validator<T> getValidator() {
+        return new Validator<T>() {
             @Override
             public ValidationResult apply(Control control, T value) {
                 boolean condition = value != null
-                                    ? !value.toString().matches(ObjectPSI.this.regExValidation)
-                                    : value == null;
+                        ? !value.toString().matches(ObjectPSI.this.regExValidation)
+                        : value == null;
                 return ValidationResult.fromMessageIf(
                         control,
                         ObjectPSI.this.getDescription(),
@@ -168,6 +182,7 @@ public class ObjectPSI<T> implements  Clone<ObjectPSI<T>>,PropertySheet.Item{
             }
         };
     }
+
     /***************************************************************************
      *                                                                         *
      * Equals/HashCode/toString                                                *
@@ -198,6 +213,7 @@ public class ObjectPSI<T> implements  Clone<ObjectPSI<T>>,PropertySheet.Item{
                 ? sqlTableName.equals(objectPSI.sqlTableName)
                 : objectPSI.sqlTableName == null;
     }
+
     @Override
     public int hashCode() {
         int result = sheetObject.getValue() != null ? sheetObject.getValue().hashCode() : 0;
@@ -207,15 +223,17 @@ public class ObjectPSI<T> implements  Clone<ObjectPSI<T>>,PropertySheet.Item{
         result = 4 * result + (sqlTableName != null ? sqlTableName.hashCode() : 0);
         return result;
     }
+
     @Override
     public String toString() {
         return "ObjectPSI [" +
-                "name = "       + this.getName()   +
-                "value = "      + this.getValue()  +
-                "SQL name = "   + this.getSqlName()+
-                "type ="        + this.getType()   +
-                "category = "   + this.getCategory();
+                "name = " + this.getName() +
+                "value = " + this.getValue() +
+                "SQL name = " + this.getSqlName() +
+                "type =" + this.getType() +
+                "category = " + this.getCategory();
     }
+
     /***************************************************************************
      *                                                                         *
      * Extractor                                                               *

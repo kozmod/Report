@@ -25,15 +25,15 @@ public class CounterAgentDAO implements CommonNamedDAO<Collection<CountAgentTVI>
 
     @Override
     public ObservableList<CountAgentTVI> getData() {
-        ObservableList<CountAgentTVI> list =  FXCollections.observableArrayList(CountAgentTVI.extractor());
+        ObservableList<CountAgentTVI> list = FXCollections.observableArrayList(CountAgentTVI.extractor());
 
         String sqlQuery = "SELECT *  FROM [Test].[dbo].[vCOMPANY_IDEAL_COR]";
 
-        try(Connection connection = SqlConnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(sqlQuery)) {
-            if(pstmt.execute()) {
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(sqlQuery)) {
+            if (pstmt.execute()) {
                 try (ResultSet rs = pstmt.getResultSet()) {
-                    while(rs.next()) {
+                    while (rs.next()) {
                         list.add(
                                 new CountAgentTVI(
                                         rs.getInt("ID_COUNT"),
@@ -51,7 +51,7 @@ public class CounterAgentDAO implements CommonNamedDAO<Collection<CountAgentTVI>
             ex.printStackTrace();
             Logger.getLogger(ExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return  list;
+        return list;
     }
 
     @Override
@@ -64,12 +64,12 @@ public class CounterAgentDAO implements CommonNamedDAO<Collection<CountAgentTVI>
                 " ID_COUNT = ? " +
                 " AND ID_FORM = ? " +
                 " AND ID_TYPE = ? ";
-        try(Connection connection = SqlConnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(sqlQuery)) {
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(sqlQuery)) {
             for (CountAgentTVI countAgent : entry) {
-                pstmt.setInt(1,countAgent.getIdName());
-                pstmt.setInt(2,countAgent.getIdForm());
-                pstmt.setInt(3,countAgent.getIdType());
+                pstmt.setInt(1, countAgent.getIdName());
+                pstmt.setInt(2, countAgent.getIdForm());
+                pstmt.setInt(3, countAgent.getIdType());
                 pstmt.addBatch();
             }
             pstmt.executeBatch();
@@ -110,13 +110,13 @@ public class CounterAgentDAO implements CommonNamedDAO<Collection<CountAgentTVI>
             }
             try (Connection connection = SqlConnector.getInstance();
                  CallableStatement cstmt = connection.prepareCall(sqlAddFRK)) {
-                if(Objects.isNull(item.getLinkedNames()) || item.getLinkedNames().isEmpty()) {
+                if (Objects.isNull(item.getLinkedNames()) || item.getLinkedNames().isEmpty()) {
                     cstmt.setString(1, "-1");
                     cstmt.setInt(2, item.getIdForm());
                     cstmt.setInt(3, item.getIdName());
                     cstmt.setInt(4, item.getIdType());
                     cstmt.execute();
-                }else if(Objects.nonNull(item.getLinkedNames()) && !item.getLinkedNames().isEmpty()){
+                } else if (Objects.nonNull(item.getLinkedNames()) && !item.getLinkedNames().isEmpty()) {
                     for (LinkedNamePair linkedName : item.getLinkedNames()) {
                         cstmt.setString(1, linkedName.getKey().toString());
                         cstmt.setInt(2, item.getIdForm());
@@ -132,4 +132,4 @@ public class CounterAgentDAO implements CommonNamedDAO<Collection<CountAgentTVI>
             }
         });
     }
- }
+}

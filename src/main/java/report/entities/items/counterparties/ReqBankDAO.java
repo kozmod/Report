@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import report.entities.items.expenses.ExpensesDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.models.sql.SqlConnector;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -13,36 +14,38 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ReqBankDAO extends AbstractReqDAO{
+public class ReqBankDAO extends AbstractReqDAO {
 
     //common data
-    private static final String SQL       = "SELECT * FROM [dbo].[Count_Req_Bank]  WHERE  id_Count = ? AND dell =0";
+    private static final String SQL = "SELECT * FROM [dbo].[Count_Req_Bank]  WHERE  id_Count = ? AND dell =0";
     private static final String SQL_TABLE = "[dbo].[Count_Req_Bank]";
-    private static final String CATEGORY  = "Банковские реквизиты";
+    private static final String CATEGORY = "Банковские реквизиты";
     //columns
-    private static String BANK_NAME  = "BankName";
-    private static String BIC        = "BIC";
+    private static String BANK_NAME = "BankName";
+    private static String BIC = "BIC";
     private static String ACC_NUMBER = "AccNumber";
-    private static String COR_ACC    = "CorAcc";
+    private static String COR_ACC = "CorAcc";
 
     @Override
     public String getSqlTableName() {
         return ReqBankDAO.SQL_TABLE;
     }
+
     @Override
     public <HEIR extends List<ObjectPSI>> HEIR getData() {
         return null;
     }
-    public List<ObjectPSI> getByID(int countId){
-        List<ObjectPSI> list =  FXCollections.observableArrayList(ObjectPSI.extractor());
+
+    public List<ObjectPSI> getByID(int countId) {
+        List<ObjectPSI> list = FXCollections.observableArrayList(ObjectPSI.extractor());
         Map<String, ObjectPSI> map = this.getEmtyItems();
-        try(Connection connection = SqlConnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(SQL)) {
-            pstmt.setInt(1,countId);
-            if(pstmt.execute()){
-                try(ResultSet rs = pstmt.getResultSet()){
-                    if(rs.next()){
-                        ReqDaoUtils.setID(rs.getLong("id_Count"),map);
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(SQL)) {
+            pstmt.setInt(1, countId);
+            if (pstmt.execute()) {
+                try (ResultSet rs = pstmt.getResultSet()) {
+                    if (rs.next()) {
+                        ReqDaoUtils.setID(rs.getLong("id_Count"), map);
                         map.get(BANK_NAME).setValue(rs.getString(BANK_NAME));
                         map.get(BIC).setValue(rs.getInt(BIC));
                         map.get(ACC_NUMBER).setValue(rs.getString(ACC_NUMBER));
@@ -57,7 +60,7 @@ public class ReqBankDAO extends AbstractReqDAO{
         return list;
     }
 
-    public Map<String, ObjectPSI> getEmtyItems(){
+    public Map<String, ObjectPSI> getEmtyItems() {
         return ReqDaoUtils
                 .getEmptyItems(
                         new ObjectPSI<>("Наименование банка",

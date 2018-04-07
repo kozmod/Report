@@ -8,12 +8,12 @@ import report.entities.items.DItem;
 
 import java.util.Objects;
 
-public class CommonDItem<F,S> implements Clone {
+public class CommonDItem<F, S> implements Clone {
 
     private Long id;
     private final String sqlColumn;
-    private final ObjectProperty<F>  firstValue;
-    private final ObjectProperty<S>  secondValue;
+    private final ObjectProperty<F> firstValue;
+    private final ObjectProperty<S> secondValue;
 
     /***************************************************************************
      *                                                                         *
@@ -21,19 +21,20 @@ public class CommonDItem<F,S> implements Clone {
      *                                                                         *
      **************************************************************************/
     public CommonDItem(long id, String sqlColumnName, F fValue, S sValue) {
-        this.id        = id;
+        this.id = id;
         this.sqlColumn = sqlColumnName;
-        this.firstValue  = new SimpleObjectProperty<>(fValue);
+        this.firstValue = new SimpleObjectProperty<>(fValue);
         this.secondValue = new SimpleObjectProperty<>(sValue);
     }
+
     /***************************************************************************
      *                                                                         *
      * Clone CONSTRUCTOR                                                       *
      *                                                                         *
      **************************************************************************/
     @Override
-    public CommonDItem<F,S> getClone() {
-        CommonDItem<F,S> clone = new CommonDItem<>(
+    public CommonDItem<F, S> getClone() {
+        CommonDItem<F, S> clone = new CommonDItem<>(
                 this.id,
                 this.sqlColumn,
                 this.getFirstValue(),
@@ -41,22 +42,32 @@ public class CommonDItem<F,S> implements Clone {
         );
         return clone;
     }
+
     /***************************************************************************
      *                                                                         *
      * Getter / Setter                                                         *
      *                                                                         *
      **************************************************************************/
-    public long getId() {return id;}
-    public void setId(long id) {this.id = id;}
+    public long getId() {
+        return id;
+    }
 
-    public String getSqlColumn() {return sqlColumn;}
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getSqlColumn() {
+        return sqlColumn;
+    }
 
     public F getFirstValue() {
         return firstValue.get();
     }
+
     public ObjectProperty<F> firstValueProperty() {
         return firstValue;
     }
+
     public void setFirstValue(F firstValue) {
         this.firstValue.set(firstValue);
     }
@@ -64,12 +75,15 @@ public class CommonDItem<F,S> implements Clone {
     public S getSecondValue() {
         return secondValue.get();
     }
+
     public ObjectProperty<S> secondValueProperty() {
         return secondValue;
     }
+
     public void setSecondValue(S secondValue) {
         this.secondValue.set(secondValue);
     }
+
     /***************************************************************************
      *                                                                         *
      * hashCode / equals / toString                                            *
@@ -78,12 +92,13 @@ public class CommonDItem<F,S> implements Clone {
     @Override
     public int hashCode() {
         int hash = 5;
-        hash = 3 * hash + Objects.hashCode(this.id)                    >>>3;
-        hash = 3 * hash + Objects.hashCode(this.sqlColumn)             >>>3;
-        hash = 3 * hash + Objects.hashCode(this.firstValue.getValue()) >>>3;
-        hash = 3 * hash + Objects.hashCode(this.secondValue.getValue())>>>3;
+        hash = 3 * hash + Objects.hashCode(this.id) >>> 3;
+        hash = 3 * hash + Objects.hashCode(this.sqlColumn) >>> 3;
+        hash = 3 * hash + Objects.hashCode(this.firstValue.getValue()) >>> 3;
+        hash = 3 * hash + Objects.hashCode(this.secondValue.getValue()) >>> 3;
         return hash;
     }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -110,12 +125,13 @@ public class CommonDItem<F,S> implements Clone {
         }
         return true;
     }
+
     @Override
     public String toString() {
-        return "ID=["+ getId()+"];" +
-                "FV=["+getFirstValue() + "];" +
-                "SV=["+ getSecondValue()+"];" +
-                "hashCode=["+this.hashCode()+"]";
+        return "ID=[" + getId() + "];" +
+                "FV=[" + getFirstValue() + "];" +
+                "SV=[" + getSecondValue() + "];" +
+                "hashCode=[" + this.hashCode() + "]";
     }
     /***************************************************************************
      *                                                                         *
@@ -123,12 +139,12 @@ public class CommonDItem<F,S> implements Clone {
      *                                                                         *
      **************************************************************************/
     /**
-     *Extractor to observe changes in "Property" fields.
+     * Extractor to observe changes in "Property" fields.
      *
-     * @return Callback<VariableTIV, Observable[]>
+     * @return Callback<VariableTIV   ,       Observable   [   ]>
      */
-    public static<F,S> Callback<CommonDItem<F,S>, Observable[]> extractor() {
-        return (CommonDItem<F,S> p) -> new Observable[]{p.firstValueProperty(),p.secondValueProperty()};
+    public static <F, S> Callback<CommonDItem<F, S>, Observable[]> extractor() {
+        return (CommonDItem<F, S> p) -> new Observable[]{p.firstValueProperty(), p.secondValueProperty()};
     }
 
 }

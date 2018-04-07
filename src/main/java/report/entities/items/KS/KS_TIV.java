@@ -13,86 +13,100 @@ import report.entities.items.Item;
 
 
 public class KS_TIV extends Item {
-    
-    private final IntegerProperty ksNumber; 
+
+    private final IntegerProperty ksNumber;
     private final IntegerProperty ksDate;
     private DoubleProperty restOfValue;
 
     //Constructor
     public KS_TIV(
-            long        id,
-            Timestamp   dateCreate,
-            int         ksNumber,
-            int         ksDate,
-            String      siteNumber, 
-            String      typeHome, 
-            String      contractor, 
-            String      JM_name, 
-            String      JobOrMat, 
-            String      BindedJob, 
-            Double       value, 
-            String      unit, 
-            Double       price_one, 
-            Double       price_sum, 
-            String      bildingPart) {
-        super(id ,dateCreate, siteNumber, typeHome, contractor, JM_name, JobOrMat, BindedJob, value, unit, price_one, price_sum, bildingPart);
-        this.ksNumber       = new SimpleIntegerProperty(ksNumber);
-        this.ksDate         = new SimpleIntegerProperty(ksDate);
+            long id,
+            Timestamp dateCreate,
+            int ksNumber,
+            int ksDate,
+            String siteNumber,
+            String typeHome,
+            String contractor,
+            String JM_name,
+            String JobOrMat,
+            String BindedJob,
+            Double value,
+            String unit,
+            Double price_one,
+            Double price_sum,
+            String bildingPart) {
+        super(id, dateCreate, siteNumber, typeHome, contractor, JM_name, JobOrMat, BindedJob, value, unit, price_one, price_sum, bildingPart);
+        this.ksNumber = new SimpleIntegerProperty(ksNumber);
+        this.ksDate = new SimpleIntegerProperty(ksDate);
         this.restOfValue = new SimpleDoubleProperty(0);
-        
+
     }
- 
-// Clone CONSTRUCTOR implementation
-        @Override
-        public KS_TIV getClone() {
-            KS_TIV clone = new KS_TIV(
-                                    super.getId(),
-                                    super.getDateCreate(),
-                                    this.getKSNumber(),
-                                    this.getKSDate(),
-                                    super.getSiteNumber(),
-                                    super.getTypeHome(),
-                                    super.getContractor(),
-                                    super.getJM_name(),
-                                    super.getJobOrMat(),
-                                    super.getBindJob(),
-                                    super.getQuantity(),
-                                    super.getUnit(),
-                                    super.getPriceOne(),
-                                    super.getPriceSum(),
-                                    super.getBuildingPart()
-                                    );
-            return clone;
-        }
-//Getter //Setter ===============================================================================    
-        public int    getKSNumber() {return ksNumber.get();}
-        public void   setKSNumber(int value_inp) {ksNumber.set(value_inp);}
 
-        public int    getKSDate() {return ksDate.get();}
-        public void   setKSDate(int value_inp) {ksDate.set(value_inp);}
+    // Clone CONSTRUCTOR implementation
+    @Override
+    public KS_TIV getClone() {
+        KS_TIV clone = new KS_TIV(
+                super.getId(),
+                super.getDateCreate(),
+                this.getKSNumber(),
+                this.getKSDate(),
+                super.getSiteNumber(),
+                super.getTypeHome(),
+                super.getContractor(),
+                super.getJM_name(),
+                super.getJobOrMat(),
+                super.getBindJob(),
+                super.getQuantity(),
+                super.getUnit(),
+                super.getPriceOne(),
+                super.getPriceSum(),
+                super.getBuildingPart()
+        );
+        return clone;
+    }
 
-        public double getRestOfValue() {return restOfValue.get();}
-        public void   setRestOfValue(double valu_inp) {this.restOfValue.set(valu_inp);}
-        
-        
-        
-              
-//Equakls AND hashCode ==========================================================================         
+    //Getter //Setter ===============================================================================
+    public int getKSNumber() {
+        return ksNumber.get();
+    }
+
+    public void setKSNumber(int value_inp) {
+        ksNumber.set(value_inp);
+    }
+
+    public int getKSDate() {
+        return ksDate.get();
+    }
+
+    public void setKSDate(int value_inp) {
+        ksDate.set(value_inp);
+    }
+
+    public double getRestOfValue() {
+        return restOfValue.get();
+    }
+
+    public void setRestOfValue(double valu_inp) {
+        this.restOfValue.set(valu_inp);
+    }
+
+
+    //Equakls AND hashCode ==========================================================================
     @Override
     public int hashCode() {
         int hash = 3;
-        hash = 2 * hash + (this.ksDate     != null ? this.priceSum.hashCode()  : 0);
-        hash = 2 * hash + (this.ksNumber   != null ? this.ksNumber.hashCode()   : 0);
-        hash = 2 * hash + (super.quantity != null ? super.quantity.hashCode()     : 0);
+        hash = 2 * hash + (this.ksDate != null ? this.priceSum.hashCode() : 0);
+        hash = 2 * hash + (this.ksNumber != null ? this.ksNumber.hashCode() : 0);
+        hash = 2 * hash + (super.quantity != null ? super.quantity.hashCode() : 0);
         hash = 2 * hash + (super.priceOne != null ? super.priceOne.hashCode() : 0);
         hash = 2 * hash + (super.priceSum != null ? super.priceSum.hashCode() : 0);
-            
-    return hash;
-   }
-          
+
+        return hash;
+    }
+
     @Override
     public boolean equals(Object obj) {
-            
+
         if (obj == null) {
             return false;
         }
@@ -139,10 +153,10 @@ public class KS_TIV extends Item {
         if ((super.buildingPart.get() == null) ? (other.buildingPart.getValue() != null) : !super.buildingPart.get().equals(other.buildingPart.get())) {
             return false;
         }
-    return true;
+        return true;
     }
-    
-    
+
+
     public static Callback<Item, Observable[]> extractor() {
         return (Item p) -> new Observable[]{p.quantityProperty()};
     }

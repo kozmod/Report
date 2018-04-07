@@ -20,12 +20,12 @@ public class PropertiesDAO implements CommonNamedDAO<VariableTIV_new> {
                 + " * "
                 + "from dbo.[TBL_COMMAND_PROPERTY] "
                 + "WHERE  [dell] = 0 ";
-        try(Connection connection = SqlConnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(sqlQuery)) {
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(sqlQuery)) {
             pstmt.execute();
 
-            try(ResultSet rs = pstmt.getResultSet()){
-                while(rs.next())
+            try (ResultSet rs = pstmt.getResultSet()) {
+                while (rs.next())
                     item = new VariableTIV_new(
                             rs.getLong("id"),
                             rs.getDouble(VariableTIV_new.SQL.INCOME_TAX),
@@ -36,9 +36,9 @@ public class PropertiesDAO implements CommonNamedDAO<VariableTIV_new> {
         } catch (SQLException ex) {
             Logger.getLogger(VariableTIV.class.getName()).log(Level.SEVERE, null, ex);
         }
-        if(item == null)
-            item = new VariableTIV_new(0,0,0);
-        return  item;
+        if (item == null)
+            item = new VariableTIV_new(0, 0, 0);
+        return item;
     }
 
     @Override

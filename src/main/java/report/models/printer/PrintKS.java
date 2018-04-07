@@ -3,6 +3,7 @@ package report.models.printer;
 
 import java.nio.file.Path;
 import java.time.LocalDate;
+
 import javafx.collections.ObservableList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -14,15 +15,15 @@ import report.usage_strings.SQL;
 import report.layoutControllers.estimate.EstimateController.Est;
 
 
-public class PrintKS extends AbstractPrinterXML{
-    
-    
+public class PrintKS extends AbstractPrinterXML {
+
+
     private Document doc;
     private ObservableList<KS_TIV> obsKS;
-//    private ObservableList<PreviewTableItem>  obsPreTab;
+    //    private ObservableList<PreviewTableItem>  obsPreTab;
     private String ksNumber, ksDate;
     private ContractorTIV contractorObject;
-    
+
 
 //Constructor =====================================================================================================================    
 //    private PrintKS(
@@ -45,9 +46,9 @@ public class PrintKS extends AbstractPrinterXML{
 //    }
 
     public PrintKS(ObservableList<KS_TIV> obsKS, ContractorTIV contractor, Path path) {
-        this.obsKS    = obsKS;
-        this.ksNumber = Integer.toString(((KS_TIV)obsKS.get(0)).getKSNumber());
-        this.ksDate   = LocalDate.ofEpochDay(((KS_TIV)obsKS.get(0)).getKSDate()).toString();
+        this.obsKS = obsKS;
+        this.ksNumber = Integer.toString(((KS_TIV) obsKS.get(0)).getKSNumber());
+        this.ksDate = LocalDate.ofEpochDay(((KS_TIV) obsKS.get(0)).getKSDate()).toString();
 
         this.contractorObject = contractor;
 
@@ -61,10 +62,9 @@ public class PrintKS extends AbstractPrinterXML{
     }
 
     public PrintKS(ObservableList<KS_TIV> obsKS, Path path) {
-        this.obsKS    = obsKS;
-        this.ksNumber = Integer.toString(((KS_TIV)obsKS.get(0)).getKSNumber());
-        this.ksDate   = LocalDate.ofEpochDay(((KS_TIV)obsKS.get(0)).getKSDate()).toString();
-
+        this.obsKS = obsKS;
+        this.ksNumber = Integer.toString(((KS_TIV) obsKS.get(0)).getKSNumber());
+        this.ksDate = LocalDate.ofEpochDay(((KS_TIV) obsKS.get(0)).getKSDate()).toString();
 
 
         doc = buildDocument("\\lib\\XML_Models\\KS-2.xml");
@@ -90,25 +90,25 @@ public class PrintKS extends AbstractPrinterXML{
 //        saveDocument("\\libS\\XML_Models\\КС-2 № " + ksNumber + ".xml");
 //    }
 
-    
-    
-//Methods ==========================================================================================================================
-    //Add Name of OBJECT
-    private void setObjectName(){
 
-        String text  = new StringBuilder("Объект: ДКП 'Мечта пятницы', ж/дом '',  уч. № ")
+    //Methods ==========================================================================================================================
+    //Add Name of OBJECT
+    private void setObjectName() {
+
+        String text = new StringBuilder("Объект: ДКП 'Мечта пятницы', ж/дом '',  уч. № ")
                 .insert(36, obsKS.get(0).getTypeHome())
-                .append( obsKS.get(0).getSiteNumber())
+                .append(obsKS.get(0).getSiteNumber())
                 .toString();
-        
+
         getTargetElement("Home").setTextContent(text);
-        
+
     }
-    private void setAdress(){
+
+    private void setAdress() {
         String text = new StringBuilder("Объект: ")
-                .append( "ООО «")
+                .append("ООО «")
                 .append(contractorObject.getContractor())
-                .append( "», ")
+                .append("», ")
                 .append(contractorObject.getAdress())
                 .toString();
 
@@ -117,143 +117,143 @@ public class PrintKS extends AbstractPrinterXML{
     }
 
     //Add Dates of KS
-    private void  setDates(){
-        
+    private void setDates() {
+
         super.getTargetElement("createData").setTextContent(ksDate);
         getTargetElement("periodFrom").setTextContent(
                 LocalDate.ofEpochDay((long) Est.KS.getSiteSecondValue(SQL.Site.DATE_CONTRACT)).toString()
         );
         getTargetElement("periodTo").setTextContent(
-            LocalDate.ofEpochDay((long) Est.KS.getSiteSecondValue(SQL.Site.FINISH_BUILDING)).toString()
-        );   
+                LocalDate.ofEpochDay((long) Est.KS.getSiteSecondValue(SQL.Site.FINISH_BUILDING)).toString()
+        );
     }
-       
-    private void  setNumber(){
+
+    private void setNumber() {
         //saveEst Date contract
         LocalDate dateContract = LocalDate.ofEpochDay((long) Est.KS.getSiteSecondValue(SQL.Site.DATE_CONTRACT));
-        String day   = String.format("%02d", dateContract.getDayOfMonth());
+        String day = String.format("%02d", dateContract.getDayOfMonth());
         String month = String.format("%02d", dateContract.getMonthValue());
-        String year  = Integer.toString(dateContract.getYear());
-        
+        String year = Integer.toString(dateContract.getYear());
+
         //set number of KS
         getTargetElement("number").setTextContent("№ " + ksNumber);
-        
+
         //set ->  day / month / year
         getTargetElement("day").setTextContent(day);
-        getTargetElement("month").setTextContent(month);  
-        getTargetElement("year").setTextContent(year);   
+        getTargetElement("month").setTextContent(month);
+        getTargetElement("year").setTextContent(year);
     }
-       
-    
+
+
     //Add Job - Material rows
-    private void addJMrows(){
-        
+    private void addJMrows() {
+
         int rowsQuantity = 1;
         String buildingPart = null;
-        
-        for(Item item : obsKS){
-            
-            
+
+        for (Item item : obsKS) {
+
+
             Element targetRow = getTargetElement("SumRow");
 
             //CHECK -> Binded Job
-            if(!item.getBuildingPart().equals(buildingPart)){
+            if (!item.getBuildingPart().equals(buildingPart)) {
                 buildingPart = item.getBuildingPart();
-                 
+
                 Element row = doc.createElement("Row");
                 row.setAttribute("ss:StyleID", "s143");
-                
+
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s77")
-                                 .setCellValue("Number", Integer.toString(rowsQuantity))
-                                 .build());
+                        .setCellStyle("s77")
+                        .setCellValue("Number", Integer.toString(rowsQuantity))
+                        .build());
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s77")
-                                 .setCellValue("String", "" )
-                                 .build());
+                        .setCellStyle("s77")
+                        .setCellValue("String", "")
+                        .build());
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s150")
-                                 .setCellValue("String", buildingPart)
-                                 .build());
+                        .setCellStyle("s150")
+                        .setCellValue("String", buildingPart)
+                        .build());
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s77")
-                                 .setCellValue("String", "" )
-                                 .build());
+                        .setCellStyle("s77")
+                        .setCellValue("String", "")
+                        .build());
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s77")
-                                 .setCellValue("String", "" )
-                                 .build());
+                        .setCellStyle("s77")
+                        .setCellValue("String", "")
+                        .build());
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s77")
-                                 .setCellValue("String", "" )
-                                 .build());
+                        .setCellStyle("s77")
+                        .setCellValue("String", "")
+                        .build());
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s77")
-                                 .setCellValue("String", "" )
-                                 .build());
+                        .setCellStyle("s77")
+                        .setCellValue("String", "")
+                        .build());
                 row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s77")
-                                 .setCellValue("String", "" )
-                                 .build());
-                
-                targetRow.getParentNode().insertBefore(row, targetRow); 
+                        .setCellStyle("s77")
+                        .setCellValue("String", "")
+                        .build());
+
+                targetRow.getParentNode().insertBefore(row, targetRow);
                 rowsQuantity++;
-            };
-            
+            }
+            ;
+
             //Set rows
             Element row = doc.createElement("Row");
             row.setAttribute("ss:StyleID", "s143");
-            
+
             row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s77")
-                                 .setCellValue("Number", Integer.toString(rowsQuantity))
-                                 .build());
+                    .setCellStyle("s77")
+                    .setCellValue("Number", Integer.toString(rowsQuantity))
+                    .build());
             row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s77")
-                                 .setCellValue("Number", "" )
-                                 .build());
+                    .setCellStyle("s77")
+                    .setCellValue("Number", "")
+                    .build());
             row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s172")
-                                 .setCellValue("String", item.getJM_name())
-                                 .build());
+                    .setCellStyle("s172")
+                    .setCellValue("String", item.getJM_name())
+                    .build());
             row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s67")
-                                 .setCellValue("String", "договорная" )
-                                 .build());
-            row.appendChild( new CellBuilder(doc)
-                                 .setCellStyle("s67")
-                                 .setCellValue("String", item.getUnit() )
-                                 .build());
+                    .setCellStyle("s67")
+                    .setCellValue("String", "договорная")
+                    .build());
             row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s173")
-                                 .setCellValue("Number", Double.toString(item.getQuantity()) )
-                                 .build());
+                    .setCellStyle("s67")
+                    .setCellValue("String", item.getUnit())
+                    .build());
             row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s174")
-                                 .setCellValue("Number",new DoubleStringConverter().toString(item.getPriceOne())
-                                         .replace(" ","") )
-                                 .build());
+                    .setCellStyle("s173")
+                    .setCellValue("Number", Double.toString(item.getQuantity()))
+                    .build());
             row.appendChild(new CellBuilder(doc)
-                                 .setCellStyle("s174")
-                                 .setCellValue("Number", "" )
-                                 .setMultFormula("-1","-2")
-                                 .build());
-            
+                    .setCellStyle("s174")
+                    .setCellValue("Number", new DoubleStringConverter().toString(item.getPriceOne())
+                            .replace(" ", ""))
+                    .build());
+            row.appendChild(new CellBuilder(doc)
+                    .setCellStyle("s174")
+                    .setCellValue("Number", "")
+                    .setMultFormula("-1", "-2")
+                    .build());
+
             targetRow.getParentNode().insertBefore(row, targetRow);
             rowsQuantity++;
         }
-        
+
         //set FORMULA to ROW "Итого:"
         String rowsCounter = Integer.toString(rowsQuantity - 1);
         super.getTargetElement("SumAmountValue")
-                .setAttribute("ss:Formula", "=SUM(R[-"+ rowsCounter +"]C:R[-1]C)");
+                .setAttribute("ss:Formula", "=SUM(R[-" + rowsCounter + "]C:R[-1]C)");
         super.getTargetElement("SumAmountCost")
-                .setAttribute("ss:Formula", "=SUM(R[-"+ rowsCounter +"]C:R[-1]C)");
-        
+                .setAttribute("ss:Formula", "=SUM(R[-" + rowsCounter + "]C:R[-1]C)");
 
-      
+
     }
-    
+
 //Builder ==========================================================================================================================  
 //    public static class Builder{
 //        private ObservableList<Item> obsKS;

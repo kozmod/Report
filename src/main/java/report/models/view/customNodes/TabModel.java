@@ -24,16 +24,17 @@ public class TabModel {
     private DoubleBinding sumDouble;
 
 //Constructors ========================================================================================================
-    
-    private TabModel() {}
-    
+
+    private TabModel() {
+    }
+
     public TabModel(Est enumEst) {
         this.enumEst = enumEst;
         createTitledPane();
     }
 
 
-//Getter/Setter=====================================================================================================
+    //Getter/Setter=====================================================================================================
     public VBox getBaseVBox() {
         return baseVBox;
     }
@@ -42,24 +43,25 @@ public class TabModel {
     public SumLabel getSumLabel() {
         return sumLable;
     }
+
     public Double getSumLabelValue() {
 
         return sumDouble.getValue();
     }
 
 
-//Methots ===========================================================================================================    
-    private void createTitledPane(){
-       
+    //Methots ===========================================================================================================
+    private void createTitledPane() {
+
         baseVBox = new VBox();
         scrollPane = new ScrollPane();
-        faundationTP    = new TitledStackModel("ФУНДАМЕНТ",         enumEst);
-        wallsTP         = new TitledStackModel("СТЕНЫ, ПЕРЕКРЫТИЯ", enumEst);
-        roofTP          = new TitledStackModel("КРОВЛЯ",            enumEst);
-        apertureTP      = new TitledStackModel("ПРОЕМЫ",            enumEst);
+        faundationTP = new TitledStackModel("ФУНДАМЕНТ", enumEst);
+        wallsTP = new TitledStackModel("СТЕНЫ, ПЕРЕКРЫТИЯ", enumEst);
+        roofTP = new TitledStackModel("КРОВЛЯ", enumEst);
+        apertureTP = new TitledStackModel("ПРОЕМЫ", enumEst);
         finishingWorkTP = new TitledStackModel("ОТДЕЛОЧНЫЕ РАБОТЫ", enumEst);
-        
-        sumLable = new SumLabel(new Insets(5,10,10,10));
+
+        sumLable = new SumLabel(new Insets(5, 10, 10, 10));
 //        sumLable.textProperty().bind(new StringBinding(){
 //            {
 //                super.bind(
@@ -82,7 +84,7 @@ public class TabModel {
 //                return DecimalFormatter.formatNumber(f1 + f2 + f3+ f4 + f5);
 //            }
 //        });
-        sumDouble =  new DoubleBinding(){
+        sumDouble = new DoubleBinding() {
             {
                 super.bind(
                         faundationTP.getLabelDoubleProperty(),
@@ -100,12 +102,14 @@ public class TabModel {
                 double f4 = apertureTP.getLabelDoubleProperty().get();
                 double f5 = finishingWorkTP.getLabelDoubleProperty().get();
 //                return faundationTP.getLabelProperty().getQuantity();
-                return f1 + f2 + f3+ f4 + f5;
+                return f1 + f2 + f3 + f4 + f5;
             }
         };
 
-        sumLable.textProperty().bind(new StringBinding(){
-            { super.bind(sumDouble); }
+        sumLable.textProperty().bind(new StringBinding() {
+            {
+                super.bind(sumDouble);
+            }
 
             @Override
             protected String computeValue() {
@@ -113,12 +117,11 @@ public class TabModel {
             }
         });
 
-        baseVBox.getChildren().addAll(faundationTP,wallsTP,roofTP,apertureTP,finishingWorkTP);
+        baseVBox.getChildren().addAll(faundationTP, wallsTP, roofTP, apertureTP, finishingWorkTP);
 
 
-       
     }
-       
+
 //    public void updateContextMenus(){
 //        faundationTP    .updateContextMenu();
 //        wallsTP         .updateContextMenu();      
@@ -127,43 +130,43 @@ public class TabModel {
 //        finishingWorkTP .updateContextMenu();
 //        
 //    }
-    
-    public void setEditable(boolean param){
-        faundationTP    .getModelTable().setEditable(param);
-        wallsTP         .getModelTable().setEditable(param);    
-        roofTP          .getModelTable().setEditable(param);  
-        apertureTP      .getModelTable().setEditable(param);  
-        finishingWorkTP .getModelTable().setEditable(param);
+
+    public void setEditable(boolean param) {
+        faundationTP.getModelTable().setEditable(param);
+        wallsTP.getModelTable().setEditable(param);
+        roofTP.getModelTable().setEditable(param);
+        apertureTP.getModelTable().setEditable(param);
+        finishingWorkTP.getModelTable().setEditable(param);
     }
-    
-    public void updateTablesItems(){
-        faundationTP    .updateTableItems();
-        wallsTP         .updateTableItems();    
-        roofTP          .updateTableItems();  
-        apertureTP      .updateTableItems();  
-        finishingWorkTP .updateTableItems();
+
+    public void updateTablesItems() {
+        faundationTP.updateTableItems();
+        wallsTP.updateTableItems();
+        roofTP.updateTableItems();
+        apertureTP.updateTableItems();
+        finishingWorkTP.updateTableItems();
     }
-    
- // inner class all sum lable =================================================================================================================
+
+    // inner class all sum lable =================================================================================================================
     class SumLabel extends Label {
 
         SumLabel(Insets insets) {
             setPadding(insets);
             init_Properties();
         }
-        
+
         SumLabel() {
-            setPadding(new Insets(0,0,0,0));
+            setPadding(new Insets(0, 0, 0, 0));
             init_Properties();
         }
-        
-        private void init_Properties(){
+
+        private void init_Properties() {
             setFont(Font.font("Arial", FontWeight.BOLD, 15));
             setTextFill(Color.MAROON);
             setMaxWidth(Double.MAX_VALUE);
             setNodeOrientation(NodeOrientation.RIGHT_TO_LEFT);
         }
-        
-        
+
+
     }
 }

@@ -14,25 +14,25 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ReqExBodyDAO  extends AbstractReqDAO{
+public class ReqExBodyDAO extends AbstractReqDAO {
     //common data
-    private static final String SQL       = "SELECT * FROM [dbo].[Count_Req_ExBody]  WHERE  id_Count = ? AND dell =0";
+    private static final String SQL = "SELECT * FROM [dbo].[Count_Req_ExBody]  WHERE  id_Count = ? AND dell =0";
     private static final String SQL_TABLE = "[dbo].[Count_Req_ExBody]";
-    private static final String CATEGORY  = "Исполнительный Орган";
+    private static final String CATEGORY = "Исполнительный Орган";
     //columns
-    private static String EX_BODY             = "ExBody";
-    private static String EX_BODY_NAME        = "ExBody_Name";
-    private static String EX_BODY_SURNAME     = "ExBody_Surname";
-    private static String EX_BODY_F_NAME      = "ExBody_FName";
-    private static String ACTION_BASIS        = "ActionBasis";
-    private static String BOOKKEEPER_NAME     = "Bookkeeper_Name";
-    private static String BOOKKEEPER_SURNAME  = "Bookkeeper_Surname";
-    private static String BOOKKEEPER_F_NAME   = "Bookkeeper_FName";
-    private static String ID_SERIES           = "ID_Series";
-    private static String ID_NUMBER           = "ID_Number";
-    private static String ID_DATE             = "ID_Date";
-    private static String ID_TEXT             = "ID_Text";
-    private static String ID_CODE             = "ID_Code";
+    private static String EX_BODY = "ExBody";
+    private static String EX_BODY_NAME = "ExBody_Name";
+    private static String EX_BODY_SURNAME = "ExBody_Surname";
+    private static String EX_BODY_F_NAME = "ExBody_FName";
+    private static String ACTION_BASIS = "ActionBasis";
+    private static String BOOKKEEPER_NAME = "Bookkeeper_Name";
+    private static String BOOKKEEPER_SURNAME = "Bookkeeper_Surname";
+    private static String BOOKKEEPER_F_NAME = "Bookkeeper_FName";
+    private static String ID_SERIES = "ID_Series";
+    private static String ID_NUMBER = "ID_Number";
+    private static String ID_DATE = "ID_Date";
+    private static String ID_TEXT = "ID_Text";
+    private static String ID_CODE = "ID_Code";
 
     @Override
     public String getSqlTableName() {
@@ -43,17 +43,18 @@ public class ReqExBodyDAO  extends AbstractReqDAO{
     public <HEIR extends List<ObjectPSI>> HEIR getData() {
         return null;
     }
+
     @Override
-    public List<ObjectPSI> getByID(int countId){
+    public List<ObjectPSI> getByID(int countId) {
         List<ObjectPSI> list = FXCollections.observableArrayList(ObjectPSI.extractor());
         Map<String, ObjectPSI> map = this.getEmptyItems();
-        try(Connection connection = SqlConnector.getInstance();
-            PreparedStatement pstmt = connection.prepareStatement(SQL)) {
-            pstmt.setInt(1,countId);
-            if(pstmt.execute()){
-                try(ResultSet rs = pstmt.getResultSet()){
-                    if(rs.next()){
-                        ReqDaoUtils.setID(rs.getLong("id_Count"),map);
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(SQL)) {
+            pstmt.setInt(1, countId);
+            if (pstmt.execute()) {
+                try (ResultSet rs = pstmt.getResultSet()) {
+                    if (rs.next()) {
+                        ReqDaoUtils.setID(rs.getLong("id_Count"), map);
                         map.get(EX_BODY).setValue(rs.getString(EX_BODY));
                         map.get(EX_BODY_NAME).setValue(rs.getString(EX_BODY_NAME));
                         map.get(EX_BODY_SURNAME).setValue(rs.getString(EX_BODY_SURNAME));
@@ -78,7 +79,7 @@ public class ReqExBodyDAO  extends AbstractReqDAO{
         return list;
     }
 
-    public Map<String, ObjectPSI> getEmptyItems(){
+    public Map<String, ObjectPSI> getEmptyItems() {
         return ReqDaoUtils
                 .getEmptyItems(
                         new ObjectPSI<>("ИО Наименование",
@@ -176,7 +177,6 @@ public class ReqExBodyDAO  extends AbstractReqDAO{
 
                 );
     }
-
 
 
 }

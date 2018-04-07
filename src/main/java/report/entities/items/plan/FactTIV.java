@@ -7,27 +7,27 @@ import report.entities.items.Clone;
 
 import java.sql.Timestamp;
 
-public  class FactTIV implements Clone {
+public class FactTIV implements Clone {
     private long id;
     private Timestamp dateCreate;
 
     protected final IntegerProperty typeID;
     protected final StringProperty type;
-    protected final IntegerProperty  quantity;
-    private final DoubleProperty   SmetCost;
+    protected final IntegerProperty quantity;
+    private final DoubleProperty SmetCost;
     protected final DoubleProperty SmetCostSum;
-    private  final DoubleProperty costHouseSum;
-    private final DoubleProperty   SaleCost;
-    protected final DoubleProperty   SaleCostSum;
-    protected final DoubleProperty   profit;
+    private final DoubleProperty costHouseSum;
+    private final DoubleProperty SaleCost;
+    protected final DoubleProperty SaleCostSum;
+    protected final DoubleProperty profit;
 
 
     public FactTIV(
-            long   id,
+            long id,
             Timestamp dateCreate,
-            int    typeID,
+            int typeID,
             String type,
-            int    quantity,
+            int quantity,
             double SmetCost,
             double SmetCostSum,
             double costHouseSum,
@@ -36,17 +36,17 @@ public  class FactTIV implements Clone {
             double profit
     ) {
         this.id = id;
-        this.dateCreate   = dateCreate;
-        this.typeID       = new SimpleIntegerProperty(typeID);
-        this.type         = new SimpleStringProperty(type);
-        this.quantity     = new SimpleIntegerProperty(quantity);
-        this.SmetCostSum  = new SimpleDoubleProperty(SmetCostSum);
-        this.SaleCostSum  = new SimpleDoubleProperty(SaleCostSum);
+        this.dateCreate = dateCreate;
+        this.typeID = new SimpleIntegerProperty(typeID);
+        this.type = new SimpleStringProperty(type);
+        this.quantity = new SimpleIntegerProperty(quantity);
+        this.SmetCostSum = new SimpleDoubleProperty(SmetCostSum);
+        this.SaleCostSum = new SimpleDoubleProperty(SaleCostSum);
 
-        this.SmetCost  = new SimpleDoubleProperty(SmetCost);
-        this.SaleCost  = new SimpleDoubleProperty(SaleCost);
+        this.SmetCost = new SimpleDoubleProperty(SmetCost);
+        this.SaleCost = new SimpleDoubleProperty(SaleCost);
         this.costHouseSum = new SimpleDoubleProperty(costHouseSum);
-        this.profit    = new SimpleDoubleProperty(profit);
+        this.profit = new SimpleDoubleProperty(profit);
     }
 
     //Clone CONSTRUCTOR
@@ -69,56 +69,131 @@ public  class FactTIV implements Clone {
     }
 
 
-
     //Getter / Setter ==================================================================================
 
-//    @Override
-    public long getId()                    {return this.id;}
-//    @Override
-    public void setId(long id)             {this.id = id;  }
+    //    @Override
+    public long getId() {
+        return this.id;
+    }
 
-    public Timestamp       getDateCreate()            {return dateCreate;  }
-    public void            setDateCreate(Timestamp v) {this.dateCreate = v;}
+    //    @Override
+    public void setId(long id) {
+        this.id = id;
+    }
 
-    public IntegerProperty getTypeIDProperty()       {return typeID;}
-    public Integer         getTypeID()               {return typeID.getValue();}
-    public void            setTypeID(Integer v)      {this.typeID.setValue(v); }
+    public Timestamp getDateCreate() {
+        return dateCreate;
+    }
 
-    public StringProperty  getTypeProperty()          {return type;}
-    public String          getType()                  {return type.getValue();}
-    public void            setType(String v)          {this.type.setValue(v); }
+    public void setDateCreate(Timestamp v) {
+        this.dateCreate = v;
+    }
 
-    public IntegerProperty getQuantityProperty()    {return quantity;}
-    public Integer         getQuantity()            {return quantity.getValue();}
-    public void            setQuantity(Integer v)   {this.quantity.setValue(v); }
+    public IntegerProperty getTypeIDProperty() {
+        return typeID;
+    }
 
-    public DoubleProperty   getSmetCostSumProperty() {return SmetCostSum;}
-    public Double           getSmetCostSum()         {return SmetCostSum.getValue();}
-    public void             setSmetCostSum(Double v)  {this.SmetCostSum.setValue(v); }
+    public Integer getTypeID() {
+        return typeID.getValue();
+    }
 
-    public DoubleProperty   getSaleCostSumProperty() {return SaleCostSum; }
-    public Double           getSaleCostSum()         {return SaleCostSum.getValue();}
-    public void             setSaleCostSum(Double v)  {this.SaleCostSum.setValue(v); }
+    public void setTypeID(Integer v) {
+        this.typeID.setValue(v);
+    }
+
+    public StringProperty getTypeProperty() {
+        return type;
+    }
+
+    public String getType() {
+        return type.getValue();
+    }
+
+    public void setType(String v) {
+        this.type.setValue(v);
+    }
+
+    public IntegerProperty getQuantityProperty() {
+        return quantity;
+    }
+
+    public Integer getQuantity() {
+        return quantity.getValue();
+    }
+
+    public void setQuantity(Integer v) {
+        this.quantity.setValue(v);
+    }
+
+    public DoubleProperty getSmetCostSumProperty() {
+        return SmetCostSum;
+    }
+
+    public Double getSmetCostSum() {
+        return SmetCostSum.getValue();
+    }
+
+    public void setSmetCostSum(Double v) {
+        this.SmetCostSum.setValue(v);
+    }
+
+    public DoubleProperty getSaleCostSumProperty() {
+        return SaleCostSum;
+    }
+
+    public Double getSaleCostSum() {
+        return SaleCostSum.getValue();
+    }
+
+    public void setSaleCostSum(Double v) {
+        this.SaleCostSum.setValue(v);
+    }
 
 
-    public DoubleProperty getSmetCostProperty() {return SmetCost;           }
-    public Double         getSmetCost()         {return SmetCost.getValue();}
-    public void           setSmetCost(Double v)  {this.SmetCost.setValue(v); }
+    public DoubleProperty getSmetCostProperty() {
+        return SmetCost;
+    }
 
-    public DoubleProperty getSaleCostProperty() {return SaleCost; }
-    public Double         getSaleCost()         {return SaleCost.getValue(); }
-    public void           setSaleCost(Double v)  {this.SaleCost.setValue(v); }
+    public Double getSmetCost() {
+        return SmetCost.getValue();
+    }
 
-    public Double         getProfit() { return profit.get();}
-    public DoubleProperty getProfitProperty() {return profit;}
-    public void           setProfit(double profit) {this.profit.set(profit);}
+    public void setSmetCost(Double v) {
+        this.SmetCost.setValue(v);
+    }
+
+    public DoubleProperty getSaleCostProperty() {
+        return SaleCost;
+    }
+
+    public Double getSaleCost() {
+        return SaleCost.getValue();
+    }
+
+    public void setSaleCost(Double v) {
+        this.SaleCost.setValue(v);
+    }
+
+    public Double getProfit() {
+        return profit.get();
+    }
+
+    public DoubleProperty getProfitProperty() {
+        return profit;
+    }
+
+    public void setProfit(double profit) {
+        this.profit.set(profit);
+    }
 
     public double getCostHouseSum() {
         return costHouseSum.get();
     }
+
     public DoubleProperty costHouseSumProperty() {
         return costHouseSum;
     }
+
     public void setCostHouseSum(double costHouseSum) {
         this.costHouseSum.set(costHouseSum);
     }
@@ -126,15 +201,15 @@ public  class FactTIV implements Clone {
     @Override
     public int hashCode() {
         int hash = 33;
-        hash = 3 * hash + (this.typeID      != null ? this.typeID.intValue()       : 0);
-        hash = 3 * hash + (this.type        != null ? this.type.hashCode()         : 0);
-        hash = 3 * hash + (this.quantity    != null ? this.quantity.intValue()     : 0);
-        hash = 3 * hash + (this.SmetCost    != null ? this.SmetCost.intValue()     : 0);
-        hash = 3 * hash + (this.SmetCostSum != null ? this.SmetCostSum.intValue()  : 0);
-        hash = 3 * hash + (this.SaleCost    != null ? this.SaleCost.intValue()     : 0);
-        hash = 3 * hash + (this.SaleCostSum != null ? this.SaleCostSum.intValue()  : 0);
-        hash = 3 * hash + (this.profit      != null ? this.profit.intValue()       : 0);
-        hash = 3 * hash + (this.costHouseSum != null ? this.costHouseSum.intValue()    : 0);
+        hash = 3 * hash + (this.typeID != null ? this.typeID.intValue() : 0);
+        hash = 3 * hash + (this.type != null ? this.type.hashCode() : 0);
+        hash = 3 * hash + (this.quantity != null ? this.quantity.intValue() : 0);
+        hash = 3 * hash + (this.SmetCost != null ? this.SmetCost.intValue() : 0);
+        hash = 3 * hash + (this.SmetCostSum != null ? this.SmetCostSum.intValue() : 0);
+        hash = 3 * hash + (this.SaleCost != null ? this.SaleCost.intValue() : 0);
+        hash = 3 * hash + (this.SaleCostSum != null ? this.SaleCostSum.intValue() : 0);
+        hash = 3 * hash + (this.profit != null ? this.profit.intValue() : 0);
+        hash = 3 * hash + (this.costHouseSum != null ? this.costHouseSum.intValue() : 0);
 
         return hash;
     }
@@ -181,7 +256,8 @@ public  class FactTIV implements Clone {
     }
 
     /**
-     *Extractor
+     * Extractor
+     *
      * @return extractor
      */
     public static Callback<FactTIV, Observable[]> extractor() {
