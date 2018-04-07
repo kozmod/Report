@@ -84,48 +84,48 @@ public class ModelsTest {
         );
     }
 
-    @Test
-//    @Disabled
-    @SuppressWarnings("unchecked")
-    @DisplayName("Template Factory Test - Docx")
-    public void templateFactoryDocxTest() throws SQLException {
-        File file = new File("xxxx.docx");
-        List<ObjectPSI> list = new ArrayList<>();
-        list.add(new ObjectPSI("Наименование банка",
-                "",
-                "Организация",
-                "CHANGED",
-                "Contractor_Name",
-                "",
-                ".{1,50}"
-        ));
-        list.add(new ObjectPSI("Наименование банка",
-                "",
-                "Организация",
-                "ОГРН",
-                "OGRN",
-                "",
-                ".{1,50}"
-        ));
-        list.add(new ObjectPSI("Наименование банка",
-                "",
-                "Организация",
-                "XXXXXXXXXXXXXXXXXXXXXX",
-                "ExBody_Surname_roditelnij",
-                "",
-                ".{1,50}"
-        ));
-
-        list.add(new ObjectPSI("Наименование банка",
-                "",
-                "Организация",
-                "ASADADADDAD",
-                "Appraisal_term",
-                "",
-                ".{1,50}"
-        ));
-        TemplateFactory.writeDocxTemplate(file, list);
-    }
+//    @Test
+////    @Disabled
+//    @SuppressWarnings("unchecked")
+//    @DisplayName("Template Factory Test - Docx")
+//    public void templateFactoryDocxTest() throws SQLException {
+//        File file = new File("xxxx.docx");
+//        List<ObjectPSI> list = new ArrayList<>();
+//        list.add(new ObjectPSI("Наименование банка",
+//                "",
+//                "Организация",
+//                "CHANGED",
+//                "Contractor_Name",
+//                "",
+//                ".{1,50}"
+//        ));
+//        list.add(new ObjectPSI("Наименование банка",
+//                "",
+//                "Организация",
+//                "ОГРН",
+//                "OGRN",
+//                "",
+//                ".{1,50}"
+//        ));
+//        list.add(new ObjectPSI("Наименование банка",
+//                "",
+//                "Организация",
+//                "XXXXXXXXXXXXXXXXXXXXXX",
+//                "ExBody_Surname_roditelnij",
+//                "",
+//                ".{1,50}"
+//        ));
+//
+//        list.add(new ObjectPSI("Наименование банка",
+//                "",
+//                "Организация",
+//                "ASADADADDAD",
+//                "Appraisal_term",
+//                "",
+//                ".{1,50}"
+//        ));
+//        TemplateFactory.writeDocxTemplate(file, list);
+//    }
 
     @Test
 //    @Disabled
@@ -152,61 +152,6 @@ public class ModelsTest {
 //                ".{1,50}"
 //        ));
 
-        TemplateFactory.writeDocTemplate(file, list);
-    }
-
-
-    @Test
-//    @Disabled
-    @SuppressWarnings("unchecked")
-    @DisplayName("----")
-    public void test() throws Exception {
-        XWPFDocument document = new XWPFDocument(new FileInputStream("D:\\IdeaProjects\\Report\\lib\\docs_templates\\test.docx"));
-
-        WordReplaceTextInFormFields replaser = new WordReplaceTextInFormFields();
-        replaser.replaceFormFieldText(document, "t", "Моя Компания");
-
-        document.write(new FileOutputStream("D:\\IdeaProjects\\Report\\lib\\docs_templates\\out.docx"));
-        document.close();
-
-    }
-
-    public class WordReplaceTextInFormFields {
-
-        public void replaceFormFieldText(XWPFDocument document, String ffname, String text) {
-            boolean foundformfield = false;
-            for (XWPFParagraph paragraph : document.getParagraphs()) {
-                for (XWPFRun run : paragraph.getRuns()) {
-//                    System.out.println(run.getCTR().toString());
-//                    System.out.println(Arrays.toString(run.getCTR().getTArray()));
-                    XmlCursor cursor = run.getCTR().newCursor();
-                    cursor.selectPath("declare namespace w='http://schemas.openxmlformats.org/wordprocessingml/2006/main' .//w:fldChar/@w:fldCharType");
-                    while (cursor.hasNextSelection()) {
-                        cursor.toNextSelection();
-                        XmlObject obj = cursor.getObject();
-                        if ("begin".equals(((SimpleValue) obj).getStringValue())) {
-                            cursor.toParent();
-                            obj = cursor.getObject();
-                            obj = obj.selectPath("declare namespace w='http://schemas.openxmlformats.org/wordprocessingml/2006/main' .//w:ffData/w:name/@w:val")[0];
-                            if (ffname.equals(((SimpleValue) obj).getStringValue())) {
-                                foundformfield = true;
-                            } else {
-                                foundformfield = false;
-                            }
-                        } else if ("end".equals(((SimpleValue) obj).getStringValue())) {
-                            if (foundformfield) return;
-                            foundformfield = false;
-                        }
-                    }
-                    if (foundformfield && run.getCTR().getTArray().length > 0) {
-                        CTText[] textXmlArray = run.getCTR().getTArray();
-                        run.getCTR().getTList().get(0).setStringValue(text);
-                        CTText textXml = textXmlArray[0];
-                        textXml.setStringValue(text);
-                        System.out.println(run.getCTR());
-                    }
-                }
-            }
-        }
+//        TemplateFactory.writeDocTemplate(file, list);
     }
 }
