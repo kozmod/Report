@@ -1,4 +1,4 @@
-package report.models.services;
+package report.services;
 
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 
@@ -8,7 +8,7 @@ import java.util.List;
 public class TemplateFactory {
 
     public static void writeDocxTemplate(File outputFile, List<ObjectPSI> psiList) {
-        TemplateDocx docx = new TemplateDocx("D:\\IdeaProjects\\Report\\lib\\docs_templates\\шаблон.docx");
+        TemplateDocx docx = new TemplateDocx("D:\\IdeaProjects\\Report\\lib\\docs_templates\\test.docx");
         docx.process(new ChangeTemplateTask(psiList));
         docx.save(outputFile);
     }
@@ -18,4 +18,6 @@ public class TemplateFactory {
         doc.process(new ChangeTemplateTask(psiList));
         doc.save(outputFile);
     }
+
+
 }

@@ -1,24 +1,30 @@
-import org.apache.poi.hwpf.HWPFDocument;
-import org.apache.poi.hwpf.extractor.WordExtractor;
+import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
+import org.apache.poi.xwpf.usermodel.XWPFRun;
+import org.apache.xmlbeans.SimpleValue;
+import org.apache.xmlbeans.XmlCursor;
+import org.apache.xmlbeans.XmlObject;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTR;
+import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTText;
 import report.entities.items.counterparties.*;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.models.converters.dateStringConverters.LocalDayStringConverter;
-import report.models.services.TemplateFactory;
-
+import report.services.TemplateFactory;
 import java.io.*;
 import java.math.BigInteger;
+import java.sql.Array;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
+@SuppressWarnings("Duplicates")
 @FixMethodOrder(MethodSorters.JVM)
 public class ModelsTest {
     @Test
@@ -82,7 +88,7 @@ public class ModelsTest {
 //    @Disabled
     @SuppressWarnings("unchecked")
     @DisplayName("Template Factory Test - Docx")
-    public void tmplateFactoryDocxTest() throws SQLException {
+    public void templateFactoryDocxTest() throws SQLException {
         File file = new File("xxxx.docx");
         List<ObjectPSI> list = new ArrayList<>();
         list.add(new ObjectPSI("Наименование банка",
@@ -109,6 +115,15 @@ public class ModelsTest {
                 "",
                 ".{1,50}"
         ));
+
+        list.add(new ObjectPSI("Наименование банка",
+                "",
+                "Организация",
+                "ASADADADDAD",
+                "Appraisal_term",
+                "",
+                ".{1,50}"
+        ));
         TemplateFactory.writeDocxTemplate(file, list);
     }
 
@@ -116,7 +131,7 @@ public class ModelsTest {
 //    @Disabled
     @SuppressWarnings("unchecked")
     @DisplayName("Template Factory Test - Doc")
-    public void tmplateFactoryTest() throws SQLException {
+    public void templateFactoryTest() throws SQLException {
         File file = new File("xxxx-2.doc");
 
         List<ObjectPSI> list = new ArrayList<>();
@@ -140,13 +155,58 @@ public class ModelsTest {
         TemplateFactory.writeDocTemplate(file, list);
     }
 
+
     @Test
 //    @Disabled
     @SuppressWarnings("unchecked")
-    @DisplayName("Template Factory Test - Doc")
-    public void copyTest() throws SQLException {
-        File file = new File("xxxx-2.doc");
+    @DisplayName("----")
+    public void test() throws Exception {
+        XWPFDocument document = new XWPFDocument(new FileInputStream("D:\\IdeaProjects\\Report\\lib\\docs_templates\\test.docx"));
+
+        WordReplaceTextInFormFields replaser = new WordReplaceTextInFormFields();
+        replaser.replaceFormFieldText(document, "t", "Моя Компания");
+
+        document.write(new FileOutputStream("D:\\IdeaProjects\\Report\\lib\\docs_templates\\out.docx"));
+        document.close();
 
     }
 
+    public class WordReplaceTextInFormFields {
+
+        public void replaceFormFieldText(XWPFDocument document, String ffname, String text) {
+            boolean foundformfield = false;
+            for (XWPFParagraph paragraph : document.getParagraphs()) {
+                for (XWPFRun run : paragraph.getRuns()) {
+//                    System.out.println(run.getCTR().toString());
+//                    System.out.println(Arrays.toString(run.getCTR().getTArray()));
+                    XmlCursor cursor = run.getCTR().newCursor();
+                    cursor.selectPath("declare namespace w='http://schemas.openxmlformats.org/wordprocessingml/2006/main' .//w:fldChar/@w:fldCharType");
+                    while (cursor.hasNextSelection()) {
+                        cursor.toNextSelection();
+                        XmlObject obj = cursor.getObject();
+                        if ("begin".equals(((SimpleValue) obj).getStringValue())) {
+                            cursor.toParent();
+                            obj = cursor.getObject();
+                            obj = obj.selectPath("declare namespace w='http://schemas.openxmlformats.org/wordprocessingml/2006/main' .//w:ffData/w:name/@w:val")[0];
+                            if (ffname.equals(((SimpleValue) obj).getStringValue())) {
+                                foundformfield = true;
+                            } else {
+                                foundformfield = false;
+                            }
+                        } else if ("end".equals(((SimpleValue) obj).getStringValue())) {
+                            if (foundformfield) return;
+                            foundformfield = false;
+                        }
+                    }
+                    if (foundformfield && run.getCTR().getTArray().length > 0) {
+                        CTText[] textXmlArray = run.getCTR().getTArray();
+                        run.getCTR().getTList().get(0).setStringValue(text);
+                        CTText textXml = textXmlArray[0];
+                        textXml.setStringValue(text);
+                        System.out.println(run.getCTR());
+                    }
+                }
+            }
+        }
+    }
 }
