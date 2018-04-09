@@ -3,11 +3,10 @@ package report.models.view.nodesFactories;
 
 import javafx.scene.control.ContextMenu;
 import report.entities.items.estimate.EstimateDAO;
-import report.layoutControllers.addEstimateRow.AddEstimateRowController;
-import report.layoutControllers.estimate.EstimateController.Est;
+import report.layout.controllers.addEstimateRow.AddEstimateRowController;
+import report.layout.controllers.estimate.EstimateController.Est;
 import report.models.view.nodesHelpers.StageCreator;
 import report.models.view.wrappers.Reverting;
-import report.models.view.wrappers.tableWrappers.AbstractTableWrapper;
 import report.usage_strings.PathStrings;
 import report.models.view.customNodes.ContextMenuOptional;
 import report.models.view.wrappers.tableWrappers.TableWrapper;

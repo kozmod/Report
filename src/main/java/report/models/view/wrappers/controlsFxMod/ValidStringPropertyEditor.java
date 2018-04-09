@@ -49,7 +49,7 @@ public class ValidStringPropertyEditor<T extends TextInputControl> extends Abstr
      * Get ValidStringPropertyEditor with TextField.
      *
      * @param property ObjectPSI
-     * @return AbstractPropertyEditor<String   ,   TextField>
+     * @return AbstractPropertyEditor<String       ,       TextField>
      */
     public static AbstractPropertyEditor<String, TextField> textField(ObjectPSI property) {
         return new ValidStringPropertyEditor<>(property, new TextField());
@@ -59,7 +59,7 @@ public class ValidStringPropertyEditor<T extends TextInputControl> extends Abstr
      * Get ValidStringPropertyEditor with TextArea.
      *
      * @param property ObjectPSI
-     * @return AbstractPropertyEditor<String   ,   TextArea>
+     * @return AbstractPropertyEditor<String       ,       TextArea>
      */
     public static AbstractPropertyEditor<String, TextArea> textArea(ObjectPSI property) {
         return new ValidStringPropertyEditor<>(property, new TextArea());

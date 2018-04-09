@@ -3,7 +3,7 @@ package report.entities.items.estimate;
 
 import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.Item;
-import report.layoutControllers.LogController;
+import report.layout.controllers.LogController;
 import report.models.sql.SqlConnector;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.layoutControllers.estimate.EstimateController.Est;
+import report.layout.controllers.estimate.EstimateController.Est;
 //import report.models.Formula_test;
 import report.entities.items.cb.AddEstTIV;
 

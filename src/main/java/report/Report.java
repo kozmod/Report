@@ -19,7 +19,7 @@ import javafx.scene.Scene;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
-import report.layoutControllers.root.RootLayoutController;
+import report.layout.controllers.root.RootLayoutController;
 import report.models.view.nodesHelpers.StageCreator;
 import report.usage_strings.PathStrings;
 

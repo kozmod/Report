@@ -26,7 +26,7 @@ public class ReportingMonthDAO {
     public ObservableList<ReportingMonth> getData(LocalDate dateFrom, LocalDate dateTo) {
         ObservableList<ReportingMonth> list = FXCollections.observableArrayList();
 
-        String sqlQuery = "exec dbo.MONTH_GRAPHIK @DateTO = '2012-01-01',@DateFrom = '20180601'";
+        String sqlQuery = "exec dbo.MONTH_GRAPHIK @DateTO = '2012-01-01',@DateFrom = '2018-06-01'";
 //        String sqlQuery = "exec dbo.MONTH_GRAPHIK ?,?";
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement(sqlQuery)) {

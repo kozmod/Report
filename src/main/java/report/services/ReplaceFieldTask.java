@@ -39,7 +39,7 @@ public class ReplaceFieldTask implements Consumer<XWPFRun> {
 
                 textToReplace = replacementMap.get(((SimpleValue) obj).getStringValue());
             } else if (FLD_CHAR_TYPE_END.equals(((SimpleValue) obj).getStringValue())) {
-                if(Objects.nonNull(textToReplace)){
+                if (Objects.nonNull(textToReplace)) {
                     return;
                 }
             }

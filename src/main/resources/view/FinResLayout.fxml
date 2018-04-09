@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.*?>
 
 <GridPane hgap="5.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="report.layoutControllers.finRes.FinResController">
+          fx:controller="report.layout.controllers.finRes.FinResController">
     <columnConstraints>
         <ColumnConstraints maxWidth="-Infinity" minWidth="10.0" prefWidth="120.0"/>
         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="10.0"/>

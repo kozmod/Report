@@ -136,7 +136,7 @@ public class ContractorTIV implements Clone {
     /**
      * Extractor to observe changes in "Property" fields.
      *
-     * @return Callback<ContractorTIV   ,       Observable   [   ]>
+     * @return Callback<ContractorTIV       ,               Observable       [       ]>
      */
     public static Callback<ContractorTIV, Observable[]> extractor() {
         return (ContractorTIV p) -> new Observable[]{p.getContractorProperty(), p.getDirectorProperty(), p.getAdressProperty(), p.getCommentsProperty()};

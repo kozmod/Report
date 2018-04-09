@@ -10,7 +10,7 @@
 
 <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
       prefHeight="94.0" prefWidth="228.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="report.layoutControllers.DeleteController">
+      fx:controller="report.layout.controllers.DeleteController">
     <children>
         <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Вы уверены, что хотите удалить:">
             <font>
