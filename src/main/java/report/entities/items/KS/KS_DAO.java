@@ -20,8 +20,8 @@ import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.layoutControllers.LogController;
-import report.layoutControllers.estimate.EstimateController.Est;
+import report.layout.controllers.LogController;
+import report.layout.controllers.estimate.EstimateController.Est;
 
 
 public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {

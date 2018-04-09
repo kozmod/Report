@@ -21,7 +21,7 @@ import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.layoutControllers.LogController;
+import report.layout.controllers.LogController;
 
 
 public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
@@ -43,8 +43,6 @@ public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
     public ObservableList<PlanTIV> getData() {
         ObservableList<PlanTIV> list = FXCollections.observableArrayList(PlanTIV.extractor());
 
-//        String psmtmtString = " execute dbo.[getListPlan] ";
-
         String sqlString = "SELECT"
                 + " F.[id]"
                 + ",F.[TypeName]"
@@ -62,25 +60,25 @@ public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement(sqlString)) {
             pstmt.execute();
-//            System.out.println(b);
-            ResultSet rs = pstmt.getResultSet();
-            while (rs.next()) {
-                PlanTIV item = new PlanTIV(
-                        rs.getLong(SQL.Common.ID),
-                        rs.getTimestamp(SQL.Common.DATE_CREATE),
-                        rs.getInt(SQL.Plan.TYPE_ID),
-                        rs.getString(SQL.Plan.TYPE_NAME),
-                        rs.getInt(SQL.Plan.QUANTITY),
-                        rs.getInt(SQL.Plan.REST),
-                        rs.getDouble(SQL.Plan.SMET_COST),
-                        rs.getDouble(SQL.Plan.SMET_COST_SUM),
-                        rs.getDouble(SQL.Plan.SALE_COST),
-                        rs.getDouble(SQL.Plan.SALE_COST_SUM),
-                        (rs.getDouble(SQL.Plan.SALE_COST_SUM) - rs.getDouble(SQL.Plan.SMET_COST_SUM))
-                );
-                list.add(item);
-            }
 
+            try(ResultSet rs = pstmt.getResultSet()) {
+                while (rs.next()) {
+                    PlanTIV item = new PlanTIV(
+                            rs.getLong(SQL.Common.ID),
+                            rs.getTimestamp(SQL.Common.DATE_CREATE),
+                            rs.getInt(SQL.Plan.TYPE_ID),
+                            rs.getString(SQL.Plan.TYPE_NAME),
+                            rs.getInt(SQL.Plan.QUANTITY),
+                            rs.getInt(SQL.Plan.REST),
+                            rs.getDouble(SQL.Plan.SMET_COST),
+                            rs.getDouble(SQL.Plan.SMET_COST_SUM),
+                            rs.getDouble(SQL.Plan.SALE_COST),
+                            rs.getDouble(SQL.Plan.SALE_COST_SUM),
+                            (rs.getDouble(SQL.Plan.SALE_COST_SUM) - rs.getDouble(SQL.Plan.SMET_COST_SUM))
+                    );
+                    list.add(item);
+                }
+            }
         } catch (SQLException ex) {
             Logger.getLogger(PlanDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

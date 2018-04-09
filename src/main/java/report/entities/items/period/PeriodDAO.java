@@ -19,8 +19,8 @@ import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.layoutControllers.LogController;
-import report.layoutControllers.estimate.EstimateController.Est;
+import report.layout.controllers.LogController;
+import report.layout.controllers.estimate.EstimateController.Est;
 import report.models.sql.SqlConnector;
 
 public class PeriodDAO implements CommonNamedDAO<Collection<PeriodTIV>> {

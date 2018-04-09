@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import report.layoutControllers.LogController;
+import report.layout.controllers.LogController;
 import report.models.sql.SqlConnector;
 import report.usage_strings.PathStrings;
 

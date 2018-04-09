@@ -2,14 +2,11 @@ package report.models.view.nodesFactories;
 
 import javafx.stage.FileChooser;
 
-import org.apache.commons.io.FilenameUtils;
-import report.layoutControllers.estimate.EstimateController.Est;
-import report.models.sql.BinaryStreamQuery;
+import report.layout.controllers.estimate.EstimateController.Est;
 import report.usage_strings.PathStrings;
 import report.usage_strings.SQL;
 
 import java.io.File;
-import java.util.List;
 
 public class FileChooserFactory {
     private FileChooserFactory() {

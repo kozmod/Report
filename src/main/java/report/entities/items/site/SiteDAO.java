@@ -3,7 +3,7 @@ package report.entities.items.site;
 
 import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.estimate.EstimateDAO;
-import report.layoutControllers.LogController;
+import report.layout.controllers.LogController;
 import report.models.sql.SqlConnector;
 import report.usage_strings.SQL;
 
@@ -18,7 +18,7 @@ import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.layoutControllers.estimate.EstimateController.Est;
+import report.layout.controllers.estimate.EstimateController.Est;
 
 
 public class SiteDAO implements CommonNamedDAO<Collection<PreviewTIV>> {

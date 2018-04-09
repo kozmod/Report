@@ -20,10 +20,11 @@ public class TempladeDocxTest {
     @Test
     void doxServiceTest() {
 
-        Map<String,String> replacementMap = new HashMap<>();
-        replacementMap.put("t1","ЗАМЕНА_1");
-        replacementMap.put("t2","ЗАМЕНА_2");
-        replacementMap.put("t3","ЗАМЕНА_3");
+        Map<String, String> replacementMap = new HashMap<>();
+        replacementMap.put("t1", "ЗАМЕНА_1");
+        replacementMap.put("t2", "ЗАМЕНА_2");
+        replacementMap.put("t3", "ЗАМЕНА_3");
+        replacementMap.put("t4", "ЗАМЕНА_4");
 
 
         TemplateDocx docx = TemplateDocx.newBuilder()

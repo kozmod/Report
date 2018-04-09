@@ -12,7 +12,7 @@ import report.entities.items.KS.KS_TIV;
 import report.entities.items.contractor.ContractorTIV;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.usage_strings.SQL;
-import report.layoutControllers.estimate.EstimateController.Est;
+import report.layout.controllers.estimate.EstimateController.Est;
 
 
 public class PrintKS extends AbstractPrinterXML {

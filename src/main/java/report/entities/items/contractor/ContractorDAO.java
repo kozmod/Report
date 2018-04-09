@@ -4,7 +4,7 @@ package report.entities.items.contractor;
 
 import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.osr.OSR_DAO;
-import report.layoutControllers.LogController;
+import report.layout.controllers.LogController;
 import report.models.sql.SqlConnector;
 import report.usage_strings.SQL;
 

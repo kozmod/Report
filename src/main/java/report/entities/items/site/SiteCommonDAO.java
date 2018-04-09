@@ -205,21 +205,20 @@ public class SiteCommonDAO {
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement prst = connection.prepareStatement(ResultSetString)) {
 
-            ResultSet rs = prst.executeQuery();
-            if (rs.next()) {
-                list.addAll(
-                        //0
-                        new PreviewTIV(rs.getLong("id"), "Date", "Дата последней транзакции", rs.getLong("Date")),
-                        //1
-                        new PreviewTIV(rs.getLong("id"), "OutgoingRest", "Исходящий остаток", rs.getDouble("OutgoingRest")),
-                        //2
-                        new PreviewTIV(rs.getLong("id"), "Quantity", "Количество Участков", rs.getInt("Quantity")),
-                        //3
-                        new PreviewTIV(rs.getLong("id"), "SumProfit", "Суммарная прибыль", rs.getDouble("SumProfit"))
+            try(ResultSet rs = prst.executeQuery()) {
+                if (rs.next()) {
+                    list.addAll(
+                            //0
+                            new PreviewTIV(rs.getLong("id"), "Date", "Дата последней транзакции", rs.getLong("Date")),
+                            //1
+                            new PreviewTIV(rs.getLong("id"), "OutgoingRest", "Исходящий остаток", rs.getDouble("OutgoingRest")),
+                            //2
+                            new PreviewTIV(rs.getLong("id"), "Quantity", "Количество Участков", rs.getInt("Quantity")),
+                            //3
+                            new PreviewTIV(rs.getLong("id"), "SumProfit", "Суммарная прибыль", rs.getDouble("SumProfit"))
 
-                );
-
-                //System.out.println(SiteInfoTable.saveEst(0).getFirstValue());
+                    );
+                }
             }
         } catch (SQLException ex) {
             Logger.getLogger(SiteDAO.class.getName()).log(Level.SEVERE, null, ex);

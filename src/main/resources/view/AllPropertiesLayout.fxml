@@ -13,7 +13,7 @@
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="981.0"
          prefWidth="1272.0" tabClosingPolicy="UNAVAILABLE" xmlns="http://javafx.com/javafx/8"
          xmlns:fx="http://javafx.com/fxml/1"
-         fx:controller="report.layoutControllers.allProperties.AllPropertiesController">
+         fx:controller="report.layout.controllers.allProperties.AllPropertiesController">
     <tabs>
         <Tab text="Вх. данные">
             <content>

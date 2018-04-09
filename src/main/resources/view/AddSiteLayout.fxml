@@ -11,7 +11,7 @@
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="320.0"
           prefWidth="300.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-          fx:controller="report.layoutControllers.AddSiteController">
+          fx:controller="report.layout.controllers.AddSiteController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="200.0"/>
         <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" minWidth="10.0"/>

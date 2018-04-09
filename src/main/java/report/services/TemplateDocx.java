@@ -57,25 +57,29 @@ public class TemplateDocx {
 
 
     public class Builder {
-        private Builder(){}
+        private Builder() {
+        }
 
-        public Builder setTemplateFile(Path templatePath){
+        public Builder setTemplateFile(Path templatePath) {
             TemplateDocx.this.templateFile = templatePath.toFile();
             return this;
         }
-        public Builder setTemplateFile(String templatePath){
+
+        public Builder setTemplateFile(String templatePath) {
             TemplateDocx.this.templateFile = new File(templatePath);
             return this;
         }
 
-        public Builder setOutputFile(Path outputPath){
+        public Builder setOutputFile(Path outputPath) {
             TemplateDocx.this.outputFile = outputPath.toFile();
             return this;
         }
-        public Builder setOutputFile(String outputPath){
+
+        public Builder setOutputFile(String outputPath) {
             TemplateDocx.this.outputFile = new File(outputPath);
             return this;
         }
+
         public TemplateDocx build() {
             return TemplateDocx.this;
         }

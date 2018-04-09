@@ -134,7 +134,7 @@ public class DItem implements Clone {
     /**
      * Extractor to observe changes in "Property" fields.
      *
-     * @return Callback<VariableTIV   ,       Observable   [   ]>
+     * @return Callback<VariableTIV       ,               Observable       [       ]>
      */
     public static Callback<DItem, Observable[]> extractor() {
         return (DItem p) -> new Observable[]{p.secondValueProperty()};
