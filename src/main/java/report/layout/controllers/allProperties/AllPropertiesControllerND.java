@@ -6,10 +6,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.ComboBoxTableCell;
@@ -52,6 +50,7 @@ import java.math.BigInteger;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Map;
+import java.util.Objects;
 
 class AllPropertiesControllerND implements TableFactory {
 
@@ -218,7 +217,6 @@ class AllPropertiesControllerND implements TableFactory {
             PropertyEditor<?> editor = null;
             if (param.getValue().getClass().equals(Integer.class)) {
                 editor = Editors.createNumericEditor(param);
-                setPadegPopOver(editor.getEditor());
             } else if (param.getValue().getClass().equals(BigInteger.class)) {
                 editor = Editors.createNumericEditor(param);
             } else if (param.getValue().getClass().equals(String.class)) {
@@ -245,6 +243,10 @@ class AllPropertiesControllerND implements TableFactory {
                     };
                 } else {
                     editor = Editors.createTextEditor(param);
+                }
+                //TODO -> REFACTOR
+                if(Objects.nonNull(editor.getEditor()) && editor.getEditor() instanceof TextField){
+                    setPadegPopOver((TextField) editor.getEditor());
                 }
             } else if (param.getValue().getClass().equals(LocalDate.class)) {
                 editor = Editors.createDateEditor(param);
@@ -393,17 +395,23 @@ class AllPropertiesControllerND implements TableFactory {
     }
 
     //TODO доделать
-    private static void setPadegPopOver(final Node node) {
+    private static void setPadegPopOver(final TextField node) {
         GridPane gridPane = new GridPane();
         gridPane.setPadding(new Insets(5, 5, 5, 5));
 
         TextField padegTextField = new TextField();
         CheckBox padegCheckbox = new CheckBox("Использвать при заполнеии договора");
+//        padegTextField.disableProperty().bind(
+//                Bindings.when(padegCheckbox.selectedProperty())
+//                        .then(false)
+//                        .otherwise(true)
+//        );
 
-        gridPane.add(padegTextField, 0,0);
-        gridPane.add(padegCheckbox, 0,2);
+        gridPane.add(padegTextField, 0, 0);
+        gridPane.add(padegCheckbox, 0, 2);
 
         PopOver popOver = new PopOver();
+
         popOver.setContentNode(gridPane);
         node.focusedProperty().addListener((ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) -> {
             if (newPropertyValue) {
@@ -412,5 +420,38 @@ class AllPropertiesControllerND implements TableFactory {
                 popOver.hide();
             }
         });
+
+        node.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(Objects.nonNull(newValue)){
+                padegTextField.setText(PadegUtils.changePadeg(newValue));
+            }
+        });
+//
+//        padegTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
+//            if(Objects.nonNull(newValue)){
+//
+//                System.out.println(padegTextField.isFocused() + " padegTextField");
+//            }
+//        });
+//
+//        node.setOnMouseEntered(e -> {
+//            System.out.println("ode.setOnMouseEntered");
+//                node.setDisable(false);
+//                padegTextField.setDisable(true);
+//
+//        });
+//        padegTextField.setOnMouseEntered(e -> {
+//            System.out.println("padegTextField.setOnMouseEntered");
+//            padegTextField.setDisable(false);
+//            node.setDisable(true);
+//
+//        });
+//
+//        popOver.focusedProperty().addListener((observable, oldValue, newValue) -> {
+//            if(Objects.nonNull(newValue)){
+//                System.out.println(popOver.isFocused() + " popOver");
+//            }
+//        });
+
     }
 }
