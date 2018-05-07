@@ -52,9 +52,9 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
-class AllPropertiesControllerND implements TableFactory {
+public class AllPropertiesControllerUtils implements TableFactory {
 
-    private AllPropertiesControllerND() {
+    private AllPropertiesControllerUtils() {
     }
 
     /**
@@ -214,7 +214,7 @@ class AllPropertiesControllerND implements TableFactory {
         countSheet.setModeSwitcherVisible(true);
         countSheet.setSearchBoxVisible(true);
         countSheet.setPropertyEditorFactory(param -> {
-            PropertyEditor<?> editor = null;
+            PropertyEditor<?> editor;
             if (param.getValue().getClass().equals(Integer.class)) {
                 editor = Editors.createNumericEditor(param);
             } else if (param.getValue().getClass().equals(BigInteger.class)) {
@@ -245,7 +245,7 @@ class AllPropertiesControllerND implements TableFactory {
                     editor = Editors.createTextEditor(param);
                 }
                 //TODO -> REFACTOR
-                if(Objects.nonNull(editor.getEditor()) && editor.getEditor() instanceof TextField){
+                if (Objects.nonNull(editor.getEditor()) && editor.getEditor() instanceof TextField) {
                     setPadegPopOver((TextField) editor.getEditor());
                 }
             } else if (param.getValue().getClass().equals(LocalDate.class)) {
@@ -278,8 +278,6 @@ class AllPropertiesControllerND implements TableFactory {
         return propertySheetWrapper;
     }
 
-    /**
-     */
     static void decorLinkedNamesGP(GridPane gridPane, TableWrapper<CountAgentTVI> tableWrapper) {
         //Nodes
         ListView<LinkedNamePair> listView = new ListView<>();
@@ -394,64 +392,85 @@ class AllPropertiesControllerND implements TableFactory {
         return tableWrapper;
     }
 
-    //TODO доделать
-    private static void setPadegPopOver(final TextField node) {
-        GridPane gridPane = new GridPane();
-        gridPane.setPadding(new Insets(5, 5, 5, 5));
+    private static void setPadegPopOver(final TextField sourceTextField) {
+        PopOver padegPopOver = new PadegPopOver(sourceTextField);
+    }
 
-        TextField padegTextField = new TextField();
-        CheckBox padegCheckbox = new CheckBox("Использвать при заполнеии договора");
-//        padegTextField.disableProperty().bind(
-//                Bindings.when(padegCheckbox.selectedProperty())
-//                        .then(false)
-//                        .otherwise(true)
-//        );
+    static class PadegPopOver extends PopOver {
+        private final GridPane gridPane = new GridPane();
+        private final Button saveButton = new Button("Сохранить");
+        private final CheckBox padegCheckbox = new CheckBox("AAAAA");
+        private final TextField padegTextField = new TextField();
+        private final TextField sourceTextField;
+        private String saveTextFieldData;
 
-        gridPane.add(padegTextField, 0, 0);
-        gridPane.add(padegCheckbox, 0, 2);
+        PadegPopOver(TextField sourceTextField) {
+            this.sourceTextField = sourceTextField;
+            this.initialize();
+        }
 
-        PopOver popOver = new PopOver();
+        {
+            gridPane.setPadding(new Insets(5, 5, 5, 5));
+            gridPane.add(padegTextField, 0, 0);
+            gridPane.add(padegCheckbox, 0, 2);
+            this.setContentNode(gridPane);
+        }
 
-        popOver.setContentNode(gridPane);
-        node.focusedProperty().addListener((ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) -> {
-            if (newPropertyValue) {
-                popOver.show(node);
-            } else {
-                popOver.hide();
-            }
-        });
 
-        node.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(Objects.nonNull(newValue)){
-                padegTextField.setText(PadegUtils.changePadeg(newValue));
-            }
-        });
-//
-//        padegTextField.focusedProperty().addListener((observable, oldValue, newValue) -> {
-//            if(Objects.nonNull(newValue)){
-//
-//                System.out.println(padegTextField.isFocused() + " padegTextField");
-//            }
-//        });
-//
-//        node.setOnMouseEntered(e -> {
-//            System.out.println("ode.setOnMouseEntered");
-//                node.setDisable(false);
-//                padegTextField.setDisable(true);
-//
-//        });
-//        padegTextField.setOnMouseEntered(e -> {
-//            System.out.println("padegTextField.setOnMouseEntered");
-//            padegTextField.setDisable(false);
-//            node.setDisable(true);
-//
-//        });
-//
-//        popOver.focusedProperty().addListener((observable, oldValue, newValue) -> {
-//            if(Objects.nonNull(newValue)){
-//                System.out.println(popOver.isFocused() + " popOver");
-//            }
-//        });
+        private void initialize() {
+            this.initSourceTextField();
+            this.initPadegTextField();
+            this.initSaveButton();
+            padegCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> {
+                if (Objects.nonNull(newValue)) {
+                    padegTextField.setDisable(!newValue);
+                }
+            });
+        }
 
+        private void initSourceTextField(){
+            sourceTextField.setOnMouseClicked(e -> {
+                if (!padegTextField.isDisable()) {
+                    padegTextField.setDisable(true);
+                    padegCheckbox.setSelected(false);
+                }
+                sourceTextField.requestFocus();
+            });
+            sourceTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (Objects.nonNull(newValue)) {
+                    padegTextField.setText(PadegUtils.changePadeg(newValue));
+                }
+            });
+            sourceTextField.focusedProperty().addListener((ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) -> {
+                if (newPropertyValue) {
+                    this.show(sourceTextField);
+                } else {
+                    this.hide();
+                }
+            });
+        }
+
+        private void initPadegTextField(){
+            padegTextField.setOnMouseClicked(e -> {
+                if (padegTextField.isDisable()) {
+                    padegTextField.setDisable(false);
+                }
+            });
+            padegTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+                if (Objects.nonNull(newValue)) {
+                    if(!padegTextField.isDisable()){
+                        gridPane.add(saveButton, 0, 3);
+                    }
+                }
+
+            });
+        }
+
+        private void initSaveButton(){
+            saveButton.setOnAction( event -> {
+                saveTextFieldData = padegTextField.getText();
+                gridPane.getChildren().remove(saveButton);
+            });
+        }
     }
 }

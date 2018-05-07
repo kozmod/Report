@@ -10,9 +10,9 @@ import report.models.view.nodesFactories.TableFactory;
 
 import java.util.Objects;
 
-public class AddKSControllerTF {
+public class AddKSControllerUtils {
 
-    private AddKSControllerTF() {
+    private AddKSControllerUtils() {
     }
 
     /**

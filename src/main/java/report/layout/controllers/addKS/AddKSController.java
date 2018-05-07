@@ -77,8 +77,8 @@ public class AddKSController implements Initializable {
         siteNumLabel.setText(EstimateController.Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER));
         contLabel.setText(EstimateController.Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
 
-        AddKSControllerTF.decorAddKS(allJMTable);
-        AddKSControllerTF.decorAddKS(selectedJMTable);
+        AddKSControllerUtils.decorAddKS(allJMTable);
+        AddKSControllerUtils.decorAddKS(selectedJMTable);
         //set Items of allJMTable
         allJMTable.setItems(obsAllJM);
         selectedJMTable.setItems(obsSelectedJM);

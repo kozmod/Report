@@ -14,9 +14,9 @@ import report.models.view.wrappers.tableWrappers.TableWrapperEST;
 import report.models.view.nodesFactories.TableCellFactory;
 import report.usage_strings.SQL;
 
-public class AddEstimateRowTF {
+public class AddEstimateRowUtils {
 
-    private AddEstimateRowTF() {
+    private AddEstimateRowUtils() {
     }
 
     /**

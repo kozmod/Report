@@ -7,9 +7,9 @@ import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.models.view.wrappers.tableWrappers.TableWrapper;
 import report.models.view.nodesFactories.TableFactory;
 
-public class FinResControllerTF {
+public class FinResControllerUtils {
 
-    private FinResControllerTF() {
+    private FinResControllerUtils() {
     }
 
     /**

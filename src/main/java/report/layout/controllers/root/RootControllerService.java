@@ -36,9 +36,11 @@ public class RootControllerService {
      * @return TreeItem<String>
      */
     public TreeItem<String> getTreeViewList() {
-        return new SiteCommonDAO().getTreeObsList(ServiceStrings.PERCENT.trim(),
+        return new SiteCommonDAO().getTreeObsList(
                 ServiceStrings.PERCENT.trim(),
-                ServiceStrings.PERCENT.trim());
+                ServiceStrings.PERCENT.trim(),
+                ServiceStrings.PERCENT.trim()
+        );
     }
 
     /**

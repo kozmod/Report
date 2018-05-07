@@ -19,9 +19,9 @@ import report.models.view.nodesFactories.TableFactory;
 
 import java.util.List;
 
-public class EstimateControllerTF implements TableFactory {
+public class EstimateControllerUtils implements TableFactory {
 
-    private EstimateControllerTF() {
+    private EstimateControllerUtils() {
 
     }
 

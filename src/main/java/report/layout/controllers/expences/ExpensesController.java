@@ -118,9 +118,9 @@ public class ExpensesController implements Initializable {
      ********************************************************************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        siteTWrapper = ExpensesControllerTF.decorProperty_Site(siteTV);
-        expensesTWrapper = ExpensesControllerTF.decorProperty_Expenses(expensesTV);
-        periodTWrapper = ExpensesControllerTF.decorProperty_JobPeriod(periodTV);
+        siteTWrapper = ExpensesControllerUtils.decorProperty_Site(siteTV);
+        expensesTWrapper = ExpensesControllerUtils.decorProperty_Expenses(expensesTV);
+        periodTWrapper = ExpensesControllerUtils.decorProperty_JobPeriod(periodTV);
 
         siteTWrapper.setTableData(Est.Common.getPreviewObservableList());
         expensesTWrapper.setTableData(new ExpensesDAO().getData());

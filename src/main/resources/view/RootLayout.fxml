@@ -9,9 +9,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="772.0"
-            prefWidth="1247.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="report.layout.controllers.root.RootLayoutController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="772.0" prefWidth="1247.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.layout.controllers.root.RootLayoutController">
     <top>
         <StackPane>
             <children>
@@ -21,44 +19,34 @@
                             <items>
                                 <Menu mnemonicParsing="false" text="Загрузка Excel файлов">
                                     <items>
-                                        <MenuItem mnemonicParsing="false" onAction="#handle_menuFileLoad"
-                                                  text="Load Sites/Base form File"/>
-                                        <SeparatorMenuItem mnemonicParsing="false"/>
-                                        <MenuItem mnemonicParsing="false" onAction="#handle_menuFileAccLoad"
-                                                  text="Load Account statement"/>
+                                        <MenuItem mnemonicParsing="false" onAction="#handle_menuFileLoad" text="Load Sites/Base form File" />
+                                        <SeparatorMenuItem mnemonicParsing="false" />
+                                        <MenuItem mnemonicParsing="false" onAction="#handle_menuFileAccLoad" text="Load Account statement" />
                                     </items>
                                 </Menu>
-                                <Menu mnemonicParsing="false" text="База SQL">
-                                    <items>
-                                        <MenuItem mnemonicParsing="false" onAction="#handle_menuFileBackup"
-                                                  text="Бекап базы"/>
-                                        <MenuItem mnemonicParsing="false" onAction="#handle_menuFileRestore"
-                                                  text="Восстановление"/>
-                                        <SeparatorMenuItem mnemonicParsing="false"/>
-                                        <MenuItem mnemonicParsing="false" onAction="#handle_menuFileDropBD"
-                                                  text="Стереть базу данных"/>
-                                    </items>
-                                </Menu>
-                                <SeparatorMenuItem mnemonicParsing="false"/>
-                                <MenuItem mnemonicParsing="false" onAction="#handle_AddSite" text="Добавить участок"/>
-                                <MenuItem fx:id="printEstToXmlMenuItem" mnemonicParsing="false"
-                                          onAction="#handle_PrintToXML" text="Выгрузить смету в xml-файл"/>
+                                <SeparatorMenuItem mnemonicParsing="false" />
+                                <MenuItem mnemonicParsing="false" onAction="#handle_AddSite" text="Добавить участок" />
+                                <MenuItem fx:id="printEstToXmlMenuItem" mnemonicParsing="false" onAction="#handle_PrintToXML" text="Выгрузить смету в xml-файл" />
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="SQL">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#handle_menuSqlConnect"
-                                          text="Соединение с SQL-базой"/>
-                                <MenuItem mnemonicParsing="false" text="Реконнект"/>
+                                <MenuItem mnemonicParsing="false" onAction="#handle_menuSqlConnect" text="Соединение с SQL-базой" />
+                                <Menu mnemonicParsing="false" text="Действия с Базой">
+                                    <items>
+                                        <MenuItem mnemonicParsing="false" onAction="#handle_menuFileBackup" text="Бекап базы" />
+                                        <MenuItem mnemonicParsing="false" onAction="#handle_menuFileRestore" text="Восстановление" />
+                                        <SeparatorMenuItem mnemonicParsing="false" />
+                                        <MenuItem mnemonicParsing="false" onAction="#handle_menuFileDropBD" text="Стереть базу данных" />
+                                    </items>
+                                </Menu>
                             </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Фильтры">
                             <items>
-                                <MenuItem mnemonicParsing="false" onAction="#handle_AccountFilter"
-                                          text="Фильр / Выписка "/>
-                                <MenuItem mnemonicParsing="false" onAction="#handle_Log" text="Log"/>
-                                <MenuItem mnemonicParsing="false" onAction="#handle_CommonProperties"
-                                          text="Общие параметры"/>
+                                <MenuItem mnemonicParsing="false" onAction="#handle_AccountFilter" text="Фильр / Выписка " />
+                                <MenuItem mnemonicParsing="false" onAction="#handle_Log" text="Log" />
+                                <MenuItem mnemonicParsing="false" onAction="#handle_CommonProperties" text="Общие параметры" />
                             </items>
                         </Menu>
                     </menus>
@@ -71,55 +59,43 @@
             <content>
                 <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefWidth="345.0">
                     <children>
-                        <Button alignment="TOP_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                onAction="#handle_CommonInfButton" text="Общаая Информация (Start Page)"/>
-                        <Button alignment="TOP_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308"
-                                mnemonicParsing="false" onAction="#handle_PlanningButton" text="Планирование"/>
-                        <Button alignment="TOP_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308"
-                                mnemonicParsing="false" onAction="#handle_FinResButton" text="Финансовый результат"/>
+                        <Button alignment="TOP_LEFT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handle_CommonInfButton" text="Общаая Информация (Start Page)" />
+                        <Button alignment="TOP_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handle_PlanningButton" text="Планирование" />
+                        <Button alignment="TOP_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handle_FinResButton" text="Финансовый результат" />
                         <TitledPane animated="false" text="Участки">
                             <content>
                                 <GridPane hgap="5.0" vgap="5.0">
                                     <columnConstraints>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity"/>
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                                        <ColumnConstraints hgrow="SOMETIMES" minWidth="-Infinity" />
                                     </columnConstraints>
                                     <rowConstraints>
-                                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="250.0" vgrow="SOMETIMES"/>
-                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
+                                        <RowConstraints maxHeight="-Infinity" minHeight="-Infinity" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="250.0" vgrow="SOMETIMES" />
+                                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                                     </rowConstraints>
                                     <children>
-                                        <ComboBox fx:id="comboQueueNum" prefWidth="150.0" promptText="Очередь"/>
-                                        <ComboBox fx:id="comboSiteCondition" prefWidth="150.0" promptText="Статус "
-                                                  GridPane.columnIndex="1" GridPane.halignment="RIGHT"/>
-                                        <TreeView fx:id="treeViewSite" GridPane.columnSpan="3" GridPane.rowIndex="1"/>
-                                        <Button alignment="CENTER" contentDisplay="RIGHT"
-                                                maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                                onAction="#handle_OkButton" text="Фильтр" GridPane.columnIndex="2"/>
-                                        <TextField fx:id="findSiteByNameTF" promptText="Номер участка"
-                                                   GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                        <ComboBox fx:id="comboQueueNum" prefWidth="150.0" promptText="Очередь" />
+                                        <ComboBox fx:id="comboSiteCondition" prefWidth="150.0" promptText="Статус " GridPane.columnIndex="1" GridPane.halignment="RIGHT" />
+                                        <TreeView fx:id="treeViewSite" GridPane.columnSpan="3" GridPane.rowIndex="1" />
+                                        <Button alignment="CENTER" contentDisplay="RIGHT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handle_OkButton" text="Фильтр" GridPane.columnIndex="2" />
+                                        <TextField fx:id="findSiteByNameTF" promptText="Номер участка" GridPane.columnIndex="1" GridPane.rowIndex="2">
                                             <GridPane.margin>
-                                                <Insets left="5.0" right="5.0"/>
+                                                <Insets left="5.0" right="5.0" />
                                             </GridPane.margin>
                                         </TextField>
-                                        <Button alignment="TOP_CENTER" contentDisplay="RIGHT"
-                                                maxWidth="1.7976931348623157E308" mnemonicParsing="false"
-                                                onAction="#handle_FindSiteByName" text="Найти" textOverrun="CLIP"
-                                                GridPane.columnIndex="2" GridPane.rowIndex="2">
+                                        <Button alignment="TOP_CENTER" contentDisplay="RIGHT" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handle_FindSiteByName" text="Найти" textOverrun="CLIP" GridPane.columnIndex="2" GridPane.rowIndex="2">
                                             <GridPane.margin>
-                                                <Insets/>
+                                                <Insets />
                                             </GridPane.margin>
                                             <opaqueInsets>
-                                                <Insets/>
+                                                <Insets />
                                             </opaqueInsets>
                                             <graphic>
-                                                <ImageView fitHeight="15.0" fitWidth="15.0"
-                                                           nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true"
-                                                           preserveRatio="true">
+                                                <ImageView fitHeight="15.0" fitWidth="15.0" nodeOrientation="RIGHT_TO_LEFT" pickOnBounds="true" preserveRatio="true">
                                                     <image>
-                                                        <Image url="@../img/search_glass.png"/>
+                                                        <Image url="@../img/search_glass.png" />
                                                     </image>
                                                 </ImageView>
                                             </graphic>
@@ -128,13 +104,11 @@
                                 </GridPane>
                             </content>
                         </TitledPane>
-                        <TitledPane fx:id="infoTitledPane" animated="false" text="Информация по участку"/>
-                        <TitledPane fx:id="changesTitledPane" animated="false" expanded="false"
-                                    text="Журнал изменений"/>
-                        <Button alignment="TOP_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308"
-                                mnemonicParsing="false" onAction="#handle_accountButton" text="Расчетный счет">
+                        <TitledPane fx:id="infoTitledPane" animated="false" text="Информация по участку" />
+                        <TitledPane fx:id="changesTitledPane" animated="false" expanded="false" text="Журнал изменений" />
+                        <Button alignment="TOP_LEFT" contentDisplay="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handle_accountButton" text="Расчетный счет">
                             <opaqueInsets>
-                                <Insets/>
+                                <Insets />
                             </opaqueInsets>
                         </Button>
                     </children>
@@ -143,6 +117,6 @@
         </ScrollPane>
     </left>
     <center>
-        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER"/>
+        <ScrollPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
     </center>
 </BorderPane>

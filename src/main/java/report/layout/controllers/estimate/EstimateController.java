@@ -330,10 +330,10 @@ public class EstimateController implements Initializable {
         dateKSto.setConverter(new LocalDayStringConverter());
 
         //add Additional table
-        tableAdditionalWrapper = EstimateControllerTF.decorAdditional(tableAdditional);
+        tableAdditionalWrapper = EstimateControllerUtils.decorAdditional(tableAdditional);
         init_EstLayoutTabs();
         //add KS table
-        tableKSWrapper = EstimateControllerTF.decorKS(tableKS);
+        tableKSWrapper = EstimateControllerUtils.decorKS(tableKS);
 //        ksSumLabel.textProperty().bind(Bindings.convert(tableKSWrapper.getSumProperty()));
         ksSumLabel.textProperty().bindBidirectional(
                 tableKSWrapper.getSumProperty(),

@@ -15,9 +15,9 @@ import report.models.view.wrappers.tableWrappers.TableWrapper;
 import report.models.view.nodesFactories.TableCellFactory;
 import report.models.view.nodesFactories.TableFactory;
 
-public class ExpensesControllerTF {
+public class ExpensesControllerUtils {
 
-    private ExpensesControllerTF() {
+    private ExpensesControllerUtils() {
     }
 
     /**
