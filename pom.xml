@@ -87,21 +87,13 @@
         <!--<systemPath>${project.basedir}/lib/dependencies/sqljdbc4.jar</systemPath>-->
         <!--</dependency>-->
         <!-- https://mvnrepository.com/artifact/com.microsoft.sqlserver/mssql-jdbc -->
-        <!-- ++++++++++++++++++++++++++++++++++++++++ Project ++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+        <!-- ++++++++++++++++++++++++++++++++++++++++ Padeg   ++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
         <dependency>
             <groupId>padeg</groupId>
             <artifactId>padeg</artifactId>
             <version>3.3.0.24</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/dependencies/padeg-3.3.0.24.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>padeg</groupId>
-            <artifactId>padeg</artifactId>
-            <version>3.3.0.24</version>
-            <classifier>sources</classifier>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/dependencies/padeg-3.3.0.24-javadoc.jar</systemPath>
         </dependency>
         <!-- ++++++++++++++++++++++++++++++++++++++++ Project ++++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
         <dependency>
@@ -163,7 +155,6 @@
             <!--<scope>system</scope>-->
             <!--<systemPath>${project.basedir}/lib/dependencies/commons-collections4-4.1.jar</systemPath>-->
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.docx4j/docx4j -->
         <dependency>
             <groupId>org.docx4j</groupId>
             <artifactId>docx4j</artifactId>
@@ -179,7 +170,14 @@
             <artifactId>poi</artifactId>
             <version>3.17</version>
         </dependency>
-        <!-- +++++++++++++++++++++++++++++++++++++++++ CONTROL FX  +++++++++++++++++++++++++++++++++++++++++++++++++ -->
+        <!-- +++++++++++++++++++++++++++++++++++++++++ JFoenix +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
+        <!-- +++++++++++++++++++++++++++++++++++++++++ DOES NOT USING ++++++++++++++++++++++++++++++++++++++++++++++ -->
+        <dependency>
+            <groupId>com.jfoenix</groupId>
+            <artifactId>jfoenix</artifactId>
+            <version>9.0.3</version>
+        </dependency>
+        <!-- +++++++++++++++++++++++++++++++++++++++++ CONTROL FX ++++++++++++++++++++++++++++++++++++++++++++++++++ -->
         <dependency>
             <groupId>org.controlsfx</groupId>
             <artifactId>controlsfx</artifactId>

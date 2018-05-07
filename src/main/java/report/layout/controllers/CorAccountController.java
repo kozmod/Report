@@ -16,7 +16,7 @@ import javafx.stage.FileChooser;
 import javafx.util.Duration;
 
 import report.entities.items.account.AccountDAO;
-import report.layout.controllers.addKS.AddKSControllerTF;
+import report.layout.controllers.addKS.AddKSControllerUtils;
 import report.models.sql.sqlQuery.InsertFileXLSQuery;
 import report.models.converters.dateStringConverters.LocalDayStringConverter;
 
@@ -34,7 +34,7 @@ public class CorAccountController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //decore Acc table
-        AddKSControllerTF.decorAcc(accTable);
+        AddKSControllerUtils.decorAcc(accTable);
         accTable.setItems(new AccountDAO().getList(0, 0));
 
         init_DatePickers();

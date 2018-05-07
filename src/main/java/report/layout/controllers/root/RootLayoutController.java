@@ -24,7 +24,7 @@ import report.layout.controllers.DeleteController;
 import report.layout.controllers.LogController;
 import report.layout.controllers.estimate.EstimateController;
 import report.layout.controllers.expences.ExpensesController;
-import report.layout.controllers.expences.ExpensesControllerTF;
+import report.layout.controllers.expences.ExpensesControllerUtils;
 import report.layout.controllers.intro.IntroLayoutController;
 import report.models.coefficient.FormulaQuery;
 import report.models.coefficient.Formula;
@@ -71,7 +71,7 @@ public class RootLayoutController implements Initializable {
     TextField findSiteByNameTF;
 
     private TableView previewTable;
-    private static final TableView changeTable = ExpensesControllerTF.getChangeView();
+    private static final TableView changeTable = ExpensesControllerUtils.getChangeView();
 
     /*!******************************************************************************************************************
      *                                                                                                      Getter/Setter
@@ -145,7 +145,7 @@ public class RootLayoutController implements Initializable {
     }
 
     private void init_previewTable() {
-        previewTable = RootControllerTF.getSite();
+        previewTable = RootControllerUtils.getSite();
         infoTitledPane.setContent(previewTable);
     }
 
@@ -328,19 +328,9 @@ public class RootLayoutController implements Initializable {
 
     }
 
-
-
-
-
-    /*!******************************************************************************************************************
-     *                                                                                                     InputValidator
-     ********************************************************************************************************************/
-
-
     /*!******************************************************************************************************************
      *                                                                                                     Inner Classes
      ********************************************************************************************************************/
-    //inner class - TreeView Cell Factory =========================================================================
     class TVCellFactory implements Callback<TreeView<String>, TreeCell<String>> {
 
         @Override
@@ -420,17 +410,14 @@ public class RootLayoutController implements Initializable {
 //                    contAddLayout.getStage().show();
                 }
             });
-            contDelItem.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    StageCreator delLayout
-                            = new StageCreator(PathStrings.Layout.DEL_SITE, "Удалить")
-                            .loadNewWindow();
-                    delController = delLayout.getController();
-                    delController.setRootController(getRootController());
-                    delController.init_delLabels(selectedTreeElem, selectedTreeElemParent);
+            contDelItem.setOnAction(event -> {
+                StageCreator delLayout
+                        = new StageCreator(PathStrings.Layout.DEL_SITE, "Удалить")
+                        .loadNewWindow();
+                delController = delLayout.getController();
+                delController.setRootController(getRootController());
+                delController.init_delLabels(selectedTreeElem, selectedTreeElemParent);
 //                    delLayout.getStage().show();
-                }
             });
 
 

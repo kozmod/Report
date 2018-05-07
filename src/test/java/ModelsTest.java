@@ -1,28 +1,22 @@
-import org.apache.poi.openxml4j.opc.OPCPackage;
+
+import javafx.scene.control.TextField;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
-import org.apache.poi.xwpf.usermodel.XWPFRun;
-import org.apache.xmlbeans.SimpleValue;
-import org.apache.xmlbeans.XmlCursor;
-import org.apache.xmlbeans.XmlObject;
 import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTR;
-import org.openxmlformats.schemas.wordprocessingml.x2006.main.CTText;
 import report.entities.items.counterparties.*;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
+import report.layout.controllers.allProperties.AllPropertiesControllerUtils;
 import report.models.converters.dateStringConverters.LocalDayStringConverter;
-import report.services.TemplateFactory;
+
 
 import java.io.*;
 import java.math.BigInteger;
-import java.sql.Array;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.ArrayList;;
 import java.util.List;
 
 @SuppressWarnings("Duplicates")
@@ -84,49 +78,6 @@ public class ModelsTest {
                 new LocalDayStringConverter().fromString("2012-01-01").toString()
         );
     }
-
-//    @Test
-////    @Disabled
-//    @SuppressWarnings("unchecked")
-//    @DisplayName("Template Factory Test - Docx")
-//    public void templateFactoryDocxTest() throws SQLException {
-//        File file = new File("xxxx.docx");
-//        List<ObjectPSI> list = new ArrayList<>();
-//        list.add(new ObjectPSI("Наименование банка",
-//                "",
-//                "Организация",
-//                "CHANGED",
-//                "Contractor_Name",
-//                "",
-//                ".{1,50}"
-//        ));
-//        list.add(new ObjectPSI("Наименование банка",
-//                "",
-//                "Организация",
-//                "ОГРН",
-//                "OGRN",
-//                "",
-//                ".{1,50}"
-//        ));
-//        list.add(new ObjectPSI("Наименование банка",
-//                "",
-//                "Организация",
-//                "XXXXXXXXXXXXXXXXXXXXXX",
-//                "ExBody_Surname_roditelnij",
-//                "",
-//                ".{1,50}"
-//        ));
-//
-//        list.add(new ObjectPSI("Наименование банка",
-//                "",
-//                "Организация",
-//                "ASADADADDAD",
-//                "Appraisal_term",
-//                "",
-//                ".{1,50}"
-//        ));
-//        TemplateFactory.writeDocxTemplate(file, list);
-//    }
 
     @Test
 //    @Disabled

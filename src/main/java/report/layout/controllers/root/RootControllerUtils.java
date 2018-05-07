@@ -7,9 +7,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import report.models.view.nodesFactories.TableCellFactory;
 import report.models.view.nodesFactories.TableFactory;
 
-class RootControllerTF implements TableFactory {
+class RootControllerUtils implements TableFactory {
 
-    private RootControllerTF() {
+    private RootControllerUtils() {
     }
 
     /**

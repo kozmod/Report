@@ -87,15 +87,15 @@ public class CounterAgentDAO implements CommonNamedDAO<Collection<CountAgentTVI>
         list.forEach(item -> {
             int newElementId = -1;
             try (Connection connection = SqlConnector.getInstance();
-                 CallableStatement cstmt = connection.prepareCall(sqlAddCount)) {
-                cstmt.setString(1, Integer.toString(newElementId));
-                cstmt.setString(2, item.getName());
-                cstmt.execute();
-                cstmt.getResultSet();
-                cstmt.getMoreResults();
-                cstmt.getResultSet();
-                if (cstmt.getMoreResults()) {
-                    try (ResultSet rs = cstmt.getResultSet()) {
+                 CallableStatement callableStatement = connection.prepareCall(sqlAddCount)) {
+                callableStatement.setString(1, Integer.toString(newElementId));
+                callableStatement.setString(2, item.getName());
+                callableStatement.execute();
+                callableStatement.getResultSet();
+                callableStatement.getMoreResults();
+                callableStatement.getResultSet();
+                if (callableStatement.getMoreResults()) {
+                    try (ResultSet rs = callableStatement.getResultSet()) {
                         while (rs.next()) {
                             newElementId = rs.getInt("ID");
                             if (newElementId != -1) {

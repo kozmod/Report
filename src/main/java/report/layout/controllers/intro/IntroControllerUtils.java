@@ -7,9 +7,9 @@ import report.models.view.wrappers.tableWrappers.TableWrapper;
 import report.models.view.nodesFactories.TableCellFactory;
 import report.models.view.nodesFactories.TableFactory;
 
-public class IntroControllerTF implements TableFactory {
+public class IntroControllerUtils implements TableFactory {
 
-    private IntroControllerTF() {
+    private IntroControllerUtils() {
     }
 
     /**
