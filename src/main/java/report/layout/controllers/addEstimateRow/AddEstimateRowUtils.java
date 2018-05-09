@@ -10,7 +10,7 @@ import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.cb.AddEstTIV;
 import report.entities.items.estimate.EstimateDAO;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
-import report.models.view.wrappers.tableWrappers.TableWrapperEST;
+import report.models.view.wrappers.table.TableWrapperEST;
 import report.models.view.nodesFactories.TableCellFactory;
 import report.usage_strings.SQL;
 

@@ -11,7 +11,7 @@ import report.entities.items.period.PeriodDAO;
 import report.entities.items.period.PeriodTIV;
 import report.entities.items.site.PreviewTIV;
 import report.models.converters.dateStringConverters.EpochDayStringConverter;
-import report.models.view.wrappers.tableWrappers.TableWrapper;
+import report.models.view.wrappers.table.TableWrapper;
 import report.models.view.nodesFactories.TableCellFactory;
 import report.models.view.nodesFactories.TableFactory;
 

@@ -9,7 +9,7 @@ import report.models.view.nodesHelpers.StageCreator;
 import report.models.view.wrappers.Reverting;
 import report.usage_strings.PathStrings;
 import report.models.view.customNodes.ContextMenuOptional;
-import report.models.view.wrappers.tableWrappers.TableWrapper;
+import report.models.view.wrappers.table.TableWrapper;
 
 
 public class ContextMenuFactory {

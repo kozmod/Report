@@ -18,6 +18,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public interface CommonNamedDAO<E> extends CommonDAO<E> {
+
     String getSqlTableName();
 
     /**

@@ -1,10 +1,8 @@
 import helperClasses.FxTestStage;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import org.controlsfx.control.PropertySheet;
 import org.junit.FixMethodOrder;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -15,18 +13,10 @@ import report.entities.items.counterparties.ReqCommonDAO;
 import report.entities.items.counterparties.ReqExBodyDAO;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 
-import report.models.view.wrappers.propertySheetWrappers.PropertySheetWrapper;
+import report.models.view.wrappers.propertySheet.PropertySheetWrapper;
 import report.usage_strings.PathStrings;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.lang.reflect.Field;
-import java.math.BigInteger;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 @FixMethodOrder(MethodSorters.JVM)

@@ -98,13 +98,13 @@ public class SiteCommonDAO {
      * @param siteNumb
      * @param queueNumb
      */
-    public void insertSite(String siteNumb, String queueNumb, String siteType, String typeHome, String contractor) {
+    public void insertSite(String siteNumb, String queueNumb, String siteType, String typeHome, int contractorId) {
 
-        String psmtmtString = "INSERT INTO dbo.[Site] ("
+        String psmtmtString = "INSERT INTO dbo.[Site_new] ("
                 + "[SiteNumber]"
                 + ",[QueueBuilding]"
                 + ",[TypeHome]"
-                + ",[Contractor]"
+                + ",[id_Count]"
                 + ",[StatusPayment]"
                 + ",[NContract]"
                 + ",[DateContract]"
@@ -133,7 +133,7 @@ public class SiteCommonDAO {
             pstmt.setString(1, siteNumb);
             pstmt.setString(2, queueNumb);
             pstmt.setString(3, typeHome);
-            pstmt.setString(4, contractor);
+            pstmt.setInt(4, contractorId);
 
             pstmt.setInt(5, (int) LocalDate.now().toEpochDay());
             pstmt.setInt(6, (int) LocalDate.now().toEpochDay());

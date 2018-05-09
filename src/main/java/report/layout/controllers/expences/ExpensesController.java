@@ -39,7 +39,7 @@ import report.layout.controllers.estimate.EstimateController.Est;
 
 import report.entities.items.period.PeriodTIV;
 //import report.models.Formula_test;
-import report.models.view.wrappers.tableWrappers.TableWrapper;
+import report.models.view.wrappers.table.TableWrapper;
 import report.models.view.nodesFactories.ContextMenuFactory;
 import report.models.view.customNodes.ContextMenuOptional;
 

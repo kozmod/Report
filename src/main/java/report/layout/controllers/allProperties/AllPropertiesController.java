@@ -25,9 +25,9 @@ import report.entities.items.site.name.SiteNameDAO;
 import report.entities.items.site.name.SiteNameTIV;
 import report.entities.items.variable.VariableTIV_new;
 import report.models.converters.dateStringConverters.LocalDayStringConverter;
-import report.models.view.wrappers.propertySheetWrappers.PropertySheetWrapper;
-import report.models.view.wrappers.tableWrappers.ReverseTableWrapper;
-import report.models.view.wrappers.tableWrappers.TableWrapper;
+import report.models.view.wrappers.propertySheet.PropertySheetWrapper;
+import report.models.view.wrappers.table.ReverseTableWrapper;
+import report.models.view.wrappers.table.TableWrapper;
 import report.models.view.nodesFactories.ContextMenuFactory;
 import report.models.view.customNodes.ContextMenuOptional;
 

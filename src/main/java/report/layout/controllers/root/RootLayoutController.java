@@ -18,8 +18,8 @@ import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
-import report.layout.controllers.AddContractController;
-import report.layout.controllers.AddSiteController;
+import report.layout.controllers.AddContractorController;
+import report.layout.controllers.addSite.AddSiteController;
 import report.layout.controllers.DeleteController;
 import report.layout.controllers.LogController;
 import report.layout.controllers.estimate.EstimateController;
@@ -43,7 +43,7 @@ public class RootLayoutController implements Initializable {
 
     // ref to Report App      
     private Report reportApp;
-    private AddContractController contAddController;
+    private AddContractorController contAddController;
     private DeleteController delController;
     private AddSiteController siteAddController;
     private EstimateController showEstController;

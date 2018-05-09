@@ -12,8 +12,8 @@ import report.layout.controllers.planning.temp.EditingTreeTableCell;
 import report.models.coefficient.Quantity;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.models.converters.numberStringConverters.IntegerStringConverter;
-import report.models.view.wrappers.tableWrappers.DiscountTreeTableWrapper;
-import report.models.view.wrappers.tableWrappers.TableWrapper;
+import report.models.view.wrappers.table.DiscountTreeTableWrapper;
+import report.models.view.wrappers.table.TableWrapper;
 import report.models.view.nodesFactories.TableCellFactory;
 import report.models.view.nodesFactories.TableFactory;
 

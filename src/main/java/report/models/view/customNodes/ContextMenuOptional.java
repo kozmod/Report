@@ -17,9 +17,9 @@ import report.entities.items.Clone;
 import report.entities.items.DItem;
 import report.models.printer.PrintEstimate;
 import report.models.view.wrappers.Reverting;
-import report.models.view.wrappers.tableWrappers.DiscountTreeTableWrapper;
-import report.models.view.wrappers.tableWrappers.ReverseTableWrapper;
-import report.models.view.wrappers.tableWrappers.TableWrapper;
+import report.models.view.wrappers.table.DiscountTreeTableWrapper;
+import report.models.view.wrappers.table.ReverseTableWrapper;
+import report.models.view.wrappers.table.TableWrapper;
 
 
 public class ContextMenuOptional extends ContextMenu {

@@ -5,7 +5,7 @@ import javafx.scene.control.TableView;
 import report.entities.items.account.AccountTVI;
 import report.models.converters.dateStringConverters.EpochDayStringConverter;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
-import report.models.view.wrappers.tableWrappers.TableWrapper;
+import report.models.view.wrappers.table.TableWrapper;
 import report.models.view.nodesFactories.TableFactory;
 
 import java.util.Objects;

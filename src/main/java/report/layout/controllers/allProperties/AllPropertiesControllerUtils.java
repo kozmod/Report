@@ -41,9 +41,9 @@ import report.entities.items.variable.VariableTIV_new;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.models.view.LinkedNamePair;
 import report.models.view.nodesFactories.ContextMenuFactory;
-import report.models.view.wrappers.propertySheetWrappers.PropertySheetWrapper;
-import report.models.view.wrappers.tableWrappers.ReverseTableWrapper;
-import report.models.view.wrappers.tableWrappers.TableWrapper;
+import report.models.view.wrappers.propertySheet.PropertySheetWrapper;
+import report.models.view.wrappers.table.ReverseTableWrapper;
+import report.models.view.wrappers.table.TableWrapper;
 import report.models.view.nodesFactories.TableFactory;
 
 import java.math.BigInteger;
