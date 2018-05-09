@@ -393,18 +393,20 @@ public class AllPropertiesControllerUtils implements TableFactory {
     }
 
     private static void setPadegPopOver(final TextField sourceTextField) {
-        PopOver padegPopOver = new PadegPopOver(sourceTextField);
+        PopOver padegPopOver = new PadegTextFieldPopOver(sourceTextField);
     }
 
-    static class PadegPopOver extends PopOver {
-        private final GridPane gridPane = new GridPane();
-        private final Button saveButton = new Button("Сохранить");
-        private final CheckBox padegCheckbox = new CheckBox("AAAAA");
-        private final TextField padegTextField = new TextField();
+    /**\
+     * Padeg PopOver
+     */
+    static class PadegTextFieldPopOver extends PopOver {
         private final TextField sourceTextField;
-        private String saveTextFieldData;
+        private final TextField padegTextField = new TextField();
+        private final GridPane gridPane = new GridPane();
+        private final CheckBox padegCheckbox = new CheckBox("Ручной ввод");
 
-        PadegPopOver(TextField sourceTextField) {
+
+        PadegTextFieldPopOver(TextField sourceTextField) {
             this.sourceTextField = sourceTextField;
             this.initialize();
         }
@@ -413,35 +415,20 @@ public class AllPropertiesControllerUtils implements TableFactory {
             gridPane.setPadding(new Insets(5, 5, 5, 5));
             gridPane.add(padegTextField, 0, 0);
             gridPane.add(padegCheckbox, 0, 2);
-            this.setContentNode(gridPane);
+            setContentNode(gridPane);
         }
 
 
         private void initialize() {
-            this.initSourceTextField();
-            this.initPadegTextField();
-            this.initSaveButton();
-            padegCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> {
-                if (Objects.nonNull(newValue)) {
-                    padegTextField.setDisable(!newValue);
-                }
-            });
+            initSourceTextField();
+            initPadegTextField();
+            initCheckbox();
+
         }
 
         private void initSourceTextField(){
-            sourceTextField.setOnMouseClicked(e -> {
-                if (!padegTextField.isDisable()) {
-                    padegTextField.setDisable(true);
-                    padegCheckbox.setSelected(false);
-                }
-                sourceTextField.requestFocus();
-            });
-            sourceTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-                if (Objects.nonNull(newValue)) {
-                    padegTextField.setText(PadegUtils.changePadeg(newValue));
-                }
-            });
-            sourceTextField.focusedProperty().addListener((ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) -> {
+            sourceTextField.focusedProperty()
+                    .addListener((ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) -> {
                 if (newPropertyValue) {
                     this.show(sourceTextField);
                 } else {
@@ -451,25 +438,26 @@ public class AllPropertiesControllerUtils implements TableFactory {
         }
 
         private void initPadegTextField(){
-            padegTextField.setOnMouseClicked(e -> {
-                if (padegTextField.isDisable()) {
-                    padegTextField.setDisable(false);
-                }
-            });
-            padegTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            padegTextField.textProperty()
+                    .bindBidirectional(sourceTextField.textProperty(), new PadegStringConverter());
+            padegTextField.disableProperty().bind(
+                    Bindings.when(padegCheckbox.selectedProperty())
+                            .then(false)
+                            .otherwise(true)
+            );
+        }
+        private void initCheckbox(){
+            padegCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> {
                 if (Objects.nonNull(newValue)) {
-                    if(!padegTextField.isDisable()){
-                        gridPane.add(saveButton, 0, 3);
+                    if(newValue) {
+                        padegTextField.textProperty().unbindBidirectional(sourceTextField.textProperty());
+                        padegTextField.requestFocus();
+                    }else {
+                        padegTextField.textProperty()
+                                .bindBidirectional(sourceTextField.textProperty(), new PadegStringConverter());
+                        sourceTextField.requestFocus();
                     }
                 }
-
-            });
-        }
-
-        private void initSaveButton(){
-            saveButton.setOnAction( event -> {
-                saveTextFieldData = padegTextField.getText();
-                gridPane.getChildren().remove(saveButton);
             });
         }
     }
