@@ -174,7 +174,6 @@ public class SiteDAO implements CommonNamedDAO<Collection<PreviewTIV>> {
         StringBuffer stringValues = new StringBuffer(" VALUES(");
         String prefix = "";
         for (PreviewTIV item : items) {
-//                if(item.getSqlColumn().equals(SQL.Site.COST_HOUSE))System.err.println("COST_HOUSE -----------> "+ item.getSecondValue().formatNumber());
             if (!item.getSqlColumn().equals(SQL.Site.TAXES_ALL)) {
                 stringInsert.append(prefix + "[" + item.getSqlColumn() + "]");
                 if (!item.getSqlColumn().equals(SQL.Site.SITE_TYPE_ID))

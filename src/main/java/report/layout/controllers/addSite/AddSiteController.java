@@ -142,7 +142,7 @@ public class AddSiteController implements Initializable {
         if (isInputValid()) {
             String insertQueueName = null;
             if (radioButtonsTG.selectedToggleProperty().get().equals(queueRB_list))
-                insertQueueName = (String) queueComboBox.getValue();
+                insertQueueName = queueComboBox.getValue();
             else if (radioButtonsTG.selectedToggleProperty().get().equals(queueRB_new))
                 insertQueueName = queueTF.getText();
 
@@ -150,9 +150,9 @@ public class AddSiteController implements Initializable {
             new SiteCommonDAO().insertSite(
                     siteNumTF.getText(),
                     insertQueueName,
-                    classComboBox.getValue().toString(),
-                    typeHomeComboBox.getValue().toString(),
-                    contractorComboBox.getValue().getItem().getIdName()
+                    classComboBox.getValue(),
+                    typeHomeComboBox.getValue(),
+                    contractorComboBox.getValue().getItem().getIdCountConst()
             );
 
             Stage appStage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
