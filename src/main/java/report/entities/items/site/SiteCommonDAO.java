@@ -38,6 +38,7 @@ public class SiteCommonDAO {
 
         ArrayList<PreviewTIV> siteList = new ArrayList<>();
 
+        //TODO:
         String psmtmtString = "SELECT [id],[SiteNumber], [Contractor]  FROM dbo.[Site] "
                 + "WHERE [StatusPayment] LIKE ? "
                 + "AND [QueueBuilding] LIKE ? "
