@@ -83,7 +83,7 @@
 //            this.comboBox.editableProperty().bind(this.comboBoxEditable);
 //         }
 //
-//         this.comboBox.getSelectionModel().select(this.getItem());
+//         this.comboBox.getSelectionModel().select(this.getEntity());
 //         super.startEdit();
 //         this.setText((String)null);
 //         this.setGraphic(this.comboBox);
@@ -127,7 +127,7 @@
 //   }
 //   @Override
 //   public void commitEdit(T item) {
-//      if (!isEditing() & !item.equals(getItem())) {
+//      if (!isEditing() & !item.equals(getEntity())) {
 //         TableView<S> table = getTableView();
 //         if (table != null) {
 //            TableColumn<S, T> column = getTableColumn();
@@ -147,7 +147,7 @@
 //   @Override
 //   public void cancelEdit() {
 //      super.cancelEdit();
-//      this.setText(this.converter.get().toString(this.getItem()));
+//      this.setText(this.converter.get().toString(this.getEntity()));
 //      this.setGraphic((Node)null);
 //   }
 //

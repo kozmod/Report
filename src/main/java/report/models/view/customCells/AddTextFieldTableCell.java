@@ -114,7 +114,7 @@
 //        // the baked-in mechanism sets our editing state to false before we can
 //        // intercept the loss of focus. The default commitEdit(...) method
 //        // simply bails if we are not editing...
-//        if (!isEditing() && !item.equals(getItem())) {
+//        if (!isEditing() && !item.equals(getEntity())) {
 //            TableView<S> table = getTableView();
 //            if (table != null) {
 //                TableColumn<S, T> column = getTableColumn();
@@ -190,8 +190,8 @@
 //
 //    static <T> String getItemText(Cell<T> cell, StringConverter<T> converter) {
 //        return converter == null ?
-//                cell.getItem() == null ? "" : cell.getItem().toString() :
-//                converter.toString(cell.getItem());
+//                cell.getEntity() == null ? "" : cell.getEntity().toString() :
+//                converter.toString(cell.getEntity());
 //    }
 //
 //

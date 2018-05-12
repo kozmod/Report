@@ -19,8 +19,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
-import report.entities.items.counterparties.AgentTVI.CounterAgentDAO;
 import report.entities.items.plan.FactTIV;
 import report.entities.items.plan.PlanDAO;
 import report.entities.items.plan.PlanTIV;
@@ -145,14 +143,13 @@ public class AddSiteController implements Initializable {
                 insertQueueName = queueComboBox.getValue();
             else if (radioButtonsTG.selectedToggleProperty().get().equals(queueRB_new))
                 insertQueueName = queueTF.getText();
-
-//       System.out.println(InsertSiteVel +"  "+ InsertQueueVal + "   "+ InsertContVal +"  "+ InsertTypeHomeVal);
+            //TODO: move to service
             new SiteCommonDAO().insertSite(
                     siteNumTF.getText(),
                     insertQueueName,
                     classComboBox.getValue(),
                     typeHomeComboBox.getValue(),
-                    contractorComboBox.getValue().getItem().getIdCountConst()
+                    contractorComboBox.getValue().getEntity().getIdCountConst()
             );
 
             Stage appStage = (Stage) ((Node) (event.getSource())).getScene().getWindow();

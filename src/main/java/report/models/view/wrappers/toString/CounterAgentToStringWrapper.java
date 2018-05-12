@@ -10,7 +10,7 @@ public final  class CounterAgentToStringWrapper implements ToStringWrapper<Count
     }
 
     @Override
-    public CountAgentTVI getItem() {
+    public CountAgentTVI getEntity() {
         return countAgent;
     }
 
