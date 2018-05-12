@@ -205,5 +205,41 @@ public class ContractorDAO implements CommonNamedDAO<Collection<ContractorTIV>> 
 //        
 //    }
 
+    public void insert1(Collection<ContractorTIV> items) {
+        String sql = "INSERT into [dbo].[Contractors] "
+                + "( "
+                + " [Contractor]"
+                + ",[Director]"
+                + ",[Adress]"
+                + ",[Comments]"
+                + " ) "
+                + "VALUES(?,?,?,?)";
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(sql,
+                     Statement.RETURN_GENERATED_KEYS);) {
+            //set false SQL Autocommit
+            connection.setAutoCommit(false);
+
+            for (ContractorTIV obsItem : items) {
+                pstmt.setString(1, obsItem.getContractor());
+                pstmt.setString(2, obsItem.getDirector());
+                pstmt.setString(3, obsItem.getAdress());
+                pstmt.setString(4, obsItem.getComments());
+
+
+                int affectedRows = pstmt.executeUpdate();
+
+                try (ResultSet generategKeys = pstmt.getGeneratedKeys();) {
+                    if (generategKeys.next())
+                        obsItem.setId(generategKeys.getLong(1));
+                }
+            }
+
+            //SQL commit
+            connection.commit();
+        } catch (SQLException ex) {
+            Logger.getLogger(OSR_DAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
 
 }

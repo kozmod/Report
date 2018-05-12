@@ -41,7 +41,8 @@ public class CounterAgentDAO implements CommonNamedDAO<Collection<CountAgentTVI>
                                         rs.getInt("ID_FORM"),
                                         rs.getString("Name_Form"),
                                         rs.getInt("ID_TYPE"),
-                                        rs.getString("Name_Type")
+                                        rs.getString("Name_Type"),
+                                        rs.getInt("ID_Count_Const")
                                 )
                         );
                     }
