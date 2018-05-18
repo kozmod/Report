@@ -38,8 +38,7 @@ public class SiteCommonDAO {
 
         ArrayList<PreviewTIV> siteList = new ArrayList<>();
 
-        //TODO:
-        String psmtmtString = "SELECT [id],[SiteNumber], [Contractor]  FROM dbo.[Site] "
+        String psmtmtString = "SELECT [id],[SiteNumber], [Contractor],[id_Count]  FROM dbo.[Site] "
                 + "WHERE [StatusPayment] LIKE ? "
                 + "AND [QueueBuilding] LIKE ? "
                 + "AND [SiteNumber] LIKE ? "
@@ -71,7 +70,7 @@ public class SiteCommonDAO {
 
         rootNode.setExpanded(true);
         for (PreviewTIV site : siteList) {
-            TreeItem<String> ContratorLeaf = new TreeItem<String>(site.getSecondValue().toString());
+            TreeItem<String> ContratorLeaf = new TreeItem<>(site.getSecondValue().toString());
             boolean found = false;
             for (TreeItem<String> siteNode : rootNode.getChildren()) {
                 if (siteNode.getValue().contentEquals(site.getFirstValue())) {
@@ -81,7 +80,7 @@ public class SiteCommonDAO {
                 }
             }
             if (!found) {
-                TreeItem<String> siteNode = new TreeItem<String>(site.getFirstValue());
+                TreeItem<String> siteNode = new TreeItem<>(site.getFirstValue());
                 rootNode.getChildren().add(siteNode);
                 siteNode.getChildren().add(ContratorLeaf);
             }

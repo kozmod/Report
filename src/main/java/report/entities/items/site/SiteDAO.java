@@ -166,11 +166,11 @@ public class SiteDAO implements CommonNamedDAO<Collection<PreviewTIV>> {
 
     }
 
+    //TODO: в таблицу сайт теперь пишутся значения ID  подрядчика, а не строковое значение Подрядчика
     @Override
     public void insert(Collection<PreviewTIV> items) {
-
         //Build INSERT SQL String
-        StringBuffer stringInsert = new StringBuffer("insert into [dbo].[Site]( ");
+        StringBuffer stringInsert = new StringBuffer("insert into [dbo].[Site_new]( ");
         StringBuffer stringValues = new StringBuffer(" VALUES(");
         String prefix = "";
         for (PreviewTIV item : items) {
@@ -200,7 +200,6 @@ public class SiteDAO implements CommonNamedDAO<Collection<PreviewTIV>> {
             int i = 1;
             for (PreviewTIV obsItem : items) {
                 if (!obsItem.getSqlColumn().equals(SQL.Site.TAXES_ALL)) {
-//                        System.out.println(item.getSiteSecondValue().formatNumber() + " # "+ i);
                     pstmt.setObject(i, obsItem.getSecondValue());
                     i++;
                 }

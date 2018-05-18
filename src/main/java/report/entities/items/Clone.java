@@ -9,7 +9,5 @@ public interface Clone<E> {
      * @return Clone
      */
     E getClone();
-
-
 }
 
