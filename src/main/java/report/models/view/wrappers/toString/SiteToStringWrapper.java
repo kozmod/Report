@@ -1,19 +1,19 @@
 package report.models.view.wrappers.toString;
 
-public final class SiteToStringWrapper implements ToStringWrapper<Integer> {
-    private final int integer;
+public final class SiteToStringWrapper implements ToStringWrapper<String> {
+    private final String siteNumber;
 
-    public SiteToStringWrapper(int integer) {
-        this.integer = integer;
+    public SiteToStringWrapper(String siteNumber) {
+        this.siteNumber = siteNumber;
     }
 
     @Override
-    public Integer getEntity() {
-        return integer;
+    public String getEntity() {
+        return siteNumber;
     }
 
     @Override
     public String toString() {
-        return String.valueOf(integer);
+        return siteNumber;
     }
 }

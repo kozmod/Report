@@ -147,7 +147,6 @@ public class EstimateController implements Initializable {
                 return allItems.stream()
                         .filter((Item i) -> i.equalsSuperClass(selectedItem))
                         .sorted(Comparator.comparingLong(item -> item.getDateCreate().getTime()))
-//                    .sorted((item1, item2) -> Long.compare(item1.getDateCreate().getTime(), item2.getDateCreate().getTime()))
                         .collect(collectingAndThen(toList(), FXCollections::observableArrayList));
             else
                 return FXCollections.observableArrayList();
@@ -156,8 +155,6 @@ public class EstimateController implements Initializable {
         public void updateList_DL(CommonDAO dao) {
             allItems = (ObservableList<? extends Item>) dao.getData();
         }
-//        public void updateList_DL(){ createTab();}
-
 
         //Update ---------------------------------------------------------------------------
         public void updatePreviewTable() {
@@ -585,14 +582,6 @@ public class EstimateController implements Initializable {
                     new ContractorDAO().getOne(Est.KS.getSiteSecondValue(SQL.KS.CONTRACTOR)),
                     selectedFile.toPath()
             );
-
-
-//            new PrintKS.Builder()
-//                    .setObsKS(tableKSWrapper.getObservableItems())
-////                 .setObsPreTab(previewTableObs)
-//                    .setKSnumber(listKS.getSelectionModel().getSelectedItem().formatNumber())
-//                    .setKSDate(ksDateLabel.getText())
-//                    .build();
         }
 
     }

@@ -396,7 +396,8 @@ public class AllPropertiesControllerUtils implements TableFactory {
         PopOver padegPopOver = new PadegTextFieldPopOver(sourceTextField);
     }
 
-    /**\
+    /**
+     * \
      * Padeg PopOver
      */
     static class PadegTextFieldPopOver extends PopOver {
@@ -426,18 +427,18 @@ public class AllPropertiesControllerUtils implements TableFactory {
 
         }
 
-        private void initSourceTextField(){
+        private void initSourceTextField() {
             sourceTextField.focusedProperty()
                     .addListener((ObservableValue<? extends Boolean> arg0, Boolean oldPropertyValue, Boolean newPropertyValue) -> {
-                if (newPropertyValue) {
-                    this.show(sourceTextField);
-                } else {
-                    this.hide();
-                }
-            });
+                        if (newPropertyValue) {
+                            this.show(sourceTextField);
+                        } else {
+                            this.hide();
+                        }
+                    });
         }
 
-        private void initPadegTextField(){
+        private void initPadegTextField() {
             padegTextField.textProperty()
                     .bindBidirectional(sourceTextField.textProperty(), new PadegStringConverter());
             padegTextField.disableProperty().bind(
@@ -446,13 +447,14 @@ public class AllPropertiesControllerUtils implements TableFactory {
                             .otherwise(true)
             );
         }
-        private void initCheckbox(){
+
+        private void initCheckbox() {
             padegCheckbox.selectedProperty().addListener((observable, oldValue, newValue) -> {
                 if (Objects.nonNull(newValue)) {
-                    if(newValue) {
+                    if (newValue) {
                         padegTextField.textProperty().unbindBidirectional(sourceTextField.textProperty());
                         padegTextField.requestFocus();
-                    }else {
+                    } else {
                         padegTextField.textProperty()
                                 .bindBidirectional(sourceTextField.textProperty(), new PadegStringConverter());
                         sourceTextField.requestFocus();

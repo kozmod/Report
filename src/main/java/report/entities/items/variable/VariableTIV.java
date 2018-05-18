@@ -99,7 +99,7 @@ public class VariableTIV implements Clone {
     /**
      * Extractor to observe changes in "Property" fields.
      *
-     * @return Callback<VariableTIV       ,               Observable       [       ]>
+     * @return Callback<VariableTIV               ,                               Observable               [               ]>
      */
     public static Callback<VariableTIV, Observable[]> extractor() {
         return (VariableTIV p) -> new Observable[]{p.getValueProprty()};

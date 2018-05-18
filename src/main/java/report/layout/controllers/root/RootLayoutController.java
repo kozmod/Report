@@ -18,7 +18,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
 
-import report.layout.controllers.AddContractorController;
 import report.layout.controllers.addSite.AddSiteController;
 import report.layout.controllers.DeleteController;
 import report.layout.controllers.LogController;
@@ -30,6 +29,8 @@ import report.models.coefficient.FormulaQuery;
 import report.models.coefficient.Formula;
 import report.models.view.nodesHelpers.InputValidator;
 import report.models.view.nodesFactories.FileChooserFactory;
+import report.models.view.wrappers.toString.CounterAgentToStringWrapper;
+import report.models.view.wrappers.toString.ToStringWrapper;
 import report.usage_strings.PathStrings;
 import report.models.view.nodesHelpers.StageCreator;
 import report.models.sql.sqlQuery.BackUpQuery;
@@ -41,9 +42,7 @@ import report.usage_strings.SQL;
 
 public class RootLayoutController implements Initializable {
 
-    // ref to Report App      
     private Report reportApp;
-    private AddContractorController contAddController;
     private DeleteController delController;
     private AddSiteController siteAddController;
     private EstimateController showEstController;
@@ -58,7 +57,7 @@ public class RootLayoutController implements Initializable {
     @FXML
     private ComboBox<Object> comboQueueNum, comboSiteCondition;
     @FXML
-    private TreeView<String> treeViewSite;
+    private TreeView<ToStringWrapper> treeViewSite;
     @FXML
     private TitledPane infoTitledPane, changesTitledPane;
 
@@ -106,8 +105,9 @@ public class RootLayoutController implements Initializable {
         treeViewSite.setDisable(v);
     }
 
-    public void update_SelctedTreeViewItem(String value) {
-        treeViewSite.getSelectionModel().getSelectedItem().setValue(value);
+    public void update_SelectedTreeViewItem(String value) {
+        //TODO сделать обновление
+//        treeViewSite.getSelectionModel().getSelectedItem().setValue(value);
     }
 
 
@@ -142,6 +142,7 @@ public class RootLayoutController implements Initializable {
     private void init_siteTreeView() {
         treeViewSite.setRoot(rootService.getTreeViewList());
         treeViewSite.setCellFactory(new TVCellFactory());
+        treeViewSite.setShowRoot(false);
     }
 
     private void init_previewTable() {
@@ -221,23 +222,19 @@ public class RootLayoutController implements Initializable {
 
     @FXML
     private void handle_AccountFilter(ActionEvent event) {
-        StageCreator corFilterLayout
-                = new StageCreator(PathStrings.Layout.COR_FILTER, "Фильр / Выписка").loadNewWindow();
+        new StageCreator(PathStrings.Layout.COR_FILTER, "Фильр / Выписка").loadNewWindow();
 
     }
 
     @FXML
     private void handle_Log(ActionEvent event) {
-        StageCreator logLayout
-                = new StageCreator(PathStrings.Layout.LOG, "Log").loadNewWindow();
+        new StageCreator(PathStrings.Layout.LOG, "Log").loadNewWindow();
 
     }
 
     @FXML
     private void handle_CommonProperties(ActionEvent event) {
-        StageCreator allPropLayout
-                = new StageCreator(PathStrings.Layout.ALL_PROPERTIES, "Общие параметры").loadNewWindow();
-//        allPropLayout.<AllPropertiesController>getController().initData();
+        new StageCreator(PathStrings.Layout.ALL_PROPERTIES, "Общие параметры").loadNewWindow();
     }
 
     @FXML
@@ -249,7 +246,6 @@ public class RootLayoutController implements Initializable {
             selectedFile = FileChooserFactory.saveEst(EstimateController.Est.Base);
             if (selectedFile != null) {
                 rootService.printEstBase(selectedFile);
-//                new PrintEstimate(Est.Base.getAllItemsList_Live(), selectedFile.toPath());
                 LogController.appendLogViewText("Базовая смета сохранена в файл");
             }
         } else if ((EstimateController.Est.Changed.isExist()
@@ -257,7 +253,6 @@ public class RootLayoutController implements Initializable {
             selectedFile = FileChooserFactory.saveEst(EstimateController.Est.Changed);
             if (selectedFile != null) {
                 rootService.printEstChange(selectedFile);
-//                new PrintEstimate(Est.Changed.getAllItemsList_Live(), selectedFile.toPath());
                 LogController.appendLogViewText("Изменненная смета сохранена в файл");
             }
         } else {
@@ -303,7 +298,6 @@ public class RootLayoutController implements Initializable {
 
     @FXML
     private void handle_FinResButton(ActionEvent event) {
-//         StageCreator finResLayout  =
         new StageCreator(PathStrings.Layout.FIN_RES).loadIntoRootBorderPaneCenter();
     }
 
@@ -331,20 +325,20 @@ public class RootLayoutController implements Initializable {
     /*!******************************************************************************************************************
      *                                                                                                     Inner Classes
      ********************************************************************************************************************/
-    class TVCellFactory implements Callback<TreeView<String>, TreeCell<String>> {
+    class TVCellFactory implements Callback<TreeView<ToStringWrapper>, TreeCell<ToStringWrapper>> {
 
         @Override
-        public TreeCell<String> call(TreeView<String> param) {
-            TreeCell<String> cell = new TreeCell<String>() {
+        public TreeCell<ToStringWrapper> call(TreeView<ToStringWrapper> param) {
+            TreeCell<ToStringWrapper> cell = new TreeCell<ToStringWrapper>() {
 
                 @Override
-                protected void updateItem(String item, boolean empty) {
+                protected void updateItem(ToStringWrapper item, boolean empty) {
                     super.updateItem(item, empty);
 
                     if (empty) {
                         setText(null);
                     } else {
-                        setText(getItem() == null ? "" : getItem());
+                        setText(getItem() == null ? "" : getItem().toString());
                     }
                     setGraphic(null);
                 }
@@ -352,7 +346,6 @@ public class RootLayoutController implements Initializable {
             };
             final ContextMenu contextMenu = new ContextMenu();
 
-//            final MenuItem siteAddItem        = new MenuItem("Добавить участок")      {{ setDisable(true); }};
             final MenuItem siteEditItem = new MenuItem("Редактировать") {{
                 setDisable(true);
             }};
@@ -365,22 +358,9 @@ public class RootLayoutController implements Initializable {
             final MenuItem contDelItem = new MenuItem("Удалить") {{
                 setDisable(true);
             }};
-//            siteAddItem.setOnAction(new EventHandler<ActionEvent>() {
-//                @Override
-//                public void handle(ActionEvent event) {
-//                    StageCreator siteAddLayout
-//                            = new StageCreator(PathStrings.Layout.SITE_ADD, "Добавить Участок");
-//                    siteAddController = siteAddLayout.getController();
-//                    siteAddController.setRootController(getRootController());
-//
-//                    siteAddLayout.getStage().show();
-//                }
-//            });
             siteEditItem.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent event) {
-//                    previewTable.setEditable(true);
-//                    previewTable.setEditColor();
                     StageCreator expensesLayout
                             = new StageCreator(PathStrings.Layout.EXPENSES,
                             "Свойства Участка № "
@@ -392,7 +372,6 @@ public class RootLayoutController implements Initializable {
                     expensesController = expensesLayout.getController();
                     expensesController.setRootController(getRootController());
                     expensesController.setControllerStage(expensesLayout.getStage());
-//                    expensesController.setPreviewOBS(previewTableObs);
                     expensesLayout.getStage().setResizable(false);
 //                    expensesLayout.getStage().show();
                 }
@@ -403,11 +382,10 @@ public class RootLayoutController implements Initializable {
                     StageCreator contAddLayout
                             = new StageCreator(PathStrings.Layout.CONT_ADD, "Добавить Субподрядчика")
                             .loadNewWindow();
-                    contAddController = contAddLayout.getController();
-                    contAddController.setRootController(getRootController());
-                    contAddController.init_InfLabels(selectedTreeElemParent);
-                    contAddController.setTreeViewSite(treeViewSite);
-//                    contAddLayout.getStage().show();
+//                    contAddController = contAddLayout.getController();
+//                    contAddController.setRootController(getRootController());
+//                    contAddController.init_InfLabels(selectedTreeElemParent);
+//                    contAddController.setTreeViewSite(treeViewSite);
                 }
             });
             contDelItem.setOnAction(event -> {
@@ -434,10 +412,10 @@ public class RootLayoutController implements Initializable {
                     selectedTreeElemParent
                             = ((TreeView) cell.getTreeView()).getTreeItem(cell.getIndex()
                     ).getParent().getValue().toString();
-                    selectedTreeElem
-                            = ((TreeView) cell.getTreeView()).getTreeItem(cell.getIndex()
-                    ).getValue().toString();
-//                    siteAddItem  .setDisable(true);
+                    selectedTreeElem = ((CounterAgentToStringWrapper) cell.getTreeView().getTreeItem(cell.getIndex())
+                            .getValue())
+                            .getEntity()
+                            .getName();
                     siteEditItem.setDisable(false);
                     contAddItem.setDisable(false);
                     separator.setDisable(false);
@@ -446,7 +424,6 @@ public class RootLayoutController implements Initializable {
 
                     //Update Preview TableWrapper OBS-LIST
                     EstimateController.Est.Common.setSiteObs(new SiteDAO(selectedTreeElemParent, selectedTreeElem).getData());
-//                    update_previewTable(Est.Common.getPreviewObservableList());
                     previewTable.setItems(EstimateController.Est.Common.getPreviewObservableList());
 
                     //create Coefficient
@@ -459,15 +436,8 @@ public class RootLayoutController implements Initializable {
                             .getController();
                     showEstController.setRootController(getRootController());
 
-
-                    //Comput Coeffecient
-//                        Formula.coeffSetter().setObsList(previewTableObs).setCoefficient();
-//                    Formula_test.coefficient.computeCoef();
-
-
                 } else if (cell.getItem().equals("Участки №")
                         && !((TreeView) cell.getTreeView()).getTreeItem(cell.getIndex()).isLeaf()) {
-//                    siteAddItem  .setDisable(false);
                     siteEditItem.setDisable(true);
                     contAddItem.setDisable(true);
                     separator.setDisable(true);

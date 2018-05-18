@@ -7,6 +7,7 @@ import report.layout.controllers.estimate.EstimateController;
 import report.entities.items.site.SiteCommonDAO;
 import report.models.printer.PrintEstimate;
 import report.models.utils.ConcurrentUtils;
+import report.models.view.wrappers.toString.ToStringWrapper;
 import report.usage_strings.SQL;
 import report.usage_strings.ServiceStrings;
 
@@ -35,7 +36,7 @@ public class RootControllerService {
      *
      * @return TreeItem<String>
      */
-    public TreeItem<String> getTreeViewList() {
+    public TreeItem<ToStringWrapper> getTreeViewList() {
         return new SiteCommonDAO().getTreeObsList(
                 ServiceStrings.PERCENT.trim(),
                 ServiceStrings.PERCENT.trim(),
@@ -48,7 +49,7 @@ public class RootControllerService {
      *
      * @return TreeItem<String>
      */
-    public TreeItem<String> getTreeViewList(String Queue, String paymentStatus) {
+    public TreeItem<ToStringWrapper> getTreeViewList(String Queue, String paymentStatus) {
         return new SiteCommonDAO().getTreeObsList(Queue.trim(),
                 paymentStatus.trim(),
                 ServiceStrings.PERCENT.trim());
@@ -59,7 +60,7 @@ public class RootControllerService {
      *
      * @return TreeItem<String>
      */
-    public TreeItem<String> finTreeViewListWithOneElement(String siteNumber) {
+    public TreeItem<ToStringWrapper> finTreeViewListWithOneElement(String siteNumber) {
         return new SiteCommonDAO().getTreeObsList(ServiceStrings.PERCENT.trim(),
                 ServiceStrings.PERCENT.trim(),
                 siteNumber);

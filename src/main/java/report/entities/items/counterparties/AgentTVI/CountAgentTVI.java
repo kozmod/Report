@@ -173,7 +173,7 @@ public class CountAgentTVI implements Clone {
                 "id-type [" + this.getIdForm() + "]," +
                 "type [" + this.getForm() + "]," +
                 "id-form [" + this.getIdType() + "]," +
-                "form [" + this.getType() + "]"+
+                "form [" + this.getType() + "]" +
                 "id-count-const [" + this.getIdCountConst() + "]";
     }
 

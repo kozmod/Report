@@ -36,9 +36,9 @@ public class AddSiteController implements Initializable {
     private RootLayoutController rootController;
 
     @FXML
-    private ComboBox<String> queueComboBox, classComboBox,  typeHomeComboBox;
+    private ComboBox<String> queueComboBox, classComboBox, typeHomeComboBox;
     @FXML
-    private ComboBox<CounterAgentToStringWrapper>  contractorComboBox;
+    private ComboBox<CounterAgentToStringWrapper> contractorComboBox;
     @FXML
     private TextField siteNumTF, queueTF, planTF, factTF;
     @FXML

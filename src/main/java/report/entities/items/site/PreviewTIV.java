@@ -130,7 +130,7 @@ public class PreviewTIV implements Clone {
     /**
      * Extractor to observe changes in "Property" fields.
      *
-     * @return Callback<VariableTIV       ,               Observable       [       ]>
+     * @return Callback<VariableTIV               ,                               Observable               [               ]>
      */
     public static Callback<PreviewTIV, Observable[]> extractor() {
         return (PreviewTIV p) -> new Observable[]{p.getSecondProperty()};

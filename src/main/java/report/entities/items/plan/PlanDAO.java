@@ -61,7 +61,7 @@ public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
              PreparedStatement pstmt = connection.prepareStatement(sqlString)) {
             pstmt.execute();
 
-            try(ResultSet rs = pstmt.getResultSet()) {
+            try (ResultSet rs = pstmt.getResultSet()) {
                 while (rs.next()) {
                     PlanTIV item = new PlanTIV(
                             rs.getLong(SQL.Common.ID),

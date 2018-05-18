@@ -249,7 +249,7 @@ public class ExpensesController implements Initializable {
         CONTRACTOR.setValue(Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
         siteUndoButton.setDisable(true);
         siteSaveButton.setDisable(true);
-        rootController.update_SelctedTreeViewItem(
+        rootController.update_SelectedTreeViewItem(
                 Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR)
         );
 

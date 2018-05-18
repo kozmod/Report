@@ -18,7 +18,7 @@ public class AddSiteControllerService {
         final CommonNamedDAO<Collection<CountAgentTVI>> dao = new CounterAgentDAO();
         final ObservableList<CounterAgentToStringWrapper> newList = FXCollections.observableArrayList();
         for (CountAgentTVI item : dao.getData()) {
-            if(Objects.equals(item.getIdType(), CONTRACTOR_TYPE)){
+            if (Objects.equals(item.getIdType(), CONTRACTOR_TYPE)) {
                 newList.add(new CounterAgentToStringWrapper(item));
             }
         }

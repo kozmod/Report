@@ -327,7 +327,7 @@ public class AllPropertiesController implements Initializable {
             case "+":
                 if (countAgentTableWrapper.tableView().isEditable()) {
                     addResult = countAgentTableWrapper.getItems().add(
-                            new CountAgentTVI(-1, "-", 0, "-", 0, "-",-1)
+                            new CountAgentTVI(-1, "-", 0, "-", 0, "-", -1)
                                     .setNewStatus(true)
                     );
                 }

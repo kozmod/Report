@@ -2,7 +2,7 @@ package report.models.view.wrappers.toString;
 
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 
-public final  class CounterAgentToStringWrapper implements ToStringWrapper<CountAgentTVI> {
+public final class CounterAgentToStringWrapper implements ToStringWrapper<CountAgentTVI> {
     private final CountAgentTVI countAgent;
 
     public CounterAgentToStringWrapper(CountAgentTVI countAgent) {

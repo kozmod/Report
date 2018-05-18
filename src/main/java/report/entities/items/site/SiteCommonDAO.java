@@ -7,6 +7,10 @@ package report.entities.items.site;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
+import report.models.view.wrappers.toString.CounterAgentToStringWrapper;
+import report.models.view.wrappers.toString.SiteToStringWrapper;
+import report.models.view.wrappers.toString.ToStringWrapper;
 import report.usage_strings.SQL;
 
 import java.sql.Connection;
@@ -32,18 +36,80 @@ public class SiteCommonDAO {
      *
      * @return
      */
-    public TreeItem<String> getTreeObsList(String queueValue, String payment, String siteNumber) {    //DATA for TREEVIEW
+//    public TreeItem<String> getTreeObsList(String queueValue, String payment, String siteNumber) {    //DATA for TREEVIEW
+//
+//        long lBegin = System.currentTimeMillis();
+//
+//        ArrayList<PreviewTIV> siteList = new ArrayList<>();
+//
+//        String psmtmtString = "SELECT [id],[SiteNumber], [Contractor],[id_Count]  FROM dbo.[Site] "
+//                + "WHERE [StatusPayment] LIKE ? "
+//                + "AND [QueueBuilding] LIKE ? "
+//                + "AND [SiteNumber] LIKE ? "
+//                + "AND [dell] = 0 "                                           //dell 0 - false / 1 - true
+//                + "ORDER BY [SiteNumber]";
+//        try (Connection connection = SqlConnector.getInstance();
+//             PreparedStatement pstmt = connection.prepareStatement(psmtmtString)) {
+//            pstmt.setString(1, payment);
+//            pstmt.setString(2, queueValue);
+//            pstmt.setString(3, siteNumber);
+//
+//            ResultSet rs = pstmt.executeQuery();
+//
+//            while (rs.next()) {
+//                siteList.add(new PreviewTIV(
+//                        rs.getLong(SQL.Common.ID),
+//                        "",
+//                        rs.getObject(SQL.Common.SITE_NUMBER).toString(),
+//                        rs.getObject(SQL.Common.CONTRACTOR).toString()));
+//
+//            }
+//        } catch (SQLException ex) {
+//            System.err.println("report.models.treeViewModel.getSiteData()");
+//            Logger.getLogger(SiteCommonDAO.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//
+//
+//        TreeItem<String> rootNode = new TreeItem<>("Участки №");
+//
+//        rootNode.setExpanded(true);
+//        for (PreviewTIV site : siteList) {
+//            TreeItem<String> ContratorLeaf = new TreeItem<>(site.getSecondValue().toString());
+//            boolean found = false;
+//            for (TreeItem<String> siteNode : rootNode.getChildren()) {
+//                if (siteNode.getValue().contentEquals(site.getFirstValue())) {
+//                    siteNode.getChildren().add(ContratorLeaf);
+//                    found = true;
+//                    break;
+//                }
+//            }
+//            if (!found) {
+//                TreeItem<String> siteNode = new TreeItem<>(site.getFirstValue());
+//                rootNode.getChildren().add(siteNode);
+//                siteNode.getChildren().add(ContratorLeaf);
+//            }
+//        }
+//
+//        long lEnd = System.currentTimeMillis();
+//        System.out.println(lEnd - lBegin);
+//
+//        return rootNode;
+//    }
+    //TODO: FIX SQL Query
+    public TreeItem<ToStringWrapper> getTreeObsList(String queueValue, String payment, String siteNumber) {
 
-        long lBegin = System.currentTimeMillis();
+        TreeItem<ToStringWrapper> rootTreeViewItem = null;
 
-        ArrayList<PreviewTIV> siteList = new ArrayList<>();
+        String psmtmtString =
+                "  SELECT  CIC.*, S.SiteNumber, S.QueueBuilding,S.StatusPayment " +
+                        "  FROM [dbo].[vCOMPANY_IDEAL_COR] CIC " +
+                        "  INNER JOIN [dbo].[Site] S ON CIC.ID_Count_Const = S.id_Count " +
+                        "  WHERE [dell] = 0 " +
+                        "  AND [StatusPayment] LIKE ? " +
+                        "  AND [QueueBuilding] LIKE ? " +
+                        "  AND [SiteNumber] LIKE ? " +
+                        "  ORDER BY [SiteNumber] ";
 
-        String psmtmtString = "SELECT [id],[SiteNumber], [Contractor],[id_Count]  FROM dbo.[Site] "
-                + "WHERE [StatusPayment] LIKE ? "
-                + "AND [QueueBuilding] LIKE ? "
-                + "AND [SiteNumber] LIKE ? "
-                + "AND [dell] = 0 "                                           //dell 0 - false / 1 - true
-                + "ORDER BY [SiteNumber]";
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement(psmtmtString)) {
             pstmt.setString(1, payment);
@@ -52,44 +118,12 @@ public class SiteCommonDAO {
 
             ResultSet rs = pstmt.executeQuery();
 
-            while (rs.next()) {
-                siteList.add(new PreviewTIV(
-                        rs.getLong(SQL.Common.ID),
-                        "",
-                        rs.getObject(SQL.Common.SITE_NUMBER).toString(),
-                        rs.getObject(SQL.Common.CONTRACTOR).toString()));
-
-            }
+            rootTreeViewItem = prepareRootTreeViewItem(rs);
         } catch (SQLException ex) {
             System.err.println("report.models.treeViewModel.getSiteData()");
             Logger.getLogger(SiteCommonDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-
-        TreeItem<String> rootNode = new TreeItem<>("Участки №");
-
-        rootNode.setExpanded(true);
-        for (PreviewTIV site : siteList) {
-            TreeItem<String> ContratorLeaf = new TreeItem<>(site.getSecondValue().toString());
-            boolean found = false;
-            for (TreeItem<String> siteNode : rootNode.getChildren()) {
-                if (siteNode.getValue().contentEquals(site.getFirstValue())) {
-                    siteNode.getChildren().add(ContratorLeaf);
-                    found = true;
-                    break;
-                }
-            }
-            if (!found) {
-                TreeItem<String> siteNode = new TreeItem<>(site.getFirstValue());
-                rootNode.getChildren().add(siteNode);
-                siteNode.getChildren().add(ContratorLeaf);
-            }
-        }
-
-        long lEnd = System.currentTimeMillis();
-        System.out.println(lEnd - lBegin);
-
-        return rootNode;
+        return rootTreeViewItem;
     }
 
     /**
@@ -205,7 +239,7 @@ public class SiteCommonDAO {
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement prst = connection.prepareStatement(ResultSetString)) {
 
-            try(ResultSet rs = prst.executeQuery()) {
+            try (ResultSet rs = prst.executeQuery()) {
                 if (rs.next()) {
                     list.addAll(
                             //0
@@ -226,6 +260,48 @@ public class SiteCommonDAO {
 
 
         return list;
+    }
+
+    private TreeItem<ToStringWrapper> prepareRootTreeViewItem(ResultSet rs) throws SQLException {
+        TreeItem<ToStringWrapper> root = new TreeItem<>(
+                new SiteToStringWrapper("-")
+        );
+        root.setExpanded(true);
+
+        while (rs.next()) {
+            final String siteNumber = rs.getString("SiteNumber");
+
+            TreeItem<ToStringWrapper> ContractorLeaf = new TreeItem<>(
+                    new CounterAgentToStringWrapper(
+                            new CountAgentTVI(
+                                    rs.getInt("ID_COUNT"),
+                                    rs.getString("Name_Count"),
+                                    rs.getInt("ID_FORM"),
+                                    rs.getString("Name_Form"),
+                                    rs.getInt("ID_Type_Const"),
+                                    rs.getString("Name_Type"),
+                                    rs.getInt("ID_Count_Const")
+                            )
+                    )
+            );
+
+            boolean found = false;
+            for (TreeItem<ToStringWrapper> siteNode : root.getChildren()) {
+
+                if (siteNode.getValue().getEntity().equals(siteNumber)) {
+                    siteNode.getChildren().add(ContractorLeaf);
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
+                TreeItem<ToStringWrapper> siteNode = new TreeItem<>(new SiteToStringWrapper(siteNumber));
+                root.getChildren().add(siteNode);
+                siteNode.getChildren().add(ContractorLeaf);
+            }
+
+        }
+        return root;
     }
 
 }
