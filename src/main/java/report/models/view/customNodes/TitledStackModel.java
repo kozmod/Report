@@ -99,7 +99,7 @@ public class TitledStackModel extends StackPane {
 
 
     public void updateTableItems() {
-        tableViewWrapper.updateTableFromBASE(new EstimateDAO().getOneBildingPartList(enumEst, title));
+        tableViewWrapper.updateTableFromBASE(new EstimateDAO().getOneBuildingPartList(enumEst, title));
     }
 
 

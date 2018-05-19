@@ -309,7 +309,6 @@ public class ExpensesController implements Initializable {
         if (Est.Changed.isExist()) {
             new FormulaQuery().applyCoefficient(
                     Est.Changed.getSiteSecondValue(SQL.Common.SITE_NUMBER),
-                    Est.Changed.getSiteSecondValue(SQL.Common.CONTRACTOR),
                     COEFFICIENT.getValue());
         }
         if (Est.Changed.isExist()) {

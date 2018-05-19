@@ -3,7 +3,9 @@ package report.entities.items.estimate;
 
 import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.Item;
+import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.layout.controllers.LogController;
+import report.layout.controllers.estimate.EstimateController;
 import report.models.sql.SqlConnector;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
@@ -60,7 +62,6 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                 + "E.[id]"
                 + ",E.[SiteNumber]"
                 + ",E.[TypeHome] "
-                + ",E.[Contractor] "
                 + ",E.[JM_name] "
                 + ",E.[JobsOrMaterials] "
                 + ",E.[BindedJob]"
@@ -70,13 +71,15 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                 + ",E.[Price_sum]"
                 + ",E.[BuildingPart]"
                 + ",E.[TableType]"
+                + ",E.[id_count_const]"
                 + ",E.[DateCreate]"
                 + ",E.[dell]"
                 + ",(CASE  "
                 + "WHEN EXISTS "
                 + "(SELECT *  From dbo.[KS] KS "
                 + "WHERE KS.[SiteNumber] = E.[SiteNumber] "
-                + "AND KS .[Contractor] = E.[Contractor] "
+//                + "AND KS .[Contractor] = E.[Contractor] "
+                + "AND KS .[id_count_const] = E.[id_count_const] "
                 + "AND KS .[TypeHome] = E.[TypeHome] "
                 + "AND KS .[JM_name] = E.[JM_name] "
                 + "AND KS .[JobsOrMaterials] = E.[JobsOrMaterials] "
@@ -90,14 +93,16 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                 + ") AS 'Exist' "
                 + "FROM   dbo.[Estimate] E "
                 + "WHERE E.[SiteNumber] = ? "
-                + "AND E.[Contractor] = ? "
+                + "AND E.[id_count_const] = ? "
                 + "AND E.[TableType] = ? ";
 //                                            + "AND E.[dell] = 0 ";
 
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement prst = connection.prepareStatement(sql)) {
+
+            CountAgentTVI contractor = EstimateController.Est.Common.getCountAgentTVI();
             prst.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
-            prst.setString(2, enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR));
+            prst.setInt(2, contractor.getIdCountConst());
             prst.setInt(3, enumEst.getTaleType());
 
             ResultSet rs = prst.executeQuery();
@@ -108,7 +113,8 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                         rs.getTimestamp(SQL.Common.DATE_CREATE),
                         rs.getObject(SQL.Common.SITE_NUMBER).toString(),
                         rs.getObject(SQL.Common.TYPE_HOME).toString(),
-                        rs.getObject(SQL.Common.CONTRACTOR).toString(),
+//                        rs.getObject(SQL.Common.CONTRACTOR).toString(),
+                        contractor.toString(),
                         rs.getObject(SQL.Estimate.JM_NAME).toString(),
                         rs.getObject(SQL.Estimate.JOB_MATERIAL).toString(),
                         rs.getObject(SQL.Estimate.BINDED_JOB).toString(),
@@ -197,7 +203,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
      * @param title   (String)
      * @return List of Item
      */
-    public ObservableList<EstimateTVI> getOneBildingPartList(Est enumEst, String title) {
+    public ObservableList<EstimateTVI> getOneBuildingPartList(Est enumEst, String title) {
 
         ObservableList<EstimateTVI> listEstAll = FXCollections.observableArrayList();
 
@@ -208,7 +214,8 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                 + "WHEN EXISTS "
                 + "(SELECT *  From dbo.[KS] KS "
                 + "WHERE KS.[SiteNumber] = E.[SiteNumber] "
-                + "AND KS .[Contractor] = E.[Contractor] "
+//                + "AND KS .[Contractor] = E.[Contractor] "
+                + "AND KS .[id_count_const] = E.[id_count_const] "
                 + "AND KS .[TypeHome] = E.[TypeHome] "
                 + "AND KS .[JM_name] = E.[JM_name] "
                 + "AND KS .[JobsOrMaterials] = E.[JobsOrMaterials] "
@@ -222,15 +229,18 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                 + ") AS 'Exist' "
                 + "FROM   dbo.[Estimate] E "
                 + "WHERE E.[SiteNumber] = ? "
-                + "AND   E.[Contractor] = ? "
+//                + "AND   E.[Contractor] = ? "
+                + "AND   E.[id_count_const] = ? "
                 + "AND E.[BuildingPart] = ? "
                 + "AND E.[TableType] = ? "
                 + "AND E.[dell] = 0 ";
 
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement prst = connection.prepareStatement(ResultSetString)) {
+
+            CountAgentTVI contractor = EstimateController.Est.Common.getCountAgentTVI();
             prst.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
-            prst.setString(2, enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR));
+            prst.setInt(2, contractor.getIdCountConst());
             prst.setString(3, title);
             prst.setInt(4, enumEst.getTaleType());
 
@@ -243,7 +253,8 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                         rs.getTimestamp(SQL.Common.DATE_CREATE),
                         rs.getObject(SQL.Common.SITE_NUMBER).toString(),
                         rs.getObject(SQL.Common.TYPE_HOME).toString(),
-                        rs.getObject(SQL.Common.CONTRACTOR).toString(),
+//                        rs.getObject(SQL.Common.CONTRACTOR).toString(),
+                        rs.getObject("id_count_const").toString(),
                         rs.getObject(SQL.Estimate.JM_NAME).toString(),
                         rs.getObject(SQL.Estimate.JOB_MATERIAL).toString(),
                         rs.getObject(SQL.Estimate.BINDED_JOB).toString(),
@@ -357,7 +368,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                 + "("
                 + "[SiteNumber]"
                 + ",[TypeHome] "
-                + ",[Contractor] "
+                + ",[id_count_const] "
                 + ",[JM_name] "
                 + ",[JobsOrMaterials] "
                 + ",[BindedJob]"
@@ -375,9 +386,10 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
             for (Item obsItem : items) {
+                CountAgentTVI contractor = EstimateController.Est.Common.getCountAgentTVI();
                 pstmt.setString(1, obsItem.getSiteNumber());
                 pstmt.setString(2, obsItem.getTypeHome());
-                pstmt.setString(3, obsItem.getContractor());
+                pstmt.setInt(3, contractor.getIdCountConst());
                 pstmt.setString(4, obsItem.getJM_name());
                 pstmt.setString(5, obsItem.getJobOrMat());
                 pstmt.setString(6, obsItem.getBindJob());
@@ -417,24 +429,30 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                 "DECLARE "
                         + " @coefficient as float"
                         + ",@SiteNumber  as varchar(100)"
-                        + ",@Contractor  as varchar(100)"
+//                        + ",@Contractor  as varchar(100)"
+                        + ",@id_count_const  as int "
                         + ",@TypeHome    as varchar(100)"
                         + ",@TableType   as int"
                         + ",@SiteNumberFrom as varchar(100) "
-                        + ",@ContractorFrom as varchar(100) "
+//                        + ",@ContractorFrom as varchar(100) "
+                        + ",@id_count_const_FROM as int "
                         + ",@TableTypeFrom  as int "
                         + "SET @SiteNumber  = ? "       //1
-                        + "SET @Contractor  = ? "       //2
+                        + "SET @id_count_const  = ? "   //2
                         + "SET @TypeHome    = ? "       //3
                         + "SET @TableType   = ? "       //4
-                        + "SET @coefficient = (SELECT top 1 K FROM dbo.[Site] WHERE [SiteNumber] = @SiteNumber AND [Contractor] = @Contractor AND [dell] = 0 ) "
+//                        + "SET @coefficient = (SELECT top 1 K FROM dbo.[Site_new] WHERE [SiteNumber] = @SiteNumber AND [Contractor] = @Contractor AND [dell] = 0 ) "
+                        + "SET @coefficient = (CASE WHEN @TableType = 1 THEN 1 "
+                        + " WHEN @TableType = 2 THEN (SELECT top 1 K FROM dbo.[Site_new] WHERE [SiteNumber] = @SiteNumber AND [id_Count] = @id_count_const AND [dell] = 0) END) "
                         + "SET @SiteNumberFrom = (CASE WHEN @TableType = 1 THEN '0' WHEN @TableType = 2 then @SiteNumber END) "
-                        + "SET @ContractorFrom = (CASE WHEN @TableType = 1 THEN '0' WHEN @TableType = 2 then @Contractor END) "
+//                        + "SET @ContractorFrom = (CASE WHEN @TableType = 1 THEN '0' WHEN @TableType = 2 then @Contractor END) "
+                        + "SET @id_count_const_FROM = (CASE WHEN @TableType = 1 THEN -1 WHEN @TableType = 2 then @id_count_const END) "
                         + "SET @TableTypeFrom  = (CASE WHEN @TableType = 1 THEN  0  WHEN @TableType = 2 then 1           END) "
                         + "INSERT into dbo.[Estimate] ("
                         + " [SiteNumber]"
                         + ",[TypeHome]"
-                        + ",[Contractor]"
+//                        + ",[Contractor]"
+                        + ",[id_count_const]"
                         + ",[JM_name]"
                         + ",[JobsOrMaterials]"
                         + ",[BindedJob]"
@@ -450,17 +468,14 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                         + " SELECT "
                         + " @SiteNumber"
                         + ",E.[TypeHome]"
-                        + ",@Contractor "
+//                        + ",@Contractor "
+                        + ",@id_count_const "
                         + ",E.[JM_name]"
                         + ",E.[JobsOrMaterials]"
                         + ",E.[BindedJob]"
                         + ",E.[Unit]"
                         + ",E.[Value]"
                         + ",E.[Price_one]*isNULL(@coefficient, 1) "
-//                                            + ",E.[Price_one]*(CASE "
-//								+ "WHEN @coefficient is NULL  THEN 1 "
-//								+ "ELSE @coefficient "
-//								+ "END ) "
                         + ",E.[BuildingPart]"
                         + ",@TableType "
                         + ",E.[NumberSession]"
@@ -468,7 +483,8 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                         + ",E.[DateCreate] "
                         + "FROM  [Estimate] E "
                         + "WHERE E.[SiteNumber] = @SiteNumberFrom "
-                        + "And   E.[Contractor] = @ContractorFrom "
+//                        + "And   E.[Contractor] = @ContractorFrom "
+                        + "And   E.[id_count_const] = @id_count_const_FROM "
                         + "And   E.[TableType]  = @TableTypeFrom "
                         + "And   E.[TypeHome]   = @TypeHome "
                         + "And   E.[dell] = 0 ";
@@ -476,35 +492,15 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
 
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement(pstString);) {
-            //1: coefficient / 5: from - SiteNumber / 6: from - Contractor / 7: from - TableType
-//            if(enumEst == Est.Base){
-//                pstmt.setFloat  (1,  1);
-//                pstmt.setString (5, "0");
-//                pstmt.setString (6, "0"); 
-//                pstmt.setInt    (7,  0); 
-//            } else
-//            if(enumEst == Est.Changed){
-//                pstmt.setDouble  (1, Formula.getQuantity());
-////                pstmt.setFloat  (1, coefficient.getQuantity());
-//                pstmt.setString (5, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
-//                pstmt.setString (6, enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR));
-//                pstmt.setInt    (7, 1); 
-//            }
-//             //2: SiteNumber / 3: Contractor / 4: TableType / 8: TypeHome
-//                pstmt.setString (2, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
-//                pstmt.setString (3, enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR));
-//                pstmt.setInt    (4, enumEst.getTaleType());                                                       
-//                pstmt.setString (8, enumEst.getSiteSecondValue(SQL.Common.TYPE_HOME));
 
-
+            CountAgentTVI contractor = EstimateController.Est.Common.getCountAgentTVI();
             pstmt.setString(1, enumEst.getSiteSecondValue(SQL.Estimate.SITE_NUMBER));
-            pstmt.setString(2, enumEst.getSiteSecondValue(SQL.Estimate.CONTRACTOR));
+            pstmt.setInt(2, contractor.getIdCountConst());
             pstmt.setString(3, enumEst.getSiteSecondValue(SQL.Estimate.TYPE_HOME));
             pstmt.setInt(4, enumEst.getTaleType());
 
 
             pstmt.execute();
-//            System.out.println("OEF INSERRT " + coefficient.getQuantity());
         } catch (SQLException ex) {
             Logger.getLogger(EstimateDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -568,7 +564,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
 //           || diffList.newElements().size()  > 0) insert(diffList.newElements());     
         CommonNamedDAO.super.dellAndInsert(memento);
         //?????????????
-//        table.updateTableFromSQL(this.getOneBildingPartList(Est.Base, table.getTitle()));
+//        table.updateTableFromSQL(this.getOneBuildingPartList(Est.Base, table.getTitle()));
         Est.Base.updateList_DL(this);
     }
 //       @Override
@@ -583,7 +579,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
 ////           || diffList.newElements().size()  > 0) insert(diffList.newElements());
 //        TableViewItemDAO.super.dellAndInsert(table);
 //       //?????????????
-////        table.updateTableFromSQL(this.getOneBildingPartList(Est.Base, table.getTitle()));
+////        table.updateTableFromSQL(this.getOneBuildingPartList(Est.Base, table.getTitle()));
 //        Est.Base.updateList_DL(this);
 //       }
 

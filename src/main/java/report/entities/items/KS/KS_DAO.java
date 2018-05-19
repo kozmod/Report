@@ -4,6 +4,8 @@ package report.entities.items.KS;
 
 import report.entities.abstraction.CommonNamedDAO;
 import report.entities.items.Item;
+import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
+import report.layout.controllers.estimate.EstimateController;
 import report.models.sql.SqlConnector;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
@@ -65,7 +67,7 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
                 + ",[KS_Date]"
                 + ",[SiteNumber]"
                 + ",[TypeHome]"
-                + ",[Contractor]"
+//                + ",[Contractor]"
                 + ",[JM_name]"
                 + ",[JobsOrMaterials]"
                 + ",[BindedJob]"
@@ -78,14 +80,16 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
                 + ",[dell]"
                 + "From dbo.[KS]"
                 + "Where [SiteNumber] = ? "
-                + "And [Contractor] = ? ";
+                + "And [id_count_const] = ? ";
 //                + "And [dell] = 0 ";
 
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {
 
+
+            CountAgentTVI contractor = EstimateController.Est.Common.getCountAgentTVI();
             pstmt.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
-            pstmt.setString(2, enumEst.getSiteSecondValue(SQL.Common.CONTRACTOR));
+            pstmt.setInt(2, contractor.getIdCountConst());
             pstmt.execute();
 
             ResultSet rs = pstmt.getResultSet();
@@ -99,7 +103,7 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
                         rs.getInt(SQL.KS.DATE),
                         rs.getObject(SQL.Common.SITE_NUMBER).toString(),
                         rs.getObject(SQL.Common.TYPE_HOME).toString(),
-                        rs.getObject(SQL.Common.CONTRACTOR).toString(),
+                        contractor.toString(),
                         rs.getObject(SQL.Estimate.JM_NAME).toString(),
                         rs.getObject(SQL.Estimate.JOB_MATERIAL).toString(),
                         rs.getObject(SQL.Estimate.BINDED_JOB).toString(),
@@ -347,7 +351,8 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
                 + ",[KS_Date]"
                 + ",[SiteNumber]"
                 + ",[TypeHome]"
-                + ",[Contractor]"
+//                + ",[Contractor]"
+                + ",[id_count_const]"
                 + ",[JM_name]"
                 + ",[JobsOrMaterials]"
                 + ",[BindedJob]"
@@ -364,7 +369,8 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
                 + ",?"
                 + ",E.[SiteNumber]"
                 + ",E.[TypeHome]"
-                + ",E.[Contractor]"
+//                + ",E.[Contractor]"
+                + ",E.[id_count_const]"
                 + ",E.[JM_name]"
                 + ",E.[JobsOrMaterials]"
                 + ",E.[BindedJob]"
@@ -377,7 +383,8 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
                 + ",E.[DateCreate] "
                 + "FROM  [Estimate] E "
                 + "WHERE E.[SiteNumber] = ? "
-                + "And   E.[Contractor] = ? "
+//                + "And   E.[Contractor] = ? "
+                + "And   E.[id_count_const] = ? "
                 + "And   E.[JM_name]    = ? "
                 + "And   E.[BindedJob]  = ? "
                 + "And   E.[TableType]  = 2 "
@@ -387,10 +394,12 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
              PreparedStatement pstmt = connection.prepareStatement(pstString);) {
             for (Item item : listKS) {
 
+                CountAgentTVI contractor = EstimateController.Est.Common.getCountAgentTVI();
                 pstmt.setInt(1, ks_Number);
-                pstmt.setInt(2, (int) (Math.round(ks_Date * 100) / 100));
+                pstmt.setInt(2,  (Math.round(ks_Date * 100) / 100));
                 pstmt.setString(3, item.getSiteNumber());
-                pstmt.setString(4, item.getContractor());
+//                pstmt.setString(4, item.getContractor());
+                pstmt.setInt(4, contractor.getIdCountConst());
                 pstmt.setString(5, item.getJM_name());    //JM_Name
                 pstmt.setString(6, item.getBindJob()); //bindJob
 

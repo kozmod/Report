@@ -8,7 +8,9 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.variable.VariableTIV_new;
+import report.layout.controllers.estimate.EstimateController;
 import report.layout.controllers.estimate.EstimateController.Est;
 import report.models.sql.SqlConnector;
 import report.usage_strings.SQL;
@@ -87,13 +89,14 @@ public class FormulaQuery {
         return q;
     }
 
-    public void applyCoefficient(String siteNumber, String contractor, double coefficient) {
+    public void applyCoefficient(String siteNumber, double coefficient) {
 
+        CountAgentTVI contractor = EstimateController.Est.Common.getCountAgentTVI();
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt
                      = connection.prepareStatement("execute ComputeK ?,?,? ");) {
             pstmt.setString(1, siteNumber);
-            pstmt.setString(2, contractor);
+            pstmt.setInt(2, contractor.getIdCountConst());
             pstmt.setDouble(3, coefficient);
             pstmt.execute();
 
