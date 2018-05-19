@@ -116,6 +116,7 @@ public class SiteCommonDAO {
             pstmt.setString(2, queueValue);
             pstmt.setString(3, siteNumber);
 
+
             ResultSet rs = pstmt.executeQuery();
 
             rootTreeViewItem = prepareRootTreeViewItem(rs);
@@ -160,7 +161,7 @@ public class SiteCommonDAO {
                 //NContract/DateContract/SmetCost/SumCost/FinishBilding
                 + " '', ?,'','', ? ,'','','','',"
                 //StatusJobs/SaleHouse/incom/overheads/taxes
-                + "'не начат',0.0,(SELECT P.[TypeID] FROM [FinPlan] P WHERE P.[TypeName] = ? ))";
+                + "'не начат',0.0,(SELECT P.[TypeID] FROM [FinPlan] P WHERE P.[TypeName] = ? AND dell = 0))";
 //                               .
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {

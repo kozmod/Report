@@ -32,6 +32,7 @@ import javafx.util.Duration;
 import report.entities.abstraction.CommonDAO;
 import report.entities.items.Item;
 import report.entities.items.KS.KS_TIV;
+import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.estimate.EstimateDAO;
 import report.entities.items.estimate.EstimateTVI;
 import report.entities.items.site.PreviewTIV;
@@ -131,7 +132,6 @@ public class EstimateController implements Initializable {
 
         public ObservableList getAllItemsList_Live() {
             Collection<List> tempCollection = this.getTabMap().values();
-//            return (List) tempCollection.stream().flatMap(p -> p.stream()).collect(Collectors.toList());
             return tempCollection.stream().flatMap(Collection::stream).collect(Collector.of(
                     FXCollections::observableArrayList,
                     ObservableList::add,
@@ -248,11 +248,21 @@ public class EstimateController implements Initializable {
                     .flatMap(mapItem -> ((List) mapItem).stream())
                     .filter(item -> ((Item) item).equalsSuperClass(inpItem))
                     .findFirst().orElse(null);
-//                   .get();
         }
 
         //enum VAR ---------------------------------------------------------------------------
 
+
+        public CountAgentTVI getCountAgentTVI() {
+            return countAgentTVI;
+        }
+
+        public void setCountAgentTVI(CountAgentTVI countAgentTVI) {
+            this.countAgentTVI = countAgentTVI;
+        }
+
+        //TODO: сюда записываем CountAgentTVI  для последующего забра
+        private CountAgentTVI countAgentTVI;
         private int taleType;
         private Map<Object, ObservableList<Item>> tabMap;
         private TabModel tab;

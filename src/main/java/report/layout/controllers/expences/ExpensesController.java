@@ -318,7 +318,7 @@ public class ExpensesController implements Initializable {
 
         }
 
-        new SiteDAO().dellAndInsert((Collection<PreviewTIV>) siteTWrapper);
+        new SiteDAO().dellAndInsert( siteTWrapper.getItems());
         siteTWrapper.saveMemento();
         siteTWrapper.refresh();
 

@@ -23,17 +23,18 @@ import report.layout.controllers.estimate.EstimateController.Est;
 
 public class SiteDAO implements CommonNamedDAO<Collection<PreviewTIV>> {
 
-    private String siteNumber, contractor;
+    private String siteNumber;
+    private int contractorId;
 
-    public SiteDAO(String siteNumber, String contractor) {
+    public SiteDAO(String siteNumber, int contractorId) {
         this.siteNumber = siteNumber;
-        this.contractor = contractor;
+        this.contractorId = contractorId;
     }
 
     public SiteDAO() {
         if (Est.Common.isExist()) {
             this.siteNumber = Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER);
-            this.contractor = Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR);
+            this.contractorId = Est.Common.getCountAgentTVI().getIdCountConst();
         }
     }
 
@@ -71,13 +72,13 @@ public class SiteDAO implements CommonNamedDAO<Collection<PreviewTIV>> {
                 + "FROM dbo.[Site] S "
                 + "LEFT JOIN FinPlan T ON T.TypeID = S.SiteTypeID "
                 + "WHERE S.[SiteNumber] = ? "
-                + "AND   S.[Contractor] = ? "
+                + "AND   S.[id_Count] = ? "
                 + "AND   S.[dell] = 0";
 
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement prst = connection.prepareStatement(ResultSetString)) {
             prst.setString(1, siteNumber);
-            prst.setString(2, contractor);
+            prst.setInt(2, contractorId);
 
             ResultSet rs = prst.executeQuery();
             if (rs.next()) {
@@ -170,16 +171,20 @@ public class SiteDAO implements CommonNamedDAO<Collection<PreviewTIV>> {
     @Override
     public void insert(Collection<PreviewTIV> items) {
         //Build INSERT SQL String
-        StringBuffer stringInsert = new StringBuffer("insert into [dbo].[Site_new]( ");
-        StringBuffer stringValues = new StringBuffer(" VALUES(");
+        StringBuilder stringInsert = new StringBuilder("insert into [dbo].[Site_new]( ");
+        StringBuilder stringValues = new StringBuilder(" VALUES(");
         String prefix = "";
         for (PreviewTIV item : items) {
             if (!item.getSqlColumn().equals(SQL.Site.TAXES_ALL)) {
                 stringInsert.append(prefix + "[" + item.getSqlColumn() + "]");
-                if (!item.getSqlColumn().equals(SQL.Site.SITE_TYPE_ID))
-                    stringValues.append(prefix + "?");
-                else
+                if (item.getSqlColumn().equals(SQL.Site.SITE_TYPE_ID)) {
                     stringValues.append(prefix + "(SELECT P.[TypeID] from [FinPlan] P WHERE P.[TypeName] = ? )");
+                }else if(item.getSqlColumn().equals(SQL.Site.CONTRACTOR)) {
+                    int countractorId = Est.Common.getCountAgentTVI().getIdCountConst();
+                    stringValues.append(prefix + String.valueOf(countractorId) );
+                }else{
+                    stringValues.append(prefix + "?");
+                }
                 prefix = ",";
             }
         }
@@ -189,9 +194,8 @@ public class SiteDAO implements CommonNamedDAO<Collection<PreviewTIV>> {
         stringInsert.append(stringValues);
 
         System.err.println(stringInsert.toString());
-
         try (Connection connection = SqlConnector.getInstance();
-             PreparedStatement pstmt = connection.prepareStatement(stringInsert.toString(),
+             PreparedStatement pstmt = connection.prepareStatement(stringInsert.toString().replace(SQL.Site.CONTRACTOR,SQL.Site.CONTRACTOR_ID),  //TODO: поправить при рефакторинге
                      Statement.RETURN_GENERATED_KEYS);) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
@@ -199,7 +203,8 @@ public class SiteDAO implements CommonNamedDAO<Collection<PreviewTIV>> {
             //Add data to Prepare Statement
             int i = 1;
             for (PreviewTIV obsItem : items) {
-                if (!obsItem.getSqlColumn().equals(SQL.Site.TAXES_ALL)) {
+                if (!obsItem.getSqlColumn().equals(SQL.Site.TAXES_ALL)
+                        && (!obsItem.getSqlColumn().equals(SQL.Site.CONTRACTOR))) {
                     pstmt.setObject(i, obsItem.getSecondValue());
                     i++;
                 }

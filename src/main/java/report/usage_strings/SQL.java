@@ -37,6 +37,7 @@ public interface SQL extends ServiceStrings {
         String SITE_NUMBER = "SiteNumber";
         String TYPE_HOME = "TypeHome";
         String CONTRACTOR = "Contractor";
+        String CONTRACTOR_ID = "id_Count";
 
         String TEXT = "Text";
         String TYPE = "Type";
@@ -52,6 +53,7 @@ public interface SQL extends ServiceStrings {
         String SITE_NUMBER = Common.SITE_NUMBER;
         String TYPE_HOME = Common.TYPE_HOME;
         String CONTRACTOR = Common.CONTRACTOR;
+        String CONTRACTOR_ID = Common.CONTRACTOR_ID;
         String DATE_CONTRACT = "DateContract";
         String FINISH_BUILDING = "FinishBuilding";
         String STATUS_JOBS = "StatusJobs";

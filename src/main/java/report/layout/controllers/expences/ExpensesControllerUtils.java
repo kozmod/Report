@@ -7,6 +7,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import report.entities.items.expenses.ExpensesDAO;
+import report.entities.items.expenses.ExpensesTVI;
 import report.entities.items.period.PeriodDAO;
 import report.entities.items.period.PeriodTIV;
 import report.entities.items.site.PreviewTIV;
@@ -100,14 +101,14 @@ public class ExpensesControllerUtils {
      * @return TableWrapper(child of TableView)
      */
     public static TableWrapper decorProperty_Expenses(TableView table) {
-        TableWrapper tableWrapper = new TableWrapper(table, new ExpensesDAO());
+        TableWrapper<ExpensesTVI> tableWrapper = new TableWrapper(table, new ExpensesDAO());
 
         tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
 
         TableColumn textColumn = tableWrapper.addColumn("Наименование", "text");
         TableColumn typeColumn = tableWrapper.addColumn("Тип", "type");
-        TableColumn valueColumn = tableWrapper.addColumn("Значение", "quantity");
+        TableColumn<ExpensesTVI,Double > valueColumn = tableWrapper.addColumn("Значение","value");
 
         typeColumn.setCellFactory(param -> TableCellFactory.getExpenseesCell());
 

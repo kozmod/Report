@@ -412,10 +412,11 @@ public class RootLayoutController implements Initializable {
                     selectedTreeElemParent
                             = ((TreeView) cell.getTreeView()).getTreeItem(cell.getIndex()
                     ).getParent().getValue().toString();
-                    selectedTreeElem = ((CounterAgentToStringWrapper) cell.getTreeView().getTreeItem(cell.getIndex())
-                            .getValue())
-                            .getEntity()
-                            .getName();
+
+                    CounterAgentToStringWrapper selectedItem = (CounterAgentToStringWrapper) cell.getTreeView().getTreeItem(cell.getIndex()).getValue();
+                    selectedTreeElem = selectedItem.getEntity().getName();
+                    EstimateController.Est.Common.setCountAgentTVI(selectedItem.getEntity());
+
                     siteEditItem.setDisable(false);
                     contAddItem.setDisable(false);
                     separator.setDisable(false);
@@ -423,7 +424,7 @@ public class RootLayoutController implements Initializable {
                     printEstToXmlMenuItem.setDisable(false);
 
                     //Update Preview TableWrapper OBS-LIST
-                    EstimateController.Est.Common.setSiteObs(new SiteDAO(selectedTreeElemParent, selectedTreeElem).getData());
+                    EstimateController.Est.Common.setSiteObs(new SiteDAO(selectedTreeElemParent, selectedItem.getEntity().getIdCountConst()).getData());
                     previewTable.setItems(EstimateController.Est.Common.getPreviewObservableList());
 
                     //create Coefficient
@@ -436,14 +437,16 @@ public class RootLayoutController implements Initializable {
                             .getController();
                     showEstController.setRootController(getRootController());
 
-                } else if (cell.getItem().equals("Участки №")
-                        && !((TreeView) cell.getTreeView()).getTreeItem(cell.getIndex()).isLeaf()) {
-                    siteEditItem.setDisable(true);
-                    contAddItem.setDisable(true);
-                    separator.setDisable(true);
-                    contDelItem.setDisable(true);
+                }
+//                else if (cell.getItem().equals("Участки №")
+//                        && !((TreeView) cell.getTreeView()).getTreeItem(cell.getIndex()).isLeaf()) {
+//                    siteEditItem.setDisable(true);
+//                    contAddItem.setDisable(true);
+//                    separator.setDisable(true);
+//                    contDelItem.setDisable(true);
 
-                } else {
+//                }
+                else {
                     siteEditItem.setDisable(true);
                     contAddItem.setDisable(true);
                     separator.setDisable(true);

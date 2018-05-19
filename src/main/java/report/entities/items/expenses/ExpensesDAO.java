@@ -46,16 +46,16 @@ public class ExpensesDAO implements CommonNamedDAO<Collection<ExpensesTVI>> {
                 + " * "
                 + "from dbo.[SiteExpenses] "
                 + "WHERE [SiteNumber] = ? "
-                + "AND   [Contractor] = ? "
+                + "AND   Id_Count = ? "
                 + "AND   [dell] = 0";
 
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement(sqlQuery);) {
             //set false SQL Autocommit
             pstmt.setString(1, Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER));
-            pstmt.setString(2, Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
+            pstmt.setInt(2, Est.Common.getCountAgentTVI().getIdCountConst());
             pstmt.execute();
-            try (ResultSet rs = pstmt.getResultSet();) {
+            try (ResultSet rs = pstmt.getResultSet()) {
                 while (rs.next())
                     list.add(new ExpensesTVI(
                                     rs.getLong(SQL.Common.ID),
@@ -122,8 +122,9 @@ public class ExpensesDAO implements CommonNamedDAO<Collection<ExpensesTVI>> {
                 + ",[Text]"
                 + ",[Type]"
                 + ",[Value]"
+                + ",[Id_Count]"
                 + " ) "
-                + "VALUES(?,?,?,?,?)";
+                + "VALUES(?,?,?,?,?,?)";
 //                    + "VALUES('10а','УЮТСТРОЙ','ssss',0,11111)";
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement(sql,
@@ -137,6 +138,7 @@ public class ExpensesDAO implements CommonNamedDAO<Collection<ExpensesTVI>> {
                 pstmt.setString(3, obsItem.getText());
                 pstmt.setInt(4, obsItem.getType());
                 pstmt.setDouble(5, obsItem.getValue());
+                pstmt.setInt(6, Est.Common.getCountAgentTVI().getIdCountConst());
 
                 int affectedRows = pstmt.executeUpdate();
 
