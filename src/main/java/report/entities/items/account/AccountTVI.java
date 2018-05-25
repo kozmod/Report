@@ -9,7 +9,7 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
-//Account TableWrapper Item to ObsList
+//Account TableWrapper AbstractEstimateTVI to ObsList
 public class AccountTVI {
 
     private final IntegerProperty date;

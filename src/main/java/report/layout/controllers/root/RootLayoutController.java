@@ -409,11 +409,14 @@ public class RootLayoutController implements Initializable {
 
             cell.setOnMouseClicked((MouseEvent event) -> {
                 if (((TreeView) cell.getTreeView()).getTreeItem(cell.getIndex()).isLeaf()) {
-                    selectedTreeElemParent
-                            = ((TreeView) cell.getTreeView()).getTreeItem(cell.getIndex()
-                    ).getParent().getValue().toString();
+                    selectedTreeElemParent = ((TreeView) cell.getTreeView())
+                            .getTreeItem(cell.getIndex())
+                            .getParent()
+                            .getValue().toString();
 
                     CounterAgentToStringWrapper selectedItem = (CounterAgentToStringWrapper) cell.getTreeView().getTreeItem(cell.getIndex()).getValue();
+                    RootControllerService.initCounterAgentHolder(selectedTreeElemParent,selectedItem.getEntity());
+
                     selectedTreeElem = selectedItem.getEntity().getName();
                     EstimateController.Est.Common.setCountAgentTVI(selectedItem.getEntity());
 

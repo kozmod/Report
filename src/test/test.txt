@@ -23,18 +23,18 @@ import org.springframework.batch.core.step.skip.NeverSkipItemSkipPolicy;
 import org.springframework.batch.core.step.skip.SkipLimitExceededException;
 import org.springframework.batch.core.step.skip.SkipPolicy;
 import org.springframework.batch.core.step.tasklet.Tasklet;
-import org.springframework.batch.item.ExecutionContext;
-import org.springframework.batch.item.ItemProcessor;
-import org.springframework.batch.item.ItemReader;
-import org.springframework.batch.item.ItemWriter;
-import org.springframework.batch.item.file.FlatFileItemReader;
-import org.springframework.batch.item.file.FlatFileParseException;
-import org.springframework.batch.item.file.LineMapper;
-import org.springframework.batch.item.file.mapping.DefaultLineMapper;
-import org.springframework.batch.item.file.mapping.FieldSetMapper;
-import org.springframework.batch.item.file.transform.DefaultFieldSetFactory;
-import org.springframework.batch.item.file.transform.DelimitedLineTokenizer;
-import org.springframework.batch.item.file.transform.FieldSet;
+import org.springframework.batch.abstractEstimateTVI.ExecutionContext;
+import org.springframework.batch.abstractEstimateTVI.ItemProcessor;
+import org.springframework.batch.abstractEstimateTVI.ItemReader;
+import org.springframework.batch.abstractEstimateTVI.ItemWriter;
+import org.springframework.batch.abstractEstimateTVI.file.FlatFileItemReader;
+import org.springframework.batch.abstractEstimateTVI.file.FlatFileParseException;
+import org.springframework.batch.abstractEstimateTVI.file.LineMapper;
+import org.springframework.batch.abstractEstimateTVI.file.mapping.DefaultLineMapper;
+import org.springframework.batch.abstractEstimateTVI.file.mapping.FieldSetMapper;
+import org.springframework.batch.abstractEstimateTVI.file.transform.DefaultFieldSetFactory;
+import org.springframework.batch.abstractEstimateTVI.file.transform.DelimitedLineTokenizer;
+import org.springframework.batch.abstractEstimateTVI.file.transform.FieldSet;
 import org.springframework.batch.repeat.RepeatStatus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -242,18 +242,18 @@ public class BatchConfiguration {
     public ItemProcessor<ReceiptTransaction, ReceiptTransaction> processor() {
         return new ItemProcessor<ReceiptTransaction, ReceiptTransaction>(){
             @Override
-            public ReceiptTransaction process(ReceiptTransaction item) throws Exception {
-                amountPaySum = amountPaySum.add(BigInteger.valueOf(item.getAmount()));
+            public ReceiptTransaction process(ReceiptTransaction abstractEstimateTVI) throws Exception {
+                amountPaySum = amountPaySum.add(BigInteger.valueOf(abstractEstimateTVI.getAmount()));
                 System.err.println(
                         "\033[34;43m" +
-                                item.getService() + " " +
-                                item.getOrderDate() + " TA->" +
-                                item.getTransactionId() + " A->" +
-                                item.getAmount() + " "
+                                abstractEstimateTVI.getService() + " " +
+                                abstractEstimateTVI.getOrderDate() + " TA->" +
+                                abstractEstimateTVI.getTransactionId() + " A->" +
+                                abstractEstimateTVI.getAmount() + " "
                                 +  "\033[0m"
                 );
                 quantity++;
-                return item;
+                return abstractEstimateTVI;
             }
         };
     }
@@ -270,9 +270,9 @@ public class BatchConfiguration {
 //        //writer
 //    	FlatFileItemWriter<String> writer = new FlatFileItemWriter<String>(){
 //            @Override
-//            public void write(List<? extends String> items) throws Exception {
+//            public void write(List<? extends String> abstractEstimateTVIS) throws Exception {
 ////                System.out.println("--------------> "+ path + " header : " + headerString);
-//                super.write(items);
+//                super.write(abstractEstimateTVIS);
 //            }
 //        };
 ////    	writer.setResource(new ClassPathResource("student-marksheet.csv"));
@@ -284,8 +284,8 @@ public class BatchConfiguration {
 //        writer.setShouldDeleteIfEmpty(true);
 //    	writer.setLineAggregator(new LineAggregator<String>() {
 //            @Override
-//            public String aggregate(String item) {
-//                return item;
+//            public String aggregate(String abstractEstimateTVI) {
+//                return abstractEstimateTVI;
 //            }
 //
 //        });
@@ -391,9 +391,9 @@ public class BatchConfiguration {
                 .processor(this.processor())
                 .writer(new ItemWriter<ReceiptTransaction>() {
                     @Override
-                    public void write(List<? extends ReceiptTransaction> items) throws Exception {
+                    public void write(List<? extends ReceiptTransaction> abstractEstimateTVIS) throws Exception {
                         if(quantity <= headerQ)
-                        System.err.println(System.currentTimeMillis() +"------------------------------ write ---------------------------------- " + items.size());
+                        System.err.println(System.currentTimeMillis() +"------------------------------ write ---------------------------------- " + abstractEstimateTVIS.size());
                         else
                             System.out.println("------------------------------ no ---------------------------------- ");
                     }

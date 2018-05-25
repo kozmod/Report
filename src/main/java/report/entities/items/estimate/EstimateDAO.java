@@ -2,7 +2,7 @@
 package report.entities.items.estimate;
 
 import report.entities.abstraction.CommonNamedDAO;
-import report.entities.items.Item;
+import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.layout.controllers.LogController;
 import report.layout.controllers.estimate.EstimateController;
@@ -43,7 +43,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
     /**
      * Get String of a Mirror (SQL.Tables).
      *
-     * @return List of Item
+     * @return List of AbstractEstimateTVI
      */
     @Override
     public String getSqlTableName() {
@@ -53,10 +53,18 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
     /**
      * Get List of TableWrapper Items (EstimateTVI) from SQL
      *
-     * @return List of Item
+     * @return List of AbstractEstimateTVI
      */
     @Override
     public ObservableList<EstimateTVI> getData() {
+        return this.getData(
+                enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER),
+                enumEst.getTableType(),
+                EstimateController.Est.Common.getCountAgentTVI()
+        );
+    }
+
+    public ObservableList<EstimateTVI> getData(String siteNumber, int tableType,CountAgentTVI contractor) {
         ObservableList<EstimateTVI> listEstAll = FXCollections.observableArrayList();
         String sql = "SELECT "
                 + "E.[id]"
@@ -100,10 +108,9 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement prst = connection.prepareStatement(sql)) {
 
-            CountAgentTVI contractor = EstimateController.Est.Common.getCountAgentTVI();
-            prst.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
+            prst.setString(1, siteNumber);
             prst.setInt(2, contractor.getIdCountConst());
-            prst.setInt(3, enumEst.getTaleType());
+            prst.setInt(3, tableType);
 
             ResultSet rs = prst.executeQuery();
 
@@ -146,10 +153,11 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
         return listEstAll;
     }
 
+
     /**
      * Get <b>BASE</b>List of TableWrapper Items (EstimateTVI) from SQL
      *
-     * @return List of Item
+     * @return List of AbstractEstimateTVI
      */
     public ObservableList<AddEstTIV> getBaseList(String BildingPart) {
         ObservableList<AddEstTIV> list = FXCollections.observableArrayList();
@@ -201,7 +209,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
      *
      * @param enumEst (enumeration)
      * @param title   (String)
-     * @return List of Item
+     * @return List of AbstractEstimateTVI
      */
     public ObservableList<EstimateTVI> getOneBuildingPartList(Est enumEst, String title) {
 
@@ -242,7 +250,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
             prst.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
             prst.setInt(2, contractor.getIdCountConst());
             prst.setString(3, title);
-            prst.setInt(4, enumEst.getTaleType());
+            prst.setInt(4, enumEst.getTableType());
 
             ResultSet rs = prst.executeQuery();
 
@@ -291,7 +299,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
     /**
      * Delete EstimateTVI  Entities from SQL
      *
-     * @param items (Collection of Item)
+     * @param items (Collection of AbstractEstimateTVI)
      */
     @Override
     public void delete(Collection<EstimateTVI> items) {
@@ -300,8 +308,8 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
              PreparedStatement pstmt = connection.prepareStatement("update [dbo].[Estimate] SET dell = 1 WHERE [id] = ? AND [dell] = 0;");) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
-            for (Item obsItem : items) {
-                pstmt.setLong(1, obsItem.getId());
+            for (AbstractEstimateTVI obsAbstractEstimateTVI : items) {
+                pstmt.setLong(1, obsAbstractEstimateTVI.getId());
                 pstmt.addBatch();
             }
             pstmt.executeBatch();
@@ -309,11 +317,11 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
             connection.commit();
             //add info to LogTextArea / LogController
             items.forEach(item -> {
-                LogController.appendLogViewText("deleted EST item: " + ((Item) item).getJM_name()
-                        + " [JM/ " + ((Item) item).getJobOrMat() + "]"
-                        + " [BP/ " + ((Item) item).getBindJob() + "]"
-                        + " [S#/ " + ((Item) item).getSiteNumber() + "]"
-                        + " [C/ " + ((Item) item).getContractor() + "]");
+                LogController.appendLogViewText("deleted EST item: " + ((AbstractEstimateTVI) item).getJM_name()
+                        + " [JM/ " + ((AbstractEstimateTVI) item).getJobOrMat() + "]"
+                        + " [BP/ " + ((AbstractEstimateTVI) item).getBindJob() + "]"
+                        + " [S#/ " + ((AbstractEstimateTVI) item).getSiteNumber() + "]"
+                        + " [C/ " + ((AbstractEstimateTVI) item).getContractor() + "]");
             });
             LogController.appendLogViewText(items.size() + " deleted");
 
@@ -322,13 +330,13 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
         }
     }
 //    @Override
-//    public void delete(Collection<Item> items) {
+//    public void delete(Collection<AbstractEstimateTVI> items) {
 //                
 //        try(Connection connection   = SqlConnector.getInstance();
 //            PreparedStatement pstmt = connection.prepareStatement("execute dellRowEst ?,?,?,?,?,?");) {
 //            //set false SQL Autocommit
 //            connection.setAutoCommit(false);
-//                for (Item obsItem : items) {
+//                for (AbstractEstimateTVI obsItem : items) {
 //                    pstmt.setString   (1, obsItem.getSiteNumber());
 //                    pstmt.setString   (2, obsItem.getContractor());
 //                    pstmt.setString   (3, obsItem.getBuildingPart());
@@ -343,11 +351,11 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
 //           connection.commit();
 //           //add info to LogTextArea / LogController
 //           items.forEach(item -> {
-//                LogController.appendLogViewText("deleted item: "+ ((Item)item).getJM_name()
-//                                                         +" [JM/ "+((Item)item).getJobOrMat()      + "]"
-//                                                         +" [BP/ "+((Item)item).getBindJob()     + "]"
-//                                                         +" [S#/ " + ((Item)item).getSiteNumber()  + "]"
-//                                                         +" [C/ " + ((Item)item).getContractor()   + "]");
+//                LogController.appendLogViewText("deleted item: "+ ((AbstractEstimateTVI)item).getJM_name()
+//                                                         +" [JM/ "+((AbstractEstimateTVI)item).getJobOrMat()      + "]"
+//                                                         +" [BP/ "+((AbstractEstimateTVI)item).getBindJob()     + "]"
+//                                                         +" [S#/ " + ((AbstractEstimateTVI)item).getSiteNumber()  + "]"
+//                                                         +" [C/ " + ((AbstractEstimateTVI)item).getContractor()   + "]");
 //                });
 //            LogController.appendLogViewText(items.size() + " deleted");
 //            
@@ -360,7 +368,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
     /**
      * Delete EstimateTVI  Entities from SQL
      *
-     * @param items (Collection of Item)
+     * @param items (Collection of AbstractEstimateTVI)
      */
     @Override
     public void insert(Collection<EstimateTVI> items) {
@@ -385,37 +393,37 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                      Statement.RETURN_GENERATED_KEYS);) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
-            for (Item obsItem : items) {
+            for (AbstractEstimateTVI obsAbstractEstimateTVI : items) {
                 CountAgentTVI contractor = EstimateController.Est.Common.getCountAgentTVI();
-                pstmt.setString(1, obsItem.getSiteNumber());
-                pstmt.setString(2, obsItem.getTypeHome());
+                pstmt.setString(1, obsAbstractEstimateTVI.getSiteNumber());
+                pstmt.setString(2, obsAbstractEstimateTVI.getTypeHome());
                 pstmt.setInt(3, contractor.getIdCountConst());
-                pstmt.setString(4, obsItem.getJM_name());
-                pstmt.setString(5, obsItem.getJobOrMat());
-                pstmt.setString(6, obsItem.getBindJob());
-                pstmt.setString(7, obsItem.getUnit());
-                pstmt.setDouble(8, obsItem.getQuantity());
-                pstmt.setDouble(9, obsItem.getPriceOne());
-                pstmt.setString(10, obsItem.getBuildingPart());
-                pstmt.setInt(11, ((EstimateTVI) obsItem).getTableType());
+                pstmt.setString(4, obsAbstractEstimateTVI.getJM_name());
+                pstmt.setString(5, obsAbstractEstimateTVI.getJobOrMat());
+                pstmt.setString(6, obsAbstractEstimateTVI.getBindJob());
+                pstmt.setString(7, obsAbstractEstimateTVI.getUnit());
+                pstmt.setDouble(8, obsAbstractEstimateTVI.getQuantity());
+                pstmt.setDouble(9, obsAbstractEstimateTVI.getPriceOne());
+                pstmt.setString(10, obsAbstractEstimateTVI.getBuildingPart());
+                pstmt.setInt(11, ((EstimateTVI) obsAbstractEstimateTVI).getTableType());
 
 
                 int affectedRows = pstmt.executeUpdate();
 
                 try (ResultSet generategKeys = pstmt.getGeneratedKeys();) {
                     if (generategKeys.next())
-                        obsItem.setId(generategKeys.getLong(1));
+                        obsAbstractEstimateTVI.setId(generategKeys.getLong(1));
                 }
             }
             //SQL commit
             connection.commit();
             //add info to LogTextArea / LogController
             items.forEach(item -> {
-                LogController.appendLogViewText("inserted item: " + ((Item) item).getJM_name()
-                        + " [JM/ " + ((Item) item).getJobOrMat() + "]"
-                        + " [BP/ " + ((Item) item).getBindJob() + "]"
-                        + " [S#/ " + ((Item) item).getSiteNumber() + "]"
-                        + " [C/ " + ((Item) item).getContractor() + "]");
+                LogController.appendLogViewText("inserted item: " + ((AbstractEstimateTVI) item).getJM_name()
+                        + " [JM/ " + ((AbstractEstimateTVI) item).getJobOrMat() + "]"
+                        + " [BP/ " + ((AbstractEstimateTVI) item).getBindJob() + "]"
+                        + " [S#/ " + ((AbstractEstimateTVI) item).getSiteNumber() + "]"
+                        + " [C/ " + ((AbstractEstimateTVI) item).getContractor() + "]");
             });
             LogController.appendLogViewText(items.size() + " inserted");
         } catch (SQLException ex) {
@@ -497,7 +505,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
             pstmt.setString(1, enumEst.getSiteSecondValue(SQL.Estimate.SITE_NUMBER));
             pstmt.setInt(2, contractor.getIdCountConst());
             pstmt.setString(3, enumEst.getSiteSecondValue(SQL.Estimate.TYPE_HOME));
-            pstmt.setInt(4, enumEst.getTaleType());
+            pstmt.setInt(4, enumEst.getTableType());
 
 
             pstmt.execute();
@@ -507,12 +515,12 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
 
     }
 //    @Override
-//    public void insert(Collection<Item> items) {
+//    public void insert(Collection<AbstractEstimateTVI> items) {
 //        try(Connection connection = SqlConnector.getInstance();
 //            PreparedStatement pstmt  = connection.prepareStatement("execute addRowEst ?,?,?,?,?,?,?,?,?,?,?");) {
 //            //set false SQL Autocommit
 //            connection.setAutoCommit(false);
-//                for (Item obsItem : items) {
+//                for (AbstractEstimateTVI obsItem : items) {
 //                    pstmt.setString   (1,  obsItem.getSiteNumber());
 //                    pstmt.setString   (2,  obsItem.getContractor());
 //                    pstmt.setString   (3,  obsItem.getBuildingPart());
@@ -532,11 +540,11 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
 //           connection.commit();
 //           //add info to LogTextArea / LogController
 //           items.forEach(item -> {
-//                LogController.appendLogViewText("inserted item: "+ ((Item)item).getJM_name()
-//                                                         +" [JM/ "+((Item)item).getJobOrMat()      + "]"
-//                                                         +" [BP/ "+((Item)item).getBindJob()     + "]"
-//                                                         +" [S#/ " + ((Item)item).getSiteNumber()  + "]"
-//                                                         +" [C/ " + ((Item)item).getContractor()   + "]");
+//                LogController.appendLogViewText("inserted item: "+ ((AbstractEstimateTVI)item).getJM_name()
+//                                                         +" [JM/ "+((AbstractEstimateTVI)item).getJobOrMat()      + "]"
+//                                                         +" [BP/ "+((AbstractEstimateTVI)item).getBindJob()     + "]"
+//                                                         +" [S#/ " + ((AbstractEstimateTVI)item).getSiteNumber()  + "]"
+//                                                         +" [C/ " + ((AbstractEstimateTVI)item).getContractor()   + "]");
 //                });
 //            LogController.appendLogViewText(items.size() + " inserted");
 //        } catch (SQLException ex) {

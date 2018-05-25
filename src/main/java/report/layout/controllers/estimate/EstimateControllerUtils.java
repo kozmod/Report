@@ -5,7 +5,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import report.entities.items.Item;
+import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.KS.KS_DAO;
 import report.entities.items.KS.KS_TIV;
 import report.entities.items.estimate.EstimateDAO;
@@ -64,21 +64,21 @@ public class EstimateControllerUtils implements TableFactory {
         switch (enumEst) {
             case Base:
 //                TableFactory.setTextFieldCell_NumberStringConverter(valueColumn);
-                valueColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<? extends Item, Double>>() {
+                valueColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<? extends AbstractEstimateTVI, Double>>() {
                     @Override
-                    public void handle(TableColumn.CellEditEvent<? extends Item, Double> t) {
+                    public void handle(TableColumn.CellEditEvent<? extends AbstractEstimateTVI, Double> t) {
 
-                        Item editingItem = (Item) t.getTableView().getItems().get(t.getTablePosition().getRow());
+                        AbstractEstimateTVI editingAbstractEstimateTVI = (AbstractEstimateTVI) t.getTableView().getItems().get(t.getTablePosition().getRow());
 
-                        Double price_one = editingItem.getPriceOne();
+                        Double price_one = editingAbstractEstimateTVI.getPriceOne();
                         Double value = t.getNewValue();
 
-                        editingItem.setQuantity(value);
-                        editingItem.setPriceSum(value * price_one);
+                        editingAbstractEstimateTVI.setQuantity(value);
+                        editingAbstractEstimateTVI.setPriceSum(value * price_one);
 
                         table.computeSum();
                         t.getTableView().refresh();
-                        //Diseble Save & Cancel Context menu Item
+                        //Diseble Save & Cancel Context menu AbstractEstimateTVI
 //                    ((ContextMenuModelEst)table.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
 
                     }
@@ -100,15 +100,15 @@ public class EstimateControllerUtils implements TableFactory {
                 break;
         }
 //        TableFactory.setTextFieldCell_NumberStringConverter(Price_oneColumn);
-        Price_oneColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<Item, Double>>() {
+        Price_oneColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<AbstractEstimateTVI, Double>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<Item, Double> t) {
-                Item editingItem = (Item) t.getTableView().getItems().get(t.getTablePosition().getRow());
+            public void handle(TableColumn.CellEditEvent<AbstractEstimateTVI, Double> t) {
+                AbstractEstimateTVI editingAbstractEstimateTVI = (AbstractEstimateTVI) t.getTableView().getItems().get(t.getTablePosition().getRow());
                 Double price_one = t.getNewValue();
-                Double value = editingItem.getQuantity();
+                Double value = editingAbstractEstimateTVI.getQuantity();
 
-                editingItem.setPriceOne(price_one);
-                editingItem.setPriceSum(value * price_one);
+                editingAbstractEstimateTVI.setPriceOne(price_one);
+                editingAbstractEstimateTVI.setPriceSum(value * price_one);
 
                 table.computeSum();
                 t.getTableView().refresh();
@@ -199,16 +199,16 @@ public class EstimateControllerUtils implements TableFactory {
                 valueColumn
         );
 
-        valueColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<? extends Item, Double>>() {
+        valueColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<? extends AbstractEstimateTVI, Double>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<? extends Item, Double> t) {
+            public void handle(TableColumn.CellEditEvent<? extends AbstractEstimateTVI, Double> t) {
 
                 KS_TIV editingItem = (KS_TIV) t.getRowValue();
 
                 Double price_one = editingItem.getPriceOne();
 
                 //Value of editing item in Chaged Tables
-                Double valueInChanged = EstimateController.Est.Changed.findEqualsElevent(editingItem).getQuantity();
+                Double valueInChanged = EstimateController.Est.Changed.findEqualsElement(editingItem).getQuantity();
 
                 //rest of Value in KS Lists
                 double restOfValue = valueInChanged -
@@ -216,7 +216,7 @@ public class EstimateControllerUtils implements TableFactory {
                                 .stream()
                                 .flatMap(mapItem -> ((List) mapItem).stream())
                                 .filter(editingItem::equalsSuperClass)
-                                .mapToDouble(filtered -> ((Item) filtered).getQuantity())
+                                .mapToDouble(filtered -> ((AbstractEstimateTVI) filtered).getQuantity())
                                 .sum()
                                 - t.getOldValue()
                                 + t.getNewValue());
@@ -239,10 +239,10 @@ public class EstimateControllerUtils implements TableFactory {
         ContextMenu contextMenuKS = ContextMenuFactory.getCommonSU(table);
         table.setContextMenu(contextMenuKS);
 //
-//        Est.KS.getTabMap().values().forEach(new Consumer<ObservableList<Item>>() {
+//        Est.KS.getTabMap().values().forEach(new Consumer<ObservableList<AbstractEstimateTVI>>() {
 //            @Override
-//            public void accept(ObservableList<Item> coll) {
-//                coll.addListener((ListChangeListener.Change<? extends Item> c) -> {
+//            public void accept(ObservableList<AbstractEstimateTVI> coll) {
+//                coll.addListener((ListChangeListener.Change<? extends AbstractEstimateTVI> c) -> {
 //                    System.out.println("Changed on " + c);
 //                    if(c.next() &&
 //                            (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){

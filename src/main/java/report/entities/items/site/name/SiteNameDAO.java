@@ -48,11 +48,12 @@ public class SiteNameDAO implements CommonDAO<Collection<SiteNameTIV>> {
 
     @Override
     public void delete(Collection<SiteNameTIV> entry) {
+        throw new UnsupportedOperationException(" Не реализованно ");
 
     }
 
     @Override
     public void insert(Collection<SiteNameTIV> entry) {
-
+        throw new UnsupportedOperationException(" Не реализованно ");
     }
 }

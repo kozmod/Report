@@ -4,16 +4,13 @@ import javafx.beans.Observable;
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
-import javafx.scene.Node;
 import javafx.scene.control.Control;
 import javafx.util.Callback;
 import org.controlsfx.control.PropertySheet;
-import org.controlsfx.property.editor.Editors;
 import org.controlsfx.validation.Severity;
 import org.controlsfx.validation.ValidationResult;
 import org.controlsfx.validation.Validator;
 import report.entities.items.Clone;
-import report.entities.items.Item;
 
 import java.util.Optional;
 

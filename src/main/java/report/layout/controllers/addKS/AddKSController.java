@@ -15,7 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import report.entities.items.Item;
+import report.entities.items.AbstractEstimateTVI;
 import report.layout.controllers.estimate.EstimateController;
 import report.usage_strings.SQL;
 
@@ -38,12 +38,12 @@ public class AddKSController implements Initializable {
     @FXML
     private DatePicker ksDatePicker;
     @FXML
-    private TableView<Item> allJMTable, selectedJMTable;
+    private TableView<AbstractEstimateTVI> allJMTable, selectedJMTable;
 
 //    private TableWrapperEST<KS_TIV> allJMTable      = TableFactory.getKS_add(),
 //                                  selectedJMTable = TableFactory.getKS_add();
 
-    private ObservableList<Item> obsAllJM, obsSelectedJM;
+    private ObservableList<AbstractEstimateTVI> obsAllJM, obsSelectedJM;
     private ObservableList<Object> comboBuildingPartList;
 
     {
@@ -111,9 +111,9 @@ public class AddKSController implements Initializable {
     @FXML
     private void handle_addSelectedTableButton(ActionEvent event) {                   //add Selected List            
         if (allJMTable.getSelectionModel().getSelectedItem() != null) {
-            Item sItem_allJM = allJMTable.getSelectionModel().getSelectedItem();
-            obsAllJM.remove(sItem_allJM);
-            obsSelectedJM.add(sItem_allJM);
+            AbstractEstimateTVI sAbstractEstimateTVI_allJM = allJMTable.getSelectionModel().getSelectedItem();
+            obsAllJM.remove(sAbstractEstimateTVI_allJM);
+            obsSelectedJM.add(sAbstractEstimateTVI_allJM);
         }
 
     }
@@ -121,9 +121,9 @@ public class AddKSController implements Initializable {
     @FXML
     private void handle_removeSelectedTableButton(ActionEvent event) {                 //remove Selected List
         if (selectedJMTable.getSelectionModel().getSelectedItem() != null) {
-            Item sItem = selectedJMTable.getSelectionModel().getSelectedItem();
-            obsSelectedJM.remove(sItem);
-            obsAllJM.add(sItem);
+            AbstractEstimateTVI sAbstractEstimateTVI = selectedJMTable.getSelectionModel().getSelectedItem();
+            obsSelectedJM.remove(sAbstractEstimateTVI);
+            obsAllJM.add(sAbstractEstimateTVI);
         }
     }
 

@@ -27,7 +27,7 @@ import report.layout.controllers.LogController;
 public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
 
     /**
-     * @return List of Item
+     * @return List of AbstractEstimateTVI
      */
     @Override
     public String getSqlTableName() {
@@ -37,7 +37,7 @@ public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
     /**
      * Get String of a Mirror (SQL.Tables).
      *
-     * @return List of Item
+     * @return List of AbstractEstimateTVI
      */
     @Override
     public ObservableList<PlanTIV> getData() {

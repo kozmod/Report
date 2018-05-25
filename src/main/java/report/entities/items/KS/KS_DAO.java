@@ -3,7 +3,7 @@ package report.entities.items.KS;
 
 
 import report.entities.abstraction.CommonNamedDAO;
-import report.entities.items.Item;
+import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.layout.controllers.estimate.EstimateController;
 import report.models.sql.SqlConnector;
@@ -44,7 +44,7 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
     /**
      * Get String of a Mirror (SQL.Tables).
      *
-     * @return List of Item
+     * @return List of AbstractEstimateTVI
      */
     @Override
     public String getSqlTableName() {
@@ -59,6 +59,13 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
      */
     @Override
     public ObservableList<KS_TIV> getData() {
+        return this.getData(
+                enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER),
+                EstimateController.Est.Common.getCountAgentTVI()
+        );
+    }
+
+    public ObservableList<KS_TIV> getData(String siteNumber, CountAgentTVI contractor) {
         ObservableList<KS_TIV> list = FXCollections.observableArrayList();
 
         String psmtmtString = "SELECT  "
@@ -86,9 +93,7 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement(psmtmtString);) {
 
-
-            CountAgentTVI contractor = EstimateController.Est.Common.getCountAgentTVI();
-            pstmt.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
+            pstmt.setString(1, siteNumber);
             pstmt.setInt(2, contractor.getIdCountConst());
             pstmt.execute();
 
@@ -342,9 +347,9 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
      *
      * @param ks_Number
      * @param ks_Date
-     * @param listKS    (List<Item> listKS)
+     * @param listKS    (List<AbstractEstimateTVI> listKS)
      */
-    public void insertNewKS(int ks_Number, int ks_Date, List<Item> listKS) {
+    public void insertNewKS(int ks_Number, int ks_Date, List<AbstractEstimateTVI> listKS) {
 
         String pstString = "INSERT into dbo.[KS] ("
                 + " [KS_Number]"
@@ -392,16 +397,16 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
 
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement(pstString);) {
-            for (Item item : listKS) {
+            for (AbstractEstimateTVI abstractEstimateTVI : listKS) {
 
                 CountAgentTVI contractor = EstimateController.Est.Common.getCountAgentTVI();
                 pstmt.setInt(1, ks_Number);
                 pstmt.setInt(2,  (Math.round(ks_Date * 100) / 100));
-                pstmt.setString(3, item.getSiteNumber());
-//                pstmt.setString(4, item.getContractor());
+                pstmt.setString(3, abstractEstimateTVI.getSiteNumber());
+//                pstmt.setString(4, abstractEstimateTVI.getContractor());
                 pstmt.setInt(4, contractor.getIdCountConst());
-                pstmt.setString(5, item.getJM_name());    //JM_Name
-                pstmt.setString(6, item.getBindJob()); //bindJob
+                pstmt.setString(5, abstractEstimateTVI.getJM_name());    //JM_Name
+                pstmt.setString(6, abstractEstimateTVI.getBindJob()); //bindJob
 
                 pstmt.addBatch();
             }

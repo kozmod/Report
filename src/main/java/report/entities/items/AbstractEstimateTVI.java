@@ -10,7 +10,7 @@ import javafx.beans.property.StringProperty;
 
 
 //Estimate Tabble Items to ObsList
-public abstract class Item implements Clone {
+public abstract class AbstractEstimateTVI implements Clone {
     private long id;
     private int del;
     private Timestamp dateCreate;
@@ -28,7 +28,7 @@ public abstract class Item implements Clone {
     protected final DoubleProperty priceSum;
 
 
-    public Item(
+    public AbstractEstimateTVI(
             long id,
             Timestamp dateCreate,
             String siteNumber,
@@ -235,10 +235,10 @@ public abstract class Item implements Clone {
         if (obj == null) {
             return false;
         }
-        if (!Item.class.isAssignableFrom(obj.getClass())) {
+        if (!AbstractEstimateTVI.class.isAssignableFrom(obj.getClass())) {
             return false;
         }
-        final Item other = (Item) obj;
+        final AbstractEstimateTVI other = (AbstractEstimateTVI) obj;
         if ((this.siteNumber.get() == null) ? (other.siteNumber.getValue() != null) : !this.siteNumber.get().equals(other.siteNumber.get())) {
             return false;
         }
@@ -280,10 +280,10 @@ public abstract class Item implements Clone {
         if (obj == null) {
             return false;
         }
-        if (!Item.class.isAssignableFrom(obj.getClass())) {
+        if (!AbstractEstimateTVI.class.isAssignableFrom(obj.getClass())) {
             return false;
         }
-        final Item other = (Item) obj;
+        final AbstractEstimateTVI other = (AbstractEstimateTVI) obj;
         if ((this.siteNumber.get() == null) ? (other.siteNumber.getValue() != null) : !this.siteNumber.get().equals(other.siteNumber.get())) {
             return false;
         }
@@ -314,8 +314,8 @@ public abstract class Item implements Clone {
 
 
     //Extractor
-//   public static Callback<Item, Observable[]> extractor() {
-//        return (Item p) -> new Observable[]{p.quantityProperty(), p.priceOneProperty()};
+//   public static Callback<AbstractEstimateTVI, Observable[]> extractor() {
+//        return (AbstractEstimateTVI p) -> new Observable[]{p.quantityProperty(), p.priceOneProperty()};
 //    }
 
 

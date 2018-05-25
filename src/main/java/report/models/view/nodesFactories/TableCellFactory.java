@@ -3,8 +3,8 @@ package report.models.view.nodesFactories;
 
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
+import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.Clone;
-import report.entities.items.Item;
 import report.entities.items.estimate.EstimateDAO;
 import report.entities.items.estimate.EstimateTVI;
 import report.entities.items.osr.OSR_TIV;
@@ -460,7 +460,7 @@ public class TableCellFactory {
     }
 
 
-    private class OnMouseEnteredTableCell extends TableCell<Item, Object> {
+    private class OnMouseEnteredTableCell extends TableCell<AbstractEstimateTVI, Object> {
         private Est enumEst;
 
         private OnMouseEnteredTableCell(Est enumEst) {
@@ -490,7 +490,7 @@ public class TableCellFactory {
         }
     }
 
-    private class OnDoubleMouseClickMoveToCell extends TableCell<Item, Object> {
+    private class OnDoubleMouseClickMoveToCell extends TableCell<AbstractEstimateTVI, Object> {
 
         @Override
         public void updateItem(Object item, boolean empty) {
@@ -505,7 +505,7 @@ public class TableCellFactory {
                 setOnMouseClicked(mouseEvent -> {
                     if (mouseEvent.getButton().equals(MouseButton.PRIMARY) & mouseEvent.getClickCount() == 2) {
                         String text = this.getText();
-//                            Item itemW = this.treeTableView().getObservableItems()
+//                            AbstractEstimateTVI itemW = this.treeTableView().getObservableItems()
 //                                    .stream()
 //                                    .filter(i -> i.getJM_name().equals(text))
 //                                    .findFirst()
@@ -551,7 +551,7 @@ public class TableCellFactory {
 
         ;
     }
-//   private class TooltipTableCell extends TableCell<Item, Object> {
+//   private class TooltipTableCell extends TableCell<AbstractEstimateTVI, Object> {
 //       TableWrapper table = new TableWrapper();
 //       Tooltip tooltip = new Tooltip();
 //         

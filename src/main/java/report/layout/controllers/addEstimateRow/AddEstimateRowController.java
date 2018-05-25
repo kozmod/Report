@@ -15,7 +15,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-import report.entities.items.Item;
+import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.cb.AddEstTIV;
 import report.entities.items.estimate.EstimateDAO;
 import report.layout.controllers.estimate.EstimateController.Est;
@@ -69,7 +69,7 @@ public class AddEstimateRowController implements Initializable {
         this.siteNumber = Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER);
         this.contName = Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR);
         this.typeHome = Est.Common.getSiteSecondValue(SQL.Common.TYPE_HOME);
-//        this.tableType   = enumEst.getTaleType();
+//        this.tableType   = enumEst.getTableType();
 
         init_Labels();
         init_diffObsList();
@@ -127,25 +127,25 @@ public class AddEstimateRowController implements Initializable {
      * Methods                                                                 *
      *                                                                         *
      **************************************************************************/
-    private ObservableList<AddEstTIV> getCheckObs(ObservableList<Item> items) {
+    private ObservableList<AddEstTIV> getCheckObs(ObservableList<AbstractEstimateTVI> abstractEstimateTVIS) {
         ObservableList<AddEstTIV> checkedObsList = FXCollections.observableArrayList();
-        if (items != null)
-            for (Item obsItem : items) {
+        if (abstractEstimateTVIS != null)
+            for (AbstractEstimateTVI obsAbstractEstimateTVI : abstractEstimateTVIS) {
                 checkedObsList.add(new AddEstTIV(
                         0,
                         false,
                         todayDate,
-                        obsItem.getSiteNumber(),
-                        obsItem.getTypeHome(),
-                        obsItem.getContractor(),
-                        obsItem.getJM_name(),
-                        obsItem.getJobOrMat(),
-                        obsItem.getBindJob(),
-                        obsItem.getQuantity(),
-                        obsItem.getUnit(),
-                        obsItem.getPriceOne(),
-                        obsItem.getPriceSum(),
-                        obsItem.getBuildingPart()
+                        obsAbstractEstimateTVI.getSiteNumber(),
+                        obsAbstractEstimateTVI.getTypeHome(),
+                        obsAbstractEstimateTVI.getContractor(),
+                        obsAbstractEstimateTVI.getJM_name(),
+                        obsAbstractEstimateTVI.getJobOrMat(),
+                        obsAbstractEstimateTVI.getBindJob(),
+                        obsAbstractEstimateTVI.getQuantity(),
+                        obsAbstractEstimateTVI.getUnit(),
+                        obsAbstractEstimateTVI.getPriceOne(),
+                        obsAbstractEstimateTVI.getPriceSum(),
+                        obsAbstractEstimateTVI.getBuildingPart()
                 ));
             }
 

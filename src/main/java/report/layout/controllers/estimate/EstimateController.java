@@ -30,7 +30,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
 import report.entities.abstraction.CommonDAO;
-import report.entities.items.Item;
+import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.KS.KS_TIV;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.estimate.EstimateDAO;
@@ -103,7 +103,7 @@ public class EstimateController implements Initializable {
         }
 
         //Getter ---------------------------------------------------------------------------
-        public int getTaleType() {
+        public int getTableType() {
             return taleType;
         }
 
@@ -142,10 +142,10 @@ public class EstimateController implements Initializable {
             );
         }
 
-        public ObservableList<? extends Item> findItemsList_DL(Item selectedItem) {
-            if (selectedItem != null)
+        public ObservableList<? extends AbstractEstimateTVI> findItemsList_DL(AbstractEstimateTVI selectedAbstractEstimateTVI) {
+            if (selectedAbstractEstimateTVI != null)
                 return allItems.stream()
-                        .filter((Item i) -> i.equalsSuperClass(selectedItem))
+                        .filter((AbstractEstimateTVI i) -> i.equalsSuperClass(selectedAbstractEstimateTVI))
                         .sorted(Comparator.comparingLong(item -> item.getDateCreate().getTime()))
                         .collect(collectingAndThen(toList(), FXCollections::observableArrayList));
             else
@@ -153,7 +153,7 @@ public class EstimateController implements Initializable {
         }
 
         public void updateList_DL(CommonDAO dao) {
-            allItems = (ObservableList<? extends Item>) dao.getData();
+            allItems = (ObservableList<? extends AbstractEstimateTVI>) dao.getData();
         }
 
         //Update ---------------------------------------------------------------------------
@@ -185,10 +185,8 @@ public class EstimateController implements Initializable {
                     allItems = new EstimateDAO(this).getData();
                     tabMap = allItems.stream()
                             .filter(item -> item.getDel() != 1)
-                            .sorted(Comparator.comparing(Item::getJM_name))
-//                                .collect(Collectors.groupingBy(Item::getBuildingPart));
-                            .collect(Collectors.groupingBy(Item::getBuildingPart,
-//                                        Item::getBuildingPart,
+                            .sorted(Comparator.comparing(AbstractEstimateTVI::getJM_name))
+                            .collect(Collectors.groupingBy(AbstractEstimateTVI::getBuildingPart,
                                     Collector.of(
                                             () -> FXCollections.observableArrayList(EstimateTVI.extractor()),
                                             ObservableList::add,
@@ -202,7 +200,7 @@ public class EstimateController implements Initializable {
                     allItems = new KS_DAO(this).getData();
                     tabMap = allItems.stream()
                             .filter(item -> item.getDel() != 1)
-                            .sorted(Comparator.comparing(Item::getJM_name))
+                            .sorted(Comparator.comparing(AbstractEstimateTVI::getJM_name))
                             .collect(Collectors.groupingBy(item -> ((KS_TIV) item).getKSNumber(),
                                     Collector.of(
                                             () -> FXCollections.observableArrayList(KS_TIV.extractor()),
@@ -213,7 +211,7 @@ public class EstimateController implements Initializable {
                                             })
                             ));
 
-//                                .collect(Collectors.groupingBy((Item item) -> ((KS_TIV)item).getKSNumber()));
+//                                .collect(Collectors.groupingBy((AbstractEstimateTVI item) -> ((KS_TIV)item).getKSNumber()));
                     break;
                 case Additional:
                     allItems = Base.allItems.stream()
@@ -229,7 +227,7 @@ public class EstimateController implements Initializable {
                     tabMap = allItems.stream()
                             .filter(item -> item.getDel() != 1)
                             .collect(Collectors.groupingBy(item -> ((EstimateTVI) item).getBuildingPart(),
-//                                        Item::getBuildingPart,
+//                                        AbstractEstimateTVI::getBuildingPart,
                                     Collector.of(
                                             () -> FXCollections.observableArrayList(),
                                             ObservableList::add,
@@ -243,10 +241,10 @@ public class EstimateController implements Initializable {
 
         }
 
-        public Item findEqualsElevent(Item inpItem) {
-            return (Item) tabMap.values().stream()
+        public AbstractEstimateTVI findEqualsElement(AbstractEstimateTVI inpAbstractEstimateTVI) {
+            return (AbstractEstimateTVI) tabMap.values().stream()
                     .flatMap(mapItem -> ((List) mapItem).stream())
-                    .filter(item -> ((Item) item).equalsSuperClass(inpItem))
+                    .filter(item -> ((AbstractEstimateTVI) item).equalsSuperClass(inpAbstractEstimateTVI))
                     .findFirst().orElse(null);
         }
 
@@ -264,9 +262,9 @@ public class EstimateController implements Initializable {
         //TODO: сюда записываем CountAgentTVI  для последующего забра
         private CountAgentTVI countAgentTVI;
         private int taleType;
-        private Map<Object, ObservableList<Item>> tabMap;
+        private Map<Object, ObservableList<AbstractEstimateTVI>> tabMap;
         private TabModel tab;
-        private ObservableList<? extends Item> allItems;
+        private ObservableList<? extends AbstractEstimateTVI> allItems;
         private ObservableList<PreviewTIV> previewTableObs;
     }
     /*!******************************************************************************************************************
@@ -279,7 +277,7 @@ public class EstimateController implements Initializable {
 
     //preview table
     private Map<Integer, List<KS_TIV>> ksMap;
-    private Map<String, List<Item>> mapBase, mapChange;
+    private Map<String, List<AbstractEstimateTVI>> mapBase, mapChange;
 
     @FXML
     private Label ksSumLabel, ksDateLabel, erroeLable;
@@ -498,19 +496,19 @@ public class EstimateController implements Initializable {
                 //count values
                 tableKSWrapper.getItems().stream().forEach(item -> {
 
-                    Item equalsItem = Est.Changed.findEqualsElevent(item);
+                    AbstractEstimateTVI equalsAbstractEstimateTVI = Est.Changed.findEqualsElement(item);
                     double sum = 0;
-                    if (item != null && equalsItem != null)
-                        sum = equalsItem.getQuantity() -
+                    if (item != null && equalsAbstractEstimateTVI != null)
+                        sum = equalsAbstractEstimateTVI.getQuantity() -
                                 ksMap.values().stream()
                                         .flatMap(mapItem -> mapItem.stream())
                                         .filter(item::equalsSuperClass)
                                         .mapToDouble(filtered -> filtered.getQuantity())
                                         .sum();
 
-                    ((KS_TIV) item).setRestOfValue(sum);
+                    item.setRestOfValue(sum);
 
-//                                Est.Changed.findEqualsElevent(item).getQuantity() -
+//                                Est.Changed.findEqualsElement(item).getQuantity() -
 //                                        ksMap.values().stream()
 //                                                .flatMap(mapItem ->mapItem.stream())
 //                                                .filter(item::equalsSuperClass)

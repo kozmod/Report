@@ -26,7 +26,7 @@ public class OSR_DAO implements CommonNamedDAO<Collection<OSR_TIV>> {
     /**
      * Get String of a Mirror (SQL.Tables).
      *
-     * @return List of Item
+     * @return List of AbstractEstimateTVI
      */
     @Override
     public String getSqlTableName() {
@@ -119,8 +119,8 @@ public class OSR_DAO implements CommonNamedDAO<Collection<OSR_TIV>> {
 //                LogController.appendLogViewText("deleted item: "+ ((OSR_TIV)item).getJM_name()
 //                                                         +" [JM/ "+((OSR_TIV)item).getJobOrMat()      + "]"
 //                                                         +" [BP/ "+((OSR_TIV)item).getBindedJob()     + "]"
-//                                                         +" [S#/ " + ((Item)item).getSiteNumber()  + "]"
-//                                                         +" [C/ " + ((Item)item).getContractor()   + "]");
+//                                                         +" [S#/ " + ((AbstractEstimateTVI)item).getSiteNumber()  + "]"
+//                                                         +" [C/ " + ((AbstractEstimateTVI)item).getContractor()   + "]");
             });
             LogController.appendLogViewText(items.size() + " deleted");
 
@@ -164,11 +164,11 @@ public class OSR_DAO implements CommonNamedDAO<Collection<OSR_TIV>> {
             connection.commit();
             //add info to LogTextArea / LogController
 //           items.forEach(item -> {
-////                LogController.appendLogViewText("inserted item: "+ ((Item)item).getJM_name()
-////                                                         +" [JM/ "+((Item)item).getJobOrMat()      + "]"
-////                                                         +" [BP/ "+((Item)item).getBindedJob()     + "]"
-////                                                         +" [S#/ " + ((Item)item).getSiteNumber()  + "]"
-////                                                         +" [C/ " + ((Item)item).getContractor()   + "]");
+////                LogController.appendLogViewText("inserted item: "+ ((AbstractEstimateTVI)item).getJM_name()
+////                                                         +" [JM/ "+((AbstractEstimateTVI)item).getJobOrMat()      + "]"
+////                                                         +" [BP/ "+((AbstractEstimateTVI)item).getBindedJob()     + "]"
+////                                                         +" [S#/ " + ((AbstractEstimateTVI)item).getSiteNumber()  + "]"
+////                                                         +" [C/ " + ((AbstractEstimateTVI)item).getContractor()   + "]");
 //                });
             LogController.appendLogViewText(items.size() + " inserted");
         } catch (SQLException ex) {

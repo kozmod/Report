@@ -7,7 +7,7 @@ import java.time.LocalDate;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import report.entities.items.Item;
+import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.KS.KS_TIV;
 import report.entities.items.contractor.ContractorTIV;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
@@ -77,7 +77,7 @@ public class PrintKS extends AbstractPrinterXML {
 
 
 //    public  PrintKS(String ksNamber) {
-//        this.obsKS = (ObservableList<Item>) Est.KS.getTabMap().saveEst(ksNamber);
+//        this.obsKS = (ObservableList<AbstractEstimateTVI>) Est.KS.getTabMap().saveEst(ksNamber);
 //
 //        this.ksNumber = ksNamber;
 //        this.ksDate = obsKS.saveEst(2).formatNumber();
@@ -151,14 +151,14 @@ public class PrintKS extends AbstractPrinterXML {
         int rowsQuantity = 1;
         String buildingPart = null;
 
-        for (Item item : obsKS) {
+        for (AbstractEstimateTVI abstractEstimateTVI : obsKS) {
 
 
             Element targetRow = getTargetElement("SumRow");
 
             //CHECK -> Binded Job
-            if (!item.getBuildingPart().equals(buildingPart)) {
-                buildingPart = item.getBuildingPart();
+            if (!abstractEstimateTVI.getBuildingPart().equals(buildingPart)) {
+                buildingPart = abstractEstimateTVI.getBuildingPart();
 
                 Element row = doc.createElement("Row");
                 row.setAttribute("ss:StyleID", "s143");
@@ -215,7 +215,7 @@ public class PrintKS extends AbstractPrinterXML {
                     .build());
             row.appendChild(new CellBuilder(doc)
                     .setCellStyle("s172")
-                    .setCellValue("String", item.getJM_name())
+                    .setCellValue("String", abstractEstimateTVI.getJM_name())
                     .build());
             row.appendChild(new CellBuilder(doc)
                     .setCellStyle("s67")
@@ -223,15 +223,15 @@ public class PrintKS extends AbstractPrinterXML {
                     .build());
             row.appendChild(new CellBuilder(doc)
                     .setCellStyle("s67")
-                    .setCellValue("String", item.getUnit())
+                    .setCellValue("String", abstractEstimateTVI.getUnit())
                     .build());
             row.appendChild(new CellBuilder(doc)
                     .setCellStyle("s173")
-                    .setCellValue("Number", Double.toString(item.getQuantity()))
+                    .setCellValue("Number", Double.toString(abstractEstimateTVI.getQuantity()))
                     .build());
             row.appendChild(new CellBuilder(doc)
                     .setCellStyle("s174")
-                    .setCellValue("Number", new DoubleStringConverter().toString(item.getPriceOne())
+                    .setCellValue("Number", new DoubleStringConverter().toString(abstractEstimateTVI.getPriceOne())
                             .replace(" ", ""))
                     .build());
             row.appendChild(new CellBuilder(doc)
@@ -256,11 +256,11 @@ public class PrintKS extends AbstractPrinterXML {
 
 //Builder ==========================================================================================================================  
 //    public static class Builder{
-//        private ObservableList<Item> obsKS;
+//        private ObservableList<AbstractEstimateTVI> obsKS;
 //        private ObservableList<PreviewTIV>  obsPreTab;
 //        private String ksNumber, ksDate;
 //
-//        public Builder setObsKS(ObservableList<Item> obsKS) {
+//        public Builder setObsKS(ObservableList<AbstractEstimateTVI> obsKS) {
 //            this.obsKS = obsKS;
 //        return this;
 //        }
