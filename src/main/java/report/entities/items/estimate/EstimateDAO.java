@@ -223,7 +223,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                 + "(SELECT *  From dbo.[KS] KS "
                 + "WHERE KS.[SiteNumber] = E.[SiteNumber] "
 //                + "AND KS .[Contractor] = E.[Contractor] "
-                + "AND KS .[id_count_const] = E.[id_count_const] "
+                + "AND KS .[id_count] = E.[id_count] "
                 + "AND KS .[TypeHome] = E.[TypeHome] "
                 + "AND KS .[JM_name] = E.[JM_name] "
                 + "AND KS .[JobsOrMaterials] = E.[JobsOrMaterials] "
@@ -238,7 +238,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                 + "FROM   dbo.[Estimate] E "
                 + "WHERE E.[SiteNumber] = ? "
 //                + "AND   E.[Contractor] = ? "
-                + "AND   E.[id_count_const] = ? "
+                + "AND   E.[id_count] = ? "
                 + "AND E.[BuildingPart] = ? "
                 + "AND E.[TableType] = ? "
                 + "AND E.[dell] = 0 ";
@@ -262,7 +262,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                         rs.getObject(SQL.Common.SITE_NUMBER).toString(),
                         rs.getObject(SQL.Common.TYPE_HOME).toString(),
 //                        rs.getObject(SQL.Common.CONTRACTOR).toString(),
-                        rs.getObject("id_count_const").toString(),
+                        rs.getObject("id_count").toString(),
                         rs.getObject(SQL.Estimate.JM_NAME).toString(),
                         rs.getObject(SQL.Estimate.JOB_MATERIAL).toString(),
                         rs.getObject(SQL.Estimate.BINDED_JOB).toString(),
@@ -376,7 +376,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                 + "("
                 + "[SiteNumber]"
                 + ",[TypeHome] "
-                + ",[id_count_const] "
+                + ",[id_count] "
                 + ",[JM_name] "
                 + ",[JobsOrMaterials] "
                 + ",[BindedJob]"
@@ -438,29 +438,29 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                         + " @coefficient as float"
                         + ",@SiteNumber  as varchar(100)"
 //                        + ",@Contractor  as varchar(100)"
-                        + ",@id_count_const  as int "
+                        + ",@id_count  as int "
                         + ",@TypeHome    as varchar(100)"
                         + ",@TableType   as int"
                         + ",@SiteNumberFrom as varchar(100) "
 //                        + ",@ContractorFrom as varchar(100) "
-                        + ",@id_count_const_FROM as int "
+                        + ",@id_count_FROM as int "
                         + ",@TableTypeFrom  as int "
                         + "SET @SiteNumber  = ? "       //1
-                        + "SET @id_count_const  = ? "   //2
+                        + "SET @id_count  = ? "   //2
                         + "SET @TypeHome    = ? "       //3
                         + "SET @TableType   = ? "       //4
 //                        + "SET @coefficient = (SELECT top 1 K FROM dbo.[Site_new] WHERE [SiteNumber] = @SiteNumber AND [Contractor] = @Contractor AND [dell] = 0 ) "
                         + "SET @coefficient = (CASE WHEN @TableType = 1 THEN 1 "
-                        + " WHEN @TableType = 2 THEN (SELECT top 1 K FROM dbo.[Site_new] WHERE [SiteNumber] = @SiteNumber AND [id_Count] = @id_count_const AND [dell] = 0) END) "
+                        + " WHEN @TableType = 2 THEN (SELECT top 1 K FROM dbo.[Site_new] WHERE [SiteNumber] = @SiteNumber AND [id_Count] = @id_count AND [dell] = 0) END) "
                         + "SET @SiteNumberFrom = (CASE WHEN @TableType = 1 THEN '0' WHEN @TableType = 2 then @SiteNumber END) "
 //                        + "SET @ContractorFrom = (CASE WHEN @TableType = 1 THEN '0' WHEN @TableType = 2 then @Contractor END) "
-                        + "SET @id_count_const_FROM = (CASE WHEN @TableType = 1 THEN -1 WHEN @TableType = 2 then @id_count_const END) "
+                        + "SET @id_count_FROM = (CASE WHEN @TableType = 1 THEN -1 WHEN @TableType = 2 then @id_count END) "
                         + "SET @TableTypeFrom  = (CASE WHEN @TableType = 1 THEN  0  WHEN @TableType = 2 then 1           END) "
                         + "INSERT into dbo.[Estimate] ("
                         + " [SiteNumber]"
                         + ",[TypeHome]"
 //                        + ",[Contractor]"
-                        + ",[id_count_const]"
+                        + ",[id_count]"
                         + ",[JM_name]"
                         + ",[JobsOrMaterials]"
                         + ",[BindedJob]"
@@ -477,7 +477,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                         + " @SiteNumber"
                         + ",E.[TypeHome]"
 //                        + ",@Contractor "
-                        + ",@id_count_const "
+                        + ",@id_count "
                         + ",E.[JM_name]"
                         + ",E.[JobsOrMaterials]"
                         + ",E.[BindedJob]"
@@ -492,7 +492,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                         + "FROM  [Estimate] E "
                         + "WHERE E.[SiteNumber] = @SiteNumberFrom "
 //                        + "And   E.[Contractor] = @ContractorFrom "
-                        + "And   E.[id_count_const] = @id_count_const_FROM "
+                        + "And   E.[id_count] = @id_count_FROM "
                         + "And   E.[TableType]  = @TableTypeFrom "
                         + "And   E.[TypeHome]   = @TypeHome "
                         + "And   E.[dell] = 0 ";
