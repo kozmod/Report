@@ -105,9 +105,9 @@ public class AllPropertiesController implements Initializable {
      **************************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        reportingMonthTableWrapper = AllPropertiesControllerUtils.decorMonthTable(reportingMonthTable);
-        contractTableWrapper = AllPropertiesControllerUtils.decorContractTable(contractTable);
-        siteNameTableWrapper = AllPropertiesControllerUtils.decorSiteNameTable(siteTable);
+        reportingMonthTableWrapper = AllPropertiesControllerNodeUtils.decorMonthTable(reportingMonthTable);
+        contractTableWrapper = AllPropertiesControllerNodeUtils.decorContractTable(contractTable);
+        siteNameTableWrapper = AllPropertiesControllerNodeUtils.decorSiteNameTable(siteTable);
         this.init_VariableTab();
         this.init_ContractorTab();
         this.init_CounterPatiesTab();
@@ -138,7 +138,7 @@ public class AllPropertiesController implements Initializable {
      */
     private void init_VariableTab() {
         //add OSR TableView
-        variableTableWrapper = AllPropertiesControllerUtils.decorVariable(variableTable);
+        variableTableWrapper = AllPropertiesControllerNodeUtils.decorVariable(variableTable);
         //table Context menu property
         variableTableWrapper.tableView().contextMenuProperty().bind(
                 Bindings.when(variableEditСheckBox.selectedProperty())
@@ -159,7 +159,7 @@ public class AllPropertiesController implements Initializable {
      */
     private void init_ContractorTab() {
         //add Contractors TableView
-        contractorTableWrapper = AllPropertiesControllerUtils.decorContractor(contractorTable);
+        contractorTableWrapper = AllPropertiesControllerNodeUtils.decorContractor(contractorTable);
         ContextMenuOptional.setTableItemContextMenuListener(contractorTableWrapper);
 
         //bing ContextMenu
@@ -203,13 +203,13 @@ public class AllPropertiesController implements Initializable {
      *                                                                         *
      **************************************************************************/
     private void init_CounterPatiesTab() {
-        countAgentTableWrapper = AllPropertiesControllerUtils.decorCountAgent(countAgentTable);
+        countAgentTableWrapper = AllPropertiesControllerNodeUtils.decorCountAgent(countAgentTable);
         countAgentTableWrapper.tableView()
                 .editableProperty()
                 .bind(countAgentСheckBox.selectedProperty());
         addCoutButton.visibleProperty()
                 .bind(countAgentСheckBox.selectedProperty());
-        counterPropSheet = AllPropertiesControllerUtils.getCountPropertySheet(countAgentTableWrapper);
+        counterPropSheet = AllPropertiesControllerNodeUtils.getCountPropertySheet(countAgentTableWrapper);
 
 
         reqBankScrollPane.setContent(counterPropSheet.getSheet());
@@ -246,7 +246,7 @@ public class AllPropertiesController implements Initializable {
 //                System.out.println(counterPropSheet.getSheet().getItems().get(listener.getFrom()).getValue());
             }
         });
-        AllPropertiesControllerUtils.decorLinkedNamesGP(linkedNamesGP, countAgentTableWrapper);
+        AllPropertiesControllerNodeUtils.decorLinkedNamesGP(linkedNamesGP, countAgentTableWrapper);
 
     }
 

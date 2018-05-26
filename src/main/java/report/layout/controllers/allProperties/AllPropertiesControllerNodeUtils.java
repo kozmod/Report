@@ -52,9 +52,9 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
-public class AllPropertiesControllerUtils implements TableFactory {
+public class AllPropertiesControllerNodeUtils implements TableFactory {
 
-    private AllPropertiesControllerUtils() {
+    private AllPropertiesControllerNodeUtils() {
     }
 
     /**
@@ -271,7 +271,9 @@ public class AllPropertiesControllerUtils implements TableFactory {
                         item.setRequisites(
                                 FXCollections.observableArrayList(propertySheetWrapper.getObservableItems())
                         );
-                    } else {
+                    } else if(item == null) {
+
+                    }else {
                         propertySheetWrapper.setItems(item.getRequisites());
                     }
                 });
@@ -301,7 +303,9 @@ public class AllPropertiesControllerUtils implements TableFactory {
             CountAgentTVI countAgent = tableWrapper.getSelectionModel().getSelectedItem();
             popOver.hide();
             tableWrapper.undoChangeItems();
-            listView.setItems(tableWrapper.getSelectionModel().getSelectedItem().getLinkedNames());
+            if(tableWrapper.getSelectionModel().getSelectedItem() != null) { //todo -> refactor
+                listView.setItems(tableWrapper.getSelectionModel().getSelectedItem().getLinkedNames());
+            }
         });
 
         hBox.getChildren().addAll(saveListButton, cancelListButton);
@@ -337,13 +341,13 @@ public class AllPropertiesControllerUtils implements TableFactory {
                 .selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     CountAgentTVI item = tableWrapper.getSelectionModel().getSelectedItem();
-                    if (item.getLinkedNames() == null) {
-                        ObservableList linkedName = CounterAgentDaoUtil.getMatchLinkedNames(newValue.getName());
-//                                if(!linkedName.isEmpty()){
-                        item.setLinkedNames(linkedName);
-//                                }
+                    if(item != null) {
+                        if (item.getLinkedNames() == null) {
+                            ObservableList linkedName = CounterAgentDaoUtil.getMatchLinkedNames(newValue.getName());
+                            item.setLinkedNames(linkedName);
+                        }
+                        listView.setItems(item.getLinkedNames());
                     }
-                    listView.setItems(item.getLinkedNames());
                 });
     }
 

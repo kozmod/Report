@@ -15,9 +15,9 @@ import report.models.view.nodesFactories.TableFactory;
 import report.services.common.CounterAgentHolder;
 import report.usage_strings.SQL;
 
-class RootControllerUtils implements TableFactory {
+class RootControllerNodeUtils implements TableFactory {
 
-    private RootControllerUtils() {
+    private RootControllerNodeUtils() {
     }
 
     /**
@@ -106,5 +106,4 @@ class RootControllerUtils implements TableFactory {
         );
         return list;
     }
-
 }

@@ -19,9 +19,9 @@ import report.models.view.nodesFactories.TableFactory;
 
 import java.util.List;
 
-public class EstimateControllerUtils implements TableFactory {
+public class EstimateControllerNodeUtils implements TableFactory {
 
-    private EstimateControllerUtils() {
+    private EstimateControllerNodeUtils() {
 
     }
 
@@ -238,21 +238,9 @@ public class EstimateControllerUtils implements TableFactory {
 
         ContextMenu contextMenuKS = ContextMenuFactory.getCommonSU(table);
         table.setContextMenu(contextMenuKS);
-//
-//        Est.KS.getTabMap().values().forEach(new Consumer<ObservableList<AbstractEstimateTVI>>() {
-//            @Override
-//            public void accept(ObservableList<AbstractEstimateTVI> coll) {
-//                coll.addListener((ListChangeListener.Change<? extends AbstractEstimateTVI> c) -> {
-//                    System.out.println("Changed on " + c);
-//                    if(c.next() &&
-//                            (c.wasUpdated() || c.wasAdded() || c.wasRemoved())){
-//                        ((ContextMenuOptional) contexMenuKS).setDisable_SaveUndoPrint_groupe(false);
-////                               contexMenuKS.setDisable_SaveUndoPrint_groupe(false);
-//                    }
-//                });
-//            }
-//        });
         return table;
     }
+
+
 
 }
