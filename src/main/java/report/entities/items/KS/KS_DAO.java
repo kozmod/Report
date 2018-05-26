@@ -403,10 +403,9 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
                 pstmt.setInt(1, ks_Number);
                 pstmt.setInt(2,  (Math.round(ks_Date * 100) / 100));
                 pstmt.setString(3, abstractEstimateTVI.getSiteNumber());
-//                pstmt.setString(4, abstractEstimateTVI.getContractor());
                 pstmt.setInt(4, contractor.getIdCountConst());
-                pstmt.setString(5, abstractEstimateTVI.getJM_name());    //JM_Name
-                pstmt.setString(6, abstractEstimateTVI.getBindJob()); //bindJob
+                pstmt.setString(5, abstractEstimateTVI.getJM_name());
+                pstmt.setString(6, abstractEstimateTVI.getBindJob());
 
                 pstmt.addBatch();
             }
@@ -416,9 +415,6 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
             Logger.getLogger(KS_DAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
-
-    //    public void dellAndInsert(Collection<KS_TIV> dellItem, Collection<KS_TIV> newItem){
     @Override
     public void dellAndInsert(Memento<Collection<KS_TIV>> memento) {
         CommonNamedDAO.super.dellAndInsert(memento);
