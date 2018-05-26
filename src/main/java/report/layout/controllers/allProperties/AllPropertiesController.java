@@ -123,7 +123,6 @@ public class AllPropertiesController implements Initializable {
         variableTableWrapper.setFromBase();
         contractorTableWrapper.setFromBase();
         countAgentTableWrapper.setFromBase();
-
     }
 
     /***************************************************************************
@@ -148,7 +147,6 @@ public class AllPropertiesController implements Initializable {
                 .bind(variableEditСheckBox.selectedProperty());
 
     }
-
     /***************************************************************************
      *                                                                         *
      * Init Contractor                                                         *
