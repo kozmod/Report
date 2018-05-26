@@ -15,7 +15,7 @@ import javafx.scene.layout.StackPane;
 import report.entities.items.estimate.EstimateDAO;
 import report.entities.items.estimate.EstimateTVI;
 import report.layout.controllers.estimate.EstimateController.Est;
-import report.layout.controllers.estimate.EstimateControllerUtils;
+import report.layout.controllers.estimate.EstimateControllerNodeUtils;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.models.view.wrappers.table.TableWrapper;
 import report.models.view.wrappers.table.TableWrapperEST;
@@ -63,13 +63,12 @@ public class TitledStackModel extends StackPane {
 
     }
 
-
     /*!******************************************************************************************************************
      *                                                                                                     Private Methods
      ********************************************************************************************************************/
     //1
     private void init_tableView() {
-        tableViewWrapper = EstimateControllerUtils.getEst(enumEst, title);
+        tableViewWrapper = EstimateControllerNodeUtils.getEst(enumEst, title);
 
         if (enumEst.getTabMap().get(title) != null) {
             tableViewWrapper.setTableData((ObservableList) enumEst.getTabMap().get(title));

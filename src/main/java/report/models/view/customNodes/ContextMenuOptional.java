@@ -51,8 +51,11 @@ public class ContextMenuOptional extends ContextMenu {
         tableWrapper.getItems().addListener((ListChangeListener.Change<? extends S> c) -> {
             System.out.println("Changed on " + c + " - ContextMenuOptional");
             if (c.next() && (c.wasUpdated() || c.wasAdded() || c.wasRemoved())) {
-                ((ContextMenuOptional) tableWrapper.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
-                tableWrapper.refresh();
+                ContextMenuOptional contextMenuOptional =((ContextMenuOptional) tableWrapper.getContextMenu());
+                if(contextMenuOptional != null){
+                    contextMenuOptional.setDisable_SaveUndoPrint_groupe(false);
+                    tableWrapper.refresh();
+                }
             }
         });
     }

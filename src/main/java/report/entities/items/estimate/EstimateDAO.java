@@ -79,7 +79,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                 + ",E.[Price_sum]"
                 + ",E.[BuildingPart]"
                 + ",E.[TableType]"
-                + ",E.[id_count_const]"
+                + ",E.[id_count]"
                 + ",E.[DateCreate]"
                 + ",E.[dell]"
                 + ",(CASE  "
@@ -87,7 +87,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                 + "(SELECT *  From dbo.[KS] KS "
                 + "WHERE KS.[SiteNumber] = E.[SiteNumber] "
 //                + "AND KS .[Contractor] = E.[Contractor] "
-                + "AND KS .[id_count_const] = E.[id_count_const] "
+                + "AND KS .[id_count] = E.[id_count] "
                 + "AND KS .[TypeHome] = E.[TypeHome] "
                 + "AND KS .[JM_name] = E.[JM_name] "
                 + "AND KS .[JobsOrMaterials] = E.[JobsOrMaterials] "
@@ -101,7 +101,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                 + ") AS 'Exist' "
                 + "FROM   dbo.[Estimate] E "
                 + "WHERE E.[SiteNumber] = ? "
-                + "AND E.[id_count_const] = ? "
+                + "AND E.[id_count] = ? "
                 + "AND E.[TableType] = ? ";
 //                                            + "AND E.[dell] = 0 ";
 

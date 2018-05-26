@@ -146,7 +146,7 @@ public class RootLayoutController implements Initializable {
     }
 
     private void init_previewTable() {
-        previewTable = RootControllerUtils.getSite();
+        previewTable = RootControllerNodeUtils.getSite();
         infoTitledPane.setContent(previewTable);
     }
 

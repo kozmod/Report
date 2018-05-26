@@ -87,7 +87,7 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
                 + ",[dell]"
                 + "From dbo.[KS]"
                 + "Where [SiteNumber] = ? "
-                + "And [id_count_const] = ? ";
+                + "And [id_count] = ? ";
 //                + "And [dell] = 0 ";
 
         try (Connection connection = SqlConnector.getInstance();

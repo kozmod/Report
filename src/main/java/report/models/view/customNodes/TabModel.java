@@ -62,28 +62,6 @@ public class TabModel {
         finishingWorkTP = new TitledStackModel("ОТДЕЛОЧНЫЕ РАБОТЫ", enumEst);
 
         sumLable = new SumLabel(new Insets(5, 10, 10, 10));
-//        sumLable.textProperty().bind(new StringBinding(){
-//            {
-//                super.bind(
-//                        faundationTP.getLabelProperty(),
-//                        wallsTP.getLabelProperty(),
-//                        roofTP.getLabelProperty(),
-//                        apertureTP.getLabelProperty(),
-//                        finishingWorkTP.getLabelProperty());
-//            }
-//
-//            @Override
-//            protected String computeValue() {
-//                double f1 = DecimalFormatter.stringToDouble(faundationTP.getLabelProperty().getValueSafe());
-//                double f2 = DecimalFormatter.stringToDouble(wallsTP.getLabelProperty().getValueSafe());
-//                double f3 = DecimalFormatter.stringToDouble(roofTP.getLabelProperty().getValueSafe());
-//                double f4 = DecimalFormatter.stringToDouble(apertureTP.getLabelProperty().getValueSafe());
-//                double f5 = DecimalFormatter.stringToDouble(finishingWorkTP.getLabelProperty().getValueSafe());
-//
-////                return faundationTP.getLabelProperty().getQuantity();
-//                return DecimalFormatter.formatNumber(f1 + f2 + f3+ f4 + f5);
-//            }
-//        });
         sumDouble = new DoubleBinding() {
             {
                 super.bind(
@@ -122,14 +100,6 @@ public class TabModel {
 
     }
 
-//    public void updateContextMenus(){
-//        faundationTP    .updateContextMenu();
-//        wallsTP         .updateContextMenu();      
-//        roofTP          .updateContextMenu();      
-//        apertureTP      .updateContextMenu();   
-//        finishingWorkTP .updateContextMenu();
-//        
-//    }
 
     public void setEditable(boolean param) {
         faundationTP.getModelTable().setEditable(param);
