@@ -5,7 +5,7 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import org.controlsfx.control.PropertySheet;
 import org.controlsfx.validation.ValidationSupport;
-import report.entities.items.counterparties.AbstractReqDAO;
+import report.entities.items.counterparties.AbstractReqDao;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.models.mementos.ChangedMemento;
 import report.models.view.customNodes.ContextMenuOptional;
@@ -20,7 +20,7 @@ public class PropertySheetWrapper implements Reverting {
     private ObservableList<ObjectPSI> items;
     private Map<Integer, List<ObjectPSI>> cashedItemsMap;
     private ListChangeListener<ObjectPSI> listChangeListener;
-    private AbstractReqDAO[] daos;
+    private AbstractReqDao[] daos;
     private ChangedMemento memento;
     private ValidationSupport validationSupport;
     /***************************************************************************
@@ -34,7 +34,7 @@ public class PropertySheetWrapper implements Reverting {
     private PropertySheetWrapper() {
     }
 
-    public PropertySheetWrapper(PropertySheet sheet, AbstractReqDAO... daos) {
+    public PropertySheetWrapper(PropertySheet sheet, AbstractReqDao... daos) {
         this.daos = daos;
         this.sheet = sheet;
         items = FXCollections.observableArrayList(ObjectPSI.extractor());

@@ -9,7 +9,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
-import report.entities.abstraction.CommonDAO;
+import report.entities.abstraction.CommonDao;
 import report.entities.items.Clone;
 import report.models.mementos.TableMemento;
 import report.models.view.customNodes.ContextMenuOptional;
@@ -25,11 +25,11 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
      * CONSTRUCTORS                                                            *
      *                                                                         *
      **************************************************************************/
-    public TableWrapper(TableView<E> table, CommonDAO<ObservableList<E>> commonDao) {
+    public TableWrapper(TableView<E> table, CommonDao<ObservableList<E>> commonDao) {
         this("TEST TITLE", table, commonDao);
     }
 
-    public TableWrapper(String title, TableView<E> table, CommonDAO<ObservableList<E>> commonDao) {
+    public TableWrapper(String title, TableView<E> table, CommonDao<ObservableList<E>> commonDao) {
         super(title);
         this.DAO = commonDao;
         tableView = table;
@@ -77,7 +77,7 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
     /**
      * Contain :
      * <br>
-     * 1. setItems() from <b>SQL</b> if <u>CommonDAO</u> != <b>NULL</b>
+     * 1. setItems() from <b>SQL</b> if <u>CommonDao</u> != <b>NULL</b>
      * <br>
      * 2. saveMemento() - save table items to TableMemento.
      * <br>

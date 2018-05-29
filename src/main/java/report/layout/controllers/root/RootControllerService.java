@@ -3,7 +3,7 @@ package report.layout.controllers.root;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
-import report.entities.items.site.SiteDAO;
+import report.entities.items.site.SiteDao;
 import report.layout.controllers.estimate.EstimateController;
 import report.entities.items.site.SiteCommonDAO;
 import report.models.printer.PrintEstimate;
@@ -14,7 +14,6 @@ import report.usage_strings.SQL;
 import report.usage_strings.ServiceStrings;
 
 import java.io.File;
-import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -30,11 +29,11 @@ public class RootControllerService {
     }
 
     public ObservableList<Object> getComboQueueValues() {
-        return new SiteDAO().getDistinct(SQL.Site.QUEUE_BUILDING, ServiceStrings.PERCENT);
+        return new SiteDao().getDistinct(SQL.Site.QUEUE_BUILDING, ServiceStrings.PERCENT);
     }
 
     public ObservableList<Object> getComboSiteConditionValues() {
-        return new SiteDAO().getDistinct(SQL.Site.STATUS_PAYMENT, ServiceStrings.PERCENT);
+        return new SiteDao().getDistinct(SQL.Site.STATUS_PAYMENT, ServiceStrings.PERCENT);
     }
 
     public static CounterAgentHolder initCounterAgentHolder(String siteNumber, CountAgentTVI countAgentTVI) {

@@ -2,12 +2,12 @@ package dao;
 
 import org.junit.Test;
 import report.entities.items.site.SiteEntity;
-import report.entities.items.site.SiteEntityDAO;
+import report.entities.items.site.SiteEntityDao;
 
 public class SiteNewDaoTest {
     @Test
     public void shouldGetSiteBySiteNumberAndCountAgentId() {
-        SiteEntityDAO dao =  new SiteEntityDAO();
+        SiteEntityDao dao =  new SiteEntityDao();
 
         SiteEntity site = dao.getDataByBusinessKey("3.0",1);
         System.out.println(site);
@@ -16,7 +16,7 @@ public class SiteNewDaoTest {
 
     @Test
     public void shouldInsertNewSite() {
-        SiteEntityDAO dao =  new SiteEntityDAO();
+        SiteEntityDao dao =  new SiteEntityDao();
         SiteEntity site = dao.getDataByBusinessKey("3.0",1);
         System.out.println(site);
         dao.insert(site);

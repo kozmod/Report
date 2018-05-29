@@ -2,7 +2,7 @@
 package report.models.view.nodesFactories;
 
 import javafx.scene.control.ContextMenu;
-import report.entities.items.estimate.EstimateDAO;
+import report.entities.items.estimate.EstimateDao;
 import report.layout.controllers.addEstimateRow.AddEstimateRowController;
 import report.layout.controllers.estimate.EstimateController.Est;
 import report.models.view.nodesHelpers.StageCreator;
@@ -72,9 +72,9 @@ public class ContextMenuFactory {
      */
     public static ContextMenu getEstPrint(Est enumEst) {
         return ContextMenuOptional.newBuilder()
-//                .setDAO(new EstimateDAO(enumEst))
+//                .setDAO(new EstimateDao(enumEst))
 //                    .setEnum(enumEst)
-                .addPrintSmeta(new EstimateDAO(enumEst))
+                .addPrintSmeta(new EstimateDao(enumEst))
                 .build();
 
     }

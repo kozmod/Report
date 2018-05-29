@@ -2,7 +2,7 @@
 package report.entities.items.KS;
 
 
-import report.entities.abstraction.CommonNamedDAO;
+import report.entities.abstraction.CommonNamedDao;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.layout.controllers.estimate.EstimateController;
@@ -26,7 +26,7 @@ import report.layout.controllers.LogController;
 import report.layout.controllers.estimate.EstimateController.Est;
 
 
-public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
+public class KS_Dao implements CommonNamedDao<Collection<KS_TIV>> {
 
     private Est enumEst;
 
@@ -34,10 +34,10 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
         return enumEst;
     }
 
-    public KS_DAO() {
+    public KS_Dao() {
     }
 
-    public KS_DAO(Est enumEst) {
+    public KS_Dao(Est enumEst) {
         this.enumEst = enumEst;
     }
 
@@ -123,7 +123,7 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(KS_DAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(KS_Dao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -183,7 +183,7 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(KS_DAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(KS_Dao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -215,7 +215,7 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
                         + " [C/ " + item.getContractor() + "]");
             });
         } catch (SQLException ex) {
-            Logger.getLogger(KS_DAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(KS_Dao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 //    @Override
@@ -258,7 +258,7 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
             pstmt.execute();
 
         } catch (SQLException ex) {
-            Logger.getLogger(KS_DAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(KS_Dao.class.getName()).log(Level.SEVERE, null, ex);
 
         }
     }
@@ -311,7 +311,7 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
             //SQL commit
             connection.commit();
         } catch (SQLException ex) {
-            Logger.getLogger(KS_DAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(KS_Dao.class.getName()).log(Level.SEVERE, null, ex);
         }
 //    public void insert(Collection<KS_TIV> items) {
 //        try(Connection connection   = SqlConnector.getInstance();
@@ -412,12 +412,12 @@ public class KS_DAO implements CommonNamedDAO<Collection<KS_TIV>> {
             pstmt.executeBatch();
 
         } catch (SQLException ex) {
-            Logger.getLogger(KS_DAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(KS_Dao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     @Override
     public void dellAndInsert(Memento<Collection<KS_TIV>> memento) {
-        CommonNamedDAO.super.dellAndInsert(memento);
+        CommonNamedDao.super.dellAndInsert(memento);
         //??????????
 //        table.updateTableFromSQL(this.getOneKSList(Est.KS, ksNumber ));
         Est.KS.updateList_DL(this);

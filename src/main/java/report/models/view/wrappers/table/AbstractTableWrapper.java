@@ -1,7 +1,7 @@
 package report.models.view.wrappers.table;
 
 import javafx.scene.control.ContextMenu;
-import report.entities.abstraction.CommonDAO;
+import report.entities.abstraction.CommonDao;
 import report.models.mementos.Memento;
 import report.models.view.wrappers.Reverting;
 
@@ -9,7 +9,7 @@ public abstract class AbstractTableWrapper<E> implements Reverting {
 
     Memento<E> memento;
     final String title;
-    CommonDAO<E> DAO;
+    CommonDao<E> DAO;
 
     /***************************************************************************
      *                                                                         *
@@ -17,11 +17,11 @@ public abstract class AbstractTableWrapper<E> implements Reverting {
      *                                                                         *
      **************************************************************************/
 
-//    public AbstractTableWrapper (CommonDAO<E> commonDao) {
+//    public AbstractTableWrapper (CommonDao<E> commonDao) {
 //        this("TEST TITLE", commonDao);
 //    }
 
-//    public AbstractTableWrapper(String title, CommonDAO<E> commonDao) {
+//    public AbstractTableWrapper(String title, CommonDao<E> commonDao) {
 //        this.title = title;
 //        this.commonDao = commonDao;
 //    }
@@ -68,13 +68,13 @@ public abstract class AbstractTableWrapper<E> implements Reverting {
 //    /**
 //     * Get DAO.
 //     */
-    public CommonDAO<E> getDAO() {
+    public CommonDao<E> getDAO() {
         if (this.DAO == null)
             throw new NullPointerException(TableWrapper.class.getCanonicalName());
         return DAO;
     }
 
-    public void setDAO(final CommonDAO<E> dao) {
+    public void setDAO(final CommonDao<E> dao) {
         this.DAO = dao;
     }
 

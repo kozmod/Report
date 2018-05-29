@@ -6,7 +6,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.scene.control.TableView;
-import report.entities.abstraction.CommonDAO;
+import report.entities.abstraction.CommonDao;
 import report.entities.items.AbstractEstimateTVI;
 
 
@@ -28,11 +28,11 @@ public class TableWrapperEST<E extends AbstractEstimateTVI> extends TableWrapper
      *                                                                                                       CONSTRUCTORS
      ********************************************************************************************************************/
 
-    public TableWrapperEST(TableView<E> table, CommonDAO<ObservableList<E>> dao) {
+    public TableWrapperEST(TableView<E> table, CommonDao<ObservableList<E>> dao) {
         super("TEST EST TITLE", table, dao);
     }
 
-    public TableWrapperEST(String title, TableView<E> table, CommonDAO<ObservableList<E>> dao) {
+    public TableWrapperEST(String title, TableView<E> table, CommonDao<ObservableList<E>> dao) {
         super(title, table, dao);
     }
 

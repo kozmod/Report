@@ -5,7 +5,7 @@ import org.junit.FixMethodOrder;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
-import report.entities.items.counterparties.AgentTVI.CounterAgentDAO;
+import report.entities.items.counterparties.AgentTVI.CounterAgentDao;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.counterparties.utils.CounterAgentDaoUtil;
 import report.models.view.LinkedNamePair;
@@ -19,7 +19,7 @@ public class CountAgentsDaoTest {
     @DisplayName("Counter Agents")
     public void shouldGetListOfCounterAgentTest() {
         //get all Counter Agents
-        ObservableList<CountAgentTVI> countAgentList = new CounterAgentDAO().getData();
+        ObservableList<CountAgentTVI> countAgentList = new CounterAgentDao().getData();
         // set to all CounterAgents exist Linked Names
         countAgentList.forEach(countAgent ->
                 countAgent.setLinkedNames(
@@ -59,7 +59,7 @@ public class CountAgentsDaoTest {
                                 }));
 //                .forEach(countAgent -> System.out.println(countAgent.getLinkedNames()));
 
-        new CounterAgentDAO().insert(listToInsert);
+        new CounterAgentDao().insert(listToInsert);
 
 
     }
@@ -68,7 +68,7 @@ public class CountAgentsDaoTest {
     @DisplayName("Counter Agents")
     public void shoulDeleteElement_WhenUseDELETE_FRK_ACCOUNT_COUNT_TYPE_FORM_Test() {
         //get all Counter Agents
-        ObservableList<CountAgentTVI> countAgentList = new CounterAgentDAO().getData();
+        ObservableList<CountAgentTVI> countAgentList = new CounterAgentDao().getData();
         ObservableList<CountAgentTVI> listToDelete =
                 countAgentList.stream()
                         .filter(countAgent -> countAgent.getName().equals("ГРЭМ") && countAgent.getIdName() == 1)
@@ -80,7 +80,7 @@ public class CountAgentsDaoTest {
                                     return l1;
                                 }));
         listToDelete.forEach(e -> System.out.println(e.getIdForm() + " " + e.getIdName() + " " + e.getIdType()));
-        new CounterAgentDAO().delete(listToDelete);
+        new CounterAgentDao().delete(listToDelete);
     }
 
     @Test

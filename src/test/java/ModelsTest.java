@@ -1,5 +1,4 @@
 
-import javafx.scene.control.TextField;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
 import org.apache.poi.xwpf.usermodel.XWPFParagraph;
 import org.junit.FixMethodOrder;
@@ -9,7 +8,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
 import report.entities.items.counterparties.*;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
-import report.layout.controllers.allProperties.AllPropertiesControllerUtils;
 import report.models.converters.dateStringConverters.LocalDayStringConverter;
 
 
@@ -62,7 +60,7 @@ public class ModelsTest {
 //    @Disabled
     @DisplayName("ReqDaoUtils sql string build")
     public void reqDaoUtilsTest() throws SQLException {
-        List<ObjectPSI> list = new ReqCommonDAO().getByID(55);
+        List<ObjectPSI> list = new ReqCommonDao().getByID(55);
         String str = ReqDaoUtils.buildSqlString("id_Count", list);
 //        String str2 = ReqDaoUtils.buildSqlString(list);
         System.out.println(str + "\n"

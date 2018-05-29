@@ -2,8 +2,8 @@
 package report.entities.items.plan;
 
 
-import report.entities.abstraction.CommonNamedDAO;
-import report.entities.items.KS.KS_DAO;
+import report.entities.abstraction.CommonNamedDao;
+import report.entities.items.KS.KS_Dao;
 import report.models.coefficient.Quantity;
 import report.models.sql.SqlConnector;
 import report.models.mementos.Memento;
@@ -24,7 +24,7 @@ import javafx.collections.ObservableList;
 import report.layout.controllers.LogController;
 
 
-public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
+public class PlanDao implements CommonNamedDao<Collection<PlanTIV>> {
 
     /**
      * @return List of AbstractEstimateTVI
@@ -80,7 +80,7 @@ public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(PlanDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlanDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 
@@ -161,7 +161,7 @@ public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(PlanDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlanDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -191,7 +191,7 @@ public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
             LogController.appendLogViewText(entry.size() + " deleted");
 
         } catch (SQLException ex) {
-            Logger.getLogger(PlanDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PlanDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -231,13 +231,13 @@ public class PlanDAO implements CommonNamedDAO<Collection<PlanTIV>> {
             connection.commit();
 
         } catch (SQLException ex) {
-            Logger.getLogger(KS_DAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(KS_Dao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
     @Override
     public void dellAndInsert(Memento<Collection<PlanTIV>> memento) {
-        CommonNamedDAO.super.dellAndInsert(memento);
+        CommonNamedDao.super.dellAndInsert(memento);
         //????????????????????????????????????????????
         Quantity.updateFromBase();
 //        table. setFromBase();

@@ -11,8 +11,8 @@ import javafx.scene.layout.HBox;
 import javafx.util.converter.NumberStringConverter;
 import report.entities.items.DItem;
 import report.entities.items.osr.OSR_TIV;
+import report.entities.items.plan.PlanDao;
 import report.entities.items.plan.PlanTIV;
-import report.entities.items.plan.PlanDAO;
 import report.entities.items.plan.FactTIV;
 import report.models.coefficient.Quantity;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
@@ -97,7 +97,7 @@ public class PlanningController implements Initializable {
 
         //add Fact TableView
         factTableWrapper = PlaningControllerUtils.decorFact(factTable);
-        factTableWrapper.setTableData(new PlanDAO().getListFact());
+        factTableWrapper.setTableData(new PlanDao().getListFact());
 
         //table Context menu property
         planTableWrapper.tableView().contextMenuProperty().bind(

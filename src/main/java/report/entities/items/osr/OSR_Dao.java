@@ -1,7 +1,7 @@
 
 package report.entities.items.osr;
 
-import report.entities.abstraction.CommonNamedDAO;
+import report.entities.abstraction.CommonDao;
 import report.layout.controllers.LogController;
 import report.models.coefficient.Quantity;
 import report.models.sql.SqlConnector;
@@ -18,21 +18,9 @@ import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-//import report.models.Formula_test;
 
 
-public class OSR_DAO implements CommonNamedDAO<Collection<OSR_TIV>> {
-
-    /**
-     * Get String of a Mirror (SQL.Tables).
-     *
-     * @return List of AbstractEstimateTVI
-     */
-    @Override
-    public String getSqlTableName() {
-        return SQL.Tables.SITE_OSR;
-    }
-
+public class OSR_Dao implements CommonDao<Collection<OSR_TIV>> {
 
     /**
      * Get Quantity of sites
@@ -51,7 +39,7 @@ public class OSR_DAO implements CommonNamedDAO<Collection<OSR_TIV>> {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(OSR_DAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OSR_Dao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return siteQuantity;
     }
@@ -89,7 +77,7 @@ public class OSR_DAO implements CommonNamedDAO<Collection<OSR_TIV>> {
 
             }
         } catch (SQLException ex) {
-            Logger.getLogger(OSR_DAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OSR_Dao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listAllOSR;
     }
@@ -125,7 +113,7 @@ public class OSR_DAO implements CommonNamedDAO<Collection<OSR_TIV>> {
             LogController.appendLogViewText(items.size() + " deleted");
 
         } catch (SQLException ex) {
-            Logger.getLogger(OSR_DAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OSR_Dao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -172,7 +160,7 @@ public class OSR_DAO implements CommonNamedDAO<Collection<OSR_TIV>> {
 //                });
             LogController.appendLogViewText(items.size() + " inserted");
         } catch (SQLException ex) {
-            Logger.getLogger(OSR_DAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(OSR_Dao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

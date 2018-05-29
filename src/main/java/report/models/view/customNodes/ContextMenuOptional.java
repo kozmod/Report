@@ -11,7 +11,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 
-import report.entities.abstraction.CommonDAO;
+import report.entities.abstraction.CommonDao;
 import report.entities.abstraction.Reverse;
 import report.entities.items.Clone;
 import report.entities.items.DItem;
@@ -188,7 +188,7 @@ public class ContextMenuOptional extends ContextMenu {
             return this;
         }
 
-        public Builder addPrintSmeta(CommonDAO dao) {
+        public Builder addPrintSmeta(CommonDao dao) {
             printSmeta = new MenuItem("Выгрузить смету");
             printSmeta.setOnAction(event -> {
                 new PrintEstimate(dao);

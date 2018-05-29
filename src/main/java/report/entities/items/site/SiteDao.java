@@ -1,8 +1,8 @@
 
 package report.entities.items.site;
 
-import report.entities.abstraction.CommonNamedDAO;
-import report.entities.items.estimate.EstimateDAO;
+import report.entities.abstraction.CommonNamedDao;
+import report.entities.items.estimate.EstimateDao;
 import report.layout.controllers.LogController;
 import report.models.sql.SqlConnector;
 import report.usage_strings.SQL;
@@ -21,17 +21,17 @@ import javafx.collections.ObservableList;
 import report.layout.controllers.estimate.EstimateController.Est;
 
 
-public class SiteDAO implements CommonNamedDAO<Collection<PreviewTIV>> {
+public class SiteDao implements CommonNamedDao<Collection<PreviewTIV>> {
 
     private String siteNumber;
     private int contractorId;
 
-    public SiteDAO(String siteNumber, int contractorId) {
+    public SiteDao(String siteNumber, int contractorId) {
         this.siteNumber = siteNumber;
         this.contractorId = contractorId;
     }
 
-    public SiteDAO() {
+    public SiteDao() {
         if (Est.Common.isExist()) {
             this.siteNumber = Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER);
             this.contractorId = Est.Common.getCountAgentTVI().getIdCountConst();
@@ -130,7 +130,7 @@ public class SiteDAO implements CommonNamedDAO<Collection<PreviewTIV>> {
 
 
         } catch (SQLException ex) {
-            Logger.getLogger(SiteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SiteDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         long lEnd = System.currentTimeMillis();
@@ -162,7 +162,7 @@ public class SiteDAO implements CommonNamedDAO<Collection<PreviewTIV>> {
             LogController.appendLogViewText(items.size() + " deleted");
 
         } catch (SQLException ex) {
-            Logger.getLogger(EstimateDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EstimateDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -229,7 +229,7 @@ public class SiteDAO implements CommonNamedDAO<Collection<PreviewTIV>> {
             });
             LogController.appendLogViewText(items.size() + " inserted");
         } catch (SQLException ex) {
-            Logger.getLogger(EstimateDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EstimateDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 

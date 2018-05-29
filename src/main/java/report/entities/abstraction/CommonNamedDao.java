@@ -17,7 +17,7 @@ import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public interface CommonNamedDAO<E> extends CommonDAO<E> {
+public interface CommonNamedDao<E> extends CommonDao<E>,MementoDao<E> {
 
     String getSqlTableName();
 
@@ -44,7 +44,7 @@ public interface CommonNamedDAO<E> extends CommonDAO<E> {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(CommonDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(CommonDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return FXCollections.observableArrayList(disSet);
     }

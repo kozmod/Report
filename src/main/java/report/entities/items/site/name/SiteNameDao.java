@@ -2,12 +2,9 @@ package report.entities.items.site.name;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.entities.abstraction.CommonDAO;
-import report.entities.abstraction.CommonNamedDAO;
-import report.entities.items.estimate.EstimateDAO;
-import report.entities.items.estimate.EstimateTVI;
+import report.entities.abstraction.CommonDao;
+import report.entities.items.estimate.EstimateDao;
 import report.models.sql.SqlConnector;
-import report.usage_strings.SQL;
 
 
 import java.sql.*;
@@ -15,7 +12,7 @@ import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SiteNameDAO implements CommonDAO<Collection<SiteNameTIV>> {
+public class SiteNameDao implements CommonDao<Collection<SiteNameTIV>> {
 
 
     @Override
@@ -41,7 +38,7 @@ public class SiteNameDAO implements CommonDAO<Collection<SiteNameTIV>> {
                 listSiteNameTIV.add(item);
             }
         } catch (SQLException ex) {
-            Logger.getLogger(EstimateDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EstimateDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return listSiteNameTIV;
     }

@@ -36,7 +36,7 @@ import report.models.view.nodesHelpers.StageCreator;
 import report.models.sql.sqlQuery.BackUpQuery;
 import report.entities.items.site.PreviewTIV;
 import report.models.sql.sqlQuery.InsertFileXLSQuery;
-import report.entities.items.site.SiteDAO;
+import report.entities.items.site.SiteDao;
 import report.usage_strings.SQL;
 
 
@@ -427,7 +427,7 @@ public class RootLayoutController implements Initializable {
                     printEstToXmlMenuItem.setDisable(false);
 
                     //Update Preview TableWrapper OBS-LIST
-                    EstimateController.Est.Common.setSiteObs(new SiteDAO(selectedTreeElemParent, selectedItem.getEntity().getIdCountConst()).getData());
+                    EstimateController.Est.Common.setSiteObs(new SiteDao(selectedTreeElemParent, selectedItem.getEntity().getIdCountConst()).getData());
                     previewTable.setItems(EstimateController.Est.Common.getPreviewObservableList());
 
                     //create Coefficient

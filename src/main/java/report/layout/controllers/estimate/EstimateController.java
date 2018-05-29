@@ -29,17 +29,16 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import report.entities.abstraction.CommonDAO;
+import report.entities.abstraction.CommonDao;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.KS.KS_TIV;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
-import report.entities.items.estimate.EstimateDAO;
+import report.entities.items.estimate.EstimateDao;
 import report.entities.items.estimate.EstimateTVI;
 import report.entities.items.site.PreviewTIV;
-import report.entities.items.site.SiteDAO;
+import report.entities.items.site.SiteDao;
 import report.layout.controllers.addKS.AddKSController;
 import report.layout.controllers.root.RootLayoutController;
-import report.entities.items.contractor.ContractorDAO;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.models.converters.dateStringConverters.LocalDayStringConverter;
 import report.usage_strings.PathStrings;
@@ -53,7 +52,7 @@ import report.models.view.nodesHelpers.StageCreator;
 import report.models.printer.PrintKS;
 import report.models.view.customNodes.TabModel;
 import report.models.view.wrappers.table.TableWrapperEST;
-import report.entities.items.KS.KS_DAO;
+import report.entities.items.KS.KS_Dao;
 import report.models.view.customNodes.ContextMenuOptional;
 
 
@@ -152,13 +151,13 @@ public class EstimateController implements Initializable {
                 return FXCollections.observableArrayList();
         }
 
-        public void updateList_DL(CommonDAO dao) {
+        public void updateList_DL(CommonDao dao) {
             allItems = (ObservableList<? extends AbstractEstimateTVI>) dao.getData();
         }
 
         //Update ---------------------------------------------------------------------------
         public void updatePreviewTable() {
-            new SiteDAO().dellAndInsert(previewTableObs);
+            new SiteDao().dellAndInsert(previewTableObs);
         }
 
         public void updateTabData() {
@@ -182,7 +181,7 @@ public class EstimateController implements Initializable {
             switch (this) {
                 case Base:
                 case Changed:
-                    allItems = new EstimateDAO(this).getData();
+                    allItems = new EstimateDao(this).getData();
                     tabMap = allItems.stream()
                             .filter(item -> item.getDel() != 1)
                             .sorted(Comparator.comparing(AbstractEstimateTVI::getJM_name))
@@ -197,7 +196,7 @@ public class EstimateController implements Initializable {
                             ));
                     break;
                 case KS:
-                    allItems = new KS_DAO(this).getData();
+                    allItems = new KS_Dao(this).getData();
                     tabMap = allItems.stream()
                             .filter(item -> item.getDel() != 1)
                             .sorted(Comparator.comparing(AbstractEstimateTVI::getJM_name))
@@ -394,7 +393,7 @@ public class EstimateController implements Initializable {
         addFromModelButton.setOnAction(event -> {
             if (!enumEst.getSiteSecondValue(SQL.Site.CONTRACTOR).equals("-")
                     || !enumEst.getSiteSecondValue(SQL.Site.TYPE_HOME).equals("-")) {
-                new EstimateDAO().insertEstNewTables(enumEst);
+                new EstimateDao().insertEstNewTables(enumEst);
                 //            init_Lists();
                 //            if(enumEst == Est.Base)    init_EstBase();
                 //            if(enumEst == Est.Changed) init_EstChaged();
@@ -587,7 +586,7 @@ public class EstimateController implements Initializable {
                 && selectedFile != null
                 ) {
             new PrintKS(tableKSWrapper.getItems(),
-                    new ContractorDAO().getOne(Est.KS.getSiteSecondValue(SQL.KS.CONTRACTOR)),
+//                    new ContractorDao().getOne(Est.KS.getSiteSecondValue(SQL.KS.CONTRACTOR)), //todo change !!!!
                     selectedFile.toPath()
             );
         }
@@ -598,7 +597,7 @@ public class EstimateController implements Initializable {
     private void handle_deleteKS(ActionEvent event) {
         if (!listKS.getSelectionModel().isEmpty() && listKS.getSelectionModel().getSelectedItem() != null) {
             String selectedItemKS = listKS.getSelectionModel().getSelectedItem().toString();
-            new KS_DAO().deleteKS(selectedItemKS);
+            new KS_Dao().deleteKS(selectedItemKS);
             ksMap.remove(Integer.parseInt(selectedItemKS));
             listKS.getItems().clear();
             listKS.getItems().addAll(ksMap.keySet());

@@ -2,7 +2,8 @@ package report.models.view.wrappers.table;
 
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableView;
-import report.entities.abstraction.CommonDAO;
+import report.entities.abstraction.CommonDao;
+import report.entities.abstraction.MementoDao;
 import report.entities.abstraction.Reverse;
 import report.entities.items.Clone;
 import report.entities.items.DItem;
@@ -14,18 +15,18 @@ public class ReverseTableWrapper<E extends Reverse & Clone> extends AbstractTabl
 
     private final TableView<DItem> tableView;
     private E reverseObj;
-    private CommonDAO<E> commonDAO;
+    private MementoDao<E> commonDAO;
 
     /***************************************************************************
      *                                                                         *
      * Constructor                                                             *
      *                                                                         *
      **************************************************************************/
-    public ReverseTableWrapper(String title, TableView<DItem> table, CommonDAO<E> commonDao) {
+    public ReverseTableWrapper(String title, TableView<DItem> table, MementoDao<E> commonDao) {
         this(title, table, null, commonDao);
     }
 
-    public ReverseTableWrapper(String title, TableView<DItem> table, E reverseObj, CommonDAO<E> commonDao) {
+    public ReverseTableWrapper(String title, TableView<DItem> table, E reverseObj, MementoDao<E> commonDao) {
         super(title);
         this.commonDAO = commonDao;
         this.reverseObj = reverseObj;
@@ -84,7 +85,7 @@ public class ReverseTableWrapper<E extends Reverse & Clone> extends AbstractTabl
     }
 
     @Override
-    public CommonDAO getDAO() {
+    public CommonDao getDAO() {
         return this.commonDAO;
     }
 

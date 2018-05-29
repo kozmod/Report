@@ -1,7 +1,7 @@
 
 package report.entities.items.estimate;
 
-import report.entities.abstraction.CommonNamedDAO;
+import report.entities.abstraction.CommonNamedDao;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.layout.controllers.LogController;
@@ -28,15 +28,15 @@ import report.layout.controllers.estimate.EstimateController.Est;
 import report.entities.items.cb.AddEstTIV;
 
 
-public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
+public class EstimateDao implements CommonNamedDao<Collection<EstimateTVI>> {
 
     private Est enumEst;
     private String tableName = SQL.Tables.ESTIMATE;
 
-    public EstimateDAO() {
+    public EstimateDao() {
     }
 
-    public EstimateDAO(Est enumEst) {
+    public EstimateDao(Est enumEst) {
         this.enumEst = enumEst;
     }
 
@@ -147,7 +147,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
                 warning = warning.getNextWarning();
             }
         } catch (SQLException ex) {
-            Logger.getLogger(EstimateDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EstimateDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return listEstAll;
@@ -198,7 +198,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(EstimateDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EstimateDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -290,7 +290,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
 
 
         } catch (SQLException ex) {
-            Logger.getLogger(EstimateDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EstimateDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return listEstAll;
@@ -326,7 +326,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
             LogController.appendLogViewText(items.size() + " deleted");
 
         } catch (SQLException ex) {
-            Logger.getLogger(EstimateDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EstimateDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 //    @Override
@@ -427,7 +427,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
             });
             LogController.appendLogViewText(items.size() + " inserted");
         } catch (SQLException ex) {
-            Logger.getLogger(EstimateDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EstimateDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -510,7 +510,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
 
             pstmt.execute();
         } catch (SQLException ex) {
-            Logger.getLogger(EstimateDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EstimateDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -570,7 +570,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
 //           || diffList.exElements().size() > 0) delete(diffList.exElements());
 //        if(diffList.newElements()  != null 
 //           || diffList.newElements().size()  > 0) insert(diffList.newElements());     
-        CommonNamedDAO.super.dellAndInsert(memento);
+        CommonNamedDao.super.dellAndInsert(memento);
         //?????????????
 //        table.updateTableFromSQL(this.getOneBuildingPartList(Est.Base, table.getTitle()));
         Est.Base.updateList_DL(this);

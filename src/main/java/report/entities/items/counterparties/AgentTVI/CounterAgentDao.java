@@ -3,8 +3,8 @@ package report.entities.items.counterparties.AgentTVI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import report.entities.abstraction.CommonNamedDAO;
-import report.entities.items.expenses.ExpensesDAO;
+import report.entities.abstraction.CommonDao;
+import report.entities.items.expenses.ExpensesDao;
 import report.models.sql.SqlConnector;
 import report.models.view.LinkedNamePair;
 import report.usage_strings.SQL;
@@ -15,13 +15,9 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class CounterAgentDAO implements CommonNamedDAO<Collection<CountAgentTVI>> {
+public class CounterAgentDao implements CommonDao<Collection<CountAgentTVI>> {
 
 
-    @Override
-    public String getSqlTableName() {
-        return SQL.Tables.COUNTERPARTIES;
-    }
 
     @Override
     public ObservableList<CountAgentTVI> getData() {
@@ -50,7 +46,7 @@ public class CounterAgentDAO implements CommonNamedDAO<Collection<CountAgentTVI>
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            Logger.getLogger(ExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExpensesDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -76,7 +72,7 @@ public class CounterAgentDAO implements CommonNamedDAO<Collection<CountAgentTVI>
             pstmt.executeBatch();
         } catch (SQLException ex) {
             ex.printStackTrace();
-            Logger.getLogger(ExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExpensesDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }
@@ -101,13 +97,13 @@ public class CounterAgentDAO implements CommonNamedDAO<Collection<CountAgentTVI>
                             newElementId = rs.getInt("ID");
                             if (newElementId != -1) {
                                 item.setIdName(newElementId);
-                                System.out.println(" new element ID " + newElementId + " see ->CounterAgentDAO ");
+                                System.out.println(" new element ID " + newElementId + " see ->CounterAgentDao ");
                             }
                         }
                     }
                 }
             } catch (SQLException ex) {
-                Logger.getLogger(ExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(ExpensesDao.class.getName()).log(Level.SEVERE, null, ex);
             }
             try (Connection connection = SqlConnector.getInstance();
                  CallableStatement cstmt = connection.prepareCall(sqlAddFRK)) {

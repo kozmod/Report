@@ -6,9 +6,9 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import report.entities.items.AbstractEstimateTVI;
-import report.entities.items.KS.KS_DAO;
+import report.entities.items.KS.KS_Dao;
 import report.entities.items.KS.KS_TIV;
-import report.entities.items.estimate.EstimateDAO;
+import report.entities.items.estimate.EstimateDao;
 import report.entities.items.estimate.EstimateTVI;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.models.view.wrappers.table.TableWrapper;
@@ -34,7 +34,7 @@ public class EstimateControllerNodeUtils implements TableFactory {
      * @see EstimateController.Est - enumeration of "Estimate Tables"
      */
     public static TableWrapperEST getEst(EstimateController.Est enumEst, String title) {
-        TableWrapperEST table = new TableWrapperEST(title, new TableView(), new EstimateDAO(enumEst));
+        TableWrapperEST table = new TableWrapperEST(title, new TableView(), new EstimateDao(enumEst));
 
 
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -174,7 +174,7 @@ public class EstimateControllerNodeUtils implements TableFactory {
      */
     public static TableWrapperEST<KS_TIV> decorKS(TableView tableView) {
         TableWrapperEST table = new TableWrapperEST(tableView,
-                new KS_DAO(EstimateController.Est.KS));
+                new KS_Dao(EstimateController.Est.KS));
 
 
         table.setEditable(true);

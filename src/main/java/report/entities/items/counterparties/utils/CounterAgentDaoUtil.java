@@ -3,7 +3,7 @@ package report.entities.items.counterparties.utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.entities.abstraction.DaoUtil;
-import report.entities.items.expenses.ExpensesDAO;
+import report.entities.items.expenses.ExpensesDao;
 import report.models.sql.SqlConnector;
 import report.models.view.LinkedNamePair;
 
@@ -56,7 +56,7 @@ public class CounterAgentDaoUtil implements DaoUtil<String, Integer> {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            Logger.getLogger(ExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExpensesDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -79,7 +79,7 @@ public class CounterAgentDaoUtil implements DaoUtil<String, Integer> {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            Logger.getLogger(ExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExpensesDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }

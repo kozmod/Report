@@ -9,9 +9,8 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import report.entities.abstraction.CommonDAO;
+import report.entities.abstraction.CommonDao;
 import report.entities.items.AbstractEstimateTVI;
-import report.entities.items.contractor.ContractorTIV;
 import report.usage_strings.SQL;
 import report.layout.controllers.estimate.EstimateController.Est;
 
@@ -23,10 +22,10 @@ public class PrintEstimate extends AbstractPrinterXML {
     private Document doc;
     private ObservableList<AbstractEstimateTVI> obsKS;
     private ObservableList<PreviewTIV> obsPreTab;
-    private ContractorTIV contractorObject;
+//    private ContractorTIV contractorObject;
 
     //Constructor =====================================================================================================================    
-    public PrintEstimate(CommonDAO dao) {
+    public PrintEstimate(CommonDao dao) {
         this.obsKS = FXCollections.observableArrayList((Collection<? extends AbstractEstimateTVI>) dao.getData());
 
 

@@ -20,7 +20,7 @@ import report.layout.controllers.estimate.EstimateController;
 import report.usage_strings.SQL;
 
 import report.models.view.nodesHelpers.InputValidator;
-import report.entities.items.KS.KS_DAO;
+import report.entities.items.KS.KS_Dao;
 
 
 public class AddKSController implements Initializable {
@@ -133,7 +133,7 @@ public class AddKSController implements Initializable {
             int ksNumber = Integer.parseInt(ksNumTextField.getText());
             int ksDate = (int) ksDatePicker.getValue().toEpochDay();
 
-            new KS_DAO().insertNewKS(ksNumber, ksDate, obsSelectedJM);
+            new KS_Dao().insertNewKS(ksNumber, ksDate, obsSelectedJM);
             //System.out.println(obsSelectedJM);
             showEstController.update_TapKS();
 

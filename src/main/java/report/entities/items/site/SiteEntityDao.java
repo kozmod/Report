@@ -1,7 +1,7 @@
 package report.entities.items.site;
 
-import report.entities.abstraction.CommonNamedDAO;
-import report.entities.items.estimate.EstimateDAO;
+import report.entities.abstraction.CommonNamedDao;
+import report.entities.items.estimate.EstimateDao;
 import report.models.sql.SqlConnector;
 
 import java.sql.*;
@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SiteEntityDAO implements CommonNamedDAO<SiteEntity> {
+public class SiteEntityDao implements CommonNamedDao<SiteEntity> {
     private static final String TABLE_NAME = "Site_New";
     private static final int REQUIRED_FOUND_SITE_QUANTITY = 1;
 
@@ -119,7 +119,7 @@ public class SiteEntityDAO implements CommonNamedDAO<SiteEntity> {
             //SQL commit
             connection.commit();
         } catch (SQLException ex) {
-            Logger.getLogger(EstimateDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(EstimateDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

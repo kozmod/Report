@@ -22,21 +22,20 @@ import org.controlsfx.property.editor.AbstractPropertyEditor;
 import org.controlsfx.property.editor.Editors;
 import org.controlsfx.property.editor.PropertyEditor;
 import org.controlsfx.validation.ValidationSupport;
-import report.entities.abstraction.CommonDAO;
+import report.entities.abstraction.CommonDao;
 import report.entities.contract.ContractTIV;
 import report.entities.items.DItem;
-import report.entities.items.contractor.ContractorDAO;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
-import report.entities.items.counterparties.AgentTVI.CounterAgentDAO;
+import report.entities.items.counterparties.AgentTVI.CounterAgentDao;
+import report.entities.items.counterparties.ReqBankDao;
 import report.entities.items.counterparties.utils.CounterAgentDaoUtil;
-import report.entities.items.counterparties.ReqBankDAO;
-import report.entities.items.counterparties.ReqCommonDAO;
-import report.entities.items.counterparties.ReqExBodyDAO;
+import report.entities.items.counterparties.ReqCommonDao;
+import report.entities.items.counterparties.ReqExBodyDao;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.entities.items.site.month.ReportingMonth;
 import report.entities.items.site.month.CashFlowDAO;
 import report.entities.items.site.name.SiteNameTIV;
-import report.entities.items.variable.PropertiesDAO;
+import report.entities.items.variable.PropertiesDao;
 import report.entities.items.variable.VariableTIV_new;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.models.view.LinkedNamePair;
@@ -66,7 +65,7 @@ public class AllPropertiesControllerNodeUtils implements TableFactory {
      * @return TableWrapper
      */
     static ReverseTableWrapper<VariableTIV_new> decorVariable(TableView table) {
-        ReverseTableWrapper<VariableTIV_new> tableWrapper = new ReverseTableWrapper<>("Общие параметры", table, new PropertiesDAO());
+        ReverseTableWrapper<VariableTIV_new> tableWrapper = new ReverseTableWrapper<>("Общие параметры", table, new PropertiesDao());
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
@@ -97,29 +96,6 @@ public class AllPropertiesControllerNodeUtils implements TableFactory {
         return tableWrapper;
     }
 
-
-    /**
-     * Create TableWrapper "Contractor"(AllPropertiesController).
-     * <br>
-     * Show SQL table Items where dell = 0
-     * <br>
-     *
-     * @return TableWrapper
-     */
-    static TableWrapper decorContractor(TableView table) {
-        TableWrapper tableWrapper = new TableWrapper(table, new ContractorDAO());
-
-        table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-//
-        TableColumn idColumn = tableWrapper.addColumn("ID", "id");
-        TableColumn contractorColumn = tableWrapper.addColumn("Подрядчик", "contractor");
-
-        idColumn.setMaxWidth(50);
-        idColumn.setMinWidth(35);
-
-        return tableWrapper;
-    }
-
     /**
      * Create TableWrapper "Counterparties"(AllPropertiesController).
      * <br>
@@ -129,7 +105,7 @@ public class AllPropertiesControllerNodeUtils implements TableFactory {
      * @return TableWrapper
      */
     static TableWrapper<CountAgentTVI> decorCountAgent(TableView<CountAgentTVI> table) {
-        CommonDAO dao = new CounterAgentDAO();
+        CommonDao dao = new CounterAgentDao();
         Map<String, Integer> formMap = CounterAgentDaoUtil.getForm();
         Map<String, Integer> typeMap = CounterAgentDaoUtil.getType();
 
@@ -201,9 +177,9 @@ public class AllPropertiesControllerNodeUtils implements TableFactory {
         PropertySheet countSheet = new PropertySheet();
         PropertySheetWrapper propertySheetWrapper = new PropertySheetWrapper(
                 countSheet,
-                new ReqCommonDAO(),
-                new ReqBankDAO(),
-                new ReqExBodyDAO()
+                new ReqCommonDao(),
+                new ReqBankDao(),
+                new ReqExBodyDao()
         );
 
         countSheet.setContextMenu(ContextMenuFactory.getCommonSU(propertySheetWrapper));//TODO
@@ -289,7 +265,7 @@ public class AllPropertiesControllerNodeUtils implements TableFactory {
         editButton.setDisable(true);
         Button saveListButton = new Button("Сохранить");
         saveListButton.setOnAction(event -> {
-            CounterAgentDAO counterAgentDAO = new CounterAgentDAO();
+            CounterAgentDao counterAgentDAO = new CounterAgentDao();
             counterAgentDAO.delete(
                     FXCollections.observableArrayList(tableWrapper.getSelectionModel().getSelectedItem())
             );

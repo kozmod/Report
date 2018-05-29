@@ -9,7 +9,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.KS.KS_TIV;
-import report.entities.items.contractor.ContractorTIV;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.usage_strings.SQL;
 import report.layout.controllers.estimate.EstimateController.Est;
@@ -22,7 +21,7 @@ public class PrintKS extends AbstractPrinterXML {
     private ObservableList<KS_TIV> obsKS;
     //    private ObservableList<PreviewTableItem>  obsPreTab;
     private String ksNumber, ksDate;
-    private ContractorTIV contractorObject;
+//    private ContractorTIV contractorObject;
 
 
 //Constructor =====================================================================================================================    
@@ -45,21 +44,23 @@ public class PrintKS extends AbstractPrinterXML {
 //        saveDocument(System.getProperty("user.dir") + "\\lib\\XML_Models\\КС-2 № " + ksNumber + ".xml");
 //    }
 
-    public PrintKS(ObservableList<KS_TIV> obsKS, ContractorTIV contractor, Path path) {
-        this.obsKS = obsKS;
-        this.ksNumber = Integer.toString(((KS_TIV) obsKS.get(0)).getKSNumber());
-        this.ksDate = LocalDate.ofEpochDay(((KS_TIV) obsKS.get(0)).getKSDate()).toString();
-
-        this.contractorObject = contractor;
-
-        doc = buildDocument("\\lib\\XML_Models\\KS-2.xml");
-        setObjectName();
-        setDates();
-        setNumber();
-        addJMrows();
-        setAdress();
-        saveDocument(path.toString());
-    }
+//    public PrintKS(ObservableList<KS_TIV> obsKS,
+//                   ContractorTIV contractor,
+//                   Path path) {
+//        this.obsKS = obsKS;
+//        this.ksNumber = Integer.toString(((KS_TIV) obsKS.get(0)).getKSNumber());
+//        this.ksDate = LocalDate.ofEpochDay(((KS_TIV) obsKS.get(0)).getKSDate()).toString();
+//
+////        this.contractorObject = contractor;
+//
+//        doc = buildDocument("\\lib\\XML_Models\\KS-2.xml");
+//        setObjectName();
+//        setDates();
+//        setNumber();
+//        addJMrows();
+//        setAdress();
+//        saveDocument(path.toString());
+//    }
 
     public PrintKS(ObservableList<KS_TIV> obsKS, Path path) {
         this.obsKS = obsKS;
@@ -107,9 +108,9 @@ public class PrintKS extends AbstractPrinterXML {
     private void setAdress() {
         String text = new StringBuilder("Объект: ")
                 .append("ООО «")
-                .append(contractorObject.getContractor())
+//                .append(contractorObject.getContractor())
                 .append("», ")
-                .append(contractorObject.getAdress())
+//                .append(contractorObject.getAdress())
                 .toString();
 
         getTargetElement("Contractor").setTextContent(text);

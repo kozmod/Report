@@ -1,6 +1,6 @@
 package report.entities.items.variable;
 
-import report.entities.abstraction.CommonNamedDAO;
+import report.entities.abstraction.CommonDao;
 import report.models.sql.SqlConnector;
 
 import java.sql.Connection;
@@ -10,8 +10,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PropertiesDAO implements CommonNamedDAO<VariableTIV_new> {
-
+public class PropertiesDao implements CommonDao<VariableTIV_new> {
 
     @Override
     public VariableTIV_new getData() {
@@ -43,16 +42,13 @@ public class PropertiesDAO implements CommonNamedDAO<VariableTIV_new> {
 
     @Override
     public void delete(VariableTIV_new entry) {
+        throw new UnsupportedOperationException("не реализовано");
 
     }
 
     @Override
     public void insert(VariableTIV_new entry) {
-
+        throw new UnsupportedOperationException("не реализовано");
     }
 
-    @Override
-    public String getSqlTableName() {
-        return null;
-    }
 }

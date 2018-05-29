@@ -2,13 +2,7 @@ package report.entities.abstraction;
 
 import report.models.mementos.Memento;
 
-public interface CommonDAO<E> {
-    <HEIR extends E> HEIR getData();
-
-    void delete(E entry);
-
-    void insert(E entry);
-
+public interface MementoDao<E> extends CommonDao<E> {
     /**
      * Delete & Insert data to SQL in direct sequence
      *

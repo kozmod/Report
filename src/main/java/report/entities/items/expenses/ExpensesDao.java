@@ -1,11 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package report.entities.items.period;
 
-import report.entities.abstraction.CommonNamedDAO;
+package report.entities.items.expenses;
+
+import report.entities.abstraction.CommonDao;
+import report.models.sql.SqlConnector;
 import report.usage_strings.SQL;
 
 import java.sql.Connection;
@@ -21,66 +18,64 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layout.controllers.LogController;
 import report.layout.controllers.estimate.EstimateController.Est;
-import report.models.sql.SqlConnector;
 
-public class PeriodDAO implements CommonNamedDAO<Collection<PeriodTIV>> {
+
+public class ExpensesDao implements CommonDao<Collection<ExpensesTVI>> {
 
     /**
-     * Get String of a Mirror (SQL.Tables).
+     * Get List of expenses Items from SQL (SiteExpenses)
      *
-     * @return List of AbstractEstimateTVI
+     * @return ObservableList of ExpensesTVI
      */
     @Override
-    public String getSqlTableName() {
-        return SQL.Tables.SITE_JOB_PERIOD;
-    }
+    public ObservableList<ExpensesTVI> getData() {
+        ObservableList<ExpensesTVI> list = FXCollections.observableArrayList(ExpensesTVI.extractor());
 
-    @Override
-    public ObservableList<PeriodTIV> getData() {
-        ObservableList<PeriodTIV> list = FXCollections.observableArrayList(PeriodTIV.extractor());
-
-        String sqlQuery = "SELECT "       //[id] [SiteNumber] [Contractor][Text][DateFrom][DateTo]
+        String sqlQuery = "SELECT "       //[id] [SiteNumber] [Contractor][Text][Type][Value]
                 + " * "
-                + "from dbo.[SiteJobPeriod] "
+                + "from dbo.[SiteExpenses] "
                 + "WHERE [SiteNumber] = ? "
-                + "AND   [Contractor] = ? "
+                + "AND   Id_Count = ? "
                 + "AND   [dell] = 0";
 
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement(sqlQuery);) {
             //set false SQL Autocommit
             pstmt.setString(1, Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER));
-            pstmt.setString(2, Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
+            pstmt.setInt(2, Est.Common.getCountAgentTVI().getIdCountConst());
             pstmt.execute();
-
             try (ResultSet rs = pstmt.getResultSet()) {
                 while (rs.next())
-                    list.add(new PeriodTIV(
+                    list.add(new ExpensesTVI(
                                     rs.getLong(SQL.Common.ID),
                                     rs.getString(SQL.Common.SITE_NUMBER),
                                     rs.getString(SQL.Common.CONTRACTOR),
                                     rs.getString(SQL.Common.TEXT),
-                                    rs.getInt(SQL.Period.DATE_FROM),
-                                    rs.getInt(SQL.Period.DATE_TO)
+                                    rs.getByte(SQL.Common.TYPE),
+                                    rs.getDouble(SQL.Common.VALUE)
                             )
                     );
-
-
             }
         } catch (SQLException ex) {
-            Logger.getLogger(PeriodDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExpensesDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
 
+
+    /**
+     * Delete ExpensesTVI Entities from SQL (SiteExpenses)
+     *
+     * @param items (Collection of TableExpenses)
+     */
     @Override
-    public void delete(Collection<PeriodTIV> items) {
-        String sql = "update [dbo].[SiteJobPeriod] SET dell = 1 WHERE [id] = ? AND [dell] = 0;";
+    public void delete(Collection<ExpensesTVI> items) {
+        String sql = "update [dbo].[SiteExpenses] SET dell = 1 WHERE [id] = ? AND [dell] = 0;";
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
-            for (PeriodTIV obsItem : items) {
+            for (ExpensesTVI obsItem : items) {
                 pstmt.setLong(1, obsItem.getId());
                 pstmt.addBatch();
             }
@@ -98,36 +93,45 @@ public class PeriodDAO implements CommonNamedDAO<Collection<PeriodTIV>> {
             LogController.appendLogViewText(items.size() + " deleted");
 
         } catch (SQLException ex) {
-            Logger.getLogger(PeriodDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExpensesDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
+    /**
+     * Insert ExpensesTVI Entities to SQL (SiteExpenses)
+     *
+     * @param items (Collection of ExpensesTVI)
+     */
     @Override
-    public void insert(Collection<PeriodTIV> items) {
-        String sql = "INSERT into [dbo].[SiteJobPeriod] "
+    public void insert(Collection<ExpensesTVI> items) {
+        String sql = "INSERT into [dbo].[SiteExpenses] "
                 + "( "
                 + " [SiteNumber]"
                 + ",[Contractor]"
                 + ",[Text]"
-                + ",[DateFrom]"
-                + ",[DateTo]"
+                + ",[Type]"
+                + ",[Value]"
+                + ",[Id_Count]"
                 + " ) "
-                + "VALUES(?,?,?,?,?)";
+                + "VALUES(?,?,?,?,?,?)";
+//                    + "VALUES('10а','УЮТСТРОЙ','ssss',0,11111)";
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement(sql,
                      Statement.RETURN_GENERATED_KEYS);) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
 
-            for (PeriodTIV obsItem : items) {
+            for (ExpensesTVI obsItem : items) {
                 pstmt.setString(1, obsItem.getSiteNumber());
                 pstmt.setString(2, obsItem.getContractor());
                 pstmt.setString(3, obsItem.getText());
-                pstmt.setInt(4, obsItem.getDateFrom());
-                pstmt.setInt(5, obsItem.getDateTo());
+                pstmt.setInt(4, obsItem.getType());
+                pstmt.setDouble(5, obsItem.getValue());
+                pstmt.setInt(6, Est.Common.getCountAgentTVI().getIdCountConst());
 
                 int affectedRows = pstmt.executeUpdate();
 
+                System.out.println(affectedRows);
                 try (ResultSet generategKeys = pstmt.getGeneratedKeys();) {
                     if (generategKeys.next())
                         obsItem.setId(generategKeys.getLong(1));
@@ -146,7 +150,9 @@ public class PeriodDAO implements CommonNamedDAO<Collection<PeriodTIV>> {
 //                });
             LogController.appendLogViewText(items.size() + " inserted");
         } catch (SQLException ex) {
-            Logger.getLogger(PeriodDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExpensesDao.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (Exception ex) {
+            Logger.getLogger(ExpensesDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

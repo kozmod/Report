@@ -1,6 +1,6 @@
 package report.entities.abstraction;
 
-import report.entities.items.expenses.ExpensesDAO;
+import report.entities.items.expenses.ExpensesDao;
 import report.models.sql.SqlConnector;
 
 import java.sql.Connection;
@@ -31,7 +31,7 @@ public interface DaoUtil<K, V> {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(ExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExpensesDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return map;
     }

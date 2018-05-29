@@ -6,9 +6,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
-import report.entities.items.expenses.ExpensesDAO;
+import report.entities.items.expenses.ExpensesDao;
 import report.entities.items.expenses.ExpensesTVI;
-import report.entities.items.period.PeriodDAO;
+import report.entities.items.period.PeriodDao;
 import report.entities.items.period.PeriodTIV;
 import report.entities.items.site.PreviewTIV;
 import report.models.converters.dateStringConverters.EpochDayStringConverter;
@@ -101,7 +101,7 @@ public class ExpensesControllerUtils {
      * @return TableWrapper(child of TableView)
      */
     public static TableWrapper decorProperty_Expenses(TableView table) {
-        TableWrapper<ExpensesTVI> tableWrapper = new TableWrapper(table, new ExpensesDAO());
+        TableWrapper<ExpensesTVI> tableWrapper = new TableWrapper(table, new ExpensesDao());
 
         tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
@@ -122,7 +122,7 @@ public class ExpensesControllerUtils {
      * @return TableWrapper(child of TableView)
      */
     public static TableWrapper<PeriodTIV> decorProperty_JobPeriod(TableView table) {
-        TableWrapper tableWrapper = new TableWrapper(table, new PeriodDAO());
+        TableWrapper tableWrapper = new TableWrapper(table, new PeriodDao());
         tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
         TableColumn dateFromColumn = tableWrapper.addColumn("Датаначала", "dateFrom");

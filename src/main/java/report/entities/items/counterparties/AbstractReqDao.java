@@ -1,6 +1,6 @@
 package report.entities.items.counterparties;
 
-import report.entities.abstraction.CommonNamedDAO;
+import report.entities.abstraction.CommonNamedDao;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.models.sql.SqlConnector;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public abstract class AbstractReqDAO implements CommonNamedDAO<List<ObjectPSI>> {
+public abstract class AbstractReqDao implements CommonNamedDao<List<ObjectPSI>> {
     public abstract List<ObjectPSI> getByID(int id);
 
     @Override
@@ -39,7 +39,7 @@ public abstract class AbstractReqDAO implements CommonNamedDAO<List<ObjectPSI>> 
 //            });
         } catch (SQLException ex) {
             ex.printStackTrace();
-            Logger.getLogger(AbstractReqDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractReqDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
@@ -83,7 +83,7 @@ public abstract class AbstractReqDAO implements CommonNamedDAO<List<ObjectPSI>> 
 //                LogController.appendLogViewText(items.size() + " inserted");
         } catch (SQLException ex) {
             ex.printStackTrace();
-            Logger.getLogger(AbstractReqDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(AbstractReqDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }

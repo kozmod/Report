@@ -1,7 +1,7 @@
 package report.entities.items.counterparties;
 
 import javafx.collections.FXCollections;
-import report.entities.items.expenses.ExpensesDAO;
+import report.entities.items.expenses.ExpensesDao;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.models.sql.SqlConnector;
 
@@ -14,7 +14,7 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class ReqExBodyDAO extends AbstractReqDAO {
+public class ReqExBodyDao extends AbstractReqDao {
     //common data
     private static final String SQL = "SELECT * FROM [dbo].[Count_Req_ExBody]  WHERE  id_Count = ? AND dell =0";
     private static final String SQL_TABLE = "[dbo].[Count_Req_ExBody]";
@@ -36,7 +36,7 @@ public class ReqExBodyDAO extends AbstractReqDAO {
 
     @Override
     public String getSqlTableName() {
-        return ReqExBodyDAO.SQL_TABLE;
+        return ReqExBodyDao.SQL_TABLE;
     }
 
     @Override
@@ -74,7 +74,7 @@ public class ReqExBodyDAO extends AbstractReqDAO {
             }
             list.addAll(map.values());
         } catch (SQLException ex) {
-            Logger.getLogger(ExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExpensesDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }

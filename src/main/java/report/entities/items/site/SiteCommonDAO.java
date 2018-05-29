@@ -11,14 +11,12 @@ import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.models.view.wrappers.toString.CounterAgentToStringWrapper;
 import report.models.view.wrappers.toString.SiteToStringWrapper;
 import report.models.view.wrappers.toString.ToStringWrapper;
-import report.usage_strings.SQL;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,9 +25,6 @@ import report.models.sql.SqlConnector;
 
 
 public class SiteCommonDAO {
-
-    public SiteCommonDAO() {
-    }
 
     /**
      * Get ArrayList to TreeView Of Sites and make TreeViewItem.
@@ -256,7 +251,7 @@ public class SiteCommonDAO {
                 }
             }
         } catch (SQLException ex) {
-            Logger.getLogger(SiteDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(SiteDao.class.getName()).log(Level.SEVERE, null, ex);
         }
 
 

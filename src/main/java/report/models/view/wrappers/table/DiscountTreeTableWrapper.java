@@ -2,7 +2,8 @@ package report.models.view.wrappers.table;
 
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TreeTableView;
-import report.entities.abstraction.CommonDAO;
+import report.entities.abstraction.CommonDao;
+import report.entities.abstraction.MementoDao;
 import report.entities.items.DItem;
 import report.entities.items.discount_coef.DiscountCoef;
 import report.models.mementos.EntityMemento;
@@ -13,18 +14,18 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef>
 
     private final TreeTableView<DItem> treeTableView;
     private DiscountCoef discountCoef;
-    private CommonDAO<DiscountCoef> commonDAO;
+    private MementoDao<DiscountCoef> commonDAO;
 
     /***************************************************************************
      *                                                                         *
      * Constructor                                                             *
      *                                                                         *
      **************************************************************************/
-    public DiscountTreeTableWrapper(String title, TreeTableView treeView, CommonDAO<DiscountCoef> commonDao) {
+    public DiscountTreeTableWrapper(String title, TreeTableView treeView, MementoDao<DiscountCoef> commonDao) {
         this(title, treeView, commonDao.getData(), commonDao);
     }
 
-    public DiscountTreeTableWrapper(String title, TreeTableView treeView, DiscountCoef discountCoef, CommonDAO<DiscountCoef> commonDao) {
+    public DiscountTreeTableWrapper(String title, TreeTableView treeView, DiscountCoef discountCoef, MementoDao<DiscountCoef> commonDao) {
         super(title);
         this.commonDAO = commonDao;
         this.discountCoef = discountCoef;
@@ -101,7 +102,7 @@ public class DiscountTreeTableWrapper extends AbstractTableWrapper<DiscountCoef>
     }
 
     @Override
-    public CommonDAO getDAO() {
+    public CommonDao getDAO() {
         return this.commonDAO;
     }
 

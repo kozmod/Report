@@ -4,10 +4,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.TextFieldTableCell;
 import report.entities.items.DItem;
 import report.entities.items.discount_coef.DiscountQuery;
+import report.entities.items.osr.OSR_Dao;
 import report.entities.items.osr.OSR_TIV;
-import report.entities.items.osr.OSR_DAO;
 import report.entities.items.plan.PlanTIV;
-import report.entities.items.plan.PlanDAO;
+import report.entities.items.plan.PlanDao;
 import report.layout.controllers.planning.temp.EditingTreeTableCell;
 import report.models.coefficient.Quantity;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
@@ -33,7 +33,7 @@ public class PlaningControllerUtils implements TableFactory {
      */
 
     public static TableWrapper<PlanTIV> decorPlan(TableView<PlanTIV> table) {
-        TableWrapper<PlanTIV> tableWrapper = new TableWrapper(table, new PlanDAO());
+        TableWrapper<PlanTIV> tableWrapper = new TableWrapper(table, new PlanDao());
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 //
@@ -165,7 +165,7 @@ public class PlaningControllerUtils implements TableFactory {
      */
     @SuppressWarnings("Duplicates")
     static TableWrapper decorOSR(TableView table) {
-        TableWrapper tableWrapper = new TableWrapper(table, new OSR_DAO());
+        TableWrapper tableWrapper = new TableWrapper(table, new OSR_Dao());
 
 //        tableWrapper.setEditable(true);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

@@ -12,7 +12,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.StackPane;
-import report.entities.items.estimate.EstimateDAO;
+import report.entities.items.estimate.EstimateDao;
 import report.entities.items.estimate.EstimateTVI;
 import report.layout.controllers.estimate.EstimateController.Est;
 import report.layout.controllers.estimate.EstimateControllerNodeUtils;
@@ -98,7 +98,7 @@ public class TitledStackModel extends StackPane {
 
 
     public void updateTableItems() {
-        tableViewWrapper.updateTableFromBASE(new EstimateDAO().getOneBuildingPartList(enumEst, title));
+        tableViewWrapper.updateTableFromBASE(new EstimateDao().getOneBuildingPartList(enumEst, title));
     }
 
 

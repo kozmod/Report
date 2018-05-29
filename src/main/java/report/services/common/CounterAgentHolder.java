@@ -3,22 +3,21 @@ package report.services.common;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.entities.items.AbstractEstimateTVI;
-import report.entities.items.KS.KS_DAO;
+import report.entities.items.KS.KS_Dao;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
-import report.entities.items.estimate.EstimateDAO;
+import report.entities.items.estimate.EstimateDao;
 import report.entities.items.estimate.EstimateTVI;
 import report.entities.items.site.SiteEntity;
-import report.entities.items.site.SiteEntityDAO;
+import report.entities.items.site.SiteEntityDao;
 
 import java.util.*;
 import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 public class CounterAgentHolder {
 
     public enum SelectedCounterAgent {BASE, CHANGED, ADDITIONAL, KS}
 
-    private  final SiteEntity siteEntity;
+    private final SiteEntity siteEntity;
     private final CountAgentTVI selectedCounterAgen;
     public Map<SelectedCounterAgent, ObservableList<? extends AbstractEstimateTVI>> estDocuments;
 
@@ -29,13 +28,13 @@ public class CounterAgentHolder {
     public CounterAgentHolder(SiteEntity siteEntity, CountAgentTVI selectedCounterAgen) {
         this.selectedCounterAgen = selectedCounterAgen;
         this.siteEntity = siteEntity;
-//        this.estDocuments = new EnumMap<>(SelectedCounterAgent.class);
+        this.estDocuments = new EnumMap<>(SelectedCounterAgent.class);
         this.initDocuments();
     }
 
     public CounterAgentHolder(String siteNumber, CountAgentTVI selectedCounterAgen) {
         this(
-                new SiteEntityDAO().getDataByBusinessKey(siteNumber, selectedCounterAgen.getIdCountConst()),
+                new SiteEntityDao().getDataByBusinessKey(siteNumber, selectedCounterAgen.getIdCountConst()),
                 selectedCounterAgen
         );
     }
@@ -49,21 +48,22 @@ public class CounterAgentHolder {
 
     public ObservableList<? extends AbstractEstimateTVI> getDocument(SelectedCounterAgent type, boolean isNotDelete) {
         if (isNotDelete) {
-            estDocuments.get(type)
+            return estDocuments.get(type)
                     .stream()
                     .filter(item -> item.getDel() != 1)
                     .sorted(Comparator.comparing(AbstractEstimateTVI::getJM_name))
                     .collect(
-                            Collectors.groupingBy(AbstractEstimateTVI::getBuildingPart,
-                                    Collector.of(
-                                            () -> FXCollections.observableArrayList(EstimateTVI.extractor()),
-                                            ObservableList::add,
-                                            (l1, l2) -> {
-                                                l1.addAll(l2);
-                                                return l1;
-                                            }
-                                    )
-                            ));
+//                            Collectors.groupingBy(AbstractEstimateTVI::getBuildingPart,
+                            Collector.of(
+                                    () -> FXCollections.observableArrayList(EstimateTVI.extractor()),
+                                    ObservableList::add,
+                                    (l1, l2) -> {
+                                        l1.addAll(l2);
+                                        return l1;
+                                    }
+                            )
+//                            )
+                    );
         }
         return estDocuments.get(type);
     }
@@ -81,19 +81,19 @@ public class CounterAgentHolder {
         final String siteNumber = siteEntity.getSiteNumber();
         estDocuments.put(
                 SelectedCounterAgent.BASE,
-                new EstimateDAO().getData(siteNumber, 1, selectedCounterAgen)
+                new EstimateDao().getData(siteNumber, 1, selectedCounterAgen)
         );
         estDocuments.put(
                 SelectedCounterAgent.CHANGED,
-                new EstimateDAO().getData(siteNumber, 2, selectedCounterAgen)
+                new EstimateDao().getData(siteNumber, 2, selectedCounterAgen)
         );
         estDocuments.put(
                 SelectedCounterAgent.ADDITIONAL,
-                new EstimateDAO().getData(siteNumber, 3, selectedCounterAgen)
+                new EstimateDao().getData(siteNumber, 3, selectedCounterAgen)
         );
         estDocuments.put(
                 SelectedCounterAgent.KS,
-                new KS_DAO().getData(siteNumber, selectedCounterAgen)
+                new KS_Dao().getData(siteNumber, selectedCounterAgen)
         );
     }
 

@@ -20,9 +20,9 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import report.entities.items.plan.FactTIV;
-import report.entities.items.plan.PlanDAO;
+import report.entities.items.plan.PlanDao;
 import report.entities.items.plan.PlanTIV;
-import report.entities.items.site.SiteDAO;
+import report.entities.items.site.SiteDao;
 import report.layout.controllers.root.RootLayoutController;
 import report.models.view.wrappers.toString.CounterAgentToStringWrapper;
 import report.usage_strings.SQL;
@@ -53,11 +53,11 @@ public class AddSiteController implements Initializable {
     private ObservableList<String> listTypes;
 
     {
-        listPlan = new PlanDAO().getData();
-        listFact = new PlanDAO().getListFact();
-        listQueue = new SiteDAO().getDistinct(SQL.Site.QUEUE_BUILDING);
+        listPlan = new PlanDao().getData();
+        listFact = new PlanDao().getListFact();
+        listQueue = new SiteDao().getDistinct(SQL.Site.QUEUE_BUILDING);
         listContractors = AddSiteControllerService.getConterAgentList();
-        listTypes = new SiteDAO().getDistinct(SQL.Site.TYPE_HOME, ServiceStrings.Line);
+        listTypes = new SiteDao().getDistinct(SQL.Site.TYPE_HOME, ServiceStrings.Line);
     }
 
     /*!******************************************************************************************************************

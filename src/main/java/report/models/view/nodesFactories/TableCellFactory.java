@@ -5,12 +5,12 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.Clone;
-import report.entities.items.estimate.EstimateDAO;
+import report.entities.items.estimate.EstimateDao;
 import report.entities.items.estimate.EstimateTVI;
 import report.entities.items.osr.OSR_TIV;
-import report.entities.items.plan.PlanDAO;
+import report.entities.items.plan.PlanDao;
 import report.entities.items.site.PreviewTIV;
-import report.entities.items.site.SiteDAO;
+import report.entities.items.site.SiteDao;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -322,15 +322,15 @@ public class TableCellFactory {
             comboBox.setPrefWidth(150);
             switch (item.getSqlColumn()) {
                 case SQL.Site.CONTRACTOR:
-                    comboBox.setItems(new SiteDAO().getDistinct(SQL.Common.CONTRACTOR));
+                    comboBox.setItems(new SiteDao().getDistinct(SQL.Common.CONTRACTOR));
 //                                comboBox.setItems(new CommonQuery().getObsDISTINCT(SQL.Tables.C, SQL.Plan.TYPE_NAME, this));
                     break;
                 case SQL.Site.TYPE_HOME:
-                    comboBox.setItems(new EstimateDAO().getDistinct(SQL.Common.TYPE_HOME));
+                    comboBox.setItems(new EstimateDao().getDistinct(SQL.Common.TYPE_HOME));
 
                     break;
                 case SQL.Site.SITE_TYPE_ID:
-                    comboBox.setItems(new PlanDAO().getDistinct(SQL.Plan.TYPE_NAME));
+                    comboBox.setItems(new PlanDao().getDistinct(SQL.Plan.TYPE_NAME));
                     break;
                 case SQL.Site.STATUS_JOBS:
                     comboBox.setItems(FXCollections.observableArrayList("закончен", "не начат", "в работе"));

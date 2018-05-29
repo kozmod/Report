@@ -2,7 +2,7 @@ package report.entities.items.site.month;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.entities.items.expenses.ExpensesDAO;
+import report.entities.items.expenses.ExpensesDao;
 import report.models.sql.SqlConnector;
 import report.models.converters.dateStringConverters.LocalDayStringConverter;
 
@@ -53,7 +53,7 @@ public class CashFlowDAO {
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            Logger.getLogger(ExpensesDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ExpensesDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
