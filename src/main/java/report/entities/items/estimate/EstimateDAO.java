@@ -64,7 +64,7 @@ public class EstimateDAO implements CommonNamedDAO<Collection<EstimateTVI>> {
         );
     }
 
-    public ObservableList<EstimateTVI> getData(String siteNumber, int tableType,CountAgentTVI contractor) {
+    public ObservableList<EstimateTVI> getData(String siteNumber, int tableType, CountAgentTVI contractor) {
         ObservableList<EstimateTVI> listEstAll = FXCollections.observableArrayList();
         String sql = "SELECT "
                 + "E.[id]"

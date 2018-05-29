@@ -18,8 +18,8 @@ public class CounterAgentHolder {
 
     public enum SelectedCounterAgent {BASE, CHANGED, ADDITIONAL, KS}
 
-    public final SiteEntity siteEntity;
-    public final CountAgentTVI selectedCounterAgen;
+    private  final SiteEntity siteEntity;
+    private final CountAgentTVI selectedCounterAgen;
     public Map<SelectedCounterAgent, ObservableList<? extends AbstractEstimateTVI>> estDocuments;
 
     /*!******************************************************************************************************************
@@ -29,7 +29,7 @@ public class CounterAgentHolder {
     public CounterAgentHolder(SiteEntity siteEntity, CountAgentTVI selectedCounterAgen) {
         this.selectedCounterAgen = selectedCounterAgen;
         this.siteEntity = siteEntity;
-        this.estDocuments = new EnumMap<>(SelectedCounterAgent.class);
+//        this.estDocuments = new EnumMap<>(SelectedCounterAgent.class);
         this.initDocuments();
     }
 
