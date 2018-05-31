@@ -1,4 +1,4 @@
-package report.entities.abstraction;
+package report.entities.abstraction.dao;
 
 import report.entities.items.expenses.ExpensesDao;
 import report.models.sql.SqlConnector;

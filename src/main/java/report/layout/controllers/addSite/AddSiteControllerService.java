@@ -2,7 +2,7 @@ package report.layout.controllers.addSite;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.entities.abstraction.CommonDao;
+import report.entities.abstraction.dao.CommonDao;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.counterparties.AgentTVI.CounterAgentDao;
 import report.models.view.wrappers.toString.CounterAgentToStringWrapper;

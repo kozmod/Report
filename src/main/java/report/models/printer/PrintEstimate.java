@@ -9,7 +9,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import report.entities.abstraction.CommonDao;
+import report.entities.abstraction.dao.CommonDao;
 import report.entities.items.AbstractEstimateTVI;
 import report.usage_strings.SQL;
 import report.layout.controllers.estimate.EstimateController.Est;

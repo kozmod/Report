@@ -7,17 +7,15 @@ import report.models.view.wrappers.table.TableWrapper;
 import report.models.view.nodesFactories.TableCellFactory;
 import report.models.view.nodesFactories.TableFactory;
 
-public class IntroControllerUtils implements TableFactory {
+abstract class IntroControllerNodeUtils implements TableFactory {
 
-    private IntroControllerUtils() {
-    }
 
     /**
      * Decorate PreviewT TableView (RootLayoutController)
      *
      * @param table
      */
-    public static void decorPreview(TableView table) {
+    static void decorPreview(TableView table) {
 
         TableWrapper tableWrapper = new TableWrapper(table, null);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -37,7 +35,7 @@ public class IntroControllerUtils implements TableFactory {
      *
      * @param table
      */
-    public static void decorIntroFinishedSite(TableView table) {
+    static void decorIntroFinishedSite(TableView table) {
 
         TableWrapper tableWrapper = new TableWrapper(table, null);
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -58,8 +56,6 @@ public class IntroControllerUtils implements TableFactory {
                 smetCostCol,
                 saleCostCol
         );
-
-
     }
 
 }

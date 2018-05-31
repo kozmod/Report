@@ -2,7 +2,7 @@ package report.entities.items.site.name;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.entities.abstraction.CommonDao;
+import report.entities.abstraction.dao.CommonDao;
 import report.entities.items.estimate.EstimateDao;
 import report.models.sql.SqlConnector;
 

@@ -1,5 +1,5 @@
 
-package report.entities.abstraction;
+package report.entities.abstraction.dao;
 
 
 import javafx.collections.FXCollections;
@@ -17,7 +17,7 @@ import java.util.TreeSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public interface CommonNamedDao<E> extends CommonDao<E>,MementoDao<E> {
+public interface CommonNamedDao<E> extends CommonDao<E>, MementoDao<E> {
 
     String getSqlTableName();
 

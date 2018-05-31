@@ -9,7 +9,7 @@ import report.entities.items.site.SiteCommonDAO;
 import report.models.printer.PrintEstimate;
 import report.models.utils.ConcurrentUtils;
 import report.models.view.wrappers.toString.ToStringWrapper;
-import report.services.common.CounterAgentHolder;
+import report.services.common.CounterAgentWrapper;
 import report.usage_strings.SQL;
 import report.usage_strings.ServiceStrings;
 
@@ -20,7 +20,7 @@ import java.util.concurrent.Executors;
 
 public class RootControllerService {
 
-    private static CounterAgentHolder counterAgentHolder;
+    private static CounterAgentWrapper counterAgentWrapper;
 
     private RootLayoutController rootLayout;
 
@@ -36,12 +36,12 @@ public class RootControllerService {
         return new SiteDao().getDistinct(SQL.Site.STATUS_PAYMENT, ServiceStrings.PERCENT);
     }
 
-    public static CounterAgentHolder initCounterAgentHolder(String siteNumber, CountAgentTVI countAgentTVI) {
-        return counterAgentHolder;
+    public static CounterAgentWrapper initCounterAgentHolder(String siteNumber, CountAgentTVI countAgentTVI) {
+        return counterAgentWrapper;
     }
 
-    public static Optional<CounterAgentHolder> getCounterAgentHolder() {
-        return Optional.of(counterAgentHolder);
+    public static Optional<CounterAgentWrapper> getCounterAgentWrapper() {
+        return Optional.of(counterAgentWrapper);
     }
 
     /**

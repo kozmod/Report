@@ -9,7 +9,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TableView.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
-import report.entities.abstraction.CommonDao;
+import report.entities.abstraction.dao.CommonDao;
 import report.entities.items.Clone;
 import report.models.mementos.TableMemento;
 import report.models.view.customNodes.ContextMenuOptional;

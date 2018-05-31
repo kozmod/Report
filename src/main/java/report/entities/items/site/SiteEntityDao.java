@@ -1,6 +1,6 @@
 package report.entities.items.site;
 
-import report.entities.abstraction.CommonNamedDao;
+import report.entities.abstraction.dao.CommonNamedDao;
 import report.entities.items.estimate.EstimateDao;
 import report.models.sql.SqlConnector;
 
@@ -75,6 +75,7 @@ public class SiteEntityDao implements CommonNamedDao<SiteEntity> {
                                         rs.getString("NContract"),
                                         rs.getInt("DateContract"),
                                         rs.getInt("id_Count"),
+                                        rs.getString("CountAgentName"),
                                         rs.getInt("SiteTypeID"),
                                         rs.getString("QueueBuilding"),
                                         rs.getFloat("SmetCost"),
@@ -113,7 +114,7 @@ public class SiteEntityDao implements CommonNamedDao<SiteEntity> {
              PreparedStatement pstmt = connection.prepareStatement("UPDATE [dbo].[Site_new] SET dell = 1 WHERE [id] = ? AND [dell] = 0;");) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
-                pstmt.setLong(1, entry.getId());
+            pstmt.setLong(1, entry.getId());
 
             pstmt.executeUpdate();
             //SQL commit
@@ -125,7 +126,7 @@ public class SiteEntityDao implements CommonNamedDao<SiteEntity> {
 
     @Override
     public void insert(SiteEntity entry) {
-        String sql ="INSERT INTO [dbo].[Site_new] " +
+        String sql = "INSERT INTO [dbo].[Site_new] " +
                 "(" +
                 " [SiteNumber]" +
                 ",[TypeHome]" +
@@ -153,40 +154,40 @@ public class SiteEntityDao implements CommonNamedDao<SiteEntity> {
                      Statement.RETURN_GENERATED_KEYS)) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
-           if(Objects.nonNull(entry)){
+            if (Objects.nonNull(entry)) {
 
-           }
-                pstmt.setString(1, entry.getSiteNumber());
-                pstmt.setString(2, entry.getTypeHome());
-                pstmt.setString(3, entry.getNumberOfContract());
-                pstmt.setInt(4, entry.getDateOfContract());
-                pstmt.setFloat(5, entry.getSmetCost());
-                pstmt.setFloat(6, entry.getSumCost());
-                pstmt.setInt(7, entry.getFinishBuilding());
-                pstmt.setFloat(8, entry.getCostHouse());
-                pstmt.setFloat(9, entry.getCostSite());
-                pstmt.setFloat(10, entry.getSaleClient());
-                pstmt.setFloat(11, entry.getDebtClient());
-                pstmt.setString(12, entry.getStatusPayment());
-                pstmt.setString(13, entry.getStatusJobs());
-                pstmt.setString(14, entry.getQueueBuildings());
-                pstmt.setFloat(15,entry.getSaleHouse());
-                pstmt.setDouble(16, entry.getCoefficient());
-                pstmt.setInt(17, entry.getSiteTypeId());
-                pstmt.setInt(18, entry.getCountAgentId());
+            }
+            pstmt.setString(1, entry.getSiteNumber());
+            pstmt.setString(2, entry.getTypeHome());
+            pstmt.setString(3, entry.getNumberOfContract());
+            pstmt.setInt(4, entry.getDateOfContract());
+            pstmt.setFloat(5, entry.getSmetCost());
+            pstmt.setFloat(6, entry.getSumCost());
+            pstmt.setInt(7, entry.getFinishBuilding());
+            pstmt.setFloat(8, entry.getCostHouse());
+            pstmt.setFloat(9, entry.getCostSite());
+            pstmt.setFloat(10, entry.getSaleClient());
+            pstmt.setFloat(11, entry.getDebtClient());
+            pstmt.setString(12, entry.getStatusPayment());
+            pstmt.setString(13, entry.getStatusJobs());
+            pstmt.setString(14, entry.getQueueBuildings());
+            pstmt.setFloat(15, entry.getSaleHouse());
+            pstmt.setDouble(16, entry.getCoefficient());
+            pstmt.setInt(17, entry.getSiteTypeId());
+            pstmt.setInt(18, entry.getCountAgentId());
 
-                int affectedRows = pstmt.executeUpdate();
+            int affectedRows = pstmt.executeUpdate();
 
-                try (ResultSet generategKeys = pstmt.getGeneratedKeys();) {
-                    if (generategKeys.next())
-                        entry.setId(generategKeys.getLong(1));
-                }
+            try (ResultSet generategKeys = pstmt.getGeneratedKeys();) {
+                if (generategKeys.next())
+                    entry.setId(generategKeys.getLong(1));
+            }
             //SQL commit
             connection.commit();
             //add info to LogTextArea / LogController
         } catch (SQLException ex) {
             Logger.getLogger(SiteEntity.class.getName()).log(Level.SEVERE, null, ex);
-        }finally {
+        } finally {
 
         }
 

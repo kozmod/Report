@@ -11,8 +11,8 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 
-import report.entities.abstraction.CommonDao;
-import report.entities.abstraction.Reverse;
+import report.entities.abstraction.dao.CommonDao;
+import report.entities.abstraction.Transformable;
 import report.entities.items.Clone;
 import report.entities.items.DItem;
 import report.models.printer.PrintEstimate;
@@ -51,8 +51,8 @@ public class ContextMenuOptional extends ContextMenu {
         tableWrapper.getItems().addListener((ListChangeListener.Change<? extends S> c) -> {
             System.out.println("Changed on " + c + " - ContextMenuOptional");
             if (c.next() && (c.wasUpdated() || c.wasAdded() || c.wasRemoved())) {
-                ContextMenuOptional contextMenuOptional =((ContextMenuOptional) tableWrapper.getContextMenu());
-                if(contextMenuOptional != null){
+                ContextMenuOptional contextMenuOptional = ((ContextMenuOptional) tableWrapper.getContextMenu());
+                if (contextMenuOptional != null) {
                     contextMenuOptional.setDisable_SaveUndoPrint_groupe(false);
                     tableWrapper.refresh();
                 }
@@ -66,7 +66,7 @@ public class ContextMenuOptional extends ContextMenu {
         });
     }
 
-    public static <S extends Clone & Reverse> void setTableItemContextMenuListener(ReverseTableWrapper<S> tableWrapper, ObservableList<DItem> list) {
+    public static <S extends Clone & Transformable> void setTableItemContextMenuListener(ReverseTableWrapper<S> tableWrapper, ObservableList<DItem> list) {
         list.addListener((ListChangeListener.Change<? extends DItem> c) -> {
             ((ContextMenuOptional) tableWrapper.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
         });

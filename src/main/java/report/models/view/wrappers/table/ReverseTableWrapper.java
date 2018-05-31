@@ -2,16 +2,16 @@ package report.models.view.wrappers.table;
 
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TableView;
-import report.entities.abstraction.CommonDao;
-import report.entities.abstraction.MementoDao;
-import report.entities.abstraction.Reverse;
+import report.entities.abstraction.dao.CommonDao;
+import report.entities.abstraction.dao.MementoDao;
+import report.entities.abstraction.Transformable;
 import report.entities.items.Clone;
 import report.entities.items.DItem;
 import report.models.mementos.EntityMemento;
 import report.models.mementos.Memento;
 import report.models.view.customNodes.ContextMenuOptional;
 
-public class ReverseTableWrapper<E extends Reverse & Clone> extends AbstractTableWrapper<E> {
+public class ReverseTableWrapper<E extends Transformable & Clone> extends AbstractTableWrapper<E> {
 
     private final TableView<DItem> tableView;
     private E reverseObj;

@@ -7,20 +7,20 @@ import report.entities.items.site.SiteEntityDao;
 public class SiteNewDaoTest {
     @Test
     public void shouldGetSiteBySiteNumberAndCountAgentId() {
-        SiteEntityDao dao =  new SiteEntityDao();
+        SiteEntityDao dao = new SiteEntityDao();
 
-        SiteEntity site = dao.getDataByBusinessKey("3.0",1);
+        SiteEntity site = dao.getDataByBusinessKey("3.0", 1);
         System.out.println(site);
 
     }
 
     @Test
     public void shouldInsertNewSite() {
-        SiteEntityDao dao =  new SiteEntityDao();
-        SiteEntity site = dao.getDataByBusinessKey("3.0",1);
+        SiteEntityDao dao = new SiteEntityDao();
+        SiteEntity site = dao.getDataByBusinessKey("3.0", 1);
         System.out.println(site);
         dao.insert(site);
-        site = dao.getDataByBusinessKey("3.0",1);
+        site = dao.getDataByBusinessKey("3.0", 1);
         System.out.println(site);
 
     }

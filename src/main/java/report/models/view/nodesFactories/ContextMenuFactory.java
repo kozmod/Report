@@ -5,7 +5,7 @@ import javafx.scene.control.ContextMenu;
 import report.entities.items.estimate.EstimateDao;
 import report.layout.controllers.addEstimateRow.AddEstimateRowController;
 import report.layout.controllers.estimate.EstimateController.Est;
-import report.models.view.nodesHelpers.StageCreator;
+import report.models.view.nodesHelpers.FxmlStage;
 import report.models.view.wrappers.Reverting;
 import report.usage_strings.PathStrings;
 import report.models.view.customNodes.ContextMenuOptional;
@@ -26,9 +26,9 @@ public class ContextMenuFactory {
                     .newBuilder()
                     .setTable(tableWrapperView)
                     .addSpecialMenuItem("Дабавить").addActionEventHandler(action -> {
-                        StageCreator addSiteRowLayout
-                                = new StageCreator(PathStrings.Layout.ADD_SITE_ROW, "Добавление строк")
-                                .loadNewWindow();
+                        FxmlStage addSiteRowLayout
+                                = new FxmlStage(PathStrings.Layout.ADD_SITE_ROW, "Добавление строк")
+                                .loadAndShowNewWindow();
                         AddEstimateRowController controllerAddRow = addSiteRowLayout.getController();
                         controllerAddRow.setRootTableView(tableWrapperView);
 //                        addSiteRowLayout.getStage().show();
@@ -46,9 +46,9 @@ public class ContextMenuFactory {
                 .setTable(tableWrapperView)
 //                             .addEstAddMenuItem()
                 .addSpecialMenuItem("Дабавить").addActionEventHandler(action -> {
-                    StageCreator addSiteRowLayout
-                            = new StageCreator(PathStrings.Layout.ADD_SITE_ROW, "Добавление строк")
-                            .loadNewWindow();
+                    FxmlStage addSiteRowLayout
+                            = new FxmlStage(PathStrings.Layout.ADD_SITE_ROW, "Добавление строк")
+                            .loadAndShowNewWindow();
                     AddEstimateRowController controllerAddRow = addSiteRowLayout.getController();
                     controllerAddRow.setRootTableView(tableWrapperView);
 //                                                            controllerAddRow.setAditionalTableView(Est.Additional.getAllItemsList_Live());

@@ -2,7 +2,7 @@
 package report.entities.items.KS;
 
 
-import report.entities.abstraction.CommonNamedDao;
+import report.entities.abstraction.dao.CommonNamedDao;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.layout.controllers.estimate.EstimateController;
@@ -401,7 +401,7 @@ public class KS_Dao implements CommonNamedDao<Collection<KS_TIV>> {
 
                 CountAgentTVI contractor = EstimateController.Est.Common.getCountAgentTVI();
                 pstmt.setInt(1, ks_Number);
-                pstmt.setInt(2,  (Math.round(ks_Date * 100) / 100));
+                pstmt.setInt(2, (Math.round(ks_Date * 100) / 100));
                 pstmt.setString(3, abstractEstimateTVI.getSiteNumber());
                 pstmt.setInt(4, contractor.getIdCountConst());
                 pstmt.setString(5, abstractEstimateTVI.getJM_name());
@@ -415,6 +415,7 @@ public class KS_Dao implements CommonNamedDao<Collection<KS_TIV>> {
             Logger.getLogger(KS_Dao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+
     @Override
     public void dellAndInsert(Memento<Collection<KS_TIV>> memento) {
         CommonNamedDao.super.dellAndInsert(memento);

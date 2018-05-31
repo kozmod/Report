@@ -2,8 +2,8 @@ package report.models.view.wrappers.table;
 
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.TreeTableView;
-import report.entities.abstraction.CommonDao;
-import report.entities.abstraction.MementoDao;
+import report.entities.abstraction.dao.CommonDao;
+import report.entities.abstraction.dao.MementoDao;
 import report.entities.items.DItem;
 import report.entities.items.discount_coef.DiscountCoef;
 import report.models.mementos.EntityMemento;

@@ -22,7 +22,7 @@ import org.controlsfx.property.editor.AbstractPropertyEditor;
 import org.controlsfx.property.editor.Editors;
 import org.controlsfx.property.editor.PropertyEditor;
 import org.controlsfx.validation.ValidationSupport;
-import report.entities.abstraction.CommonDao;
+import report.entities.abstraction.dao.CommonDao;
 import report.entities.contract.ContractTIV;
 import report.entities.items.DItem;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
@@ -51,7 +51,7 @@ import java.util.Date;
 import java.util.Map;
 import java.util.Objects;
 
-public class AllPropertiesControllerNodeUtils implements TableFactory {
+abstract class AllPropertiesControllerNodeUtils implements TableFactory {
 
     private AllPropertiesControllerNodeUtils() {
     }
@@ -64,8 +64,8 @@ public class AllPropertiesControllerNodeUtils implements TableFactory {
      *
      * @return TableWrapper
      */
-    static ReverseTableWrapper<VariableTIV_new> decorVariable(TableView table) {
-        ReverseTableWrapper<VariableTIV_new> tableWrapper = new ReverseTableWrapper<>("Общие параметры", table, new PropertiesDao());
+    static ReverseTableWrapper<VariableTIV_new> decorVariable(TableView<VariableTIV_new> table) {
+        ReverseTableWrapper<VariableTIV_new> tableWrapper = new ReverseTableWrapper("Общие параметры", table, new PropertiesDao());
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
@@ -247,9 +247,9 @@ public class AllPropertiesControllerNodeUtils implements TableFactory {
                         item.setRequisites(
                                 FXCollections.observableArrayList(propertySheetWrapper.getObservableItems())
                         );
-                    } else if(item == null) {
+                    } else if (item == null) {
 
-                    }else {
+                    } else {
                         propertySheetWrapper.setItems(item.getRequisites());
                     }
                 });
@@ -279,7 +279,7 @@ public class AllPropertiesControllerNodeUtils implements TableFactory {
             CountAgentTVI countAgent = tableWrapper.getSelectionModel().getSelectedItem();
             popOver.hide();
             tableWrapper.undoChangeItems();
-            if(tableWrapper.getSelectionModel().getSelectedItem() != null) { //todo -> refactor
+            if (tableWrapper.getSelectionModel().getSelectedItem() != null) { //todo -> refactor
                 listView.setItems(tableWrapper.getSelectionModel().getSelectedItem().getLinkedNames());
             }
         });
@@ -317,7 +317,7 @@ public class AllPropertiesControllerNodeUtils implements TableFactory {
                 .selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     CountAgentTVI item = tableWrapper.getSelectionModel().getSelectedItem();
-                    if(item != null) {
+                    if (item != null) {
                         if (item.getLinkedNames() == null) {
                             ObservableList linkedName = CounterAgentDaoUtil.getMatchLinkedNames(newValue.getName());
                             item.setLinkedNames(linkedName);

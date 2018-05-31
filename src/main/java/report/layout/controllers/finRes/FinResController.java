@@ -43,7 +43,7 @@ public class FinResController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         //Decorate and Init FinRes
-        FinResControllerUtils.decorFinRes(finResTable);
+        FinResControllerNodeUtils.decorFinRes(finResTable);
         finResTable.setItems(finResObs);
 
 //        //Init DatePickers

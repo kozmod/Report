@@ -7,18 +7,14 @@ import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.models.view.wrappers.table.TableWrapper;
 import report.models.view.nodesFactories.TableFactory;
 
-public class FinResControllerUtils {
-
-    private FinResControllerUtils() {
-    }
-
+abstract class FinResControllerNodeUtils {
     /**
      * Decorate FinRes TableView (FinResController)
      *
      * @param table
      */
     @SuppressWarnings("unchecked")
-    public static void decorFinRes(TableView table) {
+    static void decorFinRes(TableView table) {
 
         TableWrapper tableWrapper = new TableWrapper(table, null);
         tableWrapper.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);

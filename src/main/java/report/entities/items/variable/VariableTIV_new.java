@@ -4,11 +4,11 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.entities.abstraction.Reverse;
+import report.entities.abstraction.Transformable;
 import report.entities.items.Clone;
 import report.entities.items.DItem;
 
-public class VariableTIV_new implements Clone, Reverse {
+public class VariableTIV_new implements Transformable<DItem>, Clone {
 
     public interface SQL {
         String SQL_TABLE = "TBL_COMMAND_PROPERTY";

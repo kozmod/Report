@@ -1,6 +1,6 @@
 package report.entities.items.variable;
 
-import report.entities.abstraction.CommonDao;
+import report.entities.abstraction.dao.MementoDao;
 import report.models.sql.SqlConnector;
 
 import java.sql.Connection;
@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class PropertiesDao implements CommonDao<VariableTIV_new> {
+public class PropertiesDao implements MementoDao<VariableTIV_new> {
 
     @Override
     public VariableTIV_new getData() {

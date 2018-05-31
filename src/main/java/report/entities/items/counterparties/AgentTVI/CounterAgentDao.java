@@ -3,11 +3,10 @@ package report.entities.items.counterparties.AgentTVI;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
-import report.entities.abstraction.CommonDao;
+import report.entities.abstraction.dao.CommonDao;
 import report.entities.items.expenses.ExpensesDao;
 import report.models.sql.SqlConnector;
 import report.models.view.LinkedNamePair;
-import report.usage_strings.SQL;
 
 import java.sql.*;
 import java.util.Collection;
@@ -16,7 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class CounterAgentDao implements CommonDao<Collection<CountAgentTVI>> {
-
 
 
     @Override

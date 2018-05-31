@@ -1,7 +1,7 @@
 package report.models.view.wrappers.table;
 
 import javafx.scene.control.ContextMenu;
-import report.entities.abstraction.CommonDao;
+import report.entities.abstraction.dao.CommonDao;
 import report.models.mementos.Memento;
 import report.models.view.wrappers.Reverting;
 

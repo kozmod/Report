@@ -29,7 +29,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
-import report.entities.abstraction.CommonDao;
+import report.entities.abstraction.dao.CommonDao;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.KS.KS_TIV;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
@@ -47,7 +47,7 @@ import report.models.view.wrappers.table.TableWrapper;
 import report.models.view.nodesFactories.FileChooserFactory;
 
 
-import report.models.view.nodesHelpers.StageCreator;
+import report.models.view.nodesHelpers.FxmlStage;
 
 import report.models.printer.PrintKS;
 import report.models.view.customNodes.TabModel;
@@ -541,7 +541,7 @@ public class EstimateController implements Initializable {
     @FXML //Add new KS
     private void handle_addKS(ActionEvent event) {
         if (Est.Changed.isExist()) {
-            StageCreator siteAddLayout = new StageCreator(PathStrings.Layout.ADD_KS, "Добавить KC").loadNewWindow();
+            FxmlStage siteAddLayout = new FxmlStage(PathStrings.Layout.ADD_KS, "Добавить KC").loadAndShowNewWindow();
             ksAddController = siteAddLayout.getController();
             ksAddController.setShowEstController(this);
 //            siteAddLayout.getStage().show();

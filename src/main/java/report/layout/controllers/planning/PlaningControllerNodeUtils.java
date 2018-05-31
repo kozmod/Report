@@ -17,12 +17,7 @@ import report.models.view.wrappers.table.TableWrapper;
 import report.models.view.nodesFactories.TableCellFactory;
 import report.models.view.nodesFactories.TableFactory;
 
-public class PlaningControllerUtils implements TableFactory {
-
-
-    private PlaningControllerUtils() {
-    }
-
+abstract class PlaningControllerNodeUtils implements TableFactory {
     /**
      * Create TableWrapper "Plan"(AllPropertiesController).
      * <br>
@@ -32,7 +27,7 @@ public class PlaningControllerUtils implements TableFactory {
      * @return TableWrapper
      */
 
-    public static TableWrapper<PlanTIV> decorPlan(TableView<PlanTIV> table) {
+    static TableWrapper<PlanTIV> decorPlan(TableView<PlanTIV> table) {
         TableWrapper<PlanTIV> tableWrapper = new TableWrapper(table, new PlanDao());
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -120,7 +115,7 @@ public class PlaningControllerUtils implements TableFactory {
      *
      * @return TableWrapper
      */
-    public static TableWrapper decorFact(TableView table) {
+    static TableWrapper decorFact(TableView table) {
         TableWrapper tableWrapper = new TableWrapper(table, null);
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -204,7 +199,7 @@ public class PlaningControllerUtils implements TableFactory {
      * @param treeTable
      * @return
      */
-    public static DiscountTreeTableWrapper decorKD(TreeTableView<DItem> treeTable) {
+    static DiscountTreeTableWrapper decorKD(TreeTableView<DItem> treeTable) {
         DiscountTreeTableWrapper treeTableWrapper = new DiscountTreeTableWrapper("Коэффициент Дисконтирования", treeTable, new DiscountQuery());
 
         TreeTableColumn<DItem, String> nameColumn = new TreeTableColumn<>("Наименование");
@@ -237,64 +232,5 @@ public class PlaningControllerUtils implements TableFactory {
         return treeTableWrapper;
 
     }
-//      public static TreeTableView decorKD(TreeTableView<DItem> treeTable){
-////        DiscountCoef dc = new DiscountCoef(1,9.2,
-////                new SpecificRisk(1,1d,1d,1d,1d,1d),
-////                new MarketRisk(1,1d,1d,1d,1d,1d,1d,1d,1d)
-////        );
-//        TreeTableColumn<DItem, String> nameColumn =  new TreeTableColumn<>("Наименование");
-//        nameColumn.setSortable(false);
-//        nameColumn.setCellValueFactory((param) ->
-//                param.getQuantity().getQuantity().firstValueProperty()
-//        );
-//
-//        TreeTableColumn<DItem, Double> valueColumn = new TreeTableColumn<>("Значение");
-//        valueColumn.setSortable(false);
-//        valueColumn.setCellValueFactory((param) ->
-//                param.getQuantity().getQuantity().secondValueProperty().asObject()
-//        );
-////        Callback<TreeTableColumn<DItem,Double>, TreeTableCell<DItem,Double>> defaultCellFactory2
-////                =  ComboBoxTreeTableCell.forTreeTableColumn(2d,3d,4d);
-//
-////        Callback<TreeTableColumn<DItem,Double>, TreeTableCell<DItem,Double>> defaultCellFactory = TextFieldTreeTableCell.forTreeTableColumn(new DoubleStringConverter());
-//        valueColumn.setCellFactory(p -> new EditingTreeTableCell(new DoubleStringConverter()));
-//
-//        valueColumn.setOnEditCommit(event ->{
-//            final TreeItem<DItem> parent =  event.getTreeTablePosition().getTreeItem().getParent();
-//            final TreeItem<DItem> current =  event.getTreeTablePosition().getTreeItem();
-//            current.getQuantity().setSecondValue(event.getNewValue());
-////           final double parentNewValue = parent.getChildren().stream().mapToDouble(i -> i.getQuantity().getSecondValue()).sum();
-////           parent.getQuantity().setSecondValue(parentNewValue);
-//            event.getTreeTableView().getRoot().getQuantity().setSecondValue(Math.random());
-//            event.getTreeTableView().refresh();
-//        });
-//
-//
-////        Callback<TreeTableColumn<DItem,Double>, TreeTableCell<DItem,Double>> defaultCellFactory = TextFieldTreeTableCell.forTreeTableColumn(new DoubleStringConverter());
-////        valueColumn.setCellFactory((TreeTableColumn<DItem,Double> tv) -> {
-////            TreeTableCell<DItem,Double> cell = defaultCellFactory.call(tv);
-////            cell.itemProperty().addListener((obs, oldTreeItem, newTreeItem) -> {
-////                TreeItem<DItem> item = cell.getTreeTableView().getTreeItem(cell.getIndex());
-////                if (newTreeItem == null) {
-////                    cell.setEditable(false);
-////                } else if ( item !=null && item.isLeaf()  ) {
-////                    cell.setEditable(true);
-////                } else {
-////                    cell.setEditable(false);
-////                }
-////            });
-////            return cell ;
-////        });
-//        valueColumn.setMaxWidth(120);
-//        valueColumn.setMinWidth(100);
-//        treeTable.getColumns().setAll(nameColumn, valueColumn);
-////        treeTable.setRoot(dc.tree());
-//        treeTable.setEditable(true);
-//        treeTable.setShowRoot(false);
-//
-//        return treeTable;
-//
-//    }
-//
 
 }

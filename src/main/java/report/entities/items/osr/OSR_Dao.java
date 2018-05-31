@@ -1,7 +1,7 @@
 
 package report.entities.items.osr;
 
-import report.entities.abstraction.CommonDao;
+import report.entities.abstraction.dao.CommonDao;
 import report.layout.controllers.LogController;
 import report.models.coefficient.Quantity;
 import report.models.sql.SqlConnector;

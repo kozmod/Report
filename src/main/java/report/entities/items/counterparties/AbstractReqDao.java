@@ -1,6 +1,6 @@
 package report.entities.items.counterparties;
 
-import report.entities.abstraction.CommonNamedDao;
+import report.entities.abstraction.dao.CommonNamedDao;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.models.sql.SqlConnector;
 

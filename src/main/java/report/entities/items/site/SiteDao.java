@@ -1,7 +1,7 @@
 
 package report.entities.items.site;
 
-import report.entities.abstraction.CommonNamedDao;
+import report.entities.abstraction.dao.CommonNamedDao;
 import report.entities.items.estimate.EstimateDao;
 import report.layout.controllers.LogController;
 import report.models.sql.SqlConnector;
@@ -179,10 +179,10 @@ public class SiteDao implements CommonNamedDao<Collection<PreviewTIV>> {
                 stringInsert.append(prefix + "[" + item.getSqlColumn() + "]");
                 if (item.getSqlColumn().equals(SQL.Site.SITE_TYPE_ID)) {
                     stringValues.append(prefix + "(SELECT P.[TypeID] from [FinPlan] P WHERE P.[TypeName] = ? )");
-                }else if(item.getSqlColumn().equals(SQL.Site.CONTRACTOR)) {
+                } else if (item.getSqlColumn().equals(SQL.Site.CONTRACTOR)) {
                     int countractorId = Est.Common.getCountAgentTVI().getIdCountConst();
-                    stringValues.append(prefix + String.valueOf(countractorId) );
-                }else{
+                    stringValues.append(prefix + String.valueOf(countractorId));
+                } else {
                     stringValues.append(prefix + "?");
                 }
                 prefix = ",";
@@ -195,7 +195,7 @@ public class SiteDao implements CommonNamedDao<Collection<PreviewTIV>> {
 
         System.err.println(stringInsert.toString());
         try (Connection connection = SqlConnector.getInstance();
-             PreparedStatement pstmt = connection.prepareStatement(stringInsert.toString().replace(SQL.Site.CONTRACTOR,SQL.Site.CONTRACTOR_ID),  //TODO: поправить при рефакторинге
+             PreparedStatement pstmt = connection.prepareStatement(stringInsert.toString().replace(SQL.Site.CONTRACTOR, SQL.Site.CONTRACTOR_ID),  //TODO: поправить при рефакторинге
                      Statement.RETURN_GENERATED_KEYS);) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);

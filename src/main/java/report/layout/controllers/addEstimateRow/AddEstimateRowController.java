@@ -88,7 +88,7 @@ public class AddEstimateRowController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Init TableView
-        elemTableWrapperView = AddEstimateRowUtils.decorEst_add(elemTableView);
+        elemTableWrapperView = AddEstimateRowNodeUtils.decorEst_add(elemTableView);
 
     }
 

@@ -1,7 +1,7 @@
 
 package report.entities.items.expenses;
 
-import report.entities.abstraction.CommonDao;
+import report.entities.abstraction.dao.CommonDao;
 import report.models.sql.SqlConnector;
 import report.usage_strings.SQL;
 

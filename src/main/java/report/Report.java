@@ -13,7 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import report.layout.controllers.root.RootLayoutController;
-import report.models.view.nodesHelpers.StageCreator;
+import report.models.view.nodesHelpers.FxmlStage;
 import report.usage_strings.PathStrings;
 
 
@@ -57,7 +57,7 @@ public class Report extends Application {
     private Scene scene;
     private RootLayoutController rootController;
     private Object centerController;
-    private StageCreator stageCreator;
+    private FxmlStage fxmlStage;
 
     /*!******************************************************************************************************************
      *                                                                                                      Getter/Setter
@@ -108,11 +108,9 @@ public class Report extends Application {
     }
 
     //init Intro Layout
-    public StageCreator initIntroLayout() {
-        StageCreator.setReportMain(this);
-        StageCreator center = new StageCreator(PathStrings.Layout.INTRO, "").loadIntoRootBorderPaneCenter();
-        Object centerController = center.getController();
-        return center;
+    public FxmlStage initIntroLayout() {
+        FxmlStage.setReportMain(this);
+        return new FxmlStage(PathStrings.Layout.INTRO, "").loadIntoRootBorderPaneCenter();
     }
 
 

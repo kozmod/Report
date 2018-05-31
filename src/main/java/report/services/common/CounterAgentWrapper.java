@@ -13,11 +13,11 @@ import report.entities.items.site.SiteEntityDao;
 import java.util.*;
 import java.util.stream.Collector;
 
-public class CounterAgentHolder {
+public class CounterAgentWrapper {
 
     public enum SelectedCounterAgent {BASE, CHANGED, ADDITIONAL, KS}
 
-    private final SiteEntity siteEntity;
+    private final SiteWrapper siteWrapper;
     private final CountAgentTVI selectedCounterAgen;
     public Map<SelectedCounterAgent, ObservableList<? extends AbstractEstimateTVI>> estDocuments;
 
@@ -25,16 +25,18 @@ public class CounterAgentHolder {
      *                                                                                                       CONSTRUCTORS
      ********************************************************************************************************************/
 
-    public CounterAgentHolder(SiteEntity siteEntity, CountAgentTVI selectedCounterAgen) {
+    public CounterAgentWrapper(SiteWrapper siteWrapper, CountAgentTVI selectedCounterAgen) {
         this.selectedCounterAgen = selectedCounterAgen;
-        this.siteEntity = siteEntity;
+        this.siteWrapper = siteWrapper;
         this.estDocuments = new EnumMap<>(SelectedCounterAgent.class);
         this.initDocuments();
     }
 
-    public CounterAgentHolder(String siteNumber, CountAgentTVI selectedCounterAgen) {
+    public CounterAgentWrapper(String siteNumber, CountAgentTVI selectedCounterAgen) {
         this(
-                new SiteEntityDao().getDataByBusinessKey(siteNumber, selectedCounterAgen.getIdCountConst()),
+                new SiteWrapper(
+                        new SiteEntityDao().getDataByBusinessKey(siteNumber, selectedCounterAgen.getIdCountConst())
+                ),
                 selectedCounterAgen
         );
     }
@@ -69,16 +71,16 @@ public class CounterAgentHolder {
     }
 
 
-    public CountAgentTVI getSelectedCounterAgen() {
+    public CountAgentTVI getSelectedCounterAgent() {
         return selectedCounterAgen;
     }
 
     public SiteEntity getSiteEntity() {
-        return siteEntity;
+        return siteWrapper.getSiteEntity();
     }
 
     private void initDocuments() {
-        final String siteNumber = siteEntity.getSiteNumber();
+        final String siteNumber = siteWrapper.getSiteEntity().getSiteNumber();
         estDocuments.put(
                 SelectedCounterAgent.BASE,
                 new EstimateDao().getData(siteNumber, 1, selectedCounterAgen)

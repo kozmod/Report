@@ -2,7 +2,7 @@ package report.entities.items.counterparties.utils;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.entities.abstraction.DaoUtil;
+import report.entities.abstraction.dao.DaoUtil;
 import report.entities.items.expenses.ExpensesDao;
 import report.models.sql.SqlConnector;
 import report.models.view.LinkedNamePair;

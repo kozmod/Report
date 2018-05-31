@@ -16,11 +16,7 @@ import report.models.view.wrappers.table.TableWrapper;
 import report.models.view.nodesFactories.TableCellFactory;
 import report.models.view.nodesFactories.TableFactory;
 
-public class ExpensesControllerUtils {
-
-    private ExpensesControllerUtils() {
-    }
-
+public abstract class ExpensesControllerNodeUtils {
     /**
      * Create TableWrapper "ChangeView"(expensesesLayoutController).
      * <br>
@@ -108,7 +104,7 @@ public class ExpensesControllerUtils {
 
         TableColumn textColumn = tableWrapper.addColumn("Наименование", "text");
         TableColumn typeColumn = tableWrapper.addColumn("Тип", "type");
-        TableColumn<ExpensesTVI,Double > valueColumn = tableWrapper.addColumn("Значение","value");
+        TableColumn<ExpensesTVI, Double> valueColumn = tableWrapper.addColumn("Значение", "value");
 
         typeColumn.setCellFactory(param -> TableCellFactory.getExpenseesCell());
 

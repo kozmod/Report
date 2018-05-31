@@ -1,7 +1,7 @@
 
 package report.entities.items.estimate;
 
-import report.entities.abstraction.CommonNamedDao;
+import report.entities.abstraction.dao.CommonNamedDao;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.layout.controllers.LogController;

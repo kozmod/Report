@@ -1,4 +1,4 @@
-package report.entities.abstraction;
+package report.entities.abstraction.dao;
 
 import report.models.mementos.Memento;
 

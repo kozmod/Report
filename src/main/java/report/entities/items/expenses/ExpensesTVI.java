@@ -219,7 +219,7 @@ public class ExpensesTVI implements Clone {
     /**
      * Extractor to observe changes in "Property" fields.
      *
-     * @return Callback<VariableTIV               ,                               Observable               [               ]>
+     * @return Callback<VariableTIV                               ,                                                               Observable                               [                               ]>
      */
     public static Callback<ExpensesTVI, Observable[]> extractor() {
         return (ExpensesTVI p) -> new Observable[]{p.getTextProperty(), p.getValueProperty()};

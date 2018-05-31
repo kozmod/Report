@@ -1,6 +1,6 @@
 package report.entities.items.discount_coef;
 
-import report.entities.abstraction.MementoDao;
+import report.entities.abstraction.dao.MementoDao;
 import report.entities.items.estimate.EstimateDao;
 import report.entities.items.expenses.ExpensesDao;
 import report.entities.items.period.PeriodDao;

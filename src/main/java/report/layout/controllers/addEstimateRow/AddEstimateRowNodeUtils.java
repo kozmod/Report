@@ -6,7 +6,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.Callback;
-import report.entities.abstraction.CommonNamedDao;
+import report.entities.abstraction.dao.CommonNamedDao;
 import report.entities.items.cb.AddEstTIV;
 import report.entities.items.estimate.EstimateDao;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
@@ -14,11 +14,7 @@ import report.models.view.wrappers.table.TableWrapperEST;
 import report.models.view.nodesFactories.TableCellFactory;
 import report.usage_strings.SQL;
 
-public class AddEstimateRowUtils {
-
-    private AddEstimateRowUtils() {
-    }
-
+abstract class AddEstimateRowNodeUtils {
     /**
      * Create TableWrapper to AddEstimateRowController.Contain columns and their options.
      *

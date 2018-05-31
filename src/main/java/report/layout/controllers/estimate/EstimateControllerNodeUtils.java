@@ -19,12 +19,7 @@ import report.models.view.nodesFactories.TableFactory;
 
 import java.util.List;
 
-public class EstimateControllerNodeUtils implements TableFactory {
-
-    private EstimateControllerNodeUtils() {
-
-    }
-
+public abstract class EstimateControllerNodeUtils implements TableFactory {
 
     /**
      * Create TableWrapper(TableWrapper EST).Contain columns and their options.
@@ -147,7 +142,7 @@ public class EstimateControllerNodeUtils implements TableFactory {
      *
      * @return TableWrapper(child of TableView)
      */
-    public static TableWrapper decorAdditional(TableView table) {
+    static TableWrapper decorAdditional(TableView table) {
         TableWrapper tableWrapper = new TableWrapper(table, null);
 
         tableWrapper.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -172,10 +167,8 @@ public class EstimateControllerNodeUtils implements TableFactory {
      *
      * @return TableWrapper(child of TableView)
      */
-    public static TableWrapperEST<KS_TIV> decorKS(TableView tableView) {
-        TableWrapperEST table = new TableWrapperEST(tableView,
-                new KS_Dao(EstimateController.Est.KS));
-
+    static TableWrapperEST<KS_TIV> decorKS(TableView<KS_TIV> tableView) {
+        TableWrapperEST table = new TableWrapperEST(tableView, new KS_Dao(EstimateController.Est.KS));
 
         table.setEditable(true);
         table.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -240,7 +233,6 @@ public class EstimateControllerNodeUtils implements TableFactory {
         table.setContextMenu(contextMenuKS);
         return table;
     }
-
 
 
 }

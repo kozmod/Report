@@ -15,6 +15,7 @@ public class SiteEntity implements Clone {
     private final StringProperty numberOfContract;
     private final IntegerProperty dateOfContract;
     private final IntegerProperty countAgentId;
+    private final StringProperty countAgentName;
     private final IntegerProperty siteTypeId;
     private final StringProperty queueBuildings;
     private final FloatProperty smetCost;
@@ -36,6 +37,7 @@ public class SiteEntity implements Clone {
             String numberOfContract,
             int dateOfContract,
             int countAgentId,
+            String countAgentName,
             int siteTypeId,
             String queueBuildings,
             float smetCost,
@@ -55,6 +57,7 @@ public class SiteEntity implements Clone {
         this.numberOfContract = new SimpleStringProperty(numberOfContract);
         this.dateOfContract = new SimpleIntegerProperty(dateOfContract);
         this.countAgentId = new SimpleIntegerProperty(countAgentId);
+        this.countAgentName = new SimpleStringProperty(countAgentName);
         this.siteTypeId = new SimpleIntegerProperty(siteTypeId);
         this.queueBuildings = new SimpleStringProperty(queueBuildings);
         this.smetCost = new SimpleFloatProperty(smetCost);
@@ -83,6 +86,7 @@ public class SiteEntity implements Clone {
                 this.numberOfContract.getValueSafe(),
                 this.dateOfContract.getValue(),
                 this.countAgentId.getValue(),
+                this.countAgentName.getValueSafe(),
                 this.siteTypeId.getValue(),
                 this.queueBuildings.getValueSafe(),
                 this.smetCost.getValue(),
@@ -316,10 +320,22 @@ public class SiteEntity implements Clone {
         this.finishBuilding.set(finishBuilding);
     }
 
+    public String getCountAgentName() {
+        return countAgentName.get();
+    }
+
+    public StringProperty countAgentNameProperty() {
+        return countAgentName;
+    }
+
+    public void setCountAgentName(String countAgentName) {
+        this.countAgentName.set(countAgentName);
+    }
+
     /**
      * Extractor to observe changes in "Property" fields.
      *
-     * @return Callback<VariableTIV                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Observable                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               [                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ]>
+     * @return Callback<VariableTIV                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Observable                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               [                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ]>
      */
     public static Callback<SiteEntity, Observable[]> extractor() {
         return (SiteEntity p) -> new Observable[]{
@@ -327,6 +343,7 @@ public class SiteEntity implements Clone {
                 p.numberOfContract,
                 p.dateOfContract,
                 p.countAgentId,
+                p.countAgentName,
                 p.siteTypeId,
                 p.queueBuildings,
                 p.smetCost,
@@ -352,6 +369,7 @@ public class SiteEntity implements Clone {
                 " ,numberOfContract = " + this.numberOfContract.getValueSafe() +
                 " ,dateOfContract = " + this.dateOfContract.getValue() +
                 " ,countAgentId = " + this.countAgentId.getValue() +
+                " ,countAgentName = " + this.countAgentName.getValueSafe() +
                 " ,siteTypeId = " + this.siteTypeId.getValue() +
                 " ,queueBuildings = " + this.queueBuildings.getValueSafe() +
                 " ,smetCost = " + this.smetCost.getValue() +

@@ -10,10 +10,7 @@ import report.models.view.nodesFactories.TableFactory;
 
 import java.util.Objects;
 
-public class AddKSControllerUtils {
-
-    private AddKSControllerUtils() {
-    }
+public abstract class AddKSControllerNodeUtils {
 
     /**
      * Decorate KS_add TableView (AddKSController)

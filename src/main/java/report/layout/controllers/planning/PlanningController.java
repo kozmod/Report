@@ -91,12 +91,12 @@ public class PlanningController implements Initializable {
 
     private void init_PlanTab() {
         //add Plan TableView
-        planTableWrapper = PlaningControllerUtils.decorPlan(planTable);
+        planTableWrapper = PlaningControllerNodeUtils.decorPlan(planTable);
         planTableWrapper.setFromBase();
         ContextMenuOptional.setTableItemContextMenuListener(planTableWrapper);
 
         //add Fact TableView
-        factTableWrapper = PlaningControllerUtils.decorFact(factTable);
+        factTableWrapper = PlaningControllerNodeUtils.decorFact(factTable);
         factTableWrapper.setTableData(new PlanDao().getListFact());
 
         //table Context menu property
@@ -134,7 +134,7 @@ public class PlanningController implements Initializable {
      */
     private void init_OSRTab() {
         //add OSR TableView
-        osrTableWrapper = PlaningControllerUtils.decorOSR(osrTable);
+        osrTableWrapper = PlaningControllerNodeUtils.decorOSR(osrTable);
         osrTableWrapper.setFromBase();
         ContextMenuOptional.setTableItemContextMenuListener(osrTableWrapper);
 
@@ -181,8 +181,8 @@ public class PlanningController implements Initializable {
      * Initialization of KD Tab.
      */
     private void init_KDTab() {
-        kdTreeTableWrapper = PlaningControllerUtils.decorKD(kdTreeTable);
-//        PlaningControllerUtils.decorKD(kdTreeTable);
+        kdTreeTableWrapper = PlaningControllerNodeUtils.decorKD(kdTreeTable);
+//        PlaningControllerNodeUtils.decorKD(kdTreeTable);
 //        kdTreeTableWrapper.tableView().setRoot(new DiscountQuery().getData().tree());
         kdTreeTableWrapper.setFromBase();
         kdTreeTableWrapper.tableView().editableProperty().bind(Bindings

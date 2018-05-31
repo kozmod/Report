@@ -2,7 +2,7 @@
 package report.entities.items.plan;
 
 
-import report.entities.abstraction.CommonNamedDao;
+import report.entities.abstraction.dao.CommonNamedDao;
 import report.entities.items.KS.KS_Dao;
 import report.models.coefficient.Quantity;
 import report.models.sql.SqlConnector;

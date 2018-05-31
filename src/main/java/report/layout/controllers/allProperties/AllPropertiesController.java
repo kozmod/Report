@@ -127,6 +127,7 @@ public class AllPropertiesController implements Initializable {
                 .bind(variableEditСheckBox.selectedProperty());
 
     }
+
     /***************************************************************************
      *                                                                         *
      * Init 3                                                                  *
@@ -179,7 +180,6 @@ public class AllPropertiesController implements Initializable {
         AllPropertiesControllerNodeUtils.decorLinkedNamesGP(linkedNamesGP, countAgentTableWrapper);
 
     }
-
 
 
     /**
