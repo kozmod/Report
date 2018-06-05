@@ -1,5 +1,7 @@
 package report.entities.items.site;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
 import report.entities.abstraction.dao.CommonNamedDao;
 import report.entities.items.estimate.EstimateDao;
 import report.models.sql.SqlConnector;
@@ -11,9 +13,12 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public class SiteEntityDao implements CommonNamedDao<SiteEntity> {
+
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
+
     private static final String TABLE_NAME = "Site_New";
     private static final int REQUIRED_FOUND_SITE_QUANTITY = 1;
-
 
     @Override
     public String getSqlTableName() {
@@ -53,7 +58,7 @@ public class SiteEntityDao implements CommonNamedDao<SiteEntity> {
                 "S.[k]," +
                 "S.[dell]," +
                 "S.[DateCreate], " +
-                "CAN.[Name] as [CountAgentName] CAN " +
+                " CAN.[Name] as [CountAgentName] " +
                 " FROM [dbo].[Site_new] S " +
                 " INNER JOIN [dbo].[DIC_Count_Name] CAN ON CAN.[id_Count] = S.[id_Count] " +
                 " WHERE S.[SiteNumber] = ? AND S.[id_Count] = ? AND S.[dell] = 0";
@@ -101,7 +106,6 @@ public class SiteEntityDao implements CommonNamedDao<SiteEntity> {
 
                 }
             }
-            ResultSet rs = prst.executeQuery();
         } catch (SQLException e) {
             e.printStackTrace();
         }
