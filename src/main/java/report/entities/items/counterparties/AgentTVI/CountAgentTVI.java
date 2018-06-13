@@ -168,13 +168,13 @@ public class CountAgentTVI implements Clone {
     @Override
     public String toString() {
         return "CountAgentTVI: " +
-                "id-name [" + this.getIdName() + "]," +
-                "name [" + this.getName() + "]," +
-                "id-type [" + this.getIdForm() + "]," +
-                "type [" + this.getForm() + "]," +
-                "id-form [" + this.getIdType() + "]," +
-                "form [" + this.getType() + "]" +
-                "id-count-const [" + this.getIdCountConst() + "]";
+                "id-name [" + getIdName() + "]," +
+                "name [" + getName() + "]," +
+                "id-type [" + getIdForm() + "]," +
+                "type [" + getForm() + "]," +
+                "id-form [" + getIdType() + "]," +
+                "form [" + getType() + "]" +
+                "id-count-const [" + getIdCountConst() + "]";
     }
 
     /***************************************************************************

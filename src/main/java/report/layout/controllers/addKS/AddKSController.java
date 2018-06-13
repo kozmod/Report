@@ -16,16 +16,16 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import report.entities.items.AbstractEstimateTVI;
-import report.layout.controllers.estimate.EstimateController;
+import report.entities.items.KS.KsDao;
+import report.layout.controllers.estimate.EstimateController_old;
 import report.usage_strings.SQL;
 
 import report.models.view.nodesHelpers.InputValidator;
-import report.entities.items.KS.KS_Dao;
 
 
 public class AddKSController implements Initializable {
 
-    private EstimateController showEstController;
+    private EstimateController_old showEstController;
 
     @FXML
     private Label siteNumLabel, contLabel, errorLabel;
@@ -40,7 +40,7 @@ public class AddKSController implements Initializable {
     @FXML
     private TableView<AbstractEstimateTVI> allJMTable, selectedJMTable;
 
-//    private TableWrapperEST<KS_TIV> allJMTable      = TableFactory.getKS_add(),
+//    private PriceSumTableWrapper<KS_TIV> allJMTable      = TableFactory.getKS_add(),
 //                                  selectedJMTable = TableFactory.getKS_add();
 
     private ObservableList<AbstractEstimateTVI> obsAllJM, obsSelectedJM;
@@ -48,13 +48,13 @@ public class AddKSController implements Initializable {
 
     {
         //All Job_Mat list init
-        obsAllJM = FXCollections.observableArrayList(EstimateController.Est.Changed.getAllItemsList_Live());
+        obsAllJM = FXCollections.observableArrayList(EstimateController_old.Est.Changed.getAllItemsList_Live());
 
         //Empty Selected Job_Mat list init
         obsSelectedJM = FXCollections.observableArrayList();
 
         //ComboBox Items List
-        comboBuildingPartList = FXCollections.observableArrayList(EstimateController.Est.Changed.getTabMap().keySet());
+        comboBuildingPartList = FXCollections.observableArrayList(EstimateController_old.Est.Changed.getTabMap().keySet());
         comboBuildingPartList.add("Все");
     }
 
@@ -62,7 +62,7 @@ public class AddKSController implements Initializable {
      *                                                                                                     Getter/Setter
      ********************************************************************************************************************/
 
-    public void setShowEstController(EstimateController showEstController) {
+    public void setShowEstController(EstimateController_old showEstController) {
         this.showEstController = showEstController;
     }
 
@@ -74,11 +74,11 @@ public class AddKSController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
 
         //set data to Labels
-        siteNumLabel.setText(EstimateController.Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER));
-        contLabel.setText(EstimateController.Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
+        siteNumLabel.setText(EstimateController_old.Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER));
+        contLabel.setText(EstimateController_old.Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
 
-        AddKSControllerNodeUtils.decorAddKS(allJMTable);
-        AddKSControllerNodeUtils.decorAddKS(selectedJMTable);
+        AddKSControllerNodeFactory.decorAddKS(allJMTable);
+        AddKSControllerNodeFactory.decorAddKS(selectedJMTable);
         //set Items of allJMTable
         allJMTable.setItems(obsAllJM);
         selectedJMTable.setItems(obsSelectedJM);
@@ -94,9 +94,9 @@ public class AddKSController implements Initializable {
         comboBuildingPart.getSelectionModel().selectedItemProperty()
                 .addListener((options, oldValue, newValue) -> {
                     if (newValue.equals("Все"))
-                        obsAllJM = FXCollections.observableArrayList(EstimateController.Est.Changed.getAllItemsList_Live());
+                        obsAllJM = FXCollections.observableArrayList(EstimateController_old.Est.Changed.getAllItemsList_Live());
                     else
-                        obsAllJM = FXCollections.observableArrayList((List) EstimateController.Est.Changed.getTabMap().get(comboBuildingPart.getValue()));
+                        obsAllJM = FXCollections.observableArrayList((List) EstimateController_old.Est.Changed.getTabMap().get(comboBuildingPart.getValue()));
                     allJMTable.setItems(obsAllJM);
                 });
     }
@@ -133,7 +133,7 @@ public class AddKSController implements Initializable {
             int ksNumber = Integer.parseInt(ksNumTextField.getText());
             int ksDate = (int) ksDatePicker.getValue().toEpochDay();
 
-            new KS_Dao().insertNewKS(ksNumber, ksDate, obsSelectedJM);
+            new KsDao().insertNewKS(ksNumber, ksDate, obsSelectedJM);
             //System.out.println(obsSelectedJM);
             showEstController.update_TapKS();
 

@@ -40,8 +40,8 @@ public class CorFilterController implements Initializable {
     @FXML
     private void handle_saveButton(ActionEvent event) {
         new ItemCorDAO().dellAndInsert(memento, selectedItems);
-//        commonSQL_DELETE.dellCor_Cor(FXCollections.observableArrayList( new DiffList(selectedItems, temp).newElements()));
-//        commonSQL_INSERT.insertIntoCor(FXCollections.observableArrayList(new DiffList(selectedItems, temp).exElements()));
+//        commonSQL_DELETE.dellCor_Cor(FXCollections.observableArrayList( new DiffList(selectedItems, temp).changeCollectionNotContain()));
+//        commonSQL_INSERT.insertIntoCor(FXCollections.observableArrayList(new DiffList(selectedItems, temp).baseCollectionNotContain()));
 
     }
 

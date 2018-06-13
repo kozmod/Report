@@ -14,16 +14,16 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.StackPane;
 import report.entities.items.estimate.EstimateDao;
 import report.entities.items.estimate.EstimateTVI;
-import report.layout.controllers.estimate.EstimateController.Est;
+import report.layout.controllers.estimate.EstimateController_old.Est;
 import report.layout.controllers.estimate.EstimateControllerNodeUtils;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
+import report.models.view.wrappers.table.PriceSumTableWrapper;
 import report.models.view.wrappers.table.TableWrapper;
-import report.models.view.wrappers.table.TableWrapperEST;
 
 
 public class TitledStackModel extends StackPane {
 
-    private TableWrapperEST<EstimateTVI> tableViewWrapper;
+    private PriceSumTableWrapper<EstimateTVI> tableViewWrapper;
     final private Label sumLabel = new Label();
     final private TitledPane titledPane = new TitledPane();
     final private Est enumEst;
@@ -44,7 +44,7 @@ public class TitledStackModel extends StackPane {
     }
 
     public DoubleProperty getLabelDoubleProperty() {
-        return tableViewWrapper.getSumProperty();
+        return tableViewWrapper.getProperty();
     }
 
     public TableWrapper getModelTable() {
@@ -83,8 +83,8 @@ public class TitledStackModel extends StackPane {
     //2
     private void init_Lable() {
         TitledStackModel.setMargin(sumLabel, new Insets(5, 10, 0, 0));
-        sumLabel.textProperty().setValue(tableViewWrapper.getSumProperty().getValue().toString());
-        Bindings.bindBidirectional(sumLabel.textProperty(), tableViewWrapper.getSumProperty(), new DoubleStringConverter().format());
+        sumLabel.textProperty().setValue(tableViewWrapper.getProperty().getValue().toString());
+        Bindings.bindBidirectional(sumLabel.textProperty(), tableViewWrapper.getProperty(), new DoubleStringConverter().format());
     }
 
     //3
@@ -100,21 +100,5 @@ public class TitledStackModel extends StackPane {
     public void updateTableItems() {
         tableViewWrapper.updateTableFromBASE(new EstimateDao().getOneBuildingPartList(enumEst, title));
     }
-
-
-//Public Methots     ============================================================================
-
-//    public void initContextMenu(ContextMenu cm){
-//        
-//            tableViewWrapper.setContextMenu(cm);
-//            tableViewWrapper.getObservableItems().addListener((ListChangeListener.Change<? extends AbstractEstimateTVI> c) -> {
-//                System.out.println("Changed on " + c);
-//                if(c.next() && 
-//                        (c.wasUpdated() || c.wasAdded() || c.wasRemoved() )){
-////                                ((ContextMenuBuilder)contexMenuEst).setDisable_SaveUndoPrint_groupe(false);
-//                                ((ContextMenuOptional)cm).setDisable_SaveUndoPrint_groupe(false);
-//                }
-//        });
-//    }
 
 }

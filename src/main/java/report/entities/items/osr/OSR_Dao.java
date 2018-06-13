@@ -171,15 +171,15 @@ public class OSR_Dao implements CommonDao<Collection<OSR_TIV>> {
 //                   current = table.getObservableItems();
 //        
 ////        DataUtils.DiffList diffList = new DataUtils.DiffList(tableMemento,current);
-////        if(diffList.exElements() != null 
-////           || diffList.exElements().size() > 0) delete(diffList.exElements());
-////        if(diffList.newElements()  != null 
-////           || diffList.newElements().size()  > 0) insert(diffList.newElements());     
+////        if(diffList.baseCollectionNotContain() != null
+////           || diffList.baseCollectionNotContain().size() > 0) delete(diffList.baseCollectionNotContain());
+////        if(diffList.changeCollectionNotContain()  != null
+////           || diffList.changeCollectionNotContain().size()  > 0) insert(diffList.changeCollectionNotContain());
 //        DataUtils.DiffList diffList = new DataUtils.DiffList(tableMemento,current);
-//        if(diffList.exElements() != null 
-//           || diffList.exElements().size() > 0) delete(diffList.intersection());
-//        if(diffList.newElements()  != null 
-//           || diffList.newElements().size()  > 0) insert(diffList.newElements());     
+//        if(diffList.baseCollectionNotContain() != null
+//           || diffList.baseCollectionNotContain().size() > 0) delete(diffList.intersection());
+//        if(diffList.changeCollectionNotContain()  != null
+//           || diffList.changeCollectionNotContain().size()  > 0) insert(diffList.changeCollectionNotContain());
 //        
 //       //?????????????
 ////        table.updateTableFromSQL(getData());

@@ -4,9 +4,9 @@ package report.models.view.nodesFactories;
 import javafx.scene.control.ContextMenu;
 import report.entities.items.estimate.EstimateDao;
 import report.layout.controllers.addEstimateRow.AddEstimateRowController;
-import report.layout.controllers.estimate.EstimateController.Est;
+import report.layout.controllers.estimate.EstimateController_old.Est;
 import report.models.view.nodesHelpers.FxmlStage;
-import report.models.view.wrappers.Reverting;
+import report.models.view.wrappers.ContainMemento;
 import report.usage_strings.PathStrings;
 import report.models.view.customNodes.ContextMenuOptional;
 import report.models.view.wrappers.table.TableWrapper;
@@ -104,7 +104,7 @@ public class ContextMenuFactory {
      * @param tableWrapperView (TableWrapper extends TableView)
      * @return ContextMenu
      */
-    public static ContextMenu getCommonSU(Reverting tableWrapperView) {
+    public static ContextMenu getCommonSU(ContainMemento tableWrapperView) {
         return ContextMenuOptional.newBuilder()
                 .setTable(tableWrapperView)
                 .addSaveMenuItem()

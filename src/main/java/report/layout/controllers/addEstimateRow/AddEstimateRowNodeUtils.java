@@ -10,7 +10,7 @@ import report.entities.abstraction.dao.CommonNamedDao;
 import report.entities.items.cb.AddEstTIV;
 import report.entities.items.estimate.EstimateDao;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
-import report.models.view.wrappers.table.TableWrapperEST;
+import report.models.view.wrappers.table.PriceSumTableWrapper;
 import report.models.view.nodesFactories.TableCellFactory;
 import report.usage_strings.SQL;
 
@@ -21,9 +21,9 @@ abstract class AddEstimateRowNodeUtils {
      * @return TableWrapper(child of TableView)
      */
     @SuppressWarnings("unchecked")
-    public static TableWrapperEST<AddEstTIV> decorEst_add(TableView table) {
+    public static PriceSumTableWrapper<AddEstTIV> decorEst_add(TableView table) {
         CommonNamedDao dao = new EstimateDao();
-        TableWrapperEST<AddEstTIV> tableWrapper = new TableWrapperEST<>(table, dao);
+        PriceSumTableWrapper<AddEstTIV> tableWrapper = new PriceSumTableWrapper<>(table, dao);
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 

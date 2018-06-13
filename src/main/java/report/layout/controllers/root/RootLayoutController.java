@@ -5,11 +5,13 @@ import java.io.File;
 
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeView;
-import report.Report;
+import javafx.scene.layout.GridPane;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -19,16 +21,22 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 
+import report.layout.controllers.CorAccountController;
 import report.layout.controllers.addSite.AddSiteController;
 import report.layout.controllers.DeleteController;
 import report.layout.controllers.LogController;
-import report.layout.controllers.estimate.EstimateController;
+import report.layout.controllers.estimate.EstimateController_old;
 import report.layout.controllers.expences.ExpensesController;
 import report.layout.controllers.expences.ExpensesControllerNodeUtils;
+import report.layout.controllers.finRes.FinResController;
 import report.layout.controllers.intro.IntroLayoutController;
+import report.layout.controllers.planning.PlanningController;
 import report.models.view.nodesHelpers.InputValidator;
 import report.models.view.nodesFactories.FileChooserFactory;
 import report.models.view.wrappers.toString.ToStringWrapper;
+import report.spring.spring.components.ApplicationContextProvider;
+import report.spring.views.RootViewFx;
+import report.spring.views.ViewFx;
 import report.usage_strings.PathStrings;
 import report.models.view.nodesHelpers.FxmlStage;
 import report.models.sql.sqlQuery.BackUpQuery;
@@ -37,14 +45,18 @@ import report.models.sql.sqlQuery.InsertFileXLSQuery;
 
 public class RootLayoutController implements Initializable {
 
-    private Report reportApp;
+    @Autowired
+    private RootViewFx rootViewFx;
+    @Autowired
+    private RootControllerNodeFactory rootControllerNodeFactory;
+
     private DeleteController delController;
     private AddSiteController siteAddController;
-    private EstimateController estController;
+    private EstimateController_old estController;
     private ExpensesController expensesController;
     private IntroLayoutController introControllre;
 
-    private RootControllerService rootService = new RootControllerService(this);
+    private RootControllerService rootService = new RootControllerService();
 
     @FXML
     private ComboBox<Object> comboQueueNum, comboSiteCondition;
@@ -65,9 +77,9 @@ public class RootLayoutController implements Initializable {
     /*!******************************************************************************************************************
      *                                                                                                      Getter/Setter
      ********************************************************************************************************************/
-    public void setReportApp(Report reportApp) {
-        this.reportApp = reportApp;
-    }
+//    public void setReportApp(Report reportApp) {
+//        this.reportApp = reportApp;
+//    }
 
     public RootLayoutController getRootController() {
         return this;
@@ -88,7 +100,7 @@ public class RootLayoutController implements Initializable {
         delController.setRootController(this);
     }
 
-    public void setEstController(EstimateController showEstController) {
+    public void setEstController(EstimateController_old showEstController) {
         this.estController = showEstController;
         showEstController.setRootController(this);
     }
@@ -147,12 +159,12 @@ public class RootLayoutController implements Initializable {
 
     private void init_siteTreeView() {
         treeViewSite.setRoot(rootService.getTreeViewList());
-        treeViewSite.setCellFactory(RootControllerNodeUtils.getRootTreeViewCellFactory(this));
+        treeViewSite.setCellFactory(rootControllerNodeFactory.getRootTreeViewCellFactory(this));
         treeViewSite.setShowRoot(false);
     }
 
     private void init_previewTable() {
-        previewTable = RootControllerNodeUtils.getSite();
+        previewTable = rootControllerNodeFactory.getSite();
         infoTitledPane.setContent(previewTable);
     }
 
@@ -166,12 +178,22 @@ public class RootLayoutController implements Initializable {
         init_TreeComboBlock();
         init_siteTreeView();
         init_previewTable();
-        if (!(reportApp.getCenterController() instanceof IntroLayoutController)) {
-            reportApp.initIntroLayout()
-                    .<IntroLayoutController>getController()
-                    .updateTables();
+//        if (!(reportApp.getCenterController() instanceof IntroLayoutController)) {
+        if (rootViewFx.centerControllerEquals(IntroLayoutController.class)) {
+
+//            reportApp.<IntroLayoutController>getCenterController().updateTables();
+            rootViewFx.<IntroLayoutController>getCenterController().updateTables();
+
         } else {
-            reportApp.<IntroLayoutController>getCenterController().updateTables();
+
+//            ViewFx<GridPane,IntroLayoutController> introLayoutController = beanFactory.getBean("introView",ViewFx.class);
+            ViewFx<GridPane,IntroLayoutController> introLayoutController = ApplicationContextProvider.getBean("introView");
+            introLayoutController.getController().updateTables();
+            rootViewFx.setCenter(introLayoutController);
+////
+////            reportApp.initIntroLayout()
+////                    .<IntroLayoutController>getController()
+////                    .updateTables();
         }
     }
 
@@ -247,16 +269,16 @@ public class RootLayoutController implements Initializable {
     private void handle_PrintToXML(ActionEvent event) {
 
         File selectedFile;
-        if (EstimateController.Est.Base.isExist()
+        if (EstimateController_old.Est.Base.isExist()
                 && estController.getBaseTab().isSelected()) {
-            selectedFile = FileChooserFactory.saveEst(EstimateController.Est.Base);
+            selectedFile = FileChooserFactory.saveEst(EstimateController_old.Est.Base);
             if (selectedFile != null) {
                 rootService.printEstBase(selectedFile);
                 LogController.appendLogViewText("Базовая смета сохранена в файл");
             }
-        } else if ((EstimateController.Est.Changed.isExist()
+        } else if ((EstimateController_old.Est.Changed.isExist()
                 && estController.getChangeTab().isSelected())) {
-            selectedFile = FileChooserFactory.saveEst(EstimateController.Est.Changed);
+            selectedFile = FileChooserFactory.saveEst(EstimateController_old.Est.Changed);
             if (selectedFile != null) {
                 rootService.printEstChange(selectedFile);
                 LogController.appendLogViewText("Изменненная смета сохранена в файл");
@@ -304,28 +326,32 @@ public class RootLayoutController implements Initializable {
 
     @FXML
     private void handle_FinResButton(ActionEvent event) {
-        new FxmlStage(PathStrings.Layout.FIN_RES).loadIntoRootBorderPaneCenter();
+//        new FxmlStage(PathStrings.Layout.FIN_RES).loadIntoRootBorderPaneCenter();
+        ViewFx<GridPane, FinResController>  viewFx = ApplicationContextProvider.getBean("finResView");
+        rootViewFx.getView().setCenter(viewFx.getView());
+
+
     }
 
     @FXML
     private void handle_PlanningButton(ActionEvent event) {
-        new FxmlStage(PathStrings.Layout.PLANNING).loadIntoRootBorderPaneCenter();
+//        new FxmlStage(PathStrings.Layout.PLANNING).loadIntoRootBorderPaneCenter();
+        ViewFx<TabPane, PlanningController>  viewFx = ApplicationContextProvider.getBean("planingView");
+        rootViewFx.getView().setCenter(viewFx.getView());
     }
 
 
     @FXML
     private void handle_CommonInfButton(ActionEvent event) {
-        new FxmlStage(PathStrings.Layout.INTRO)
-                .loadIntoRootBorderPaneCenter()
-                .<IntroLayoutController>getController()
-                .updateTables();
+        ViewFx<GridPane, IntroLayoutController>  viewFx = ApplicationContextProvider.getBean("introView");
+        rootViewFx.getView().setCenter(viewFx.getView());
+        viewFx.getController().updateTables();
     }
 
     @FXML
     private void handle_accountButton(ActionEvent event) {
-        new FxmlStage(PathStrings.Layout.ACC).loadIntoRootBorderPaneCenter();
-
-
+       ViewFx<GridPane, CorAccountController> viewFx = ApplicationContextProvider.getBean("corAccountView");
+        rootViewFx.getView().setCenter(viewFx.getView());
     }
 }
 

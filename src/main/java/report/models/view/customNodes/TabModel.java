@@ -11,7 +11,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
-import report.layout.controllers.estimate.EstimateController.Est;
+import report.layout.controllers.estimate.EstimateController_old.Est;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
 
 
@@ -79,7 +79,7 @@ public class TabModel {
                 double f3 = roofTP.getLabelDoubleProperty().get();
                 double f4 = apertureTP.getLabelDoubleProperty().get();
                 double f5 = finishingWorkTP.getLabelDoubleProperty().get();
-//                return faundationTP.getLabelProperty().getQuantity();
+//                return faundationTP.getSumLabelTextProperty().getQuantity();
                 return f1 + f2 + f3 + f4 + f5;
             }
         };

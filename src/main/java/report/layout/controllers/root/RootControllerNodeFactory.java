@@ -7,6 +7,7 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TreeCell;
@@ -14,34 +15,39 @@ import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.util.Callback;
+import org.springframework.beans.factory.annotation.Autowired;
 import report.entities.items.site.PreviewTIV;
 import report.entities.items.site.SiteDao;
 import report.entities.items.site.SiteEntity;
 import report.layout.controllers.DeleteController;
-import report.layout.controllers.estimate.EstimateController;
+import report.layout.controllers.estimate.EstimateController_old;
+import report.layout.controllers.estimate.new_estimate.EstimateTabPaneController;
 import report.layout.controllers.expences.ExpensesController;
 import report.models.coefficient.Formula;
 import report.models.coefficient.FormulaQuery;
+import report.models.counterpaties.EstimateData;
 import report.models.view.nodesFactories.TableCellFactory;
 import report.models.view.nodesFactories.TableFactory;
 import report.models.view.nodesHelpers.FxmlStage;
 import report.models.view.wrappers.toString.CounterAgentToStringWrapper;
 import report.models.view.wrappers.toString.ToStringWrapper;
-import report.services.common.CounterAgentWrapper;
+import report.spring.spring.components.ApplicationContextProvider;
+import report.spring.views.RootViewFx;
+import report.spring.views.ViewFx;
 import report.usage_strings.PathStrings;
 import report.usage_strings.SQL;
 
-class RootControllerNodeUtils implements TableFactory {
+public class RootControllerNodeFactory implements TableFactory {
 
-    private RootControllerNodeUtils() {
-    }
+    @Autowired
+    private RootViewFx rootViewFx;
 
     /**
      * Create TableWrapper(Preview TableWrapper) with 2 columns /Object/.
      *
      * @return TableWrapper(Preview TableWrapper)
      */
-    static TableView getSite() {
+    public  TableView getSite() {
         TableView table = new TableView();
 
         table.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -62,21 +68,21 @@ class RootControllerNodeUtils implements TableFactory {
     }
 
 
-    static ObservableList<PreviewTIV> getPreviewTIV() {
+    public ObservableList<PreviewTIV> getPreviewTIV() {
 
-        final CounterAgentWrapper counterAgentWrapper = RootControllerService
-                .getCounterAgentWrapper()
+        final EstimateData estimateData = RootControllerService
+                .getEstimateData()
                 .orElseThrow(
-                        () -> new IllegalArgumentException("CounterAgentWrapper is NULL")
+                        () -> new IllegalArgumentException("EstimateData is NULL")
                 );
 
-        final String counterAgetNameWithForm = counterAgentWrapper.getSelectedCounterAgent()
+        final String counterAgetNameWithForm = estimateData.getSelectedCounterAgent()
                 .getForm()
                 .concat(" ")
-                .concat(counterAgentWrapper.getSelectedCounterAgent().getName());
+                .concat(estimateData.getSelectedCounterAgent().getName());
 
-        final long siteId = counterAgentWrapper.getSiteEntity().getId();
-        final SiteEntity siteEntity = counterAgentWrapper.getSiteEntity();
+        final long siteId = estimateData.getSiteEntity().getId();
+        final SiteEntity siteEntity = estimateData.getSiteEntity();
 
         final ObservableList<PreviewTIV> list = FXCollections.observableArrayList(PreviewTIV.extractor());
 
@@ -123,11 +129,11 @@ class RootControllerNodeUtils implements TableFactory {
         return list;
     }
 
-    static RootTreeViewCellFactory getRootTreeViewCellFactory(RootLayoutController rootLayoutController) {
+    public RootTreeViewCellFactory getRootTreeViewCellFactory(RootLayoutController rootLayoutController) {
         return new RootTreeViewCellFactory(rootLayoutController);
     }
 
-    static class RootTreeViewCellFactory implements Callback<TreeView<ToStringWrapper>, TreeCell<ToStringWrapper>> {
+    public class RootTreeViewCellFactory implements Callback<TreeView<ToStringWrapper>, TreeCell<ToStringWrapper>> {
         private String selectedTreeElemParent;
         private String selectedTreeElem;
         private RootLayoutController rootLayoutControlle;
@@ -215,7 +221,7 @@ class RootControllerNodeUtils implements TableFactory {
                     RootControllerService.initCounterAgentHolder(selectedTreeElemParent, selectedItem.getEntity());
 
                     selectedTreeElem = selectedItem.getEntity().getName();
-                    EstimateController.Est.Common.setCountAgentTVI(selectedItem.getEntity());
+                    EstimateController_old.Est.Common.setCountAgentTVI(selectedItem.getEntity());
 
                     siteEditItem.setDisable(false);
                     contAddItem.setDisable(false);
@@ -224,22 +230,26 @@ class RootControllerNodeUtils implements TableFactory {
 //                        printEstToXmlMenuItem.setDisable(false); //todo : unkomment
 
                     //Update Preview TableWrapper OBS-LIST
-                    EstimateController.Est.Common.setSiteObs(
+                    EstimateController_old.Est.Common.setSiteObs(
                             new SiteDao(
                                     selectedTreeElemParent,
                                     selectedItem.getEntity().getIdCountConst()
                             ).getData()
                     );
-                    rootLayoutControlle.getPreviewTable().setItems(EstimateController.Est.Common.getPreviewObservableList());
+                    rootLayoutControlle.getPreviewTable().setItems(EstimateController_old.Est.Common.getPreviewObservableList());
 
                     //create Coefficient
                     Formula formula = new FormulaQuery().getFormula();
                     //Set TAXES_ALL
-                    EstimateController.Est.Common.getSiteItem(SQL.Site.TAXES_ALL).setSecondValue(formula.allTaxes());
+                    EstimateController_old.Est.Common.getSiteItem(SQL.Site.TAXES_ALL).setSecondValue(formula.allTaxes());
 
-                    FxmlStage estLayout = new FxmlStage(PathStrings.Layout.SITE_EST)
-                            .loadIntoRootBorderPaneCenter();
-                    rootLayoutControlle.setEstController(estLayout.getController());
+                    ViewFx<TabPane, EstimateTabPaneController> estimateTabPaneControllerViewFx
+                            = ApplicationContextProvider.getBean("estimateTabPaneView");
+                    estimateTabPaneControllerViewFx.getController().initTabPane(selectedTreeElemParent,selectedItem.getEntity());
+                    rootViewFx.setCenter(estimateTabPaneControllerViewFx);
+//                    FxmlStage estLayout = new FxmlStage(PathStrings.Layout.SITE_EST)
+//                            .loadIntoRootBorderPaneCenter(); //todo
+//                    rootLayoutControlle.setEstController(estLayout.getController());//todo
 
                 } else {
                     siteEditItem.setDisable(true);

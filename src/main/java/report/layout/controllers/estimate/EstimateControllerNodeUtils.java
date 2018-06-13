@@ -6,13 +6,13 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import report.entities.items.AbstractEstimateTVI;
-import report.entities.items.KS.KS_Dao;
+import report.entities.items.KS.KsDao;
 import report.entities.items.KS.KS_TIV;
 import report.entities.items.estimate.EstimateDao;
 import report.entities.items.estimate.EstimateTVI;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
+import report.models.view.wrappers.table.PriceSumTableWrapper;
 import report.models.view.wrappers.table.TableWrapper;
-import report.models.view.wrappers.table.TableWrapperEST;
 import report.models.view.nodesFactories.ContextMenuFactory;
 import report.models.view.nodesFactories.TableCellFactory;
 import report.models.view.nodesFactories.TableFactory;
@@ -26,10 +26,10 @@ public abstract class EstimateControllerNodeUtils implements TableFactory {
      *
      * @param enumEst - enumeration. Contain: data of Estimate Tables
      * @return TableWrapper(child of TableView)
-     * @see EstimateController.Est - enumeration of "Estimate Tables"
+     * @see EstimateController_old.Est - enumeration of "Estimate Tables"
      */
-    public static TableWrapperEST getEst(EstimateController.Est enumEst, String title) {
-        TableWrapperEST table = new TableWrapperEST(title, new TableView(), new EstimateDao(enumEst));
+    public static PriceSumTableWrapper getEst(EstimateController_old.Est enumEst, String title) {
+        PriceSumTableWrapper table = new PriceSumTableWrapper(title, new TableView(), new EstimateDao(enumEst));
 
 
         table.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -71,11 +71,8 @@ public abstract class EstimateControllerNodeUtils implements TableFactory {
                         editingAbstractEstimateTVI.setQuantity(value);
                         editingAbstractEstimateTVI.setPriceSum(value * price_one);
 
-                        table.computeSum();
+                        table.computeProperty();
                         t.getTableView().refresh();
-                        //Diseble Save & Cancel Context menu AbstractEstimateTVI
-//                    ((ContextMenuModelEst)table.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
-
                     }
                 });
                 break;
@@ -105,7 +102,7 @@ public abstract class EstimateControllerNodeUtils implements TableFactory {
                 editingAbstractEstimateTVI.setPriceOne(price_one);
                 editingAbstractEstimateTVI.setPriceSum(value * price_one);
 
-                table.computeSum();
+                table.computeProperty();
                 t.getTableView().refresh();
 
 //                ((ContextMenuModelEst)table.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
@@ -167,8 +164,8 @@ public abstract class EstimateControllerNodeUtils implements TableFactory {
      *
      * @return TableWrapper(child of TableView)
      */
-    static TableWrapperEST<KS_TIV> decorKS(TableView<KS_TIV> tableView) {
-        TableWrapperEST table = new TableWrapperEST(tableView, new KS_Dao(EstimateController.Est.KS));
+    static PriceSumTableWrapper<KS_TIV> decorKS(TableView<KS_TIV> tableView) {
+        PriceSumTableWrapper table = new PriceSumTableWrapper(tableView, new KsDao(EstimateController_old.Est.KS));
 
         table.setEditable(true);
         table.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
@@ -182,7 +179,7 @@ public abstract class EstimateControllerNodeUtils implements TableFactory {
         TableColumn Price_sumColumn = table.addColumn("Стоимость (общая)", "priceSum");
         TableColumn restPriceSumColumn = table.addColumn("Остаток (общий)", "restOfValue");
 
-        JM_nameColumn.setCellFactory(param -> TableCellFactory.getOnMouseEnteredTableCell(EstimateController.Est.KS));
+        JM_nameColumn.setCellFactory(param -> TableCellFactory.getOnMouseEnteredTableCell(EstimateController_old.Est.KS));
         valueColumn.setEditable(true);
 
 //        TableFactory.setTextFieldCell_NumberStringConverter(valueColumn);
@@ -201,11 +198,11 @@ public abstract class EstimateControllerNodeUtils implements TableFactory {
                 Double price_one = editingItem.getPriceOne();
 
                 //Value of editing item in Chaged Tables
-                Double valueInChanged = EstimateController.Est.Changed.findEqualsElement(editingItem).getQuantity();
+                Double valueInChanged = EstimateController_old.Est.Changed.findEqualsElement(editingItem).getQuantity();
 
                 //rest of Value in KS Lists
                 double restOfValue = valueInChanged -
-                        (EstimateController.Est.KS.getTabMap().values()
+                        (EstimateController_old.Est.KS.getTabMap().values()
                                 .stream()
                                 .flatMap(mapItem -> ((List) mapItem).stream())
                                 .filter(editingItem::equalsSuperClass)
@@ -223,7 +220,7 @@ public abstract class EstimateControllerNodeUtils implements TableFactory {
 //                Set new Rest of Value
                 editingItem.setRestOfValue(restOfValue);
 
-                table.computeSum();
+                table.computeProperty();
                 t.getTableView().refresh();
 
             }

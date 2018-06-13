@@ -1,30 +1,19 @@
 package report.models.view.wrappers.table;
 
 import javafx.scene.control.ContextMenu;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import report.entities.abstraction.dao.CommonDao;
 import report.models.mementos.Memento;
-import report.models.view.wrappers.Reverting;
+import report.models.view.wrappers.ContainMemento;
 
-public abstract class AbstractTableWrapper<E> implements Reverting {
+import java.util.Optional;
+
+public abstract class AbstractTableWrapper<E> implements ContainMemento {
 
     Memento<E> memento;
     final String title;
     CommonDao<E> DAO;
-
-    /***************************************************************************
-     *                                                                         *
-     * CONSTRUCTORS                                                            *
-     *                                                                         *
-     **************************************************************************/
-
-//    public AbstractTableWrapper (CommonDao<E> commonDao) {
-//        this("TEST TITLE", commonDao);
-//    }
-
-//    public AbstractTableWrapper(String title, CommonDao<E> commonDao) {
-//        this.title = title;
-//        this.commonDao = commonDao;
-//    }
 
     /**
      * Abstract Constructor.
@@ -48,7 +37,7 @@ public abstract class AbstractTableWrapper<E> implements Reverting {
         return this.memento;
     }
 
-    ;
+
 
     /***************************************************************************
      *                                                                         *

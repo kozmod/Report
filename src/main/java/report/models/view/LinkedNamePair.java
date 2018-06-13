@@ -10,7 +10,7 @@ import javafx.util.Pair;
  */
 public class LinkedNamePair extends Pair<Integer, String> {
     /**
-     * Creates a new pair
+     * Creates AbstractJavaFxApplication new pair
      *
      * @param key   The key for this pair
      * @param value The value to use for this pair

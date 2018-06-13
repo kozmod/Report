@@ -13,12 +13,13 @@ import java.util.stream.Collectors;
 /**
  * This class filter two list and make list new or exist elements in baseList, use methods:
  * <b>
- * <br>exElements
- * <br>newElements
+ * <br>baseCollectionNotContain
+ * <br>changeCollectionNotContain
  * </b>
  *
  * @param <T>
  */
+@Deprecated
 public class DiffList<T> {
     private final Collection<T> baseList;
     private final Collection<T> editedList;

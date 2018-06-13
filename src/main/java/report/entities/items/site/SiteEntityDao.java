@@ -14,8 +14,6 @@ import java.util.logging.Logger;
 
 public class SiteEntityDao implements CommonNamedDao<SiteEntity> {
 
-    @Autowired
-    private JdbcTemplate jdbcTemplate;
 
     private static final String TABLE_NAME = "Site_New";
     private static final int REQUIRED_FOUND_SITE_QUANTITY = 1;

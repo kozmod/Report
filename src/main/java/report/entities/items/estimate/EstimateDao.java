@@ -5,7 +5,7 @@ import report.entities.abstraction.dao.CommonNamedDao;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.layout.controllers.LogController;
-import report.layout.controllers.estimate.EstimateController;
+import report.layout.controllers.estimate.EstimateController_old;
 import report.models.sql.SqlConnector;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
@@ -17,18 +17,17 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.sql.Timestamp;
-import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.layout.controllers.estimate.EstimateController.Est;
+import report.layout.controllers.estimate.EstimateController_old.Est;
 //import report.models.Formula_test;
 import report.entities.items.cb.AddEstTIV;
 
 
-public class EstimateDao implements CommonNamedDao<Collection<EstimateTVI>> {
+public class EstimateDao implements CommonNamedDao<ObservableList<EstimateTVI>> {
 
     private Est enumEst;
     private String tableName = SQL.Tables.ESTIMATE;
@@ -41,7 +40,7 @@ public class EstimateDao implements CommonNamedDao<Collection<EstimateTVI>> {
     }
 
     /**
-     * Get String of a Mirror (SQL.Tables).
+     * Get String of AbstractJavaFxApplication Mirror (SQL.Tables).
      *
      * @return List of AbstractEstimateTVI
      */
@@ -59,12 +58,12 @@ public class EstimateDao implements CommonNamedDao<Collection<EstimateTVI>> {
     public ObservableList<EstimateTVI> getData() {
         return this.getData(
                 enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER),
-                enumEst.getTableType(),
-                EstimateController.Est.Common.getCountAgentTVI()
+                EstimateController_old.Est.Common.getCountAgentTVI(),
+                enumEst.getTableType()
         );
     }
 
-    public ObservableList<EstimateTVI> getData(String siteNumber, int tableType, CountAgentTVI contractor) {
+    public ObservableList<EstimateTVI> getData(String siteNumber,  CountAgentTVI contractor,int tableType) {
         ObservableList<EstimateTVI> listEstAll = FXCollections.observableArrayList();
         String sql = "SELECT "
                 + "E.[id]"
@@ -246,7 +245,7 @@ public class EstimateDao implements CommonNamedDao<Collection<EstimateTVI>> {
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement prst = connection.prepareStatement(ResultSetString)) {
 
-            CountAgentTVI contractor = EstimateController.Est.Common.getCountAgentTVI();
+            CountAgentTVI contractor = EstimateController_old.Est.Common.getCountAgentTVI();
             prst.setString(1, enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER));
             prst.setInt(2, contractor.getIdCountConst());
             prst.setString(3, title);
@@ -302,7 +301,7 @@ public class EstimateDao implements CommonNamedDao<Collection<EstimateTVI>> {
      * @param items (Collection of AbstractEstimateTVI)
      */
     @Override
-    public void delete(Collection<EstimateTVI> items) {
+    public void delete(ObservableList<EstimateTVI> items) {
 
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement("update [dbo].[Estimate] SET dell = 1 WHERE [id] = ? AND [dell] = 0;");) {
@@ -317,11 +316,12 @@ public class EstimateDao implements CommonNamedDao<Collection<EstimateTVI>> {
             connection.commit();
             //add info to LogTextArea / LogController
             items.forEach(item -> {
-                LogController.appendLogViewText("deleted EST item: " + ((AbstractEstimateTVI) item).getJM_name()
-                        + " [JM/ " + ((AbstractEstimateTVI) item).getJobOrMat() + "]"
-                        + " [BP/ " + ((AbstractEstimateTVI) item).getBindJob() + "]"
-                        + " [S#/ " + ((AbstractEstimateTVI) item).getSiteNumber() + "]"
-                        + " [C/ " + ((AbstractEstimateTVI) item).getContractor() + "]");
+                LogController.appendLogViewText("deleted EST item: " + item.getJM_name()
+                        + " [JM/ " +  item.getJobOrMat() + "]"
+                        + " [BP/ " + item.getBindJob() + "]"
+                        + " [S#/ " + item.getSiteNumber() + "]"
+                        + " [C/ " +  item.getContractor() + "]"
+                );
             });
             LogController.appendLogViewText(items.size() + " deleted");
 
@@ -371,7 +371,7 @@ public class EstimateDao implements CommonNamedDao<Collection<EstimateTVI>> {
      * @param items (Collection of AbstractEstimateTVI)
      */
     @Override
-    public void insert(Collection<EstimateTVI> items) {
+    public void insert(ObservableList<EstimateTVI> items) {
         String sql = "insert into [dbo].[Estimate] "
                 + "("
                 + "[SiteNumber]"
@@ -394,7 +394,7 @@ public class EstimateDao implements CommonNamedDao<Collection<EstimateTVI>> {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
             for (AbstractEstimateTVI obsAbstractEstimateTVI : items) {
-                CountAgentTVI contractor = EstimateController.Est.Common.getCountAgentTVI();
+                CountAgentTVI contractor = EstimateController_old.Est.Common.getCountAgentTVI();
                 pstmt.setString(1, obsAbstractEstimateTVI.getSiteNumber());
                 pstmt.setString(2, obsAbstractEstimateTVI.getTypeHome());
                 pstmt.setInt(3, contractor.getIdCountConst());
@@ -501,7 +501,7 @@ public class EstimateDao implements CommonNamedDao<Collection<EstimateTVI>> {
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement(pstString);) {
 
-            CountAgentTVI contractor = EstimateController.Est.Common.getCountAgentTVI();
+            CountAgentTVI contractor = EstimateController_old.Est.Common.getCountAgentTVI();
             pstmt.setString(1, enumEst.getSiteSecondValue(SQL.Estimate.SITE_NUMBER));
             pstmt.setInt(2, contractor.getIdCountConst());
             pstmt.setString(3, enumEst.getSiteSecondValue(SQL.Estimate.TYPE_HOME));
@@ -561,15 +561,15 @@ public class EstimateDao implements CommonNamedDao<Collection<EstimateTVI>> {
      * @param memento (TableWrapper)
      */
     @Override
-    public void dellAndInsert(Memento<Collection<EstimateTVI>> memento) {
+    public void dellAndInsert(Memento<ObservableList<EstimateTVI>> memento) {
 //        Collection tableMemento = table.getMemento().getSavedState(),
 //                   current = table.getObservableItems();
 //        
 //        DataUtils.DiffList diffList = new DataUtils.DiffList(tableMemento,current);
-//        if(diffList.exElements() != null 
-//           || diffList.exElements().size() > 0) delete(diffList.exElements());
-//        if(diffList.newElements()  != null 
-//           || diffList.newElements().size()  > 0) insert(diffList.newElements());     
+//        if(diffList.baseCollectionNotContain() != null
+//           || diffList.baseCollectionNotContain().size() > 0) delete(diffList.baseCollectionNotContain());
+//        if(diffList.changeCollectionNotContain()  != null
+//           || diffList.changeCollectionNotContain().size()  > 0) insert(diffList.changeCollectionNotContain());
         CommonNamedDao.super.dellAndInsert(memento);
         //?????????????
 //        table.updateTableFromSQL(this.getOneBuildingPartList(Est.Base, table.getTitle()));
@@ -581,10 +581,10 @@ public class EstimateDao implements CommonNamedDao<Collection<EstimateTVI>> {
 ////                   current = table.getObservableItems();
 ////
 ////        DataUtils.DiffList diffList = new DataUtils.DiffList(tableMemento,current);
-////        if(diffList.exElements() != null
-////           || diffList.exElements().size() > 0) delete(diffList.exElements());
-////        if(diffList.newElements()  != null
-////           || diffList.newElements().size()  > 0) insert(diffList.newElements());
+////        if(diffList.baseCollectionNotContain() != null
+////           || diffList.baseCollectionNotContain().size() > 0) delete(diffList.baseCollectionNotContain());
+////        if(diffList.changeCollectionNotContain()  != null
+////           || diffList.changeCollectionNotContain().size()  > 0) insert(diffList.changeCollectionNotContain());
 //        TableViewItemDAO.super.dellAndInsert(table);
 //       //?????????????
 ////        table.updateTableFromSQL(this.getOneBuildingPartList(Est.Base, table.getTitle()));

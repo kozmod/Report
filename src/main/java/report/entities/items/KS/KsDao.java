@@ -5,7 +5,7 @@ package report.entities.items.KS;
 import report.entities.abstraction.dao.CommonNamedDao;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
-import report.layout.controllers.estimate.EstimateController;
+import report.layout.controllers.estimate.EstimateController_old;
 import report.models.sql.SqlConnector;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
@@ -23,10 +23,10 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layout.controllers.LogController;
-import report.layout.controllers.estimate.EstimateController.Est;
+import report.layout.controllers.estimate.EstimateController_old.Est;
 
 
-public class KS_Dao implements CommonNamedDao<Collection<KS_TIV>> {
+public class KsDao implements CommonNamedDao<Collection<KS_TIV>> {
 
     private Est enumEst;
 
@@ -34,15 +34,15 @@ public class KS_Dao implements CommonNamedDao<Collection<KS_TIV>> {
         return enumEst;
     }
 
-    public KS_Dao() {
+    public KsDao() {
     }
 
-    public KS_Dao(Est enumEst) {
+    public KsDao(Est enumEst) {
         this.enumEst = enumEst;
     }
 
     /**
-     * Get String of a Mirror (SQL.Tables).
+     * Get String of AbstractJavaFxApplication Mirror (SQL.Tables).
      *
      * @return List of AbstractEstimateTVI
      */
@@ -61,11 +61,12 @@ public class KS_Dao implements CommonNamedDao<Collection<KS_TIV>> {
     public ObservableList<KS_TIV> getData() {
         return this.getData(
                 enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER),
-                EstimateController.Est.Common.getCountAgentTVI()
+                EstimateController_old.Est.Common.getCountAgentTVI(),
+                2
         );
     }
 
-    public ObservableList<KS_TIV> getData(String siteNumber, CountAgentTVI contractor) {
+    public ObservableList<KS_TIV> getData(String siteNumber, CountAgentTVI contractor, int tableType) {
         ObservableList<KS_TIV> list = FXCollections.observableArrayList();
 
         String psmtmtString = "SELECT  "
@@ -87,7 +88,8 @@ public class KS_Dao implements CommonNamedDao<Collection<KS_TIV>> {
                 + ",[dell]"
                 + "From dbo.[KS]"
                 + "Where [SiteNumber] = ? "
-                + "And [id_count] = ? ";
+                + "And [id_count] = ? "
+                + "And [TableType] = ? ";
 //                + "And [dell] = 0 ";
 
         try (Connection connection = SqlConnector.getInstance();
@@ -95,6 +97,7 @@ public class KS_Dao implements CommonNamedDao<Collection<KS_TIV>> {
 
             pstmt.setString(1, siteNumber);
             pstmt.setInt(2, contractor.getIdCountConst());
+            pstmt.setInt(3, tableType);
             pstmt.execute();
 
             ResultSet rs = pstmt.getResultSet();
@@ -123,7 +126,7 @@ public class KS_Dao implements CommonNamedDao<Collection<KS_TIV>> {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(KS_Dao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(KsDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -183,7 +186,7 @@ public class KS_Dao implements CommonNamedDao<Collection<KS_TIV>> {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(KS_Dao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(KsDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
@@ -215,31 +218,9 @@ public class KS_Dao implements CommonNamedDao<Collection<KS_TIV>> {
                         + " [C/ " + item.getContractor() + "]");
             });
         } catch (SQLException ex) {
-            Logger.getLogger(KS_Dao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(KsDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-//    @Override
-//    public void delete(Collection<KS_TIV> items) {
-//        try(Connection connection   = SqlConnector.getInstance();
-//            PreparedStatement pstmt = connection.prepareStatement("execute dellRowKS ?,?,?,?,?,?");) {
-//            connection.setAutoCommit(false);
-//                for (KS_TIV obsItem : items) {
-////                    
-//                    pstmt.setInt      (1, obsItem.getKSNumber());
-//                    pstmt.setString   (2, obsItem.getSiteNumber());
-//                    pstmt.setString   (3, obsItem.getContractor());
-//                    pstmt.setString   (4, obsItem.getBuildingPart());
-//                    pstmt.setString   (5, obsItem.getJM_name());
-//                    pstmt.setString   (6, obsItem.getBindJob());
-//                    
-//                    pstmt.addBatch();
-//                }
-//           pstmt.executeBatch();
-//           connection.commit();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(commonSQL_INSERT.class.getName()).log(Level.SEVERE, null, ex);
-//        }
-//    }
 
     /**
      * Delete All Entities in One KS from SQL
@@ -258,7 +239,7 @@ public class KS_Dao implements CommonNamedDao<Collection<KS_TIV>> {
             pstmt.execute();
 
         } catch (SQLException ex) {
-            Logger.getLogger(KS_Dao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(KsDao.class.getName()).log(Level.SEVERE, null, ex);
 
         }
     }
@@ -311,35 +292,8 @@ public class KS_Dao implements CommonNamedDao<Collection<KS_TIV>> {
             //SQL commit
             connection.commit();
         } catch (SQLException ex) {
-            Logger.getLogger(KS_Dao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(KsDao.class.getName()).log(Level.SEVERE, null, ex);
         }
-//    public void insert(Collection<KS_TIV> items) {
-//        try(Connection connection   = SqlConnector.getInstance();
-//            PreparedStatement pstmt = connection.prepareStatement("execute addRowKS ?,?,?,?,?,?,?,?,?,?,?,?");) {
-//            //set false SQL Autocommit
-//            connection.setAutoCommit(false);
-//                for (KS_TIV obsItem : items) {
-//                    pstmt.setInt      (1,  obsItem.getKSNumber());
-//                    pstmt.setInt      (2,  obsItem.getKSDate());
-//                    pstmt.setString   (3,  obsItem.getSiteNumber());
-//                    pstmt.setString   (4,  obsItem.getContractor());
-//                    pstmt.setString   (5,  obsItem.getBuildingPart());
-//                    pstmt.setString   (6,  obsItem.getJM_name());
-//                    pstmt.setString   (7,  obsItem.getBindJob());
-//                    pstmt.setString   (8,  obsItem.getJobOrMat());
-//                    pstmt.setFloat    (9,  obsItem.getQuantity());
-//                    pstmt.setString   (10,  obsItem.getUnit());
-//                    pstmt.setFloat    (11, obsItem.getPriceOne());
-//                    pstmt.setString   (12, obsItem.getTypeHome());
-//                    
-//                    pstmt.addBatch();
-//                }
-//           pstmt.executeBatch(); 
-//           //SQL commit
-//           connection.commit();
-//        } catch (SQLException ex) {
-//            Logger.getLogger(commonSQL_INSERT.class.getName()).log(Level.SEVERE, null, ex);
-//        }
     }
 
     /**
@@ -399,7 +353,7 @@ public class KS_Dao implements CommonNamedDao<Collection<KS_TIV>> {
              PreparedStatement pstmt = connection.prepareStatement(pstString);) {
             for (AbstractEstimateTVI abstractEstimateTVI : listKS) {
 
-                CountAgentTVI contractor = EstimateController.Est.Common.getCountAgentTVI();
+                CountAgentTVI contractor = EstimateController_old.Est.Common.getCountAgentTVI();
                 pstmt.setInt(1, ks_Number);
                 pstmt.setInt(2, (Math.round(ks_Date * 100) / 100));
                 pstmt.setString(3, abstractEstimateTVI.getSiteNumber());
@@ -412,7 +366,7 @@ public class KS_Dao implements CommonNamedDao<Collection<KS_TIV>> {
             pstmt.executeBatch();
 
         } catch (SQLException ex) {
-            Logger.getLogger(KS_Dao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(KsDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

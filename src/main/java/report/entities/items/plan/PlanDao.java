@@ -3,7 +3,7 @@ package report.entities.items.plan;
 
 
 import report.entities.abstraction.dao.CommonNamedDao;
-import report.entities.items.KS.KS_Dao;
+import report.entities.items.KS.KsDao;
 import report.models.coefficient.Quantity;
 import report.models.sql.SqlConnector;
 import report.models.mementos.Memento;
@@ -35,7 +35,7 @@ public class PlanDao implements CommonNamedDao<Collection<PlanTIV>> {
     }
 
     /**
-     * Get String of a Mirror (SQL.Tables).
+     * Get String of AbstractJavaFxApplication Mirror (SQL.Tables).
      *
      * @return List of AbstractEstimateTVI
      */
@@ -231,7 +231,7 @@ public class PlanDao implements CommonNamedDao<Collection<PlanTIV>> {
             connection.commit();
 
         } catch (SQLException ex) {
-            Logger.getLogger(KS_Dao.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(KsDao.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

@@ -13,10 +13,11 @@ import report.entities.abstraction.dao.CommonDao;
 import report.entities.items.Clone;
 import report.models.mementos.TableMemento;
 import report.models.view.customNodes.ContextMenuOptional;
+import report.models.view.wrappers.BindBase;
 
 import java.util.*;
 
-public class TableWrapper<E extends Clone> extends AbstractTableWrapper<ObservableList<E>> {
+public class TableWrapper<E extends Clone> extends AbstractTableWrapper<ObservableList<E>> implements BindBase {
 
     protected final TableView<E> tableView;
 
@@ -25,6 +26,7 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
      * CONSTRUCTORS                                                            *
      *                                                                         *
      **************************************************************************/
+
     public TableWrapper(TableView<E> table, CommonDao<ObservableList<E>> commonDao) {
         this("TEST TITLE", table, commonDao);
     }
@@ -94,7 +96,14 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
      * Getters/Setters                                                         *
      *                                                                         *
      **************************************************************************/
-
+    public  Optional<TableColumn<E, ?>> getTableColumnByName( String name) {
+        for (TableColumn<E, ?> col : this.tableView.getColumns())
+            if (col.getText().equals(name)) {
+                return Optional.of(col);
+            }
+        ;
+        return Optional.empty();
+    }
     @Override
     public ContextMenu getContextMenu() {
         return tableView.getContextMenu();

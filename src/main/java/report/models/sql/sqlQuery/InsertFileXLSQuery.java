@@ -449,7 +449,7 @@ public class InsertFileXLSQuery {
             Logger.getLogger(InsertFileXLSQuery.class.getName()).log(Level.SEVERE, null, ex);
         }
 
-//        System.out.println("dif " + new DiffList(existAccObs, xlsAccObs).newElements().size());
+//        System.out.println("dif " + new DiffList(existAccObs, xlsAccObs).changeCollectionNotContain().size());
 //        System.out.println("existAccObs "+ existAccObs.size());
 //        System.out.println("xlsAccObs "+ xlsAccObs.size());
 

@@ -98,7 +98,7 @@ public class Report extends Application {
 //            scene = new Scene(rootlayout,1800,900);
             primaryStage.setScene(scene);
             rootController = loader.getController(); //set controller
-            rootController.setReportApp(this);
+//            rootController.setReportApp(this);
 
 
         } catch (IOException ex) {

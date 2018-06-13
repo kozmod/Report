@@ -4,12 +4,12 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TreeItem;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.site.SiteDao;
-import report.layout.controllers.estimate.EstimateController;
+import report.layout.controllers.estimate.EstimateController_old;
 import report.entities.items.site.SiteCommonDAO;
+import report.models.counterpaties.EstimateData;
 import report.models.printer.PrintEstimate;
 import report.models.utils.ConcurrentUtils;
 import report.models.view.wrappers.toString.ToStringWrapper;
-import report.services.common.CounterAgentWrapper;
 import report.usage_strings.SQL;
 import report.usage_strings.ServiceStrings;
 
@@ -20,13 +20,7 @@ import java.util.concurrent.Executors;
 
 public class RootControllerService {
 
-    private static CounterAgentWrapper counterAgentWrapper;
-
-    private RootLayoutController rootLayout;
-
-    public RootControllerService(RootLayoutController root) {
-        this.rootLayout = root;
-    }
+    private static EstimateData estimateData;
 
     public ObservableList<Object> getComboQueueValues() {
         return new SiteDao().getDistinct(SQL.Site.QUEUE_BUILDING, ServiceStrings.PERCENT);
@@ -36,12 +30,12 @@ public class RootControllerService {
         return new SiteDao().getDistinct(SQL.Site.STATUS_PAYMENT, ServiceStrings.PERCENT);
     }
 
-    public static CounterAgentWrapper initCounterAgentHolder(String siteNumber, CountAgentTVI countAgentTVI) {
-        return counterAgentWrapper;
+    public static EstimateData initCounterAgentHolder(String siteNumber, CountAgentTVI countAgentTVI) {
+        return estimateData;
     }
 
-    public static Optional<CounterAgentWrapper> getCounterAgentWrapper() {
-        return Optional.of(counterAgentWrapper);
+    public static Optional<EstimateData> getEstimateData() {
+        return Optional.of(estimateData);
     }
 
     /**
@@ -86,7 +80,7 @@ public class RootControllerService {
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() ->
-                new PrintEstimate(EstimateController.Est.Base.getAllItemsList_Live(),
+                new PrintEstimate(EstimateController_old.Est.Base.getAllItemsList_Live(),
                         selectedFile.toPath()));
 
 
@@ -99,7 +93,7 @@ public class RootControllerService {
     public void printEstChange(File selectedFile) {
         ExecutorService executor = Executors.newSingleThreadExecutor();
         executor.execute(() ->
-                new PrintEstimate(EstimateController.Est.Changed.getAllItemsList_Live(),
+                new PrintEstimate(EstimateController_old.Est.Changed.getAllItemsList_Live(),
                         selectedFile.toPath()));
         ConcurrentUtils.stop(executor);
     }

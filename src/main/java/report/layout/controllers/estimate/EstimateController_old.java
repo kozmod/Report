@@ -25,7 +25,6 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 
-import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -41,6 +40,7 @@ import report.layout.controllers.addKS.AddKSController;
 import report.layout.controllers.root.RootLayoutController;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.models.converters.dateStringConverters.LocalDayStringConverter;
+import report.models.view.wrappers.table.PriceSumTableWrapper;
 import report.usage_strings.PathStrings;
 import report.usage_strings.SQL;
 import report.models.view.wrappers.table.TableWrapper;
@@ -51,12 +51,11 @@ import report.models.view.nodesHelpers.FxmlStage;
 
 import report.models.printer.PrintKS;
 import report.models.view.customNodes.TabModel;
-import report.models.view.wrappers.table.TableWrapperEST;
-import report.entities.items.KS.KS_Dao;
+import report.entities.items.KS.KsDao;
 import report.models.view.customNodes.ContextMenuOptional;
 
 
-public class EstimateController implements Initializable {
+public class EstimateController_old implements Initializable {
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
 //                                                                                                  ENUM
@@ -196,7 +195,7 @@ public class EstimateController implements Initializable {
                             ));
                     break;
                 case KS:
-                    allItems = new KS_Dao(this).getData();
+                    allItems = new KsDao(this).getData();
                     tabMap = allItems.stream()
                             .filter(item -> item.getDel() != 1)
                             .sorted(Comparator.comparing(AbstractEstimateTVI::getJM_name))
@@ -279,26 +278,27 @@ public class EstimateController implements Initializable {
     private Map<String, List<AbstractEstimateTVI>> mapBase, mapChange;
 
     @FXML
-    private Label ksSumLabel, ksDateLabel, erroeLable;
+    private Label ksSumLabel,
+            ksDateLabel, erroeLable;
     @FXML
     private VBox baseVBox, changedVBox;
     @FXML
     private ListView<Object> listKS;
     @FXML
     private DatePicker dateKSfrom, dateKSto;
-    @FXML
-    private GridPane gridPaneAdditional;
-    @FXML
-    private ScrollPane scrollPaneBase, scrollPaneChanged;
-    @FXML
-    private ComboBox comboAdditional;
+//    @FXML
+//    private GridPane gridPaneAdditional;
+//    @FXML
+//    private ScrollPane scrollPaneBase, scrollPaneChanged;
+//    @FXML
+//    private ComboBox comboAdditional;
     @FXML
     private Tab baseTab, changeTab, dopTab;
     @FXML
     private TableView tableKS, tableAdditional;
 
     private Label labelSumBase, labelSumChanged;
-    private TableWrapperEST<KS_TIV> tableKSWrapper;
+    private PriceSumTableWrapper<KS_TIV> tableKSWrapper;
     private TableWrapper tableAdditionalWrapper;
 
 
@@ -340,7 +340,7 @@ public class EstimateController implements Initializable {
         tableKSWrapper = EstimateControllerNodeUtils.decorKS(tableKS);
 //        ksSumLabel.textProperty().bind(Bindings.convert(tableKSWrapper.getSumProperty()));
         ksSumLabel.textProperty().bindBidirectional(
-                tableKSWrapper.getSumProperty(),
+                tableKSWrapper.getProperty(),
                 new DoubleStringConverter().format()
         );
 
@@ -426,7 +426,7 @@ public class EstimateController implements Initializable {
 
         TabModel tm = new TabModel(enumEst);
         enumEst.setTab(tm);
-//        tm1 = new TabModel(enumEst.getTabMap());
+//        tm1 = new SumVboxModel(enumEst.getTabMap());
         switch (enumEst) {
             case Base:
                 labelSumBase = tm.getSumLabel();
@@ -597,7 +597,7 @@ public class EstimateController implements Initializable {
     private void handle_deleteKS(ActionEvent event) {
         if (!listKS.getSelectionModel().isEmpty() && listKS.getSelectionModel().getSelectedItem() != null) {
             String selectedItemKS = listKS.getSelectionModel().getSelectedItem().toString();
-            new KS_Dao().deleteKS(selectedItemKS);
+            new KsDao().deleteKS(selectedItemKS);
             ksMap.remove(Integer.parseInt(selectedItemKS));
             listKS.getItems().clear();
             listKS.getItems().addAll(ksMap.keySet());

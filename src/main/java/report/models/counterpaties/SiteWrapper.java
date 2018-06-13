@@ -1,4 +1,4 @@
-package report.services.common;
+package report.models.counterpaties;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -15,6 +15,10 @@ public class SiteWrapper implements Transformable<PreviewTIV> {
 
     public SiteWrapper(SiteEntity siteEntity) {
         this.siteEntity = siteEntity;
+    }
+    public SiteWrapper(SiteEntity siteEntity,BigDecimal allTaxes) {
+        this.siteEntity = siteEntity;
+        this.allTaxes = allTaxes;
     }
 
     public SiteEntity getSiteEntity() {

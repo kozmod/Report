@@ -1,6 +1,6 @@
 package report.models.view.wrappers;
 
-public interface Reverting extends BindBase {
+public interface ContainMemento extends BindBase{
     /**
      * Save Items to MEMENTO.
      */

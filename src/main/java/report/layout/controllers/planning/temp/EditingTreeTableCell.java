@@ -177,7 +177,7 @@ public class EditingTreeTableCell extends TreeTableCell<DItem, Double> {
                 if (converter == null) {
                     throw new IllegalStateException(
                             "Attempting to convert text input into Object, but provided "
-                                    + "StringConverter is null. Be sure to set a StringConverter "
+                                    + "StringConverter is null. Be sure to set AbstractJavaFxApplication StringConverter "
                                     + "in your cell factory.");
                 }
                 cell.commitEdit(converter.fromString(textField.getText()));

@@ -3,13 +3,13 @@ package report.usage_strings;
 
 
 /**
- * This Interface is a Mirror of <b>SQLTables</b> Columns.
+ * This Interface is AbstractJavaFxApplication Mirror of <b>SQLTables</b> Columns.
  */
 public interface SQL extends ServiceStrings {
 
 
     /**
-     * This Nested Interface is a Mirror of <b>SQLTables</b> Names.
+     * This Nested Interface is AbstractJavaFxApplication Mirror of <b>SQLTables</b> Names.
      */
     interface Tables {
         String SITE = "Site";
@@ -26,7 +26,7 @@ public interface SQL extends ServiceStrings {
     }
 
     /**
-     * This Nested Interface is a Mirror of <b>Common SQLTables</b> Columns.
+     * This Nested Interface is AbstractJavaFxApplication Mirror of <b>Common SQLTables</b> Columns.
      */
     interface Common {
 
@@ -47,7 +47,7 @@ public interface SQL extends ServiceStrings {
     }
 
     /**
-     * This Nested Interface is a Mirror of <b>Site SQLTable</b> Columns.
+     * This Nested Interface is AbstractJavaFxApplication Mirror of <b>Site SQLTable</b> Columns.
      */
     interface Site {
         String SITE_NUMBER = Common.SITE_NUMBER;
@@ -75,7 +75,7 @@ public interface SQL extends ServiceStrings {
     }
 
     /**
-     * This Nested Interface is a Mirror of <b>KS SQLTable</b> Columns.
+     * This Nested Interface is AbstractJavaFxApplication Mirror of <b>KS SQLTable</b> Columns.
      */
     interface KS {
         String SITE_NUMBER = Common.SITE_NUMBER;
@@ -89,7 +89,7 @@ public interface SQL extends ServiceStrings {
     }
 
     /**
-     * This Nested Interface is a Mirror of <b>Estimate SQLTable</b> Columns.
+     * This Nested Interface is AbstractJavaFxApplication Mirror of <b>Estimate SQLTable</b> Columns.
      */
     interface Estimate {
         String SITE_NUMBER = Common.SITE_NUMBER;
@@ -109,7 +109,7 @@ public interface SQL extends ServiceStrings {
     }
 
     /**
-     * This Nested Interface is a Mirror of <b>Contractors SQLTable</b> Columns.
+     * This Nested Interface is AbstractJavaFxApplication Mirror of <b>Contractors SQLTable</b> Columns.
      */
     interface Contractors {
         String DIRECTOR = "Director";
@@ -120,7 +120,7 @@ public interface SQL extends ServiceStrings {
     }
 
     /**
-     * This Nested Interface is a Mirror of <b>COR SQLTable</b> Columns.
+     * This Nested Interface is AbstractJavaFxApplication Mirror of <b>COR SQLTable</b> Columns.
      */
     interface Cor {
         String NAME_COR = "Name_Cor";
@@ -129,7 +129,7 @@ public interface SQL extends ServiceStrings {
     }
 
     /**
-     * This Nested Interface is a Mirror of <b>Plan SQLTable</b> Columns.
+     * This Nested Interface is AbstractJavaFxApplication Mirror of <b>Plan SQLTable</b> Columns.
      */
     interface Plan {
         String TYPE_ID = "TypeID";
@@ -146,7 +146,7 @@ public interface SQL extends ServiceStrings {
     }
 
     /**
-     * This Nested Interface is a Mirror of <b>Period SQLTable</b> Columns.
+     * This Nested Interface is AbstractJavaFxApplication Mirror of <b>Period SQLTable</b> Columns.
      */
     interface Period {
         String DATE_FROM = "DateFrom";
@@ -155,7 +155,7 @@ public interface SQL extends ServiceStrings {
     }
 
     /**
-     * This Nested Interface is a Mirror of <b>Period SQLTable</b> Columns.
+     * This Nested Interface is AbstractJavaFxApplication Mirror of <b>Period SQLTable</b> Columns.
      */
     interface Formula {
         String SITE_EXPESES = "SiteExpeses";

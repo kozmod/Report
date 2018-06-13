@@ -3,10 +3,12 @@ package report.entities.items;
 
 import java.sql.Timestamp;
 
+import javafx.beans.Observable;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.util.Callback;
 
 
 //Estimate Tabble Items to ObsList
@@ -313,10 +315,10 @@ public abstract class AbstractEstimateTVI implements Clone {
     }
 
 
-    //Extractor
-//   public static Callback<AbstractEstimateTVI, Observable[]> extractor() {
-//        return (AbstractEstimateTVI p) -> new Observable[]{p.quantityProperty(), p.priceOneProperty()};
-//    }
+//    Extractor
+   public static Callback<AbstractEstimateTVI, Observable[]> extractor() {
+        return (AbstractEstimateTVI p) -> new Observable[]{p.quantityProperty(), p.priceOneProperty()};
+    }
 
 
 }

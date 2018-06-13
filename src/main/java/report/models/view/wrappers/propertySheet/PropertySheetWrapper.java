@@ -9,13 +9,13 @@ import report.entities.items.counterparties.AbstractReqDao;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 import report.models.mementos.ChangedMemento;
 import report.models.view.customNodes.ContextMenuOptional;
-import report.models.view.wrappers.Reverting;
+import report.models.view.wrappers.ContainMemento;
 
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class PropertySheetWrapper implements Reverting {
+public class PropertySheetWrapper implements ContainMemento {
     private PropertySheet sheet;
     private ObservableList<ObjectPSI> items;
     private Map<Integer, List<ObjectPSI>> cashedItemsMap;
