@@ -15,14 +15,16 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
+import report.entities.items.estimate.EstimateTVI;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
+import report.models.view.wrappers.table.PriceSumTableWrapper;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public class SumVboxModel extends VBox {
+public class SumVboxModel<T extends PriceSumTableWrapper<EstimateTVI> > extends VBox {
 
-    private List<SumColumnTableTitledStackModel> listStackModels;
+    private List<SumColumnTableTitledStackModel<T>> listStackModels;
     private ScrollPane scrollPane;
     private Label sumLabel;
     private DoubleBinding allSackSumProperty;
@@ -39,7 +41,7 @@ public class SumVboxModel extends VBox {
 
     }
 
-    public SumVboxModel(List<SumColumnTableTitledStackModel> listStackModels) {
+    public SumVboxModel(List<SumColumnTableTitledStackModel<T>> listStackModels) {
         this.listStackModels = listStackModels;
         getChildren().addAll(listStackModels);
         getChildren().addAll(sumLabel);
@@ -48,6 +50,10 @@ public class SumVboxModel extends VBox {
 
     public void setEditable(boolean param) {
         listStackModels.forEach(stackModel -> stackModel.tableView().setEditable(param));
+    }
+
+    public List<SumColumnTableTitledStackModel<T>> getListStackModels() {
+        return listStackModels;
     }
 
     private void bindDoubleProperty() {

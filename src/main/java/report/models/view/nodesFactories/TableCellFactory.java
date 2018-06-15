@@ -408,7 +408,7 @@ public class TableCellFactory {
         }
     }
 
-    private class inKsColoredCell extends TableCell<EstimateTVI, Boolean> {
+    public class inKsColoredCell extends TableCell<EstimateTVI, Boolean> {
 
         @Override
         public void updateItem(Boolean item, boolean empty) {

@@ -12,7 +12,7 @@ import javafx.util.Callback;
 
 
 //Estimate Tabble Items to ObsList
-public abstract class AbstractEstimateTVI implements Clone {
+public abstract class AbstractEstimateTVI<E> implements Clone<E> {
     private long id;
     private int del;
     private Timestamp dateCreate;

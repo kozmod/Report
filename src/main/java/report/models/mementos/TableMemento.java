@@ -86,27 +86,4 @@ public class TableMemento<E extends Clone<E>> implements Memento<Collection<E>> 
             }
         });
     }
-
 }
-
-//public  class TableMemento<S extends Clone> {
-//
-//    private  ObservableList<S> tableMemento;
-//
-//    public TableMemento(ObservableList<S>  tableItems) {
-//        this.tableMemento  = getNewObs( tableItems);
-//
-//    }
-//
-//    public ObservableList<S> getSavedState() {return  this.getNewObs( tableMemento); }
-//
-//    private ObservableList<S> getNewObs(ObservableList<S> items){
-//        ObservableList<S> newObsList = FXCollections.observableArrayList();
-//        items.forEach((S obsItem) -> {
-//            newObsList.add(
-//                    (S)obsItem.getClone()
-//            );
-//        });
-//    return newObsList;
-//    }
-//}

@@ -7,5 +7,5 @@ public interface SummableColumnTable<T> {
 
     T computeProperty();
 
-    TableView tableView();
+//    TableView tableView();
 }

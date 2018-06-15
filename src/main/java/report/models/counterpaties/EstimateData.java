@@ -154,6 +154,7 @@ public class EstimateData {
 //                .orElse(null);
 //    }
 
+
     public static class EnumMultiMap<E extends Enum<E>, K, V> {
         private EnumMap<E, Map<K, V>> enumMap;
 

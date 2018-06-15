@@ -23,9 +23,8 @@ public interface FxConfig {
     default <V extends ViewFx<? extends Node, ? extends Initializable>> V loadView(String url,Initializable controller) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(url));
-        Parent node = loader.load();
         loader.setController(controller);
-        return (V) new ViewFx(node, controller);
+        return (V) new ViewFx(loader.load(), controller);
     }
 
     default <V extends ControlFx<?, ? extends Initializable>> V loadElement(String url) throws IOException {
@@ -37,8 +36,7 @@ public interface FxConfig {
     default <V extends ControlFx<?, ? extends Initializable>> V loadElement(String url, Initializable controller) throws IOException {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(url));
-        Parent node = loader.load();
         loader.setController(controller);
-        return (V) new ControlFx(node, controller);
+        return (V) new ControlFx(loader.load(), controller);
     }
 }

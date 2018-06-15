@@ -3,10 +3,12 @@ package report.layout.controllers.estimate.new_estimate;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
+import report.layout.controllers.estimate.new_estimate.service.BaseStackTableController;
 import report.layout.controllers.estimate.new_estimate.service.EstimateControllerNodeFactory;
 import report.layout.controllers.estimate.new_estimate.service.EstimateService;
 import report.models.counterpaties.EstimateData;
@@ -58,21 +60,39 @@ public class EstimateTabPaneController implements Initializable {
         TabPane tabPane = estimateTabPaneControllerViewFx.getView();
         tabPane.getTabs().clear();
 
-        if (estimateData.isDocumentExist(EstimateDocumentType.BASE)) {
-            SumVboxModel baseTabContent = estimateControllerNodeFactory.newEstimateVboxModel(EstimateDocumentType.BASE, estimateData);
-            tabPane.getTabs().add(estimateControllerNodeFactory.newTab("Base", baseTabContent));
 
-            tabPane.getTabs().add(
-                    estimateControllerNodeFactory.newTab("BASE_KS", baseKsViewFx .getView())
-            );
-           if (estimateData.isDocumentExist(EstimateDocumentType.CHANGED)) {
-               SumVboxModel changedTabContent = estimateControllerNodeFactory.newEstimateVboxModel(EstimateDocumentType.CHANGED, estimateData);
-               tabPane.getTabs().add(estimateControllerNodeFactory.newTab("Changed", changedTabContent));
-               tabPane.getTabs().add(
-                       estimateControllerNodeFactory.newTab("Changed_KS", changedKsViewFx.getView())
-               );
-           }
+        if (estimateData.isDocumentExist(EstimateDocumentType.BASE)) {
+            ViewFx<StackPane,BaseStackTableController> v = ApplicationContextProvider.getBean("baseStackPaneTableView");
+
+
+
+
+//            tabPane.getTabs().add(
+//                    estimateControllerNodeFactory.newTab("BASE_KS", baseKsViewFx .getView())
+//            );
+//           if (estimateData.isDocumentExist(EstimateDocumentType.CHANGED)) {
+//               SumVboxModel changedTabContent = estimateControllerNodeFactory.newEstimateVboxModel(EstimateDocumentType.CHANGED, estimateData);
+//               tabPane.getTabs().add(estimateControllerNodeFactory.newTab("Changed", changedTabContent));
+//               tabPane.getTabs().add(
+//                       estimateControllerNodeFactory.newTab("Changed_KS", changedKsViewFx.getView())
+//               );
+//           }
         }
+//   if (estimateData.isDocumentExist(EstimateDocumentType.BASE)) {
+//            SumVboxModel baseTabContent = estimateControllerNodeFactory.newEstimateVboxModel(EstimateDocumentType.BASE, estimateData);
+//            tabPane.getTabs().add(estimateControllerNodeFactory.newTab("Base", baseTabContent));
+//
+//            tabPane.getTabs().add(
+//                    estimateControllerNodeFactory.newTab("BASE_KS", baseKsViewFx .getView())
+//            );
+//           if (estimateData.isDocumentExist(EstimateDocumentType.CHANGED)) {
+//               SumVboxModel changedTabContent = estimateControllerNodeFactory.newEstimateVboxModel(EstimateDocumentType.CHANGED, estimateData);
+//               tabPane.getTabs().add(estimateControllerNodeFactory.newTab("Changed", changedTabContent));
+//               tabPane.getTabs().add(
+//                       estimateControllerNodeFactory.newTab("Changed_KS", changedKsViewFx.getView())
+//               );
+//           }
+//        }
     }
 
 

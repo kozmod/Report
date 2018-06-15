@@ -18,7 +18,7 @@ import javafx.util.Callback;
 import report.entities.items.AbstractEstimateTVI;
 
 
-public class EstimateTVI extends AbstractEstimateTVI {
+public class EstimateTVI extends AbstractEstimateTVI<EstimateTVI> {
     private final IntegerProperty tableType;
     private final BooleanProperty inKS;
 

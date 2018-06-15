@@ -16,7 +16,6 @@ import report.entities.items.estimate.EstimateDao;
 import report.entities.items.estimate.EstimateTVI;
 import report.layout.controllers.estimate.EstimateController_old;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
-import report.models.counterpaties.EstimateData;
 import report.models.counterpaties.EstimateDocumentType;
 import report.models.view.customNodes.newNode.SumColumnTableTitledStackModel;
 import report.models.view.customNodes.newNode.SumVboxModel;
@@ -29,6 +28,8 @@ import report.models.view.wrappers.table.TableWrapper;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import static report.spring.utils.FxTableUtils.addColumn;
 
 @SuppressWarnings("Duplicates")
 public class EstimateControllerNodeFactory {
@@ -51,26 +52,26 @@ public class EstimateControllerNodeFactory {
 
 
     @SuppressWarnings("unchecked")
-    public SumVboxModel newEstimateVboxModel(EstimateDocumentType docType,EstimateData estimateData) {
+    public SumVboxModel newEstimateVboxModel(EstimateDocumentType docType) {
         SumColumnTableTitledStackModel fundament = newPriceSumTitledPane(FUNDAMENT, docType);
-        fundament.tableView().setItems(estimateData.getDocuments().getByBiKey(docType,FUNDAMENT));
+//        fundament.tableView().setItems(estimateData.getDocuments().getByBiKey(docType,FUNDAMENT));
 
         SumColumnTableTitledStackModel steni = newPriceSumTitledPane(STENI, docType);
-        steni.tableView().setItems(estimateData.getDocuments().getByBiKey(docType,STENI));
+//        steni.tableView().setItems(estimateData.getDocuments().getByBiKey(docType,STENI));
 
         SumColumnTableTitledStackModel krowlia = newPriceSumTitledPane(KROWLIA, docType);
-        krowlia.tableView().setItems(estimateData.getDocuments().getByBiKey(docType,KROWLIA));
+//        krowlia.tableView().setItems(estimateData.getDocuments().getByBiKey(docType,KROWLIA));
 
         SumColumnTableTitledStackModel proemi = newPriceSumTitledPane(PROEMI, docType);
-        proemi.tableView().setItems(estimateData.getDocuments().getByBiKey(docType,PROEMI));
+//        proemi.tableView().setItems(estimateData.getDocuments().getByBiKey(docType,PROEMI));
 
         SumColumnTableTitledStackModel otdelka = newPriceSumTitledPane(OTDELKA, docType);
-        otdelka.tableView().setItems(estimateData.getDocuments().getByBiKey(docType,OTDELKA));
+//        otdelka.tableView().setItems(estimateData.getDocuments().getByBiKey(docType,OTDELKA));
 
-        List<SumColumnTableTitledStackModel> titledStackModelList = Arrays.asList(fundament,steni,krowlia,proemi,otdelka);
-        titledStackModelList.forEach(SumColumnTableTitledStackModel::computeSum);
+//        List<SumColumnTableTitledStackModel> titledStackModelList = Arrays.asList(fundament,steni,krowlia,proemi,otdelka);
+//        titledStackModelList.forEach(SumColumnTableTitledStackModel::computeSum);
 
-        return new SumVboxModel(titledStackModelList);
+        return new SumVboxModel(Arrays.asList(fundament,steni,krowlia,proemi,otdelka));
     }
 
 
@@ -117,6 +118,30 @@ public class EstimateControllerNodeFactory {
         }
         return new SumColumnTableTitledStackModel(title, priceSumTableWrapper);
     }
+
+//    public Map<String,TableColumn<EstimateTVI,?>> tuneEstimateTable(TableView<EstimateTVI> table){
+//        final Map<String,TableColumn<EstimateTVI,?>>  columnMap = new LinkedHashMap<>();
+//
+//        TableColumn<EstimateTVI, String> jobMaterialNameColumn = addColumn(table, "Наименование работ/затрат", column -> column.getValue().JM_nameProperty());
+//        TableColumn<EstimateTVI, String> bindJobColumn = addColumn(table,"Связанная работа", column -> column.getValue().bindJobProperty());
+//        TableColumn<EstimateTVI, Double> quantityColumn = addColumn(table,"Кол-во", column -> column.getValue().quantityProperty().asObject());
+//        TableColumn<EstimateTVI, String> unitColumn = addColumn(table,"Eд. изм.", column -> column.getValue().unitProperty());
+//        TableColumn<EstimateTVI, Double> periceOneColumn = addColumn(table,"Стоимость (за единицу)", column -> column.getValue().priceOneProperty().asObject());
+//        TableColumn<EstimateTVI, Double> priceOneSumColumn = addColumn(table,"Стоимость (общая)", column -> column.getValue().priceSumProperty().asObject());
+//        TableColumn<EstimateTVI, Boolean> isInKSColumn = addColumn(table,"КС", "inKS");
+//
+//        jobMaterialNameColumn.setMinWidth(300);
+//        bindJobColumn.setMinWidth(160);
+//
+//        quantityColumn.setEditable(true);
+//        periceOneColumn.setEditable(true);
+//
+//        isInKSColumn.setCellFactory(param -> TableCellFactory.getInKsColoredCell());
+//
+//
+//        return columnMap;
+//    }
+
 
     private PriceSumTableWrapper<EstimateTVI> newPriseSumTable(EstimateDocumentType docType) {
         final PriceSumTableWrapper<EstimateTVI> tableWrapper = new PriceSumTableWrapper<>(new TableView<>(), estimateDao);

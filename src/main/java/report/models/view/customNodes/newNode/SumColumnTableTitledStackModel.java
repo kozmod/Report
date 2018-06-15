@@ -11,16 +11,17 @@ import javafx.scene.control.TitledPane;
 import javafx.scene.layout.StackPane;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.models.view.wrappers.table.SummableColumnTable;
+import report.models.view.wrappers.table.TableWrapper;
 
 import java.util.Objects;
 
 
-public class SumColumnTableTitledStackModel extends StackPane {
+public class SumColumnTableTitledStackModel<T extends TableWrapper & SummableColumnTable<DoubleProperty>> extends StackPane {
 
     private final Label sumLabel;
     private final TitledPane titledPane;
     private final DoubleProperty sumValue;
-    private final SummableColumnTable<DoubleProperty> table;
+    private final T table;
 
     {
         sumLabel = new Label();
@@ -36,7 +37,7 @@ public class SumColumnTableTitledStackModel extends StackPane {
     }
 
 
-    public SumColumnTableTitledStackModel(String title, SummableColumnTable<DoubleProperty> table) {
+    public SumColumnTableTitledStackModel(String title, T table) {
         titledPane.setText(title);
         this.sumValue = table.getProperty();
         this.table = table;
