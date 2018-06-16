@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
@@ -30,10 +29,9 @@ import javafx.scene.text.Text;
 import javafx.util.Duration;
 import report.entities.abstraction.dao.CommonDao;
 import report.entities.items.AbstractEstimateTVI;
-import report.entities.items.KS.KS_TIV;
+import report.entities.items.KS.KsTIV;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.estimate.EstimateDao;
-import report.entities.items.estimate.EstimateTVI;
 import report.entities.items.site.PreviewTIV;
 import report.entities.items.site.SiteDao;
 import report.layout.controllers.addKS.AddKSController;
@@ -143,7 +141,7 @@ public class EstimateController_old implements Initializable {
         public ObservableList<? extends AbstractEstimateTVI> findItemsList_DL(AbstractEstimateTVI selectedAbstractEstimateTVI) {
             if (selectedAbstractEstimateTVI != null)
                 return allItems.stream()
-                        .filter((AbstractEstimateTVI i) -> i.equalsSuperClass(selectedAbstractEstimateTVI))
+                        .filter((AbstractEstimateTVI i) -> i.businessKeyEquals(selectedAbstractEstimateTVI))
                         .sorted(Comparator.comparingLong(item -> item.getDateCreate().getTime()))
                         .collect(collectingAndThen(toList(), FXCollections::observableArrayList));
             else
@@ -180,60 +178,60 @@ public class EstimateController_old implements Initializable {
             switch (this) {
                 case Base:
                 case Changed:
-                    allItems = new EstimateDao(this).getData();
-                    tabMap = allItems.stream()
-                            .filter(item -> item.getDel() != 1)
-                            .sorted(Comparator.comparing(AbstractEstimateTVI::getJM_name))
-                            .collect(Collectors.groupingBy(AbstractEstimateTVI::getBuildingPart,
-                                    Collector.of(
-                                            () -> FXCollections.observableArrayList(EstimateTVI.extractor()),
-                                            ObservableList::add,
-                                            (l1, l2) -> {
-                                                l1.addAll(l2);
-                                                return l1;
-                                            })
-                            ));
+//                    allItems = new EstimateDao(this).getData();
+//                    tabMap = allItems.stream()
+//                            .filter(item -> item.getDel() != 1)
+//                            .sorted(Comparator.comparing(AbstractEstimateTVI::getJM_name))
+//                            .collect(Collectors.groupingBy(AbstractEstimateTVI::getBuildingPart,
+//                                    Collector.of(
+//                                            () -> FXCollections.observableArrayList(EstimateTVI.extractor()),
+//                                            ObservableList::add,
+//                                            (l1, l2) -> {
+//                                                l1.addAll(l2);
+//                                                return l1;
+//                                            })
+//                            ));
                     break;
                 case KS:
                     allItems = new KsDao(this).getData();
-                    tabMap = allItems.stream()
-                            .filter(item -> item.getDel() != 1)
-                            .sorted(Comparator.comparing(AbstractEstimateTVI::getJM_name))
-                            .collect(Collectors.groupingBy(item -> ((KS_TIV) item).getKSNumber(),
-                                    Collector.of(
-                                            () -> FXCollections.observableArrayList(KS_TIV.extractor()),
-                                            ObservableList::add,
-                                            (l1, l2) -> {
-                                                l1.addAll(l2);
-                                                return l1;
-                                            })
-                            ));
+//                    tabMap = allItems.stream()
+//                            .filter(item -> item.getDel() != 1)
+//                            .sorted(Comparator.comparing(AbstractEstimateTVI::getJM_name))
+//                            .collect(Collectors.groupingBy(item -> ((KsTIV) item).getKSNumber(),
+//                                    Collector.of(
+//                                            () -> FXCollections.observableArrayList(KsTIV.extractor()),
+//                                            ObservableList::add,
+//                                            (l1, l2) -> {
+//                                                l1.addAll(l2);
+//                                                return l1;
+//                                            })
+//                            ));
 
-//                                .collect(Collectors.groupingBy((AbstractEstimateTVI item) -> ((KS_TIV)item).getKSNumber()));
+//                                .collect(Collectors.groupingBy((AbstractEstimateTVI item) -> ((KsTIV)item).getKSNumber()));
                     break;
                 case Additional:
-                    allItems = Base.allItems.stream()
-                            .filter(item -> !Changed.allItems.contains(item))
-                            .collect(Collector.of(
-                                    () -> FXCollections.observableArrayList(EstimateTVI.extractor()),
-                                    ObservableList::add,
-                                    (l1, l2) -> {
-                                        l1.addAll(l2);
-                                        return l1;
-                                    })
-                            );
-                    tabMap = allItems.stream()
-                            .filter(item -> item.getDel() != 1)
-                            .collect(Collectors.groupingBy(item -> ((EstimateTVI) item).getBuildingPart(),
-//                                        AbstractEstimateTVI::getBuildingPart,
-                                    Collector.of(
-                                            () -> FXCollections.observableArrayList(),
-                                            ObservableList::add,
-                                            (l1, l2) -> {
-                                                l1.addAll(l2);
-                                                return l1;
-                                            })
-                            ));
+//                    allItems = Base.allItems.stream()
+//                            .filter(item -> !Changed.allItems.contains(item))
+//                            .collect(Collector.of(
+//                                    () -> FXCollections.observableArrayList(EstimateTVI.extractor()),
+//                                    ObservableList::add,
+//                                    (l1, l2) -> {
+//                                        l1.addAll(l2);
+//                                        return l1;
+//                                    })
+//                            );
+//                    tabMap = allItems.stream()
+//                            .filter(item -> item.getDel() != 1)
+//                            .collect(Collectors.groupingBy(item -> ((EstimateTVI) item).getBuildingPart(),
+////                                        AbstractEstimateTVI::getBuildingPart,
+//                                    Collector.of(
+//                                            () -> FXCollections.observableArrayList(),
+//                                            ObservableList::add,
+//                                            (l1, l2) -> {
+//                                                l1.addAll(l2);
+//                                                return l1;
+//                                            })
+//                            ));
                     break;
             }
 
@@ -242,7 +240,7 @@ public class EstimateController_old implements Initializable {
         public AbstractEstimateTVI findEqualsElement(AbstractEstimateTVI inpAbstractEstimateTVI) {
             return (AbstractEstimateTVI) tabMap.values().stream()
                     .flatMap(mapItem -> ((List) mapItem).stream())
-                    .filter(item -> ((AbstractEstimateTVI) item).equalsSuperClass(inpAbstractEstimateTVI))
+                    .filter(item -> ((AbstractEstimateTVI) item).businessKeyEquals(inpAbstractEstimateTVI))
                     .findFirst().orElse(null);
         }
 
@@ -274,7 +272,7 @@ public class EstimateController_old implements Initializable {
     private AddKSController ksAddController;
 
     //preview table
-    private Map<Integer, List<KS_TIV>> ksMap;
+    private Map<Integer, List<KsTIV>> ksMap;
     private Map<String, List<AbstractEstimateTVI>> mapBase, mapChange;
 
     @FXML
@@ -298,7 +296,7 @@ public class EstimateController_old implements Initializable {
     private TableView tableKS, tableAdditional;
 
     private Label labelSumBase, labelSumChanged;
-    private PriceSumTableWrapper<KS_TIV> tableKSWrapper;
+    private PriceSumTableWrapper<KsTIV> tableKSWrapper;
     private TableWrapper tableAdditionalWrapper;
 
 
@@ -501,7 +499,7 @@ public class EstimateController_old implements Initializable {
                         sum = equalsAbstractEstimateTVI.getQuantity() -
                                 ksMap.values().stream()
                                         .flatMap(mapItem -> mapItem.stream())
-                                        .filter(item::equalsSuperClass)
+                                        .filter(item::businessKeyEquals)
                                         .mapToDouble(filtered -> filtered.getQuantity())
                                         .sum();
 
@@ -510,7 +508,7 @@ public class EstimateController_old implements Initializable {
 //                                Est.Changed.findEqualsElement(item).getQuantity() -
 //                                        ksMap.values().stream()
 //                                                .flatMap(mapItem ->mapItem.stream())
-//                                                .filter(item::equalsSuperClass)
+//                                                .filter(item::businessKeyEquals)
 //                                                .mapToDouble(filtered -> filtered.getQuantity())
 //                                                .sum()
 //                        );
@@ -518,7 +516,7 @@ public class EstimateController_old implements Initializable {
 
                 //Set date Lable of selected KS
                 ksDateLabel.setText(LocalDate.ofEpochDay(
-                        ((KS_TIV) ksMap.get(newValue).get(0)).getKSDate()).toString());
+                        ((KsTIV) ksMap.get(newValue).get(0)).getKSDate()).toString());
                 ksSumLabel.setVisible(true);
                 ksDateLabel.setVisible(true);
             }
@@ -554,7 +552,7 @@ public class EstimateController_old implements Initializable {
     @FXML
     private void handle_FilterKS(ActionEvent event) {
 
-        ObservableMap<Integer, List<KS_TIV>> tempKsMap = FXCollections.observableHashMap();
+        ObservableMap<Integer, List<KsTIV>> tempKsMap = FXCollections.observableHashMap();
         if (isInputValid()) {
             int dateFrom = (int) dateKSfrom.getValue().toEpochDay();
             int dateTo = (int) dateKSto.getValue().toEpochDay();
@@ -581,7 +579,7 @@ public class EstimateController_old implements Initializable {
     @FXML
     private void hanle_PrintKS(ActionEvent event) {
         File selectedFile = FileChooserFactory.saveKS(listKS.getSelectionModel().getSelectedItem().toString());
-        ObservableList<KS_TIV> i = tableKSWrapper.getItems();
+        ObservableList<KsTIV> i = tableKSWrapper.getItems();
         if (!listKS.getSelectionModel().isEmpty()
                 && selectedFile != null
                 ) {

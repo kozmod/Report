@@ -107,7 +107,7 @@ public class Report extends Application {
 
     }
 
-    //init Intro Layout
+    //initData Intro Layout
     public FxmlStage initIntroLayout() {
         FxmlStage.setReportMain(this);
         return new FxmlStage(PathStrings.Layout.INTRO, "").loadIntoRootBorderPaneCenter();
@@ -125,7 +125,7 @@ public class Report extends Application {
         this.primaryStage = stage;
         this.primaryStage.setTitle("App");
 
-        //init ROOT
+        //initData ROOT
         this.initRootLayout();
         this.primaryStage.sizeToScene();
         primaryStage.show();

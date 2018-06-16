@@ -40,17 +40,17 @@ public class AddKSController implements Initializable {
     @FXML
     private TableView<AbstractEstimateTVI> allJMTable, selectedJMTable;
 
-//    private PriceSumTableWrapper<KS_TIV> allJMTable      = TableFactory.getKS_add(),
+//    private PriceSumTableWrapper<KsTIV> allJMTable      = TableFactory.getKS_add(),
 //                                  selectedJMTable = TableFactory.getKS_add();
 
     private ObservableList<AbstractEstimateTVI> obsAllJM, obsSelectedJM;
     private ObservableList<Object> comboBuildingPartList;
 
     {
-        //All Job_Mat list init
+        //All Job_Mat list initData
         obsAllJM = FXCollections.observableArrayList(EstimateController_old.Est.Changed.getAllItemsList_Live());
 
-        //Empty Selected Job_Mat list init
+        //Empty Selected Job_Mat list initData
         obsSelectedJM = FXCollections.observableArrayList();
 
         //ComboBox Items List

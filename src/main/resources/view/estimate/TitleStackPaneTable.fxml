@@ -7,8 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-
-<StackPane alignment="TOP_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane alignment="TOP_RIGHT" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <TitledPane fx:id="titledPane" animated="false">
          <content>
@@ -19,7 +18,7 @@
             </TableView>
          </content>
       </TitledPane>
-      <Label fx:id="sumLable" text="0">
+      <Label fx:id="sumLabel" text="0">
          <StackPane.margin>
             <Insets right="10.0" top="5.0" />
          </StackPane.margin>

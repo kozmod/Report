@@ -12,20 +12,22 @@ import org.springframework.context.annotation.Scope;
 import report.entities.items.KS.KsDao;
 import report.entities.items.estimate.EstimateDao;
 import report.entities.items.site.SiteEntityDao;
-import report.layout.controllers.estimate.new_estimate.EstimateVboxController;
 import report.layout.controllers.estimate.new_estimate.EstimateTabPaneController;
 import report.layout.controllers.estimate.new_estimate.KsGridController;
-import report.layout.controllers.estimate.new_estimate.service.BaseStackTableController;
+import report.layout.controllers.estimate.new_estimate.BaseEstimateTableController;
 import report.layout.controllers.estimate.new_estimate.service.EstimateControllerNodeFactory;
 import report.layout.controllers.estimate.new_estimate.service.EstimateService;
+import report.layout.controllers.estimate.new_estimate.SumLabelGridController;
 import report.models.counterpaties.EstimateData;
+import report.models.counterpaties.KsData;
 import report.spring.views.ViewFx;
 
 import java.io.IOException;
 
+import static report.spring.spring.components.ApplicationContextProvider.getBean;
+
 @Configuration
 public class EstimateConfig implements FxConfig {
-
 
 
     public final static String ESTIMATE_TAB_PANE_PATH = "/view/estimate/EstimateTabPane.fxml";
@@ -34,13 +36,22 @@ public class EstimateConfig implements FxConfig {
     public final static String KS_GRID_PATH = "/view/estimate/KsGridPane.fxml";
     public final static String ESTIMATE_VBOX__FXML_PATH = "/view/estimate/EstimateVbox.fxml";
     public final static String BASE_STACK_PANE_TABLE_PATH = "/view/estimate/TitleStackPaneTable.fxml";
+    public final static String SUM_LABLE_GRID_PATH = "/view/estimate/SumLabelGridPane.fxml";
     public final static String KS_ADD_FXML_PATH = "/view/KSAddLayout.fxml";
 
 
+    @Lazy
     @Bean
-    public EstimateData estimateData(){
+    public EstimateData estimateData() {
         return new EstimateData();
     }
+
+    @Lazy
+    @Bean
+    public KsData ksData() {
+        return new KsData();
+    }
+
 
     @Bean(name = "estimateTabPaneView")
     @Description("Root TabView to Estimate TabPane ")
@@ -53,73 +64,62 @@ public class EstimateConfig implements FxConfig {
         return estimateTabPaneView().getController();
     }
 
-//    @Bean(name = "estimateBaseView")
-//    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-//    @Autowired
-//    public ViewFx<SumVboxModel, EstimateVboxController> estimateBaseView(EstimateVboxController estimateVboxController,
-//                                                                     EstimateControllerNodeFactory estimateControllerNodeFactory
-//    ) throws IOException {
-//        EstimateDocumentType documentType = EstimateDocumentType.BASE;
-//
-//        SumVboxModel vbox = estimateControllerNodeFactory.newEstimateVboxModel(documentType);
-//        estimateVboxController.setEstimateDocumentType(documentType);
-//        estimateVboxController.setSumVboxModel(vbox);
-//        return new ViewFx<>(vbox,estimateVboxController);
-//    }
-//
-//    @Bean(name = "estimateChangedView")
-//    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-//    @Autowired
-//    public ViewFx<SumVboxModel, EstimateVboxController> estimateChangedView(EstimateVboxController estimateVboxController,
-//                                                                     EstimateControllerNodeFactory estimateControllerNodeFactory
-//    ) throws IOException {
-//        EstimateDocumentType documentType = EstimateDocumentType.CHANGED;
-//
-//        SumVboxModel vbox = estimateControllerNodeFactory.newEstimateVboxModel(documentType);
-//        estimateVboxController.setEstimateDocumentType(documentType);
-//        estimateVboxController.setSumVboxModel(vbox);
-//        return new ViewFx<>(vbox,estimateVboxController);
-//    }
-
-//    @Bean(name = "ksView")
+    @Lazy
     @Bean
-    @Description("KS View")
+    @Description("Sum LablelGrid Table View")
     @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-    public ViewFx<GridPane, KsGridController> ksView() throws IOException {
-        return loadView(KS_GRID_PATH);
+    public ViewFx<GridPane, SumLabelGridController> sumLabelGridView() throws IOException {
+        return loadView(
+                SUM_LABLE_GRID_PATH,
+                getBean(SumLabelGridController.class)
+        );
     }
 
-//    @Bean
-//    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-//    public KsGridController ksController() throws IOException {
-//        return ksView().getController();
-//    }
+    @Lazy
+    @Bean
+    @Description("Sum LabelGrid Table View")
+    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
+    public SumLabelGridController sumLabelGridController() throws IOException {
+        return new SumLabelGridController();
+    }
 
     @Bean
     @Description("Base-StackPane Table View")
     @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-    public ViewFx<StackPane, BaseStackTableController> baseStackPaneTableView() throws IOException {
-        return loadView(BASE_STACK_PANE_TABLE_PATH, new BaseStackTableController());
+    public ViewFx<StackPane, BaseEstimateTableController> baseStackPaneTableView() throws IOException {
+        return loadView(
+                BASE_STACK_PANE_TABLE_PATH,
+                getBean(BaseEstimateTableController.class)
+        );
     }
 
     @Bean
     @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-    public BaseStackTableController baseStackPaneTableComtroller() throws IOException {
-        return baseStackPaneTableView().getController();
+    public BaseEstimateTableController baseStackPaneTableController() throws IOException {
+        return new BaseEstimateTableController();
     }
 
+    @Bean
+    @Description("KS View")
+    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
+    public ViewFx<GridPane, KsGridController> ksView() throws IOException {
+        return loadView(KS_GRID_PATH,
+                getBean(KsGridController.class)
+                );
+    }
 
     @Bean
     @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-    public KsGridController klController() throws IOException {
-        return ksView().getController();
+    public KsGridController ksController(){
+        return new KsGridController();
     }
+
 
 //    @Bean
 //    @Description("Changed-StackPane Table View")
 //    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-//    public ViewFx<StackPane, BaseStackTableController> changedStackPaneTableView() throws IOException {
-//        return loadView(BASE_STACK_PANE_TABLE_PATH, new BaseStackTableController());
+//    public ViewFx<StackPane, BaseEstimateTableController> changedStackPaneTableView() throws IOException {
+//        return loadView(BASE_STACK_PANE_TABLE_PATH, new BaseEstimateTableController());
 //    }
 
 
@@ -132,9 +132,7 @@ public class EstimateConfig implements FxConfig {
      **!*************************************************************************************************************/
 
 
-
-
-//    @Bean
+    //    @Bean
 //    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
 //    public EstimateVboxController estimateVboxController() throws IOException {
 //        return new EstimateVboxController();

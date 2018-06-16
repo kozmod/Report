@@ -92,7 +92,7 @@ public class AddSiteController implements Initializable {
         planTF.setText(" - ");
         factTF.setText(" - ");
 
-        //init ComboBoxesValue
+        //initData ComboBoxesValue
         init_ComboBoxesValue();
     }
 

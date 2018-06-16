@@ -63,7 +63,7 @@ public class EstimateTVI extends AbstractEstimateTVI<EstimateTVI> {
                 super.getPriceSum(),
                 super.getBuildingPart(),
                 this.getTableType(),
-                this.getInKS()
+                this.isInKS()
         );
         return clone;
     }
@@ -186,25 +186,30 @@ public class EstimateTVI extends AbstractEstimateTVI<EstimateTVI> {
     }
 //Getter //Setter ===============================================================================
 
+
     public int getTableType() {
         return tableType.get();
     }
 
-    public void setPrice_one(int value_inp) {
-        tableType.set(value_inp);
+    public IntegerProperty tableTypeProperty() {
+        return tableType;
     }
 
-    public boolean getInKS() {
+    public void setTableType(int tableType) {
+        this.tableType.set(tableType);
+    }
+
+    public boolean isInKS() {
         return inKS.get();
     }
 
-    //    public void    setInKS(boolean value_inp) {inKS.set(value_inp);}
-//    public void    setNotInKS() {inKS.set(false);}
-//    public void    setInKS()    {inKS.set(true);}
-    public void setInKS(boolean value_inp) {
-        inKS.set(value_inp);
+    public BooleanProperty inKSProperty() {
+        return inKS;
     }
 
+    public void setInKS(boolean inKS) {
+        this.inKS.set(inKS);
+    }
 
     //Equakls AND hashCode ==========================================================================
     @Override
@@ -269,8 +274,8 @@ public class EstimateTVI extends AbstractEstimateTVI<EstimateTVI> {
      *
      * @return extractor
      */
-    public static Callback<AbstractEstimateTVI, Observable[]> extractor() {
-        return (AbstractEstimateTVI p) -> new Observable[]{p.quantityProperty(), p.priceOneProperty()};
+    public static Callback<EstimateTVI, Observable[]> extractor() {
+        return (EstimateTVI p) -> new Observable[]{p.quantityProperty(), p.priceOneProperty()};
     }
 
 

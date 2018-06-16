@@ -12,14 +12,14 @@ import javafx.util.Callback;
 import report.entities.items.AbstractEstimateTVI;
 
 
-public class KS_TIV extends AbstractEstimateTVI {
+public class KsTIV extends AbstractEstimateTVI<KsTIV> {
 
     private final IntegerProperty ksNumber;
     private final IntegerProperty ksDate;
     private DoubleProperty restOfValue;
 
     //Constructor
-    public KS_TIV(
+    public KsTIV(
             long id,
             Timestamp dateCreate,
             int ksNumber,
@@ -44,8 +44,8 @@ public class KS_TIV extends AbstractEstimateTVI {
 
     // Clone CONSTRUCTOR implementation
     @Override
-    public KS_TIV getClone() {
-        KS_TIV clone = new KS_TIV(
+    public KsTIV getClone() {
+        KsTIV clone = new KsTIV(
                 super.getId(),
                 super.getDateCreate(),
                 this.getKSNumber(),
@@ -110,10 +110,10 @@ public class KS_TIV extends AbstractEstimateTVI {
         if (obj == null) {
             return false;
         }
-        if (!KS_TIV.class.isAssignableFrom(obj.getClass())) {
+        if (!KsTIV.class.isAssignableFrom(obj.getClass())) {
             return false;
         }
-        final KS_TIV other = (KS_TIV) obj;
+        final KsTIV other = (KsTIV) obj;
         if (this.ksNumber.get() != other.ksNumber.get()) {
             return false;
         }
@@ -157,8 +157,8 @@ public class KS_TIV extends AbstractEstimateTVI {
     }
 
 
-    public static Callback<AbstractEstimateTVI, Observable[]> extractor() {
-        return (AbstractEstimateTVI p) -> new Observable[]{p.quantityProperty()};
+    public static Callback<KsTIV, Observable[]> extractor() {
+        return (KsTIV p) -> new Observable[]{p.quantityProperty()};
     }
 
 }

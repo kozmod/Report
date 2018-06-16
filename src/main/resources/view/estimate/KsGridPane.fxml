@@ -6,9 +6,9 @@
 <?import javafx.scene.text.*?>
 <?import javafx.scene.layout.*?>
 
-<GridPane fx:id="gridPaneKS" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="report.layout.controllers.estimate.new_estimate.KsGridController">
+<GridPane fx:id="gridPaneKS" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <ListView fx:id="listKS" prefWidth="150.0" GridPane.rowIndex="2">
+      <ListView fx:id="ksListView" prefWidth="150.0" GridPane.rowIndex="2">
          <contextMenu>
             <ContextMenu>
                <items>
@@ -23,7 +23,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
       </ListView>
-      <Label fx:id="ksSumLabel" text="Label" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
+      <Label fx:id="ksSumLabel" text="0" visible="false" GridPane.columnIndex="1" GridPane.halignment="RIGHT" GridPane.rowIndex="4">
          <font>
             <Font name="Arial Bold" size="14.0" />
          </font>
@@ -84,7 +84,7 @@
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>
       </Label>
-      <TableView fx:id="tableKS" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+      <TableView fx:id="ksTableView" editable="true" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
          <GridPane.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </GridPane.margin>

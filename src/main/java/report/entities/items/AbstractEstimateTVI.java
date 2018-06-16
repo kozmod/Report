@@ -9,6 +9,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
+import report.entities.items.estimate.EstimateTVI;
 
 
 //Estimate Tabble Items to ObsList
@@ -233,7 +234,6 @@ public abstract class AbstractEstimateTVI<E> implements Clone<E> {
 
     @Override
     public boolean equals(Object obj) {
-
         if (obj == null) {
             return false;
         }
@@ -277,8 +277,12 @@ public abstract class AbstractEstimateTVI<E> implements Clone<E> {
         return true;
     }
 
-    // EQUIALS Entity on tableItem level//
-    public boolean equalsSuperClass(Object obj) {
+    /**
+     * Check equality by business key
+     * @param obj AbstractEstimateTVI
+     * @return boolean
+     */
+    public boolean businessKeyEquals(Object obj) {
         if (obj == null) {
             return false;
         }
@@ -316,10 +320,9 @@ public abstract class AbstractEstimateTVI<E> implements Clone<E> {
 
 
 //    Extractor
-   public static Callback<AbstractEstimateTVI, Observable[]> extractor() {
-        return (AbstractEstimateTVI p) -> new Observable[]{p.quantityProperty(), p.priceOneProperty()};
-    }
-
+//   public static Callback<AbstractEstimateTVI, Observable[]> extractor() {
+//        return (AbstractEstimateTVI p) -> new Observable[]{p.quantityProperty(), p.priceOneProperty()};
+//    }
 
 }
     

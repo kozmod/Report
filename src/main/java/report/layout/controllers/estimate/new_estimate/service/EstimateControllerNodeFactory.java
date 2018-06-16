@@ -2,30 +2,26 @@ package report.layout.controllers.estimate.new_estimate.service;
 
 
 import javafx.event.EventHandler;
-import javafx.scene.Node;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.SelectionMode;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import org.springframework.beans.factory.annotation.Autowired;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.KS.KsDao;
-import report.entities.items.KS.KS_TIV;
+import report.entities.items.KS.KsTIV;
 import report.entities.items.estimate.EstimateDao;
 import report.entities.items.estimate.EstimateTVI;
 import report.layout.controllers.estimate.EstimateController_old;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
-import report.models.counterpaties.EstimateDocumentType;
+import report.models.counterpaties.DocumentType;
 import report.models.view.customNodes.newNode.SumColumnTableTitledStackModel;
-import report.models.view.customNodes.newNode.SumVboxModel;
 import report.models.view.nodesFactories.ContextMenuFactory;
 import report.models.view.nodesFactories.TableCellFactory;
 import report.models.view.nodesFactories.TableFactory;
 import report.models.view.wrappers.table.PriceSumTableWrapper;
 import report.models.view.wrappers.table.TableWrapper;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -43,43 +39,11 @@ public class EstimateControllerNodeFactory {
     @Autowired
     private EstimateDao estimateDao;
 
-    public Tab newTab(String title, Node content) {
-        Tab tab = new Tab();
-        tab.setText(title);
-        tab.setContent(content);
-        return tab;
-    }
-
-
-    @SuppressWarnings("unchecked")
-    public SumVboxModel newEstimateVboxModel(EstimateDocumentType docType) {
-        SumColumnTableTitledStackModel fundament = newPriceSumTitledPane(FUNDAMENT, docType);
-//        fundament.tableView().setItems(estimateData.getDocuments().getByBiKey(docType,FUNDAMENT));
-
-        SumColumnTableTitledStackModel steni = newPriceSumTitledPane(STENI, docType);
-//        steni.tableView().setItems(estimateData.getDocuments().getByBiKey(docType,STENI));
-
-        SumColumnTableTitledStackModel krowlia = newPriceSumTitledPane(KROWLIA, docType);
-//        krowlia.tableView().setItems(estimateData.getDocuments().getByBiKey(docType,KROWLIA));
-
-        SumColumnTableTitledStackModel proemi = newPriceSumTitledPane(PROEMI, docType);
-//        proemi.tableView().setItems(estimateData.getDocuments().getByBiKey(docType,PROEMI));
-
-        SumColumnTableTitledStackModel otdelka = newPriceSumTitledPane(OTDELKA, docType);
-//        otdelka.tableView().setItems(estimateData.getDocuments().getByBiKey(docType,OTDELKA));
-
-//        List<SumColumnTableTitledStackModel> titledStackModelList = Arrays.asList(fundament,steni,krowlia,proemi,otdelka);
-//        titledStackModelList.forEach(SumColumnTableTitledStackModel::computeSum);
-
-        return new SumVboxModel(Arrays.asList(fundament,steni,krowlia,proemi,otdelka));
-    }
-
-
-    private SumColumnTableTitledStackModel newPriceSumTitledPane(String title, EstimateDocumentType docType) {
+    private SumColumnTableTitledStackModel newPriceSumTitledPane(String title, DocumentType docType) {
         final PriceSumTableWrapper<EstimateTVI> priceSumTableWrapper = newPriseSumTable(docType);
         priceSumTableWrapper.tableView().setId(title);
 
-        if (Objects.equals(docType, EstimateDocumentType.BASE)) {
+        if (Objects.equals(docType, DocumentType.BASE)) {
             priceSumTableWrapper.getTableColumnByName("Кол-во")
                     .ifPresent(quantityColumn ->
                             quantityColumn.setOnEditCommit(tableColumn -> {
@@ -98,16 +62,16 @@ public class EstimateControllerNodeFactory {
                                 tableColumn.getTableView().refresh();
                             })
                     );
-        } else if (Objects.equals(docType, EstimateDocumentType.CHANGED)) {
+        } else if (Objects.equals(docType, DocumentType.CHANGED)) {
             priceSumTableWrapper.getSelectionModel().selectedItemProperty()
                     .addListener((obs, oldSelection, newSelection) -> priceSumTableWrapper.getTableColumnByName("Стоимость (за единицу)")
                                     .ifPresent(periceOneColumn ->
                                                     periceOneColumn.setOnEditCommit(tableColumn -> {
 
-                                                        if (Objects.nonNull(newSelection) && newSelection.getInKS()) {
+                                                        if (Objects.nonNull(newSelection) && newSelection.isInKS()) {
                                                             priceSumTableWrapper.setEditable(false);
                                                             periceOneColumn.setEditable(false);
-                                                        } else if (Objects.nonNull(newSelection) && !newSelection.getInKS()) {
+                                                        } else if (Objects.nonNull(newSelection) && !newSelection.isInKS()) {
                                                             priceSumTableWrapper.setEditable(true);
                                                             periceOneColumn.setEditable(true);
 //
@@ -143,7 +107,7 @@ public class EstimateControllerNodeFactory {
 //    }
 
 
-    private PriceSumTableWrapper<EstimateTVI> newPriseSumTable(EstimateDocumentType docType) {
+    private PriceSumTableWrapper<EstimateTVI> newPriseSumTable(DocumentType docType) {
         final PriceSumTableWrapper<EstimateTVI> tableWrapper = new PriceSumTableWrapper<>(new TableView<>(), estimateDao);
 
         tableWrapper.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
@@ -166,7 +130,7 @@ public class EstimateControllerNodeFactory {
         isInKSColumn.setCellFactory(param -> TableCellFactory.getInKsColoredCell());
 //        JM_nameColumn.setCellFactory(param -> TableCellFactory.getOnMouseEnteredTableCell(enumEst));//todo
 
-        if (docType.equals(EstimateDocumentType.BASE)) {
+        if (docType.equals(DocumentType.BASE)) {
             quantityColumn.setOnEditCommit(tableColumn -> {
 
                 AbstractEstimateTVI editingAbstractEstimateTVI = tableColumn.getTableView()
@@ -182,12 +146,12 @@ public class EstimateControllerNodeFactory {
                 tableWrapper.computeProperty();
                 tableColumn.getTableView().refresh();
             });
-        } else if (docType.equals(EstimateDocumentType.CHANGED)) {
+        } else if (docType.equals(DocumentType.CHANGED)) {
             tableWrapper.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-                if (newSelection != null && newSelection.getInKS()) {
+                if (newSelection != null && newSelection.isInKS()) {
                     tableWrapper.setEditable(false);
                     periceOneColumn.setEditable(false);
-                } else if (newSelection != null && !((EstimateTVI) newSelection).getInKS()) {
+                } else if (newSelection != null && !((EstimateTVI) newSelection).isInKS()) {
                     tableWrapper.setEditable(true);
                     periceOneColumn.setEditable(true);
 //                    System.out.println(((EstimateTVI)newSelection).getInKS());
@@ -252,16 +216,16 @@ public class EstimateControllerNodeFactory {
     }
 
     //todo: припелить
-    public PriceSumTableWrapper<KS_TIV> thuneKs(TableView<KS_TIV> tableView) {
-        PriceSumTableWrapper<KS_TIV> table = new PriceSumTableWrapper(tableView, new KsDao(EstimateController_old.Est.KS));
+    public PriceSumTableWrapper<KsTIV> thuneKs(TableView<KsTIV> tableView) {
+        PriceSumTableWrapper<KsTIV> table = new PriceSumTableWrapper(tableView, new KsDao(EstimateController_old.Est.KS));
 
         table.setEditable(true);
         table.tableView().setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
 
-        TableColumn<KS_TIV, String> JM_nameColumn = table.addColumn("Наименование работ/затрат", "JM_name");
+        TableColumn<KsTIV, String> JM_nameColumn = table.addColumn("Наименование работ/затрат", "JM_name");
         TableColumn BJobColumnn = table.addColumn("Связанная работа", "bindJob");
         TableColumn BPartColumns = table.addColumn("Часть", "buildingPart");
-        TableColumn<KS_TIV, Double> valueColumn = table.addColumn("Кол-во", "quantity");
+        TableColumn<KsTIV, Double> valueColumn = table.addColumn("Кол-во", "quantity");
         TableColumn unitColumn = table.addColumn("Eд. изм.", "unit");
         TableColumn Price_oneColumn = table.addColumn("Стоимость (за единицу)", "priceOne");
         TableColumn Price_sumColumn = table.addColumn("Стоимость (общая)", "priceSum");
@@ -277,11 +241,11 @@ public class EstimateControllerNodeFactory {
                 valueColumn
         );
 
-        valueColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<KS_TIV, Double>>() {
+        valueColumn.setOnEditCommit(new EventHandler<TableColumn.CellEditEvent<KsTIV, Double>>() {
             @Override
-            public void handle(TableColumn.CellEditEvent<KS_TIV, Double> t) {
+            public void handle(TableColumn.CellEditEvent<KsTIV, Double> t) {
 
-                KS_TIV editingItem = t.getRowValue();
+                KsTIV editingItem = t.getRowValue();
 
                 Double price_one = editingItem.getPriceOne();
 
@@ -293,7 +257,7 @@ public class EstimateControllerNodeFactory {
                         (EstimateController_old.Est.KS.getTabMap().values()
                                 .stream()
                                 .flatMap(mapItem -> ((List) mapItem).stream())
-                                .filter(editingItem::equalsSuperClass)
+                                .filter(editingItem::businessKeyEquals)
                                 .mapToDouble(filtered -> ((AbstractEstimateTVI) filtered).getQuantity())
                                 .sum()
                                 - t.getOldValue()
