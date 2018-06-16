@@ -26,7 +26,7 @@ import report.layout.controllers.LogController;
 import report.layout.controllers.estimate.EstimateController_old.Est;
 
 
-public class KsDao implements CommonNamedDao<Collection<KS_TIV>> {
+public class KsDao implements CommonNamedDao<Collection<KsTIV>> {
 
     private Est enumEst;
 
@@ -53,12 +53,12 @@ public class KsDao implements CommonNamedDao<Collection<KS_TIV>> {
 
 
     /**
-     * Get List of TableWrapper Items (KS_TIV) from SQL
+     * Get List of TableWrapper Items (KsTIV) from SQL
      *
-     * @return List of KS_TIV
+     * @return List of KsTIV
      */
     @Override
-    public ObservableList<KS_TIV> getData() {
+    public ObservableList<KsTIV> getData() {
         return this.getData(
                 enumEst.getSiteSecondValue(SQL.Common.SITE_NUMBER),
                 EstimateController_old.Est.Common.getCountAgentTVI(),
@@ -66,8 +66,8 @@ public class KsDao implements CommonNamedDao<Collection<KS_TIV>> {
         );
     }
 
-    public ObservableList<KS_TIV> getData(String siteNumber, CountAgentTVI contractor, int tableType) {
-        ObservableList<KS_TIV> list = FXCollections.observableArrayList();
+    public ObservableList<KsTIV> getData(String siteNumber, CountAgentTVI contractor, int tableType) {
+        ObservableList<KsTIV> list = FXCollections.observableArrayList();
 
         String psmtmtString = "SELECT  "
                 + " [id]"
@@ -104,7 +104,7 @@ public class KsDao implements CommonNamedDao<Collection<KS_TIV>> {
 
             while (rs.next()) {
 
-                KS_TIV item = new KS_TIV(
+                KsTIV item = new KsTIV(
                         rs.getLong(SQL.Common.ID),
                         rs.getTimestamp(SQL.Common.DATE_CREATE),
                         rs.getInt(SQL.KS.NUMBER),
@@ -132,17 +132,17 @@ public class KsDao implements CommonNamedDao<Collection<KS_TIV>> {
     }
 
     /**
-     * Get List of TableWrapper Items (KS_TIV) from SQL
+     * Get List of TableWrapper Items (KsTIV) from SQL
      * <b>(only ONE List use KS number)</b>
      *
      * @param enumEst  (enumeration)
      * @param ksNumber (integer)
-     * @return List of KS_TIV
+     * @return List of KsTIV
      */
 
-    public List<KS_TIV> getOneKSList(Est enumEst, int ksNumber) {
+    public List<KsTIV> getOneKSList(Est enumEst, int ksNumber) {
 
-        List<KS_TIV> list = FXCollections.observableArrayList();
+        List<KsTIV> list = FXCollections.observableArrayList();
 
         String psmtmtString = "SELECT  "
                 + " * "
@@ -164,7 +164,7 @@ public class KsDao implements CommonNamedDao<Collection<KS_TIV>> {
 
             while (rs.next()) {
 
-                KS_TIV item = new KS_TIV(
+                KsTIV item = new KsTIV(
                         rs.getLong(SQL.Common.ID),
                         rs.getTimestamp(SQL.Common.CONTRACTOR),
                         rs.getInt(SQL.KS.NUMBER),
@@ -192,17 +192,17 @@ public class KsDao implements CommonNamedDao<Collection<KS_TIV>> {
     }
 
     /**
-     * Delete KS_TIV  Entities from SQL
+     * Delete KsTIV  Entities from SQL
      *
-     * @param items (Collection of KS_TIV)
+     * @param items (Collection of KsTIV)
      */
     @Override
-    public void delete(Collection<KS_TIV> items) {
+    public void delete(Collection<KsTIV> items) {
         String sql = "update [dbo].[KS] SET dell = 1 WHERE [id] = ? AND [dell] = 0;";
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement(sql);) {
             connection.setAutoCommit(false);
-            for (KS_TIV obsItem : items) {
+            for (KsTIV obsItem : items) {
                 pstmt.setLong(1, obsItem.getId());
                 pstmt.addBatch();
             }
@@ -245,7 +245,7 @@ public class KsDao implements CommonNamedDao<Collection<KS_TIV>> {
     }
 
     @Override
-    public void insert(Collection<KS_TIV> items) {
+    public void insert(Collection<KsTIV> items) {
         String sql = "INSERT into [dbo].[KS] "
                 + "( "
                 + " [KS_Number]"
@@ -267,7 +267,7 @@ public class KsDao implements CommonNamedDao<Collection<KS_TIV>> {
                      Statement.RETURN_GENERATED_KEYS);) {
             //set false SQL Autocommit
             connection.setAutoCommit(false);
-            for (KS_TIV obsItem : items) {
+            for (KsTIV obsItem : items) {
                 pstmt.setInt(1, obsItem.getKSNumber());
                 pstmt.setInt(2, obsItem.getKSDate());
                 pstmt.setString(3, obsItem.getSiteNumber());
@@ -371,7 +371,7 @@ public class KsDao implements CommonNamedDao<Collection<KS_TIV>> {
     }
 
     @Override
-    public void dellAndInsert(Memento<Collection<KS_TIV>> memento) {
+    public void dellAndInsert(Memento<Collection<KsTIV>> memento) {
         CommonNamedDao.super.dellAndInsert(memento);
         //??????????
 //        table.updateTableFromSQL(this.getOneKSList(Est.KS, ksNumber ));

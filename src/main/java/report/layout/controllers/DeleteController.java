@@ -57,14 +57,14 @@ public class DeleteController implements Initializable {
      ********************************************************************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        //init delete Button -> press "ENTER"
+        //initData delete Button -> press "ENTER"
         delButton.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
             if (ev.getCode() == KeyCode.ENTER) {
                 delButton.fire();
                 ev.consume();
             }
         });
-        //init censel Button Button -> press "ENTER"
+        //initData censel Button Button -> press "ENTER"
         censelButton.addEventHandler(KeyEvent.KEY_PRESSED, ev -> {
             if (ev.getCode() == KeyCode.ENTER) {
                 censelButton.fire();

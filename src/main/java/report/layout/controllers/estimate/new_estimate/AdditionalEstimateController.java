@@ -1,18 +1,18 @@
 package report.layout.controllers.estimate.new_estimate;
 
 import javafx.fxml.Initializable;
-import report.models.counterpaties.EstimateDocumentType;
+import report.models.counterpaties.DocumentType;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 public class AdditionalEstimateController implements Initializable {
 
-    private EstimateDocumentType estimateDocumentType;
+    private DocumentType documentType;
 
-    public void setEstimateDocumentType(EstimateDocumentType estimateDocumentType) {
-        this.estimateDocumentType = estimateDocumentType;
-        System.out.println(estimateDocumentType);
+    public void setDocumentType(DocumentType documentType) {
+        this.documentType = documentType;
+        System.out.println(documentType);
     }
 
     @Override

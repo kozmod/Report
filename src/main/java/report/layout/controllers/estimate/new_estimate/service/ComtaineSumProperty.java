@@ -4,5 +4,4 @@ import javafx.fxml.Initializable;
 
 public interface ComtaineSumProperty<T> extends Initializable {
     T property();
-
 }

@@ -7,7 +7,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.KS.KsDao;
-import report.entities.items.KS.KS_TIV;
+import report.entities.items.KS.KsTIV;
 import report.entities.items.estimate.EstimateDao;
 import report.entities.items.estimate.EstimateTVI;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
@@ -78,11 +78,11 @@ public abstract class EstimateControllerNodeUtils implements TableFactory {
                 break;
             case Changed:
                 table.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
-                    if (newSelection != null && ((EstimateTVI) newSelection).getInKS()) {
+                    if (newSelection != null && ((EstimateTVI) newSelection).isInKS()) {
                         table.setEditable(false);
                         Price_oneColumn.setEditable(false);
 //                    System.out.println(((EstimateTVI)newSelection).getInKS());
-                    } else if (newSelection != null && !((EstimateTVI) newSelection).getInKS()) {
+                    } else if (newSelection != null && !((EstimateTVI) newSelection).isInKS()) {
                         table.setEditable(true);
                         Price_oneColumn.setEditable(true);
 //                    System.out.println(((EstimateTVI)newSelection).getInKS());
@@ -164,7 +164,7 @@ public abstract class EstimateControllerNodeUtils implements TableFactory {
      *
      * @return TableWrapper(child of TableView)
      */
-    static PriceSumTableWrapper<KS_TIV> decorKS(TableView<KS_TIV> tableView) {
+    static PriceSumTableWrapper<KsTIV> decorKS(TableView<KsTIV> tableView) {
         PriceSumTableWrapper table = new PriceSumTableWrapper(tableView, new KsDao(EstimateController_old.Est.KS));
 
         table.setEditable(true);
@@ -193,7 +193,7 @@ public abstract class EstimateControllerNodeUtils implements TableFactory {
             @Override
             public void handle(TableColumn.CellEditEvent<? extends AbstractEstimateTVI, Double> t) {
 
-                KS_TIV editingItem = (KS_TIV) t.getRowValue();
+                KsTIV editingItem = (KsTIV) t.getRowValue();
 
                 Double price_one = editingItem.getPriceOne();
 
@@ -205,7 +205,7 @@ public abstract class EstimateControllerNodeUtils implements TableFactory {
                         (EstimateController_old.Est.KS.getTabMap().values()
                                 .stream()
                                 .flatMap(mapItem -> ((List) mapItem).stream())
-                                .filter(editingItem::equalsSuperClass)
+                                .filter(editingItem::businessKeyEquals)
                                 .mapToDouble(filtered -> ((AbstractEstimateTVI) filtered).getQuantity())
                                 .sum()
                                 - t.getOldValue()

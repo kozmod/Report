@@ -1,5 +1,4 @@
 import org.junit.Test;
-import report.layout.controllers.estimate.new_estimate.service.BaseStackTableController;
 import report.spring.utils.CollectionsUtils;
 
 import java.util.ArrayList;
@@ -45,4 +44,25 @@ public class tetetetdqukywfbjuyhyfqwewefv {
 
     }
 
+    @Test
+    public void equalsTest() {
+        A a1 = new B();
+        ((A) new B()).equals(a1);
+    }
+
+    class A{
+        @Override
+        public boolean equals(Object obj) {
+            System.out.println("A");
+            return super.equals(obj);
+        }
+    }
+
+    class  B extends A{
+        @Override
+        public boolean equals(Object obj) {
+            System.out.println("b");
+            return true;
+        }
+    }
 }

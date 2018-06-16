@@ -1,4 +1,4 @@
-package report.layout.controllers.estimate.new_estimate.service;
+package report.layout.controllers.estimate.new_estimate;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
@@ -12,7 +12,10 @@ import javafx.scene.control.TitledPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.estimate.EstimateTVI;
+import report.layout.controllers.estimate.new_estimate.service.ComtaineSumProperty;
+import report.layout.controllers.estimate.new_estimate.service.EstimateService;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
+import report.models.counterpaties.DocumentType;
 import report.models.mementos.TableMemento;
 import report.models.view.nodesFactories.TableCellFactory;
 import report.spring.utils.FxTableUtils;
@@ -22,7 +25,9 @@ import java.util.ResourceBundle;
 
 import static report.spring.utils.FxTableUtils.addColumn;
 
-public class BaseStackTableController implements Initializable,ComtaineSumProperty<DoubleProperty> {
+public class BaseEstimateTableController implements Initializable,ComtaineSumProperty<DoubleProperty> {
+
+    private DocumentType documentType;
 
     @Autowired
     private EstimateService estimateService;
@@ -37,15 +42,22 @@ public class BaseStackTableController implements Initializable,ComtaineSumProper
     private TableMemento<EstimateTVI> memento;
     private final DoubleProperty sumValue = new SimpleDoubleProperty();
 
-    public void initData(String title,ObservableList<EstimateTVI> tableItems){
+
+    public void initData(DocumentType documentType, String title){
         titledPane.setText(title);
-        tableView.setItems(tableItems);
-        memento = new TableMemento<>(tableItems);
+        this.documentType = documentType;
+        tableView.setItems(
+                estimateService.getEstimateMap(documentType).get(title)
+        );
+        computeColumnValue();
     }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTableView();
+        sumLabel.textProperty()
+                .bindBidirectional(sumValue, new DoubleStringConverter().format());
     }
 
     @Override
@@ -68,7 +80,7 @@ public class BaseStackTableController implements Initializable,ComtaineSumProper
         TableColumn<EstimateTVI, String> unitColumn = addColumn(tableView,"Eд. изм.", column -> column.getValue().unitProperty());
         TableColumn<EstimateTVI, Double> periceOneColumn = addColumn(tableView,"Стоимость (за единицу)", column -> column.getValue().priceOneProperty().asObject());
         TableColumn<EstimateTVI, Double> priceOneSumColumn = addColumn(tableView,"Стоимость (общая)", column -> column.getValue().priceSumProperty().asObject());
-        TableColumn<EstimateTVI, Boolean> isInKSColumn = addColumn(tableView,"КС", "inKS");
+        TableColumn<EstimateTVI, Boolean> isInKSColumn = addColumn(tableView,"КС", column -> column.getValue().inKSProperty());
 
         jobMaterialNameColumn.setMinWidth(300);
         bindJobColumn.setMinWidth(160);

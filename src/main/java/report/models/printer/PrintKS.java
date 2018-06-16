@@ -8,7 +8,7 @@ import javafx.collections.ObservableList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import report.entities.items.AbstractEstimateTVI;
-import report.entities.items.KS.KS_TIV;
+import report.entities.items.KS.KsTIV;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.usage_strings.SQL;
 import report.layout.controllers.estimate.EstimateController_old.Est;
@@ -18,7 +18,7 @@ public class PrintKS extends AbstractPrinterXML {
 
 
     private Document doc;
-    private ObservableList<KS_TIV> obsKS;
+    private ObservableList<KsTIV> obsKS;
     //    private ObservableList<PreviewTableItem>  obsPreTab;
     private String ksNumber, ksDate;
 //    private ContractorTIV contractorObject;
@@ -26,7 +26,7 @@ public class PrintKS extends AbstractPrinterXML {
 
 //Constructor =====================================================================================================================    
 //    private PrintKS(
-//            ObservableList<KS_TIV> obsKS,
+//            ObservableList<KsTIV> obsKS,
 ////                    ObservableList<PreviewTableItem> obsPreTab,
 //                    String ksNumber,
 //                    String ksDate) {
@@ -44,12 +44,12 @@ public class PrintKS extends AbstractPrinterXML {
 //        saveDocument(System.getProperty("user.dir") + "\\lib\\XML_Models\\КС-2 № " + ksNumber + ".xml");
 //    }
 
-//    public PrintKS(ObservableList<KS_TIV> obsKS,
+//    public PrintKS(ObservableList<KsTIV> obsKS,
 //                   ContractorTIV contractor,
 //                   Path path) {
 //        this.obsKS = obsKS;
-//        this.ksNumber = Integer.toString(((KS_TIV) obsKS.get(0)).getKSNumber());
-//        this.ksDate = LocalDate.ofEpochDay(((KS_TIV) obsKS.get(0)).getKSDate()).toString();
+//        this.ksNumber = Integer.toString(((KsTIV) obsKS.get(0)).getKSNumber());
+//        this.ksDate = LocalDate.ofEpochDay(((KsTIV) obsKS.get(0)).getKSDate()).toString();
 //
 ////        this.contractorObject = contractor;
 //
@@ -62,10 +62,10 @@ public class PrintKS extends AbstractPrinterXML {
 //        saveDocument(path.toString());
 //    }
 
-    public PrintKS(ObservableList<KS_TIV> obsKS, Path path) {
+    public PrintKS(ObservableList<KsTIV> obsKS, Path path) {
         this.obsKS = obsKS;
-        this.ksNumber = Integer.toString(((KS_TIV) obsKS.get(0)).getKSNumber());
-        this.ksDate = LocalDate.ofEpochDay(((KS_TIV) obsKS.get(0)).getKSDate()).toString();
+        this.ksNumber = Integer.toString(((KsTIV) obsKS.get(0)).getKSNumber());
+        this.ksDate = LocalDate.ofEpochDay(((KsTIV) obsKS.get(0)).getKSDate()).toString();
 
 
         doc = buildDocument("\\lib\\XML_Models\\KS-2.xml");
