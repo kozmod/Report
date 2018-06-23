@@ -44,107 +44,6 @@
                 </GridPane>
             </content>
         </Tab>
-        <Tab text="Подрядчики">
-            <content>
-                <GridPane fx:id="contractorGP">
-                    <columnConstraints>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="200.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="-Infinity" minWidth="10.0" prefWidth="10.0"/>
-                        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
-                    </columnConstraints>
-                    <rowConstraints>
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                        <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
-                    </rowConstraints>
-                    <children>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Подрядчик :" GridPane.columnIndex="2">
-                            <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                            </GridPane.margin>
-                        </Text>
-                        <TextField fx:id="contractorNameTF" promptText="Подрядчик " GridPane.columnIndex="2"
-                                   GridPane.rowIndex="1">
-                            <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                            </GridPane.margin>
-                        </TextField>
-                        <TextArea fx:id="contractorAdressTA" prefHeight="200.0" prefWidth="200.0" promptText="Адрес"
-                                  wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="5">
-                            <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                            </GridPane.margin>
-                        </TextArea>
-                        <TextArea fx:id="contractorCommentsTA" prefHeight="200.0" prefWidth="200.0"
-                                  promptText="комментарии" wrapText="true" GridPane.columnIndex="2"
-                                  GridPane.rowIndex="7">
-                            <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                            </GridPane.margin>
-                        </TextArea>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Руоководитель подразделения :"
-                              GridPane.columnIndex="2" GridPane.rowIndex="2">
-                            <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                            </GridPane.margin>
-                        </Text>
-                        <TextField fx:id="contractorDirectorTF" promptText="Руоководитель подразделения"
-                                   GridPane.columnIndex="2" GridPane.rowIndex="3">
-                            <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                            </GridPane.margin>
-                        </TextField>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Адрес :" GridPane.columnIndex="2"
-                              GridPane.rowIndex="4">
-                            <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                            </GridPane.margin>
-                        </Text>
-                        <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Комментарии :" GridPane.columnIndex="2"
-                              GridPane.rowIndex="6">
-                            <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                            </GridPane.margin>
-                        </Text>
-                        <CheckBox fx:id="contractorEditСheckBox" mnemonicParsing="false" text="Редактировать"
-                                  GridPane.rowIndex="8">
-                            <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                            </GridPane.margin>
-                        </CheckBox>
-                        <HBox alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="5.0"
-                              GridPane.columnIndex="2" GridPane.rowIndex="8">
-                            <children>
-                                <Button fx:id="contractorSaveItemButton" mnemonicParsing="false"
-                                        onAction="#handle_contractorItemButton" text="Сохранить" visible="false"/>
-                                <Button fx:id="contractorCencelItemButton" mnemonicParsing="false"
-                                        onAction="#handle_contractorItemButton" text="Отмена" visible="false"/>
-                                <Button fx:id="contractorAddItemButton" mnemonicParsing="false"
-                                        onAction="#handle_contractorItemButton" text="Добавить"/>
-                            </children>
-                            <opaqueInsets>
-                                <Insets/>
-                            </opaqueInsets>
-                            <GridPane.margin>
-                                <Insets left="5.0" right="5.0"/>
-                            </GridPane.margin>
-                        </HBox>
-                        <TableView fx:id="contractorTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowSpan="8">
-                            <GridPane.margin>
-                                <Insets bottom="5.0" left="5.0" right="5.0" top="5.0"/>
-                            </GridPane.margin>
-                        </TableView>
-                    </children>
-                </GridPane>
-            </content>
-        </Tab>
         <Tab text="Untitled Tab">
             <content>
                 <GridPane xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
@@ -233,7 +132,7 @@
                 </GridPane>
             </content>
         </Tab>
-        <Tab text="MONTH_TEST">
+        <Tab text="Денежный поток">
             <content>
                 <GridPane>
                     <columnConstraints>
@@ -248,8 +147,8 @@
                         <RowConstraints maxHeight="-Infinity" minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
                     </rowConstraints>
                     <children>
-                        <TableView fx:id="reportingMonthTable" prefHeight="200.0" prefWidth="200.0"
-                                   GridPane.columnSpan="4" GridPane.rowIndex="1">
+                        <TableView fx:id="cashFlowTable" prefHeight="200.0" prefWidth="200.0" GridPane.columnSpan="4"
+                                   GridPane.rowIndex="1">
                             <GridPane.margin>
                                 <Insets/>
                             </GridPane.margin>

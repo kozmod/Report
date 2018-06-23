@@ -4,7 +4,7 @@ package report.entities.items.fin_res;
 
 import javafx.beans.property.*;
 
-//Fin Result TableWrapper Item to ObsList
+//Fin Result TableWrapper AbstractEstimateTVI to ObsList
 public class FinResTVI {
 
     private final StringProperty siteNumber;

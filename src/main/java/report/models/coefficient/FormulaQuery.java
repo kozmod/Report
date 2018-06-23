@@ -8,8 +8,10 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.variable.VariableTIV_new;
-import report.layout.controllers.estimate.EstimateController.Est;
+import report.layout.controllers.estimate.EstimateController_old;
+import report.layout.controllers.estimate.EstimateController_old.Est;
 import report.models.sql.SqlConnector;
 import report.usage_strings.SQL;
 
@@ -20,24 +22,8 @@ public class FormulaQuery {
      *
      * @return f (Formula)
      */
-    public Formula getFormula() {
+    public Formula getFormula(final String siteNumber,final  String contractor) {
         Formula formula = null;
-
-        String siteNumber = Est.Common.getSiteSecondValue(SQL.Site.SITE_NUMBER);
-        String contractor = Est.Common.getSiteSecondValue(SQL.Site.CONTRACTOR);
-
-//        Properties variableProperties = new VariablePropertiesCommonDAOTableView().getProperties();
-//        Double pse  = new DoubleStringConverter()
-//                .fromString(
-//                variableProperties.get(
-//                        FileFields.FormulaVar.PER_SALE_EXPENSES
-//                ).toString()
-//        );
-//        Double iTax = new DoubleStringConverter().fromString(
-//                variableProperties.get(
-//                        FileFields.FormulaVar.INCOM_TAX
-//                ).toString()
-//        );
 
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement("execute Coeff_TEST_2 ?,? ");) {
@@ -66,7 +52,16 @@ public class FormulaQuery {
         return formula;
     }
 
+    public Formula getFormula() {
+        return getFormula(
+                Est.Common.getSiteSecondValue(SQL.Site.SITE_NUMBER),
+                Est.Common.getSiteSecondValue(SQL.Site.CONTRACTOR).toString()
+        );
+    }
 
+    public Formula getFormula(final String siteNumber,final  CountAgentTVI contractor) {
+        return getFormula(siteNumber, contractor.getName());
+    }
     /**
      * Getter to Site Quantity.
      *
@@ -87,13 +82,14 @@ public class FormulaQuery {
         return q;
     }
 
-    public void applyCoefficient(String siteNumber, String contractor, double coefficient) {
+    public void applyCoefficient(String siteNumber, double coefficient) {
 
+        CountAgentTVI contractor = EstimateController_old.Est.Common.getCountAgentTVI();
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt
                      = connection.prepareStatement("execute ComputeK ?,?,? ");) {
             pstmt.setString(1, siteNumber);
-            pstmt.setString(2, contractor);
+            pstmt.setInt(2, contractor.getIdCountConst());
             pstmt.setDouble(3, coefficient);
             pstmt.execute();
 

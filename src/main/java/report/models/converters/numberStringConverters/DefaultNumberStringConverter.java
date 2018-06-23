@@ -77,12 +77,10 @@ public abstract class DefaultNumberStringConverter<T extends Number> extends Str
      */
     public DefaultNumberStringConverter(final String pattern, char groupingSeparator, char decimalSeparator, final RoundingMode roundingMode) {
 
-        this.decimalFormatSymbols = new DecimalFormatSymbols() {
-            {
-                setGroupingSeparator(groupingSeparator);
-                setDecimalSeparator(decimalSeparator);
-            }
-        };
+        this.decimalFormatSymbols = new DecimalFormatSymbols() {{
+            setGroupingSeparator(groupingSeparator);
+            setDecimalSeparator(decimalSeparator);
+        }};
         this.decimalFormat = new DecimalFormat(pattern, decimalFormatSymbols) {
             {
                 setRoundingMode(roundingMode);

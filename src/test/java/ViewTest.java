@@ -1,32 +1,22 @@
 import helperClasses.FxTestStage;
-import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import org.controlsfx.control.PropertySheet;
 import org.junit.FixMethodOrder;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runners.MethodSorters;
 
-import report.entities.items.counterparties.ReqBankDAO;
-import report.entities.items.counterparties.ReqCommonDAO;
-import report.entities.items.counterparties.ReqExBodyDAO;
+import report.entities.items.counterparties.ReqBankDao;
+import report.entities.items.counterparties.ReqCommonDao;
+import report.entities.items.counterparties.ReqExBodyDao;
 import report.entities.items.propertySheet__TEST.ObjectPSI;
 
-import report.models.view.wrappers.propertySheetWrappers.PropertySheetWrapper;
+import report.models.view.wrappers.propertySheet.PropertySheetWrapper;
 import report.usage_strings.PathStrings;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
 import java.lang.reflect.Field;
-import java.math.BigInteger;
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 
 @FixMethodOrder(MethodSorters.JVM)
@@ -75,7 +65,7 @@ public class ViewTest {
     @Test
     @Disabled
     public void checkToString() {
-        ObservableList<ObjectPSI> list = (ObservableList<ObjectPSI>) new ReqBankDAO().getByID(55);
+        ObservableList<ObjectPSI> list = (ObservableList<ObjectPSI>) new ReqBankDao().getByID(55);
         list.addListener((ListChangeListener<? super ObjectPSI>) e -> {
             System.out.println("AAAAAAAAAA");
         });
@@ -92,9 +82,9 @@ public class ViewTest {
         PropertySheet countSheet = new PropertySheet();
         PropertySheetWrapper wrapper = new PropertySheetWrapper(
                 countSheet,
-                new ReqCommonDAO(),
-                new ReqBankDAO(),
-                new ReqExBodyDAO()
+                new ReqCommonDao(),
+                new ReqBankDao(),
+                new ReqExBodyDao()
         );
 
         for (int i = 0; i < 300; i++) {

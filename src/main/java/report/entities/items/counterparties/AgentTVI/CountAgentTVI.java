@@ -17,6 +17,7 @@ public class CountAgentTVI implements Clone {
     private StringProperty form;
     private int idType;
     private StringProperty type;
+    private int idCountConst;
 
     private ObservableList<LinkedNamePair> linkedNames;
     private ObservableList<ObjectPSI> requisites;
@@ -33,11 +34,13 @@ public class CountAgentTVI implements Clone {
             int idForm,
             String form,
             int idType,
-            String type
+            String type,
+            int idCountConst
     ) {
         this.idName = idName;
         this.idForm = idForm;
         this.idType = idType;
+        this.idCountConst = idCountConst;
         this.name = new SimpleStringProperty(name);
         this.form = new SimpleStringProperty(form);
         this.type = new SimpleStringProperty(type);
@@ -52,6 +55,7 @@ public class CountAgentTVI implements Clone {
         this.idName = source.idName;
         this.idForm = source.idForm;
         this.idType = source.idType;
+        this.idCountConst = source.idCountConst;
         this.name = new SimpleStringProperty(source.name.getValue());
         this.form = new SimpleStringProperty(source.form.getValue());
         this.type = new SimpleStringProperty(source.type.getValue());
@@ -65,6 +69,14 @@ public class CountAgentTVI implements Clone {
     @Override
     public CountAgentTVI getClone() {
         return new CountAgentTVI(this);
+    }
+
+    public void setIdCountConst(int idCountConst) {
+        this.idCountConst = idCountConst;
+    }
+
+    public int getIdCountConst() {
+        return idCountConst;
     }
 
     public int getIdName() {
@@ -156,12 +168,13 @@ public class CountAgentTVI implements Clone {
     @Override
     public String toString() {
         return "CountAgentTVI: " +
-                "id-name [" + this.getIdName() + "]," +
-                "name [" + this.getName() + "]," +
-                "id-type [" + this.getIdForm() + "]," +
-                "type [" + this.getForm() + "]," +
-                "id-form [" + this.getIdType() + "]," +
-                "form [" + this.getType() + "]";
+                "id-name [" + getIdName() + "]," +
+                "name [" + getName() + "]," +
+                "id-type [" + getIdForm() + "]," +
+                "type [" + getForm() + "]," +
+                "id-form [" + getIdType() + "]," +
+                "form [" + getType() + "]" +
+                "id-count-const [" + getIdCountConst() + "]";
     }
 
     /***************************************************************************

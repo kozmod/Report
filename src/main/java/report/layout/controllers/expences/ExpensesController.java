@@ -3,7 +3,6 @@ package report.layout.controllers.expences;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Collection;
 import java.util.ResourceBundle;
 
 import javafx.beans.InvalidationListener;
@@ -23,11 +22,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import report.entities.items.expenses.ExpensesDao;
 import report.entities.items.expenses.ExpensesTVI;
-import report.entities.items.expenses.ExpensesDAO;
-import report.entities.items.period.PeriodDAO;
+import report.entities.items.period.PeriodDao;
 import report.entities.items.site.PreviewTIV;
-import report.entities.items.site.SiteDAO;
+import report.entities.items.site.SiteDao;
 import report.layout.controllers.root.RootLayoutController;
 import report.models.coefficient.Formula;
 import report.models.coefficient.FormulaQuery;
@@ -35,11 +34,11 @@ import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.models.converters.dateStringConverters.LocalDayStringConverter;
 import report.usage_strings.SQL;
 
-import report.layout.controllers.estimate.EstimateController.Est;
+import report.layout.controllers.estimate.EstimateController_old.Est;
 
 import report.entities.items.period.PeriodTIV;
 //import report.models.Formula_test;
-import report.models.view.wrappers.tableWrappers.TableWrapper;
+import report.models.view.wrappers.table.TableWrapper;
 import report.models.view.nodesFactories.ContextMenuFactory;
 import report.models.view.customNodes.ContextMenuOptional;
 
@@ -118,13 +117,13 @@ public class ExpensesController implements Initializable {
      ********************************************************************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        siteTWrapper = ExpensesControllerUtils.decorProperty_Site(siteTV);
-        expensesTWrapper = ExpensesControllerUtils.decorProperty_Expenses(expensesTV);
-        periodTWrapper = ExpensesControllerUtils.decorProperty_JobPeriod(periodTV);
+        siteTWrapper = ExpensesControllerNodeUtils.decorProperty_Site(siteTV);
+        expensesTWrapper = ExpensesControllerNodeUtils.decorProperty_Expenses(expensesTV);
+        periodTWrapper = ExpensesControllerNodeUtils.decorProperty_JobPeriod(periodTV);
 
         siteTWrapper.setTableData(Est.Common.getPreviewObservableList());
-        expensesTWrapper.setTableData(new ExpensesDAO().getData());
-        periodTWrapper.setTableData(new PeriodDAO().getData());
+        expensesTWrapper.setTableData(new ExpensesDao().getData());
+        periodTWrapper.setTableData(new PeriodDao().getData());
 
         init_expensesTab();
         init_periodTab();
@@ -238,7 +237,7 @@ public class ExpensesController implements Initializable {
     @FXML
     private void hendler_applySiteChanges(ActionEvent event) {
 
-        new SiteDAO().dellAndInsert(siteTWrapper.getItems());
+        new SiteDao().dellAndInsert(siteTWrapper.getItems());
 
         siteTWrapper.saveMemento();
         rootController.update_previewTable(Est.Common.getPreviewObservableList());
@@ -249,7 +248,7 @@ public class ExpensesController implements Initializable {
         CONTRACTOR.setValue(Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR));
         siteUndoButton.setDisable(true);
         siteSaveButton.setDisable(true);
-        rootController.update_SelctedTreeViewItem(
+        rootController.update_SelectedTreeViewItem(
                 Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR)
         );
 
@@ -309,7 +308,6 @@ public class ExpensesController implements Initializable {
         if (Est.Changed.isExist()) {
             new FormulaQuery().applyCoefficient(
                     Est.Changed.getSiteSecondValue(SQL.Common.SITE_NUMBER),
-                    Est.Changed.getSiteSecondValue(SQL.Common.CONTRACTOR),
                     COEFFICIENT.getValue());
         }
         if (Est.Changed.isExist()) {
@@ -318,7 +316,7 @@ public class ExpensesController implements Initializable {
 
         }
 
-        new SiteDAO().dellAndInsert((Collection<PreviewTIV>) siteTWrapper);
+        new SiteDao().dellAndInsert(siteTWrapper.getItems());
         siteTWrapper.saveMemento();
         siteTWrapper.refresh();
 

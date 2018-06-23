@@ -1,5 +1,7 @@
 package report.models.coefficient;
 
+import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
+
 public class Formula {
 
     private final Integer quantity;
@@ -70,25 +72,6 @@ public class Formula {
                 | COEFFICIENT == Double.NaN
                 )
             COEFFICIENT = 1.0;
-//        else {
-//            LogController.appendLogViewText(
-//                    "siteExpenses = " + siteExpenses + " || " +
-//                            "OSR = " + new BigDecimal(OSR).toPlainString() + " || " +
-//                            "quantity = " +  new BigDecimal(quantity).toPlainString()  + " || " +
-//                            "incomeTax = " +  new BigDecimal(incomeTax).toPlainString()  + " || " +
-//                            "smetCost = " +  new BigDecimal(smetCost).toPlainString()  + " || " +
-//                            "profit =" +  new BigDecimal(profit).toPlainString() + " || " +
-//                            "perSaleExpenses =" +  new BigDecimal(perSaleExpenses).toPlainString() + " || " +
-//                            "" );
-//            LogController.appendLogViewText(
-//                    "siteExpenses = " + siteExpenses + " || " +
-//                            "OSR = " + new BigDecimal(OSR).toPlainString() + " || " +
-//                            "OSR/quantity.doubleValue() = " +  OSR/quantity.doubleValue()  + " || " +
-//                            "(profit/quantity.doubleValue())*incomeTax) = " +  (profit/quantity.doubleValue())*incomeTax  + " || " +
-//                            "profit =" +  new BigDecimal(profit).toPlainString() + " || " +
-//                            "COEFFICIENT =" + nonRoundCoefficient+ " || " +
-//
-//                            "" );
 //        }
         return COEFFICIENT;
     }
@@ -129,6 +112,9 @@ public class Formula {
 
     public static Formula formulaFromBase() {
         return new FormulaQuery().getFormula();
+    }
+    public static Formula formulaFromBase(final String siteNumber,final CountAgentTVI contractor) {
+        return new FormulaQuery().getFormula(siteNumber,contractor);
     }
 
     public static Integer quantityFromBase() {

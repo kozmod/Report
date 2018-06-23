@@ -2,7 +2,7 @@ package report.entities.items.intro;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.entities.items.KS.KS_DAO;
+import report.entities.items.KS.KsDao;
 import report.models.sql.SqlConnector;
 import report.usage_strings.SQL;
 
@@ -49,7 +49,7 @@ public class FinishedSiteDAO {
             }
 
         } catch (SQLException ex) {
-            Logger.getLogger(KS_DAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(KsDao.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }

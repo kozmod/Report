@@ -12,17 +12,17 @@ public class InputValidator {
     }
 
     public static boolean isStringValid(String inputString) {
-        return checkValidation(inputString, "^[a-zA-Zа-яА-Я0-9\\-]+$");
+        return checkValidation(inputString, "^[AbstractJavaFxApplication-zA-Zа-яА-Я0-9\\-]+$");
 
     }
 
     public static boolean isPercentValid(String inputString) {
-        return checkValidation(inputString, "^[a-zA-Zа-яА-Я0-9\\-]+$");
+        return checkValidation(inputString, "^[AbstractJavaFxApplication-zA-Zа-яА-Я0-9\\-]+$");
 
     }
 
     public static boolean isSiteNumberValid(String inputString) {
-        return checkValidation(inputString, "^\\d+[a-zA-Zа-яА-Я0-9\\-]?|(\\d+\\.*\\d+)$");
+        return checkValidation(inputString, "^\\d+[AbstractJavaFxApplication-zA-Zа-яА-Я0-9\\-]?|(\\d+\\.*\\d+)$");
 
     }
 

@@ -20,8 +20,8 @@ public class IntroLayoutController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //decorate TableViews
-        IntroControllerUtils.decorPreview(infoTV);
-        IntroControllerUtils.decorIntroFinishedSite(finishedSiteTV);
+        IntroControllerNodeUtils.decorPreview(infoTV);
+        IntroControllerNodeUtils.decorIntroFinishedSite(finishedSiteTV);
 
 
     }

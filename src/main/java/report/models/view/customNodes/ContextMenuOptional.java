@@ -11,20 +11,20 @@ import javafx.scene.control.ContextMenu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.SeparatorMenuItem;
 
-import report.entities.abstraction.CommonDAO;
-import report.entities.abstraction.Reverse;
+import report.entities.abstraction.dao.CommonDao;
+import report.entities.abstraction.Transformable;
 import report.entities.items.Clone;
 import report.entities.items.DItem;
 import report.models.printer.PrintEstimate;
-import report.models.view.wrappers.Reverting;
-import report.models.view.wrappers.tableWrappers.DiscountTreeTableWrapper;
-import report.models.view.wrappers.tableWrappers.ReverseTableWrapper;
-import report.models.view.wrappers.tableWrappers.TableWrapper;
+import report.models.view.wrappers.ContainMemento;
+import report.models.view.wrappers.table.DiscountTreeTableWrapper;
+import report.models.view.wrappers.table.ReverseTableWrapper;
+import report.models.view.wrappers.table.TableWrapper;
 
 
 public class ContextMenuOptional extends ContextMenu {
 
-    private Reverting node;
+    private ContainMemento node;
 
     MenuItem printSmeta;
     MenuItem saveMenuItem;
@@ -51,8 +51,11 @@ public class ContextMenuOptional extends ContextMenu {
         tableWrapper.getItems().addListener((ListChangeListener.Change<? extends S> c) -> {
             System.out.println("Changed on " + c + " - ContextMenuOptional");
             if (c.next() && (c.wasUpdated() || c.wasAdded() || c.wasRemoved())) {
-                ((ContextMenuOptional) tableWrapper.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
-                tableWrapper.refresh();
+                ContextMenuOptional contextMenuOptional = ((ContextMenuOptional) tableWrapper.getContextMenu());
+                if (contextMenuOptional != null) {
+                    contextMenuOptional.setDisable_SaveUndoPrint_groupe(false);
+                    tableWrapper.refresh();
+                }
             }
         });
     }
@@ -63,7 +66,7 @@ public class ContextMenuOptional extends ContextMenu {
         });
     }
 
-    public static <S extends Clone & Reverse> void setTableItemContextMenuListener(ReverseTableWrapper<S> tableWrapper, ObservableList<DItem> list) {
+    public static <S extends Clone & Transformable> void setTableItemContextMenuListener(ReverseTableWrapper<S> tableWrapper, ObservableList<DItem> list) {
         list.addListener((ListChangeListener.Change<? extends DItem> c) -> {
             ((ContextMenuOptional) tableWrapper.getContextMenu()).setDisable_SaveUndoPrint_groupe(false);
         });
@@ -134,7 +137,7 @@ public class ContextMenuOptional extends ContextMenu {
         }
 
 
-        public Builder setTable(Reverting node) {
+        public Builder setTable(ContainMemento node) {
             ContextMenuOptional.this.node = node;
 //            ContextMenuOptional.this.commonDao = tableWrapper.getDAO();
 
@@ -185,7 +188,7 @@ public class ContextMenuOptional extends ContextMenu {
             return this;
         }
 
-        public Builder addPrintSmeta(CommonDAO dao) {
+        public Builder addPrintSmeta(CommonDao dao) {
             printSmeta = new MenuItem("Выгрузить смету");
             printSmeta.setOnAction(event -> {
                 new PrintEstimate(dao);

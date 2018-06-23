@@ -4,7 +4,6 @@ import java.text.DecimalFormat;
 
 public class DoubleStringConverter extends DefaultNumberStringConverter<Double> {
 
-//    private final NFormat<Number> decimalFormatter;
 
     /*!******************************************************************************************************************
      *                                                                                                        Constructor

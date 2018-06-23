@@ -1,10 +1,3 @@
-/* ---------------------------------------------------------------------------------------------------------------------
-Name    : Report
-Version : 23.09.2017
-Author  : AORA-K
---------------------------------------------------------------------------------------------------------------------- */
-
-
 package report;
 
 
@@ -20,7 +13,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import report.layout.controllers.root.RootLayoutController;
-import report.models.view.nodesHelpers.StageCreator;
+import report.models.view.nodesHelpers.FxmlStage;
 import report.usage_strings.PathStrings;
 
 
@@ -64,7 +57,7 @@ public class Report extends Application {
     private Scene scene;
     private RootLayoutController rootController;
     private Object centerController;
-    private StageCreator stageCreator;
+    private FxmlStage fxmlStage;
 
     /*!******************************************************************************************************************
      *                                                                                                      Getter/Setter
@@ -105,7 +98,7 @@ public class Report extends Application {
 //            scene = new Scene(rootlayout,1800,900);
             primaryStage.setScene(scene);
             rootController = loader.getController(); //set controller
-            rootController.setReportApp(this);
+//            rootController.setReportApp(this);
 
 
         } catch (IOException ex) {
@@ -114,12 +107,10 @@ public class Report extends Application {
 
     }
 
-    //init Intro Layout
-    public StageCreator initIntroLayout() {
-        StageCreator.setReportMain(this);
-        StageCreator center = new StageCreator(PathStrings.Layout.INTRO, "").loadIntoRootBorderPaneCenter();
-        Object centerController = center.getController();
-        return center;
+    //initData Intro Layout
+    public FxmlStage initIntroLayout() {
+        FxmlStage.setReportMain(this);
+        return new FxmlStage(PathStrings.Layout.INTRO, "").loadIntoRootBorderPaneCenter();
     }
 
 
@@ -134,7 +125,7 @@ public class Report extends Application {
         this.primaryStage = stage;
         this.primaryStage.setTitle("App");
 
-        //init ROOT
+        //initData ROOT
         this.initRootLayout();
         this.primaryStage.sizeToScene();
         primaryStage.show();

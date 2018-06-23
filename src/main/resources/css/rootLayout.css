@@ -1,0 +1,11 @@
+/*todo: вот нвстройки  в css по типу */
+.button{
+    /*-fx-font-size: 12px;*/
+    /*-fx-font-weight: bold;*/
+    /*-fx-text-fill: #333333;*/
+}
+
+/*todo: вот нвстройки  в css по fx:id */
+#treeViewSite{
+    /*-fx-background-color: red;*/
+}

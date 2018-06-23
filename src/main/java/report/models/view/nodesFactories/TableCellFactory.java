@@ -3,14 +3,14 @@ package report.models.view.nodesFactories;
 
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
+import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.Clone;
-import report.entities.items.Item;
-import report.entities.items.estimate.EstimateDAO;
+import report.entities.items.estimate.EstimateDao;
 import report.entities.items.estimate.EstimateTVI;
 import report.entities.items.osr.OSR_TIV;
-import report.entities.items.plan.PlanDAO;
+import report.entities.items.plan.PlanDao;
 import report.entities.items.site.PreviewTIV;
-import report.entities.items.site.SiteDAO;
+import report.entities.items.site.SiteDao;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -25,7 +25,7 @@ import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.usage_strings.SQL;
 
 import report.layout.controllers.root.RootLayoutController;
-import report.layout.controllers.estimate.EstimateController.Est;
+import report.layout.controllers.estimate.EstimateController_old.Est;
 import report.entities.items.cb.AddEstTIV;
 import report.usage_strings.ServiceStrings;
 
@@ -87,8 +87,9 @@ public class TableCellFactory {
      * <br>(true - RED / false - GREEN).
      * <br>[set text quantity color]
      *
-     * @return inKsColoredCell
+     * @return InKsColoredCell
      */
+    @Deprecated
     public static TableCell getInKsColoredCell() {
         return new TableCellFactory().new inKsColoredCell();
     }
@@ -97,7 +98,7 @@ public class TableCellFactory {
      * This Cell Listen Mouse Entering to this one and set "DelTable" Items.
      * <br>
      *
-     * @return OnMouseEnteredTableCell
+     * @return DelElementTableCell
      */
     public static TableCell getOnMouseEnteredTableCell(Est enumEst) {
         return new TableCellFactory().new OnMouseEnteredTableCell(enumEst);
@@ -108,7 +109,7 @@ public class TableCellFactory {
      * Get text of this cell and find same in JM_Mane(Est), then
      * <br>
      *
-     * @return OnMouseEnteredTableCell
+     * @return DelElementTableCell
      */
     public static TableCell getOnDoubleMouseClickMoveToTextCell() {
         return new TableCellFactory().new OnDoubleMouseClickMoveToCell();
@@ -322,15 +323,15 @@ public class TableCellFactory {
             comboBox.setPrefWidth(150);
             switch (item.getSqlColumn()) {
                 case SQL.Site.CONTRACTOR:
-                    comboBox.setItems(new SiteDAO().getDistinct(SQL.Common.CONTRACTOR));
+                    comboBox.setItems(new SiteDao().getDistinct(SQL.Common.CONTRACTOR));
 //                                comboBox.setItems(new CommonQuery().getObsDISTINCT(SQL.Tables.C, SQL.Plan.TYPE_NAME, this));
                     break;
                 case SQL.Site.TYPE_HOME:
-                    comboBox.setItems(new EstimateDAO().getDistinct(SQL.Common.TYPE_HOME));
+                    comboBox.setItems(new EstimateDao().getDistinct(SQL.Common.TYPE_HOME));
 
                     break;
                 case SQL.Site.SITE_TYPE_ID:
-                    comboBox.setItems(new PlanDAO().getDistinct(SQL.Plan.TYPE_NAME));
+                    comboBox.setItems(new PlanDao().getDistinct(SQL.Plan.TYPE_NAME));
                     break;
                 case SQL.Site.STATUS_JOBS:
                     comboBox.setItems(FXCollections.observableArrayList("закончен", "не начат", "в работе"));
@@ -408,7 +409,8 @@ public class TableCellFactory {
         }
     }
 
-    private class inKsColoredCell extends TableCell<EstimateTVI, Boolean> {
+    @Deprecated
+    public class inKsColoredCell extends TableCell<EstimateTVI, Boolean> {
 
         @Override
         public void updateItem(Boolean item, boolean empty) {
@@ -460,7 +462,8 @@ public class TableCellFactory {
     }
 
 
-    private class OnMouseEnteredTableCell extends TableCell<Item, Object> {
+    @Deprecated
+    private class OnMouseEnteredTableCell extends TableCell<AbstractEstimateTVI, Object> {
         private Est enumEst;
 
         private OnMouseEnteredTableCell(Est enumEst) {
@@ -490,7 +493,7 @@ public class TableCellFactory {
         }
     }
 
-    private class OnDoubleMouseClickMoveToCell extends TableCell<Item, Object> {
+    private class OnDoubleMouseClickMoveToCell extends TableCell<AbstractEstimateTVI, Object> {
 
         @Override
         public void updateItem(Object item, boolean empty) {
@@ -505,7 +508,7 @@ public class TableCellFactory {
                 setOnMouseClicked(mouseEvent -> {
                     if (mouseEvent.getButton().equals(MouseButton.PRIMARY) & mouseEvent.getClickCount() == 2) {
                         String text = this.getText();
-//                            Item itemW = this.treeTableView().getObservableItems()
+//                            AbstractEstimateTVI itemW = this.treeTableView().getObservableItems()
 //                                    .stream()
 //                                    .filter(i -> i.getJM_name().equals(text))
 //                                    .findFirst()
@@ -551,7 +554,7 @@ public class TableCellFactory {
 
         ;
     }
-//   private class TooltipTableCell extends TableCell<Item, Object> {
+//   private class TooltipTableCell extends TableCell<AbstractEstimateTVI, Object> {
 //       TableWrapper table = new TableWrapper();
 //       Tooltip tooltip = new Tooltip();
 //         

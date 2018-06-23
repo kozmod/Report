@@ -9,11 +9,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
-import report.entities.abstraction.CommonDAO;
-import report.entities.items.Item;
-import report.entities.items.contractor.ContractorTIV;
+import report.entities.abstraction.dao.CommonDao;
+import report.entities.items.AbstractEstimateTVI;
 import report.usage_strings.SQL;
-import report.layout.controllers.estimate.EstimateController.Est;
+import report.layout.controllers.estimate.EstimateController_old.Est;
 
 import report.entities.items.site.PreviewTIV;
 
@@ -21,13 +20,13 @@ import report.entities.items.site.PreviewTIV;
 public class PrintEstimate extends AbstractPrinterXML {
 
     private Document doc;
-    private ObservableList<Item> obsKS;
+    private ObservableList<AbstractEstimateTVI> obsKS;
     private ObservableList<PreviewTIV> obsPreTab;
-    private ContractorTIV contractorObject;
+//    private ContractorTIV contractorObject;
 
     //Constructor =====================================================================================================================    
-    public PrintEstimate(CommonDAO dao) {
-        this.obsKS = FXCollections.observableArrayList((Collection<? extends Item>) dao.getData());
+    public PrintEstimate(CommonDao dao) {
+        this.obsKS = FXCollections.observableArrayList((Collection<? extends AbstractEstimateTVI>) dao.getData());
 
 
         doc = buildDocument("\\lib\\XML_Models\\Смета.xml");
@@ -81,14 +80,14 @@ public class PrintEstimate extends AbstractPrinterXML {
         int rowsQuantity = 1;
         String buildingPart = null;
 
-        for (Item item : obsKS) {
+        for (AbstractEstimateTVI abstractEstimateTVI : obsKS) {
 
 
             Element targetRow = getTargetElement("SumRow");
 
             //CHECK -> Binded Job
-            if (!item.getBuildingPart().equals(buildingPart)) {
-                buildingPart = item.getBuildingPart();
+            if (!abstractEstimateTVI.getBuildingPart().equals(buildingPart)) {
+                buildingPart = abstractEstimateTVI.getBuildingPart();
 
                 Element row = doc.createElement("Row");
 //                row.setAttribute("ss:StyleID", "s46");
@@ -147,23 +146,23 @@ public class PrintEstimate extends AbstractPrinterXML {
             //JM name
             row.appendChild(new CellBuilder(doc)
                     .setCellStyle("s147")
-                    .setCellValue("String", item.getJM_name())
+                    .setCellValue("String", abstractEstimateTVI.getJM_name())
                     .build());
             //Unit
             row.appendChild(new CellBuilder(doc)
                     .setCellStyle("s141")
-                    .setCellValue("String", item.getUnit())
+                    .setCellValue("String", abstractEstimateTVI.getUnit())
                     .build());
             //Value
             row.appendChild(new CellBuilder(doc)
                     .setCellStyle("s148")
-                    .setCellValue("Number", Double.toString(item.getQuantity()))
+                    .setCellValue("Number", Double.toString(abstractEstimateTVI.getQuantity()))
                     .build());
-            if (item.getBindJob().endsWith("-")) {
+            if (abstractEstimateTVI.getBindJob().endsWith("-")) {
                 //Price one - JOB
                 row.appendChild(new CellBuilder(doc)
                         .setCellStyle("s148")
-                        .setCellValue("Number", Double.toString(item.getPriceOne()))
+                        .setCellValue("Number", Double.toString(abstractEstimateTVI.getPriceOne()))
                         .build());
                 //Price Sum - JOB
                 row.appendChild(new CellBuilder(doc)
@@ -198,7 +197,7 @@ public class PrintEstimate extends AbstractPrinterXML {
                 //Price one - Material
                 row.appendChild(new CellBuilder(doc)
                         .setCellStyle("s148")
-                        .setCellValue("Number", Double.toString(item.getPriceOne()))
+                        .setCellValue("Number", Double.toString(abstractEstimateTVI.getPriceOne()))
                         .build());
                 //Price one - Material
                 row.appendChild(new CellBuilder(doc)
@@ -228,11 +227,11 @@ public class PrintEstimate extends AbstractPrinterXML {
 
 //Builder ==========================================================================================================================  
 //    public static class Builder{
-//        private ObservableList<Item> obsKS;
+//        private ObservableList<AbstractEstimateTVI> obsKS;
 //        private ObservableList<PreviewTableItem>  obsPreTab;
 //        private String ksNumber, ksDate;
 //
-//        public Builder setObsKS(ObservableList<Item> obsKS) {
+//        public Builder setObsKS(ObservableList<AbstractEstimateTVI> obsKS) {
 //            this.obsKS = obsKS;
 //        return this;
 //        }

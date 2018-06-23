@@ -15,10 +15,10 @@ import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.util.Callback;
-import report.entities.items.Item;
+import report.entities.items.AbstractEstimateTVI;
 
 
-public class EstimateTVI extends Item {
+public class EstimateTVI extends AbstractEstimateTVI<EstimateTVI> {
     private final IntegerProperty tableType;
     private final BooleanProperty inKS;
 
@@ -63,7 +63,7 @@ public class EstimateTVI extends Item {
                 super.getPriceSum(),
                 super.getBuildingPart(),
                 this.getTableType(),
-                this.getInKS()
+                this.isInKS()
         );
         return clone;
     }
@@ -186,25 +186,30 @@ public class EstimateTVI extends Item {
     }
 //Getter //Setter ===============================================================================
 
+
     public int getTableType() {
         return tableType.get();
     }
 
-    public void setPrice_one(int value_inp) {
-        tableType.set(value_inp);
+    public IntegerProperty tableTypeProperty() {
+        return tableType;
     }
 
-    public boolean getInKS() {
+    public void setTableType(int tableType) {
+        this.tableType.set(tableType);
+    }
+
+    public boolean isInKS() {
         return inKS.get();
     }
 
-    //    public void    setInKS(boolean value_inp) {inKS.set(value_inp);}
-//    public void    setNotInKS() {inKS.set(false);}
-//    public void    setInKS()    {inKS.set(true);}
-    public void setInKS(boolean value_inp) {
-        inKS.set(value_inp);
+    public BooleanProperty inKSProperty() {
+        return inKS;
     }
 
+    public void setInKS(boolean inKS) {
+        this.inKS.set(inKS);
+    }
 
     //Equakls AND hashCode ==========================================================================
     @Override
@@ -224,7 +229,7 @@ public class EstimateTVI extends Item {
 //        if (obj == null) {
 //            return false;
 //        }
-//        if (!Item.class.isAssignableFrom(obj.getClass())) {
+//        if (!AbstractEstimateTVI.class.isAssignableFrom(obj.getClass())) {
 //            return false;
 //        }
 //        final EstimateTVI other = (EstimateTVI) obj;
@@ -269,8 +274,8 @@ public class EstimateTVI extends Item {
      *
      * @return extractor
      */
-    public static Callback<Item, Observable[]> extractor() {
-        return (Item p) -> new Observable[]{p.quantityProperty(), p.priceOneProperty()};
+    public static Callback<EstimateTVI, Observable[]> extractor() {
+        return (EstimateTVI p) -> new Observable[]{p.quantityProperty(), p.priceOneProperty()};
     }
 
 

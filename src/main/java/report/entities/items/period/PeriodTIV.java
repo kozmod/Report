@@ -205,7 +205,7 @@ public class PeriodTIV implements Clone {
     /**
      * Extractor to observe changes in "Property" fields.
      *
-     * @return Callback<VariableTIV       ,               Observable       [       ]>
+     * @return Callback<VariableTIV                               ,                                                               Observable                               [                               ]>
      */
     public static Callback<PeriodTIV, Observable[]> extractor() {
         return (PeriodTIV p) -> new Observable[]{p.getTextProperty(), p.getDateFromProperty(), p.getDateToProperty()};

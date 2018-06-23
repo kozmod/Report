@@ -11,14 +11,14 @@ import javafx.scene.layout.HBox;
 import javafx.util.converter.NumberStringConverter;
 import report.entities.items.DItem;
 import report.entities.items.osr.OSR_TIV;
+import report.entities.items.plan.PlanDao;
 import report.entities.items.plan.PlanTIV;
-import report.entities.items.plan.PlanDAO;
 import report.entities.items.plan.FactTIV;
 import report.models.coefficient.Quantity;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.models.view.customNodes.ContextMenuOptional;
-import report.models.view.wrappers.tableWrappers.DiscountTreeTableWrapper;
-import report.models.view.wrappers.tableWrappers.TableWrapper;
+import report.models.view.wrappers.table.DiscountTreeTableWrapper;
+import report.models.view.wrappers.table.TableWrapper;
 import report.models.view.nodesFactories.ContextMenuFactory;
 
 import java.net.URL;
@@ -91,13 +91,13 @@ public class PlanningController implements Initializable {
 
     private void init_PlanTab() {
         //add Plan TableView
-        planTableWrapper = PlaningControllerUtils.decorPlan(planTable);
+        planTableWrapper = PlaningControllerNodeUtils.decorPlan(planTable);
         planTableWrapper.setFromBase();
         ContextMenuOptional.setTableItemContextMenuListener(planTableWrapper);
 
         //add Fact TableView
-        factTableWrapper = PlaningControllerUtils.decorFact(factTable);
-        factTableWrapper.setTableData(new PlanDAO().getListFact());
+        factTableWrapper = PlaningControllerNodeUtils.decorFact(factTable);
+        factTableWrapper.setTableData(new PlanDao().getListFact());
 
         //table Context menu property
         planTableWrapper.tableView().contextMenuProperty().bind(
@@ -134,7 +134,7 @@ public class PlanningController implements Initializable {
      */
     private void init_OSRTab() {
         //add OSR TableView
-        osrTableWrapper = PlaningControllerUtils.decorOSR(osrTable);
+        osrTableWrapper = PlaningControllerNodeUtils.decorOSR(osrTable);
         osrTableWrapper.setFromBase();
         ContextMenuOptional.setTableItemContextMenuListener(osrTableWrapper);
 
@@ -181,8 +181,8 @@ public class PlanningController implements Initializable {
      * Initialization of KD Tab.
      */
     private void init_KDTab() {
-        kdTreeTableWrapper = PlaningControllerUtils.decorKD(kdTreeTable);
-//        PlaningControllerUtils.decorKD(kdTreeTable);
+        kdTreeTableWrapper = PlaningControllerNodeUtils.decorKD(kdTreeTable);
+//        PlaningControllerNodeUtils.decorKD(kdTreeTable);
 //        kdTreeTableWrapper.tableView().setRoot(new DiscountQuery().getData().tree());
         kdTreeTableWrapper.setFromBase();
         kdTreeTableWrapper.tableView().editableProperty().bind(Bindings

@@ -6,7 +6,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.TextFieldTableCell;
 import javafx.util.StringConverter;
 
-
+@Deprecated
 public interface TableFactory {
     /**
      * Set Text Field cell with string converter to column array.

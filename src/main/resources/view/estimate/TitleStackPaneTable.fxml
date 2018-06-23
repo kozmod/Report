@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane alignment="TOP_RIGHT" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TitledPane fx:id="titledPane" animated="false">
+         <content>
+            <TableView fx:id="tableView">
+               <columnResizePolicy>
+                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TableView>
+         </content>
+         <graphic>
+            <CheckBox fx:id="editCheckBox" mnemonicParsing="false" />
+         </graphic>
+      </TitledPane>
+      <Label fx:id="sumLabel" text="0">
+         <StackPane.margin>
+            <Insets right="10.0" top="5.0" />
+         </StackPane.margin>
+      </Label>
+   </children>
+</StackPane>

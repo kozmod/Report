@@ -3,62 +3,68 @@ package report.layout.controllers.root;
 
 import java.io.File;
 
-import javafx.scene.control.*;
-import report.Report;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.TabPane;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TitledPane;
+import javafx.scene.control.TreeView;
+import javafx.scene.layout.GridPane;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import javafx.beans.binding.Bindings;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.input.MouseEvent;
-import javafx.util.Callback;
 
-import report.layout.controllers.AddContractController;
-import report.layout.controllers.AddSiteController;
+import report.layout.controllers.CorAccountController;
+import report.layout.controllers.addSite.AddSiteController;
 import report.layout.controllers.DeleteController;
 import report.layout.controllers.LogController;
-import report.layout.controllers.estimate.EstimateController;
+import report.layout.controllers.estimate.EstimateController_old;
 import report.layout.controllers.expences.ExpensesController;
-import report.layout.controllers.expences.ExpensesControllerUtils;
+import report.layout.controllers.expences.ExpensesControllerNodeUtils;
+import report.layout.controllers.finRes.FinResController;
 import report.layout.controllers.intro.IntroLayoutController;
-import report.models.coefficient.FormulaQuery;
-import report.models.coefficient.Formula;
+import report.layout.controllers.planning.PlanningController;
 import report.models.view.nodesHelpers.InputValidator;
 import report.models.view.nodesFactories.FileChooserFactory;
+import report.models.view.wrappers.toString.ToStringWrapper;
+import report.spring.spring.components.ApplicationContextProvider;
+import report.spring.views.RootViewFx;
+import report.spring.views.ViewFx;
 import report.usage_strings.PathStrings;
-import report.models.view.nodesHelpers.StageCreator;
+import report.models.view.nodesHelpers.FxmlStage;
 import report.models.sql.sqlQuery.BackUpQuery;
 import report.entities.items.site.PreviewTIV;
 import report.models.sql.sqlQuery.InsertFileXLSQuery;
-import report.entities.items.site.SiteDAO;
-import report.usage_strings.SQL;
-
 
 public class RootLayoutController implements Initializable {
 
-    // ref to Report App      
-    private Report reportApp;
-    private AddContractController contAddController;
+    @Autowired
+    private ApplicationContextProvider context;
+    @Autowired
+    private RootViewFx rootViewFx;
+    @Autowired
+    private RootControllerNodeFactory rootControllerNodeFactory;
+
+
     private DeleteController delController;
     private AddSiteController siteAddController;
-    private EstimateController showEstController;
+    private EstimateController_old estController;
     private ExpensesController expensesController;
     private IntroLayoutController introControllre;
 
-    private RootControllerService rootService = new RootControllerService(this);
-
-    private String selectedTreeElemParent;
-    private String selectedTreeElem;
+    private RootControllerService rootService = new RootControllerService();
 
     @FXML
     private ComboBox<Object> comboQueueNum, comboSiteCondition;
     @FXML
-    private TreeView<String> treeViewSite;
+    private TreeView<ToStringWrapper> treeViewSite;
     @FXML
     private TitledPane infoTitledPane, changesTitledPane;
 
@@ -66,19 +72,17 @@ public class RootLayoutController implements Initializable {
     private MenuItem printEstToXmlMenuItem;
 
     @FXML
-    Label lll;
-    @FXML
     TextField findSiteByNameTF;
 
     private TableView previewTable;
-    private static final TableView changeTable = ExpensesControllerUtils.getChangeView();
+    private static final TableView changeTable = ExpensesControllerNodeUtils.getChangeView();
 
     /*!******************************************************************************************************************
      *                                                                                                      Getter/Setter
      ********************************************************************************************************************/
-    public void setReportApp(Report reportApp) {
-        this.reportApp = reportApp;
-    }
+//    public void setReportApp(Report reportApp) {
+//        this.reportApp = reportApp;
+//    }
 
     public RootLayoutController getRootController() {
         return this;
@@ -86,6 +90,22 @@ public class RootLayoutController implements Initializable {
 
     public TableView getPreviewTable() {
         return previewTable;
+    }
+
+
+    public void setExpensesController(ExpensesController expensesController) {
+        this.expensesController = expensesController;
+        expensesController.setRootController(this);
+    }
+
+    public void setDelController(DeleteController delController) {
+        this.delController = delController;
+        delController.setRootController(this);
+    }
+
+    public void setEstController(EstimateController_old showEstController) {
+        this.estController = showEstController;
+        showEstController.setRootController(this);
     }
 
     /*!******************************************************************************************************************
@@ -106,8 +126,9 @@ public class RootLayoutController implements Initializable {
         treeViewSite.setDisable(v);
     }
 
-    public void update_SelctedTreeViewItem(String value) {
-        treeViewSite.getSelectionModel().getSelectedItem().setValue(value);
+    public void update_SelectedTreeViewItem(String value) {
+        //TODO сделать обновление
+//        treeViewSite.getSelectionModel().getSelectedItem().setValue(value);
     }
 
 
@@ -141,11 +162,12 @@ public class RootLayoutController implements Initializable {
 
     private void init_siteTreeView() {
         treeViewSite.setRoot(rootService.getTreeViewList());
-        treeViewSite.setCellFactory(new TVCellFactory());
+        treeViewSite.setCellFactory(rootControllerNodeFactory.getRootTreeViewCellFactory(this));
+        treeViewSite.setShowRoot(false);
     }
 
     private void init_previewTable() {
-        previewTable = RootControllerUtils.getSite();
+        previewTable = rootControllerNodeFactory.getSite();
         infoTitledPane.setContent(previewTable);
     }
 
@@ -159,12 +181,22 @@ public class RootLayoutController implements Initializable {
         init_TreeComboBlock();
         init_siteTreeView();
         init_previewTable();
-        if (!(reportApp.getCenterController() instanceof IntroLayoutController)) {
-            reportApp.initIntroLayout()
-                    .<IntroLayoutController>getController()
-                    .updateTables();
+//        if (!(reportApp.getCenterController() instanceof IntroLayoutController)) {
+        if (rootViewFx.centerControllerEquals(IntroLayoutController.class)) {
+
+//            reportApp.<IntroLayoutController>getCenterController().updateTables();
+            rootViewFx.<IntroLayoutController>getCenterController().updateTables();
+
         } else {
-            reportApp.<IntroLayoutController>getCenterController().updateTables();
+
+//            ViewFx<GridPane,IntroLayoutController> introLayoutController = beanFactory.getBean("introView",ViewFx.class);
+            ViewFx<GridPane,IntroLayoutController> introLayoutController = context.getBean("introView");
+            introLayoutController.getController().updateTables();
+            rootViewFx.setCenter(introLayoutController);
+////
+////            reportApp.initIntroLayout()
+////                    .<IntroLayoutController>getController()
+////                    .updateTables();
         }
     }
 
@@ -221,43 +253,37 @@ public class RootLayoutController implements Initializable {
 
     @FXML
     private void handle_AccountFilter(ActionEvent event) {
-        StageCreator corFilterLayout
-                = new StageCreator(PathStrings.Layout.COR_FILTER, "Фильр / Выписка").loadNewWindow();
+        new FxmlStage(PathStrings.Layout.COR_FILTER, "Фильр / Выписка").loadAndShowNewWindow();
 
     }
 
     @FXML
     private void handle_Log(ActionEvent event) {
-        StageCreator logLayout
-                = new StageCreator(PathStrings.Layout.LOG, "Log").loadNewWindow();
+        new FxmlStage(PathStrings.Layout.LOG, "Log").loadAndShowNewWindow();
 
     }
 
     @FXML
     private void handle_CommonProperties(ActionEvent event) {
-        StageCreator allPropLayout
-                = new StageCreator(PathStrings.Layout.ALL_PROPERTIES, "Общие параметры").loadNewWindow();
-//        allPropLayout.<AllPropertiesController>getController().initData();
+        new FxmlStage(PathStrings.Layout.ALL_PROPERTIES, "Общие параметры").loadAndShowNewWindow();
     }
 
     @FXML
     private void handle_PrintToXML(ActionEvent event) {
 
         File selectedFile;
-        if (EstimateController.Est.Base.isExist()
-                && showEstController.getBaseTab().isSelected()) {
-            selectedFile = FileChooserFactory.saveEst(EstimateController.Est.Base);
+        if (EstimateController_old.Est.Base.isExist()
+                && estController.getBaseTab().isSelected()) {
+            selectedFile = FileChooserFactory.saveEst(EstimateController_old.Est.Base);
             if (selectedFile != null) {
                 rootService.printEstBase(selectedFile);
-//                new PrintEstimate(Est.Base.getAllItemsList_Live(), selectedFile.toPath());
                 LogController.appendLogViewText("Базовая смета сохранена в файл");
             }
-        } else if ((EstimateController.Est.Changed.isExist()
-                && showEstController.getChangeTab().isSelected())) {
-            selectedFile = FileChooserFactory.saveEst(EstimateController.Est.Changed);
+        } else if ((EstimateController_old.Est.Changed.isExist()
+                && estController.getChangeTab().isSelected())) {
+            selectedFile = FileChooserFactory.saveEst(EstimateController_old.Est.Changed);
             if (selectedFile != null) {
                 rootService.printEstChange(selectedFile);
-//                new PrintEstimate(Est.Changed.getAllItemsList_Live(), selectedFile.toPath());
                 LogController.appendLogViewText("Изменненная смета сохранена в файл");
             }
         } else {
@@ -268,8 +294,8 @@ public class RootLayoutController implements Initializable {
 
     @FXML
     private void handle_AddSite(ActionEvent event) {
-        StageCreator siteAddLayout
-                = new StageCreator(PathStrings.Layout.SITE_ADD, "Добавить Участок").loadNewWindow();
+        FxmlStage siteAddLayout
+                = new FxmlStage(PathStrings.Layout.SITE_ADD, "Добавить Участок").loadAndShowNewWindow();
         siteAddController = siteAddLayout.getController();
         siteAddController.setRootController(getRootController());
 
@@ -303,186 +329,32 @@ public class RootLayoutController implements Initializable {
 
     @FXML
     private void handle_FinResButton(ActionEvent event) {
-//         StageCreator finResLayout  =
-        new StageCreator(PathStrings.Layout.FIN_RES).loadIntoRootBorderPaneCenter();
+//        new FxmlStage(PathStrings.Layout.FIN_RES).loadIntoRootBorderPaneCenter();
+        ViewFx<GridPane, FinResController>  viewFx = context.getBean("finResView");
+        rootViewFx.getView().setCenter(viewFx.getView());
+
+
     }
 
     @FXML
     private void handle_PlanningButton(ActionEvent event) {
-        new StageCreator(PathStrings.Layout.PLANNING).loadIntoRootBorderPaneCenter();
+//        new FxmlStage(PathStrings.Layout.PLANNING).loadIntoRootBorderPaneCenter();
+        ViewFx<TabPane, PlanningController>  viewFx = context.getBean("planingView");
+        rootViewFx.getView().setCenter(viewFx.getView());
     }
 
 
     @FXML
     private void handle_CommonInfButton(ActionEvent event) {
-        new StageCreator(PathStrings.Layout.INTRO)
-                .loadIntoRootBorderPaneCenter()
-                .<IntroLayoutController>getController()
-                .updateTables();
+        ViewFx<GridPane, IntroLayoutController>  viewFx = context.getBean("introView");
+        rootViewFx.getView().setCenter(viewFx.getView());
+        viewFx.getController().updateTables();
     }
 
     @FXML
     private void handle_accountButton(ActionEvent event) {
-        new StageCreator(PathStrings.Layout.ACC).loadIntoRootBorderPaneCenter();
-
-
-    }
-
-    /*!******************************************************************************************************************
-     *                                                                                                     Inner Classes
-     ********************************************************************************************************************/
-    class TVCellFactory implements Callback<TreeView<String>, TreeCell<String>> {
-
-        @Override
-        public TreeCell<String> call(TreeView<String> param) {
-            TreeCell<String> cell = new TreeCell<String>() {
-
-                @Override
-                protected void updateItem(String item, boolean empty) {
-                    super.updateItem(item, empty);
-
-                    if (empty) {
-                        setText(null);
-                    } else {
-                        setText(getItem() == null ? "" : getItem());
-                    }
-                    setGraphic(null);
-                }
-
-            };
-            final ContextMenu contextMenu = new ContextMenu();
-
-//            final MenuItem siteAddItem        = new MenuItem("Добавить участок")      {{ setDisable(true); }};
-            final MenuItem siteEditItem = new MenuItem("Редактировать") {{
-                setDisable(true);
-            }};
-            final MenuItem contAddItem = new MenuItem("Добавить субподрядчика") {{
-                setDisable(true);
-            }};
-            final SeparatorMenuItem separator = new SeparatorMenuItem() {{
-                setDisable(true);
-            }};
-            final MenuItem contDelItem = new MenuItem("Удалить") {{
-                setDisable(true);
-            }};
-//            siteAddItem.setOnAction(new EventHandler<ActionEvent>() {
-//                @Override
-//                public void handle(ActionEvent event) {
-//                    StageCreator siteAddLayout
-//                            = new StageCreator(PathStrings.Layout.SITE_ADD, "Добавить Участок");
-//                    siteAddController = siteAddLayout.getController();
-//                    siteAddController.setRootController(getRootController());
-//
-//                    siteAddLayout.getStage().show();
-//                }
-//            });
-            siteEditItem.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-//                    previewTable.setEditable(true);
-//                    previewTable.setEditColor();
-                    StageCreator expensesLayout
-                            = new StageCreator(PathStrings.Layout.EXPENSES,
-                            "Свойства Участка № "
-                                    + selectedTreeElemParent
-                                    + " / "
-                                    + selectedTreeElem)
-                            .loadNewWindow();
-
-                    expensesController = expensesLayout.getController();
-                    expensesController.setRootController(getRootController());
-                    expensesController.setControllerStage(expensesLayout.getStage());
-//                    expensesController.setPreviewOBS(previewTableObs);
-                    expensesLayout.getStage().setResizable(false);
-//                    expensesLayout.getStage().show();
-                }
-            });
-            contAddItem.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent event) {
-                    StageCreator contAddLayout
-                            = new StageCreator(PathStrings.Layout.CONT_ADD, "Добавить Субподрядчика")
-                            .loadNewWindow();
-                    contAddController = contAddLayout.getController();
-                    contAddController.setRootController(getRootController());
-                    contAddController.init_InfLabels(selectedTreeElemParent);
-                    contAddController.setTreeViewSite(treeViewSite);
-//                    contAddLayout.getStage().show();
-                }
-            });
-            contDelItem.setOnAction(event -> {
-                StageCreator delLayout
-                        = new StageCreator(PathStrings.Layout.DEL_SITE, "Удалить")
-                        .loadNewWindow();
-                delController = delLayout.getController();
-                delController.setRootController(getRootController());
-                delController.init_delLabels(selectedTreeElem, selectedTreeElemParent);
-//                    delLayout.getStage().show();
-            });
-
-
-            contextMenu.getItems().addAll(siteEditItem, contAddItem, separator, contDelItem);
-
-            cell.contextMenuProperty().bind(
-                    Bindings.when(cell.emptyProperty())
-                            .then((ContextMenu) null)
-                            .otherwise(contextMenu)
-            );
-
-            cell.setOnMouseClicked((MouseEvent event) -> {
-                if (((TreeView) cell.getTreeView()).getTreeItem(cell.getIndex()).isLeaf()) {
-                    selectedTreeElemParent
-                            = ((TreeView) cell.getTreeView()).getTreeItem(cell.getIndex()
-                    ).getParent().getValue().toString();
-                    selectedTreeElem
-                            = ((TreeView) cell.getTreeView()).getTreeItem(cell.getIndex()
-                    ).getValue().toString();
-//                    siteAddItem  .setDisable(true);
-                    siteEditItem.setDisable(false);
-                    contAddItem.setDisable(false);
-                    separator.setDisable(false);
-                    contDelItem.setDisable(false);
-                    printEstToXmlMenuItem.setDisable(false);
-
-                    //Update Preview TableWrapper OBS-LIST
-                    EstimateController.Est.Common.setSiteObs(new SiteDAO(selectedTreeElemParent, selectedTreeElem).getData());
-//                    update_previewTable(Est.Common.getPreviewObservableList());
-                    previewTable.setItems(EstimateController.Est.Common.getPreviewObservableList());
-
-                    //create Coefficient
-                    Formula formula = new FormulaQuery().getFormula();
-                    //Set TAXES_ALL
-                    EstimateController.Est.Common.getSiteItem(SQL.Site.TAXES_ALL).setSecondValue(formula.allTaxes());
-
-                    showEstController = new StageCreator(PathStrings.Layout.SITE_EST)
-                            .loadIntoRootBorderPaneCenter()
-                            .getController();
-                    showEstController.setRootController(getRootController());
-
-
-                    //Comput Coeffecient
-//                        Formula.coeffSetter().setObsList(previewTableObs).setCoefficient();
-//                    Formula_test.coefficient.computeCoef();
-
-
-                } else if (cell.getItem().equals("Участки №")
-                        && !((TreeView) cell.getTreeView()).getTreeItem(cell.getIndex()).isLeaf()) {
-//                    siteAddItem  .setDisable(false);
-                    siteEditItem.setDisable(true);
-                    contAddItem.setDisable(true);
-                    separator.setDisable(true);
-                    contDelItem.setDisable(true);
-
-                } else {
-                    siteEditItem.setDisable(true);
-                    contAddItem.setDisable(true);
-                    separator.setDisable(true);
-                    contDelItem.setDisable(true);
-
-                }
-            });
-            return cell;
-        }
+       ViewFx<GridPane, CorAccountController> viewFx = context.getBean("corAccountView");
+        rootViewFx.getView().setCenter(viewFx.getView());
     }
 }
 
