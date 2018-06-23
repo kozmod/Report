@@ -87,8 +87,9 @@ public class TableCellFactory {
      * <br>(true - RED / false - GREEN).
      * <br>[set text quantity color]
      *
-     * @return inKsColoredCell
+     * @return InKsColoredCell
      */
+    @Deprecated
     public static TableCell getInKsColoredCell() {
         return new TableCellFactory().new inKsColoredCell();
     }
@@ -97,7 +98,7 @@ public class TableCellFactory {
      * This Cell Listen Mouse Entering to this one and set "DelTable" Items.
      * <br>
      *
-     * @return OnMouseEnteredTableCell
+     * @return DelElementTableCell
      */
     public static TableCell getOnMouseEnteredTableCell(Est enumEst) {
         return new TableCellFactory().new OnMouseEnteredTableCell(enumEst);
@@ -108,7 +109,7 @@ public class TableCellFactory {
      * Get text of this cell and find same in JM_Mane(Est), then
      * <br>
      *
-     * @return OnMouseEnteredTableCell
+     * @return DelElementTableCell
      */
     public static TableCell getOnDoubleMouseClickMoveToTextCell() {
         return new TableCellFactory().new OnDoubleMouseClickMoveToCell();
@@ -408,6 +409,7 @@ public class TableCellFactory {
         }
     }
 
+    @Deprecated
     public class inKsColoredCell extends TableCell<EstimateTVI, Boolean> {
 
         @Override
@@ -460,6 +462,7 @@ public class TableCellFactory {
     }
 
 
+    @Deprecated
     private class OnMouseEnteredTableCell extends TableCell<AbstractEstimateTVI, Object> {
         private Est enumEst;
 

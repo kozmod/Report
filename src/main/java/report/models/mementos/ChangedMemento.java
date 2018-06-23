@@ -46,7 +46,7 @@ public class ChangedMemento implements Memento<List<ObjectPSI>> {
     }
 
     @Override
-    public void clearChanges() {
+    public void clear() {
         this.listClone = this.getNewObs(listMain);
     }
 

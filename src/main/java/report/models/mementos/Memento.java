@@ -9,6 +9,6 @@ public interface Memento<E> {
 
     E toDelete();
 
-    void clearChanges();
+    void clear();
 }
 

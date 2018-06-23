@@ -46,9 +46,12 @@ import report.models.sql.sqlQuery.InsertFileXLSQuery;
 public class RootLayoutController implements Initializable {
 
     @Autowired
+    private ApplicationContextProvider context;
+    @Autowired
     private RootViewFx rootViewFx;
     @Autowired
     private RootControllerNodeFactory rootControllerNodeFactory;
+
 
     private DeleteController delController;
     private AddSiteController siteAddController;
@@ -187,7 +190,7 @@ public class RootLayoutController implements Initializable {
         } else {
 
 //            ViewFx<GridPane,IntroLayoutController> introLayoutController = beanFactory.getBean("introView",ViewFx.class);
-            ViewFx<GridPane,IntroLayoutController> introLayoutController = ApplicationContextProvider.getBean("introView");
+            ViewFx<GridPane,IntroLayoutController> introLayoutController = context.getBean("introView");
             introLayoutController.getController().updateTables();
             rootViewFx.setCenter(introLayoutController);
 ////
@@ -327,7 +330,7 @@ public class RootLayoutController implements Initializable {
     @FXML
     private void handle_FinResButton(ActionEvent event) {
 //        new FxmlStage(PathStrings.Layout.FIN_RES).loadIntoRootBorderPaneCenter();
-        ViewFx<GridPane, FinResController>  viewFx = ApplicationContextProvider.getBean("finResView");
+        ViewFx<GridPane, FinResController>  viewFx = context.getBean("finResView");
         rootViewFx.getView().setCenter(viewFx.getView());
 
 
@@ -336,21 +339,21 @@ public class RootLayoutController implements Initializable {
     @FXML
     private void handle_PlanningButton(ActionEvent event) {
 //        new FxmlStage(PathStrings.Layout.PLANNING).loadIntoRootBorderPaneCenter();
-        ViewFx<TabPane, PlanningController>  viewFx = ApplicationContextProvider.getBean("planingView");
+        ViewFx<TabPane, PlanningController>  viewFx = context.getBean("planingView");
         rootViewFx.getView().setCenter(viewFx.getView());
     }
 
 
     @FXML
     private void handle_CommonInfButton(ActionEvent event) {
-        ViewFx<GridPane, IntroLayoutController>  viewFx = ApplicationContextProvider.getBean("introView");
+        ViewFx<GridPane, IntroLayoutController>  viewFx = context.getBean("introView");
         rootViewFx.getView().setCenter(viewFx.getView());
         viewFx.getController().updateTables();
     }
 
     @FXML
     private void handle_accountButton(ActionEvent event) {
-       ViewFx<GridPane, CorAccountController> viewFx = ApplicationContextProvider.getBean("corAccountView");
+       ViewFx<GridPane, CorAccountController> viewFx = context.getBean("corAccountView");
         rootViewFx.getView().setCenter(viewFx.getView());
     }
 }

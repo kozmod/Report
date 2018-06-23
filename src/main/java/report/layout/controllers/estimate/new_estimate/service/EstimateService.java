@@ -15,10 +15,16 @@ import report.models.counterpaties.EstimateData;
 import report.models.counterpaties.KsData;
 import report.models.counterpaties.SiteWrapper;
 
+import java.util.Collection;
+import java.util.Comparator;
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
+
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toList;
 
 public class EstimateService {
 
@@ -96,12 +102,17 @@ public class EstimateService {
                 ));
     }
 
-    public<T extends AbstractEstimateTVI> AbstractEstimateTVI findEqualsEstimateElement(DocumentType documentType, T inpAbstractEstimateTVI) {
+    public  Optional<AbstractEstimateTVI> findEqualsEstimateElement(DocumentType documentType, AbstractEstimateTVI inpAbstractEstimateTVI) {
         return estimateData.get(documentType)
                 .stream()
                 .filter(item -> item.getDel() != 1)
                 .filter(item -> item.businessKeyEquals(inpAbstractEstimateTVI))
-                .findFirst().orElse(null);
+                .map(AbstractEstimateTVI.class::cast)
+                .findFirst();
     }
 
+    public void insertEstimate(Collection<EstimateTVI> insert, Collection<EstimateTVI> delete){
+        estimateDao.delete(delete);
+        estimateDao.insert(insert);
+    }
 }

@@ -34,7 +34,7 @@ import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.estimate.EstimateDao;
 import report.entities.items.site.PreviewTIV;
 import report.entities.items.site.SiteDao;
-import report.layout.controllers.addKS.AddKSController;
+import report.layout.controllers.addKS.AddKsController;
 import report.layout.controllers.root.RootLayoutController;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.models.converters.dateStringConverters.LocalDayStringConverter;
@@ -52,7 +52,7 @@ import report.models.view.customNodes.TabModel;
 import report.entities.items.KS.KsDao;
 import report.models.view.customNodes.ContextMenuOptional;
 
-
+@Deprecated
 public class EstimateController_old implements Initializable {
 
 //>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
@@ -269,7 +269,7 @@ public class EstimateController_old implements Initializable {
 
 
     private RootLayoutController rootController;
-    private AddKSController ksAddController;
+    private AddKsController ksAddController;
 
     //preview table
     private Map<Integer, List<KsTIV>> ksMap;
@@ -541,7 +541,7 @@ public class EstimateController_old implements Initializable {
         if (Est.Changed.isExist()) {
             FxmlStage siteAddLayout = new FxmlStage(PathStrings.Layout.ADD_KS, "Добавить KC").loadAndShowNewWindow();
             ksAddController = siteAddLayout.getController();
-            ksAddController.setShowEstController(this);
+//            ksAddController.setShowEstController(this);
 //            siteAddLayout.getStage().show();
         } else {
             System.out.println(">>> Измененая смета (Ch) НЕ существует !!! ");

@@ -8,44 +8,29 @@ import javafx.scene.layout.GridPane;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
-import report.layout.controllers.estimate.new_estimate.service.EstimateControllerNodeFactory;
 import report.layout.controllers.estimate.new_estimate.service.EstimateService;
-import report.models.counterpaties.EstimateData;
 import report.models.counterpaties.DocumentType;
-import report.models.counterpaties.KsData;
-import report.spring.views.RootViewFx;
+import report.spring.spring.components.ApplicationContextProvider;
 import report.spring.views.ViewFx;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import static report.spring.spring.components.ApplicationContextProvider.getBean;
-
 
 public class EstimateTabPaneController implements Initializable {
 
-    private static final String ESTIMATE_BEAN = "sumLabelGridView";
+    private static final String ESTIMATE_BASE = "sumLabelGridView";
     private static final String KS_BEAN = "ksView";
 
     @Autowired
     private Logger logger;
+    @Autowired
+    private ApplicationContextProvider context;
 
     @Autowired
     private ViewFx<TabPane, EstimateTabPaneController> estimateTabPaneControllerViewFx;
     @Autowired
     private EstimateService estimateService;
-//    @Autowired
-//    private ViewFx<GridPane, KsGridController> baseKsViewFx, changedKsViewFx;
-
-//    @Autowired
-//    private EstimateControllerNodeFactory estimateControllerNodeFactory;
-//    @Autowired
-//    private RootViewFx rootViewFx;
-
-//    @Autowired
-//    private EstimateData estimateData;
-//    @Autowired
-//    private KsData ksData;
 
 
     @Override
@@ -63,18 +48,6 @@ public class EstimateTabPaneController implements Initializable {
     }
 
     private void addTabs() {
-//        TabPane tabPane = estimateTabPaneControllerViewFx.getView();
-//        tabPane.getTabs().clear();
-//        if (estimateService.getEstimateData().isContains(DocumentType.BASE)) {
-//            tabPane.getTabs().add(
-//                    newTab("Смета",loadEstimateView(DocumentType.BASE))
-//            );
-//            if (estimateService.getEstimateData().isContains(DocumentType.CHANGED)) {
-//                tabPane.getTabs().add(
-//                        newTab("Базовые КС",loadKsView(DocumentType.BASE))
-//                );
-//            }
-//        }
         removeAllTabs();
         logger.info("All Tab was removed");
         if(addNewEstimateTab("Смета",DocumentType.BASE)){
@@ -93,6 +66,7 @@ public class EstimateTabPaneController implements Initializable {
         Tab tab = new Tab();
         tab.setText(title);
         tab.setContent(content);
+        tab.setClosable(false);
         return tab;
     }
 
@@ -102,7 +76,7 @@ public class EstimateTabPaneController implements Initializable {
 
     private boolean addNewEstimateTab(String tabName, DocumentType documentType){
         if(estimateService.getEstimateData().isContains(documentType)){
-            ViewFx<GridPane, SumLabelGridController> sumLabelView = getBean(ESTIMATE_BEAN);
+            ViewFx<GridPane, SumLabelGridController> sumLabelView = context.getBean(ESTIMATE_BASE);
             sumLabelView.getController().initData(documentType);
             return estimateTabPaneControllerViewFx.getView()
                     .getTabs()
@@ -117,7 +91,7 @@ public class EstimateTabPaneController implements Initializable {
 
     private boolean addNewKsTab(String tabName, DocumentType documentType){
         if(estimateService.getEstimateData().isContains(documentType)){
-            ViewFx<GridPane, KsGridController> ksGridView = getBean(KS_BEAN);
+            ViewFx<GridPane, KsGridController> ksGridView = context.getBean(KS_BEAN);
             ksGridView.getController().initData(documentType);
             return estimateTabPaneControllerViewFx.getView()
                     .getTabs()

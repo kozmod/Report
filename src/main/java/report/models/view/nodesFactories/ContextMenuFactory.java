@@ -30,8 +30,7 @@ public class ContextMenuFactory {
                                 = new FxmlStage(PathStrings.Layout.ADD_SITE_ROW, "Добавление строк")
                                 .loadAndShowNewWindow();
                         AddEstimateRowController controllerAddRow = addSiteRowLayout.getController();
-                        controllerAddRow.setRootTableView(tableWrapperView);
-//                        addSiteRowLayout.getStage().show();
+//                        controllerAddRow.setRootTableView(tableWrapperView);
                     })
                     .addRemoveMenuItem()
                     .addSeparator()
@@ -50,9 +49,7 @@ public class ContextMenuFactory {
                             = new FxmlStage(PathStrings.Layout.ADD_SITE_ROW, "Добавление строк")
                             .loadAndShowNewWindow();
                     AddEstimateRowController controllerAddRow = addSiteRowLayout.getController();
-                    controllerAddRow.setRootTableView(tableWrapperView);
-//                                                            controllerAddRow.setAditionalTableView(Est.Additional.getAllItemsList_Live());
-//                    addSiteRowLayout.getStage().show();
+//                    controllerAddRow.setRootTableView(tableWrapperView);
                 })
                 .addSeparator()
                 .addSaveMenuItem()

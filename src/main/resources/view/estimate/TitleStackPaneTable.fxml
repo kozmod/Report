@@ -17,6 +17,9 @@
                </columnResizePolicy>
             </TableView>
          </content>
+         <graphic>
+            <CheckBox fx:id="editCheckBox" mnemonicParsing="false" />
+         </graphic>
       </TitledPane>
       <Label fx:id="sumLabel" text="0">
          <StackPane.margin>

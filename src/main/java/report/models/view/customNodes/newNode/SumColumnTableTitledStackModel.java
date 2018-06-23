@@ -15,7 +15,7 @@ import report.models.view.wrappers.table.TableWrapper;
 
 import java.util.Objects;
 
-
+@Deprecated
 public class SumColumnTableTitledStackModel<T extends TableWrapper & SummableColumnTable<DoubleProperty>> extends StackPane {
 
     private final Label sumLabel;

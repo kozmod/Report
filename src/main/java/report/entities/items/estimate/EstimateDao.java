@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.sql.SQLWarning;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -27,7 +28,7 @@ import report.layout.controllers.estimate.EstimateController_old.Est;
 import report.entities.items.cb.AddEstTIV;
 
 
-public class EstimateDao implements CommonNamedDao<ObservableList<EstimateTVI>> {
+public class EstimateDao implements CommonNamedDao<Collection<EstimateTVI>> {
 
     private Est enumEst;
     private String tableName = SQL.Tables.ESTIMATE;
@@ -301,7 +302,7 @@ public class EstimateDao implements CommonNamedDao<ObservableList<EstimateTVI>> 
      * @param items (Collection of AbstractEstimateTVI)
      */
     @Override
-    public void delete(ObservableList<EstimateTVI> items) {
+    public void delete(Collection<EstimateTVI> items) {
 
         try (Connection connection = SqlConnector.getInstance();
              PreparedStatement pstmt = connection.prepareStatement("update [dbo].[Estimate] SET dell = 1 WHERE [id] = ? AND [dell] = 0;");) {
@@ -371,7 +372,7 @@ public class EstimateDao implements CommonNamedDao<ObservableList<EstimateTVI>> 
      * @param items (Collection of AbstractEstimateTVI)
      */
     @Override
-    public void insert(ObservableList<EstimateTVI> items) {
+    public void insert(Collection<EstimateTVI> items) {
         String sql = "insert into [dbo].[Estimate] "
                 + "("
                 + "[SiteNumber]"
@@ -561,7 +562,7 @@ public class EstimateDao implements CommonNamedDao<ObservableList<EstimateTVI>> 
      * @param memento (TableWrapper)
      */
     @Override
-    public void dellAndInsert(Memento<ObservableList<EstimateTVI>> memento) {
+    public void dellAndInsert(Memento<Collection<EstimateTVI>> memento) {
 //        Collection tableMemento = table.getMemento().getSavedState(),
 //                   current = table.getObservableItems();
 //        

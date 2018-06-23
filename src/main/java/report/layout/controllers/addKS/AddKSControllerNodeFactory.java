@@ -13,7 +13,7 @@ import java.util.Objects;
 public abstract class AddKSControllerNodeFactory {
 
     /**
-     * Decorate KS_add TableView (AddKSController)
+     * Decorate KS_add TableView (AddKsController)
      */
     public static void decorAcc(TableView<AccountTVI> table) {
 
@@ -71,7 +71,7 @@ public abstract class AddKSControllerNodeFactory {
 
 
     /**
-     * Decorate KS_add TableView (AddKSController)
+     * Decorate KS_add TableView (AddKsController)
      */
     public static void decorAddKS(TableView table) {
         TableWrapper tableWrapper = new TableWrapper(table, null);

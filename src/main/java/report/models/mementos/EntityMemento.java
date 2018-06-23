@@ -27,8 +27,8 @@ public class EntityMemento<E extends Clone<E>> implements Memento<E> {
     }
 
     @Override
-    public void clearChanges() {
-        throw new UnsupportedOperationException("EntityMemento: unsupported operation -> .clearChanges(); !!!!");
+    public void clear() {
+        throw new UnsupportedOperationException("EntityMemento: unsupported operation -> .clear(); !!!!");
     }
 
 }

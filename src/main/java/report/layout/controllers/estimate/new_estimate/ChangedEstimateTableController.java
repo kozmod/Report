@@ -13,56 +13,46 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
-import javafx.scene.layout.GridPane;
 import org.springframework.beans.factory.annotation.Autowired;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.estimate.EstimateTVI;
-import report.layout.controllers.addEstimateRow.AddEstimateRowController;
 import report.layout.controllers.estimate.new_estimate.service.SumPropertyContainer;
 import report.layout.controllers.estimate.new_estimate.service.EstimateService;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.models.counterpaties.DocumentType;
-
+import report.models.mementos.TableMemento_old;
 import report.spring.spring.components.ApplicationContextProvider;
 import report.spring.spring.configuration.controls.cells.EstimateDelElementsTableCell;
 import report.spring.spring.configuration.controls.cells.InKsColoredCell;
 import report.spring.spring.configuration.controls.contextmenu.CustomContextMenu;
-import report.spring.spring.configuration.controls.models.TableMemento;
-import report.spring.spring.components.FxStageProvider;
 import report.spring.utils.FxTableUtils;
-import report.spring.views.ViewFx;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
 import static report.spring.utils.FxTableUtils.addColumn;
 
-public class BaseEstimateTableController implements Initializable, SumPropertyContainer<DoubleProperty> {
+public class ChangedEstimateTableController implements Initializable, SumPropertyContainer<DoubleProperty> {
 
     private DocumentType documentType;
 
     @Autowired
     private EstimateService estimateService;
     @Autowired
-    private CustomContextMenu contextMenu;
-    @Autowired
-    private TableMemento<EstimateTVI> memento;
-    @Autowired
-    private ViewFx<GridPane,AddEstimateRowController> addEstimateView;
-    @Autowired
     private ApplicationContextProvider context;
     @Autowired
-    private FxStageProvider stageProvider;
+    private CustomContextMenu contextMenu;
 
     @FXML
     private Label sumLabel;
     @FXML
     private TitledPane titledPane;
     @FXML
-    private CheckBox editCheckBox;
-    @FXML
     private TableView<EstimateTVI> tableView;
+    @FXML
+    private CheckBox editCheckBox;
 
+    private TableMemento_old<EstimateTVI> memento;
     private final DoubleProperty sumValue = new SimpleDoubleProperty();
 
     @Override
@@ -79,9 +69,7 @@ public class BaseEstimateTableController implements Initializable, SumPropertyCo
         );
         computeColumnValue();
         initTableContextMenu();
-        memento.initState(tableView.getItems());
     }
-
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -114,7 +102,6 @@ public class BaseEstimateTableController implements Initializable, SumPropertyCo
         bindJobColumn.setMinWidth(160);
 
         quantityColumn.setEditable(true);
-        periceOneColumn.setEditable(true);
 
 
         isInKSColumn.setCellFactory(param -> context.getBean(InKsColoredCell.class));
@@ -122,23 +109,8 @@ public class BaseEstimateTableController implements Initializable, SumPropertyCo
                 param -> context.getBean(EstimateDelElementsTableCell.class).setDocumentType(documentType)
         );
 
-        quantityColumn.setOnEditCommit(tableColumn -> {
-            AbstractEstimateTVI editingAbstractEstimateTVI = tableColumn.getTableView()
-                    .getItems()
-                    .get(tableColumn.getTablePosition().getRow());
-
-            Double price_one = editingAbstractEstimateTVI.getPriceOne();
-            Double value = tableColumn.getNewValue();
-
-            editingAbstractEstimateTVI.setQuantity(value);
-            editingAbstractEstimateTVI.setPriceSum(value * price_one);
-
-            this.computeColumnValue();
-            tableColumn.getTableView().refresh();
-        });
-
         periceOneColumn.setOnEditCommit(tableColumn -> {
-            EstimateTVI editingAbstractEstimateTVI = tableColumn.getTableView()
+            AbstractEstimateTVI editingAbstractEstimateTVI = tableColumn.getTableView()
                     .getItems()
                     .get(tableColumn.getTablePosition().getRow());
             Double price_one = tableColumn.getNewValue();
@@ -151,37 +123,14 @@ public class BaseEstimateTableController implements Initializable, SumPropertyCo
             tableColumn.getTableView().refresh();
         });
 
-        FxTableUtils.setTextFieldTableCell(new DoubleStringConverter(), quantityColumn);
         FxTableUtils.setTextFieldTableCell(new DoubleStringConverter(), periceOneColumn);
     }
 
     private void initTableContextMenu() {
-        MenuItem add = contextMenu.addMenuItem("Добавить строку");
-        MenuItem delete = contextMenu.addMenuItem("Удалить строку");
-        contextMenu.addSeparator();
         MenuItem save = contextMenu.addMenuItem("Сохранить");
         MenuItem undo = contextMenu.addMenuItem("Отменить изменения");
-
-        add.setOnAction(event -> {
-            addEstimateView.getController().initData(tableView);
-            stageProvider.newStage(addEstimateView.getView()).show();//todo
-
-        });
-        delete.setOnAction(event -> {
-            tableView.getSelectionModel()
-                    .getSelectedItems()
-                    .forEach(toDelete -> tableView.getItems().remove(toDelete));
-        });
-        save.setOnAction(event -> {
-            estimateService.insertEstimate(
-                    memento.toInsert(),
-                    memento.toDelete()
-            );
-            contextMenu.applyState(0);
-        });
         undo.setOnAction(event -> {
-            tableView.getItems().setAll(memento.getSavedState());
-            memento.clear();
+            System.out.println("Отменить изменения");
             contextMenu.applyState(0);
         });
 
@@ -208,9 +157,6 @@ public class BaseEstimateTableController implements Initializable, SumPropertyCo
         tableView.getItems().addListener((ListChangeListener<EstimateTVI>) observable -> {
             if (observable.next()) {
                 if (observable.wasUpdated() || observable.wasAdded() || observable.wasRemoved()) {
-                    if (observable.wasRemoved()) {
-                        this.computeColumnValue();
-                    }
                     contextMenu.applyState(1);
                 }
             }

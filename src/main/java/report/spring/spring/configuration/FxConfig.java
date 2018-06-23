@@ -3,9 +3,6 @@ package report.spring.spring.configuration;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
-import report.spring.spring.components.ApplicationContextProvider;
 import report.spring.views.ControlFx;
 import report.spring.views.ViewFx;
 

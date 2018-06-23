@@ -41,6 +41,8 @@ public class RootControllerNodeFactory implements TableFactory {
 
     @Autowired
     private RootViewFx rootViewFx;
+    @Autowired
+    private ApplicationContextProvider context;
 
     /**
      * Create TableWrapper(Preview TableWrapper) with 2 columns /Object/.
@@ -244,7 +246,7 @@ public class RootControllerNodeFactory implements TableFactory {
                     EstimateController_old.Est.Common.getSiteItem(SQL.Site.TAXES_ALL).setSecondValue(formula.allTaxes());
 
                     ViewFx<TabPane, EstimateTabPaneController> estimateTabPaneControllerViewFx
-                            = ApplicationContextProvider.getBean("estimateTabPaneView");
+                            = context.getBean("estimateTabPaneView");
                     estimateTabPaneControllerViewFx.getController().initTabPane(selectedTreeElemParent,selectedItem.getEntity());
                     rootViewFx.setCenter(estimateTabPaneControllerViewFx);
 //                    FxmlStage estLayout = new FxmlStage(PathStrings.Layout.SITE_EST)

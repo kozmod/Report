@@ -33,7 +33,7 @@ public class PriceSumTableWrapper<E extends AbstractEstimateTVI> extends TableWr
      * <br>
      * 1. setItems()
      * <br>
-     * 2. saveMemento() - save table items to TableMemento.
+     * 2. saveMemento() - save table items to TableMemento_old.
      * <br>
      * 3. computeProperty() - saveEst priceSum of all "Price_sum" elements.
      * <br>

@@ -15,31 +15,33 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.cb.AddEstTIV;
 import report.entities.items.estimate.EstimateDao;
 import report.layout.controllers.estimate.EstimateController_old.Est;
+import report.layout.controllers.estimate.new_estimate.service.EstimateService;
+import report.models.counterpaties.EstimateData;
 import report.usage_strings.SQL;
 import report.models.DiffList;
 
 import report.entities.items.estimate.EstimateTVI;
 import report.models.view.wrappers.table.TableWrapper;
 
-
 public class AddEstimateRowController implements Initializable {
+
+    @Autowired
+    private EstimateData estimateData;
 
     private final Timestamp todayDate = new Timestamp(System.currentTimeMillis());
 
-    private ObservableList<AddEstTIV> editObsList,
-            baseObsList;
+    private ObservableList<AddEstTIV> editObsList, baseObsList;
 
     private String buildingPart,
             siteNumber,
             contName,
             typeHome;
-    private TableWrapper rootTableWrapper;
     private TableWrapper<AddEstTIV> elemTableWrapperView;
-    private ObservableList additionalTable;
     /***************************************************************************
      *                                                                         *
      * FXML Var                                                                *
@@ -54,6 +56,8 @@ public class AddEstimateRowController implements Initializable {
     @FXML
     private Button addButton;
 
+    private TableView<EstimateTVI> rootTableView;
+
 
     /***************************************************************************
      *                                                                         *
@@ -62,23 +66,16 @@ public class AddEstimateRowController implements Initializable {
      **************************************************************************/
 
 
-    public void setRootTableView(TableWrapper t) {
-        this.rootTableWrapper = t;
-        this.editObsList = getCheckObs(t.getItems());
-        this.buildingPart = t.getTitle();
-        this.siteNumber = Est.Common.getSiteSecondValue(SQL.Common.SITE_NUMBER);
-        this.contName = Est.Common.getSiteSecondValue(SQL.Common.CONTRACTOR);
-        this.typeHome = Est.Common.getSiteSecondValue(SQL.Common.TYPE_HOME);
-//        this.tableType   = enumEst.getTableType();
-
+    public void initData(TableView<EstimateTVI> rootTableView){
+        this.rootTableView = rootTableView;
+        this.editObsList = getCheckObs(rootTableView.getItems());
+        this.siteNumber = estimateData.getSiteEntity().getSiteNumber();
+        this.contName = estimateData.getSelectedCounterAgent().getName();
+        this.typeHome = estimateData.getSiteEntity().getTypeHome();
         init_Labels();
         init_diffObsList();
-
     }
 
-    public void setAditionalTableView(ObservableList t) {
-        this.additionalTable = t;
-    }
 
     /***************************************************************************
      *                                                                         *
@@ -99,7 +96,7 @@ public class AddEstimateRowController implements Initializable {
     }
 
 
-    // ATTENTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    // ATTENTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
     private void init_diffObsList() {
 
         int check;
@@ -127,7 +124,7 @@ public class AddEstimateRowController implements Initializable {
      * Methods                                                                 *
      *                                                                         *
      **************************************************************************/
-    private ObservableList<AddEstTIV> getCheckObs(ObservableList<AbstractEstimateTVI> abstractEstimateTVIS) {
+    private ObservableList<AddEstTIV> getCheckObs(ObservableList<EstimateTVI> abstractEstimateTVIS) {
         ObservableList<AddEstTIV> checkedObsList = FXCollections.observableArrayList();
         if (abstractEstimateTVIS != null)
             for (AbstractEstimateTVI obsAbstractEstimateTVI : abstractEstimateTVIS) {
@@ -223,15 +220,6 @@ public class AddEstimateRowController implements Initializable {
 
     }
 
-    @FXML
-    private void testCOMIT(ActionEvent event) {
-//////        elemTableWrapperView.commitData();
-////        elemTableView.setEditable(false);
-//        elemTableView.refresh();
-//        elemTableView.setEditable(false);
-        System.out.println("TestCommit");
-
-    }
 
     @FXML
     private void handle_addMarkedRow(ActionEvent event) {
@@ -239,7 +227,7 @@ public class AddEstimateRowController implements Initializable {
                 .stream()
                 .filter(item -> !"-".equals(item.getUnit()))
                 .collect(Collectors.toCollection(FXCollections::observableArrayList));
-        rootTableWrapper.getItems().addAll(selectedItems);
+        rootTableView.getItems().addAll(selectedItems);
         Stage appStage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
         appStage.close();
     }

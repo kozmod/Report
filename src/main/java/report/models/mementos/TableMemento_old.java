@@ -8,7 +8,8 @@ import report.entities.items.Clone;
 
 import java.util.*;
 
-public class TableMemento<E extends Clone<E>> implements Memento<Collection<E>> {
+@Deprecated
+public class TableMemento_old<E extends Clone<E>> implements Memento<Collection<E>> {
     private Set<E> deleteSet = Collections.newSetFromMap(new IdentityHashMap<>());
     private Set<E> insertSet = Collections.newSetFromMap(new IdentityHashMap<>());
     private ObservableList<E> tableMemento;
@@ -18,7 +19,7 @@ public class TableMemento<E extends Clone<E>> implements Memento<Collection<E>> 
      * Constructors                                                            *
      *                                                                         *
      **************************************************************************/
-    public TableMemento(ObservableList<E> tableItems) {
+    public TableMemento_old(ObservableList<E> tableItems) {
         this.tableMemento = getNewObs(tableItems);
         addListener(tableItems);
     }
@@ -44,7 +45,7 @@ public class TableMemento<E extends Clone<E>> implements Memento<Collection<E>> 
     }
 
     @Override
-    public void clearChanges() {
+    public void clear() {
         deleteSet.clear();
         insertSet.clear();
     }

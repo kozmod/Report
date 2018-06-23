@@ -11,7 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 import report.entities.abstraction.dao.CommonDao;
 import report.entities.items.Clone;
-import report.models.mementos.TableMemento;
+import report.models.mementos.TableMemento_old;
 import report.models.view.customNodes.ContextMenuOptional;
 import report.models.view.wrappers.BindBase;
 
@@ -47,7 +47,7 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
      */
     @Override
     public void saveMemento() {
-        super.memento = new TableMemento(tableView.getItems());
+        super.memento = new TableMemento_old(tableView.getItems());
     }
 
     /**
@@ -56,7 +56,7 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
     @Override
     public void undoChangeItems() {
         tableView.getItems().setAll(memento.getSavedState());
-        memento.clearChanges();
+        memento.clear();
     }
 
     /***************************************************************************
@@ -81,7 +81,7 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
      * <br>
      * 1. setItems() from <b>SQL</b> if <u>CommonDao</u> != <b>NULL</b>
      * <br>
-     * 2. saveMemento() - save table items to TableMemento.
+     * 2. saveMemento() - save table items to TableMemento_old.
      * <br>
      */
     public void setFromBase() {
@@ -138,7 +138,7 @@ public class TableWrapper<E extends Clone> extends AbstractTableWrapper<Observab
      * <br>
      * 1. setItems()
      * <br>
-     * 2. saveMemento() - save table items to TableMemento.
+     * 2. saveMemento() - save table items to TableMemento_old.
      * <br>
      *
      * @param items - Observable List of table item (inherited TableItems)

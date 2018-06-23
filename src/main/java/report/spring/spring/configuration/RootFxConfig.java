@@ -31,7 +31,11 @@ import static report.spring.utils.MathUtils.deductPercent;
 
 @Configuration
 @Import({EstimateConfig.class})
-@ComponentScan("report.spring.spring.components")
+@ComponentScan({
+        "report.spring.spring.components",
+        "report.spring.spring.configuration.controls",
+        "report.spring.spring.configuration.controls.models"
+})
 public class RootFxConfig implements FxConfig {
 
     @Bean

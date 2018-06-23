@@ -22,6 +22,7 @@ import report.models.view.wrappers.table.PriceSumTableWrapper;
 import java.math.BigDecimal;
 import java.util.List;
 
+@Deprecated
 public class SumVboxModel<T extends PriceSumTableWrapper<EstimateTVI> > extends VBox {
 
     private List<SumColumnTableTitledStackModel<T>> listStackModels;
