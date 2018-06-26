@@ -29,7 +29,6 @@ import report.spring.utils.CollectionsUtils;
 import report.spring.utils.FxTableUtils;
 import report.spring.views.ViewFx;
 
-import javax.swing.text.View;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Collection;
@@ -53,6 +52,8 @@ public class KsGridController implements Initializable {
     private EstimateService estimateService;
     @Autowired
     private ApplicationContextProvider context;
+    @Autowired
+    private ViewFx<GridPane, AddKsController> addKsView;
     @Autowired
     private FxStageProvider stageProvider;
 
@@ -96,11 +97,8 @@ public class KsGridController implements Initializable {
 
     private void initButtons() {
         addKsButton.setOnAction(e -> {
-            ViewFx<GridPane, AddKsController> addKsView = context.getBean("addKsView");
             addKsView.getController().initData(documentType);
-            stageProvider.newStage(addKsView).show();
-//            context.getBean("")
-
+            stageProvider.showStage(addKsView);
         });
         deleteKs.setOnAction(e -> {
         });

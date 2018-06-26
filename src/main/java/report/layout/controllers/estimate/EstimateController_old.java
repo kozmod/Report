@@ -542,7 +542,7 @@ public class EstimateController_old implements Initializable {
             FxmlStage siteAddLayout = new FxmlStage(PathStrings.Layout.ADD_KS, "Добавить KC").loadAndShowNewWindow();
             ksAddController = siteAddLayout.getController();
 //            ksAddController.setShowEstController(this);
-//            siteAddLayout.getStage().show();
+//            siteAddLayout.getStage().showStage();
         } else {
             System.out.println(">>> Измененая смета (Ch) НЕ существует !!! ");
         }

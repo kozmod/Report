@@ -14,6 +14,8 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.StackPane;
+import org.greenrobot.eventbus.EventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.estimate.EstimateTVI;
@@ -29,10 +31,13 @@ import report.spring.spring.configuration.controls.cells.InKsColoredCell;
 import report.spring.spring.configuration.controls.contextmenu.CustomContextMenu;
 import report.spring.spring.configuration.controls.models.TableMemento;
 import report.spring.spring.components.FxStageProvider;
+import report.spring.spring.event.EstimateEditEvent;
+import report.spring.spring.event.EstimateEditEventListener;
 import report.spring.utils.FxTableUtils;
 import report.spring.views.ViewFx;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static report.spring.utils.FxTableUtils.addColumn;
@@ -54,6 +59,13 @@ public class BaseEstimateTableController implements Initializable, SumPropertyCo
     @Autowired
     private FxStageProvider stageProvider;
 
+    @Autowired
+    private EventBus eventBus;
+    @Autowired
+    private EstimateEditEventListener eventListener;
+
+    @FXML
+    private StackPane stackPane;
     @FXML
     private Label sumLabel;
     @FXML
@@ -86,8 +98,23 @@ public class BaseEstimateTableController implements Initializable, SumPropertyCo
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTableView();
+        initEventBus();
         sumLabel.textProperty()
                 .bindBidirectional(sumValue, new DoubleStringConverter().format());
+
+    }
+
+    private void initEventBus(){
+        eventListener.setEventConsumer(event -> {
+            if(event.isEditing() && !Objects.equals(event.getSource(),this)){
+                stackPane.setDisable(true);
+            }else{
+                stackPane.setDisable(false);
+            }
+        });
+        editCheckBox.selectedProperty().addListener(
+                (observable, oldValue, newValue) -> eventBus.post(new EstimateEditEvent(this, newValue))
+        );
     }
 
 
@@ -164,8 +191,7 @@ public class BaseEstimateTableController implements Initializable, SumPropertyCo
 
         add.setOnAction(event -> {
             addEstimateView.getController().initData(tableView);
-            stageProvider.newStage(addEstimateView.getView()).show();//todo
-
+            stageProvider.showStage(addEstimateView);
         });
         delete.setOnAction(event -> {
             tableView.getSelectionModel()

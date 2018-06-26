@@ -187,7 +187,7 @@ public class RootControllerNodeFactory implements TableFactory {
                 rootLayoutControlle.setExpensesController(expensesController);
                 expensesController.setControllerStage(expensesLayout.getStage());
                 expensesLayout.getStage().setResizable(false);
-//                    expensesLayout.getStage().show();
+//                    expensesLayout.getStage().showStage();
             });
             contAddItem.setOnAction(event ->
                     new FxmlStage(
@@ -200,7 +200,7 @@ public class RootControllerNodeFactory implements TableFactory {
                 DeleteController delController = delLayout.getController();
                 rootLayoutControlle.setDelController(delController);
                 delController.init_delLabels(selectedTreeElem, selectedTreeElemParent);
-//                    delLayout.getStage().show();
+//                    delLayout.getStage().showStage();
             });
 
 

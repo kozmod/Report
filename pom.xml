@@ -170,6 +170,11 @@
             <artifactId>poi</artifactId>
             <version>3.17</version>
         </dependency>
+        <dependency>
+            <groupId>org.greenrobot</groupId>
+            <artifactId>eventbus</artifactId>
+            <version>3.1.1</version>
+        </dependency>
         <!-- +++++++++++++++++++++++++++++++++++++++++ JFoenix +++++++++++++++++++++++++++++++++++++++++++++++++++++ -->
         <!-- +++++++++++++++++++++++++++++++++++++++++ DOES NOT USING ++++++++++++++++++++++++++++++++++++++++++++++ -->
         <dependency>

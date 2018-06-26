@@ -116,7 +116,7 @@ public class TableCellFactory {
     }
 
     /**
-     * Cell to show list of deleted elements of table.
+     * Cell to showStage list of deleted elements of table.
      * <br>
      *
      * @return ChageTableCell

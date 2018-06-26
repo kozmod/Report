@@ -42,11 +42,7 @@ public class AddEstimateRowController implements Initializable {
             contName,
             typeHome;
     private TableWrapper<AddEstTIV> elemTableWrapperView;
-    /***************************************************************************
-     *                                                                         *
-     * FXML Var                                                                *
-     *                                                                         *
-     **************************************************************************/
+
     @FXML
     private TableView<AddEstTIV> elemTableView;
     @FXML
@@ -58,14 +54,6 @@ public class AddEstimateRowController implements Initializable {
 
     private TableView<EstimateTVI> rootTableView;
 
-
-    /***************************************************************************
-     *                                                                         *
-     * Getters/Setters                                                         *
-     *                                                                         *
-     **************************************************************************/
-
-
     public void initData(TableView<EstimateTVI> rootTableView){
         this.rootTableView = rootTableView;
         this.editObsList = getCheckObs(rootTableView.getItems());
@@ -76,12 +64,6 @@ public class AddEstimateRowController implements Initializable {
         init_diffObsList();
     }
 
-
-    /***************************************************************************
-     *                                                                         *
-     * Init                                                                    *
-     *                                                                         *
-     **************************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         //Init TableView
@@ -177,11 +159,6 @@ public class AddEstimateRowController implements Initializable {
         return checkedObsList;
     }
 
-    /***************************************************************************
-     *                                                                         *
-     * Handlers                                                                *
-     *                                                                         *
-     **************************************************************************/
     @FXML
     private void testADD(ActionEvent event) {
         if (!elemTableView.isEditable()) {

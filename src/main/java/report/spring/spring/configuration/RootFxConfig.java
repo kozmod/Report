@@ -30,11 +30,15 @@ import java.io.IOException;
 import static report.spring.utils.MathUtils.deductPercent;
 
 @Configuration
-@Import({EstimateConfig.class})
+@Import({
+        EstimateConfig.class,
+        EstimateEventConfig.class
+})
 @ComponentScan({
         "report.spring.spring.components",
         "report.spring.spring.configuration.controls",
-        "report.spring.spring.configuration.controls.models"
+        "report.spring.spring.configuration.controls.models",
+
 })
 public class RootFxConfig implements FxConfig {
 
