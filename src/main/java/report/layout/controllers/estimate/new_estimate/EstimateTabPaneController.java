@@ -5,6 +5,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
+
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
@@ -13,7 +14,10 @@ import report.models.counterpaties.DocumentType;
 import report.spring.spring.components.ApplicationContextProvider;
 import report.spring.views.ViewFx;
 
+import javax.annotation.PostConstruct;
 import java.net.URL;
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 
@@ -32,6 +36,11 @@ public class EstimateTabPaneController implements Initializable {
     @Autowired
     private EstimateService estimateService;
 
+    private Map<EstimateTabsContent,ViewFx<?,? extends Initializable>> tabsContent = new EnumMap<>(EstimateTabsContent.class);
+
+    public void putContent(EstimateTabsContent key,ViewFx<?,? extends Initializable> content){
+        tabsContent.put(key,content);
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -39,10 +48,6 @@ public class EstimateTabPaneController implements Initializable {
     }
 
     public void initTabPane(String siteNumber, CountAgentTVI countAgent) {
-        initEstimateDataWrapper(siteNumber, countAgent);
-    }
-
-    private void initEstimateDataWrapper(String siteNumber, CountAgentTVI countAgent) {
         estimateService.init(siteNumber, countAgent);
         addTabs();
     }
