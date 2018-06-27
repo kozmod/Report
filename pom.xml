@@ -159,6 +159,12 @@
             <groupId>org.docx4j</groupId>
             <artifactId>docx4j</artifactId>
             <version>3.3.7</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>com.google.guava</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>org.apache.poi</groupId>

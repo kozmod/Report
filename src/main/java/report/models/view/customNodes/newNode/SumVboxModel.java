@@ -1,7 +1,7 @@
 
 package report.models.view.customNodes.newNode;
 
-import com.google.common.util.concurrent.AtomicDouble;
+
 import javafx.beans.Observable;
 import javafx.beans.binding.DoubleBinding;
 import javafx.beans.binding.StringBinding;

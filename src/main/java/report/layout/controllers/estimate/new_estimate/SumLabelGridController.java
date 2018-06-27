@@ -20,12 +20,13 @@ import report.spring.views.ViewFx;
 
 import java.net.URL;
 import java.util.Arrays;
+import java.util.EnumMap;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
 
-public class SumLabelGridController implements Initializable {
+public class SumLabelGridController extends AbstractInitializable {
 
     public final static String BASE_STACK_PANE = "baseStackPaneTableView";
     public final static String CHANGE_STACK_PANE = "changedStackPaneTableView";
@@ -42,14 +43,21 @@ public class SumLabelGridController implements Initializable {
     @FXML
     private Label sumLabel;
 
+    private final Map<String, DoubleProperty> stackViewMap = new HashMap<>();
+    private final Map<BuildingPart, ViewFx<StackPane, ? extends SumPropertyContainer<DoubleProperty>>> tables = new EnumMap<>(BuildingPart.class);
+//    private final DoubleProperty sum = new SimpleDoubleProperty();
 
-    private final DoubleProperty sum = new SimpleDoubleProperty();
+    public void putContent(BuildingPart key, ViewFx<StackPane, ? extends SumPropertyContainer<DoubleProperty>> content) {
+        tables.put(key, content);
+    }
 
-    private Map<String, DoubleProperty> stackViewMap = new HashMap<>();
+    public void setDocumentType(DocumentType documentType) {
+        this.documentType = documentType;
+    }
 
-    public void initData(final DocumentType type) {
-        this.documentType = type;
-        final String beanName = choseBean(type);
+    @Override
+    public void initData() {
+        final String beanName = choseBean(documentType);
         Arrays.asList(BuildingPart.values()).forEach(bp -> {
             final ViewFx<StackPane, ? extends SumPropertyContainer<DoubleProperty>> stackPane = context.getBean(beanName);
             final SumPropertyContainer<DoubleProperty> controller = stackPane.getController();
@@ -60,11 +68,6 @@ public class SumLabelGridController implements Initializable {
             stackViewMap.put(bp.getValue(), stackPane.getController().property());
         });
         bindProperties();
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        // not need
     }
 
     private void bindProperties() {
@@ -96,11 +99,11 @@ public class SumLabelGridController implements Initializable {
         });
     }
 
-    private String choseBean(DocumentType type){
-        if(type.equals(DocumentType.BASE)){
+    private String choseBean(DocumentType type) {
+        if (type.equals(DocumentType.BASE)) {
             return BASE_STACK_PANE;
 
-        } else if(type.equals(DocumentType.CHANGED)){
+        } else if (type.equals(DocumentType.CHANGED)) {
             return CHANGE_STACK_PANE;
         }
         throw new IllegalArgumentException();

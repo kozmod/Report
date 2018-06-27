@@ -17,11 +17,14 @@ import report.layout.controllers.addEstimateRow.AddEstimateRowController;
 import report.layout.controllers.addKS.AddKsController;
 import report.layout.controllers.estimate.new_estimate.ChangedEstimateTableController;
 import report.layout.controllers.estimate.new_estimate.EstimateTabPaneController;
+import report.layout.controllers.estimate.new_estimate.EstimateTabsContent;
 import report.layout.controllers.estimate.new_estimate.KsGridController;
 import report.layout.controllers.estimate.new_estimate.BaseEstimateTableController;
 import report.layout.controllers.estimate.new_estimate.service.EstimateControllerNodeFactory;
 import report.layout.controllers.estimate.new_estimate.service.EstimateService;
 import report.layout.controllers.estimate.new_estimate.SumLabelGridController;
+import report.models.counterpaties.BuildingPart;
+import report.models.counterpaties.DocumentType;
 import report.models.counterpaties.EstimateData;
 import report.models.counterpaties.KsData;
 import report.spring.spring.components.ApplicationContextProvider;
@@ -65,10 +68,20 @@ public class EstimateConfig implements FxConfig {
     @Bean(name = "estimateTabPaneView")
     @Description("Root TabView to Estimate TabPane ")
     public ViewFx<TabPane, EstimateTabPaneController> estimateTabPaneView() throws IOException {
-        return new ViewFx<>(
-                new TabPane(),
-                new EstimateTabPaneController()
-        );
+        EstimateTabPaneController controller = new EstimateTabPaneController();
+
+        ViewFx<GridPane, KsGridController> baseKsView = ksView();
+        baseKsView.getController().setDocumentType(DocumentType.BASE);
+
+        ViewFx<GridPane, KsGridController> changedKsView = ksView();
+        changedKsView.getController().setDocumentType(DocumentType.CHANGED);
+
+        controller.putContent(EstimateTabsContent.BASE,baseSumLabelGridView());
+        controller.putContent(EstimateTabsContent.BASE_KS,baseKsView);
+        controller.putContent(EstimateTabsContent.CHANGED,changedSumLabelGridView());
+        controller.putContent(EstimateTabsContent.CHANGED_KS,changedKsView);
+
+        return new ViewFx<>(new TabPane(), controller);
     }
 
     @Bean
@@ -76,19 +89,36 @@ public class EstimateConfig implements FxConfig {
         return estimateTabPaneView().getController();
     }
 
-//    @Bean
-//    @Description("Convenient way to 'init' -> SumLabelGrid")
-//    public BeanFunction<DocumentType, ViewFx<GridPane, SumLabelGridController>> sumLabelGridViewFunction() {
-//        return this::sumLabelGridView;
-//    }
+    @Lazy
+    @Bean
+    @Description("BASE: Grid contains TableView and SumLabel to one of columns")
+    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
+    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
+    public ViewFx<GridPane, SumLabelGridController> baseSumLabelGridView() throws IOException {
+        SumLabelGridController baseController = sumLabelGridController();
+        baseController.setDocumentType(DocumentType.BASE);
+        baseController.putContent(BuildingPart.FUNDAMENT,baseStackPaneTableView());
+        baseController.putContent(BuildingPart.PROEMI,baseStackPaneTableView());
+        baseController.putContent(BuildingPart.OTDELKA,baseStackPaneTableView());
+        baseController.putContent(BuildingPart.KROWLIA,baseStackPaneTableView());
+        baseController.putContent(BuildingPart.STENI,baseStackPaneTableView());
+        return loadView(SUM_LABLE_GRID_PATH, baseController);
+    }
 
     @Lazy
     @Bean
-    @Description("Grid contains TableView and SumLabel to one of columns")
+    @Description("CHANGED: Grid contains TableView and SumLabel to one of columns")
     @Scope(BeanDefinition.SCOPE_PROTOTYPE)
     @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
-    public ViewFx<GridPane, SumLabelGridController> sumLabelGridView() throws IOException {
-        return loadView(SUM_LABLE_GRID_PATH, sumLabelGridController());
+    public ViewFx<GridPane, SumLabelGridController> changedSumLabelGridView() throws IOException {
+        SumLabelGridController changedController = sumLabelGridController();
+        changedController.setDocumentType(DocumentType.CHANGED);
+        changedController.putContent(BuildingPart.FUNDAMENT,changedStackPaneTableView());
+        changedController.putContent(BuildingPart.PROEMI,changedStackPaneTableView());
+        changedController.putContent(BuildingPart.OTDELKA,changedStackPaneTableView());
+        changedController.putContent(BuildingPart.KROWLIA,changedStackPaneTableView());
+        changedController.putContent(BuildingPart.STENI,changedStackPaneTableView());
+        return loadView(SUM_LABLE_GRID_PATH, changedController);
     }
 
     @Lazy
@@ -97,12 +127,6 @@ public class EstimateConfig implements FxConfig {
     public SumLabelGridController sumLabelGridController() {
         return new SumLabelGridController();
     }
-//
-//    @Bean
-//    @Description("Convenient way to 'init' -> SumLabelGrid")
-//    public BeanFunction<BuildingPart, ViewFx<StackPane, BaseEstimateTableController>> baseStackPaneTableViewFunction() {
-//        return t -> baseStackPaneTableView(t) ;
-//    }
 
     @Bean
     @Description("Base-StackPane Table View")

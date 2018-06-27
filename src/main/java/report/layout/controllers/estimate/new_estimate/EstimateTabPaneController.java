@@ -4,7 +4,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
-import javafx.scene.layout.GridPane;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +13,6 @@ import report.models.counterpaties.DocumentType;
 import report.spring.spring.components.ApplicationContextProvider;
 import report.spring.views.ViewFx;
 
-import javax.annotation.PostConstruct;
 import java.net.URL;
 import java.util.EnumMap;
 import java.util.Map;
@@ -33,12 +31,13 @@ public class EstimateTabPaneController implements Initializable {
 
     @Autowired
     private ViewFx<TabPane, EstimateTabPaneController> estimateTabPaneControllerViewFx;
+
     @Autowired
     private EstimateService estimateService;
 
-    private Map<EstimateTabsContent,ViewFx<?,? extends Initializable>> tabsContent = new EnumMap<>(EstimateTabsContent.class);
+    private Map<EstimateTabsContent,ViewFx<?,? extends AbstractInitializable>> tabsContent = new EnumMap<>(EstimateTabsContent.class);
 
-    public void putContent(EstimateTabsContent key,ViewFx<?,? extends Initializable> content){
+    public void putContent(EstimateTabsContent key,ViewFx<?,? extends AbstractInitializable> content){
         tabsContent.put(key,content);
     }
 
@@ -54,17 +53,25 @@ public class EstimateTabPaneController implements Initializable {
 
     private void addTabs() {
         removeAllTabs();
+//        logger.info("All Tab was removed");
+//        if(addTabWithContent("Смета",DocumentType.BASE)){
+//            addNewKsTab("Базовые КС",DocumentType.BASE);
+//            logger.info("Init: BASE and BASE_KS");
+//            if(addTabWithContent("Измененная Смета",DocumentType.CHANGED)){
+//                addNewKsTab("Измененный КС",DocumentType.CHANGED);
+//                logger.info("Init: CHANGED and CHANGED_KS");
+//            }
+//        }
+
         logger.info("All Tab was removed");
-        if(addNewEstimateTab("Смета",DocumentType.BASE)){
-            addNewKsTab("Базовые КС",DocumentType.BASE);
+        if(addTabWithContent(DocumentType.BASE,EstimateTabsContent.BASE)){
+            addTabWithContent(DocumentType.BASE,EstimateTabsContent.BASE_KS);
             logger.info("Init: BASE and BASE_KS");
-            if(addNewEstimateTab("Измененная Смета",DocumentType.CHANGED)){
-                addNewKsTab("Измененный КС",DocumentType.CHANGED);
+            if(addTabWithContent(DocumentType.CHANGED,EstimateTabsContent.CHANGED)){
+                addTabWithContent(DocumentType.CHANGED,EstimateTabsContent.CHANGED_KS);
                 logger.info("Init: CHANGED and CHANGED_KS");
             }
         }
-
-
     }
 
     private Tab newTab(String title, Node content) {
@@ -79,14 +86,14 @@ public class EstimateTabPaneController implements Initializable {
         estimateTabPaneControllerViewFx.getView().getTabs().clear();
     }
 
-    private boolean addNewEstimateTab(String tabName, DocumentType documentType){
+    private boolean addTabWithContent(DocumentType documentType, EstimateTabsContent content){
         if(estimateService.getEstimateData().isContains(documentType)){
-            ViewFx<GridPane, SumLabelGridController> sumLabelView = context.getBean(ESTIMATE_BASE);
-            sumLabelView.getController().initData(documentType);
+            ViewFx<?, ? extends AbstractInitializable> sumLabelView = tabsContent.get(content);
+            sumLabelView.getController().initData();
             return estimateTabPaneControllerViewFx.getView()
                     .getTabs()
                     .add(newTab(
-                            tabName,
+                            content.getTitle(),
                             sumLabelView.getView()
                     ));
 
@@ -94,19 +101,19 @@ public class EstimateTabPaneController implements Initializable {
         return false;
     }
 
-    private boolean addNewKsTab(String tabName, DocumentType documentType){
-        if(estimateService.getEstimateData().isContains(documentType)){
-            ViewFx<GridPane, KsGridController> ksGridView = context.getBean(KS_BEAN);
-            ksGridView.getController().initData(documentType);
-            return estimateTabPaneControllerViewFx.getView()
-                    .getTabs()
-                    .add(newTab(
-                            tabName,
-                            ksGridView.getView()
-                    ));
-
-        }
-        return false;
-    }
+//    private boolean addNewKsTab(DocumentType documentType, EstimateTabsContent content){
+//        if(estimateService.getEstimateData().isContains(documentType)){
+//            ViewFx<?, AbstractInitializable> ksGridView = tabsContent.get(content);
+//            ksGridView.getController().initData();
+//            return estimateTabPaneControllerViewFx.getView()
+//                    .getTabs()
+//                    .add(newTab(
+//                            content.getTitle(),
+//                            ksGridView.getView()
+//                    ));
+//
+//        }
+//        return false;
+//    }
 
 }

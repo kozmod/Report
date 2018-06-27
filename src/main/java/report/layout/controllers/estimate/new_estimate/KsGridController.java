@@ -40,7 +40,7 @@ import java.util.Set;
 
 import static report.spring.utils.FxTableUtils.addColumn;
 
-public class KsGridController implements Initializable {
+public class KsGridController extends AbstractInitializable {
 
 //    @Autowired
 //    private Logger logger;
@@ -73,8 +73,11 @@ public class KsGridController implements Initializable {
     @FXML
     private MenuItem addKsButton, deleteKs, printKS;
 
-    public void initData(DocumentType documentType) {
+    public void setDocumentType(DocumentType documentType) {
         this.documentType = documentType;
+    }
+
+    public void initData() {
         ksMap = estimateService.getKsMap(documentType);
         Set<Integer> ksNumbers = ksMap.keySet();
         if (ksNumbers.isEmpty()) {
