@@ -34,7 +34,6 @@ abstract class AddEstimateRowNodeUtils {
         TableColumn<AddEstTIV, String> unitColumn = tableWrapper.addColumn("Eд. изм.", "unit");
         TableColumn<AddEstTIV, Double> priseOneColumn = tableWrapper.addColumn("Стоимость (за единицу)", "priceOne");
         TableColumn<AddEstTIV, Double> priseSumColumn = tableWrapper.addColumn("Стоимость (общая)", "priceSum");
-//
 
         checkBoxColumn.setMaxWidth(60);
         checkBoxColumn.setMinWidth(30);
