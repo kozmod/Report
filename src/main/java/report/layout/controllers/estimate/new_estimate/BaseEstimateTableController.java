@@ -5,7 +5,6 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -20,9 +19,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.estimate.EstimateTVI;
 import report.layout.controllers.addEstimateRow.AddEstimateRowController;
-import report.layout.controllers.estimate.new_estimate.service.SumPropertyContainer;
+import report.layout.controllers.estimate.new_estimate.abstraction.AbstractInitializable;
+import report.layout.controllers.estimate.new_estimate.abstraction.EstimateStackPane;
 import report.layout.controllers.estimate.new_estimate.service.EstimateService;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
+import report.models.counterpaties.BuildingPart;
 import report.models.counterpaties.DocumentType;
 
 import report.spring.spring.components.ApplicationContextProvider;
@@ -42,9 +43,10 @@ import java.util.ResourceBundle;
 
 import static report.spring.utils.FxTableUtils.addColumn;
 
-public class BaseEstimateTableController implements Initializable, SumPropertyContainer<DoubleProperty> {
+public class BaseEstimateTableController extends AbstractInitializable implements EstimateStackPane {
 
-    private DocumentType documentType;
+    private DocumentType documentType = DocumentType.BASE;
+    private BuildingPart buildingPart;
 
     @Autowired
     private EstimateService estimateService;
@@ -83,11 +85,20 @@ public class BaseEstimateTableController implements Initializable, SumPropertyCo
     }
 
     @Override
-    public void initData(DocumentType documentType, String title) {
-        titledPane.setText(title);
-        this.documentType = documentType;
+    public void setBuildingPart(BuildingPart buildingPart) {
+        this.buildingPart = buildingPart;
+    }
+
+    @Override
+    public BuildingPart getBuildingPart() {
+        return buildingPart;
+    }
+
+    @Override
+    public void initData() {
+        titledPane.setText(buildingPart.getValue());
         tableView.setItems(
-                estimateService.getEstimateMap(documentType).get(title)
+                estimateService.getEstimateMap(documentType).get(buildingPart.getValue())
         );
         computeColumnValue();
         initTableContextMenu();

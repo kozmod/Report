@@ -5,7 +5,7 @@ package report.entities.items.KS;
 import report.entities.abstraction.dao.CommonNamedDao;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
-import report.layout.controllers.estimate.EstimateController_old;
+import report.layout.controllers.estimate.old.EstimateController_old;
 import report.models.sql.SqlConnector;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import report.layout.controllers.LogController;
-import report.layout.controllers.estimate.EstimateController_old.Est;
+import report.layout.controllers.estimate.old.EstimateController_old.Est;
 
 
 public class KsDao implements CommonNamedDao<Collection<KsTIV>> {
@@ -370,6 +370,77 @@ public class KsDao implements CommonNamedDao<Collection<KsTIV>> {
         }
     }
 
+    public void insertNewKS(
+            int ks_Number,
+            int ks_Date,
+            String siteNumber,
+            int idCountConst,
+            List<AbstractEstimateTVI> listKS,
+            int tableType) {
+
+        String pstString = "INSERT into dbo.[KS] ("
+                + " [KS_Number]"
+                + ",[KS_Date]"
+                + ",[SiteNumber]"
+                + ",[TypeHome]"
+                + ",[id_count]"
+                + ",[JM_name]"
+                + ",[JobsOrMaterials]"
+                + ",[BindedJob]"
+                + ",[Unit]"
+                + ",[Value]"
+                + ",[Price_one]"
+                + ",[BuildingPart]"
+                + ",[TableType]"
+                + ",[NumberSession]"
+                + ",[dell]"
+                + ",[DateCreate]"
+                + " )"
+                + " select "
+                + " ?"
+                + ",?"
+                + ",E.[SiteNumber]"
+                + ",E.[TypeHome]"
+                + ",E.[id_count]"
+                + ",E.[JM_name]"
+                + ",E.[JobsOrMaterials]"
+                + ",E.[BindedJob]"
+                + ",E.[Unit]"
+                + ",E.[Value]"
+                + ",E.[Price_one]"
+                + ",E.[BuildingPart]"
+                + ",E.[TableType] "
+                + ",E.[NumberSession] "
+                + ",E.[dell] "
+                + ",E.[DateCreate] "
+                + "FROM  [Estimate] E "
+                + "WHERE E.[SiteNumber] = ? "
+                + "And   E.[id_count]   = ? "
+                + "And   E.[JM_name]    = ? "
+                + "And   E.[BindedJob]  = ? "
+                + "And   E.[TableType]  = ? "
+                + "And   E.[dell]       = 0 ";
+
+        try (Connection connection = SqlConnector.getInstance();
+             PreparedStatement pstmt = connection.prepareStatement(pstString);) {
+            for (AbstractEstimateTVI abstractEstimateTVI : listKS) {
+
+                pstmt.setInt(1, ks_Number);
+                pstmt.setInt(2, (Math.round(ks_Date * 100) / 100));
+                pstmt.setString(3, siteNumber);
+                pstmt.setInt(4, idCountConst);
+                pstmt.setString(5, abstractEstimateTVI.getJM_name());
+                pstmt.setString(6, abstractEstimateTVI.getBindJob());
+                pstmt.setInt(7, tableType);
+
+                pstmt.addBatch();
+            }
+            pstmt.executeBatch();
+
+        } catch (SQLException ex) {
+            Logger.getLogger(KsDao.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     @Override
     public void dellAndInsert(Memento<Collection<KsTIV>> memento) {
         CommonNamedDao.super.dellAndInsert(memento);

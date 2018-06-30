@@ -51,16 +51,21 @@
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
             </DatePicker>
-            <Button mnemonicParsing="false" text="Отфильтровать">
+            <Button fx:id="filterByDateKsButton" mnemonicParsing="false" text="Отфильтровать">
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
             </Button>
-            <Button mnemonicParsing="false" text="Все КС">
+            <Button fx:id="allKsButton" mnemonicParsing="false" text="Все КС">
                <HBox.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
             </Button>
+            <CheckBox fx:id="editCheckBox" mnemonicParsing="false" text="Редактировать">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </CheckBox>
          </children>
       </HBox>
       <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Сортировка КС :" GridPane.halignment="CENTER">

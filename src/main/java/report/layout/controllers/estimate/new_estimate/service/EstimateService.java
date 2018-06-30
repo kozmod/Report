@@ -14,15 +14,18 @@ import report.models.counterpaties.DocumentType;
 import report.models.counterpaties.EstimateData;
 import report.models.counterpaties.KsData;
 import report.models.counterpaties.SiteWrapper;
+import report.spring.utils.CollectionsUtils;
 
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.EnumMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.toList;
 
@@ -102,17 +105,49 @@ public class EstimateService {
                 ));
     }
 
-    public  Optional<AbstractEstimateTVI> findEqualsEstimateElement(DocumentType documentType, AbstractEstimateTVI inpAbstractEstimateTVI) {
-        return estimateData.get(documentType)
+    public List<AbstractEstimateTVI> findEstimateEqualsEstimateElement(DocumentType documentType, AbstractEstimateTVI inpAbstractEstimateTVI) {
+      return estimateData.get(documentType)
                 .stream()
                 .filter(item -> item.getDel() != 1)
                 .filter(item -> item.businessKeyEquals(inpAbstractEstimateTVI))
                 .map(AbstractEstimateTVI.class::cast)
-                .findFirst();
+                .collect(Collectors.toList());
+    }
+    public List<AbstractEstimateTVI> findKsEqualsEstimateElement(DocumentType documentType, AbstractEstimateTVI inpAbstractEstimateTVI) {
+        return ksData.get(documentType)
+                .stream()
+                .filter(item -> item.getDel() != 1)
+                .filter(item -> item.businessKeyEquals(inpAbstractEstimateTVI))
+                .map(AbstractEstimateTVI.class::cast)
+                .collect(Collectors.toList());
     }
 
     public void insertEstimate(Collection<EstimateTVI> insert, Collection<EstimateTVI> delete){
-        estimateDao.delete(delete);
-        estimateDao.insert(insert);
+       if(CollectionsUtils.notBlank(delete))estimateDao.delete(delete);
+       if(CollectionsUtils.notBlank(insert))estimateDao.insert(insert);
+    }
+
+    public void insertKs(Collection<KsTIV> insert, Collection<KsTIV> delete){
+        if(CollectionsUtils.notBlank(delete))ksDao.delete(delete);
+        if(CollectionsUtils.notBlank(insert))ksDao.insert(insert);
+        this.refresh();
+    }
+
+    public void insertNewKs(int ksNumber,
+                            int ksDate,
+                            List<AbstractEstimateTVI> listKS,
+                            int tableType){
+        final String siteNumber = estimateData.getSiteEntity().getSiteNumber();
+        final int idCountConst = estimateData.getSelectedCounterAgent().getIdCountConst();
+
+        ksDao.insertNewKS(
+                ksNumber,
+                ksDate,
+                siteNumber,
+                idCountConst,
+                listKS,
+                tableType
+        );
+        this.refresh();
     }
 }

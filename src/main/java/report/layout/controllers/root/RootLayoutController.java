@@ -11,6 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.TitledPane;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.GridPane;
+import org.greenrobot.eventbus.EventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.net.URL;
@@ -25,7 +26,7 @@ import report.layout.controllers.CorAccountController;
 import report.layout.controllers.addSite.AddSiteController;
 import report.layout.controllers.DeleteController;
 import report.layout.controllers.LogController;
-import report.layout.controllers.estimate.EstimateController_old;
+import report.layout.controllers.estimate.old.EstimateController_old;
 import report.layout.controllers.expences.ExpensesController;
 import report.layout.controllers.expences.ExpensesControllerNodeUtils;
 import report.layout.controllers.finRes.FinResController;
@@ -35,6 +36,7 @@ import report.models.view.nodesHelpers.InputValidator;
 import report.models.view.nodesFactories.FileChooserFactory;
 import report.models.view.wrappers.toString.ToStringWrapper;
 import report.spring.spring.components.ApplicationContextProvider;
+import report.spring.spring.event.EstimateEditEventListener;
 import report.spring.views.RootViewFx;
 import report.spring.views.ViewFx;
 import report.usage_strings.PathStrings;
@@ -51,6 +53,10 @@ public class RootLayoutController implements Initializable {
     private RootViewFx rootViewFx;
     @Autowired
     private RootControllerNodeFactory rootControllerNodeFactory;
+    @Autowired
+    private EventBus eventBus;
+    @Autowired
+    private EstimateEditEventListener eventListener;
 
 
     private DeleteController delController;
@@ -144,12 +150,22 @@ public class RootLayoutController implements Initializable {
      ********************************************************************************************************************/
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-
         changesTitledPane.setContent(changeTable);
         printEstToXmlMenuItem.setDisable(true);
-
-
     }
+
+    private void initEventBus() {
+        eventListener.setEventConsumer(event -> {
+            if (event.isEditing()) {
+                rootViewFx.getView().getLeft().setDisable(true);
+                rootViewFx.getView().getTop().setDisable(true);
+            } else {
+                rootViewFx.getView().getLeft().setDisable(false);
+                rootViewFx.getView().getTop().setDisable(false);
+            }
+        });
+    }
+
     /*!******************************************************************************************************************
      *                                                                                                               INIT
      ********************************************************************************************************************/
@@ -178,6 +194,7 @@ public class RootLayoutController implements Initializable {
 //Menu ITEMS -->     
     @FXML
     private void handle_menuSqlConnect(ActionEvent event) {
+        initEventBus();
         init_TreeComboBlock();
         init_siteTreeView();
         init_previewTable();
@@ -190,7 +207,7 @@ public class RootLayoutController implements Initializable {
         } else {
 
 //            ViewFx<GridPane,IntroLayoutController> introLayoutController = beanFactory.getBean("introView",ViewFx.class);
-            ViewFx<GridPane,IntroLayoutController> introLayoutController = context.getBean("introView");
+            ViewFx<GridPane, IntroLayoutController> introLayoutController = context.getBean("introView");
             introLayoutController.getController().updateTables();
             rootViewFx.setCenter(introLayoutController);
 ////
@@ -330,7 +347,7 @@ public class RootLayoutController implements Initializable {
     @FXML
     private void handle_FinResButton(ActionEvent event) {
 //        new FxmlStage(PathStrings.Layout.FIN_RES).loadIntoRootBorderPaneCenter();
-        ViewFx<GridPane, FinResController>  viewFx = context.getBean("finResView");
+        ViewFx<GridPane, FinResController> viewFx = context.getBean("finResView");
         rootViewFx.getView().setCenter(viewFx.getView());
 
 
@@ -339,21 +356,21 @@ public class RootLayoutController implements Initializable {
     @FXML
     private void handle_PlanningButton(ActionEvent event) {
 //        new FxmlStage(PathStrings.Layout.PLANNING).loadIntoRootBorderPaneCenter();
-        ViewFx<TabPane, PlanningController>  viewFx = context.getBean("planingView");
+        ViewFx<TabPane, PlanningController> viewFx = context.getBean("planingView");
         rootViewFx.getView().setCenter(viewFx.getView());
     }
 
 
     @FXML
     private void handle_CommonInfButton(ActionEvent event) {
-        ViewFx<GridPane, IntroLayoutController>  viewFx = context.getBean("introView");
+        ViewFx<GridPane, IntroLayoutController> viewFx = context.getBean("introView");
         rootViewFx.getView().setCenter(viewFx.getView());
         viewFx.getController().updateTables();
     }
 
     @FXML
     private void handle_accountButton(ActionEvent event) {
-       ViewFx<GridPane, CorAccountController> viewFx = context.getBean("corAccountView");
+        ViewFx<GridPane, CorAccountController> viewFx = context.getBean("corAccountView");
         rootViewFx.getView().setCenter(viewFx.getView());
     }
 }

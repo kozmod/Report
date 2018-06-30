@@ -5,7 +5,7 @@ import report.entities.abstraction.dao.CommonNamedDao;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.layout.controllers.LogController;
-import report.layout.controllers.estimate.EstimateController_old;
+import report.layout.controllers.estimate.old.EstimateController_old;
 import report.models.sql.SqlConnector;
 import report.models.mementos.Memento;
 import report.usage_strings.SQL;
@@ -23,7 +23,7 @@ import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import report.layout.controllers.estimate.EstimateController_old.Est;
+import report.layout.controllers.estimate.old.EstimateController_old.Est;
 //import report.models.Formula_test;
 import report.entities.items.cb.AddEstTIV;
 

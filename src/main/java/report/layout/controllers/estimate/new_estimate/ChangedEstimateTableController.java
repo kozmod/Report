@@ -5,7 +5,6 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ContextMenu;
 import javafx.scene.control.Label;
@@ -13,28 +12,36 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
+import javafx.scene.layout.StackPane;
+import org.greenrobot.eventbus.EventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.estimate.EstimateTVI;
-import report.layout.controllers.estimate.new_estimate.service.SumPropertyContainer;
+import report.layout.controllers.estimate.new_estimate.abstraction.AbstractInitializable;
+import report.layout.controllers.estimate.new_estimate.abstraction.EstimateStackPane;
 import report.layout.controllers.estimate.new_estimate.service.EstimateService;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
+import report.models.counterpaties.BuildingPart;
 import report.models.counterpaties.DocumentType;
 import report.models.mementos.TableMemento_old;
 import report.spring.spring.components.ApplicationContextProvider;
 import report.spring.spring.configuration.controls.cells.EstimateDelElementsTableCell;
 import report.spring.spring.configuration.controls.cells.InKsColoredCell;
 import report.spring.spring.configuration.controls.contextmenu.CustomContextMenu;
+import report.spring.spring.event.EstimateEditEvent;
+import report.spring.spring.event.EstimateEditEventListener;
 import report.spring.utils.FxTableUtils;
 
 import java.net.URL;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static report.spring.utils.FxTableUtils.addColumn;
 
-public class ChangedEstimateTableController implements Initializable, SumPropertyContainer<DoubleProperty> {
+public class ChangedEstimateTableController extends AbstractInitializable implements EstimateStackPane {
 
-    private DocumentType documentType;
+    private DocumentType documentType = DocumentType.CHANGED;
+    private BuildingPart buildingPart;
 
     @Autowired
     private EstimateService estimateService;
@@ -43,6 +50,14 @@ public class ChangedEstimateTableController implements Initializable, SumPropert
     @Autowired
     private CustomContextMenu contextMenu;
 
+
+    @Autowired
+    private EventBus eventBus;
+    @Autowired
+    private EstimateEditEventListener eventListener;
+
+    @FXML
+    private StackPane stackPane;
     @FXML
     private Label sumLabel;
     @FXML
@@ -61,11 +76,21 @@ public class ChangedEstimateTableController implements Initializable, SumPropert
     }
 
     @Override
-    public void initData(DocumentType documentType, String title) {
-        titledPane.setText(title);
+    public void setBuildingPart(BuildingPart buildingPart) {
+        this.buildingPart = buildingPart;
+    }
+
+    @Override
+    public BuildingPart getBuildingPart() {
+        return this.buildingPart;
+    }
+
+    @Override
+    public void initData() {
+        titledPane.setText(buildingPart.getValue());
         this.documentType = documentType;
         tableView.setItems(
-                estimateService.getEstimateMap(documentType).get(title)
+                estimateService.getEstimateMap(documentType).get(buildingPart.getValue())
         );
         computeColumnValue();
         initTableContextMenu();
@@ -74,10 +99,23 @@ public class ChangedEstimateTableController implements Initializable, SumPropert
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         initTableView();
+        initEventBus();
         sumLabel.textProperty()
                 .bindBidirectional(sumValue, new DoubleStringConverter().format());
     }
 
+    private void initEventBus(){
+        eventListener.setEventConsumer(event -> {
+            if(event.isEditing() && !Objects.equals(event.getSource(),this)){
+                stackPane.setDisable(true);
+            }else{
+                stackPane.setDisable(false);
+            }
+        });
+        editCheckBox.selectedProperty().addListener(
+                (observable, oldValue, newValue) -> eventBus.post(new EstimateEditEvent(this, newValue))
+        );
+    }
 
     public void computeColumnValue() {
         final double sum = tableView.getItems()

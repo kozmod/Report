@@ -10,8 +10,8 @@ import java.util.logging.Logger;
 
 import report.entities.items.counterparties.AgentTVI.CountAgentTVI;
 import report.entities.items.variable.VariableTIV_new;
-import report.layout.controllers.estimate.EstimateController_old;
-import report.layout.controllers.estimate.EstimateController_old.Est;
+import report.layout.controllers.estimate.old.EstimateController_old;
+import report.layout.controllers.estimate.old.EstimateController_old.Est;
 import report.models.sql.SqlConnector;
 import report.usage_strings.SQL;
 

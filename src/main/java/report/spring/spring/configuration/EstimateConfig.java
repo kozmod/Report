@@ -15,6 +15,7 @@ import report.entities.items.estimate.EstimateDao;
 import report.entities.items.site.SiteEntityDao;
 import report.layout.controllers.addEstimateRow.AddEstimateRowController;
 import report.layout.controllers.addKS.AddKsController;
+import report.layout.controllers.estimate.new_estimate.AddBaseOrChangeController;
 import report.layout.controllers.estimate.new_estimate.ChangedEstimateTableController;
 import report.layout.controllers.estimate.new_estimate.EstimateTabPaneController;
 import report.layout.controllers.estimate.new_estimate.EstimateTabsContent;
@@ -44,6 +45,7 @@ public class EstimateConfig implements FxConfig {
     public final static String KS_ADD_PATH = "/view/estimate/AddKsLayout.fxml";
     public final static String ADD_ESTIMATE_ROW_PATH = "/view/estimate/AddEstimateRowLayout.fxml";
     public final static String ADD_KS_PATH = "/view/estimate/AddKsLayout.fxml";
+    public final static String ADD_BASE_OR_CHANGED_PATH = "/view/estimate/AddBaseOrChangeGridPane.fxml";
 
     private final ApplicationContextProvider context;
 
@@ -97,11 +99,21 @@ public class EstimateConfig implements FxConfig {
     public ViewFx<GridPane, SumLabelGridController> baseSumLabelGridView() throws IOException {
         SumLabelGridController baseController = sumLabelGridController();
         baseController.setDocumentType(DocumentType.BASE);
-        baseController.putContent(BuildingPart.FUNDAMENT,baseStackPaneTableView());
-        baseController.putContent(BuildingPart.PROEMI,baseStackPaneTableView());
-        baseController.putContent(BuildingPart.OTDELKA,baseStackPaneTableView());
-        baseController.putContent(BuildingPart.KROWLIA,baseStackPaneTableView());
-        baseController.putContent(BuildingPart.STENI,baseStackPaneTableView());
+
+        ViewFx<StackPane, BaseEstimateTableController> fundament = baseStackPaneTableView();
+        ViewFx<StackPane, BaseEstimateTableController> proemi = baseStackPaneTableView();
+        ViewFx<StackPane, BaseEstimateTableController> otdelka = baseStackPaneTableView();
+        ViewFx<StackPane, BaseEstimateTableController> krowlia = baseStackPaneTableView();
+        ViewFx<StackPane, BaseEstimateTableController> steni = baseStackPaneTableView();
+        fundament.getController().setBuildingPart(BuildingPart.FUNDAMENT);
+        proemi.getController().setBuildingPart(BuildingPart.PROEMI);
+        otdelka.getController().setBuildingPart(BuildingPart.OTDELKA);
+        krowlia.getController().setBuildingPart(BuildingPart.KROWLIA);
+        steni.getController().setBuildingPart(BuildingPart.STENI);
+
+        baseController.addContent(
+                fundament,otdelka,krowlia,proemi,steni
+        );
         return loadView(SUM_LABLE_GRID_PATH, baseController);
     }
 
@@ -109,15 +121,24 @@ public class EstimateConfig implements FxConfig {
     @Bean
     @Description("CHANGED: Grid contains TableView and SumLabel to one of columns")
     @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-    @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
     public ViewFx<GridPane, SumLabelGridController> changedSumLabelGridView() throws IOException {
         SumLabelGridController changedController = sumLabelGridController();
         changedController.setDocumentType(DocumentType.CHANGED);
-        changedController.putContent(BuildingPart.FUNDAMENT,changedStackPaneTableView());
-        changedController.putContent(BuildingPart.PROEMI,changedStackPaneTableView());
-        changedController.putContent(BuildingPart.OTDELKA,changedStackPaneTableView());
-        changedController.putContent(BuildingPart.KROWLIA,changedStackPaneTableView());
-        changedController.putContent(BuildingPart.STENI,changedStackPaneTableView());
+
+        ViewFx<StackPane, ChangedEstimateTableController> fundament = changedStackPaneTableView();
+        ViewFx<StackPane, ChangedEstimateTableController> proemi = changedStackPaneTableView();
+        ViewFx<StackPane, ChangedEstimateTableController> otdelka = changedStackPaneTableView();
+        ViewFx<StackPane, ChangedEstimateTableController> krowlia = changedStackPaneTableView();
+        ViewFx<StackPane, ChangedEstimateTableController> steni = changedStackPaneTableView();
+        fundament.getController().setBuildingPart(BuildingPart.FUNDAMENT);
+        proemi.getController().setBuildingPart(BuildingPart.PROEMI);
+        otdelka.getController().setBuildingPart(BuildingPart.OTDELKA);
+        krowlia.getController().setBuildingPart(BuildingPart.KROWLIA);
+        steni.getController().setBuildingPart(BuildingPart.STENI);
+
+        changedController.addContent(
+                fundament,otdelka,krowlia,proemi,steni
+        );
         return loadView(SUM_LABLE_GRID_PATH, changedController);
     }
 
@@ -172,10 +193,23 @@ public class EstimateConfig implements FxConfig {
 
     @Bean
     @Scope(BeanDefinition.SCOPE_PROTOTYPE)
-    public KsGridController ksController() {
-        return new KsGridController();
+    public KsGridController ksController() throws IOException {
+        return  new KsGridController();
     }
 
+//    @Bean
+//    @Description("Add Base Or Change View")
+//    public ViewFx<GridPane, AddBaseOrChangeController> addBaseOrChangeView() throws IOException {
+//        return loadView(
+//                ADD_BASE_OR_CHANGED_PATH,
+//                addBaseOrChangeController()
+//        );
+//    }
+//
+//    @Bean
+//    public AddBaseOrChangeController addBaseOrChangeController(){
+//        return  new AddBaseOrChangeController();
+//    }
 
     @Lazy
     @Bean
@@ -196,7 +230,6 @@ public class EstimateConfig implements FxConfig {
     @Lazy
     @Bean
     @Description("Add Ks View")
-//    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
     public ViewFx<GridPane, AddKsController> addKsView() throws IOException {
         return loadView(
                 ADD_KS_PATH,

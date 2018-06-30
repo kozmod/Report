@@ -12,7 +12,7 @@ import report.entities.items.KS.KsDao;
 import report.entities.items.KS.KsTIV;
 import report.entities.items.estimate.EstimateDao;
 import report.entities.items.estimate.EstimateTVI;
-import report.layout.controllers.estimate.EstimateController_old;
+import report.layout.controllers.estimate.old.EstimateController_old;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.models.counterpaties.DocumentType;
 import report.models.view.customNodes.newNode.SumColumnTableTitledStackModel;

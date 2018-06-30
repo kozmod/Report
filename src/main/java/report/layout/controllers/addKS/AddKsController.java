@@ -1,7 +1,6 @@
 package report.layout.controllers.addKS;
 
 import java.net.URL;
-import java.util.List;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.stream.Collector;
@@ -21,21 +20,19 @@ import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import report.entities.items.AbstractEstimateTVI;
 import report.entities.items.KS.KsDao;
-import report.entities.items.KS.KsTIV;
-import report.layout.controllers.estimate.EstimateController_old;
+import report.layout.controllers.estimate.new_estimate.KsGridController;
+import report.layout.controllers.estimate.new_estimate.abstraction.AbstractInitializable;
 import report.layout.controllers.estimate.new_estimate.service.EstimateService;
 import report.models.counterpaties.DocumentType;
 
 import report.models.view.nodesHelpers.InputValidator;
 
 
-public class AddKsController implements Initializable {
+public class AddKsController extends AbstractInitializable {
 
 //    private EstimateController_old showEstController;
 
     private final static String ALL_COMBO_BOX_ITEM =  "Все";
-
-    private DocumentType documentType;
 
     @Autowired
     private EstimateService estimateService;
@@ -54,11 +51,23 @@ public class AddKsController implements Initializable {
     private TableView<AbstractEstimateTVI> allJMTable, selectedJMTable;
 
 
+
+    private DocumentType documentType;
     private ObservableList<AbstractEstimateTVI> obsAllJM;
     private ObservableList<AbstractEstimateTVI> obsSelectedJM;
+    private KsGridController ksController;
 
-    public void initData(DocumentType documentType) {
+    public void setDocumentType(DocumentType documentType) {
         this.documentType = documentType;
+    }
+
+
+    public void setKsController(KsGridController ksController) {
+        this.ksController = ksController;
+    }
+
+    @Override
+    public void initData() {
 
         obsAllJM = estimateService.getEstimateData().getNotDeletedItems(documentType);
         obsSelectedJM = FXCollections.observableArrayList();
@@ -118,12 +127,12 @@ public class AddKsController implements Initializable {
     @FXML
     private void handle_addNewKSButton(ActionEvent event) {
         if (isInputValid()) {
-            int ksNumber = Integer.parseInt(ksNumTextField.getText());
-            int ksDate = (int) ksDatePicker.getValue().toEpochDay();
+            final int ksNumber = Integer.parseInt(ksNumTextField.getText());
+            final int ksDate = (int) ksDatePicker.getValue().toEpochDay();
 
-            new KsDao().insertNewKS(ksNumber, ksDate, obsSelectedJM);
-            //System.out.println(obsSelectedJM);
-//            showEstController.update_TapKS();
+            estimateService.insertNewKs(ksNumber,ksDate,obsSelectedJM, documentType.getType());
+            ksController.initData();
+
 
             Stage appStage = (Stage) ((Node) (event.getSource())).getScene().getWindow();
             appStage.close();
