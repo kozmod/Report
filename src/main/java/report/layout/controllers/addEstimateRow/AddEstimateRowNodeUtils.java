@@ -20,7 +20,6 @@ abstract class AddEstimateRowNodeUtils {
      *
      * @return TableWrapper(child of TableView)
      */
-    //TODO -> add logic to getDataFromBase
     @SuppressWarnings("unchecked")
     public static PriceSumTableWrapper<AddEstTIV> decorEst_add(TableView table) {
         CommonNamedDao dao = new EstimateDao();
@@ -35,6 +34,7 @@ abstract class AddEstimateRowNodeUtils {
         TableColumn<AddEstTIV, String> unitColumn = tableWrapper.addColumn("Eд. изм.", "unit");
         TableColumn<AddEstTIV, Double> priseOneColumn = tableWrapper.addColumn("Стоимость (за единицу)", "priceOne");
         TableColumn<AddEstTIV, Double> priseSumColumn = tableWrapper.addColumn("Стоимость (общая)", "priceSum");
+//
 
         checkBoxColumn.setMaxWidth(60);
         checkBoxColumn.setMinWidth(30);
@@ -42,7 +42,7 @@ abstract class AddEstimateRowNodeUtils {
         checkBoxColumn.setCellFactory(param -> TableCellFactory.getCheckValueCell());
         JM_nameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         BJobColumn.setCellFactory(ComboBoxTableCell.forTableColumn(
-                dao.getDistinct(SQL.Estimate.BINDED_JOB, "-")//todo
+//                dao.getDistinct(SQL.Estimate.BINDED_JOB, "-")//todo
         ));
         //TODO: !!!! Check this new issue to add items in table. !!!
         table.setRowFactory(new Callback<TableView<AddEstTIV>, TableRow<AddEstTIV>>() {
@@ -79,7 +79,7 @@ abstract class AddEstimateRowNodeUtils {
 
         });
         unitColumn.setCellFactory(ComboBoxTableCell.forTableColumn(
-//                dao.getDistinct(SQL.Estimate.UNIT)//todo add logic to get from sql
+//                dao.getDistinct(SQL.Estimate.UNIT)
         ));
         priseOneColumn.setCellFactory(TextFieldTableCell.forTableColumn(new DoubleStringConverter()));
         priseOneColumn.setOnEditCommit((TableColumn.CellEditEvent<AddEstTIV, Double> t) -> {
