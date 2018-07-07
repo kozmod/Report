@@ -17,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import report.entities.items.plan.FactTIV;
@@ -35,6 +36,8 @@ public class AddSiteController implements Initializable {
 
     private RootLayoutController rootController;
 
+    @FXML
+    private GridPane gridPane;
     @FXML
     private ComboBox<String> queueComboBox, classComboBox, typeHomeComboBox;
     @FXML

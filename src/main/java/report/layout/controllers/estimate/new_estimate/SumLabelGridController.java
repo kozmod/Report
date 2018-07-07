@@ -40,11 +40,9 @@ public class SumLabelGridController extends AbstractInitializable {
     private Label sumLabel;
 
     private final List<ViewFx<StackPane, ? extends EstimateStackPane>> stackPanes = new LinkedList<>();
-//    private final DoubleProperty sum = new SimpleDoubleProperty();
-
 
     @SafeVarargs
-    public final void addContent(ViewFx<StackPane, ? extends EstimateStackPane>... stackPaneArray) {
+    public final void addContent(ViewFx<StackPane, ? extends EstimateStackPane> ... stackPaneArray) {
         stackPanes.addAll(Arrays.asList(stackPaneArray));
     }
 
@@ -71,7 +69,8 @@ public class SumLabelGridController extends AbstractInitializable {
     }
 
     private void bindProperties() {
-        final DoubleProperty[] doublePropertyList = stackPanes.stream()
+        final DoubleProperty[] doublePropertyList = stackPanes
+                .stream()
                 .map(stackPane -> stackPane.getController().property())
                 .toArray(DoubleProperty[]::new);
         final DoubleBinding allSackSumProperty = new DoubleBinding() {

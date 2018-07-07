@@ -2,8 +2,6 @@ package report.layout.controllers.estimate.new_estimate;
 
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 
@@ -17,6 +15,7 @@ import report.spring.spring.components.ApplicationContextProvider;
 import report.spring.spring.event.EstimateEditEventListener;
 import report.spring.views.ViewFx;
 
+import java.awt.*;
 import java.net.URL;
 import java.util.EnumMap;
 import java.util.Map;
@@ -27,7 +26,7 @@ public class EstimateTabPaneController implements Initializable {
 
     private static final String ESTIMATE_BASE = "sumLabelGridView";
     private static final String KS_BEAN = "ksView";
-
+        
     @Autowired
     private Logger logger;
     @Autowired
@@ -102,18 +101,18 @@ public class EstimateTabPaneController implements Initializable {
         return tab;
     }
 //todo
-    private Tab newAddTab(String title, Node content) {
-        Label button = new Label("+");
-        button.setOnMouseClicked(event -> {
-
-        });
-        Tab tab = new Tab();
-        tab.setContent(button);
-        tab.setText(title);
-        tab.setContent(content);
-        tab.setClosable(false);
-        return tab;
-    }
+//    private Tab newAddTab(String title, Node content) {
+//        Label button = new Label("+");
+//        button.setOnMouseClicked(event -> {
+//
+//        });
+//        Tab tab = new Tab();
+//        tab.setContent(button);
+//        tab.setText(title);
+//        tab.setContent(content);
+//        tab.setClosable(false);
+//        return tab;
+//    }
 
 
     private void removeAllTabs() {

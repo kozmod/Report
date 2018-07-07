@@ -181,6 +181,24 @@ public class EstimateConfig implements FxConfig {
         return new ChangedEstimateTableController();
     }
 
+    //todo Fish for Andrey
+//    @Bean
+//    @Description("")
+//    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
+//    public ViewFx<StackPane, AnnoController> annoStackPaneTableView() throws IOException {
+//        return loadView(
+//                ESTIMATE_STACK_PANE_TABLE_PATH,
+//                annoNewStackPaneContriller()
+//        );
+//    }
+//
+//    @Bean
+//    @Scope(BeanDefinition.SCOPE_PROTOTYPE)
+//    public AnnoController annoNewStackPaneContriller() {
+//        return new AnnoController();
+//    }
+//
+
     @Bean
     @Description("KS View")
     @Scope(BeanDefinition.SCOPE_PROTOTYPE)

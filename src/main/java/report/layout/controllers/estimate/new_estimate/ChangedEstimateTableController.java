@@ -23,7 +23,6 @@ import report.layout.controllers.estimate.new_estimate.service.EstimateService;
 import report.models.converters.numberStringConverters.DoubleStringConverter;
 import report.models.counterpaties.BuildingPart;
 import report.models.counterpaties.DocumentType;
-import report.models.mementos.TableMemento_old;
 import report.spring.spring.components.ApplicationContextProvider;
 import report.spring.spring.configuration.controls.cells.EstimateDelElementsTableCell;
 import report.spring.spring.configuration.controls.cells.InKsColoredCell;
@@ -67,7 +66,6 @@ public class ChangedEstimateTableController extends AbstractInitializable implem
     @FXML
     private CheckBox editCheckBox;
 
-    private TableMemento_old<EstimateTVI> memento;
     private final DoubleProperty sumValue = new SimpleDoubleProperty();
 
     @Override
@@ -88,7 +86,6 @@ public class ChangedEstimateTableController extends AbstractInitializable implem
     @Override
     public void initData() {
         titledPane.setText(buildingPart.getValue());
-        this.documentType = documentType;
         tableView.setItems(
                 estimateService.getEstimateMap(documentType).get(buildingPart.getValue())
         );
@@ -117,7 +114,7 @@ public class ChangedEstimateTableController extends AbstractInitializable implem
         );
     }
 
-    public void computeColumnValue() {
+    private void computeColumnValue() {
         final double sum = tableView.getItems()
                 .stream()
                 .mapToDouble(EstimateTVI::getPriceSum)

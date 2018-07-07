@@ -33,8 +33,10 @@ public class SqlConnector {
 
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+//            String url = "jdbc:sqlserver://localhost;databaseName=Test;";
             String url = "jdbc:sqlserver://localhost:1433;databaseName=Test;";
-            connection = DriverManager.getConnection(url, "User", "123456");
+//            connection = DriverManager.getConnection(url, "User", "123456");
+            connection = DriverManager.getConnection(url, "sa", "SaUser123456");
 //            System.out.println(connection.isClosed());
 
         } catch (ClassNotFoundException ex) {
@@ -56,8 +58,8 @@ public class SqlConnector {
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
             String url = "jdbc:sqlserver://localhost:1433;databaseName=master;";
-            connection = DriverManager.getConnection(url, "User", "123456");
-
+//            connection = DriverManager.getConnection(url, "User", "123456");
+            connection = DriverManager.getConnection(url, "sa", "SaUser123456");
         } catch (ClassNotFoundException ex) {
             System.out.println(ex);
 
